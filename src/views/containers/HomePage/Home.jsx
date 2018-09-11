@@ -16,6 +16,7 @@ import Slider from '../../widgets/Slider/Slider.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { HeaderHighlight } from '../../widgets/Header/Header.jsx';
+import { Text } from '../../widgets/Text/Text.jsx';
 
 require("style-loader!./Home.scss");
 
@@ -69,9 +70,17 @@ class HomePage extends React.Component {
 
           {/* end home__banner */}
 
+          <div className="home__section home__build">
+            <ButtonNew className={'home__build-btn'} label={_t('txt.build_hero')} onClick={() => {
+              
+            }}/>
+          </div>
+
+          {/* end home__build */}
+
           <div className="home__section home__intro" id={'intro'}>
             <div className="home__intro-board">
-              <p>{_t('txt.voxel_desc')}</p>
+              <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
             </div>
             <div className="home__intro-voxel">
               <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f4090555468161.598573e282a48.png" />
@@ -83,7 +92,26 @@ class HomePage extends React.Component {
           {/* end home__intro */}
 
           <div className="home__section home__modes" id={'modes'}>
-
+            <div className="home__mode">
+              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
+              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
+            </div>
+            <div className="home__mode">
+              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
+              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
+            </div>
+            <div className="home__mode">
+              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
+              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
+            </div>
+            <div className="home__mode">
+              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
+              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
+            </div>
           </div>
 
           {/* end home__modes */}

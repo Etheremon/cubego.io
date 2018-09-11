@@ -1,9 +1,9 @@
 // URLS
 export const URLS = {
 
-  GAME_PLAY: 'mons',
-  BUILD: 'mons-info',
-  MY_HERO: 'my-mons',
+  INTRO: 'intro',
+  BUILD_HERO: 'build-hero',
+  MY_HEROS: 'my-heros',
   STORE: 'store',
   BATTLE: 'mons',
 

@@ -21,48 +21,32 @@ require("style-loader!./Navbar.scss");
 
 const NavbarList = {
   default: [
-    {text: 'txt.intro', group: [
-      {link: '/#intro', text: 'txt.what_is_voxel'},
-      {link: '/#partners', text: 'txt.partners'},
-      {link: '/#advisors', text: 'txt.advisors'},
-      {link: '/#getting-started', text: 'txt.getting_started'},
-      {link: `/${URLS.FAQ}`, text: 'txt.faq', highlight: true},
-    ]},
-    {link: `/${URLS.GAME_PLAY}`, text: 'txt.game_play'},
-    {link: `/${URLS.MY_HERO}`, text: 'txt.my_hero'},
+    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
+    {link: `/${URLS.INTRO}`, text: 'txt.intro'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
+    {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
     {link: `/${URLS.STORE}`, text: 'txt.store'},
     {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
   ],
 
   home: [
     // {link: '/#intro', text: 'txt.intro'},
-    {link: '/#roadmap', text: 'txt.roadmap'},
-    {link: '/#partners', text: 'txt.partners'},
-    {link: '/#advisors', text: 'txt.advisors'},
-    {text: 'txt.getting_started', group: [
-      {link: '/#getting-started', text: 'txt.getting_started'},
-        {link: `/${URLS.FAQ}`, text: 'txt.faq', highlight: true},
-    ]},
-    {text: 'txt.gameplay', group: [
-      {link: `/${URLS.GAME_PLAY}`, text: 'txt.game_play'},
-      {link: `/${URLS.MY_HERO}`, text: 'txt.my_hero'},
-      {link: `/${URLS.STORE}`, text: 'txt.store'},
-      {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
-    ]}
+    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
+    {link: `/${URLS.INTRO}`, text: 'txt.intro'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
+    {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
+    {link: `/${URLS.STORE}`, text: 'txt.store'},
+    {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
   ],
 
   mobile: [
     {text: 'txt.intro', group: [
-      {link: '/#intro', text: 'txt.what_is_voxel'},
-      {link: '/#roadmap', text: 'txt.roadmap'},
-      {link: '/#partners', text: 'txt.partners'},
-      {link: '/#advisors', text: 'txt.advisors'},
-      {link: '/#getting-started', text: 'txt.getting_started'},
-      {link: `/${URLS.FAQ}`, text: 'txt.faq', highlight: true},
+      {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
     ]},
     {text: 'txt.gameplay', group: [
-      {link: `/${URLS.GAME_PLAY}`, text: 'txt.game_play'},
-      {link: `/${URLS.MY_HERO}`, text: 'txt.my_hero'},
+      {link: `/${URLS.INTRO}`, text: 'txt.intro'},
+      {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
+      {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
       {link: `/${URLS.STORE}`, text: 'txt.store'},
       {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
     ]}

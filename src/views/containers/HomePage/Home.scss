@@ -119,6 +119,40 @@
 
   }
 
+  .home__build {
+    height: 400px;
+    text-align: center;
+    position: relative;
+
+    .home__build-btn {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .home__modes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .home__mode {
+      min-width: 56px;
+      max-width: 15%;
+      margin: 16px 32px;
+      overflow: hidden;
+      text-align: center;
+
+      img {
+        border-radius: 50%;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+
   .home__partnership {
     padding-top: 60px;
     padding-bottom: 40px;
