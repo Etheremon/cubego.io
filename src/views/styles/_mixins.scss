@@ -1,0 +1,282 @@
+@import './colors';
+@import './variables';
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+  overflow: hidden;
+}
+
+@mixin border-radius-without-overflow($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+  -moz-transform: $transform;
+  -ms-transform: $transform;
+  -o-transform: $transform;
+  transform: $transform;
+}
+
+@mixin background-size($size) {
+  -webkit-background-size: $size;
+  -moz-background-size: $size;
+  -o-background-size: $size;
+  background-size: $size;
+}
+
+@mixin gradient-directional($start-color: #555, $end-color: #333, $deg: 45deg) {
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient($deg, $start-color, $end-color); // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient($deg, $start-color, $end-color); // Opera 12
+  background-image: linear-gradient($deg, $start-color, $end-color); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+}
+
+$tablet-width: 768px;
+$computer-width: 992px;
+
+@mixin mobile {
+  @media (max-width: #{$tablet-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$computer-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin computer {
+  @media (min-width: #{$computer-width}) {
+    @content;
+  }
+}
+
+@mixin not-mobile {
+  @media (min-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+@mixin transition-scroll($duration: $duration-default) {
+  -webkit-transition:height, $duration linear;
+  -moz-transition: height, $duration linear;
+  -ms-transition: height, $duration linear;
+  -o-transition: height, $duration linear;
+  transition: height, $duration linear;
+}
+
+@mixin ellipsis() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin firefox-only {
+  @at-root {
+    @-moz-document url-prefix() {
+      & {
+        @content;
+      }
+    }
+  }
+}
+
+// no scroll bar
+@mixin no-scroll-bar() {
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    height: 0;
+    width: 0;
+  }
+}
+
+/**
+ * Animation
+ */
+@keyframes animation--spin {
+  0% { -webkit-transform: rotate(0deg);}
+  100% { -webkit-transform: rotate(-360deg);}
+}
+@-webkit-keyframes animation--spin {
+  0% { -webkit-transform: rotate(0deg);}
+  100% { -webkit-transform: rotate(-360deg);}
+}
+@-moz-keyframes animation--spin {
+  0% { -moz-transform: rotate(0deg);}
+  100% { -moz-transform: rotate(-360deg);}
+}
+@-o-keyframes animation--spin {
+  0% { -o-transform: rotate(0deg);}
+  100% { -o-transform: rotate(-360deg);}
+}
+@-ms-keyframes animation--spin {
+  0% { -ms-transform: rotate(0deg);}
+  100% { -ms-transform: rotate(-360deg);}
+}
+@mixin spinner($time: $duration-default) {
+  animation: animation--spin $time infinite linear;
+  -webkit-animation: animation--spin $time infinite linear;
+  -moz-animation: animation--spin $time infinite linear;
+  -o-animation: animation--spin $time infinite linear;
+  -ms-animation: animation--spin $time infinite linear;
+}
+
+@-webkit-keyframes animation--pulse {
+  0% {-webkit-box-shadow: 0 0 0 0 rgba(204, 17, 7, 0.9);}
+  70% {-webkit-box-shadow: 0 0 0 8px rgba(204, 17, 7, 0);}
+  100% {-webkit-box-shadow: 0 0 0 0 rgba(204, 17, 7, 0);}
+}
+@keyframes animation--pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 17, 7, 0.9);
+    box-shadow: 0 0 0 0 rgba(204, 17, 7, 0.9);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 8px rgba(204, 17, 7, 0);
+    box-shadow: 0 0 0 8px rgba(204, 17, 7, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 17, 7, 0);
+    box-shadow: 0 0 0 0 rgba(204, 17, 7, 0);
+  }
+}
+@mixin pulse($time: $duration-default) {
+  -webkit-animation: animation--pulse $time infinite linear;
+  -moz-animation: animation--pulse $time infinite linear;
+  -o-animation: animation--pulse $time infinite linear;
+  -ms-animation: animation--pulse $time infinite linear;
+}
+
+@mixin slide-down($time: 400ms, $max-height: 500px) {
+  max-height: $max-height;
+  overflow: hidden;
+  @include transition(max-height $time ease-out);
+}
+
+@mixin slide-up($time: 400ms) {
+  max-height: 0;
+  overflow: hidden;
+  @include transition(max-height $time ease-out);
+}
+
+@mixin slide-left($time: 400ms, $max-width: 500px) {
+  max-width: $max-width;
+  overflow: hidden;
+  @include transition(max-width $time ease-out);
+}
+
+@mixin slide-right($time: 400ms) {
+  max-height: 0;
+  overflow: hidden;
+  @include transition(max-width $time ease-out);
+}
+
+@mixin fade-in($time: 200ms) {
+  opacity: 1;
+  visibility: visible;
+  @include transition(opacity $time ease-in-out);
+}
+
+@mixin fade-out($time: 200ms) {
+  opacity: 0;
+  visibility: hidden;
+  @include transition(opacity $time ease-in-out);
+}
+
+@keyframes flip-up {
+  5%   {transform: translateY(0%)}
+  50%  {transform: translateY(-15%)}
+}
+
+@keyframes flip-up-down {
+  5%   {transform: translateY(0%)}
+  50%  {transform: translateY(-5%)}
+  95%   {transform: translateY(0%)}
+}
+
+/**
+ * Transition
+ */
+@mixin transition-duration($time: $duration-default) {
+  -webkit-transition-duration: $time;
+  -moz-transition-duration: $time;
+  -ms-transition-duration: $time;
+  -o-transition-duration: $time;
+  transition-duration: $time;
+}
+
+
+/**
+ * Deco
+ */
+@mixin underline($color, $width) {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: $width solid $color;
+  }
+}
+
+
+/**
+ * Text Styles
+ */
+@mixin bright-header-normal {
+  font-size: $font-size-bigger;
+  font-weight: $font-weight-semi-bold;
+}
+
+@mixin bright-text-minor {
+  font-size: $font-size-smaller;
+  color: $white70;
+}
+
+@mixin bright-link {
+
+}
+
+@mixin bright-link-minor {
+  color: $white70;
+  font-size: $font-size-smaller;
+  @include underline($white30, 1px);
+  @include transition-duration;
+
+  &:hover {
+    color: $white90;
+    @include underline($white70, 2px);
+  }
+}
+
+@mixin dark-header-normal {
+
+}

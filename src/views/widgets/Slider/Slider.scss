@@ -1,0 +1,47 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.widget__slider {
+  position: relative;
+
+  .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    @include transition-duration(1600ms);
+
+    &:first-child {
+      position: relative;
+    }
+    &.active {
+      z-index: 1;
+      opacity: 1;
+    }
+  }
+
+  .dots {
+    position: absolute;
+    display: inline-flex;
+    z-index: 2;
+    left: 50%;
+    @include transform(translateX(-50%));
+    bottom: 16px;
+
+    .dot {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      @include border-radius(50%);
+      border: 1px solid $primary;
+      margin: 0 8px;
+      &.active {
+        background-color: $primary;
+      }
+    }
+  }
+}

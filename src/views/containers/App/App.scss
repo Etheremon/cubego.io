@@ -1,0 +1,252 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+@import '../../styles/colors';
+@import '../../styles/fonts';
+
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,400i,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Candal');
+//@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&subset=korean');
+//@import url('https://fonts.googleapis.com/css?family=Acme');
+
+
+body {
+  font-family: $f__muli !important;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-normal !important;
+  min-height: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.ui.container, .ui.text.container, h1, h2, h3, h4, h5, p {
+  font-family: $f__muli !important;
+}
+
+#root {
+  position: relative;
+  min-height: 100%;
+  //overflow-x: hidden;
+
+  .page-container-wrapper {
+    min-height: 100%;
+
+    .page-wrapper {
+      //position: relative;
+      min-height: 100%;
+      padding-top: 80px;
+      background-size: cover;
+    }
+
+    .page-container {
+      //position: relative;
+      min-height: 100%;
+
+      &.dark {
+        background-size: cover;
+      }
+
+      &.bright {
+        background-color: $c__background-white-1;
+        color: $c__gray-1;
+      }
+    }
+  }
+}
+
+/* Scroll Bar */
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  -webkit-appearance: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  //background: rgba(49, 128, 238, 0.5);
+  margin: 20px 0;
+  //background-clip: content-box;   /* THIS IS IMPORTANT */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(49, 128, 238, 1);
+  @include border-radius(10px);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+/* Overwrite Semantic UI */
+a {
+  color: #6aadef;
+  font-style: italic;
+
+  &:hover {
+    color: #5195ca;
+  }
+}
+
+.ui.container.text {
+  width: 892px !important;
+  padding: 0 16px;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+
+/* Modifiers */
+.m--sub {
+  font-style: italic;
+  font-size: $font-size-smaller;
+}
+.m--hidden {
+  display: none !important;
+}
+
+.m--center {
+  text-align: center;
+}
+
+.m--pointer {
+  cursor: pointer;
+}
+
+.m--link, .m--link:hover {
+  color: $white95 !important;
+  font-style: italic;
+  font-size: inherit !important;
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+.m--no-scroll {
+  position: fixed;
+  overflow: hidden;
+}
+
+.m--m0 {
+  margin: 0 !important;
+}
+
+.m--pointer {
+  cursor: pointer;
+}
+
+.m--color--green {
+  color: #21ba45;
+}
+.m--color--red {
+  color: #db2828;
+}
+.m--color--yellow {
+  color: #fbbd08;
+}
+.m--color--orange {
+  color: #f2711c;
+}
+
+.m--bold {
+  font-weight: bold;
+}
+
+.m--no-scroll-bar::-webkit-scrollbar {
+  width: 0;                 /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.m--noti {
+  position: relative;
+}
+.m--noti::after {
+  content: "";
+  position: absolute;
+  background-color: $red;
+  width: 6px;
+  height: 6px;
+  right: -6px;
+  top: 0;
+  @include border-radius(50%);
+}
+
+.m--line-height-100 {
+  line-height: 100%;
+}
+.m--no-text-transform {
+  text-transform: none !important;
+}
+.m--no-wrap {
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 767px) {
+  .m--mobile-only {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .m--computer-only {
+    display: none !important;
+  }
+}
+
+/* Ranged Input */
+input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  border: 1px solid #ddd;
+  padding: 0;
+  height: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+input[type="range"]:focus {
+  border-color: #ccc;
+  outline: none !important;
+}
+
+input[type="range"]::-moz-range-track {
+  background: none;
+  border: 0;
+}
+
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+//border: 1px solid #ddd;
+  height: 1.5rem;
+  width: 1.5rem;
+  background: #fff;
+  background: #fff linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -o-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  border-radius: 100%;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15), 0 0 0 1px rgba(34, 36, 38, .15) inset;
+}
+
+input[type="range"]::-moz-range-thumb {
+//border: 1px solid #ddd;
+  height: 1.5rem;
+  width: 1.5rem;
+  background: #fff;
+  background: #fff linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -o-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  background: #fff -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  border-radius: 100%;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15), 0 0 0 1px rgba(34, 36, 38, .15) inset;
+}
+
+.txn-bar__toc {
+  font-size: 10px;
+}

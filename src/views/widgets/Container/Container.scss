@@ -1,0 +1,19 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.widget__container {
+  padding: 0 16px;
+  max-width: 100%;
+  margin: 0 auto;
+
+  &.normal {
+    width: 932px;
+  }
+  &.small {
+    width: 832px;
+  }
+  &.big {
+    width: 1156px;
+  }
+}

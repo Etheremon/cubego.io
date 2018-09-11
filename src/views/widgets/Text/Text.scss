@@ -1,0 +1,56 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.widget__text {
+  margin: 4px 0;
+
+  &.h1 {
+    font-family: $f__candal;
+    font-size: 32px;
+    text-transform: uppercase;
+    font-weight: $font-weight-bold;
+  }
+
+  &.h2 {
+    font-family: $f__muli;
+    font-size: 18px;
+    font-weight: $font-weight-semi-bold;
+    text-transform: uppercase;
+  }
+
+  &.h3 {
+    font-family: $f__muli;
+    font-size: 16px;
+    font-weight: $font-weight-semi-bold;
+  }
+  &.h4 {
+    font-family: $f__muli;
+    font-size: 14px;
+    font-weight: $font-weight-semi-bold;
+  }
+
+  &.t1 {
+    font-size: $font-size-medium;
+  }
+
+  &.t2 {
+    font-size: $font-size-normal;
+  }
+
+  &.link {
+    color: $c__blue-1;
+    cursor: pointer;
+    font-style: normal;
+  }
+  &.sublink {
+    opacity: 0.8;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: $font-size-small;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
