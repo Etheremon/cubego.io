@@ -17,12 +17,10 @@
   "author": "Voxel Team",
   "license": "ISC",
   "dependencies": {
-    "easystarjs": "^0.4.3",
     "es6-tween": "^5.2.4",
     "howler": "^2.0.15",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
-    "papaparse": "^4.6.0",
     "pixi-layers": "^0.1.9",
     "pixi.js": "^4.8.1",
     "prop-types": "^15.6.0",
@@ -38,8 +36,7 @@
     "redux-saga": "^0.16.0",
     "three": "^0.96.0",
     "three-gltf-loader": "^1.92.0",
-    "three-orbit-controls": "^82.1.0",
-    "tmx-parser": "^1.5.0"
+    "three-orbit-controls": "^82.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

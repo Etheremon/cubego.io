@@ -1,0 +1,65 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+
+.widget__header-highlight {
+  font-size: 22px;
+  color: $gray;
+  font-weight: $font-weight-normal;
+  margin-bottom: 40px;
+  line-height: 30px;
+
+  b {
+    font-size: $font-size-header-2;
+    color: $gray-dark;
+    font-weight: $font-weight-bold;
+  }
+
+  &.inverted{
+    color: $white70;
+    b {
+      color: $white98;
+    }
+  }
+}
+
+
+.widget__header-normal {
+  font-size: $font-size-header-2;
+  font-weight: $font-weight-bold;
+  color: $gray-dark;
+  font-style: italic;
+  padding-bottom: 16px;
+
+  &.small {
+    font-size: $font-size-header-1;
+    font-weight: $font-weight-semi-bold;
+  }
+  &.inverted {
+    color: $white98;
+  }
+}
+
+
+.widget__header {
+  margin: 8px 0;
+  &.title {
+
+  }
+  &.subtitle {
+
+  }
+  &.section {
+    text-transform: uppercase;
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-bold;
+    font-style: italic;
+  }
+  &.paragraph {
+    text-transform: capitalize;
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-semi-bold;
+    font-style: italic;
+  }
+}
