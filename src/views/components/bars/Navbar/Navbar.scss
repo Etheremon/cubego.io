@@ -39,7 +39,7 @@
 }
 
 .navbar__wrapper {
-  background-color: $white95 !important;
+  background-color: $green-vista !important;
   border-bottom: none;
 
   &.fixed {
@@ -59,6 +59,12 @@
 
     .navbar__item-group {
       display: flex;
+      overflow: hidden;
+
+      .active {
+        border-radius: 20%;
+        background-color: black !important;
+      }
 
       &.logo {
         .navbar__item {
@@ -94,10 +100,10 @@
       i.angle.down, i.user {
         line-height: 12px;
       }
-      font-weight: $font-weight-normal;
+      font-weight: $font-weight-bold;
       font-size: $font-size-normal;
       text-transform: capitalize;
-      color: $gray-dark;
+      color: $white;
       display: flex;
       height: 100%;
       align-items: center;

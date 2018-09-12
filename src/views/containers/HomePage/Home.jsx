@@ -57,11 +57,11 @@ class HomePage extends React.Component {
 
   render() {
 
-    const { _t } = this.props;
-    
+    const { _t, pathName } = this.props;
+
     return (
       <div className="page-container">
-        <Navbar transforming navbarType={'home'} scrollingElement={'home__container'}/>
+        <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home__container'}/>
         <div className={'home__container'} id={'home__container'}>
 
           <div className={'home__section home__banner'} id={'home'}>
@@ -92,25 +92,31 @@ class HomePage extends React.Component {
           {/* end home__intro */}
 
           <div className="home__section home__modes" id={'modes'}>
-            <div className="home__mode">
-              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
-              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
-            </div>
-            <div className="home__mode">
-              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
-              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
-            </div>
-            <div className="home__mode">
-              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
-              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
-            </div>
-            <div className="home__mode">
-              <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-              <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage, used since the 1500s'} />
-              <p>{'There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain'}</p>
+            <Text className={'home_modes-title'} type={Text.types.H2} children={_t('txt.how_to_play')} />
+
+            <div className="home__mode-container">
+
+              <div className="home__mode">
+                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
+                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
+              </div>
+              <div className="home__mode">
+                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
+                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
+              </div>
+              <div className="home__mode">
+                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
+                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
+              </div>
+              <div className="home__mode">
+                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
+                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
+                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
+              </div>
+
             </div>
           </div>
 
@@ -163,9 +169,13 @@ class HomePage extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => ({
-  _t: getTranslate(store.localeReducer),
-});
+const mapStateToProps = (store, props) => {
+  let pathName = props.pathname;
+  return {
+    pathName,
+    _t: getTranslate(store.localeReducer),
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,

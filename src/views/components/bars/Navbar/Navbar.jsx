@@ -24,7 +24,7 @@ const NavbarList = {
     {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
     {link: `/${URLS.INTRO}`, text: 'txt.intro'},
     {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-    {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
+    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
     {link: `/${URLS.STORE}`, text: 'txt.store'},
     {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
   ],
@@ -34,7 +34,7 @@ const NavbarList = {
     {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
     {link: `/${URLS.INTRO}`, text: 'txt.intro'},
     {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-    {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
+    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
     {link: `/${URLS.STORE}`, text: 'txt.store'},
     {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
   ],
@@ -46,7 +46,7 @@ const NavbarList = {
     {text: 'txt.gameplay', group: [
       {link: `/${URLS.INTRO}`, text: 'txt.intro'},
       {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-      {link: `/${URLS.MY_HEROS}`, text: 'txt.my_heros'},
+      {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
       {link: `/${URLS.STORE}`, text: 'txt.store'},
       {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
     ]}
@@ -60,10 +60,15 @@ class Navbar extends React.Component {
 
     this.state = {
       showNoti: true,
+      selectedNavItem: this.props.pathName,
     };
 
     this.handleLanguageChange = this.handleLanguageChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleNavItemSelect(link) {
+    this.setState({ selectedNavItem: link })
   }
 
   componentDidMount() {
@@ -146,7 +151,7 @@ class Navbar extends React.Component {
             {NavbarList['mobile'].map((item, idx) => {
               if (item.link)
                 return (
-                  <div className={'navbar__item m--mobile-only'} key={idx}>
+                  <div className={`navbar__item m--mobile-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)}>
                     {item.link[0] === '/'
                       ? <Link smooth to={item.link}>
                           {_t(item.text)}
@@ -169,7 +174,7 @@ class Navbar extends React.Component {
                             <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
                           </a>
                   })))}>
-                    <div className={'navbar__item'}>
+                    <div className={`navbar__item ${this.state.selectedNavItem === item.link ? 'active' : ''}`} onClick={() => this.handleNavItemSelect(item.link)}>
                       {_t(item.text)}
                     </div>
                   </Dropdown>
@@ -179,7 +184,7 @@ class Navbar extends React.Component {
             {NavbarList[navbarType].map((item, idx) => {
               if (item.link)
                 return (
-                  <div className={'navbar__item m--computer-only'} key={idx}>
+                  <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)}>
                     {item.link[0] === '/'
                       ? <Link smooth to={item.link}>
                           <span className={item.highlight ? 'm--noti' : ''}>{_t(item.text)}</span>
@@ -202,7 +207,7 @@ class Navbar extends React.Component {
                             <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
                           </a>
                   })))}>
-                    <div className={'navbar__item'}>
+                    <div className={`navbar__item ${this.state.selectedNavItem === item.link ? 'active' : ''}`} onClick={() => this.handleNavItemSelect(item.link)}>
                       <span className={item.highlight ? 'm--noti' : ''}>{_t(item.text)}</span>
                     </div>
                   </Dropdown>

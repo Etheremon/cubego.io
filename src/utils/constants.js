@@ -3,9 +3,9 @@ export const URLS = {
 
   INTRO: 'intro',
   BUILD_HERO: 'build-hero',
-  MY_HEROS: 'my-heros',
+  MY_HEROES: 'my-heroes',
   STORE: 'store',
-  BATTLE: 'mons',
+  BATTLE: 'battle',
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',

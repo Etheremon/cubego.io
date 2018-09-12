@@ -5,9 +5,10 @@
 .footer__wrapper {
   position: relative;
   width: 100%;
-  background-color: $white;
+  background-color: $green-vista;
   padding-bottom: 30px;
   font-size: $font-size-small !important;
+  padding: 8px 16px;
 
   .footer__divider {
     margin-bottom: 40px;
@@ -67,7 +68,7 @@
         }
 
         a, p {
-          color: $gray-dark;
+          color: $white;
           font-style: normal;
           cursor: pointer;
         }

@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { localeReducer } from 'react-localize-redux'
 import createSagaMiddleware from 'redux-saga'
 import { voxelStoreReducers } from './reducers'
-import { LanInitialActions } from './config_language.js'
+import { LanguageActions, InitialActions } from './config_language.js'
 import rootSagas from './sagas'
 
 export const setupStore = () => {
@@ -25,7 +25,11 @@ export const setupStore = () => {
   store.sagaMiddleware = sagaMiddleware;
 
   // Initial Actions
-  LanInitialActions.forEach(a => store.dispatch(a));
+  InitialActions.forEach(a => store.dispatch(a))
+
+  LanguageActions().then(lanActions => 
+    lanActions.forEach(a => store.dispatch(a)) );
+
   sagaMiddleware.run(rootSagas);
 
   return store;

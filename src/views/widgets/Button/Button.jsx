@@ -73,7 +73,7 @@ ButtonNew.types = {
   TOKEN: 'token',
 };
 ButtonNew.defaultProps = {
-  color: ButtonNew.colors.BLUE,
+  color: ButtonNew.colors.ORANGE,
   size: ButtonNew.sizes.NORMAL,
   fluid: false,
   tokenList: ['eth', 'emont'],

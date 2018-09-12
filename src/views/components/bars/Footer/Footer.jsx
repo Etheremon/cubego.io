@@ -52,7 +52,14 @@ class Footer extends React.Component {
                 </div>
               </div>
               <div className="footer__right-social">
-                <a href="https://discord.gg/xgJpuzc" target="_blank"><img src={'https://png.icons8.com/color/1600/discord-new-logo.png'}/></a>
+                <a href="https://discord.gg/xgJpuzc" target="_blank"><img src={require('../../../../shared/img/socialMedia/discord.png')}/></a>
+                <a href="https://t.me/myetheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/telegram.png')}/></a>
+                <a href="https://www.reddit.com/r/etheremon/" target="_blank"><img src={require('../../../../shared/img/socialMedia/reddit.png')}/></a>
+                <a href="https://www.facebook.com/etheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/fb.png')}/></a>
+                <a href="https://twitter.com/myetheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/twitter.png')}/></a>
+                <a href="https://www.instagram.com/etheremon_official/" target="_blank"><img src={require('../../../../shared/img/socialMedia/insta.png')}/></a>
+                <a href="https://medium.com/etheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/medium.png')}/></a>
+                <a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><img src={require('../../../../shared/img/socialMedia/youtube.png')}/></a>
               </div>
             </div>
           </div>
