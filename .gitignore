@@ -4,3 +4,4 @@ package-lock.json
 yarn.lock
 public/
 node_modules/
+cubego_client.zip

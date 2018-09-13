@@ -1,7 +1,7 @@
 {
-  "name": "voxel",
+  "name": "CubeGo",
   "version": "1.0.0",
-  "description": "Voxel Client App",
+  "description": "CubeGo",
   "main": "app.jsx",
   "scripts": {
     "startDev": "del-cli public/* && webpack-dev-server --port 8080 --content-base=public --hot --watch-poll --config webpack.dev.js --env.ENV=dev",
@@ -10,21 +10,17 @@
     "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
   },
   "keywords": [
-    "voxel",
+    "cubego",
+    "etheremon",
+    "emont",
     "decentralize",
     "ethereum"
   ],
-  "author": "Voxel Team",
+  "author": "EmontAlliance Team",
   "license": "ISC",
   "dependencies": {
-    "es6-tween": "^5.2.4",
-    "howler": "^2.0.15",
-    "immutable": "^3.8.2",
     "lodash": "^4.17.4",
-    "pixi-layers": "^0.1.9",
-    "pixi.js": "^4.8.1",
     "prop-types": "^15.6.0",
-    "rc-slider": "^8.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-localize-redux": "^2.14.1",
@@ -33,10 +29,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-hash-link": "^1.2.0",
     "redux": "^4.0.0",
-    "redux-saga": "^0.16.0",
-    "three": "^0.96.0",
-    "three-gltf-loader": "^1.92.0",
-    "three-orbit-controls": "^82.1.0"
+    "redux-saga": "^0.16.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
