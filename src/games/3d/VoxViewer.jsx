@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ArcRotateCamera, MeshBox, MeshContainer, PointLight} from '../babylonX';
+import {ArcRotateCamera, Axis, MeshBox, MeshContainer, PointLight} from '../babylonX';
 import {fullColorHex} from "../utils";
 
 const SIZE = 0.5;
@@ -41,7 +41,8 @@ class VoxViewer extends Component {
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        <ArcRotateCamera alpha={2.18} beta={1.37} radius={17}/>
+        <Axis size={5}/>
+        <ArcRotateCamera alpha={2.18} beta={1.37} radius={17} attachControl={true}/>
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
         {this.renderVoxel(this.state.data)}

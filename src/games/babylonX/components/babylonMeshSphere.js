@@ -3,7 +3,7 @@ import {BabylonComponent} from "./babylonComponent";
 import {hexToColor3} from "../utils";
 
 export class BabylonMeshSphere extends BabylonComponent{
-  static create(scene, props) {
+  static create({scene}, props) {
     let options = {
       diameter: 5
     };

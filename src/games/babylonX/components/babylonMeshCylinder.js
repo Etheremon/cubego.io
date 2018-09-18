@@ -3,7 +3,7 @@ import {BabylonComponent} from "./babylonComponent";
 import {hexToColor3} from "../utils";
 
 export class BabylonMeshCylinder extends BabylonComponent {
-  static create(scene, props) {
+  static create({scene}, props) {
     let options = {
       height: props.height || 5,
       diameter: props.diameter || 5,

@@ -14,8 +14,9 @@ const makeTextPlane = function(text, color, size, scene) {
 };
 
 export class BabylonAxis extends BabylonComponent {
-  static create(scene, props) {
+  static create({scene}, props) {
     let size = props.size || 1;
+    let container = new BABYLON.AbstractMesh(props.name || "mesh", scene);
     let axisX = BABYLON.Mesh.CreateLines("axisX", [
       new BABYLON.Vector3.Zero(), new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, 0.05 * size, 0),
       new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
@@ -37,5 +38,9 @@ export class BabylonAxis extends BabylonComponent {
     axisZ.color = new BABYLON.Color3(0, 0, 1);
     let zChar = makeTextPlane("Z", "blue", size / 10, scene);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
+    container.addChild(axisX);
+    container.addChild(axisY);
+    container.addChild(axisZ);
+    return container;
   }
 }

@@ -24,8 +24,8 @@ mappingComponents[TYPES.ARC_ROTATE_CAMERA] = BabylonArcRotateCamera;
 mappingComponents[TYPES.POINT_LIGHT] = BabylonPointLight;
 mappingComponents[TYPES.AXIS] = BabylonAxis;
 
-const createComponent = (type, props, {engine, scene}) => {
-  return mappingComponents[type].create(scene, props);
+const createComponent = (type, props, rootContainerInstance) => {
+  return mappingComponents[type].create(rootContainerInstance, props);
 };
 
 export {createComponent, TYPES};
