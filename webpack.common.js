@@ -35,35 +35,25 @@ module.exports = env => {
             {
               loader: 'image-webpack-loader',
               options: {
-                // Compression quality, in range 0 (worst) to 100 (perfect).
-                // false creates baseline JPEG file.
                 mozjpeg: {
                   progressive: true,
                   quality: IMAGE_QUALITY[0]
                 },
-                // optipng.enabled: false will disable optipng
                 optipng: {
                   enabled: false,
                 },
-                // Instructs pngquant to use the least amount of colors required to meet or exceed the max quality. If conversion results in quality below the min quality the image won't be saved.
-                // Min and max are numbers in range 0 (worst) to 100 (perfect), similar to JPEG.
                 pngquant: {
                   quality: `${IMAGE_QUALITY[0]}-${IMAGE_QUALITY[1]}`,
                   speed: 4
                 },
-                // Interlace gif for progressive rendering.
                 gifsicle: {
                   interlaced: false,
                 },
-                // // the webp option will enable WEBP
-                // webp: {
-                //   enabled: false,
-                // }
               }
             },
           ],
         }, {
-          test: /\.(gltf|tmx|tsx)$/,
+          test: /\.(gltf|tmx|tsx|vox)$/,
           include: APP_DIR,
           use: 'file-loader',
         }, {

@@ -20,6 +20,8 @@ voxel-web
         +- styles               all common styles
         +- widgets              all common widgets, web's general components.
     +- games                    all game-scenes come here, together with game's components.
+                                games should also include react wrappers of the games; so that the views do not have to touch
+                                game's logic
     +- services                 services such as API, Web Trackers, Local Storage, etc.
     +- utils                    utility functions & logic
     +- shared                   all resource files come here                       

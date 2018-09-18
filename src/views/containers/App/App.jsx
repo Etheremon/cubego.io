@@ -13,6 +13,8 @@ import * as Utils from "../../../utils/utils";
 
 import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
+import {URLS} from "../../../utils/constants";
+import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 
 require("style-loader!./App.scss");
 
@@ -95,8 +97,8 @@ class App extends React.Component {
     ) : (
       <div className={'page-container-wrapper'}>
         <Switch>
+          <Route path={`/${URLS.MODEL_EDITOR}`} component={ModelEditor}/>
           <Route exact path='/' component={Home}/>
-
           <Route component={Home}/>
         </Switch>
         
