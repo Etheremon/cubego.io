@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import 'babylonjs-loaders';
 import {renderer as BabylonRenderer} from "./renderer/index";
 import {TYPES} from './components';
 import {BabylonMeshContainer} from "./components/babylonMeshContainer";
@@ -12,6 +13,7 @@ export let listMesh = [];
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
   scene = new BABYLON.Scene(engine);
+  window.scene = scene;
   scene.useRightHandedSystem = true;
   root = BabylonMeshContainer.create(scene, {name: 'root', position: {x: 0, y: 0, z: 0}});
   root.scene = scene;
@@ -112,6 +114,7 @@ export const MeshContainer = TYPES.MESH_CONTAINER;
 export const ArcRotateCamera = TYPES.ARC_ROTATE_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
 export const Axis = TYPES.AXIS;
+export const Voxel = TYPES.VOXEL;
 
 const BabylonX = {render};
 export default BabylonX;

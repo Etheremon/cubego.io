@@ -5,6 +5,7 @@ import {BabylonMeshCylinder} from "./babylonMeshCylinder";
 import {BabylonArcRotateCamera} from "./babylonArcRotateCamera";
 import {BabylonPointLight} from "./babylonPointLight";
 import {BabylonAxis} from "./babylonAxis";
+import {BabylonVoxel, BabylonVoxelBuilder} from "./babylonVoxel";
 const TYPES = {
   MESH_SPHERE: 'MESH_SPHERE',
   MESH_BOX: 'MESH_BOX',
@@ -12,7 +13,8 @@ const TYPES = {
   MESH_CYLINDER: 'MESH_CYLINDER',
   ARC_ROTATE_CAMERA: 'ARC_ROTATE_CAMERA',
   POINT_LIGHT: 'POINT_LIGHT',
-  AXIS: 'AXIS'
+  AXIS: 'AXIS',
+  VOXEL: 'VOXEL'
 };
 
 let mappingComponents = {};
@@ -23,6 +25,7 @@ mappingComponents[TYPES.MESH_CYLINDER] = BabylonMeshCylinder;
 mappingComponents[TYPES.ARC_ROTATE_CAMERA] = BabylonArcRotateCamera;
 mappingComponents[TYPES.POINT_LIGHT] = BabylonPointLight;
 mappingComponents[TYPES.AXIS] = BabylonAxis;
+mappingComponents[TYPES.VOXEL] = BabylonVoxel;
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);
