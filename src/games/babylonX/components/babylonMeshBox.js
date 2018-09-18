@@ -13,7 +13,7 @@ export class BabylonMeshBox extends BabylonComponent {
     box.position = new BABYLON.Vector3(props.position.x, props.position.y, props.position.z);
     box.enableEdgesRendering();
     box.edgesWidth = 2.0;
-    box.edgesColor = hexToColor3('0x000000');
+    box.edgesColor = new BABYLON.Color4(0, 0, 0, 1);
     box.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
     listMesh.push(box);
     return box;

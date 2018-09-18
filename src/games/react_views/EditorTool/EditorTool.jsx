@@ -21,21 +21,13 @@ export class EditorTool extends Component {
   }
 
   componentDidMount() {
-    // this.voxel = BabylonX.render(<VoxViewer data={this.state.voxelData}/>, document.getElementById('canvas3D'));
     this.voxel = BabylonX.render(<VoxViewer data={this.state.voxelData}/>, document.getElementById('canvas3D'));
     this.paint = PixiX.fiberRender(<PaintScene data={this.state.voxelData} changeFrame={this.changeFrame}/>, document.getElementById('canvas2D'));
   }
 
-  // handleStreamVideo(stream) {
-  //   let canvas = document.querySelector('video');
-  //
-  //   canvas.srcObject = stream;
-  // }
-
   loadModel() {
     let parser = new window.vox.Parser();
     parser.parse(require('../../data/3.vox')).then((voxelData) => {
-      // this.setState({voxelData: voxelData});
       this.voxel.setNewVoxelData(voxelData);
       this.paint.setNewVoxelData(voxelData);
     });
@@ -44,10 +36,7 @@ export class EditorTool extends Component {
   render() {
     return (
       <div>
-        {/* src="data/output_4.ogg" */}
-        {/*<video id='video' width="640" height="480" playsInline autoPlay/>*/}
         <button onClick={()=>{this.loadModel()}}> Select model 1</button>
-
         <canvas id='canvas3D' width="640" height="480"/>
         <canvas id='canvas2D' width="640" height="480"/>
       </div>

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import PixiX, {Button, Container, Rectangle} from "../pixix/index";
+import {Container, Rectangle} from "../pixix/index";
 import {fullColorHex} from "../utils";
-import {MeshBox} from "../babylonX";
-
-const LIST_COLORS = ['0x000ccc', '0xcbcc24', '0x0acc2c', '0xcc062a', '0xc10ecc', '0x0bccaa'];
 
 class PaintScene extends Component {
   constructor(props) {
@@ -14,7 +11,6 @@ class PaintScene extends Component {
     };
 
     this.selectedColorIdx = 0;
-    this.selectedShapeIdx = 0;
   }
 
   renderPixel() {
@@ -60,10 +56,6 @@ class PaintScene extends Component {
 
   changeSelectedColor(colorIdx) {
     this.selectedColorIdx = colorIdx;
-  }
-
-  changeSelectedShape(shapeIdx) {
-    this.selectedShapeIdx = shapeIdx;
   }
 
   renderColor() {
