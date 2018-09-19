@@ -8,20 +8,23 @@ let rootContainer = null;
 let scene, engine;
 let loopStarted = false;
 let root = null;
+let assetsManager = null;
 export let listMesh = [];
 
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
   scene = new BABYLON.Scene(engine);
+  //For debugging
   window.scene = scene;
-  scene.useRightHandedSystem = true;
+  // scene.useRightHandedSystem = true;
   root = BabylonMeshContainer.create(scene, {name: 'root', position: {x: 0, y: 0, z: 0}});
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
+  assetsManager = new BABYLON.AssetsManager(scene);
   rootContainer = BabylonRenderer.createContainer(root);
+  // assetsManager.onFinish = startLoop;
   startLoop();
-
   return rootContainer;
 };
 
@@ -115,6 +118,30 @@ export const ArcRotateCamera = TYPES.ARC_ROTATE_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
 export const Axis = TYPES.AXIS;
 export const Voxel = TYPES.VOXEL;
+export const HemisphericLight = TYPES.HEMISPHERIC_LIGHT;
+export const DirectionLight = TYPES.DIRECTION_LIGHT;
 
-const BabylonX = {render};
+function addMesh(id, root, file) {
+  return new Promise((resolve, reject) => {
+    let task = assetsManager.addMeshTask(id, "", root, file);
+    task.onSuccess = (taskData) => {
+      resolve(taskData)
+    };
+    task.onError = (taskData, message, exception) => {
+      console.error(message);
+      reject(message)
+    }
+  });
+}
+
+function load() {
+  assetsManager.load();
+}
+
+const loaders = {
+  addMesh,
+  load
+};
+
+const BabylonX = {render, loaders};
 export default BabylonX;

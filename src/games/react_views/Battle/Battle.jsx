@@ -26,10 +26,6 @@ export class Battle extends Component {
     });
   }
 
-  loadBattleGround() {
-    
-  }
-
   render() {
     return (
       <div>
