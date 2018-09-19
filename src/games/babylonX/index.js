@@ -120,6 +120,7 @@ export const Axis = TYPES.AXIS;
 export const Voxel = TYPES.VOXEL;
 export const HemisphericLight = TYPES.HEMISPHERIC_LIGHT;
 export const DirectionLight = TYPES.DIRECTION_LIGHT;
+export const Animation = TYPES.ANIMATION;
 
 function addMesh(id, root, file) {
   return new Promise((resolve, reject) => {

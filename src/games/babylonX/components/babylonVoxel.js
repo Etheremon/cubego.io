@@ -17,7 +17,7 @@ export class BabylonVoxel extends BabylonComponent {
       spsVoxel.addShape(meshBox, 1);
       elements.push(meshBox);
     });
-
+    //SPS is temp solution, need to change to optimized mesh solution
     spsVoxel.initParticles = function () {
       elements.forEach((element, idx) => {
         let voxel = data.voxels[idx];
@@ -37,6 +37,9 @@ export class BabylonVoxel extends BabylonComponent {
     });
     spsVoxel.initParticles();
     spsVoxel.setParticles();
+    let pivotAt = new BABYLON.Vector3(1, -1.5, 1);
+    let translation = mesh.position.subtract(pivotAt);
+    mesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
     return mesh;
   }
 }

@@ -6,4 +6,8 @@ export class BabylonComponent {
   get renderer() {
     return this._renderer;
   }
+
+  set renderer(renderer) {
+    this._renderer = renderer;
+  }
 }
