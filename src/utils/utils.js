@@ -64,7 +64,7 @@ export const CalculateExtraGen0Stats = (create_index, earned, class_id) => {
 
   // Catch Price
   if (create_index <= numEarlyBirds) catchPrice = price_origin;
-    else catchPrice = price_origin + price_return * (create_index - numEarlyBirds);
+  else catchPrice = price_origin + price_return * (create_index - numEarlyBirds);
   catchPrice = RoundToDecimalStr(catchPrice, 6);
 
   // Average Bought Price

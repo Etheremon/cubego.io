@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
 import withRouter from "react-router-dom/es/withRouter";
-import {EditorTool} from "../../../games/react_views/EditorTool/EditorTool.jsx";
+import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
+import {Layer2D} from "../../../games/react_views/Layer2D/Layer2D.jsx";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -12,15 +13,23 @@ require("style-loader!./ModelEditor.scss");
 class _ModelEditor extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      model: null,
+    }
   }
 
   componentDidMount() {
+    let parser = new window.vox.Parser();
+    parser.parse(require('../../../games/data/3.vox')).then((voxelData) => {
+      this.setState({model: voxelData});
+    });
   }
 
   render() {
     return (
-      <div className="model-editor">
-        <EditorTool/>
+      <div className={'model-editor'}>
+        <Model3D model={this.state.model}/>
+        <Layer2D/>
       </div>
     )
   }
