@@ -34,8 +34,12 @@ export class Model3D extends Component {
 
 Model3D.propTypes = {
   model: PropTypes.object,
+  tools: PropTypes.object,
+  onCellClicked: PropTypes.func,
 };
 
 Model3D.defaultProps = {
   model: null,
+  tools: {},
+  onCellClicked: () => {},
 };
