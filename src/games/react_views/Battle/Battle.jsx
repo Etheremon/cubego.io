@@ -29,7 +29,7 @@ export class Battle extends Component {
   render() {
     return (
       <div>
-        <canvas id='battle' width="640" height="480"/>
+        <canvas id='battle' width="960" height="540"/>
       </div>
     );
   }

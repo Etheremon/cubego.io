@@ -1,25 +1,32 @@
 import * as BABYLON from 'babylonjs';
 import {BabylonComponent} from "./babylonComponent";
 
+const PERMITTED_PROPS = [
+  'name',
+  'targetProperty',
+  'targetFPS',
+  'loopMode',
+  'enableBlending',
+  'keys',
+  'playOnStart',
+  'scaleSpeed',
+  'bezierCurveEase'
+];
+
+//bezierCurveEase get from http://cubic-bezier.com/
+
 export class BabylonAnimation extends BabylonComponent {
   static create({scene}, props) {
     let animation = new BabylonAnimation();
-    let animationBox = new BABYLON.Animation(props.name, "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-    let keys = [];
-    keys.push({
-      frame: 0,
-      value: 1
-    });
-    keys.push({
-      frame: 50,
-      value: 0.9
-    });
+    animation.setProps(props, PERMITTED_PROPS);
+    let animationBox = new BABYLON.Animation(props.name || 'animation', props.targetProperty || '', props.targetFPS || 30,
+      props.loopMode, props.enableBlending);
+    animationBox.setKeys(props.keys);
+    if (props.bezierCurveEase) {
+      let bezierEase = new BABYLON.BezierCurveEase(...props.bezierCurveEase);
+      animationBox.setEasingFunction(bezierEase);
+    }
 
-    keys.push({
-      frame: 100,
-      value: 1
-    });
-    animationBox.setKeys(keys);
     animation.renderer = animationBox;
     animation.scene = scene;
     return animation;
@@ -27,7 +34,12 @@ export class BabylonAnimation extends BabylonComponent {
 
   set parent(parent) {
     parent.animations.push(this.renderer);
-    let anim = this.scene.beginAnimation(parent, 0, 100, true, 4);
-    console.log(anim);
+    this._parent = parent;
+    if (this.props.playOnStart)
+      this.scene.beginDirectAnimation(parent, [this.renderer], 0, 100, !!this.props.loop, this.props.scaleSpeed || 1);
+  }
+
+  play() {
+    this.scene.beginDirectAnimation(this._parent, [this.renderer], 0, 100, !!this.props.loop, this.props.scaleSpeed || 1);
   }
 }

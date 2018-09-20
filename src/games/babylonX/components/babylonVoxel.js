@@ -1,7 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import {BabylonComponent} from "./babylonComponent";
 import {fullColorHex} from "../../utils";
-import {MeshBox} from "../index";
 import React from "react";
 import {BabylonMeshBox} from "./babylonMeshBox";
 import {hexToColor3} from "../utils";
@@ -37,9 +36,16 @@ export class BabylonVoxel extends BabylonComponent {
     });
     spsVoxel.initParticles();
     spsVoxel.setParticles();
-    let pivotAt = new BABYLON.Vector3(1, -1.5, 1);
+    let pivotAt = new BABYLON.Vector3(0, 5, 0);
     let translation = mesh.position.subtract(pivotAt);
     mesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
+    let greenMat = new BABYLON.StandardMaterial("greenMat", scene);
+    greenMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    greenMat.alpha = 0.3;
+    let fakeShadow = BABYLON.MeshBuilder.CreateGround("fakeShadow", {width: 2, height: 2}, scene);
+    fakeShadow.position.y = -1.55;
+    fakeShadow.material = greenMat;
+    fakeShadow.parent = mesh;
     return mesh;
   }
 }

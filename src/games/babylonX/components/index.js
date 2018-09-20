@@ -9,6 +9,8 @@ import {BabylonVoxel, BabylonVoxelBuilder} from "./babylonVoxel";
 import {BabylonHemisphericLight} from "./babylonHemisphericLight";
 import {BabylonDirectionLight} from "./babylonDirectionLight";
 import {BabylonAnimation} from "./babylonAnimation";
+import {BabylonPlane} from "./babylonPlane";
+import {BabylonSkybox} from "./babylonSkybox";
 const TYPES = {
   MESH_SPHERE: 'MESH_SPHERE',
   MESH_BOX: 'MESH_BOX',
@@ -20,7 +22,9 @@ const TYPES = {
   VOXEL: 'VOXEL',
   HEMISPHERIC_LIGHT: 'HEMISPHERIC_LIGHT',
   DIRECTION_LIGHT: 'DIRECTION_LIGHT',
-  ANIMATION: 'ANIMATION'
+  ANIMATION: 'ANIMATION',
+  PLANE: 'PLANE',
+  SKY_BOX: 'SKYBOX'
 };
 
 let mappingComponents = {};
@@ -35,6 +39,8 @@ mappingComponents[TYPES.VOXEL] = BabylonVoxel;
 mappingComponents[TYPES.HEMISPHERIC_LIGHT] = BabylonHemisphericLight;
 mappingComponents[TYPES.DIRECTION_LIGHT] = BabylonDirectionLight;
 mappingComponents[TYPES.ANIMATION] = BabylonAnimation;
+mappingComponents[TYPES.PLANE] = BabylonPlane;
+mappingComponents[TYPES.SKY_BOX] = BabylonSkybox;
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);
