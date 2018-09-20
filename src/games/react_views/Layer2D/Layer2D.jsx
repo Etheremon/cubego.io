@@ -44,10 +44,12 @@ export class Layer2D extends Component {
 
 Layer2D.propTypes = {
   layer: PropTypes.object,
-  onFrameChange: PropTypes.func,
+  tools: PropTypes.object,
+  onCellClicked: PropTypes.func,
 };
 
 Layer2D.defaultProps = {
   layer: null,
-  onFrameChange: () => {},
+  tools: {},
+  onCellClicked: () => {},
 };

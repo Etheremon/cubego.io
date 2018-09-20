@@ -1,6 +1,8 @@
 
 export const IsIterable = (obj) => (obj && (typeof obj[Symbol.iterator] === 'function'));
 
+export const IsArray = (arr) => (Array.isArray(arr));
+
 export const IsEqual = (a, b) => {
   if (!IsIterable(a) && !IsIterable(b)) return a === b;
   if (!IsIterable(a) || !IsIterable(b)) return false;
@@ -16,4 +18,17 @@ export const IsEqual = (a, b) => {
   }
 
   return true;
+};
+
+export const CloneDeep = (a) => {
+  if (!IsIterable(a)) return a;
+
+  let res = IsArray(a) ? [] : {};
+  let aProps = Object.getOwnPropertyNames(a);
+  for (let i = 0; i < aProps.length; i++) {
+    let propName = aProps[i];
+    res[propName] = CloneDeep(a[propName]);
+  }
+
+  return res;
 };

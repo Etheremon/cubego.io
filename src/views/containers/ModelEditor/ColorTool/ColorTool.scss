@@ -1,0 +1,17 @@
+@import '../../../styles/mixins';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
+
+
+.color-tool {
+
+  .color-tool__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .color-tool__cell {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+}

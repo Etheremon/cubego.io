@@ -31,13 +31,6 @@ body {
   .page-container-wrapper {
     min-height: 100%;
 
-    .page-wrapper {
-      //position: relative;
-      min-height: 100%;
-      padding-top: 80px;
-      background-size: cover;
-    }
-
     .page-container {
       //position: relative;
       min-height: 100%;
@@ -89,13 +82,6 @@ a {
   &:hover {
     color: #5195ca;
   }
-}
-
-.ui.container.text {
-  width: 892px !important;
-  padding: 0 16px;
-  max-width: 100% !important;
-  margin: 0 auto !important;
 }
 
 
