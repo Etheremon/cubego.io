@@ -14,23 +14,16 @@ export class Layer2D extends Component {
     super(props);
     this.state = {
     };
-
-    this.onFrameChange = this.onFrameChange.bind(this);
   }
 
   componentDidMount() {
-    // this.paint = PixiX.fiberRender(<PaintScene data={this.props.layer} changeFrame={this.onFrameChange}/>,
-    //   document.getElementById('canvas2D'));
+    this.paint = PixiX.fiberRender(<PaintScene data={this.props.layer}/>, document.getElementById('canvas2D'));
   }
 
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(this.props.layer, nextProps.layer)) {
       // this.paint.doSomeUpdates(nextProps.layer)
     }
-  }
-
-  onFrameChange(data) {
-    this.props.onFrameChange && this.props.onFrameChange(data);
   }
 
   render() {

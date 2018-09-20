@@ -14,15 +14,17 @@ class VoxViewer extends Component {
     if (!voxelData.voxels) {
       return [];
     }
+
     let elements = [];
     voxelData.voxels.forEach((voxel) => {
       let color = fullColorHex(voxelData.palette[voxel.colorIndex]);
-      elements.push(<MeshBox size={SIZE} position={{
-        x: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
-        y: -SIZE * voxelData.size.z / 2 + SIZE * voxel.z,
-        z: SIZE * voxelData.size.x / 2 - SIZE * voxel.x
-      }}
-                               key={`${voxelData.size.x} - ${voxelData.size.y} - ${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
+      elements.push(<MeshBox size={SIZE}
+                             position={{
+                               x: -SIZE * voxelData.size.x / 2 + SIZE * voxel.x,
+                               y: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
+                               z: SIZE * voxelData.size.z / 2 - SIZE * voxel.z
+                             }}
+                             key={`${voxelData.size.x} - ${voxelData.size.y} - ${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
                              color={color}/>)
     });
     return elements;
@@ -34,7 +36,7 @@ class VoxViewer extends Component {
 
   setNewVoxelData(voxelData) {
     this.setState({
-      data: voxelData
+      data: voxelData || {}
     })
   }
 

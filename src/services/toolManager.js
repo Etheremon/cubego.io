@@ -7,6 +7,9 @@ let emptyModel = {};
 export class ToolManager {
   constructor(props) {
     this.tools = {};
+    this._model = undefined;
+    this._layer = undefined;
+    this._numLayers = 0; 
     this.drawMode = null;
     this.history = {
       idx: props.models.length - 1,
@@ -24,27 +27,48 @@ export class ToolManager {
     this.onCellClicked = this.onCellClicked.bind(this);
     this.addModel = this.addModel.bind(this);
     this.getToolValue = this.getToolValue.bind(this);
+    this.updateCurrent = this.updateCurrent.bind(this);
+
+    this.updateCurrent();
   }
 
   addModel({model}) {
     this.history.idx += 1;
     this.history.models[this.history.idx] = CloneDeep(model);
+
+    this.updateCurrent();
   }
 
   onToolClicked({key, value}) {
     if (!this.tools[key]) {
       console.warn("Unknown tool!");
-    } else if (this.tools[key].type === ToolTypes.mode) {
-      if (value === true) this.drawMode = this.tools[key];
-    } else if (this.tools[key].type === ToolTypes.effect) {
-      // TODO: check if the value is valid
-      this.tools[key].value = value;
-    } else if (this.tools[key].type === ToolTypes.action) {
-      this.tools[key].onToolClicked({
-        model: this.history.models[this.history.idx],
-        effects: this.tools.filter(tool => tool.types === ToolTypes.effect),
-        history: this.history,
+      return;
+    }
+
+    // TODO: check if the value is valid
+    // Case All Tools (includes effects)
+    this.tools[key].value = value;
+
+    // Case Tool Mode
+    if (this.tools[key].type === ToolTypes.mode) {
+      // Only 1 mode at a time
+      Object.keys(this.tools).forEach((key) => {
+        if (this.tools[key].type === ToolTypes.mode)
+          this.tools[key].value = false;
       });
+
+      // Set mode
+      this.drawMode = this.tools[key];
+      this.tools[key].value = true;
+    }
+
+    // Case Tool Action
+    if (this.tools[key].type === ToolTypes.action) {
+      this.tools[key].onToolClicked({
+        toolManager: this,
+        value: value,
+      });
+      this.updateCurrent();
     }
   }
 
@@ -63,8 +87,27 @@ export class ToolManager {
     }
   }
 
+  updateCurrent() {
+    this._model = this.history.models[this.history.idx];
+
+
+    console.log(this.tools, this._model);
+
+    this._numLayers = 10;
+
+    this._layer = null;
+  }
+
   get model() {
-    return this.history.models[this.history.idx];
+    return this._model;
+  }
+
+  get layer() {
+    return this._layer;
+  }
+  
+  get numLayers() {
+    return this._numLayers;
   }
 
   getToolValue(toolKey) {
@@ -73,9 +116,9 @@ export class ToolManager {
 }
 
 export const ToolTypes = {
-  mode: 'mode',       // draw mode
-  effect: 'effect',   // effects
-  action: 'action',   // single-used actions
+  mode: 'mode',       // draw mode => this does not affect/change 3D model & 2D layer.
+  effect: 'effect',   // effects  => this does not affect/change 3D model & 2D layer.
+  action: 'action',   // single-used actions => this will affect/change either 3D model / 2D layer
 };
 
 export const Tools = {};
@@ -84,6 +127,7 @@ Tools.color = ({key='color', value=EDITOR_COLORS[0]}) => ({
   key,
   value,
   type: ToolTypes.effect,
+  options: EDITOR_COLORS,
 });
 
 Tools.draw = ({key='draw', value=true}) => ({
@@ -107,25 +151,53 @@ Tools.erase = ({key='erase', value=false}) => ({
 Tools.clear = ({key='clear'}) => ({
   key,
   type: ToolTypes.action,
-  onToolClicked: ({model, effects, history}) => {
-    history.idx += 1;
-    history.models[history.idx] = CloneDeep(emptyModel);
-    history.models.length = history.idx+1;
+  onToolClicked: ({toolManager}) => {
+    toolManager.history.idx += 1;
+    toolManager.history.models[toolManager.history.idx] = CloneDeep(emptyModel);
+    toolManager.history.models.length = toolManager.history.idx+1;
   },
 });
 
 Tools.undo = ({key='undo'}) => ({
   key,
   type: ToolTypes.action,
-  onToolClicked: ({model, effects, history}) => {
-    if (history.idx > 0) history.idx -= 1;
+  onToolClicked: ({toolManager}) => {
+    if (toolManager.history.idx > 0) toolManager.history.idx -= 1;
   },
 });
 
 Tools.redo = ({key='redo'}) => ({
   key,
   type: ToolTypes.action,
-  onToolClicked: ({model, effects, history}) => {
-    if (history.idx < history.models.length-1) history.idx += 1;
+  onToolClicked: ({toolManager}) => {
+    if (toolManager.history.idx < toolManager.history.models.length-1)
+      toolManager.history.idx += 1;
   },
+});
+
+Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => ({
+  key,
+  value,
+  type: ToolTypes.action,
+  options: [{
+    key: 'front',
+    label: 'front_view',
+  }, {
+    key: 'side',
+    label: 'side_view',
+  }, {
+    key: 'top',
+    label: 'top_view',
+  }],
+  onToolClicked: ({model, layer, effects, history, value}) => {
+
+  },
+});
+
+Tools.layerIndex = ({key='layer-index', value=0}) => ({
+  key,
+  value,
+  type: ToolTypes.action,
+  onToolClicked: ({toolManager}) => {
+  }
 });

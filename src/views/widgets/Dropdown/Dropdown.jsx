@@ -69,7 +69,7 @@ class Dropdown extends React.Component {
         <div className={`widget__dropdown__list ${this.state.open ? 'open' : ''}`}>
           {!enableSearch ? null :
             <div className={'widget__dropdown__search widget__dropdown__item'}>
-              <Icon name={'search'}/>
+              <i className="fas fa-search"/>
               <input type="text" placeholder={`${_t('txt.search')}...`} value={this.state.searchValue} onChange={this.handleOnSearchInputChange}/>
             </div>
           }

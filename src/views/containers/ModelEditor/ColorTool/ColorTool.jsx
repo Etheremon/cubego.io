@@ -22,14 +22,19 @@ class _ColorTool extends React.Component {
   }
 
   onColorChange(c) {
-
+    this.props.onChange && this.props.onChange(c);
   }
 
   render() {
+    let {value, options} = this.props;
+
     return (
       <div className={'color-tool'}>
+        <div className={'color-tool__cell'} style={{backgroundColor: value.hex}}>
+        </div>
+
         <div className={'color-tool__list'}>
-          {EDITOR_COLORS.map((c, idx) => (
+          {options.map((c, idx) => (
             <div className={'color-tool__cell'} style={{backgroundColor: c.hex}} key={idx}
                  onClick={() => {this.onColorChange(c)}}>
             </div>
