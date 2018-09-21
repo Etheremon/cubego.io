@@ -4,6 +4,7 @@ import BabylonX from "../../babylonX";
 import VoxViewer from "../../3d/VoxViewer.jsx";
 import PropTypes from "prop-types";
 import {IsEqual} from "../../../utils/objUtils";
+import {ReformatModel} from "../../../utils/modelUtils";
 
 require("style-loader!./Model3D.scss");
 
@@ -26,7 +27,7 @@ export class Model3D extends Component {
   render() {
     return (
       <div className={'model3D'}>
-        <canvas id='canvas3D' width="640" height="480"/>
+        <canvas id='canvas3D' ref={'canvas'} width="640" height="480"/>
       </div>
     );
   }

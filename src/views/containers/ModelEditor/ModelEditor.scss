@@ -4,16 +4,24 @@
 
 
 .model-editor {
-  display: flex;
-  @include mobile {
-    flex-wrap: wrap;
+
+  .model-editor__canvas {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    @include mobile {
+      flex-wrap: wrap;
+    }
   }
 
   .model-editor__left {
-    width: 600px;
-    max-width: 100%;
+    width: 50%;
     flex-direction: column;
     justify-content: space-between;
+    flex-shrink: 0;
+    @include mobile {
+      width: 100%;
+    }
   }
   .model-editor__right {
     flex-grow: 1;
