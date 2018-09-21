@@ -17,12 +17,12 @@ export class Layer2D extends Component {
   }
 
   componentDidMount() {
-    this.paint = PixiX.fiberRender(<PaintScene data={this.props.layer}/>, document.getElementById('canvas2D'));
+    this.paint = PixiX.fiberRender(<PaintScene layer={this.props.layer}/>, document.getElementById('canvas2D'));
   }
 
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(this.props.layer, nextProps.layer)) {
-      // this.paint.doSomeUpdates(nextProps.layer)
+      this.paint.updateLayer(nextProps.layer)
     }
   }
 

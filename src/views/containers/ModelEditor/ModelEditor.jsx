@@ -15,6 +15,7 @@ import {ToolManager, Tools} from "../../../services/toolManager";
 import {CloneDeep} from "../../../utils/objUtils";
 import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
 import {RangeInput} from "../../widgets/RangeInput/RangeInput.jsx";
+import * as modelUtils from "../../../utils/modelUtils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -45,12 +46,13 @@ class _ModelEditor extends React.Component {
   componentDidMount() {
     let parser = new window.vox.Parser();
     parser.parse(require('../../../games/data/3.vox')).then((voxelData) => {
-      this.toolManager.addModel({model: voxelData});
+      this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
       this.forceUpdate();
     });
   }
 
   onToolChange(key, value) {
+    console.log("on Tool Change", key, value);
     this.toolManager.onToolClicked({key, value});
     this.forceUpdate();
   }
@@ -84,7 +86,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__right'}>
               <div className={'model-editor__2d'}>
-                <Layer2D/>
+                <Layer2D layer={this.toolManager.layer}/>
               </div>
               <div className={'model-editor__layer-tool'}>
                 <Dropdown list={this.tools.view2D.options.map(option => ({
@@ -98,7 +100,7 @@ class _ModelEditor extends React.Component {
 
                 <RangeInput valMin={1} valMax={this.toolManager.numLayers} valSteps={1}
                             value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
-                            onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+                            onInput={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
                 />
               </div>
             </div>

@@ -66,6 +66,7 @@ export class ToolManager {
     if (this.tools[key].type === ToolTypes.action) {
       this.tools[key].onToolClicked({
         toolManager: this,
+        key: key,
         value: value,
       });
       this.updateCurrent();
@@ -89,13 +90,24 @@ export class ToolManager {
 
   updateCurrent() {
     this._model = this.history.models[this.history.idx];
+    if (!this._model) return null;
 
+    let x = this.tools['view-2d'].x;
+    let y = this.tools['view-2d'].y;
+    let z = this.tools['view-2d'].z;
 
-    console.log(this.tools, this._model);
+    this._numLayers = this._model.size[z];
+    let layerIdx = Utils.BoundVal(this.tools['layer-index'].value, 1, this._numLayers);
+    this.tools['layer-index'].value = layerIdx;
 
-    this._numLayers = 10;
+    this._layer = {
+      size: this._model.size,
+      palette: this._model.palette,
+      voxels: this._model.voxels.filter(cell => cell[z] === layerIdx-1),
+      x, y, z
+    };
 
-    this._layer = null;
+    console.log(this._model, this._layer);
   }
 
   get model() {
@@ -189,15 +201,30 @@ Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => (
     key: 'top',
     label: 'top_view',
   }],
-  onToolClicked: ({model, layer, effects, history, value}) => {
-
-  },
+  x: 'x',
+  y: 'y',
+  z: 'z',
+  onToolClicked: ({toolManager, key, value}) => {
+    if (value.key === 'front') {
+      toolManager.tools[key].x = 'x';
+      toolManager.tools[key].y = 'y';
+      toolManager.tools[key].z = 'z';
+    } else if (value.key === 'side') {
+      toolManager.tools[key].x = 'z';
+      toolManager.tools[key].y = 'y';
+      toolManager.tools[key].z = 'x';
+    } else if (value.key === 'top') {
+      toolManager.tools[key].x = 'x';
+      toolManager.tools[key].y = 'z';
+      toolManager.tools[key].z = 'y';
+    }
+  }
 });
 
 Tools.layerIndex = ({key='layer-index', value=0}) => ({
   key,
   value,
   type: ToolTypes.action,
-  onToolClicked: ({toolManager}) => {
+  onToolClicked: ({toolManager, value}) => {
   }
 });

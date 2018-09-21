@@ -15,6 +15,7 @@ class _RangeInput extends React.Component {
 
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onInput = this.onInput.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,11 @@ class _RangeInput extends React.Component {
 
 
   onClick(idx, onClickFunc) {
+  }
+
+  onInput(e) {
+    this.setState({value: parseFloat(e.target.value)});
+    this.props.onInput && this.props.onInput(parseFloat(e.target.value));
   }
 
   onChange(e) {
@@ -41,7 +47,7 @@ class _RangeInput extends React.Component {
         <label>{label}</label>
         <p>Min: {valMin}, Max: {valMax}, Current: {currentVal}</p>
         <input type="range" id="cowbell" min={valMin} max={valMax} value={currentVal} step={valSteps}
-               onInput={this.onChange} onChange={this.onChange}
+               onInput={this.onInput} onChange={this.onChange}
         />
       </div>
     )
@@ -67,6 +73,7 @@ _RangeInput.propTypes = {
   value: PropTypes.number,
   defaultValue: PropTypes.number,
   onChange: PropTypes.func,
+  onInput: PropTypes.func,
 };
 
 const mapStateToProps = (store) => ({

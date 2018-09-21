@@ -23,7 +23,7 @@ const prepareUpdate = (pixiElement, type, oldProps, newProps, rootContainerInsta
 };
 
 const commitUpdate = (instance, updatePayload, type, lastRawProps, nextRawProps, internalInstanceHandle) => {
-  console.log(updatePayload);
+  // console.log(updatePayload);
   loggerFnc('commitUpdate')();
   const updatedPropKeys = including(updatePayload.filter((item, i) => i % 2 === 0));
   const oldProps = filterByKey(lastRawProps, updatedPropKeys);
