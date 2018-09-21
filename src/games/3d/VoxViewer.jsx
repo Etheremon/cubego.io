@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ArcRotateCamera, Axis, HemisphericLight, MeshBox, MeshContainer, PointLight} from '../babylonX';
 import {fullColorHex} from "../utils";
+import * as Utils from "../../utils/utils";
 
 const SIZE = 0.5;
 
@@ -16,8 +17,8 @@ class VoxViewer extends Component {
     }
 
     let elements = [];
-    voxelData.voxels.forEach((voxel) => {
-      let color = fullColorHex(voxelData.palette[voxel.colorIndex]);
+    Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
+      let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
       elements.push(<MeshBox size={SIZE}
                              position={{
                                x: -SIZE * voxelData.size.x / 2 + SIZE * voxel.x,

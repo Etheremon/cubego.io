@@ -77,14 +77,15 @@ export class ToolManager {
     if (!this.drawMode) {
       console.warn("no draw mode!");
     } else {
+
       let newModel = this.drawMode.onCellClicked({
-        cell, cells,
-        effects: this.tools.filter(tool => tool.types === ToolTypes.effect),
-        models: this.history.models[this.history.idx],
+        tools: this.tools, model: this._model, cell, cells,
       });
 
       this.history.idx += 1;
       this.history.models[this.history.idx] = newModel;
+
+      this.updateCurrent();
     }
   }
 
@@ -103,11 +104,10 @@ export class ToolManager {
     this._layer = {
       size: this._model.size,
       palette: this._model.palette,
-      voxels: this._model.voxels.filter(cell => cell[z] === layerIdx-1),
+      voxels: Utils.ObjFilter(this._model.voxels, cell => cell[z] === layerIdx-1),
+      idx: layerIdx-1,
       x, y, z
     };
-
-    console.log(this._model, this._layer);
   }
 
   get model() {
@@ -146,8 +146,13 @@ Tools.draw = ({key='draw', value=true}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({model, cell, effects}) => {
-    return CloneDeep(model);
+  onCellClicked: ({tools, model, cell}) => {
+    let newModel = CloneDeep(model);
+    newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+      ...cell,
+      color: CloneDeep(tools.color.value),
+    };
+    return newModel;
   },
 });
 

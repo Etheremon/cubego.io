@@ -8,12 +8,17 @@ export const ReformatModel = (model) => {
     },
   };
 
-  newModel.voxels = model.voxels.map(cell => ({
-    ...cell,
-    x: cell.y,
-    y: cell.z,
-    z: cell.x,
-  }));
+  newModel.voxels = {};
+  model.voxels.forEach(cell => {
+    let v = {
+      ...cell,
+      x: cell.y,
+      y: cell.z,
+      z: cell.x,
+      color: model.palette[cell['colorIndex']],
+    };
+    newModel.voxels[`${v.x}-${v.y}-${v.z}`] = v;
+  });
 
   return newModel;
 };

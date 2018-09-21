@@ -20,6 +20,7 @@ export class Model3D extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(this.props.model, nextProps.model)) {
+      console.log("setting new model", nextProps.model);
       this.voxel.setNewVoxelData(nextProps.model);
     }
   }
