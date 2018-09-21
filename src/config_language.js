@@ -41,6 +41,7 @@ let selectedLan = Languages.map(lan => lan.code).includes(browserLan) ? browserL
 
 export const LanguageActions = async () => { 
   let localization = await fetchLocalization(); 
+
   return [
   initialize(Languages, {
     defaultLanguage: LS.GetItem(LS.Fields.language) || selectedLan,

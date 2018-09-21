@@ -15,13 +15,19 @@ import { Container } from '../../widgets/Container/Container.jsx';
 import { HeaderHighlight } from '../../widgets/Header/Header.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
 import {URLS} from "../../../utils/constants";
+import FeatureCard from '../../components/cards/FeatureCard/FeatureCard.jsx';
+import Carousel from '../../widgets/Carousel/Carousel.jsx';
+import { Image } from '../../components/Image/Image.jsx';
 
 require("style-loader!./Home.scss");
-
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      email: '',
+    }
   }
 
   componentDidMount() {
@@ -56,6 +62,20 @@ class HomePage extends React.Component {
   render() {
 
     const { _t, pathName } = this.props;
+    const features = [{title: 'txt.build_hero', desc: 'desc.build_hero'},
+                      {title: 'txt.auotion', desc: 'desc.auotion'},
+                      {title: 'txt.trading', desc: 'desc.trading'},
+                      {title: 'txt.battle', desc: 'desc.battle'},
+                      {title: 'txt.build_hero', desc: 'desc.build_hero'},
+                      {title: 'txt.auotion', desc: 'desc.auotion'},
+                      {title: 'txt.trading', desc: 'desc.trading'},
+                      {title: 'txt.battle', desc: 'desc.battle'},]
+    const guildGame = [
+      <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>,
+      <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>,
+      <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>,
+    ]
+    
 
     return (
       <div className="page-container">
@@ -80,10 +100,10 @@ class HomePage extends React.Component {
             <div className="home__intro-board">
               <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
             </div>
-            <div className="home__intro-voxel">
-              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f4090555468161.598573e282a48.png" />
-              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f4090555468161.598573e282a48.png" />
-              <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f4090555468161.598573e282a48.png" />
+            <div className="home__intro-cubego">
+              <img src={require('../../../shared/img/assets/model_example_1.png')} />
+              <img src={require('../../../shared/img/assets/model_example_2.png')} />
+              <img src={require('../../../shared/img/assets/model_example_3.png')} />
             </div>
           </div>
 
@@ -93,57 +113,61 @@ class HomePage extends React.Component {
             <Text className={'home_modes-title'} type={Text.types.H2} children={_t('txt.how_to_play')} />
 
             <div className="home__mode-container">
-
-              <div className="home__mode">
-                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
-                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
-              </div>
-              <div className="home__mode">
-                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
-                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
-              </div>
-              <div className="home__mode">
-                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
-                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
-              </div>
-              <div className="home__mode">
-                <img src="https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg"/>
-                <Text type={Text.types.H3} children={'The standard Lorem Ipsum passage'} />
-                <p>{'There is no one who loves pain itself, who seeks after it'}</p>
-              </div>
-
+              <Carousel list={guildGame} />
             </div>
           </div>
 
           {/* end home__modes */}
 
-          <div className="home__section home__game-play" id={'game-play'}>
-            <Container className={'home__game-play__container'}>
-              <div className={'home__game-play__img'}>
-                <img src={'http://i61.tinypic.com/wjb3gg.png'}/>
-              </div>
-              <div className={'home__game-play__info'}>
-                <div className={'home__game-play__header-text'}>
-                  <p>{_t('txt.game_play_text')}</p>
-                </div>
-                <p>{_t('txt.game_play_desc')}</p>
-              </div>
-            </Container>
+          <div className="home__section home__game-detail" id={'game-detail'}>
 
-            <Container className={'home__game-play__author'}>
-              <div className={'home__game-play__info'}>
-                <div className={'home__game-play__header-text'}>
-                  <p>{_t('txt.game_play_author')}</p>
+            <div className={'home__game-detail__copyright'}>
+              <div className={'home__game-detail__copyright-img'}>
+                <img src={require('../../../shared/img/assets/model_example_1.png')}/>
+              </div>
+              <div className={'home__game-detail__copyright-info'}>
+                <Image img={'padding_yellow'} className={'copyright__padding'} />
+                <div className={'home__game-detail__copyright-text'}>
+                  <p>{_t('txt.game_detail_copyright')}</p>
                 </div>
-                <p>{_t('txt.game_play_author-desc')}</p>
+                <p>{_t('txt.game_detail_copyright_desc')}</p>
+                <ButtonNew className={'home__game-detail__copyright-btn'} label={_t('txt.read_more')} onClick={() => {
+                  
+                }}/>
               </div>
-              <div className={'home__game-play__author-img'}>
-                <img src={'http://i61.tinypic.com/wjb3gg.png'}/>
+            </div>
+
+            <div className={'home__game-detail__index'}>
+              <div className={'home__game-detail__index-info'}>
+                <Image img={'padding_blue'} className={'index__padding'} />
+                <div className={'home__game-detail__index-text'}>
+                  <p>{_t('txt.game_detail_index')}</p>
+                </div>
+                <p>{_t('txt.game_play_index_desc')}</p>
+                <ButtonNew className={'home__game-detail__index-btn'} label={_t('txt.read_more')} onClick={() => {
+                  
+                }}/>
               </div>
-            </Container>
+              <div className={'home__game-detail__index-img'}>
+                <img src={require('../../../shared/img/assets/model_example_2.png')}/>
+              </div>
+            </div>
+
+            <div className={'home__game-detail__battle'}>
+              <div className={'home__game-detail__battle-img'}>
+                <img src={require('../../../shared/img/assets/model_example_3.png')}/>
+              </div>
+              <div className={'home__game-detail__battle-info'}>
+                <Image img={'padding_red'} className={'battle__padding'} />
+                <div className={'home__game-detail__battle-text'}>
+                  <p>{_t('txt.game_detail_battle')}</p>
+                </div>
+                <p>{_t('txt.game_detail_battle_desc')}</p>
+                <ButtonNew className={'home__game-detail__battle-btn'} label={_t('txt.read_more')} onClick={() => {
+                  
+                }}/>
+              </div>
+            </div>
           </div>
 
           {/* end home__game-play */}
@@ -160,7 +184,40 @@ class HomePage extends React.Component {
           </div>
           {/* end home__partnership */}
 
+          <div className="home__section home__features" id={'features'}>
+            <Text className={'home__features-title'} type={Text.types.H2} children={_t('txt.features')} />
+            <div className="home__features-cards">
+              {features.map((ft,index) => {
+                return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
+              } )}
+            </div>
+          </div>
+
+          {/* end home__features */}
+
+          <div className="home__section home__subscription">
+            <HeaderHighlight>
+              <b>{_t('txt.get_the_latest_news')}</b>
+            </HeaderHighlight>
+
+            <Container className={'home__subscription-container'}>
+              <div className={'home__subscription-img'}>
+                <img src={require('../../../shared/img/assets/model_example_2.png')}/>
+              </div>
+              <div className={'home__subscription-main'}>
+                <p>{_t('txt.get_the_latest_news_desc')}</p>
+                <input type="text" className={'home__subscription-input'} placeholder={_t('txt.your_email_address')} value={this.state.email} />
+                <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('txt.subscribe')} onClick={() => {
+                  
+                }}/>
+              </div>
+            </Container>
+          </div>
+
+          {/* end home__subscription */}
+
         </div>
+
         <Footer />
       </div>
     )
@@ -168,7 +225,8 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = (store, props) => {
-  let pathName = props.pathname;
+  let pathName = props.location.pathname;
+
   return {
     pathName,
     _t: getTranslate(store.localeReducer),

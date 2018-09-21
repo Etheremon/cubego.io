@@ -16,39 +16,40 @@ import {URLS} from "../../../../utils/constants";
 import Loading from "../../../widgets/Loading/Loading.jsx";
 import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
+import { Icon } from "../../Icon/Icon.jsx";
 
 require("style-loader!./Navbar.scss");
 
 const NavbarList = {
   default: [
-    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
-    {link: `/${URLS.INTRO}`, text: 'txt.intro'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
-    {link: `/${URLS.STORE}`, text: 'txt.store'},
-    {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
+    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
+    {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
+    {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
   ],
 
   home: [
     // {link: '/#intro', text: 'txt.intro'},
-    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
-    {link: `/${URLS.INTRO}`, text: 'txt.intro'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
-    {link: `/${URLS.STORE}`, text: 'txt.store'},
-    {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
+    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
+    {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
+    {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
   ],
 
   mobile: [
-    {text: 'txt.intro', group: [
-      {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us'},
+    {text: 'txt.intro', img: 'icon_introduce_game', group: [
+      {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
+      {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
     ]},
-    {text: 'txt.gameplay', group: [
-      {link: `/${URLS.INTRO}`, text: 'txt.intro'},
-      {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero'},
-      {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heros'},
-      {link: `/${URLS.STORE}`, text: 'txt.store'},
-      {link: `/${URLS.BATTLE}`, text: 'txt.battle'},
+    {text: 'txt.gameplay', img: 'icon_build_hero', group: [
+      {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
+      {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
+      {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
+      {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
     ]}
   ]
 };
@@ -116,6 +117,7 @@ class Navbar extends React.Component {
   }
 
   render() {
+
     let {navbarType, _t, fixed} = this.props;
     let {userId, userInfo, currentLanguage} = this.props.store;
 
@@ -141,8 +143,7 @@ class Navbar extends React.Component {
           <div className={'navbar__item-group logo'}>
             <div className={'navbar__item'}>
               <Link smooth to="/#home">
-                <Image img={'logo_voxl'}/>
-                <p className={'navbar__logo-text'}>Voxel</p>
+                <Image img={'logo_cubego'}/>
               </Link>
             </div>
           </div>
@@ -154,11 +155,11 @@ class Navbar extends React.Component {
                   <div className={`navbar__item m--mobile-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)}>
                     {item.link[0] === '/'
                       ? <Link smooth to={item.link}>
-                          {_t(item.text)}
+                          <span><Image img={`${item.img}`}/></span> 
                         </Link>
                       : <a href={_t(item.link)} target={'_blank'}>
-                        {_t(item.text)}
-                      </a>
+                          <span><Image img={`${item.img}`}/></span> 
+                        </a>
                     }
                   </div>
                 );
@@ -168,14 +169,14 @@ class Navbar extends React.Component {
                     content:
                       ddItem.link[0] === '/'
                         ? <Link smooth to={ddItem.link} className={'navbar__text'} key={idx}>
-                            <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
+                            <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${ddItem.img}`}/></span>
                           </Link>
                         : <a href={_t(ddItem.link)} className={'navbar__text'} key={idx} target={'_blank'}>
-                            <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
+                            <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${ddItem.img}`}/></span>
                           </a>
                   })))}>
-                    <div className={`navbar__item ${this.state.selectedNavItem === item.link ? 'active' : ''}`} onClick={() => this.handleNavItemSelect(item.link)}>
-                      {_t(item.text)}
+                    <div className={`navbar__item`}>
+                      <span><Image img={`${item.img}`}/> <Icon name={'angle down icon'}/></span>
                     </div>
                   </Dropdown>
                 )
@@ -184,13 +185,13 @@ class Navbar extends React.Component {
             {NavbarList[navbarType].map((item, idx) => {
               if (item.link)
                 return (
-                  <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)}>
+                  <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)} tooltip={_t(item.text)} tooltip-position={'buttom'}>
                     {item.link[0] === '/'
                       ? <Link smooth to={item.link}>
-                          <span className={item.highlight ? 'm--noti' : ''}>{_t(item.text)}</span>
+                          <span className={item.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/></span>
                         </Link>
                       : <a href={_t(item.link)} target={'_blank'}>
-                          <span className={item.highlight ? 'm--noti' : ''}>{_t(item.text)}</span>
+                          <span className={item.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/></span>
                         </a>
                     }
                   </div>
@@ -201,14 +202,14 @@ class Navbar extends React.Component {
                     content:
                       ddItem.link[0] === '/'
                         ? <Link smooth to={ddItem.link} className={'navbar__text'} key={idx}>
-                            <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
+                            <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/></span>
                           </Link>
                         : <a href={_t(ddItem.link)} className={'navbar__text'} key={idx} target={'_blank'}>
-                            <span className={ddItem.highlight ? 'm--noti' : ''}>{_t(ddItem.text)}</span>
+                            <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/></span>
                           </a>
                   })))}>
-                    <div className={`navbar__item ${this.state.selectedNavItem === item.link ? 'active' : ''}`} onClick={() => this.handleNavItemSelect(item.link)}>
-                      <span className={item.highlight ? 'm--noti' : ''}>{_t(item.text)}</span>
+                    <div className={`navbar__item`}>
+                      <span className={item.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/> <Icon name={'angle down icon'}/></span>
                     </div>
                   </Dropdown>
                 )
@@ -243,10 +244,10 @@ class Navbar extends React.Component {
             <div className={'navbar__item'}>
 
               <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
-                content: <span className={'navbar__text'}> {lan.code}</span>,
+                content: <span className={'navbar__text'}> <Icon name={lan.country + ' flag'}/> {lan.code}</span>,
                 onClick: () => {this.handleLanguageChange(lan.code)},
               })))}>
-                <span> {currentLanguage.code}</span>
+                <span><Icon name={currentLanguage.country + ' flag'}/>  {currentLanguage.code}</span>
               </Dropdown>
             </div>
 

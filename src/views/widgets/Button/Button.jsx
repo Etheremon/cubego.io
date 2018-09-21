@@ -63,6 +63,7 @@ ButtonNew.colors = {
   BLUE: 'blue',
   GREY: 'grey',
   NEON: 'neon',
+  GREEN: 'green',
 };
 ButtonNew.sizes = {
   SMALL: 'small',
