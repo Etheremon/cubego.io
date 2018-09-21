@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from 'prop-types';
-import {Icon} from "semantic-ui-react";
 import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
 

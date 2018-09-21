@@ -41,6 +41,7 @@ class _ModelEditor extends React.Component {
     });
 
     this.onToolChange = this.onToolChange.bind(this);
+    this.onCellClicked = this.onCellClicked.bind(this);
   }
 
   componentDidMount() {
@@ -52,8 +53,12 @@ class _ModelEditor extends React.Component {
   }
 
   onToolChange(key, value) {
-    console.log("on Tool Change", key, value);
     this.toolManager.onToolClicked({key, value});
+    this.forceUpdate();
+  }
+
+  onCellClicked(cell) {
+    this.toolManager.onCellClicked({cell});
     this.forceUpdate();
   }
 
@@ -73,7 +78,7 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__canvas'}>
             <div className={'model-editor__left'}>
               <div className={'model-editor__3d'}>
-                <Model3D model={this.toolManager.model}/>
+                <Model3D model={this.toolManager.model} onCellClicked={this.onCellClicked}/>
               </div>
 
               <div className={'model-editor__colors'}>
@@ -86,7 +91,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__right'}>
               <div className={'model-editor__2d'}>
-                <Layer2D layer={this.toolManager.layer}/>
+                <Layer2D layer={this.toolManager.layer} onCellClicked={this.onCellClicked}/>
               </div>
               <div className={'model-editor__layer-tool'}>
                 <Dropdown list={this.tools.view2D.options.map(option => ({

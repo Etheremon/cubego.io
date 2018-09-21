@@ -1,0 +1,65 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.widget__carousel {
+  position: relative;
+  height: 100%;
+
+  .next {
+    right: 15%;
+  }
+
+  .prev {
+    left: 15%;
+  }
+
+  .nav-arrow {
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+  }
+
+  .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    @include transition-duration(1600ms);
+
+    &.active {
+      z-index: 1;
+      opacity: 1;
+    }
+  }
+
+  .dots {
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    z-index: 2;
+    left: 50%;
+    @include transform(translateX(-50%));
+    bottom: 0px;
+
+    .dot {
+      cursor: pointer;
+      height: 20px;
+      margin: 0 8px;
+      &.active {
+        background-color: $primary;
+      }
+    }
+  }
+}

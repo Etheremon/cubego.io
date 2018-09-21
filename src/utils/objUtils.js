@@ -1,5 +1,5 @@
 
-export const IsIterable = (obj) => (obj && (typeof obj[Symbol.iterator] === 'function'));
+export const IsIterable = (obj) => (obj && (typeof obj === 'object'));
 
 export const IsArray = (arr) => (Array.isArray(arr));
 
