@@ -5,7 +5,6 @@
 
 .widget__button-group {
   @include border-radius(100px);
-  overflow: hidden;
   display: inline-block;
   border: 1px solid $blue-light;
 
@@ -115,18 +114,32 @@
     }
   }
 
-  &.orange {
-    background-color: $c__orange-1;
-    border-bottom: 4px solid $c__orange-3;
+  &.green {
+    background-color: $green_vista;
+    border-bottom: 4px solid $green-lochinvar;
 
     .transform {
-      background-color: $c__orange-1;
+      background-color: $c__red-1;
     }
     .transform .item:hover {
       background-color: $c__orange-3;
     }
     &:hover {
+      background-color: $c__orange-4;
+    }
+  }
+  &.orange {
+    background-color: $c__orange-5;
+    border-bottom: 4px solid $c__red-1;
+
+    .transform {
+      background-color: $c__red-1;
+    }
+    .transform .item:hover {
       background-color: $c__orange-3;
+    }
+    &:hover {
+      background-color: $c__orange-4;
     }
   }
   &.blue {

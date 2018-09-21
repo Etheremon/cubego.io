@@ -5,10 +5,13 @@
 .footer__wrapper {
   position: relative;
   width: 100%;
-  background-color: $green-vista;
   padding-bottom: 30px;
   font-size: $font-size-small !important;
   padding: 8px 16px;
+  border-top: 40px solid black;
+  border-image: url('../../../../shared/img/assets/wall_pattern.svg') 100 25 round;
+  background-clip: padding-box;
+  background-color: $c__blue-4;
 
   .footer__divider {
     margin-bottom: 40px;
@@ -19,6 +22,7 @@
     display: flex;
     align-items: stretch;
     justify-content: space-between;
+    align-items: center;
     min-height: 160px;
     @include mobile {
       flex-wrap: wrap;
@@ -47,13 +51,14 @@
     .footer__copyright {
       font-size: $font-size-small;
       color: $c__gray-2;
-      
+      text-align: center;
     }
   }
   
   .footer__right {
     display: flex;
     flex-direction: column;
+    
 
     .footer__right-content {
       display: flex;

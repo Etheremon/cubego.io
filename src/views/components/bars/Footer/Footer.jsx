@@ -28,7 +28,7 @@ class Footer extends React.Component {
 
           <div className={'footer__main'}>
             <div className="footer__left">
-              <img className={'footer__logo'} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/PlayStation_logo.svg/1280px-PlayStation_logo.svg.png'}/>
+              <img className={'footer__logo'} src={require('../../../../shared/img/logo/cubego.png')}/>
               <div className={'footer__copyright'}>
                 © Voxel. All Rights Reserved.
               </div>

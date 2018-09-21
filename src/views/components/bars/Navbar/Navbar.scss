@@ -39,7 +39,7 @@
 }
 
 .navbar__wrapper {
-  background-color: $green-vista !important;
+  background-color: #61B986 !important;
   border-bottom: none;
 
   &.fixed {
@@ -59,12 +59,23 @@
 
     .navbar__item-group {
       display: flex;
-      overflow: hidden;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
 
       .active {
-        border-radius: 20%;
-        background-color: black !important;
-      }
+        span {
+          border-radius: 5px;
+          background-color: $yellow-sands !important;
+          color: $c__orange-3 !important;
+        }
+        span:before, span:after {
+          content: "";
+          padding: 4px;
+        }
+      } 
 
       &.logo {
         .navbar__item {
@@ -75,6 +86,9 @@
         }
       }
       &.links {
+        flex-grow: 1;
+        justify-content: space-evenly;
+
         .navbar__item {
           margin: 0 12px;
           @include mobile {
@@ -125,6 +139,9 @@
       text-transform: capitalize !important;
       padding: 8px 16px;
       width: 100%;
+      span {
+        display: block !important;
+      }
     }
     .user-info {
       .navbar__item, .navbar__item a, .navbar__text {
