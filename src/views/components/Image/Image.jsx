@@ -20,6 +20,15 @@ export const ImgSource = {
   'padding_yellow': require('../../../shared/img/background/padding_yellow.png'),
   'padding_red': require('../../../shared/img/background/padding_red.png'),
   'padding_blue': require('../../../shared/img/background/padding_blue.png'),
+
+  'icon_discord': require('../../../shared/img/socialMedia/icon_discord.png'),
+  'icon_facebook': require('../../../shared/img/socialMedia/icon_facebook.png'),
+  'icon_instagram': require('../../../shared/img/socialMedia/icon_instagram.png'),
+  'icon_medium': require('../../../shared/img/socialMedia/icon_medium.png'),
+  'icon_reddit': require('../../../shared/img/socialMedia/icon_reddit.png'),
+  'icon_twitter': require('../../../shared/img/socialMedia/icon_twitter.png'),
+  'icon_youtube': require('../../../shared/img/socialMedia/icon_youtube.png'),
+  'icon_telegram': require('../../../shared/img/socialMedia/icon_telegram.png'),
 };
 
 export const Image = ({className, img, onClick}) => {

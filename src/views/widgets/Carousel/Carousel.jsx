@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
 import { Image } from "../../components/Image/Image.jsx";
+import { ButtonNew } from "../Button/Button.jsx";
 
 require("style-loader!./Carousel.scss");
 
@@ -58,12 +59,13 @@ class Carousel extends React.Component {
       <div className={`widget__carousel ${className}`}>
         {list.map((item, idx) => (
           <div className={`item ${current === idx ? 'active' : ''}`} key={idx}>
-            {item}
+            {item.image}
           </div>
         ))}
+
         <div className={'dots'}>
           {list.map((item, idx) => (
-            <div className={`dot ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx}/>
+            <ButtonNew color={ButtonNew.colors.GREY_NO_SHADOW} label={item.text} className={`dot ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx} />
           ))}
         </div>
 

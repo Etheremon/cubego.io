@@ -43,8 +43,8 @@
   }
 
   .home__intro {
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     text-align: center;
 
     .home__intro-board {
@@ -82,7 +82,7 @@
   .home__game-detail {
     text-align: center;
     padding-top: 60px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     text-align: -webkit-center;
     color: $dark;
     display: block;
@@ -136,7 +136,7 @@
     .copyright__padding {
       position: absolute;
       width: 85%;
-      height: 120%;
+      height: 130%;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
@@ -145,7 +145,7 @@
     .battle__padding {
       position: absolute;
       width: 85%;
-      height: 120%;
+      height: 130%;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
@@ -209,7 +209,7 @@
         .index__padding {
           position: absolute;
           width: 85%;
-          height: 120%;
+          height: 130%;
           left: 0;
           top: 50%;
           transform: translateY(-50%);
@@ -263,11 +263,11 @@
   .home__modes {
     width: 100%;
     text-align: center;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 
     .home_modes-title {
-      padding-bottom: 32px;
+      padding-bottom: 24px;
       color: #676767;
     }
 
@@ -292,8 +292,8 @@
   }
 
   .home__partnership {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: $white-blue;
     text-align: center;
 
@@ -323,8 +323,8 @@
 
   .home__subscription {
     text-align: center;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 
     .home__subscription-container {
       display: flex;
@@ -343,8 +343,8 @@
   
       .home__subscription-main {
         width: 50%;
-        text-align: right;
-          padding: 20px;
+        text-align: left;
+        padding: 16px 32px;
           @include mobile {
             text-align: center;
           }
@@ -382,11 +382,16 @@
   .home__features {
     text-align: center;
     width: 100%;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .home__features-title {
+      margin-bottom: 44px;
+    }
 
     .home__features-cards {
       overflow: auto;
+      overflow-y: hidden;
       margin: 0 auto;
       white-space: nowrap;
       width: 80%;

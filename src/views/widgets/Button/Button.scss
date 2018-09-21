@@ -114,6 +114,20 @@
     }
   }
 
+  &.grey_no_shadow {
+    background-color: $grey;
+    border-bottom: 4px solid transparent;
+
+    .transform {
+      background-color: $c__red-1;
+    }
+    .transform .item:hover {
+      background-color: $c__orange-3;
+    }
+    &:hover {
+      background-color: $c__orange-4;
+    }
+  }
   &.green {
     background-color: $green_vista;
     border-bottom: 4px solid $green-lochinvar;

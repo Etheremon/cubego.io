@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {URLS} from "../../../../utils/constants";
 import { Container } from '../../../widgets/Container/Container.jsx';
+import { Image } from "../../Image/Image.jsx";
 
 require("style-loader!./Footer.scss");
 
@@ -22,9 +23,6 @@ class Footer extends React.Component {
     return (
       <div className="footer__wrapper">
         <Container size={size} className={'footer__content'}>
-          <div className={'footer__divider'}>
-          
-          </div>
 
           <div className={'footer__main'}>
             <div className="footer__left">
@@ -52,14 +50,14 @@ class Footer extends React.Component {
                 </div>
               </div>
               <div className="footer__right-social">
-                <a href="https://discord.gg/xgJpuzc" target="_blank"><img src={require('../../../../shared/img/socialMedia/discord.png')}/></a>
-                <a href="https://t.me/myetheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/telegram.png')}/></a>
-                <a href="https://www.reddit.com/r/etheremon/" target="_blank"><img src={require('../../../../shared/img/socialMedia/reddit.png')}/></a>
-                <a href="https://www.facebook.com/etheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/fb.png')}/></a>
-                <a href="https://twitter.com/myetheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/twitter.png')}/></a>
-                <a href="https://www.instagram.com/etheremon_official/" target="_blank"><img src={require('../../../../shared/img/socialMedia/insta.png')}/></a>
-                <a href="https://medium.com/etheremon" target="_blank"><img src={require('../../../../shared/img/socialMedia/medium.png')}/></a>
-                <a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><img src={require('../../../../shared/img/socialMedia/youtube.png')}/></a>
+                <a href="https://discord.gg/xgJpuzc" target="_blank"><Image img={'icon_discord'} /></a>
+                <a href="https://t.me/myetheremon" target="_blank"><Image img={'icon_telegram'} /></a>
+                <a href="https://www.reddit.com/r/etheremon/" target="_blank"><Image img={'icon_reddit'} /></a>
+                <a href="https://www.facebook.com/etheremon" target="_blank"><Image img={'icon_facebook'} /></a>
+                <a href="https://twitter.com/myetheremon" target="_blank"><Image img={'icon_twitter'} /></a>
+                <a href="https://www.instagram.com/etheremon_official/" target="_blank"><Image img={'icon_instagram'} /></a>
+                <a href="https://medium.com/etheremon" target="_blank"><Image img={'icon_medium'} /></a>
+                <a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><Image img={'icon_youtube'} /></a>
               </div>
             </div>
           </div>

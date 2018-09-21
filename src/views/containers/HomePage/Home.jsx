@@ -21,6 +21,15 @@ import { Image } from '../../components/Image/Image.jsx';
 
 require("style-loader!./Home.scss");
 
+const features = [{title: 'txt.build_hero', desc: 'desc.build_hero'},
+                      {title: 'txt.auotion', desc: 'desc.auotion'},
+                      {title: 'txt.trading', desc: 'desc.trading'},
+                      {title: 'txt.battle', desc: 'desc.battle'},
+                      {title: 'txt.build_hero', desc: 'desc.build_hero'},
+                      {title: 'txt.auotion', desc: 'desc.auotion'},
+                      {title: 'txt.trading', desc: 'desc.trading'},
+                      {title: 'txt.battle', desc: 'desc.battle'},]
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -62,20 +71,11 @@ class HomePage extends React.Component {
   render() {
 
     const { _t, pathName } = this.props;
-    const features = [{title: 'txt.build_hero', desc: 'desc.build_hero'},
-                      {title: 'txt.auotion', desc: 'desc.auotion'},
-                      {title: 'txt.trading', desc: 'desc.trading'},
-                      {title: 'txt.battle', desc: 'desc.battle'},
-                      {title: 'txt.build_hero', desc: 'desc.build_hero'},
-                      {title: 'txt.auotion', desc: 'desc.auotion'},
-                      {title: 'txt.trading', desc: 'desc.trading'},
-                      {title: 'txt.battle', desc: 'desc.battle'},]
     const guildGame = [
-      <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>,
-      <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>,
-      <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>,
+      {image: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('txt.buy')} ,
+      {image: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('txt.build')} ,
+      {image: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('txt.battle')} ,
     ]
-    
 
     return (
       <div className="page-container">
@@ -143,7 +143,7 @@ class HomePage extends React.Component {
                 <div className={'home__game-detail__index-text'}>
                   <p>{_t('txt.game_detail_index')}</p>
                 </div>
-                <p>{_t('txt.game_play_index_desc')}</p>
+                <p>{_t('txt.game_detail_index_desc')}</p>
                 <ButtonNew className={'home__game-detail__index-btn'} label={_t('txt.read_more')} onClick={() => {
                   
                 }}/>

@@ -5,11 +5,10 @@
 .footer__wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 30px;
   font-size: $font-size-small !important;
-  padding: 8px 16px;
+  padding: 32px 16px;
   border-top: 40px solid black;
-  border-image: url('../../../../shared/img/assets/wall_pattern.svg') 100 25 round;
+  border-image: url('../../../../shared/img/assets/wall_pattern.svg') 130 10 round;
   background-clip: padding-box;
   background-color: $c__blue-4;
 
@@ -21,7 +20,8 @@
   .footer__main {
     display: flex;
     align-items: stretch;
-    justify-content: space-between;
+    padding: 16px 0px;
+    justify-content: space-around;
     align-items: center;
     min-height: 160px;
     @include mobile {

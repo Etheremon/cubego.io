@@ -51,15 +51,11 @@
     z-index: 2;
     left: 50%;
     @include transform(translateX(-50%));
-    bottom: 16px;
+    bottom: 0px;
 
     .dot {
       cursor: pointer;
-      width: 20px;
       height: 20px;
-      background-color: rgba(0, 0, 0, 0.7);
-      @include border-radius(50%);
-      border: 1px solid $primary;
       margin: 0 8px;
       &.active {
         background-color: $primary;
