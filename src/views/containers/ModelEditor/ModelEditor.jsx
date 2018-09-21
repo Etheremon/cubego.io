@@ -78,7 +78,7 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__canvas'}>
             <div className={'model-editor__left'}>
               <div className={'model-editor__3d'}>
-                <Model3D model={this.toolManager.model}/>
+                <Model3D model={this.toolManager.model} onCellClicked={this.onCellClicked}/>
               </div>
 
               <div className={'model-editor__colors'}>

@@ -78,8 +78,6 @@ export class ToolManager {
       console.warn("no draw mode!");
     } else {
 
-      console.log("drawing", cell, cells);
-
       let newModel = this.drawMode.onCellClicked({
         tools: this.tools, model: this._model, cell, cells,
       });
@@ -110,8 +108,6 @@ export class ToolManager {
       idx: layerIdx-1,
       x, y, z
     };
-
-    console.log("current model", this._model);
   }
 
   get model() {
@@ -150,10 +146,9 @@ Tools.draw = ({key='draw', value=true}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({tools, model, cell, effects}) => {
+  onCellClicked: ({tools, model, cell}) => {
     let newModel = CloneDeep(model);
-    console.log(newModel, tools.color);
-    model['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+    newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
       ...cell,
       color: CloneDeep(tools.color.value),
     };
