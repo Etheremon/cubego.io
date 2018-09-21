@@ -14,6 +14,7 @@ class PaintScene extends Component {
   }
 
   updateLayer(layer) {
+    console.log(layer.voxels[0][layer.z]);
     this.setState({layer});
   }
 
@@ -22,12 +23,10 @@ class PaintScene extends Component {
       return [];
     }
     this.frames = this.initFrameData(layer);
-    console.log(layer, this.frames);
-
     let elements = [];
     for (let i = 0; i < layer.size[layer.x]; i++) {
       for (let j = 0; j < layer.size[layer.y]; j++) {
-        elements.push(<Rectangle width={32} height={32} x={17 * i} y={17 * (layer.size[layer.y]-j-1)} key={`${i}-${j}`}
+        elements.push(<Rectangle width={32} height={32} x={17 * i} y={17 * (layer.size[layer.y]-j-1)} key={`${i}-${j}-${layer.voxels[0][layer.z]}-${layer.z}`}
                                  fillColor={'0x' + (this.frames[i][j].color ? this.frames[i][j].color : '89e3f9')}
                                  alpha={this.frames[i][j].color ? 1 : 0.6}
                                  buttonMode={true}

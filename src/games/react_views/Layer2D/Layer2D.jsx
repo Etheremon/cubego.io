@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import './Layer2D.scss';
-import BabylonX from "../../babylonX";
 import PixiX from "../../pixix/index";
 import PaintScene from "../../2d/PaintScene.jsx";
-import VoxViewer from "../../3d/VoxViewer.jsx";
 import PropTypes from "prop-types";
 import {IsEqual} from "../../../utils/objUtils";
 
