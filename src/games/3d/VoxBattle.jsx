@@ -32,17 +32,16 @@ class VoxBattle extends Component {
     this.playerJumpAnimations = [];
   }
 
-  createAnimationKeys(rotate) {
+  createAttackAnimationKeys(rotate) {
     return [
       {frame: 0, value: 0},
-      {frame: 10, value: -1 * rotate},
-      {frame: 70, value: 8 * rotate},
+      {frame: 50, value: 9 * rotate},
       {frame: 100, value: 0}
     ]
   };
 
   renderPlayer(data, rotate, idx) {
-    return <Voxel data={data} key={rotate} size={SIZE} rotate={rotate}>
+    return <Voxel data={data} key={rotate} size={SIZE * 0.9} rotate={rotate}>
       <Animation name='idle' targetProperty='scaling' targetFPS={60} loopMode={BABYLON.Animation.ANIMATIONTYPE_VECTOR3}
                  enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE}
                  keys={this.idleAnimationKeys} scaleSpeed={4}/>
@@ -56,7 +55,7 @@ class VoxBattle extends Component {
       <Animation name='attack' targetProperty='position.z' targetFPS={60}
                  loopMode={BABYLON.Animation.ANIMATIONTYPE_FLOAT}
                  enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE} bezierCurveEase={[.8, .04, .86, .72]}
-                 keys={this.createAnimationKeys(rotate)} scaleSpeed={2} loop={true}
+                 keys={this.createAttackAnimationKeys(rotate)} scaleSpeed={2} loop={true}
                  ref={(ref) => {
                    this.playerAttackAnimations[idx] = ref
                  }}/>
@@ -98,8 +97,12 @@ class VoxBattle extends Component {
     BabylonX.loaders.load();
     setInterval(() => {
       this.playerAttackAnimations[0].play();
-      // this.playerJumpAnimations[0].play();
-    }, 5000);
+    }, 10000);
+    setTimeout(() => {
+      setInterval(()=>{
+        this.playerAttackAnimations[1].play();
+      }, 10000);
+    }, 5000)
   }
 
   render() {

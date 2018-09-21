@@ -12,7 +12,7 @@ export class BabylonVoxel extends BabylonComponent {
     let size = props.size;
     let data = props.data;
     data.voxels.forEach((voxel) => {
-      let meshBox = BabylonMeshBox.create({scene}, {size: size || 1, position: {x: 0, y: 0, z: 0}});
+      let meshBox = BabylonMeshBox.create({scene}, {size: size * 0.98, position: {x: 0, y: 0, z: 0}});
       spsVoxel.addShape(meshBox, 1);
       elements.push(meshBox);
     });
