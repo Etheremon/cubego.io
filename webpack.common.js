@@ -53,7 +53,7 @@ module.exports = env => {
             },
           ],
         }, {
-          test: /\.(gltf|tmx|tsx|vox)$/,
+          test: /\.(gltf|tmx|tsx|vox|obj)$/,
           include: APP_DIR,
           use: 'file-loader',
         }, {
@@ -77,7 +77,7 @@ module.exports = env => {
         ENV: JSON.stringify(env.ENV)
       }),
       new CopyWebpackPlugin([
-        {from: APP_DIR + '/../assets/*'},
+        {from: APP_DIR + '/../assets/'},
       ]),
 
       new HtmlWebpackPlugin({

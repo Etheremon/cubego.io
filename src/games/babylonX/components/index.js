@@ -5,6 +5,12 @@ import {BabylonMeshCylinder} from "./babylonMeshCylinder";
 import {BabylonArcRotateCamera} from "./babylonArcRotateCamera";
 import {BabylonPointLight} from "./babylonPointLight";
 import {BabylonAxis} from "./babylonAxis";
+import {BabylonVoxel, BabylonVoxelBuilder} from "./babylonVoxel";
+import {BabylonHemisphericLight} from "./babylonHemisphericLight";
+import {BabylonDirectionLight} from "./babylonDirectionLight";
+import {BabylonAnimation} from "./babylonAnimation";
+import {BabylonPlane} from "./babylonPlane";
+import {BabylonSkybox} from "./babylonSkybox";
 const TYPES = {
   MESH_SPHERE: 'MESH_SPHERE',
   MESH_BOX: 'MESH_BOX',
@@ -12,7 +18,13 @@ const TYPES = {
   MESH_CYLINDER: 'MESH_CYLINDER',
   ARC_ROTATE_CAMERA: 'ARC_ROTATE_CAMERA',
   POINT_LIGHT: 'POINT_LIGHT',
-  AXIS: 'AXIS'
+  AXIS: 'AXIS',
+  VOXEL: 'VOXEL',
+  HEMISPHERIC_LIGHT: 'HEMISPHERIC_LIGHT',
+  DIRECTION_LIGHT: 'DIRECTION_LIGHT',
+  ANIMATION: 'ANIMATION',
+  PLANE: 'PLANE',
+  SKY_BOX: 'SKYBOX'
 };
 
 let mappingComponents = {};
@@ -23,6 +35,12 @@ mappingComponents[TYPES.MESH_CYLINDER] = BabylonMeshCylinder;
 mappingComponents[TYPES.ARC_ROTATE_CAMERA] = BabylonArcRotateCamera;
 mappingComponents[TYPES.POINT_LIGHT] = BabylonPointLight;
 mappingComponents[TYPES.AXIS] = BabylonAxis;
+mappingComponents[TYPES.VOXEL] = BabylonVoxel;
+mappingComponents[TYPES.HEMISPHERIC_LIGHT] = BabylonHemisphericLight;
+mappingComponents[TYPES.DIRECTION_LIGHT] = BabylonDirectionLight;
+mappingComponents[TYPES.ANIMATION] = BabylonAnimation;
+mappingComponents[TYPES.PLANE] = BabylonPlane;
+mappingComponents[TYPES.SKY_BOX] = BabylonSkybox;
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);

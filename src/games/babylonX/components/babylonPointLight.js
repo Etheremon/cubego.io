@@ -8,6 +8,7 @@ export class BabylonPointLight extends BabylonComponent {
       position = new BABYLON.Vector3(props.position.x, props.position.y, props.position.z);
     }
     let pointLight = new BABYLON.PointLight(props.name || "PointLight", position, scene);
+    pointLight.lightmapMode = BABYLON.Light.LIGHTMAP_SHADOWSONLY;
     return pointLight;
   }
 }

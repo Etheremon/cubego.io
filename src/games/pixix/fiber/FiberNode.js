@@ -9,6 +9,6 @@ export class FiberNode {
   }
 
   removeChild(child) {
-
+    this.$f_childrens.splice(this.$f_childrens.indexOf(child), 1);
   }
 }

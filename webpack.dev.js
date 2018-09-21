@@ -9,7 +9,7 @@ module.exports = env => {
       module: {
         rules: [{
           test: /\.s?[ac]ss$/,
-          include : APP_DIR,
+          include: APP_DIR,
           use: [{
             loader: 'style-loader'
           }, {
@@ -21,6 +21,9 @@ module.exports = env => {
           }, {
             loader: "sass-loader"
           }]
+        }, {
+          loader: "raw-loader",
+          test: /\.obj$/,
         }]
       },
 
@@ -40,8 +43,7 @@ module.exports = env => {
 
       devtool: 'inline-source-map',
 
-      plugins: [
-      ],
+      plugins: [],
 
       mode: 'development',
     })

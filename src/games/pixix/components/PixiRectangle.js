@@ -36,6 +36,13 @@ export default class PixiRectangle extends PixiComponent {
     }
   }
 
+  set alpha(alpha) {
+    this.props.alpha = alpha;
+    this._renderer.alpha = alpha;
+    this._renderer.clear();
+    this.drawRectangle();
+  }
+
   set onClick(fn) {
     this._onClick = fn;
   }

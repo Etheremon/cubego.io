@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ArcRotateCamera, Axis, MeshBox, MeshContainer, PointLight} from '../babylonX';
+import {ArcRotateCamera, Axis, HemisphericLight, MeshBox, MeshContainer, PointLight} from '../babylonX';
 import {fullColorHex} from "../utils";
 
 const SIZE = 0.5;
@@ -14,14 +14,16 @@ class VoxViewer extends Component {
     if (!voxelData.voxels) {
       return [];
     }
+
     let elements = [];
     voxelData.voxels.forEach((voxel) => {
       let color = fullColorHex(voxelData.palette[voxel.colorIndex]);
-      elements.push(<MeshBox size={SIZE} position={{
-        x: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
-        y: -SIZE * voxelData.size.z / 2 + SIZE * voxel.z,
-        z: SIZE * voxelData.size.x / 2 - SIZE * voxel.x
-      }}
+      elements.push(<MeshBox size={SIZE}
+                             position={{
+                               x: -SIZE * voxelData.size.x / 2 + SIZE * voxel.x,
+                               y: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
+                               z: SIZE * voxelData.size.z / 2 - SIZE * voxel.z
+                             }}
                              key={`${voxelData.size.x} - ${voxelData.size.y} - ${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
                              color={color}/>)
     });
@@ -34,7 +36,7 @@ class VoxViewer extends Component {
 
   setNewVoxelData(voxelData) {
     this.setState({
-      data: voxelData
+      data: voxelData || {}
     })
   }
 
@@ -45,6 +47,7 @@ class VoxViewer extends Component {
         <ArcRotateCamera alpha={2.18} beta={1.37} radius={17} attachControl={true}/>
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
+        <HemisphericLight/>
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
     );

@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import 'babylonjs-loaders';
 import {renderer as BabylonRenderer} from "./renderer/index";
 import {TYPES} from './components';
 import {BabylonMeshContainer} from "./components/babylonMeshContainer";
@@ -7,19 +8,23 @@ let rootContainer = null;
 let scene, engine;
 let loopStarted = false;
 let root = null;
+let assetsManager = null;
 export let listMesh = [];
 
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
   scene = new BABYLON.Scene(engine);
-  scene.useRightHandedSystem = true;
+  //For debugging
+  window.scene = scene;
+  // scene.useRightHandedSystem = true;
   root = BabylonMeshContainer.create(scene, {name: 'root', position: {x: 0, y: 0, z: 0}});
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
+  assetsManager = new BABYLON.AssetsManager(scene);
   rootContainer = BabylonRenderer.createContainer(root);
+  // assetsManager.onFinish = startLoop;
   startLoop();
-
   return rootContainer;
 };
 
@@ -112,6 +117,34 @@ export const MeshContainer = TYPES.MESH_CONTAINER;
 export const ArcRotateCamera = TYPES.ARC_ROTATE_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
 export const Axis = TYPES.AXIS;
+export const Voxel = TYPES.VOXEL;
+export const HemisphericLight = TYPES.HEMISPHERIC_LIGHT;
+export const DirectionLight = TYPES.DIRECTION_LIGHT;
+export const Animation = TYPES.ANIMATION;
+export const Plane = TYPES.PLANE;
+export const Skybox = TYPES.SKY_BOX;
 
-const BabylonX = {render};
+function addMesh(id, root, file) {
+  return new Promise((resolve, reject) => {
+    let task = assetsManager.addMeshTask(id, "", root, file);
+    task.onSuccess = (taskData) => {
+      resolve(taskData)
+    };
+    task.onError = (taskData, message, exception) => {
+      console.error(message);
+      reject(message)
+    }
+  });
+}
+
+function load() {
+  assetsManager.load();
+}
+
+const loaders = {
+  addMesh,
+  load
+};
+
+const BabylonX = {render, loaders};
 export default BabylonX;

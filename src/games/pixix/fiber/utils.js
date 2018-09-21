@@ -35,11 +35,11 @@ const DEFAULT_PROPS = {
 };
 
 const emptyFnc = (name) => () => {
-  console.log(name);
+  // console.log(name);
 };
 
 const loggerFnc = (name) => () => {
-  console.log(name);
+  // console.log(name);
 };
 
 const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerElement) => {

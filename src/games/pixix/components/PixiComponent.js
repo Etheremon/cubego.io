@@ -13,6 +13,12 @@ export default class PixiComponent extends FiberPixiXComponent {
     }
   }
 
+  removeChild(child) {
+    super.removeChild(child);
+    this.renderer.removeChild(child.renderer);
+    child.renderer.destroy();
+  }
+
   set renderer(renderer) {
     if (this._parent) {
       this._parent.renderer.addChild(this._renderer);

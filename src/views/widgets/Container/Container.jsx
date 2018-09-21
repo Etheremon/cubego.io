@@ -18,6 +18,7 @@ Container.sizes = {
   SMALL: 'small',
   NORMAL: 'normal',
   BIG: 'big',
+  LARGE: 'large',
 };
 
 Container.defaultProps = {
