@@ -33,7 +33,7 @@ export class BabylonAnimation extends BabylonComponent {
   }
 
   set parent(parent) {
-    parent.animations.push(this.renderer);
+    parent.renderer.animations.push(this.renderer);
     this._parent = parent;
     if (this.props.playOnStart)
       this.scene.beginDirectAnimation(parent, [this.renderer], 0, 100, !!this.props.loop, this.props.scaleSpeed || 1);

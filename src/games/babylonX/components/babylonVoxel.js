@@ -7,6 +7,7 @@ import {hexToColor3} from "../utils";
 
 export class BabylonVoxel extends BabylonComponent {
   static create({scene}, props) {
+    let voxelPlayer = new BabylonVoxel();
     let elements = [];
     let spsVoxel = new BABYLON.SolidParticleSystem(props.name || 'voxel', scene);
     let size = props.size;
@@ -46,6 +47,48 @@ export class BabylonVoxel extends BabylonComponent {
     fakeShadow.position.y = -1.55;
     fakeShadow.material = greenMat;
     fakeShadow.parent = mesh;
-    return mesh;
+
+    let healthMat = new BABYLON.StandardMaterial("redMat", scene);
+    healthMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+
+    this.healthBarBg = BABYLON.MeshBuilder.CreatePlane('healthBar', {width: 5, height: 0.3}, scene);
+    this.healthBarBg.position.y = 3;
+    // this.healthBarBg.setPivotMatrix(BABYLON.Matrix.Translation(2.5, 0, 0));
+    this.healthBarBg.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+    this.healthBarBg.material = greenMat;
+    this.healthBarBg.parent = mesh;
+
+    this.healthPercent = 0.5;
+    this.healthBar = BABYLON.MeshBuilder.CreatePlane('healthBar', {width: 5, height: 0.3}, scene);
+    this.healthBar.position.z = -0.01;
+    this.healthBar.scaling.x = this.healthPercent;//HP percent
+    this.healthBar.position.x = (1 - this.healthPercent) * -2.5;
+    // this.healthBar.setPivotMatrix(BABYLON.Matrix.Translation(2.5, 0, 0));
+
+    this.healthBar.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+    this.healthBar.material = healthMat;
+    this.healthBar.parent = this.healthBarBg;
+    voxelPlayer.scene = scene;
+    voxelPlayer.renderer = mesh;
+    return voxelPlayer;
+  }
+
+  set parent(parent) {
+    this._parent = parent;
+    this.renderer.parent = parent;
+  }
+
+  set hurt(hp) {
+    this.healthPercent.scaling.z = 0.6;
+  }
+
+  playAnimation(animations, loop, scaleSpeed) {
+    let listAnimation = [];
+    this.renderer.animations.forEach((animation) => {
+      if (animations.indexOf(animation.name) > -1) {
+        listAnimation.push(animation);
+      }
+      this.scene.beginDirectAnimation(this.renderer, listAnimation, 0, 100, loop, scaleSpeed);
+    });
   }
 }
