@@ -15,7 +15,7 @@ const PERMITTED_PROPS = [
 export default class PixiRectangle extends PixiComponent {
   drawRectangle() {
     this._renderer.lineStyle(0, this.props.borderColor || 0xffffff, 1);
-    this._renderer.beginFill(this.props.fillColor || 0xffffff, this.props.alpha || 1);
+    this._renderer.beginFill(this.props.fillColor || 0xffffff, 1);
     this._renderer.drawRect(this.props.x || 0, this.props.y || 0, this.props.width || 50, this.props.height || 50);
     this._renderer.endFill();
   }
@@ -39,8 +39,6 @@ export default class PixiRectangle extends PixiComponent {
   set alpha(alpha) {
     this.props.alpha = alpha;
     this._renderer.alpha = alpha;
-    this._renderer.clear();
-    this.drawRectangle();
   }
 
   set onClick(fn) {
