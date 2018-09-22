@@ -35,8 +35,9 @@ class VoxBattle extends Component {
 
     this.jumpAnimationKeys = [
       {frame: 0, value: 0},
-      {frame: 35, value: 1},
-      {frame: 70, value: 0},
+      {frame: 10, value: 0},
+      {frame: 40, value: 1},
+      {frame: 60, value: 0},
       {frame: 100, value: 0}
     ];
 
@@ -48,7 +49,8 @@ class VoxBattle extends Component {
   createAttackAnimationKeys(rotate) {
     return [
       {frame: 0, value: 0},
-      {frame: 70, value: 8 * rotate},
+      {frame: 60, value: 9 * rotate},
+      {frame: 70, value: 9 * rotate},
       {frame: 100, value: 0}
     ]
   };
