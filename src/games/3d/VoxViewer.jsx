@@ -25,14 +25,10 @@ class VoxViewer extends Component {
                                y: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
                                z: SIZE * voxelData.size.z / 2 - SIZE * voxel.z
                              }}
-                             key={`${voxelData.size.x} - ${voxelData.size.y} - ${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
+                             key={`${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
                              color={color}/>)
     });
     return elements;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
   }
 
   setNewVoxelData(voxelData) {

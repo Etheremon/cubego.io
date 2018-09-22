@@ -9,7 +9,7 @@ export class ToolManager {
     this.tools = {};
     this._model = undefined;
     this._layer = undefined;
-    this._numLayers = 0; 
+    this._numLayers = 0;
     this.drawMode = null;
     this.history = {
       idx: props.models.length - 1,
@@ -100,11 +100,11 @@ export class ToolManager {
     this._numLayers = this._model.size[z];
     let layerIdx = Utils.BoundVal(this.tools['layer-index'].value, 1, this._numLayers);
     this.tools['layer-index'].value = layerIdx;
-
+    let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z] === layerIdx-1);
     this._layer = {
       size: this._model.size,
       palette: this._model.palette,
-      voxels: Utils.ObjFilter(this._model.voxels, cell => cell[z] === layerIdx-1),
+      voxels,
       idx: layerIdx-1,
       x, y, z
     };
@@ -117,7 +117,7 @@ export class ToolManager {
   get layer() {
     return this._layer;
   }
-  
+
   get numLayers() {
     return this._numLayers;
   }
@@ -148,9 +148,16 @@ Tools.draw = ({key='draw', value=true}) => ({
   type: ToolTypes.mode,
   onCellClicked: ({tools, model, cell}) => {
     let newModel = CloneDeep(model);
+    let updateIdx = 0;
+    if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
+      updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
+      updateIdx = updateIdx ? updateIdx + 1 : 0;
+    }
+
     newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
       ...cell,
       color: CloneDeep(tools.color.value),
+      updateIdx
     };
     return newModel;
   },
