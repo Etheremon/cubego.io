@@ -17,7 +17,6 @@ export class BabylonMeshBox extends BabylonComponent {
     box.edgesWidth = 2.0;
     box.edgesColor = new BABYLON.Color4(0, 0, 0, 1);
     box.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
-    listMesh.push(box);
     return box;
   }
 }

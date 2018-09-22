@@ -22,12 +22,24 @@ class VoxBattle extends Component {
       {frame: 100, value: new BABYLON.Vector3.One()}
     ];
 
+    this.attackScalingAnimationKeys = [
+      {frame: 0, value: new BABYLON.Vector3.One()},
+      {frame: 10, value: new BABYLON.Vector3(1.3, 0.4, 1.3)},
+      {frame: 11, value: new BABYLON.Vector3(0.8, 1.4, 0.8)},
+      {frame: 40, value: new BABYLON.Vector3.One()},
+      {frame: 59, value: new BABYLON.Vector3(0.8, 1.4, 0.8)},
+      {frame: 60, value: new BABYLON.Vector3(1.3, 0.4, 1.3)},
+      {frame: 70, value: new BABYLON.Vector3.One()},
+      {frame: 100, value: new BABYLON.Vector3.One()}
+    ];
+
     this.jumpAnimationKeys = [
       {frame: 0, value: 0},
-      {frame: 30, value: 1},
-      {frame: 40, value: 0},
+      {frame: 35, value: 1},
+      {frame: 70, value: 0},
       {frame: 100, value: 0}
     ];
+
     this.playerAttackAnimations = [];
     this.playerJumpAnimations = [];
     this.players = [];
@@ -36,7 +48,7 @@ class VoxBattle extends Component {
   createAttackAnimationKeys(rotate) {
     return [
       {frame: 0, value: 0},
-      {frame: 40, value: 8 * rotate},
+      {frame: 70, value: 8 * rotate},
       {frame: 100, value: 0}
     ]
   };
@@ -51,11 +63,15 @@ class VoxBattle extends Component {
       <Animation name='jump' targetProperty='position.y' targetFPS={60}
                  loopMode={BABYLON.Animation.ANIMATIONTYPE_FLOAT}
                  enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE}
-                 keys={this.jumpAnimationKeys} scaleSpeed={2}/>
+                 keys={this.jumpAnimationKeys} scaleSpeed={1}/>
+      <Animation name='scaling' targetProperty='scaling' targetFPS={60}
+                 loopMode={BABYLON.Animation.ANIMATIONTYPE_VECTOR3}
+                 enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE}
+                 keys={this.attackScalingAnimationKeys} scaleSpeed={1}/>
       <Animation name='attack' targetProperty='position.z' targetFPS={60}
                  loopMode={BABYLON.Animation.ANIMATIONTYPE_FLOAT}
-                 enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE} bezierCurveEase={[.8, .04, .86, .72]}
-                 keys={this.createAttackAnimationKeys(rotate)} scaleSpeed={2} loop={true}/>
+                 enableBlending={BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE}
+                 keys={this.createAttackAnimationKeys(rotate)} scaleSpeed={1} loop={true}/>
     </Voxel>
   }
 
@@ -94,11 +110,17 @@ class VoxBattle extends Component {
     BabylonX.loaders.load();
 
     setInterval(() => {
-      this.players[0].playAnimation(['attack', 'jump'], false, 2);
+      this.players[0].playAnimation(['attack', 'scaling', 'jump'], false, 2);
+      setTimeout(() => {
+        this.players[1].hurt(15);
+      }, 500)
     }, 6000);
     setTimeout(() => {
       setInterval(() => {
-        this.players[1].playAnimation(['attack', 'jump'], false, 2);
+        this.players[1].playAnimation(['attack', 'scaling', 'jump'], false, 2);
+        setTimeout(() => {
+          this.players[0].hurt(20);
+        }, 500)
       }, 6000);
     }, 3000)
   }

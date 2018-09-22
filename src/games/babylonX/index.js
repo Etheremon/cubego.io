@@ -9,7 +9,6 @@ let scene, engine;
 let loopStarted = false;
 let root = null;
 let assetsManager = null;
-export let listMesh = [];
 
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
@@ -23,7 +22,6 @@ const createRenderer = (canvas) => {
   root.canvas = canvas;
   assetsManager = new BABYLON.AssetsManager(scene);
   rootContainer = BabylonRenderer.createContainer(root);
-  // assetsManager.onFinish = startLoop;
   startLoop();
   return rootContainer;
 };

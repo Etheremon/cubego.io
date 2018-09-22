@@ -46,7 +46,7 @@ class _ModelEditor extends React.Component {
 
   componentDidMount() {
     let parser = new window.vox.Parser();
-    parser.parse(require('../../../games/data/3.vox')).then((voxelData) => {
+    parser.parse(require('../../../games/data/2.vox')).then((voxelData) => {
       this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
       this.forceUpdate();
     });
