@@ -1,6 +1,5 @@
 import {renderer as PixiXFiberRenderer} from "./renderer";
 import PixiUtils from "../pixiUtils";
-import {renderer as BabylonRenderer} from "../../babylonX/renderer";
 
 let rootContainer = null;
 
@@ -15,7 +14,7 @@ function render(element, container, options = {}) {
     rootContainer = createRenderer(container, options);
   }
   PixiXFiberRenderer.updateContainer(element, rootContainer, null);
-  return BabylonRenderer.getPublicRootInstance(rootContainer);
+  return PixiXFiberRenderer.getPublicRootInstance(rootContainer);
 }
 
 export default render;

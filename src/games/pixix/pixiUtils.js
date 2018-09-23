@@ -21,7 +21,6 @@ export function getGame() {
 
 function initGame(element, options) {
   options = Object.assign(DEFAULT_OPTIONS, options);
-  console.log(options);
   if (typeof element === 'object') {
     let renderer = PixiUtils.createRenderer(options);
     game = new Game();
@@ -38,7 +37,6 @@ function initGame(element, options) {
 }
 
 function createRenderer(options) {
-  console.log(options.view);
   if (!options.view) {
     options.view = document.createElement('canvas');
     let body = document.getElementsByTagName("body")[0];
