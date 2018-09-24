@@ -1,7 +1,6 @@
 export class FiberNode {
   constructor() {
     this.$f_childrens = [];
-
   }
 
   addChild(child) {

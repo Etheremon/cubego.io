@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import './Model3D.scss';
-import BabylonX from "../../babylonX";
-import VoxViewer from "../../3d/VoxViewer.jsx";
 import PropTypes from "prop-types";
 import {IsEqual} from "../../../utils/objUtils";
-import {ReformatModel} from "../../../utils/modelUtils";
 import ThreeX from "../../threeX";
+import VoxViewerThree from "../../3d/VoxViewerThree.jsx";
 
 require("style-loader!./Model3D.scss");
 
@@ -17,7 +15,7 @@ export class Model3D extends Component {
 
   componentDidMount() {
     // this.voxel = BabylonX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
-    this.voxel = ThreeX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
+    this.voxel = ThreeX.render(<VoxViewerThree data={this.props.model}/>, document.getElementById('canvas3D'));
   }
 
   componentWillReceiveProps(nextProps) {

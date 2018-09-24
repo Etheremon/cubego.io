@@ -1,6 +1,7 @@
 import {renderer as ThreeXFiberRenderer} from "./renderer";
 import * as THREE from "three";
 import 'three-orbitcontrols';
+import {ThreeScene} from "../components/threeScene";
 
 let rootContainer = null;
 let scene, camera, renderer, cube, grid, projector, plane, controls, mouse, raycaster, rollOverMesh, canvas;
@@ -8,48 +9,41 @@ let radius = 300, theta = 90, phi = 60;
 let cubeGeo, cubeMaterial;
 let objects = [];
 
-function createRenderer(container, options) {
-  canvas = container;
-  camera = new THREE.PerspectiveCamera(45, container.width / container.height, 1, 10000);
-  camera.position.set(500, 800, 1300);
-  camera.lookAt(0, 0, 0);
-  controls = new THREE.OrbitControls(camera);
+function createRenderer(canvas, options) {
+  scene = ThreeScene.create();
+  scene.renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+  scene.canvas = canvas;
+  // raycaster = new THREE.Raycaster();
+  // mouse = new THREE.Vector2();
 
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color().setHSL(0.6, 0, 1);
-  renderer = new THREE.WebGLRenderer({canvas: container});
-  raycaster = new THREE.Raycaster();
-  mouse = new THREE.Vector2();
+  // cubeGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
+  // cubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
 
-  cubeGeo = new THREE.BoxBufferGeometry( 50, 50, 50 );
-  cubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+  // let rollOverGeo = new THREE.BoxBufferGeometry(50, 50, 50);
+  // let rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
+  // rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
+  // scene.add(rollOverMesh);
 
-  let rollOverGeo = new THREE.BoxBufferGeometry(50, 50, 50);
-  let rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
-  rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
-  scene.add(rollOverMesh);
+  // let geometry = new THREE.PlaneBufferGeometry(1000, 1000);
+  // geometry.rotateX(-Math.PI / 2);
+  // plane = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({visible: false}));
+  // scene.add(plane);
+  // objects.push(plane);
 
-  let geometry = new THREE.PlaneBufferGeometry(1000, 1000);
-  geometry.rotateX(-Math.PI / 2);
-  plane = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({visible: false}));
-  scene.add(plane);
-  objects.push(plane);
+  // let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+  // hemiLight.color.setHSL(0.6, 1, 0.6);
+  // hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+  // hemiLight.position.set(0, 50, 0);
+  // scene.add(hemiLight);
+  // let hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
+  // scene.add(hemiLightHelper);
 
-  let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
-  hemiLight.color.setHSL(0.6, 1, 0.6);
-  hemiLight.groundColor.setHSL(0.095, 1, 0.75);
-  hemiLight.position.set(0, 50, 0);
-  scene.add(hemiLight);
+  // let gridHelper = new THREE.GridHelper(1000, 20);
+  // scene.add(gridHelper);
 
-  let gridHelper = new THREE.GridHelper(1000, 20);
-  scene.add(gridHelper);
-
-  let hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
-  scene.add(hemiLightHelper);
-  document.addEventListener('mousemove', onDocumentMouseMove, false);
-  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-  controls.update();
-  animate();
+  // container.addEventListener('mousemove', onDocumentMouseMove, false);
+  // container.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  // animate();
   return ThreeXFiberRenderer.createContainer(scene);
 }
 
@@ -90,12 +84,6 @@ function onDocumentMouseMove(event) {
     rollOverMesh.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
   }
   render();
-}
-
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
 }
 
 function render(element, container, options = {}) {

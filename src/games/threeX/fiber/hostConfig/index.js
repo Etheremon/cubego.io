@@ -2,18 +2,21 @@ import now from "performance-now";
 import {commitMount, commitTextUpdate, resetTextContent} from "./mutations";
 import {createTextInstance, prepareForCommit} from "./reconcilers";
 import {applyProps, diffProps, emptyFnc, filterByKey, including, loggerFnc} from "../utils";
-import Component from "../../components/index";
+import {createComponent} from "../../components";
 
 const createInstance = (type, props, rootContainerInstance, hostContext, internalInstanceHandle) => {
   loggerFnc('createInstance')();
+  return createComponent(type, props, rootContainerInstance);
 };
 
 const appendChild = (parent, child) => {
   loggerFnc('appendChild')();
+  parent.addChild(child);
 };
 
 const removeChild = (parent, child) => {
   loggerFnc('removeChild')();
+  parent.removeChild(child);
 };
 
 const prepareUpdate = (element, type, oldProps, newProps, rootContainerInstance, hostContext) => {
