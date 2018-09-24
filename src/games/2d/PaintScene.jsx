@@ -27,7 +27,12 @@ class PaintScene extends Component {
     let elements = [];
     for (let i = 0; i < layer.size[layer.x]; i++) {
       for (let j = 0; j < layer.size[layer.y]; j++) {
-        elements.push(<Rectangle width={32} height={32} x={17 * i} y={17 * (layer.size[layer.y]-j-1)} key={`${i}-${j}-${layer.idx}-${layer.z}`}
+        let translatedPos = layer.cal2dPos ? layer.cal2dPos(i, j) : {x: i, y: j};
+        elements.push(<Rectangle width={32} height={32}
+                                 x={17 * translatedPos.x}
+                                 y={17 * translatedPos.y}
+                                 key={`${i}-${j}-${layer.idx}-${layer.z}`}
+
                                  fillColor={'0x' + (this.frames[i][j].color ? this.frames[i][j].color : '89e3f9')}
                                  alpha={this.frames[i][j].color ? 1 : 0.6}
                                  buttonMode={true}

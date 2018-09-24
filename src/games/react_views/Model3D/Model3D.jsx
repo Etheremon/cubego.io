@@ -17,7 +17,8 @@ export class Model3D extends Component {
 
   componentDidMount() {
     // this.voxel = BabylonX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
-    this.voxel = ThreeX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
+    this.voxel = ThreeX.render(<VoxViewer data={this.props.model}
+                                          onCellClicked={this.props.onCellClicked}/>, document.getElementById('canvas3D'));
   }
 
   componentWillReceiveProps(nextProps) {
