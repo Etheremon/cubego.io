@@ -140,13 +140,13 @@ class Navbar extends React.Component {
 
         <Container size={size} className="navbar__content">
 
-          <div className={'navbar__item-group logo'}>
+          {/* <div className={'navbar__item-group logo'}>
             <div className={'navbar__item'}>
               <Link smooth to="/#home">
                 <Image img={'logo_cubego'}/>
               </Link>
             </div>
-          </div>
+          </div> */}
 
           <div className={'navbar__item-group links'}>
             {NavbarList['mobile'].map((item, idx) => {
@@ -175,7 +175,7 @@ class Navbar extends React.Component {
                             <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${ddItem.img}`}/></span>
                           </a>
                   })))}>
-                    <div className={`navbar__item`}>
+                    <div className={`navbar__item--mobile`}>
                       <span><Image img={`${item.img}`}/> <Icon name={'angle down icon'}/></span>
                     </div>
                   </Dropdown>
@@ -214,6 +214,12 @@ class Navbar extends React.Component {
                   </Dropdown>
                 )
             })}
+
+            <div className={'navbar__item logo'}>
+              <Link smooth to="/#home">
+                <Image img={'logo_cubego'}/>
+              </Link>
+            </div>
           </div>
 
           <div className={'navbar__item-group user-info'}>

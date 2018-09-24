@@ -88,11 +88,47 @@
       &.links {
         flex-grow: 1;
         justify-content: space-evenly;
+        margin-left: 88px;
+
+        @include mobile {
+          margin-left: 0px;
+        }
+
+        .widget__dropdown__left {
+          margin: 0 4px;
+          &:nth-child(0) {
+            order: 0;
+          }
+
+          &:nth-child(1) {
+            order: 2;
+          }
+
+        }
 
         .navbar__item {
           margin: 0 12px;
-          @include mobile {
-            margin: 0 4px;
+
+          &:nth-child(0), &:nth-child(1), &:nth-child(2) {
+            order: 0;
+          }
+          &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+            order: 2;
+          }
+          &:nth-last-child(1) {
+            order: 1;
+          }
+
+          &.logo {
+            position: relative;
+            img {
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+              top: 16px;
+              height: 88px;
+              width: auto;
+            }
           }
         }
       }

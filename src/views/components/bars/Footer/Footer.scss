@@ -86,11 +86,13 @@
       display: flex;
       flex-wrap: wrap;
       img {
+        overflow: hidden;
         width: 32px;
         height: 32px;
         margin: 5px;
         @include transition-duration;
         &:hover {
+          filter: invert(100%);
         }
       }
     }

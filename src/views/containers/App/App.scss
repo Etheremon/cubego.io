@@ -10,7 +10,7 @@
 
 
 body {
-  font-family: $f__muli !important;
+  font-family: $f__overpass !important;
   font-weight: $font-weight-normal;
   font-size: $font-size-normal !important;
   min-height: 100%;
@@ -20,7 +20,7 @@ body {
 }
 
 .ui.container, .ui.text.container, h1, h2, h3, h4, h5, p {
-  font-family: $f__muli !important;
+  font-family: $f__overpass !important;
 }
 
 #root {
