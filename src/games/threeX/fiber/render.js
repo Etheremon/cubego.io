@@ -4,7 +4,7 @@ import 'three-orbitcontrols';
 import {ThreeScene} from "../components/threeScene";
 
 let rootContainer = null;
-let scene, camera, renderer, cube, grid, projector, plane, controls, mouse, raycaster, rollOverMesh, canvas;
+let scene, camera, mouse, raycaster, rollOverMesh, canvas;
 let radius = 300, theta = 90, phi = 60;
 let cubeGeo, cubeMaterial;
 let objects = [];
@@ -64,13 +64,6 @@ function onDocumentMouseDown(event) {
   render();
 }
 
-function getMousePositionOnCanvas(event) {
-  let rect = canvas.getBoundingClientRect();
-  return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top
-  }
-}
 
 function onDocumentMouseMove(event) {
   event.preventDefault();

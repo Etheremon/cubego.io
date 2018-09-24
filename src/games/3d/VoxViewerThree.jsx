@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
-import {Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
+import {Axis, Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
 import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
+import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
+import * as THREE from "three";
 
 const SIZE = 50;
 
 class VoxViewerThree extends Component {
   constructor(props) {
     super(props);
-    this.state = {data: {}}
+    this.state = {data: {}};
+    this.mouse = new THREE.Vector2();
+    this.raycaster = new THREE.Raycaster();
+    this.objects = [];
   }
 
   renderVoxel(voxelData) {
@@ -16,15 +21,17 @@ class VoxViewerThree extends Component {
       return [];
     }
     let divisions = Math.max(voxelData.size.x, voxelData.size.z);
-    let elements = [<Grid size={divisions * 50} divisions={divisions}
+    let elements = [<Grid size={divisions * 50} divisions={divisions} key='grid'
                           position={{x: -SIZE / 2, y: -SIZE * voxelData.size.y / 2, z: -SIZE / 2}}/>];
     Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE}
+      elements.push(<MeshBox size={SIZE} ref={(ref) => {
+        this.objects.push(ref._renderer)
+      }}
                              position={{
-                               x: -SIZE * voxelData.size.x / 2 + SIZE * voxel.x,
-                               y: -SIZE * voxelData.size.y / 2 + SIZE / 2 + SIZE * voxel.y,
-                               z: SIZE * voxelData.size.z / 2 - SIZE * voxel.z
+                               x: SIZE / 2 + SIZE * voxel.x,
+                               y: SIZE / 2 + SIZE * voxel.y,
+                               z: SIZE / 2 + SIZE * voxel.z
                              }}
                              key={`${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
                              color={color}/>)
@@ -38,11 +45,42 @@ class VoxViewerThree extends Component {
     })
   }
 
+  componentDidMount() {
+    this.canvas = document.getElementById('canvas3D');
+    this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
+    // canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+  }
+
+  onMouseMove(event) {
+    event.preventDefault();
+    let mousePos = getMousePositionOnCanvas(event, this.canvas);
+    this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
+    this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
+    let intersects = this.raycaster.intersectObjects(this.objects);
+    if (intersects.length > 0) {
+      let intersect = intersects[0];
+      if(false){
+        let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
+        position.divideScalar(50).floor();
+        position.multiplyScalar(50).addScalar(25);
+        this.rollOverMesh.renderer.position.copy(position);
+      } else {
+        this.rollOverMesh.renderer.position.copy(intersect.object.position);
+      }
+    }
+  }
+
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        <PerspectiveCamera/>
+        <Axis/>
+        <PerspectiveCamera ref={(ref) => {
+          this.camera = ref
+        }}/>
         <HemisphereLight/>
+        <MeshBox size={SIZE+1} color='ff0000' ref={(ref) => {
+          this.rollOverMesh = ref
+        }}/>
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
     );

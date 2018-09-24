@@ -1,6 +1,6 @@
 import {FiberNode} from "../fiber/FiberNode";
 
-export class ThreeComponent extends FiberNode{
+export class ThreeComponent extends FiberNode {
   constructor() {
     super();
     this._renderer = null;
@@ -9,6 +9,10 @@ export class ThreeComponent extends FiberNode{
 
   set renderer(renderer) {
     this._renderer = renderer;
+  }
+
+  get renderer() {
+    return this._renderer;
   }
 
   set parent(parent) {

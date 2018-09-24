@@ -154,4 +154,13 @@ function parsePoint(value) {
   return arr.map(Number);
 }
 
-export {emptyFnc, diffProps, loggerFnc, filterByKey, including, applyProps}
+function getMousePositionOnCanvas(event, canvas) {
+  let rect = canvas.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  }
+}
+
+
+export {emptyFnc, diffProps, loggerFnc, filterByKey, including, applyProps, getMousePositionOnCanvas}

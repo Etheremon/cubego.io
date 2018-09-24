@@ -11,7 +11,9 @@ export class ThreeMeshBox extends ThreeComponent {
     let cubeMesh = new THREE.Mesh(boxGeo, boxMaterial);
     let boxHelper = new THREE.BoxHelper(cubeMesh, 0xffffff);
     cubeMesh.add(boxHelper);
-    cubeMesh.position.set(props.position.x, props.position.y, props.position.z);
+    if (props.position) {
+      cubeMesh.position.set(props.position.x, props.position.y, props.position.z);
+    }
     meshContainer.renderer = cubeMesh;
     return meshContainer;
   }
