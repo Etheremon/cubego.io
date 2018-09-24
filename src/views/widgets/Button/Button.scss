@@ -61,7 +61,8 @@
 
 .widget__button-new {
   margin: 4px;
-  font-family: $f__candal;
+  font-family: $f__baloobha !important;
+  font-weight: $font-weight-normal;
   text-transform: capitalize;
   text-align: center;
   cursor: pointer;
@@ -114,9 +115,24 @@
     }
   }
 
+  &.black_no_shadow {
+    background-color: $black20;
+    border-bottom: 0px solid transparent;
+
+    .transform {
+      background-color: $c__red-1;
+    }
+    .transform .item:hover {
+      background-color: $c__orange-3;
+    }
+    &:hover {
+      background-color: $c__orange-4;
+    }
+  }
+
   &.grey_no_shadow {
     background-color: $grey;
-    border-bottom: 4px solid transparent;
+    border-bottom: 0px solid transparent;
 
     .transform {
       background-color: $c__red-1;

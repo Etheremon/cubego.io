@@ -18,6 +18,7 @@ import {URLS} from "../../../utils/constants";
 import FeatureCard from '../../components/cards/FeatureCard/FeatureCard.jsx';
 import Carousel from '../../widgets/Carousel/Carousel.jsx';
 import { Image } from '../../components/Image/Image.jsx';
+import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 
 require("style-loader!./Home.scss");
 
@@ -78,7 +79,7 @@ class HomePage extends React.Component {
     ]
 
     return (
-      <div className="page-container">
+      <PageWrapper className="page-container">
         <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home__container'}/>
         <div className={'home__container'} id={'home__container'}>
 
@@ -96,7 +97,7 @@ class HomePage extends React.Component {
 
           {/* end home__build */}
 
-          <div className="home__section home__intro" id={'intro'}>
+          <Container size={Container.sizes.SMALL} className="home__section home__intro" id={'intro'}>
             <div className="home__intro-board">
               <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
             </div>
@@ -105,12 +106,14 @@ class HomePage extends React.Component {
               <img src={require('../../../shared/img/assets/model_example_2.png')} />
               <img src={require('../../../shared/img/assets/model_example_3.png')} />
             </div>
-          </div>
+          </Container>
 
           {/* end home__intro */}
 
           <div className="home__section home__modes" id={'modes'}>
-            <Text className={'home_modes-title'} type={Text.types.H2} children={_t('txt.how_to_play')} />
+            <div className="home__modes-title__container">
+              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('txt.how_to_play')} />
+            </div>
 
             <div className="home__mode-container">
               <Carousel list={guildGame} />
@@ -120,6 +123,10 @@ class HomePage extends React.Component {
           {/* end home__modes */}
 
           <div className="home__section home__game-detail" id={'game-detail'}>
+
+            <div className="home__game-detail__title-container">
+              <Text className={'home__game-detail-title'} type={Text.types.H2} children={_t('txt.features')} />
+            </div>
 
             <div className={'home__game-detail__copyright'}>
               <div className={'home__game-detail__copyright-img'}>
@@ -131,7 +138,7 @@ class HomePage extends React.Component {
                   <p>{_t('txt.game_detail_copyright')}</p>
                 </div>
                 <p>{_t('txt.game_detail_copyright_desc')}</p>
-                <ButtonNew className={'home__game-detail__copyright-btn'} label={_t('txt.read_more')} onClick={() => {
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__copyright-btn'} label={_t('txt.read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -144,7 +151,7 @@ class HomePage extends React.Component {
                   <p>{_t('txt.game_detail_index')}</p>
                 </div>
                 <p>{_t('txt.game_detail_index_desc')}</p>
-                <ButtonNew className={'home__game-detail__index-btn'} label={_t('txt.read_more')} onClick={() => {
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__index-btn'} label={_t('txt.read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -163,7 +170,7 @@ class HomePage extends React.Component {
                   <p>{_t('txt.game_detail_battle')}</p>
                 </div>
                 <p>{_t('txt.game_detail_battle_desc')}</p>
-                <ButtonNew className={'home__game-detail__battle-btn'} label={_t('txt.read_more')} onClick={() => {
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__battle-btn'} label={_t('txt.read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -185,7 +192,7 @@ class HomePage extends React.Component {
           {/* end home__partnership */}
 
           <div className="home__section home__features" id={'features'}>
-            <Text className={'home__features-title'} type={Text.types.H2} children={_t('txt.features')} />
+            
             <div className="home__features-cards">
               {features.map((ft,index) => {
                 return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
@@ -206,7 +213,7 @@ class HomePage extends React.Component {
               </div>
               <div className={'home__subscription-main'}>
                 <p>{_t('txt.get_the_latest_news_desc')}</p>
-                <input type="text" className={'home__subscription-input'} placeholder={_t('txt.your_email_address')} value={this.state.email} />
+                <input type="text" className={'home__subscription-input'} placeholder={_t('txt.your_email_address')} value={this.state.email} readOnly/>
                 <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('txt.subscribe')} onClick={() => {
                   
                 }}/>
@@ -219,7 +226,7 @@ class HomePage extends React.Component {
         </div>
 
         <Footer />
-      </div>
+      </PageWrapper>
     )
   }
 }

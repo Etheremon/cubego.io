@@ -19,7 +19,17 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    border: 0.5px solid $gray;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
+
+    &:hover {
+      background-color: $gray-light;
+      img {
+        filter: grayscale(1);
+      }
+    }
 
     img {
       width: 24px;
@@ -40,6 +50,20 @@
     &.active {
       z-index: 1;
       opacity: 1;
+    }
+
+    img {
+
+    }
+
+    .item__title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0px;
+      padding: 8px;
+      border: 0.5px solid $gray;
+      border-radius: 8px;
     }
   }
 

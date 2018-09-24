@@ -1,7 +1,7 @@
 @import '../../styles/mixins';
 @import '../../styles/colors';
 @import '../../styles/variables';
-
+@import '../../styles/fonts';
 
 .home__container {
   color: $gray-dark;
@@ -17,6 +17,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    display: none !important;
 
     .home__banner-item {
       position: relative;
@@ -48,6 +49,7 @@
     text-align: center;
 
     .home__intro-board {
+      padding: 0px 32px;
       color: $gray-dark;
     }
 
@@ -86,6 +88,21 @@
     text-align: -webkit-center;
     color: $dark;
     display: block;
+
+    .home__game-detail__title-container {
+      margin-bottom: 80px;
+      background-color: #F2BC91;
+      height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .home__game-detail-title {
+        color: $white;
+        font-family: $f__vt323;
+        font-size: $font-size-header-3;
+      }
+    }
 
     .home__game-detail__copyright, .home__game-detail__battle {
       display: flex;
@@ -266,10 +283,24 @@
     padding-top: 20px;
     padding-bottom: 20px;
 
-    .home_modes-title {
-      padding-bottom: 24px;
-      color: #676767;
+    .home__modes-title__container {
+      background-color: #F2BC91;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 32px;
+      height: 74px;
+      
+      .home__modes-title {
+        display: inline;
+        color: $white;
+        font-family: $f__vt323;
+        font-size: $font-size-header-3;
+      }
     }
+
+    
 
     .home__mode-container {
       position: relative;
@@ -281,11 +312,11 @@
 
       .guild-game {
         position: absolute;
-        height: 100%;
+        height: 80%;
         display: block;
         left: 50%;
-        object-fit: cover;
-        @include transform(translateX(-50%));
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
       
     }
@@ -296,6 +327,7 @@
     padding-bottom: 20px;
     background-color: $white-blue;
     text-align: center;
+    display: none !important;
 
     .home__partnership__imgs {
       display: flex;
@@ -325,6 +357,7 @@
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    display: none !important;
 
     .home__subscription-container {
       display: flex;
@@ -383,10 +416,12 @@
     text-align: center;
     width: 100%;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
 
     .home__features-title {
       margin-bottom: 44px;
+      font-family: $f__vt323;
+      font-size: $font-size-header-3;
     }
 
     .home__features-cards {

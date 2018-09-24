@@ -59,6 +59,7 @@ class Carousel extends React.Component {
       <div className={`widget__carousel ${className}`}>
         {list.map((item, idx) => (
           <div className={`item ${current === idx ? 'active' : ''}`} key={idx}>
+            <div className="item__title">{item.text}</div>
             {item.image}
           </div>
         ))}
