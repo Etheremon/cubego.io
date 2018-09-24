@@ -3,15 +3,20 @@
 @import '../../../styles/variables';
 
 
-.color-tool {
+.toggle-tool {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
 
-  .color-tool__list {
-    display: flex;
-    flex-wrap: wrap;
+  .toggle-tool__img {
+    img {
+      width: 100%;
+    }
   }
-  .color-tool__cell {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+
+  &.inactive {
+    img {
+      filter: grayscale(1);
+    }
   }
 }

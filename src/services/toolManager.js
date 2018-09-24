@@ -2,7 +2,14 @@ import {EDITOR_COLORS} from "../utils/constants";
 import * as Utils from "../utils/utils";
 import {CloneDeep} from "../utils/objUtils";
 
-let emptyModel = {};
+let emptyModel = {
+  size: {
+    x: 16,
+    y: 16,
+    z: 16,
+  },
+  voxels: {},
+};
 
 export class ToolManager {
   constructor(props) {
@@ -167,8 +174,10 @@ Tools.erase = ({key='erase', value=false}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({model, cell, effects}) => {
-    return CloneDeep(model);
+  onCellClicked: ({tools, model, cell}) => {
+    let newModel = CloneDeep(model);
+    delete newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`];
+    return newModel;
   },
 });
 

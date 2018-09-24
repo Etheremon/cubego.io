@@ -30,12 +30,12 @@ class _ColorTool extends React.Component {
 
     return (
       <div className={'color-tool'}>
-        <div className={'color-tool__cell'} style={{backgroundColor: value.hex}}>
+        <div className={'color-tool__cell'} style={{backgroundColor: `rgba(${value.r},${value.g},${value.b},${value.a})`}}>
         </div>
 
         <div className={'color-tool__list'}>
           {options.map((c, idx) => (
-            <div className={'color-tool__cell'} style={{backgroundColor: c.hex}} key={idx}
+            <div className={'color-tool__cell'} style={{backgroundColor: `rgba(${c.r},${c.g},${c.b},${c.a})`}} key={idx}
                  onClick={() => {this.onColorChange(c)}}>
             </div>
           ))}

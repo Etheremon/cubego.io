@@ -29,6 +29,12 @@ class _ModelEditor extends React.Component {
 
     this.tools = {
       draw: Tools.draw({value: true}),
+      erase: Tools.erase({value: false}),
+
+      clear: Tools.clear({}),
+      undo: Tools.undo({}),
+      redo: Tools.redo({}),
+
       color: Tools.color({}),
       view2D: Tools.view2D({}),
       layerIndex: Tools.layerIndex({value: 1}),
@@ -70,9 +76,43 @@ class _ModelEditor extends React.Component {
         <Container className={'model-editor'} size={Container.sizes.LARGE}>
 
           <div className={'model-editor__tool-bar'}>
-            <ToggleTool toolKey={this.tools.draw.key}
-                        value={this.toolManager.getToolValue(this.tools.draw.key)}
-                        onChange={(val) => {this.onToolChange(this.tools.draw.key, val)}}/>
+            <div className={'group'}>
+              <div className={'item'}>
+                <ToggleTool label={_t('draw')} img={require('../../../shared/img/Icons/heart.png')}
+                            active={this.toolManager.getToolValue(this.tools.draw.key)}
+                            onClick={() => {
+                              let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
+                              this.onToolChange(this.tools.draw.key, !currentVal);
+                            }}
+                />
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('erase')} img={require('../../../shared/img/Icons/heart.png')}
+                            active={this.toolManager.getToolValue(this.tools.erase.key)}
+                            onClick={() => {
+                              let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
+                              this.onToolChange(this.tools.erase.key, !currentVal);
+                            }}
+                />
+              </div>
+            </div>
+
+            <div className={'group'}>
+              <div className={'item'}>
+                <ToggleTool label={_t('clear')} img={require('../../../shared/img/Icons/heart.png')}
+                            onClick={() => {this.onToolChange(this.tools.clear.key, true);}}/>
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('undo')} img={require('../../../shared/img/Icons/heart.png')}
+                            onClick={() => {this.onToolChange(this.tools.undo.key, true);}}/>
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('redo')} img={require('../../../shared/img/Icons/heart.png')}
+                            onClick={() => {this.onToolChange(this.tools.redo.key, true);}}/>
+              </div>
+            </div>
+
+
           </div>
 
           <div className={'model-editor__canvas'}>

@@ -8,51 +8,20 @@ import {EDITOR_COLORS} from "../../../../utils/constants";
 
 require("style-loader!./ToggleTool.scss");
 
+export const ToggleTool = ({label, img, active, onClick}) => {
+  let activeClass = "";
+  if (active === true) activeClass = "active";
+  if (active === false) activeClass = "inactive";
 
-class _ToggleTool extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-
-    this.onColorChange = this.onColorChange.bind(this);
-  }
-
-  componentDidMount() {
-  }
-
-  onColorChange(c) {
-
-  }
-
-  render() {
-    return (
-      <div className={'toggle-tool'}>
-        <div className={'color-tool__list'}>
-          {EDITOR_COLORS.map((c, idx) => (
-            <div className={'color-tool__cell'} style={{backgroundColor: c.hex}} key={idx}
-                 onClick={() => {this.onColorChange(c)}}>
-            </div>
-          ))}
-        </div>
+  return (
+    <div className={`toggle-tool ${activeClass}`}
+         onClick={() => {onClick && onClick()}}>
+      <div className={'toggle-tool__img'}>
+        <img src={img}/>
       </div>
-    )
-  }
-}
-
-const mapStateToProps = (store, props) => {
-  let pathName = props.pathname;
-  return {
-    pathName,
-    _t: getTranslate(store.localeReducer),
-  }
+       <div className={'toggle-tool__label'}>
+         {label}
+      </div>
+    </div>
+  )
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: dispatch,
-});
-
-export const ToggleTool = withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(_ToggleTool));
