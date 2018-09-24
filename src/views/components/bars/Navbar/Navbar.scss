@@ -88,6 +88,11 @@
       &.links {
         flex-grow: 1;
         justify-content: space-evenly;
+        margin-left: 88px;
+
+        @include mobile {
+          margin-left: 0px;
+        }
 
         .widget__dropdown__left {
           margin: 0 4px;
