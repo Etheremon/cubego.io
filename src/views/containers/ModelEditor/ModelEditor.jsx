@@ -32,6 +32,7 @@ class _ModelEditor extends React.Component {
       erase: Tools.erase({value: false}),
 
       clear: Tools.clear({}),
+      clearLayer: Tools.clearLayer({}),
       undo: Tools.undo({}),
       redo: Tools.redo({}),
 
@@ -54,6 +55,7 @@ class _ModelEditor extends React.Component {
     let parser = new window.vox.Parser();
     parser.parse(require('../../../games/data/2.vox')).then((voxelData) => {
       this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+      this.currentModel = modelUtils.ReformatModel(voxelData);
       this.forceUpdate();
     });
   }
@@ -99,16 +101,27 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('clear')} img={require('../../../shared/img/Icons/heart.png')}
-                            onClick={() => {this.onToolChange(this.tools.clear.key, true);}}/>
-              </div>
-              <div className={'item'}>
                 <ToggleTool label={_t('undo')} img={require('../../../shared/img/Icons/heart.png')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
                             onClick={() => {this.onToolChange(this.tools.undo.key, true);}}/>
               </div>
               <div className={'item'}>
                 <ToggleTool label={_t('redo')} img={require('../../../shared/img/Icons/heart.png')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
                             onClick={() => {this.onToolChange(this.tools.redo.key, true);}}/>
+              </div>
+            </div>
+
+            <div className={'group'}>
+              <div className={'item'}>
+                <ToggleTool label={_t('clear')} img={require('../../../shared/img/Icons/heart.png')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
+                            onClick={() => {this.onToolChange(this.tools.clear.key, true);}}/>
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('clear_current_layer')} img={require('../../../shared/img/Icons/heart.png')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
+                            onClick={() => {this.onToolChange(this.tools.clearLayer.key, true);}}/>
               </div>
             </div>
 
@@ -118,7 +131,7 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__canvas'}>
             <div className={'model-editor__left'}>
               <div className={'model-editor__3d'}>
-                <Model3D model={this.toolManager.model} tools={this.toolManager.tools} onCellClicked={this.onCellClicked}/>
+                <Model3D model={this.toolManager.model} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
               </div>
 
               <div className={'model-editor__colors'}>
@@ -131,7 +144,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__right'}>
               <div className={'model-editor__2d'}>
-                <Layer2D layer={this.toolManager.layer} tools={this.toolManager.tools} onCellClicked={this.onCellClicked}/>
+                <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
               </div>
               <div className={'model-editor__layer-tool'}>
                 <Dropdown list={this.tools.view2D.options.map(option => ({

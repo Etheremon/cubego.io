@@ -2,15 +2,6 @@ import {EDITOR_COLORS} from "../utils/constants";
 import * as Utils from "../utils/utils";
 import {CloneDeep} from "../utils/objUtils";
 
-let emptyModel = {
-  size: {
-    x: 16,
-    y: 16,
-    z: 16,
-  },
-  voxels: {},
-};
-
 export class ToolManager {
   constructor(props) {
     this._tools = {};
@@ -144,6 +135,10 @@ export class ToolManager {
   getToolValue(toolKey) {
     return this._tools[toolKey].value;
   }
+
+  isToolAvailable(toolKey) {
+    return this._tools[toolKey] && this._tools[toolKey].isActive && this._tools[toolKey].isActive({toolManager: this});
+  }
 }
 
 export const ToolTypes = {
@@ -186,7 +181,7 @@ Tools.erase = ({key='erase', value=false}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({tools, model, cell}) => {
+  onCellClicked: ({model, cell}) => {
     let newModel = CloneDeep(model);
     delete newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`];
     return newModel;
@@ -198,9 +193,26 @@ Tools.clear = ({key='clear'}) => ({
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
     toolManager.history.idx += 1;
-    toolManager.history.models[toolManager.history.idx] = CloneDeep(emptyModel);
+    toolManager.history.models[toolManager.history.idx] = CloneDeep(toolManager._model);
+    toolManager.history.models[toolManager.history.idx].voxels = {};
     toolManager.history.models.length = toolManager.history.idx+1;
   },
+  isActive: ({toolManager}) => (toolManager._model && !Utils.ObjIsEmpty(toolManager._model.voxels)),
+});
+
+Tools.clearLayer = ({key='clear-layer'}) => ({
+  key,
+  type: ToolTypes.action,
+  onToolClicked: ({toolManager}) => {
+    toolManager.history.idx += 1;
+    toolManager.history.models[toolManager.history.idx] = CloneDeep(toolManager._model);
+    toolManager.history.models[toolManager.history.idx].voxels = Utils.ObjFilter(
+      toolManager.history.models[toolManager.history.idx].voxels,
+      (voxel) => voxel[toolManager._layer.z] !== toolManager._layer.idx,
+    );
+    toolManager.history.models.length = toolManager.history.idx+1;
+  },
+  isActive: ({toolManager}) => (toolManager._layer && !Utils.ObjIsEmpty(toolManager._layer.voxels)),
 });
 
 Tools.undo = ({key='undo'}) => ({
@@ -209,6 +221,7 @@ Tools.undo = ({key='undo'}) => ({
   onToolClicked: ({toolManager}) => {
     if (toolManager.history.idx > 0) toolManager.history.idx -= 1;
   },
+  isActive: ({toolManager}) => (toolManager.history.idx > 0),
 });
 
 Tools.redo = ({key='redo'}) => ({
@@ -218,6 +231,7 @@ Tools.redo = ({key='redo'}) => ({
     if (toolManager.history.idx < toolManager.history.models.length-1)
       toolManager.history.idx += 1;
   },
+  isActive: ({toolManager}) => (toolManager.history.idx < toolManager.history.models.length - 1),
 });
 
 Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => ({
