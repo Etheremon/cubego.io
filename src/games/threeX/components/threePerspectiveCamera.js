@@ -5,8 +5,12 @@ export class ThreePerspectiveCamera extends ThreeComponent {
   static create({renderer, canvas, scene}, props) {
     let threeCamera = new ThreePerspectiveCamera();
     let camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
-    camera.position.set(500, 800, 1300);
-    camera.lookAt(0, 0, 0);
+    if (props.position) {
+      camera.position.set(props.position.x, props.position.y, props.position.z);
+    }
+    if (props.lookAt) {
+      camera.lookAt(props.lookAt.x, props.lookAt.y, props.lookAt.z);
+    }
     let controls = new THREE.OrbitControls(camera, canvas);
     controls.update();
     const animate = () => {
@@ -17,5 +21,9 @@ export class ThreePerspectiveCamera extends ThreeComponent {
     animate();
     threeCamera.renderer = camera;
     return threeCamera;
+  }
+
+  lookAt(position) {
+    this.renderer.lookAt(position.x, position.y, position.z);
   }
 }

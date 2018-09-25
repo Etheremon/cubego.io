@@ -22,16 +22,16 @@ class VoxViewerThree extends Component {
     }
     let divisions = Math.max(voxelData.size.x, voxelData.size.z);
     let elements = [<Grid size={divisions * 50} divisions={divisions} key='grid'
-                          position={{x: -SIZE / 2, y: -SIZE * voxelData.size.y / 2, z: -SIZE / 2}}/>];
+                          position={{x: 0, y: -SIZE * voxelData.size.x / 2, z: 0}}/>];
     Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
       elements.push(<MeshBox size={SIZE} ref={(ref) => {
         this.objects.push(ref._renderer)
       }}
                              position={{
-                               x: SIZE / 2 + SIZE * voxel.x,
-                               y: SIZE / 2 + SIZE * voxel.y,
-                               z: SIZE / 2 + SIZE * voxel.z
+                               x: SIZE / 2 + SIZE * voxel.x - SIZE * voxelData.size.x / 2,
+                               y: SIZE / 2 + SIZE * voxel.y - SIZE * voxelData.size.x / 2,
+                               z: SIZE / 2 + SIZE * voxel.z - SIZE * voxelData.size.z / 2
                              }}
                              key={`${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
                              color={color}/>)
@@ -42,7 +42,7 @@ class VoxViewerThree extends Component {
   setNewVoxelData(voxelData) {
     this.setState({
       data: voxelData || {}
-    })
+    });
   }
 
   componentDidMount() {
@@ -59,12 +59,12 @@ class VoxViewerThree extends Component {
     let intersects = this.raycaster.intersectObjects(this.objects);
     if (intersects.length > 0) {
       let intersect = intersects[0];
-      if(false){
+      if (false) {//for adding
         let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
         position.divideScalar(50).floor();
         position.multiplyScalar(50).addScalar(25);
         this.rollOverMesh.renderer.position.copy(position);
-      } else {
+      } else {//for painting
         this.rollOverMesh.renderer.position.copy(intersect.object.position);
       }
     }
@@ -76,9 +76,9 @@ class VoxViewerThree extends Component {
         <Axis/>
         <PerspectiveCamera ref={(ref) => {
           this.camera = ref
-        }}/>
+        }} position={{x: -500, y: 800, z: -1300}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
-        <MeshBox size={SIZE+1} color='ff0000' ref={(ref) => {
+        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref
         }}/>
         {this.renderVoxel(this.state.data)}
