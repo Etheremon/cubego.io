@@ -70,19 +70,74 @@
   .dots {
     position: absolute;
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
-    width: 100%;
+    align-items: center;
     z-index: 2;
     left: 50%;
     @include transform(translateX(-50%));
     bottom: 0px;
 
-    .dot {
+    .padding-right, .padding-left {
+      width: auto;
+      height: 8px;
+      flex-grow: 1;
+      padding: 0 16px;
+    }
+
+    .padding-left {
+      order: 2;
+    }
+
+    .padding-right {
+      order: 4;
+    }
+
+    .dot__container {
       cursor: pointer;
-      height: 20px;
-      margin: 0 8px;
+      height: 16px;
+      display: block;
+      position: relative;
+      text-align: center;
       &.active {
-        background-color: $primary;
+        .dot {
+          background-color: $c__orange-5;
+          box-shadow: 0px 3px 1px 0px $c__red-1;
+        }
+
+        .dot__text {
+          color: $c__orange-5;
+        }
+      }
+
+      .dot {
+        background-color: $violet;
+        width: 16px;
+        height: 16px;
+        border-radius: 3px;
+        box-shadow: 0px 3px 1px 0px #54447A;
+      }
+
+      .dot__text {
+        position: absolute;
+        bottom: -44px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px;
+        padding: 5px 12px;
+        background-color: #E1E1E1;
+      }
+
+      &:nth-child(1) {
+        order: 1
+      }
+
+      &:nth-child(2) {
+        order: 3
+      }
+
+      &:nth-child(3) {
+        order: 5
       }
     }
   }

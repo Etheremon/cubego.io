@@ -10,7 +10,7 @@ export const ImgSource = {
   'icon_about_us': require('../../../shared/img/icons/icon_about_us.png'),
   'icon_battle': require('../../../shared/img/icons/icon_battle.png'),
   'icon_build_hero': require('../../../shared/img/icons/icon_build_hero.png'),
-  'icon_introduce_game': require('../../../shared/img/icons/icon_introduce_game.png'),
+  'icon_market': require('../../../shared/img/icons/icon_market.png'),
   'icon_store': require('../../../shared/img/icons/icon_store.png'),
   'icon_my_heroes': require('../../../shared/img/icons/icon_my_heroes.png'),
 
@@ -29,6 +29,9 @@ export const ImgSource = {
   'icon_twitter': require('../../../shared/img/socialMedia/icon_twitter.png'),
   'icon_youtube': require('../../../shared/img/socialMedia/icon_youtube.png'),
   'icon_telegram': require('../../../shared/img/socialMedia/icon_telegram.png'),
+
+  'padding_dot_left': require('../../../shared/img/assets/padding_dot_left.png'),
+  'padding_dot_right': require('../../../shared/img/assets/padding_dot_right.png'),
 };
 
 export const Image = ({className, img, onClick}) => {

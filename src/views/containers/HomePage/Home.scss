@@ -62,7 +62,6 @@
       overflow: hidden;
 
       img {
-        background-color: $grey;
         display: block;
         border-radius: 16px;
         box-shadow: 5px 5px 16px -2px rgba(143,124,120,1) !important;
@@ -70,6 +69,27 @@
         width: 15vw;
         object-fit: cover;
         height: 20vw;
+
+        &:nth-child(1) {
+          background-image: url('../../../shared/img/background/background_intro_1.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        &:nth-child(2) {
+          background-image: url('../../../shared/img/background/background_intro_2.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        &:nth-child(3) {
+          background-image: url('../../../shared/img/background/background_intro_3.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
 
         @include mobile {
           width: 35vw;
@@ -86,38 +106,23 @@
     text-align: -webkit-center;
     color: $dark;
     display: block;
+    position: relative;
 
-    .home__game-detail__title-container {
-      margin-bottom: 80px;
-      background-color: #F2BC91;
-      height: 56px;
+    .index__content {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      .home__game-detail-title {
-        color: $white;
-        font-family: $f__vt323;
-        font-size: $font-size-header-3;
-      }
-    }
-
-    .home__game-detail__copyright, .home__game-detail__battle {
-      display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: stretch;
-      margin-bottom: 64px;
-      height: 300px;
-      @include mobile {
-        height: 400px;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-      }
-
-      .home__game-detail__copyright-img, .home__game-detail__battle-img {
-        width: 50%;
+      justify-content: center;
+      
+      .index-img {
         height: 100%;
-        position: relative;
+        position: relative; 
+        width: 53%;
         img {
           display: block;
           max-height: 100%;
@@ -128,19 +133,19 @@
           height: 50%;
         }
       }
-  
-      .home__game-detail__copyright-info, .home__game-detail__battle-info {
-        flex-grow: 1;
-        padding: 0 32px;
-        margin-left: 44px;
+
+      .index-info {
+        text-align: left;
+        padding: 20px;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        text-align: left;
-        position: relative;
+        padding-right: 50px;
+        width: 47%;
+
           @include mobile {
-            margin-top: 24px;
             text-align: center;
             width: 100%;
             height: 50%;
@@ -148,30 +153,111 @@
       }
     }
 
-    .copyright__padding {
+    .copyright__content, .battle__content {
       position: absolute;
-      width: 85%;
-      height: 130%;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      max-width: 100%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+
+
+      .copyright-img, .battle-img {
+        height: 100%;
+        position: relative; 
+        width: 53%;
+        img {
+          display: block;
+          max-height: 100%;
+        }
+
+        @include mobile {
+          width: 100%;
+          height: 50%;
+        }
+      }
+
+      .copyright-info, .battle-info {
+        padding: 0 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+        width: 47%;
+        box-sizing: border-box;
+        z-index: 2;
+        padding-left: 50px;
+
+          @include mobile {
+            text-align: center;
+            width: 100%;
+            height: 50%;
+          }
+      }
+    }
+    
+    .subtitle {
+      color: $white;
     }
 
-    .battle__padding {
+    .home__game-detail__copyright, .home__game-detail__battle {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      margin-bottom: 112px;
+      height: 400px;
+      position: relative;
+      @include mobile {
+        height: 600px;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
+
+      .copyright__layer-img, .battle__layer-img {
+        background-color: #D3D3D3;
+        width: 53%;
+      }
+
+      .copyright__layer-info {
+        width: 47%;
+        background: url('../../../shared/img/background/background_yellow.png') no-repeat center;
+      }
+
+      .battle__layer-info {
+        width: 47%;
+        background: url('../../../shared/img/background/background_red.png') no-repeat center;
+      }
+    }
+
+    .padding {
       position: absolute;
-      width: 85%;
+      width: 40%;
       height: 130%;
-      right: 0;
-      top: 50%;
       transform: translateY(-50%);
+      z-index: 0;
+      top: 50%;
+
+      @include mobile {
+        transform: translateY(0%);
+        top: 75%;
+        height: 0;
+      }
     }
-    
-    .home__game-detail__copyright-info {
-      background: url('../../../shared/img/background/background_yellow.png') no-repeat center;
+
+    .copyright__layer {
+      right: 0;
     }
-    
-    .home__game-detail__battle-info  {
-      background: url('../../../shared/img/background/background_red.png') no-repeat center;
+
+    .battle__layer {
+      right: 0;
+    }
+
+    .index__layer {
+      left: 0;
     }
 
     .home__game-detail__index {
@@ -179,56 +265,23 @@
       flex-wrap: wrap;
       align-items: stretch;
       justify-content: center;
-      margin-bottom: 64px;
-      height: 300px;
+      margin-bottom: 112px;
+      height: 400px;
+      position: relative;
       @include mobile {
         flex-wrap: wrap;
         justify-content: space-evenly;
-        height: 400px;
+        height: 600px;
       }
 
-      .home__game-detail__index-img {
-        width: 50%;
-        height: 100%;
-        position: relative;
-        img {
-          display: block;
-          max-height: 100%;
-        }
-
-        @include mobile {
-          width: 100%;
-          height: 50%;
-        }
+      .index__layer-img {
+        background-color: #D3D3D3;
+        width: 53%;
       }
-  
-      .home__game-detail__index-info {
-        text-align: left;
-        margin-right: 44px;
-        flex-grow: 1;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        position: relative;
+
+      .index__layer-info {
+        width: 47%;
         background: url('../../../shared/img/background/background_blue.png') no-repeat center;
-
-          @include mobile {
-            text-align: center;
-            width: 100%;
-            height: 50%;
-            margin-bottom: 24px;
-          }
-  
-        .index__padding {
-          position: absolute;
-          width: 85%;
-          height: 130%;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
       }
     }
 
@@ -249,10 +302,10 @@
     width: 100%;
     text-align: center;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 80px;
 
     .home__modes-title__container {
-      background-color: #F2BC91;
+      background-color: rgba(255, 106, 0, 0.6);
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -386,10 +439,19 @@
     padding-top: 20px;
     padding-bottom: 60px;
 
-    .home__features-title {
-      margin-bottom: 44px;
-      font-family: $f__vt323;
-      font-size: $font-size-header-3;
+    .home__features__title-container {
+      margin-bottom: 56px;
+      background-color: rgba(255, 106, 0, 0.6);
+      height: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .home__features-title {
+        color: $white;
+        font-family: $f__vt323;
+        font-size: $font-size-header-3;
+      }
     }
 
     .home__features-cards {
@@ -397,7 +459,7 @@
       overflow-y: hidden;
       margin: 0 auto;
       white-space: nowrap;
-      width: 80%;
+      width: 100%;
       
       .home__features-card {
         display: inline-block;

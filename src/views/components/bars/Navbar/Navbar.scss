@@ -59,10 +59,11 @@
 
     .navbar__item-group {
       display: flex;
+      position: relative;
 
       img {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
       }
 
       .active {
@@ -88,7 +89,7 @@
       &.links {
         flex-grow: 1;
         justify-content: space-evenly;
-        margin-left: 88px;
+        margin: 0 54px;
 
         @include mobile {
           margin-left: 76px;
@@ -126,13 +127,22 @@
               left: 50%;
               transform: translateX(-50%);
               top: 16px;
-              height: 88px;
+              height: 64px;
               width: auto;
             }
           }
         }
       }
       &.user-info {
+        position: absolute;
+        right: 32px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        @include mobile {
+          right: 12px;
+        }
+
         .navbar__item {
           margin-left: 8px;
           @include mobile {

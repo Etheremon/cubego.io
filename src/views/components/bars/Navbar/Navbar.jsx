@@ -23,7 +23,7 @@ require("style-loader!./Navbar.scss");
 const NavbarList = {
   default: [
     {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
-    {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
     {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
     {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
     {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
@@ -33,7 +33,7 @@ const NavbarList = {
   home: [
     // {link: '/#intro', text: 'intro'},
     {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
-    {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
     {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
     {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
     {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
@@ -41,9 +41,9 @@ const NavbarList = {
   ],
 
   mobile: [
-    {text: 'intro', img: 'icon_introduce_game', group: [
+    {text: 'intro', img: 'icon_market', group: [
       {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
-      {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
+      {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
     ]},
     {text: 'gameplay', img: 'icon_build_hero', group: [
       {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},

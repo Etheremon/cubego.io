@@ -65,9 +65,15 @@ class Carousel extends React.Component {
         ))}
 
         <div className={'dots'}>
-          {list.map((item, idx) => (
-            <ButtonNew color={ButtonNew.colors.GREY_NO_SHADOW} label={item.text} className={`dot ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx} />
-          ))}
+          {list.map((item, idx) => {
+            return  <div className={`dot__container ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx}>
+                      <div className={`dot__text`} >{item.text}</div>
+                      <div className="dot"></div>
+                    </div>
+          })}
+          <Image img={'padding_dot_left'} className="padding-left" />
+          <Image img={'padding_dot_right'} className="padding-right"/>
+          
         </div>
 
         <div className="nav-arrow next" onClick={() => this.handleChangeSlide(true)}>
