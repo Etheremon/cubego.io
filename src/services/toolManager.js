@@ -103,17 +103,25 @@ export class ToolManager {
     let x = this.tools['view-2d'].x;
     let y = this.tools['view-2d'].y;
     let z = this.tools['view-2d'].z;
+    let size = this._model.size;
 
-    this._numLayers = this._model.size[z];
+    this._numLayers = size[z[1]];
     let layerIdx = Utils.BoundVal(this.tools['layer-index'].value, 1, this._numLayers);
     this.tools['layer-index'].value = layerIdx;
-    let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z] === layerIdx-1);
+
+    let zIdx = z[0] === '+' ? layerIdx - 1 : this._numLayers - layerIdx;
+    let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z[1]] === zIdx);
+
     this._layer = {
-      size: this._model.size,
-      palette: this._model.palette,
       voxels,
-      idx: layerIdx-1,
-      x, y, z
+      idx: zIdx,
+      size: size,
+      x: x[1], y: y[1], z: z[1],
+      cal2dPos: (i, j) => {
+        i = (x[0] === '+') ? i : size[x[1]]-1-i;
+        j = (y[0] === '+') ? j : size[y[1]]-1-j;
+        return {x: i, y: j};
+      }
     };
   }
 
@@ -222,22 +230,22 @@ Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => (
     key: 'top',
     label: 'top_view',
   }],
-  x: 'x',
-  y: 'y',
-  z: 'z',
+  x: '+y',
+  y: '-z',
+  z: '-x',
   onToolClicked: ({toolManager, key, value}) => {
     if (value.key === 'front') {
-      toolManager.tools[key].x = 'x';
-      toolManager.tools[key].y = 'y';
-      toolManager.tools[key].z = 'z';
+      toolManager.tools[key].x = '+y';
+      toolManager.tools[key].y = '-z';
+      toolManager.tools[key].z = '-x';
     } else if (value.key === 'side') {
-      toolManager.tools[key].x = 'z';
-      toolManager.tools[key].y = 'y';
-      toolManager.tools[key].z = 'x';
+      toolManager.tools[key].x = '+x';
+      toolManager.tools[key].y = '-z';
+      toolManager.tools[key].z = '+y';
     } else if (value.key === 'top') {
-      toolManager.tools[key].x = 'x';
-      toolManager.tools[key].y = 'z';
-      toolManager.tools[key].z = 'y';
+      toolManager.tools[key].x = '+y';
+      toolManager.tools[key].y = '+x';
+      toolManager.tools[key].z = '+z';
     }
   }
 });
