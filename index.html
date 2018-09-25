@@ -10,11 +10,11 @@
   <title>CubeGo</title>
 
   <!-- Facebook OG Tag -->
-  <meta property="og:url"                content="https://www.CubeGo.com/" />
+  <meta property="og:url"                content="https://www.CubeGo.io/" />
   <meta property="og:type"               content="website" />
   <meta property="og:title"              content="CubeGo - Decentralized World of Creativity" />
   <meta property="og:description"        content="Decentralized World of Creativity" />
-  <meta property="og:image"              content="https://www.CubeGo.com/assets/images/banner_facebook.png" />
+  <meta property="og:image"              content="https://www.CubeGo.io/assets/images/banner_facebook.png" />
   <!-- END Facebook OG Tag -->
 
   <!-- Favicon -->
@@ -41,11 +41,7 @@
   <!-- End Libs -->
 
   <!-- External JS -->
-  <script src="/assets/web3.min.js"></script>
-  <script src="/assets/api.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/core_constant.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/core.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/utils.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
+  <!--<script src="/assets/web3.min.js"></script>-->
   <!-- End External JS-->
 
   <!-- Internal JS-->
@@ -55,76 +51,7 @@
 </head>
 
 <body id="body">
-  <!-- Google Tag Manager (noscript) -->
-  <!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9S5SDH"-->
-                    <!--height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-  <!-- End Google Tag Manager (noscript) -->
-
   <div id="root"></div>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111363129-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    var GA_TRACKING_ID = 'UA-111363129-1';
-    // gtag('config', GA_TRACKING_ID);
-  </script>
-  <!-- End Global site tag (gtag.js) - Google Analytics -->
-
-  <!-- Global site tag (gtag.js) - Google AdWords: 813605893 -->
-  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=AW-813605893"></script>-->
-  <!--<script>-->
-    <!--gtag('config', 'AW-813605893');-->
-  <!--</script>-->
-  <!-- End Global site tag (gtag.js) - Google AdWords: 813605893 -->
-
-  <!-- Facebook Pixel Code -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window,document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1809330549360784');
-  </script>
-  <!-- End Facebook Pixel Code -->
-
-  <!-- Facebook SDK -->
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '177438426293958',
-        xfbml      : true,
-        version    : 'v3.0'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
-  <!-- End Facebook SDK -->
-
-  <!-- Twitter universal website tag code -->
-  <script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
-  <script>
-    !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-    },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
-      a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-    // Insert Twitter Pixel ID and Standard Event data below
-    twq('init','nz4k9');
-  </script>
-  <!-- End Twitter universal website tag code -->
 
   <!-- Bundles -->
   <script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>

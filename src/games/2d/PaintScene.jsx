@@ -59,7 +59,7 @@ class PaintScene extends Component {
     Utils.ObjGetValues(layer.voxels).forEach((voxel) => {
       frame[voxel[layer.x]][voxel[layer.y]] = {
         voxel: voxel,
-        color: voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']),
+        color: voxel['color']['hex'] || fullColorHex(voxel['color']),
       };
     });
     return frame;

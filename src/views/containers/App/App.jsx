@@ -99,7 +99,7 @@ class App extends React.Component {
     ) : (
       <div className={'page-container-wrapper'}>
         <Switch>
-          <Route path={`/${URLS.MODEL_EDITOR}`} component={ModelEditor}/>
+          <Route path={`/${URLS.BUILD_HERO}`} component={ModelEditor}/>
           <Route path={`/${URLS.BATTLE}`} component={Battle}/>
           <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
           <Route path={`/${URLS.BUILD_HERO}`} component={ComingSoon}/>
