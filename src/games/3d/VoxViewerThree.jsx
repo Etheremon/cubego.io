@@ -15,6 +15,7 @@ class VoxViewerThree extends Component {
     this.raycaster = new THREE.Raycaster();
     this.objects = [];
     this.offsetVector = new THREE.Vector3(0, 0, 0);
+    this.isShiftDown = false;
   }
 
   renderVoxel(voxelData) {
@@ -53,6 +54,8 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false)
+    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false)
   }
 
   getRendererObject() {
@@ -63,6 +66,23 @@ class VoxViewerThree extends Component {
     });
   }
 
+  onDocumentKeyDown(event) {
+    switch (event.keyCode) {
+      case 16:
+        this.isShiftDown = true;
+        break
+    }
+
+  }
+
+  onDocumentKeyUp(event) {
+    switch (event.keyCode) {
+      case 16:
+        this.isShiftDown = false;
+        break;
+    }
+  }
+
   onMouseDown(event) {
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
@@ -70,20 +90,18 @@ class VoxViewerThree extends Component {
     let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
       let intersect = intersects[0];
-      if (false) {//for adding
-        let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
-        position.divideScalar(SIZE).floor();
-        position.multiplyScalar(SIZE).addScalar(SIZE / 2);
-        this.rollOverMesh.renderer.position.copy(position);
-      } else {//for painting
-        let position = intersect.object.position.clone();
-        let cubePos = position.add(this.offsetVector).divideScalar(SIZE).floor();
-        this.props.onCellClicked && this.props.onCellClicked({
-          ['x']: cubePos.x,
-          ['y']: cubePos.z,
-          ['z']: cubePos.y,
-        })
+      let position;
+      if (this.isShiftDown) {
+        position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
+      } else {
+        position = intersect.object.position.clone();
       }
+      let cubePos = position.add(this.offsetVector).divideScalar(SIZE).floor();
+      this.props.onCellClicked && this.props.onCellClicked({
+        ['x']: cubePos.x,
+        ['y']: cubePos.z,
+        ['z']: cubePos.y,
+      })
     }
   }
 
@@ -95,12 +113,12 @@ class VoxViewerThree extends Component {
     let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
       let intersect = intersects[0];
-      if (false) {//for adding
+      if (this.isShiftDown) {
         let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
         position.divideScalar(50).floor();
         position.multiplyScalar(50).addScalar(25);
         this.rollOverMesh.renderer.position.copy(position);
-      } else {//for painting
+      } else {
         this.rollOverMesh.renderer.position.copy(intersect.object.position);
       }
     }
