@@ -4,32 +4,11 @@ import Loading from "../Loading/Loading.jsx";
 
 require("style-loader!./Button.scss");
 
-export const ButtonGroup = ({buttons}) => {
-  return (
-    <div className={`widget__button-group`}>
-      {buttons.map((btn, idx) => (
-        <div key={idx} className={`${btn.active ? 'active' : ''}`} onClick={() => btn.onClick && btn.onClick()}>
-          {btn.label}
-        </div>
-      ))}
-    </div>
-  )
-};
-ButtonGroup.defaultProps = {
-};
-ButtonGroup.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.shape({
-    onClick: PropTypes.func,
-    label: PropTypes.string,
-    active: PropTypes.bool,
-  })),
-};
 
-
-export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList, onClick}) => {
+export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList, onClick, showDeco}) => {
 
   return (
-    <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
+    <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco ? 'deco' : ''} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
          onClick={(e) => {
            e.preventDefault();
            e.stopPropagation();
@@ -80,6 +59,7 @@ ButtonNew.defaultProps = {
   size: ButtonNew.sizes.NORMAL,
   fluid: false,
   tokenList: ['eth', 'emont'],
+  showDeco: false,
 };
 ButtonNew.propTypes = {
   color: PropTypes.string,
@@ -87,4 +67,5 @@ ButtonNew.propTypes = {
   handleOnClick: PropTypes.func,
   fluid: PropTypes.bool,
   disabled: PropTypes.bool,
+  showDeco: PropTypes.bool,
 };

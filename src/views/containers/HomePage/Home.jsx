@@ -22,14 +22,16 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 
 require("style-loader!./Home.scss");
 
-const features = [{title: 'build_hero', desc: 'desc.build_hero'},
-                      {title: 'auotion', desc: 'desc.auotion'},
-                      {title: 'trading', desc: 'desc.trading'},
-                      {title: 'battle', desc: 'desc.battle'},
-                      {title: 'build_hero', desc: 'desc.build_hero'},
-                      {title: 'auotion', desc: 'desc.auotion'},
-                      {title: 'trading', desc: 'desc.trading'},
-                      {title: 'battle', desc: 'desc.battle'},]
+const features = [
+  {title: 'build_hero', desc: 'desc.build_hero'},
+  {title: 'auction', desc: 'desc.auction'},
+  {title: 'trading', desc: 'desc.trading'},
+  {title: 'battle', desc: 'desc.battle'},
+  {title: 'build_hero', desc: 'desc.build_hero'},
+  {title: 'auction', desc: 'desc.auction'},
+  {title: 'trading', desc: 'desc.trading'},
+  {title: 'battle', desc: 'desc.battle'},
+];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -49,21 +51,9 @@ class HomePage extends React.Component {
 
     return ([
       <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
-          this.props.history.push(`/${URLS.MODEL_EDITOR}`)
-        }}/>
-      </div>,
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
-          this.props.history.push(`/${URLS.MODEL_EDITOR}`)
-        }}/>
-      </div>,
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
-          this.props.history.push(`/${URLS.MODEL_EDITOR}`)
+        <img src={require('../../../shared/img/banner/banner_1.png')}/>
+        <ButtonNew showDeco className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
+          this.props.history.push(`/${URLS.BUILD_HERO}`)
         }}/>
       </div>,
     ])
@@ -76,7 +66,7 @@ class HomePage extends React.Component {
       {image: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
       {image: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
       {image: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
-    ]
+    ];
 
     return (
       <PageWrapper className="page-container">
@@ -86,16 +76,8 @@ class HomePage extends React.Component {
           <div className={'home__section home__banner'} id={'home'}>
             <Slider list={this.renderBanner()}/>
           </div>
-
           {/* end home__banner */}
 
-          <div className="home__section home__build">
-            <ButtonNew className={'home__build-btn'} label={_t('build_hero')} onClick={() => {
-              
-            }}/>
-          </div>
-
-          {/* end home__build */}
 
           <Container size={Container.sizes.SMALL} className="home__section home__intro" id={'intro'}>
             <div className="home__intro-board">

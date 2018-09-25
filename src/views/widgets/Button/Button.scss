@@ -3,61 +3,6 @@
 @import '../../styles/variables';
 @import '../../styles/fonts';
 
-.widget__button-group {
-  @include border-radius(100px);
-  display: inline-block;
-  border: 1px solid $blue-light;
-
-  div {
-    display: inline-block;
-    background-color: $white;
-    color: $blue-light;
-    padding: 4px 20px;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
-  div.active {
-    display: inline-block;
-    background-color: $blue-light;
-    color: $white;
-  }
-}
-
-
-.widget__button-icon {
-  @include transition-duration(100ms);
-  width: 36px;
-  height: 36px;
-  &.small {
-    width: 20px;
-    height: 20px;
-  }
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  color: $gray-dark;
-  border: 2px solid $gray-dark;
-  &.inverted {
-    color: $white95;
-    border: 2px solid $white95;
-  }
-
-  i {
-    line-height: 100%;
-    margin: 0;
-  }
-
-  &:hover {
-    background: $gray-dark;
-    color: $white95;
-    &.inverted {
-      background: $white95;
-      color: $gray-dark;
-    }
-  }
-}
-
 
 .widget__button-new {
   margin: 4px;
@@ -71,6 +16,7 @@
   color: $white95;
 
   .content {
+    padding-top: 4px;
     opacity: 1;
     @include transition-duration;
   }
@@ -221,23 +167,47 @@
   &.small {
     padding: 2px 8px;
     font-size: $font-size-tiny;
-    @include border-radius(6px);
+    @include border-radius-without-overflow(6px);
     text-transform: lowercase;
   }
   &.normal {
     padding: 8px 16px;
     font-size: $font-size-small;
-    @include border-radius(10px);
+    @include border-radius-without-overflow(10px);
   }
   &.big {
     padding: 12px 24px;
     font-size: $font-size-normal;
-    @include border-radius(10px);
+    @include border-radius-without-overflow(10px);
   }
 
   &.disabled {
     opacity: 0.8;
     pointer-events: none;
     filter: grayscale(1);
+  }
+
+  &.deco {
+    &:before {
+      content: '';
+      position: absolute;
+      background: url('../../../shared/img/assets/btn_effect_reverse.png') no-repeat center;
+      display: block;
+      width: 40px;
+      height: 40px;
+      left: -44px;
+      top: 0;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      background: url('../../../shared/img/assets/btn_effect.png') no-repeat center;
+      display: block;
+      width: 40px;
+      height: 40px;
+      right: -44px;
+      top: 0;
+    }
   }
 }
