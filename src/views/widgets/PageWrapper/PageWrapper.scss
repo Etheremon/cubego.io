@@ -3,5 +3,10 @@
 @import '../../styles/variables';
 
 .widget__page-wrapper {
+  height: 100vh;
 
+  &.dark {
+    background: url('../../../shared/img/background/bgr.jpeg') no-repeat center center fixed;
+    background-size: cover;
+  }
 }

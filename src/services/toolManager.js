@@ -13,7 +13,7 @@ let emptyModel = {
 
 export class ToolManager {
   constructor(props) {
-    this.tools = {};
+    this._tools = {};
     this._model = undefined;
     this._layer = undefined;
     this._numLayers = 0;
@@ -24,7 +24,7 @@ export class ToolManager {
     };
 
     Utils.ObjGetValues(props.tools).forEach((tool, idx) => {
-      this.tools[tool.key] = tool;
+      this._tools[tool.key] = tool;
       if (tool.type === ToolTypes.mode && tool.value === true) {
         this.drawMode = tool;
       }
@@ -47,31 +47,31 @@ export class ToolManager {
   }
 
   onToolClicked({key, value}) {
-    if (!this.tools[key]) {
+    if (!this._tools[key]) {
       console.warn("Unknown tool!");
       return;
     }
 
     // TODO: check if the value is valid
     // Case All Tools (includes effects)
-    this.tools[key].value = value;
+    this._tools[key].value = value;
 
     // Case Tool Mode
-    if (this.tools[key].type === ToolTypes.mode) {
+    if (this._tools[key].type === ToolTypes.mode) {
       // Only 1 mode at a time
-      Object.keys(this.tools).forEach((key) => {
-        if (this.tools[key].type === ToolTypes.mode)
-          this.tools[key].value = false;
+      Object.keys(this._tools).forEach((key) => {
+        if (this._tools[key].type === ToolTypes.mode)
+          this._tools[key].value = false;
       });
 
       // Set mode
-      this.drawMode = this.tools[key];
-      this.tools[key].value = true;
+      this.drawMode = this._tools[key];
+      this._tools[key].value = true;
     }
 
     // Case Tool Action
-    if (this.tools[key].type === ToolTypes.action) {
-      this.tools[key].onToolClicked({
+    if (this._tools[key].type === ToolTypes.action) {
+      this._tools[key].onToolClicked({
         toolManager: this,
         key: key,
         value: value,
@@ -86,7 +86,7 @@ export class ToolManager {
     } else {
 
       let newModel = this.drawMode.onCellClicked({
-        tools: this.tools, model: this._model, cell, cells,
+        tools: this._tools, model: this._model, cell, cells,
       });
 
       this.history.idx += 1;
@@ -100,14 +100,14 @@ export class ToolManager {
     this._model = this.history.models[this.history.idx];
     if (!this._model) return null;
 
-    let x = this.tools['view-2d'].x;
-    let y = this.tools['view-2d'].y;
-    let z = this.tools['view-2d'].z;
+    let x = this._tools['view-2d'].x;
+    let y = this._tools['view-2d'].y;
+    let z = this._tools['view-2d'].z;
     let size = this._model.size;
 
     this._numLayers = size[z[1]];
-    let layerIdx = Utils.BoundVal(this.tools['layer-index'].value, 1, this._numLayers);
-    this.tools['layer-index'].value = layerIdx;
+    let layerIdx = Utils.BoundVal(this._tools['layer-index'].value, 1, this._numLayers);
+    this._tools['layer-index'].value = layerIdx;
 
     let zIdx = z[0] === '+' ? layerIdx - 1 : this._numLayers - layerIdx;
     let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z[1]] === zIdx);
@@ -137,8 +137,12 @@ export class ToolManager {
     return this._numLayers;
   }
 
+  get tools() {
+    return this._tools;
+  }
+
   getToolValue(toolKey) {
-    return this.tools[toolKey].value;
+    return this._tools[toolKey].value;
   }
 }
 

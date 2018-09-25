@@ -4,10 +4,12 @@
 
 
 .model-editor {
+  color: $white95;
 
   .model-editor__tool-bar {
     display: flex;
-    margin: 12px -4px;
+    margin: 0 -4px;
+    padding-top: 12px;
 
     .group {
       margin: 0 4px;
@@ -30,9 +32,11 @@
     @include mobile {
       flex-wrap: wrap;
     }
+    margin: 0 -8px;
   }
 
   .model-editor__left {
+    padding: 8px;
     width: 50%;
     flex-direction: column;
     justify-content: space-between;
@@ -42,6 +46,7 @@
     }
   }
   .model-editor__right {
+    padding: 8px;
     flex-grow: 1;
   }
 
