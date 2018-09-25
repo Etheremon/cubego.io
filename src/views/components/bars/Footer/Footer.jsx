@@ -41,11 +41,11 @@ class Footer extends React.Component {
                   <Link to={'/tos'} target={'_blank'}>
                     <p>{_t('footer.terms_of_sale')}</p>
                   </Link>
-                  <a href="mailto:contact@etheremon.com?Subject=Hello" target="_blank"><p>{_t('txt.email')}</p></a>
+                  <a href="mailto:contact@etheremon.com?Subject=Hello" target="_blank"><p>{_t('email')}</p></a>
                 </div>
                 <div className="footer__service-customer">
-                  <a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('txt.github')}</p></a>
-                  <a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('txt.faq')}</p></a>
+                  <a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a>
+                  <a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('faq')}</p></a>
 
                 </div>
               </div>

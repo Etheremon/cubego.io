@@ -2,9 +2,9 @@ export const ReformatModel = (model) => {
   let newModel = {
     palette: model.palette,
     size: {
-      x: model.size.y,
-      y: model.size.z,
-      z: model.size.x,
+      x: model.size.x,
+      y: model.size.y,
+      z: model.size.z,
     },
   };
 
@@ -12,9 +12,9 @@ export const ReformatModel = (model) => {
   model.voxels.forEach(cell => {
     let v = {
       ...cell,
-      x: cell.y,
-      y: cell.z,
-      z: cell.x,
+      x: model.size.x-1-cell.x,
+      y: cell.y,
+      z: cell.z,
       color: model.palette[cell['colorIndex']],
     };
     newModel.voxels[`${v.x}-${v.y}-${v.z}`] = v;

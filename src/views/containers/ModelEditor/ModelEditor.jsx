@@ -72,7 +72,7 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     return (
-      <PageWrapper>
+      <PageWrapper type={PageWrapper.types.DARK}>
         <Container className={'model-editor'} size={Container.sizes.LARGE}>
 
           <div className={'model-editor__tool-bar'}>
@@ -118,7 +118,7 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__canvas'}>
             <div className={'model-editor__left'}>
               <div className={'model-editor__3d'}>
-                <Model3D model={this.toolManager.model} onCellClicked={this.onCellClicked}/>
+                <Model3D model={this.toolManager.model} tools={this.toolManager.tools} onCellClicked={this.onCellClicked}/>
               </div>
 
               <div className={'model-editor__colors'}>
@@ -131,7 +131,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__right'}>
               <div className={'model-editor__2d'}>
-                <Layer2D layer={this.toolManager.layer} onCellClicked={this.onCellClicked}/>
+                <Layer2D layer={this.toolManager.layer} tools={this.toolManager.tools} onCellClicked={this.onCellClicked}/>
               </div>
               <div className={'model-editor__layer-tool'}>
                 <Dropdown list={this.tools.view2D.options.map(option => ({

@@ -16,6 +16,9 @@ import Footer from '../../components/bars/Footer/Footer.jsx'
 import {URLS} from "../../../utils/constants";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
+import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
+import { GetLocalizationData } from '../../../reducers/selectors';
+import Loading from '../../widgets/Loading/Loading.jsx';
 
 require("style-loader!./App.scss");
 
@@ -86,7 +89,9 @@ class App extends React.Component {
   }
 
   render () {
-    return this.maintenance ? (
+    const { alreadyFetchedLocalization } = this.props;
+
+    return alreadyFetchedLocalization ? ( this.maintenance ? (
       <div className={'page-container-wrapper'}>
         <div style={{paddingTop: "80px"}}>
           <ul className="ui list">
@@ -98,20 +103,26 @@ class App extends React.Component {
     ) : (
       <div className={'page-container-wrapper'}>
         <Switch>
-          <Route path={`/${URLS.MODEL_EDITOR}`} component={ModelEditor}/>
+          <Route path={`/${URLS.BUILD_HERO}`} component={ModelEditor}/>
           <Route path={`/${URLS.BATTLE}`} component={Battle}/>
+          <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
+          <Route path={`/${URLS.BUILD_HERO}`} component={ComingSoon}/>
+          <Route path={`/${URLS.MY_HEROES}`} component={ComingSoon}/>
+          <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
+          <Route path={`/${URLS.INTRO}`} component={ComingSoon}/>
           <Route exact path='/' component={Home}/>
           <Route component={Home}/>
         </Switch>
 
         <TxnBar/>
       </div>
-    )
+    ) ) : <Loading className={'main__page-loading'} dark />
   }
 }
 
 const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
+  alreadyFetchedLocalization: GetLocalizationData(store),
 });
 
 const mapDispatchToProps = (dispatch) => ({

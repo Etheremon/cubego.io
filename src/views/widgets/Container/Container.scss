@@ -3,6 +3,7 @@
 @import '../../styles/variables';
 
 .widget__container {
+  box-sizing: border-box;
   padding: 0 16px;
   max-width: 100%;
   margin: 0 auto;

@@ -70,7 +70,7 @@ class Dropdown extends React.Component {
           {!enableSearch ? null :
             <div className={'widget__dropdown__search widget__dropdown__item'}>
               <i className="fas fa-search"/>
-              <input type="text" placeholder={`${_t('txt.search')}...`} value={this.state.searchValue} onChange={this.handleOnSearchInputChange}/>
+              <input type="text" placeholder={`${_t('search')}...`} value={this.state.searchValue} onChange={this.handleOnSearchInputChange}/>
             </div>
           }
 
@@ -81,7 +81,7 @@ class Dropdown extends React.Component {
                 </div>
               ))
             : <div className={`widget__dropdown__item`}>
-                {_t('txt.no_result')}
+                {_t('no_result')}
               </div>
           }
         </div>
