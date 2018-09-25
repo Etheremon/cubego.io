@@ -22,34 +22,34 @@ require("style-loader!./Navbar.scss");
 
 const NavbarList = {
   default: [
-    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
-    {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
-    {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
-    {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
+    {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
+    {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
+    {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
   ],
 
   home: [
-    // {link: '/#intro', text: 'txt.intro'},
-    {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
-    {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
-    {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
-    {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
+    // {link: '/#intro', text: 'intro'},
+    {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
+    {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
+    {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
+    {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
   ],
 
   mobile: [
-    {text: 'txt.intro', img: 'icon_introduce_game', group: [
-      {link: `/${URLS.ABOUT_US}`, text: 'txt.about_us', img: 'icon_about_us'},
-      {link: `/${URLS.INTRO}`, text: 'txt.intro', img: 'icon_introduce_game'},
+    {text: 'intro', img: 'icon_introduce_game', group: [
+      {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
+      {link: `/${URLS.INTRO}`, text: 'intro', img: 'icon_introduce_game'},
     ]},
-    {text: 'txt.gameplay', img: 'icon_build_hero', group: [
-      {link: `/${URLS.BUILD_HERO}`, text: 'txt.build_hero', img: 'icon_build_hero'},
-      {link: `/${URLS.MY_HEROES}`, text: 'txt.my_heroes', img: 'icon_my_heroes'},
-      {link: `/${URLS.STORE}`, text: 'txt.store', img: 'icon_store'},
-      {link: `/${URLS.BATTLE}`, text: 'txt.battle', img: 'icon_battle'},
+    {text: 'gameplay', img: 'icon_build_hero', group: [
+      {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
+      {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+      {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
+      {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
     ]}
   ]
 };
@@ -226,7 +226,7 @@ class Navbar extends React.Component {
             <div className="navbar__item m--pointer" onClick={() => {}}>
               {userId === undefined || userInfo === undefined ? <Loading dark/>
                 : (
-                  ! userId ? <Link to={`/${URLS.SIGN_IN}`}>{this.props._t('txt.log_in')}</Link>
+                  ! userId ? <Link to={`/${URLS.SIGN_IN}`}>{this.props._t('log_in')}</Link>
                     : (userInfo.username ?
                         <Link to={`/${URLS.SIGN_IN}`} className={'m--no-text-transform m--no-wrap'}>
                           {Utils.CutoffString(userInfo.username, 12)}
@@ -239,7 +239,7 @@ class Navbar extends React.Component {
                               <i className={'user icon navbar__trigger-input-popup m--noti m--line-height-100'}/>
                             </Link>
                           }
-                          content={_t('txt.log_in_note')}
+                          content={_t('log_in_note')}
                           position='bottom right'
                         />
                     )

@@ -22,14 +22,14 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 
 require("style-loader!./Home.scss");
 
-const features = [{title: 'txt.build_hero', desc: 'desc.build_hero'},
-                      {title: 'txt.auotion', desc: 'desc.auotion'},
-                      {title: 'txt.trading', desc: 'desc.trading'},
-                      {title: 'txt.battle', desc: 'desc.battle'},
-                      {title: 'txt.build_hero', desc: 'desc.build_hero'},
-                      {title: 'txt.auotion', desc: 'desc.auotion'},
-                      {title: 'txt.trading', desc: 'desc.trading'},
-                      {title: 'txt.battle', desc: 'desc.battle'},]
+const features = [{title: 'build_hero', desc: 'desc.build_hero'},
+                      {title: 'auotion', desc: 'desc.auotion'},
+                      {title: 'trading', desc: 'desc.trading'},
+                      {title: 'battle', desc: 'desc.battle'},
+                      {title: 'build_hero', desc: 'desc.build_hero'},
+                      {title: 'auotion', desc: 'desc.auotion'},
+                      {title: 'trading', desc: 'desc.trading'},
+                      {title: 'battle', desc: 'desc.battle'},]
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -50,19 +50,19 @@ class HomePage extends React.Component {
     return ([
       <div className={'home__banner-item'} key={'banner-1'}>
         <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('txt.play_now')} onClick={() => {
+        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
           this.props.history.push(`/${URLS.MODEL_EDITOR}`)
         }}/>
       </div>,
       <div className={'home__banner-item'} key={'banner-1'}>
         <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('txt.play_now')} onClick={() => {
+        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
           this.props.history.push(`/${URLS.MODEL_EDITOR}`)
         }}/>
       </div>,
       <div className={'home__banner-item'} key={'banner-1'}>
         <img src={'https://cdn-images-1.medium.com/max/1024/1*AOHiEzvhV7zFG65Z1DWZcg.jpeg'}/>
-        <ButtonNew className={'home__banner-btn'} label={_t('txt.play_now')} onClick={() => {
+        <ButtonNew className={'home__banner-btn'} label={_t('play_now')} onClick={() => {
           this.props.history.push(`/${URLS.MODEL_EDITOR}`)
         }}/>
       </div>,
@@ -73,9 +73,9 @@ class HomePage extends React.Component {
 
     const { _t, pathName } = this.props;
     const guildGame = [
-      {image: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('txt.buy')} ,
-      {image: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('txt.build')} ,
-      {image: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('txt.battle')} ,
+      {image: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
+      {image: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
+      {image: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
     ]
 
     return (
@@ -90,7 +90,7 @@ class HomePage extends React.Component {
           {/* end home__banner */}
 
           <div className="home__section home__build">
-            <ButtonNew className={'home__build-btn'} label={_t('txt.build_hero')} onClick={() => {
+            <ButtonNew className={'home__build-btn'} label={_t('build_hero')} onClick={() => {
               
             }}/>
           </div>
@@ -112,7 +112,7 @@ class HomePage extends React.Component {
 
           <div className="home__section home__modes" id={'modes'}>
             <div className="home__modes-title__container">
-              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('txt.how_to_play')} />
+              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
             <div className="home__mode-container">
@@ -125,7 +125,7 @@ class HomePage extends React.Component {
           <div className="home__section home__game-detail" id={'game-detail'}>
 
             <div className="home__game-detail__title-container">
-              <Text className={'home__game-detail-title'} type={Text.types.H2} children={_t('txt.features')} />
+              <Text className={'home__game-detail-title'} type={Text.types.H2} children={_t('features')} />
             </div>
 
             <div className={'home__game-detail__copyright'}>
@@ -135,10 +135,10 @@ class HomePage extends React.Component {
               <div className={'home__game-detail__copyright-info'}>
                 <Image img={'padding_yellow'} className={'copyright__padding'} />
                 <div className={'home__game-detail__copyright-text'}>
-                  <p>{_t('txt.game_detail_copyright')}</p>
+                  <p>{_t('game_detail_copyright')}</p>
                 </div>
-                <p>{_t('txt.game_detail_copyright_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__copyright-btn'} label={_t('txt.read_more')} onClick={() => {
+                <p>{_t('game_detail_copyright_desc')}</p>
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__copyright-btn'} label={_t('read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -148,10 +148,10 @@ class HomePage extends React.Component {
               <div className={'home__game-detail__index-info'}>
                 <Image img={'padding_blue'} className={'index__padding'} />
                 <div className={'home__game-detail__index-text'}>
-                  <p>{_t('txt.game_detail_index')}</p>
+                  <p>{_t('game_detail_index')}</p>
                 </div>
-                <p>{_t('txt.game_detail_index_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__index-btn'} label={_t('txt.read_more')} onClick={() => {
+                <p>{_t('game_detail_index_desc')}</p>
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__index-btn'} label={_t('read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -167,10 +167,10 @@ class HomePage extends React.Component {
               <div className={'home__game-detail__battle-info'}>
                 <Image img={'padding_red'} className={'battle__padding'} />
                 <div className={'home__game-detail__battle-text'}>
-                  <p>{_t('txt.game_detail_battle')}</p>
+                  <p>{_t('game_detail_battle')}</p>
                 </div>
-                <p>{_t('txt.game_detail_battle_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__battle-btn'} label={_t('txt.read_more')} onClick={() => {
+                <p>{_t('game_detail_battle_desc')}</p>
+                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__battle-btn'} label={_t('read_more')} onClick={() => {
                   
                 }}/>
               </div>
@@ -181,7 +181,7 @@ class HomePage extends React.Component {
 
           <div className={'home__section home__partnership'} id={'partners'}>
             <HeaderHighlight>
-              <b>{_t('txt.in_partnership_with')}</b>
+              <b>{_t('in_partnership_with')}</b>
             </HeaderHighlight>
             <div className={'home__partnership__imgs'}>
               <a href={'https://etheremon.com/'} target={'_blank'}><img src={'https://www.etheremon.com/assets/images/banner_facebook.png'}/><p>ETHEREMON</p></a>
@@ -204,7 +204,7 @@ class HomePage extends React.Component {
 
           <div className="home__section home__subscription">
             <HeaderHighlight>
-              <b>{_t('txt.get_the_latest_news')}</b>
+              <b>{_t('get_the_latest_news')}</b>
             </HeaderHighlight>
 
             <Container className={'home__subscription-container'}>
@@ -212,9 +212,9 @@ class HomePage extends React.Component {
                 <img src={require('../../../shared/img/assets/model_example_2.png')}/>
               </div>
               <div className={'home__subscription-main'}>
-                <p>{_t('txt.get_the_latest_news_desc')}</p>
-                <input type="text" className={'home__subscription-input'} placeholder={_t('txt.your_email_address')} value={this.state.email} readOnly/>
-                <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('txt.subscribe')} onClick={() => {
+                <p>{_t('get_the_latest_news_desc')}</p>
+                <input type="text" className={'home__subscription-input'} placeholder={_t('your_email_address')} value={this.state.email} readOnly/>
+                <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('subscribe')} onClick={() => {
                   
                 }}/>
               </div>

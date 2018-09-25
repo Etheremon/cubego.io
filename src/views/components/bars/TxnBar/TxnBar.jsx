@@ -131,23 +131,23 @@ class TxnBar extends React.Component {
     let btns = [];
 
     if (hasMetamaskInstalled && !hasMetamaskLoggedIn) {
-      header = Utils.IsMobile ? _t('txt.mobile_app_is_locked') : _t('txt.metamask_is_locked');
+      header = Utils.IsMobile ? _t('mobile_app_is_locked') : _t('metamask_is_locked');
     } else if (!hasMetamaskInstalled) {
-      header = Utils.IsMobile ? _t('txt.mobile_app_not_installed') : _t('txt.metamask_not_installed');
+      header = Utils.IsMobile ? _t('mobile_app_not_installed') : _t('metamask_not_installed');
       btns = Utils.IsMobile
         ? [
-            <ButtonNew label={_t('txt.install_toshi')} key={0}
+            <ButtonNew label={_t('install_toshi')} key={0}
                        onClick={Utils.OpenToshiInstallation} />,
-            <ButtonNew label={_t('txt.install_cipher')} key={1}
+            <ButtonNew label={_t('install_cipher')} key={1}
                        onClick={Utils.OpenCipherInstallation} />
           ]
         : [
-            <ButtonNew label={_t('txt.install_metamask')} key={0}
+            <ButtonNew label={_t('install_metamask')} key={0}
                        onClick={Utils.OpenMetamaskInstallation} />,
           ];
     }
 
-    let content = Utils.IsMobile ? _t('txt.need_wallet_integration_mobile') : _t('txt.need_wallet_integration');
+    let content = Utils.IsMobile ? _t('need_wallet_integration_mobile') : _t('need_wallet_integration');
 
     return (
       <Popup key={0} className={'txn-bar__popup'} defaultOpen={true}
@@ -168,14 +168,14 @@ class TxnBar extends React.Component {
           </div>
 
           <Text type={Text.types.T2} className={'txn-bar__note1'}>
-            {_t('txt.intend_to_use_mew')}
+            {_t('intend_to_use_mew')}
           </Text>
           <ButtonNew label={_t('btn.close')}
                      color={ButtonNew.colors.GREY}
                      size={ButtonNew.sizes.SMALL}
                      onClick={() => {this.txnPopup && this.txnPopup.wrappedInstance.close()}} />
           <Text type={Text.types.SUBLINK} className={'txn-bar__note2'} onClick={disableMetamaskPopup}>
-            {_t('txt.dont_show_box_again')}
+            {_t('dont_show_box_again')}
           </Text>
         </div>
       </Popup>
@@ -220,7 +220,7 @@ class TxnBar extends React.Component {
                       <label>{this.props._t(this.state.currentTxn.fields[fieldName].text)}</label>
                       { (this.state.currentTxn.fields[fieldName].type === 'dropdown' || this.state.currentTxn.fields[fieldName].type === 'buttons')
                         ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
-                            ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('txt.please_select')}
+                            ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
                                         pointing={'bottom'} selection
                                         options={this.state.currentTxn.fields[fieldName].options}
                                         onChange={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
@@ -239,7 +239,7 @@ class TxnBar extends React.Component {
                                  readOnly={this.state.currentTxn.fields[fieldName].readonly}
                                  min={this.state.currentTxn.fields[fieldName].min}
                                  max={this.state.currentTxn.fields[fieldName].max}
-                                 placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('txt.please_input')}
+                                 placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_input')}
                                  onChange={(e) => {
                                    this.handleOnInputChange(e, fieldName);
                                  }}
@@ -249,7 +249,7 @@ class TxnBar extends React.Component {
                   );
                 })}
 
-                <Checkbox label={<label><Link to={'/tos'} target={'_blank'}>{this.props._t('txt.txn_agree')}</Link></label>}
+                <Checkbox label={<label><Link to={'/tos'} target={'_blank'}>{this.props._t('txn_agree')}</Link></label>}
                           onChange={(e, data) => {
                             this.setState({'tosChecked': data.checked});
                           }}

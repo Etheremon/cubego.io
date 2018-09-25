@@ -16,6 +16,7 @@ import Footer from '../../components/bars/Footer/Footer.jsx'
 import {URLS} from "../../../utils/constants";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
+import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
 
 require("style-loader!./App.scss");
 
@@ -100,6 +101,11 @@ class App extends React.Component {
         <Switch>
           <Route path={`/${URLS.MODEL_EDITOR}`} component={ModelEditor}/>
           <Route path={`/${URLS.BATTLE}`} component={Battle}/>
+          <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
+          <Route path={`/${URLS.BUILD_HERO}`} component={ComingSoon}/>
+          <Route path={`/${URLS.MY_HEROES}`} component={ComingSoon}/>
+          <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
+          <Route path={`/${URLS.INTRO}`} component={ComingSoon}/>
           <Route exact path='/' component={Home}/>
           <Route component={Home}/>
         </Switch>
