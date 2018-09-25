@@ -8,6 +8,7 @@ import Component from "./component";
 import Builder from "./builder";
 import COLOR_MATRIX_TYPES from "./components/colorMatrixTypes";
 import {render as fiberRender} from "./fiber/index";
+import {getGame} from "./fiber/render";
 
 export const ColorMatrixTypes = COLOR_MATRIX_TYPES;
 export const Sprite = TYPES.SPRITE;
@@ -28,6 +29,7 @@ export const Layer = TYPES.LAYER;
 const PixiX = {
   render: render,
   fiberRender: fiberRender,
+  getGame: getGame,
   Loader: Loader,
   changeScene: PixiUtils.changeScene,
   Game: Game,

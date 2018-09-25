@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Container, Rectangle} from "../pixix/index";
 import {fullColorHex} from "../utils";
 import * as Utils from "../../utils/utils";
+import PixiX from "../pixix";
 
 class PaintScene extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       layer: this.props.layer,
     };
@@ -63,6 +65,10 @@ class PaintScene extends Component {
       };
     });
     return frame;
+  }
+
+  componentDidMount() {
+    console.log(PixiX.getGame());
   }
 
   render() {
