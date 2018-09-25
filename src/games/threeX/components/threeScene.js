@@ -11,7 +11,6 @@ export class ThreeScene extends FiberNode {
   static create() {
     let threeScene = new ThreeScene();
     let scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x203040);
     threeScene.scene = scene;
     return threeScene;
   }
