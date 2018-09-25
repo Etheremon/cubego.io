@@ -14,41 +14,77 @@ class VoxViewerThree extends Component {
     this.mouse = new THREE.Vector2();
     this.raycaster = new THREE.Raycaster();
     this.objects = [];
+    this.offsetVector = new THREE.Vector3(0, 0, 0);
   }
 
   renderVoxel(voxelData) {
     if (!voxelData.voxels) {
       return [];
     }
-    let divisions = Math.max(voxelData.size.x, voxelData.size.z);
-    let elements = [<Grid size={divisions * 50} divisions={divisions} key='grid'
-                          position={{x: 0, y: -SIZE * voxelData.size.x / 2, z: 0}}/>];
+    let divisions = Math.max(voxelData.size.x, voxelData.size.y);
+    let elements = [<Grid size={divisions * SIZE} divisions={divisions} key='grid' color1={0xffffff} color2={0xffffff}
+                          position={{x: 0, y: -SIZE * voxelData.size.z / 2, z: 0}}/>];
     Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
+      let position = {
+        x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
+        y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
+        z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
+      };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE} ref={(ref) => {
-        this.objects.push(ref._renderer)
-      }}
-                             position={{
-                               x: SIZE / 2 + SIZE * voxel.x - SIZE * voxelData.size.x / 2,
-                               y: SIZE / 2 + SIZE * voxel.y - SIZE * voxelData.size.x / 2,
-                               z: SIZE / 2 + SIZE * voxel.z - SIZE * voxelData.size.z / 2
-                             }}
-                             key={`${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
-                             color={color}/>)
+      elements.push(<MeshBox size={SIZE} ref={(ref) => {this.objects.push(ref)}}
+                             position={position} color={color} key={`${voxel.x}-${voxel.y}-${voxel.z}`}/>)
     });
     return elements;
   }
 
   setNewVoxelData(voxelData) {
+    this.offsetVector = new THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
     this.setState({
       data: voxelData || {}
     });
   }
 
+  setNewTools(tools) {
+    let colorHex = '0x' + fullColorHex(tools.color.value);
+    this.rollOverMesh.renderer.material.color.setHex(colorHex);
+  }
+
   componentDidMount() {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
-    // canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+  }
+
+  getRendererObject() {
+    return this.objects.filter((object) => {
+      return !!object
+    }).map((object) => {
+      return object.renderer
+    });
+  }
+
+  onMouseDown(event) {
+    let mousePos = getMousePositionOnCanvas(event, this.canvas);
+    this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
+    this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
+    let intersects = this.raycaster.intersectObjects(this.getRendererObject());
+    if (intersects.length > 0) {
+      let intersect = intersects[0];
+      if (false) {//for adding
+        let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
+        position.divideScalar(SIZE).floor();
+        position.multiplyScalar(SIZE).addScalar(SIZE / 2);
+        this.rollOverMesh.renderer.position.copy(position);
+      } else {//for painting
+        let position = intersect.object.position.clone();
+        let cubePos = position.add(this.offsetVector).divideScalar(SIZE).floor();
+        this.props.onCellClicked && this.props.onCellClicked({
+          ['x']: cubePos.x,
+          ['y']: cubePos.z,
+          ['z']: cubePos.y,
+        })
+      }
+    }
   }
 
   onMouseMove(event) {
@@ -56,7 +92,7 @@ class VoxViewerThree extends Component {
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
-    let intersects = this.raycaster.intersectObjects(this.objects);
+    let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
       let intersect = intersects[0];
       if (false) {//for adding
@@ -76,7 +112,7 @@ class VoxViewerThree extends Component {
         <Axis/>
         <PerspectiveCamera ref={(ref) => {
           this.camera = ref
-        }} position={{x: -500, y: 800, z: -1300}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
+        }} position={{x: 500, y: 800, z: 1300}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
         <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref

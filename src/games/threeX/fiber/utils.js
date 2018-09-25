@@ -7,32 +7,7 @@ const RESERVED_PROPS = {
 
 const __DEV__  = false;
 
-const DEFAULT_PROPS = {
-  alpha: 1,
-  buttonMode: false,
-  cacheAsBitmap: false,
-  cursor: "auto",
-  filterArea: null,
-  filters: null,
-  hitArea: null,
-  interactive: false,
-  // localTransform  // readonly
-  mask: null,
-  // parent  // readonly
-  pivot: 0,
-  position: 0,
-  renderable: true,
-  rotation: 0,
-  scale: 1,
-  skew: 0,
-  transform: null,
-  visible: true,
-  // worldAlpha  // readonly
-  // worldTransform  // readonly
-  // worldVisible  // readonly
-  x: 0,
-  y: 0,
-};
+const DEFAULT_PROPS = {};
 
 const emptyFnc = (name) => () => {
   // console.log(name);
@@ -99,12 +74,12 @@ function defaultApplyProps(instance, oldProps, newProps) {
     .forEach(propName => {
       const value = newProps[propName];
       if (typeof value !== "undefined") {
-        setPixiValue(instance, propName, value);
+        setThreeXValue(instance, propName, value);
       } else if (typeof instance[propName] !== "undefined" && typeof DEFAULT_PROPS[propName] !== "undefined") {
         if (__DEV__) {
           console.warn(`setting default value: ${propName} was ${instance[propName]} is ${value} for`, instance);
         }
-        setPixiValue(instance, propName, DEFAULT_PROPS[propName]);
+        setThreeXValue(instance, propName, DEFAULT_PROPS[propName]);
       } else {
         if (__DEV__) {
           console.warn(`ignoring prop: ${propName} was ${instance[propName]} is ${value} for`, instance);
@@ -117,7 +92,7 @@ function isPointType(value) {
   return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint;
 }
 
-function setPixiValue(instance, propName, value) {
+function setThreeXValue(instance, propName, value) {
   if (isPointType(instance[propName]) && isPointType(value)) {
     instance[propName].copy(value);
   } else if (isPointType(instance[propName])) {

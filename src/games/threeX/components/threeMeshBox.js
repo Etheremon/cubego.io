@@ -17,4 +17,10 @@ export class ThreeMeshBox extends ThreeComponent {
     meshContainer.renderer = cubeMesh;
     return meshContainer;
   }
+
+  set color(color) {
+    console.log(color);
+    window.updatedBox = this;
+    this.renderer.material.color.setHex(parseInt(color, 16));
+  }
 }
