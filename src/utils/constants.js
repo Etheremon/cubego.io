@@ -7,6 +7,7 @@ export const URLS = {
   MY_HEROES: 'my-heroes',
   STORE: 'store',
   BATTLE: 'battle',
+  MARKET: 'market',
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',

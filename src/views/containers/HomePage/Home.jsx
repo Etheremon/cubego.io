@@ -97,65 +97,81 @@ class HomePage extends React.Component {
               <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
-            <div className="home__mode-container">
+            <Container size={Container.sizes.NORMAL} className="home__mode-container">
               <Carousel list={guildGame} />
-            </div>
+            </Container>
           </div>
 
           {/* end home__modes */}
 
           <div className="home__section home__game-detail" id={'game-detail'}>
 
-            <div className="home__game-detail__title-container">
-              <Text className={'home__game-detail-title'} type={Text.types.H2} children={_t('features')} />
-            </div>
-
             <div className={'home__game-detail__copyright'}>
-              <div className={'home__game-detail__copyright-img'}>
-                <img src={require('../../../shared/img/assets/model_example_1.png')}/>
+              <Image img={'padding_yellow'} className={'copyright__layer padding'} />
+
+              <div className={'copyright__layer-img'}>
               </div>
-              <div className={'home__game-detail__copyright-info'}>
-                <Image img={'padding_yellow'} className={'copyright__padding'} />
-                <div className={'home__game-detail__copyright-text'}>
-                  <p>{_t('game_detail_copyright')}</p>
+              <div className={'copyright__layer-info'}>
+              </div>
+
+              <Container size={Container.sizes.NORMAL} className={'copyright__content'}>
+                <div className={'copyright-img'}>
+                  <img src={require('../../../shared/img/assets/model_example_1.png')}/>
                 </div>
-                <p>{_t('game_detail_copyright_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__copyright-btn'} label={_t('read_more')} onClick={() => {
-                  
-                }}/>
-              </div>
+
+                <div className={'copyright-info'}>
+                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_copyright')} />
+                  <p>{_t('game_detail_copyright_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'copyright-btn'} label={_t('read_more')} onClick={() => {
+                    
+                  }}/>
+                </div>
+
+              </Container>
+         
             </div>
 
             <div className={'home__game-detail__index'}>
-              <div className={'home__game-detail__index-info'}>
-                <Image img={'padding_blue'} className={'index__padding'} />
-                <div className={'home__game-detail__index-text'}>
-                  <p>{_t('game_detail_index')}</p>
+              <Image img={'padding_blue'} className={'index__layer padding'} />
+              <div className={'index__layer-info'}>
+              </div>
+              <div className={'index__layer-img'}>
+              </div>
+
+              <Container size={Container.sizes.NORMAL} className={'index__content'}>
+                <div className={'index-info'}>
+                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_index')} />
+                  <p>{_t('game_detail_index_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'index-btn'} label={_t('read_more')} onClick={() => {
+                    
+                  }}/>
                 </div>
-                <p>{_t('game_detail_index_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__index-btn'} label={_t('read_more')} onClick={() => {
-                  
-                }}/>
-              </div>
-              <div className={'home__game-detail__index-img'}>
-                <img src={require('../../../shared/img/assets/model_example_2.png')}/>
-              </div>
+                <div className={'index-img'}>
+                  <img src={require('../../../shared/img/assets/model_example_2.png')}/>
+                </div>
+              </Container>
             </div>
 
             <div className={'home__game-detail__battle'}>
-              <div className={'home__game-detail__battle-img'}>
-                <img src={require('../../../shared/img/assets/model_example_3.png')}/>
+              <Image img={'padding_red'} className={'battle__layer padding'} />
+              <div className={'battle__layer-img'}>
               </div>
-              <div className={'home__game-detail__battle-info'}>
-                <Image img={'padding_red'} className={'battle__padding'} />
-                <div className={'home__game-detail__battle-text'}>
-                  <p>{_t('game_detail_battle')}</p>
+              <div className={'battle__layer-info'}>
+              </div>
+
+              <Container size={Container.sizes.NORMAL} className={'battle__content'}>
+                <div className={'battle-img'}>
+                  <img src={require('../../../shared/img/assets/model_example_3.png')}/>
                 </div>
-                <p>{_t('game_detail_battle_desc')}</p>
-                <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'home__game-detail__battle-btn'} label={_t('read_more')} onClick={() => {
-                  
-                }}/>
-              </div>
+                <div className={'battle-info'}>
+                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_battle')} />
+                  <p>{_t('game_detail_battle_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'_battle-btn'} label={_t('read_more')} onClick={() => {
+                    
+                  }}/>
+                </div>
+              </Container>
+
             </div>
           </div>
 
@@ -174,12 +190,17 @@ class HomePage extends React.Component {
           {/* end home__partnership */}
 
           <div className="home__section home__features" id={'features'}>
-            
-            <div className="home__features-cards">
-              {features.map((ft,index) => {
-                return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
-              } )}
+            <div className="home__features__title-container">
+              <Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />
             </div>
+
+            <Container size={Container.sizes.NORMAL} >
+              <div className="home__features-cards">
+                {features.map((ft,index) => {
+                  return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
+                } )}
+              </div>
+            </Container>
           </div>
 
           {/* end home__features */}
