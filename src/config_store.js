@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import { voxelStoreReducers } from './reducers'
 import { LanguageActions, InitialActions } from './config_language.js'
 import rootSagas from './sagas'
+import { Actions } from './actions/index';
 
 export const setupStore = () => {
   // Create the saga middleware
@@ -25,10 +26,12 @@ export const setupStore = () => {
   store.sagaMiddleware = sagaMiddleware;
 
   // Initial Actions
-  InitialActions.forEach(a => store.dispatch(a))
+  store.dispatch(Actions.localization.fetchLocalization.request())
 
-  LanguageActions().then(lanActions => 
-    lanActions.forEach(a => store.dispatch(a)) );
+  LanguageActions().then(lanActions => {
+    lanActions.forEach(a => store.dispatch(a));
+    store.dispatch(Actions.localization.fetchLocalization.success({response: null}))
+  });
 
   sagaMiddleware.run(rootSagas);
 

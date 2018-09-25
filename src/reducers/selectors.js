@@ -14,3 +14,8 @@ export const GetLoggedInUserId = (state) => (state.auth['userId']);
 export const GetUserInfo = (state, userId) => cloneDeep(state.user['monsters'][userId]);
 export const GetUserBasicInfo = (state, userId) => (cloneDeep(state.user['basicInfo'][userId]));
 
+
+/**
+ * Localization
+ */
+export const GetLocalizationData = (state) => cloneDeep(state.localization.localizationData['fetchedData']);

@@ -12,3 +12,8 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
  */
 export const LOAD_USER_BASIC_INFO = createFlowTypes('LOAD_USER_BASIC_INFO');
 export const FETCH_USER_BASIC_INFO = createRequestTypes('FETCH_USER_BASIC_INFO');
+
+/**
+ * localization
+ */
+export const FETCH_LOCALIZATION = createRequestTypes('FETCH_LOCALIZATION');

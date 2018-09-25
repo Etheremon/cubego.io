@@ -49,10 +49,3 @@ export const LanguageActions = async () => {
   }),
   addTranslation(localization)]
 };
-
-export const InitialActions = [
-  initialize(Languages, {
-    defaultLanguage: LS.GetItem(LS.Fields.language) || selectedLan,
-    missingTranslationMsg: '${key}',
-  })
-]
