@@ -9,11 +9,9 @@ import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx'
 
 import * as Config from '../../../../config_language'
 import * as LS from '../../../../services/localStorageService.js'
-import * as Utils from "../../../../utils/utils";
 import PropTypes from "prop-types";
 import {GetLoggedInUserId, GetUserBasicInfo} from "../../../../reducers/selectors";
 import {URLS} from "../../../../utils/constants";
-import Loading from "../../../widgets/Loading/Loading.jsx";
 import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import { Icon } from "../../Icon/Icon.jsx";
@@ -31,7 +29,6 @@ const NavbarList = {
   ],
 
   home: [
-    // {link: '/#intro', text: 'intro'},
     {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
     {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
     {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
@@ -60,7 +57,6 @@ class Navbar extends React.Component {
     super(props);
 
     this.state = {
-      showNoti: true,
       selectedNavItem: this.props.pathName,
     };
 
@@ -75,27 +71,16 @@ class Navbar extends React.Component {
   componentDidMount() {
     if (this.props.transforming && this.props.scrollingElement) {
       document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
-      document.getElementById(this.props.scrollingElement).addEventListener('scroll', this.handleScroll);
+      document.getElementById(this.props['scrollingElement']).addEventListener('scroll', this.handleScroll);
       document.addEventListener('scroll', this.handleScroll);
     }
-
-    let func = () => {
-      if (window.CurrentNetwork && window.CurrentNetwork !== 'Main Net')
-        this.setState({networkNoti: `You are using ${window.CurrentNetwork}. Some functions may not work properly!`});
-      if (window.CurrentNetwork)
-        window.clearInterval(this.getNetworkInterval);
-    };
-    this.getNetworkInterval = window.setInterval(func, 2000);
-    func();
   }
 
   componentWillUnmount() {
     if (this.props.transforming && this.props.scrollingElement) {
-      document.getElementById(this.props.scrollingElement).removeEventListener('scroll', this.handleScroll);
+      document.getElementById(this.props['scrollingElement']).removeEventListener('scroll', this.handleScroll);
       document.removeEventListener('scroll', this.handleScroll);
     }
-
-    window.clearInterval(this.getNetworkInterval);
   }
 
   handleScroll(e) {
@@ -117,38 +102,24 @@ class Navbar extends React.Component {
   }
 
   render() {
-
     let {navbarType, _t, fixed} = this.props;
-    let {userId, userInfo, currentLanguage} = this.props.store;
+    let {currentLanguage} = this.props.store;
 
     let size = Container.sizes.NORMAL;
     if (this.props.textContainer) size = Container.sizes.SMALL;
     if (this.props.big) size = Container.sizes.BIG;
 
-    let noti = this.state.showNoti ? (this.props.noti || this.state.networkNoti) : '';
-
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
-        <div className={'navbar__noti'}>
-          <Container size={size}>
-            {noti}
-            <div className={'navbar__noti-close'} onClick={() => {this.setState({showNoti: false})}}>
-              {/* <Icon name={'close'}/> */}
-            </div>
-          </Container>
-        </div>
+        <Container size={size} className={'navbar__content'}>
 
-        <Container size={size} className="navbar__content">
+          <div className={'logo'}>
+            <Link smooth to="/#home">
+              <Image img={'logo_cubego'}/>
+            </Link>
+          </div>
 
-          {/* <div className={'navbar__item-group logo'}>
-            <div className={'navbar__item'}>
-              <Link smooth to="/#home">
-                <Image img={'logo_cubego'}/>
-              </Link>
-            </div>
-          </div> */}
-
-          <div className={'navbar__item-group links'}>
+          <div className={'links'}>
             {NavbarList['mobile'].map((item, idx) => {
               if (item.link)
                 return (
@@ -214,49 +185,15 @@ class Navbar extends React.Component {
                   </Dropdown>
                 )
             })}
-
-            <div className={'navbar__item logo'}>
-              <Link smooth to="/#home">
-                <Image img={'logo_cubego'}/>
-              </Link>
-            </div>
           </div>
 
-          <div className={'navbar__item-group user-info'}>
-            <div className="navbar__item m--pointer" onClick={() => {}}>
-              {userId === undefined || userInfo === undefined ? <Loading dark/>
-                : (
-                  ! userId ? <Link to={`/${URLS.SIGN_IN}`}>{this.props._t('log_in')}</Link>
-                    : (userInfo.username ?
-                        <Link to={`/${URLS.SIGN_IN}`} className={'m--no-text-transform m--no-wrap'}>
-                          {Utils.CutoffString(userInfo.username, 12)}
-                          <i className="user icon navbar__trigger-input-popup m--line-height-100"/>
-                        </Link>
-                      : <Popup
-                          trigger={
-                            <Link to={`/${URLS.SIGN_IN}`} className={'m--no-text-transform'}>
-                              {Utils.CutoffString(userId, 8)}
-                              <i className={'user icon navbar__trigger-input-popup m--noti m--line-height-100'}/>
-                            </Link>
-                          }
-                          content={_t('log_in_note')}
-                          position='bottom right'
-                        />
-                    )
-                )
-              }
-            </div>
-
-            <div className={'navbar__item'}>
-
-              <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
-                content: <span className={'navbar__text'}> <Icon name={lan.country + ' flag'}/> {lan.code}</span>,
-                onClick: () => {this.handleLanguageChange(lan.code)},
-              })))}>
-                <span><Icon name={currentLanguage.country + ' flag'}/>  {currentLanguage.code}</span>
-              </Dropdown>
-            </div>
-
+          <div className={'user-info'}>
+            <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
+              content: <span className={'navbar__text'}> <Icon name={lan.country + ' flag'}/> {lan.code}</span>,
+              onClick: () => {this.handleLanguageChange(lan.code)},
+            })))}>
+              <span><Icon name={currentLanguage.country + ' flag'}/>  {currentLanguage.code}</span>
+            </Dropdown>
           </div>
 
         </Container>

@@ -4,25 +4,6 @@
 @import '../../../styles/fonts';
 
 
-.navbar__noti {
-  background-color: #da9404;
-  color: $white95;
-  text-align: center;
-  font-size: $font-size-small;
-
-  .widget__container {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .navbar__noti-close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-  }
-}
-
 .navbar__logo-text {
   font-weight: $font-weight-semi-bold;
   font-size: $font-size-big;
@@ -39,7 +20,7 @@
 }
 
 .navbar__wrapper {
-  background-color: #61B986 !important;
+  @include gradient-directional(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8), 180deg);;
   border-bottom: none;
 
   &.fixed {
@@ -53,146 +34,31 @@
 
   .navbar__content {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: stretch;
     min-height: 54px;
 
-    .navbar__item-group {
-      display: flex;
-      position: relative;
-
+    .logo {
       img {
-        width: 32px;
-        height: 32px;
-      }
-
-      .active {
-        span {
-          border-radius: 5px;
-          background-color: $yellow-sands !important;
-          color: $c__orange-3 !important;
-        }
-        span:before, span:after {
-          content: "";
-          padding: 4px;
-        }
-      } 
-
-      // &.logo {
-      //   .navbar__item {
-      //     img {
-      //       height: 32px;
-      //       width: auto;
-      //     }
-      //   }
-      // }
-      &.links {
-        flex-grow: 1;
-        justify-content: space-around;
-        margin: 0 0;
-
-        @include mobile {
-          margin: 0 24px;
-        }
-
-        .widget__dropdown__left {
-          margin: 0 4px;
-          &:nth-child(0) {
-            order: 0;
-          }
-
-          &:nth-child(1) {
-            order: 2;
-          }
-
-        }
-
-        .navbar__item {
-          margin: 0 12px;
-
-          &:nth-child(0), &:nth-child(1), &:nth-child(2) {
-            order: 0;
-          }
-          &:nth-child(3), &:nth-child(4), &:nth-child(5) {
-            order: 2;
-          }
-          &:nth-last-child(1) {
-            order: 1;
-          }
-
-          &.logo {
-            position: relative;
-            img {
-              position: absolute;
-              left: 50%;
-              transform: translateX(-50%);
-              top: 16px;
-              height: 64px;
-              width: auto;
-            }
-          }
-        }
-      }
-      &.user-info {
-        position: absolute;
-        right: 32px;
-        top: 50%;
-        transform: translateY(-50%);
-
-        @include mobile {
-          right: 12px;
-        }
-
-        .navbar__item {
-          margin-left: 8px;
-          @include mobile {
-            margin-left: 4px;
-          }
-        }
+        height: 60px;
       }
     }
 
-    .navbar__item, .navbar__item a {
-      cursor: pointer;
-      i {
-        margin: 0;
-      }
-      i.angle.down, i.user {
-        line-height: 12px;
-      }
-      font-weight: $font-weight-bold;
-      font-size: $font-size-normal;
-      text-transform: capitalize;
-      color: $white;
+    .links {
       display: flex;
-      height: 100%;
       align-items: center;
-      font-style: normal;
-    }
-
-    .navbar__item:hover, .navbar__item:hover a {
-      color: $c__blue-1;
-    }
-
-    .widget__dropdown {
-      height: 100%;
-    }
-
-    .navbar__text {
-      color: $gray-dark;
-      font-size: $font-size-normal !important;
-      font-weight: $font-weight-normal !important;
-      text-transform: capitalize !important;
-      padding: 8px 16px;
-      width: 100%;
-      span {
-        display: block !important;
+      .navbar__item {
+        padding: 8px 24px;
+        margin: 0;
+        img {
+          height: 32px;
+        }
       }
     }
+
     .user-info {
-      .navbar__item, .navbar__item a, .navbar__text {
-        text-transform: lowercase !important;
-      }
+      display: flex;
+      align-items: center;
     }
   }
 }
@@ -200,14 +66,4 @@
 .navbar__wrapper-transform {
   background-color: transparent !important;
   @include gradient-directional(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0), 180deg);
-
-  .navbar__item, .navbar__item a {
-    color: $white !important;
-  }
-  .navbar__item:hover, .navbar__item:hover a {
-    color: $blue-light !important;
-  }
-  .loading-dots .loading-dots--dot {
-    background-color: $white95;
-  }
 }

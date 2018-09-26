@@ -3,15 +3,8 @@
 @import '../../styles/variables';
 @import '../../styles/fonts';
 
-.home__container {
+.home-page {
   color: $gray-dark;
-  background-color: $white-smoke;
-  overflow-x: hidden;
-  perspective-origin: top left;
-  -webkit-overflow-scrolling: touch;
-  background-image: url('../../../shared/img/background/background.png');
-  background-size: contain;
-  background-repeat: repeat-y;
 
   .home__banner {
     position: relative;
@@ -44,7 +37,6 @@
 
   .home__intro {
     padding-top: 20px;
-    padding-bottom: 20px;
     text-align: center;
 
     .home__intro-board {
@@ -100,234 +92,125 @@
   }
 
   .home__game-detail {
-    text-align: center;
-    padding-top: 60px;
-    padding-bottom: 20px;
-    text-align: -webkit-center;
-    color: $dark;
-    display: block;
-    position: relative;
+    .section {
+      position: relative;
+      color: $white95;
+      margin-top: 120px;
+      height: 320px;
+      @include mobile {
+        height: auto;
+      }
+    }
 
-    .index__content {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
+    .background {
+      &.red {
+        &:before {
+          background-image: url('../../../shared/img/background/background_red.png');
+        }
+        &:after {
+          background-image: url('../../../shared/img/background/padding_red.png');
+        }
+      }
+      &.yellow {
+        &:before {
+          background-image: url('../../../shared/img/background/background_yellow.png');
+        }
+        &:after {
+          background-image: url('../../../shared/img/background/padding_yellow.png');
+        }
+      }
+      &.blue {
+        &:before {
+          background-image: url('../../../shared/img/background/background_blue.png');
+        }
+        &:after {
+          background-image: url('../../../shared/img/background/padding_blue.png');
+        }
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 16px;
+        right: 16px;
+        z-index: 1;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: -30px;
+        bottom: -30px;
+        left: 16px;
+        right: 16px;
+      }
+
+      @include not-mobile {
+        &.left {
+          &:before {
+            left: calc(50% + 20px);
+          }
+          &:after {
+            left: calc(50% + 60px);
+          }
+        }
+        &.right {
+          &:before {
+            right: calc(50% + 20px);
+          }
+          &:after {
+            right: calc(50% + 60px);
+          }
+        }
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
       height: 100%;
       display: flex;
-      flex-wrap: wrap;
-      align-items: stretch;
+      align-items: center;
       justify-content: center;
       @include mobile {
-        height: 600px;
         flex-wrap: wrap;
-        justify-content: space-evenly;
       }
-      
-      .index-img {
-        height: 100%;
-        position: relative; 
-        width: 55%;
-        img {
-          box-sizing: border-box;
+
+      .desc {
+        padding: 32px 64px;
+        @include mobile {
+          text-align: center;
           padding: 16px;
-          display: block;
-          max-height: 100%;
-        }
-
-        @include mobile {
-          width: 100%;
-          height: 50%;
         }
       }
-
-      .index-info {
-        text-align: left;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        width: 45%;
-
-        p {
-          overflow: hidden;
-        }
-
-          @include mobile {
-            align-items: center;
-            text-align: center;
-            width: 100%;
-            height: 50%;
-          }
-      }
-    }
-
-    .copywrite__content, .battle__content {
-      position: absolute;
-      max-width: 100%;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-
-      @include mobile {
-        height: 600px;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-      }
-
-
-      .copywrite-img, .battle-img {
+      .image {
+        flex-shrink: 0;
+        width: 50%;
+        text-align: center;
         height: 100%;
-        position: relative; 
-        width: 55%;
+        position: relative;
+
+        @include mobile {
+          margin-top: -30px;
+        }
+
         img {
-          box-sizing: border-box;
-          padding: 16px;
-          display: block;
-          max-height: 100%;
+          position: absolute;
+          max-width: 110%;
+          max-height: 120%;
+          top: 50%;
+          left: 50%;
+          @include transform(translateX(-50%) translateY(-50%));
         }
 
-        @include mobile {
-          width: 100%;
-          height: 50%;
-        }
+        @include flip-up-down(3s);
       }
 
-      .copywrite-info, .battle-info {
-        padding-left: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: left;
-        width: 45%;
-        box-sizing: border-box;
-        z-index: 2;
-
-          p {
-            overflow: hidden;
-          }
-
-          @include mobile {
-            align-items: center;
-            text-align: center;
-            width: 100%;
-            height: 50%;
-          }
+      &.left {
+        flex-direction: row-reverse;
       }
     }
-    
-    .subtitle {
-      color: $white;
-    }
-
-    .home__game-detail__copywrite, .home__game-detail__battle {
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      margin-bottom: 140px;
-      height: 400px;
-      position: relative;
-      @include mobile {
-        height: 600px;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        margin-bottom: 80px;
-      }
-
-      .copywrite__layer-img, .battle__layer-img {
-        background-color: #D3D3D3;
-        width: 53%;
-
-        @include mobile {
-          width: 100%;
-          height: 50%;
-        }
-      }
-
-      .copywrite__layer-info, .battle__layer-info {
-        @include mobile {
-          width: 100% !important;
-          height: 50% !important;
-        }
-      }
-
-      .copywrite__layer-info {
-        width: 47%;
-        background: url('../../../shared/img/background/background_yellow.png') no-repeat center;
-      }
-
-      .battle__layer-info {
-        width: 47%;
-        background: url('../../../shared/img/background/background_red.png') no-repeat center;
-      }
-    }
-
-    .padding {
-      position: absolute;
-      width: 40%;
-      height: 130%;
-      transform: translateY(-50%);
-      z-index: 0;
-      top: 50%;
-
-      @include mobile {
-        transform: translateY(0%);
-        top: 75%;
-        height: 0;
-      }
-    }
-
-    .copywrite__layer {
-      right: 0;
-    }
-
-    .battle__layer {
-      right: 0;
-    }
-
-    .index__layer {
-      left: 0;
-    }
-
-    .home__game-detail__index {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: stretch;
-      justify-content: center;
-      margin-bottom: 140px;
-      height: 400px;
-      position: relative;
-      @include mobile {
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        height: 600px;
-        margin-bottom: 80px;
-      }
-
-      .index__layer-img {
-        background-color: #D3D3D3;
-        width: 53%;
-      }
-
-      .index__layer-info {
-        width: 47%;
-        background: url('../../../shared/img/background/background_blue.png') no-repeat center;
-      }
-
-      .index__layer-img, .index__layer-info {
-        @include mobile {
-          width: 100% !important;
-          height: 50% !important;
-        }
-      }
-    }
-
   }
 
   .home__build {
@@ -342,18 +225,15 @@
   }
 
   .home__modes {
-    width: 100%;
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 80px;
+    padding-top: 80px;
+    padding-bottom: 20px;
 
     .home__modes-title__container {
       background-color: rgba(255, 106, 0, 0.6);
-      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-bottom: 32px;
       height: 56px;
       
       .home__modes-title {
@@ -369,9 +249,9 @@
     .home__mode-container {
       position: relative;
       width: 100%;
-      height: 460px;
+      height: 400px;
       @include mobile {
-        height: 320px;
+        height: 300px;
       }
 
       .guild-game {
@@ -478,8 +358,7 @@
 
   .home__features {
     text-align: center;
-    width: 100%;
-    padding-top: 20px;
+    padding-top: 120px;
     padding-bottom: 60px;
 
     .home__features__title-container {
@@ -500,18 +379,12 @@
     .home__features-cards {
       overflow: auto;
       overflow-y: hidden;
-      margin: 0 auto;
       white-space: nowrap;
-      width: 100%;
-      
+
       .home__features-card {
         display: inline-block;
-        width: 25%;
-        height: 350px;
-
-        @include mobile {
-          width: 50%;
-        }
+        width: 220px;
+        height: 380px;
       }
     }
   }

@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import {getTranslate} from "react-localize-redux"
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import {URLS} from "../../../../utils/constants";
 import { Container } from '../../../widgets/Container/Container.jsx';
 import { Image } from "../../Image/Image.jsx";

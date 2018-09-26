@@ -10,7 +10,7 @@
   border-top: 40px solid black;
   border-image: url('../../../../shared/img/assets/wall_pattern.svg') 130 10 round;
   background-clip: padding-box;
-  background-color: $c__blue-4;
+  background-color: rgb(6, 106, 141);
   box-sizing: border-box;
   
 
@@ -21,8 +21,7 @@
 
   .footer__main {
     display: flex;
-    align-items: stretch;
-    padding: 16px 0px;
+    padding: 16px 0;
     justify-content: space-between;
     align-items: center;
     min-height: 160px;
@@ -49,7 +48,7 @@
 
     .footer__logo {
       display: block;
-      width: 340px;
+      width: 300px;
       max-width: 50%;
       margin-bottom: 24px;
     }

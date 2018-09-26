@@ -5,6 +5,10 @@
 .widget__page-wrapper {
   min-height: 700px;
 
+  &.normal {
+    background-image: linear-gradient(#ffffff, rgba(166, 228, 193, 0.31));
+  }
+
   &.dark {
     background: url('../../../shared/img/background/bgr.jpeg') no-repeat center center fixed;
     background-size: cover;
