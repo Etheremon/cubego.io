@@ -8,10 +8,16 @@
 
   .next {
     right: 15%;
+    @include mobile {
+      right: 3%;
+    }
   }
 
   .prev {
     left: 15%;
+    @include mobile {
+      left: 3%;
+    }
   }
 
   .nav-arrow {
@@ -77,12 +83,19 @@
     left: 50%;
     @include transform(translateX(-50%));
     bottom: 0px;
+    max-width: 100%;
 
     .padding-right, .padding-left {
       width: auto;
       height: 8px;
+      flex-shrink: 1;
       flex-grow: 1;
       padding: 0 16px;
+
+      @include mobile {
+        max-width: 65%;
+        height: 3px;
+      }
     }
 
     .padding-left {
