@@ -22,7 +22,9 @@ export class Model3D extends Component {
     if (!IsEqual(this.props.model, nextProps.model)) {
       this.voxel.setNewVoxelData(nextProps.model);
     }
-    this.voxel.setNewTools(nextProps.tools);
+    if (!IsEqual(this.props.tools, nextProps.tools)) {
+      this.voxel.setNewTools(nextProps.tools);
+    }
   }
 
   render() {

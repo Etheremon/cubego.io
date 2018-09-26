@@ -25,7 +25,6 @@ const prepareUpdate = (element, type, oldProps, newProps, rootContainerInstance,
 };
 
 const commitUpdate = (instance, updatePayload, type, lastRawProps, nextRawProps, internalInstanceHandle) => {
-  console.log(updatePayload);
   loggerFnc('commitUpdate')();
   const updatedPropKeys = including(updatePayload.filter((item, i) => i % 2 === 0));
   const oldProps = filterByKey(lastRawProps, updatedPropKeys);

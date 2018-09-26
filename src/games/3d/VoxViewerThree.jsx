@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Axis, Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
+import {Axis, BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
 import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
@@ -16,6 +16,7 @@ class VoxViewerThree extends Component {
     this.objects = [];
     this.offsetVector = new THREE.Vector3(0, 0, 0);
     this.isShiftDown = false;
+    this.boxHelper = null;
   }
 
   renderVoxel(voxelData) {
@@ -32,14 +33,15 @@ class VoxViewerThree extends Component {
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE} ref={(ref) => {this.objects.push(ref)}}
+      elements.push(<MeshBox size={SIZE} ref={(ref) => {
+        this.objects.push(ref)
+      }}
                              position={position} color={color} key={`${voxel.x}-${voxel.y}-${voxel.z}`}/>)
     });
     return elements;
   }
 
   setNewVoxelData(voxelData) {
-    console.log(voxelData);
     this.offsetVector = new THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
     this.objects = [];
     this.setState({
@@ -50,6 +52,13 @@ class VoxViewerThree extends Component {
   setNewTools(tools) {
     let colorHex = '0x' + fullColorHex(tools.color.value);
     this.rollOverMesh.renderer.material.color.setHex(colorHex);
+    let center = {
+      x: -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (tools['layer-index'].value - 1) * SIZE,
+      y: 0,
+      z: 0
+    };
+    let size = {x: SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
+    this.boxHelper.setFromCenterAndSize(center, size);
   }
 
   componentDidMount() {
@@ -136,6 +145,9 @@ class VoxViewerThree extends Component {
         <HemisphereLight/>
         <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref
+        }}/>
+        <BoxHelper ref={(ref) => {
+          this.boxHelper = ref
         }}/>
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
