@@ -8,10 +8,11 @@ import {EDITOR_COLORS} from "../../../../utils/constants";
 
 require("style-loader!./ToggleTool.scss");
 
-export const ToggleTool = ({label, img, active, onClick}) => {
+export const ToggleTool = ({label, img, active, disabled, onClick}) => {
   let activeClass = "";
   if (active === true) activeClass = "active";
   if (active === false) activeClass = "inactive";
+  if (disabled) activeClass = "disabled";
 
   return (
     <div className={`toggle-tool ${activeClass}`}

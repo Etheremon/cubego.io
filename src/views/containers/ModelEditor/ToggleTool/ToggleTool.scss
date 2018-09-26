@@ -11,12 +11,21 @@
   .toggle-tool__img {
     img {
       width: 100%;
+      filter: grayscale(0.5);
     }
   }
 
-  &.inactive {
+  &.active {
+    img {
+      filter: none;
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
     img {
       filter: grayscale(1);
+      opacity: 0.5;
     }
   }
 }
