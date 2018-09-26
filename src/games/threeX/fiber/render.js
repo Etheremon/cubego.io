@@ -4,10 +4,7 @@ import 'three-orbitcontrols';
 import {ThreeScene} from "../components/threeScene";
 
 let rootContainer = null;
-let scene, camera, mouse, raycaster, rollOverMesh, canvas;
-let radius = 300, theta = 90, phi = 60;
-let cubeGeo, cubeMaterial;
-let objects = [];
+let scene;
 
 function createRenderer(canvas, options) {
   scene = ThreeScene.create();
