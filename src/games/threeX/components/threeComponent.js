@@ -31,7 +31,9 @@ export class ThreeComponent extends FiberNode {
 
   removeChild(child) {
     super.removeChild(child);
-    child.parent = null;
     this._renderer.remove(child._renderer);
+    child._renderer.geometry.dispose();
+    child._renderer.material.dispose();
+    child = undefined;
   }
 }

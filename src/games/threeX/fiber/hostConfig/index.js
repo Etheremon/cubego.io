@@ -25,7 +25,7 @@ const prepareUpdate = (element, type, oldProps, newProps, rootContainerInstance,
 };
 
 const commitUpdate = (instance, updatePayload, type, lastRawProps, nextRawProps, internalInstanceHandle) => {
-  // console.log(updatePayload);
+  console.log(updatePayload);
   loggerFnc('commitUpdate')();
   const updatedPropKeys = including(updatePayload.filter((item, i) => i % 2 === 0));
   const oldProps = filterByKey(lastRawProps, updatedPropKeys);
@@ -54,11 +54,13 @@ const getPublicInstance = (inst) => {
   return inst;
 };
 
-const insertBefore = () => {
-
+const insertBefore = (parentInstance, child, beforeChild) => {
+  loggerFnc('insertBefore')();
+  parentInstance.addChild(child);
 };
 
 const resetAfterCommit = () => {
+  loggerFnc('resetAfterCommit')();
 };
 
 const hostConfig = {

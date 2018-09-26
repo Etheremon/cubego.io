@@ -39,7 +39,9 @@ class VoxViewerThree extends Component {
   }
 
   setNewVoxelData(voxelData) {
+    console.log(voxelData);
     this.offsetVector = new THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
+    this.objects = [];
     this.setState({
       data: voxelData || {}
     });

@@ -1,20 +1,32 @@
 import * as PIXI from "pixi.js";
+
 const CHILDREN = 'children';
 
 const RESERVED_PROPS = {
   [CHILDREN]: true,
 };
 
-const __DEV__  = false;
+const __DEV__ = false;
 
 const DEFAULT_PROPS = {};
 
 const emptyFnc = (name) => () => {
-  // console.log(name);
+  console.log(name);
+};
+
+const compareVector = (vector1, vector2) => {
+  if (vector1.x && vector2.x && vector1.y && vector2.y && vector1.z && vector2.z) {
+    return vector1.x === vector2.x && vector1.y === vector2.y && vector1.z === vector2.z;
+  }
+  return false;
 };
 
 const loggerFnc = (name) => () => {
-  // console.log(name);
+  console.log(name);
+};
+
+const compareProp = (nextProp, lastProp) => {
+  return nextProp === lastProp || (nextProp == null && lastProp == null) || compareVector(nextProp, lastProp);
 };
 
 const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerElement) => {
@@ -37,7 +49,7 @@ const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerEleme
   for (propKey in nextProps) {
     const nextProp = nextProps[propKey];
     const lastProp = lastProps != null ? lastProps[propKey] : undefined;
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
+    if (!nextProps.hasOwnProperty(propKey) || compareProp(nextProp, lastProp)) {
       continue;
     }
     if (propKey === CHILDREN) {
