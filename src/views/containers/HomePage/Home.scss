@@ -66,9 +66,9 @@
         border-radius: 16px;
         box-shadow: 5px 5px 16px -2px rgba(143,124,120,1) !important;
         margin: 0 16px 16px 16px;
-        width: 15vw;
+        width: 20%;
         object-fit: cover;
-        height: 20vw;
+        height: 200px;
 
         &:nth-child(1) {
           background-image: url('../../../shared/img/background/background_intro_1.png');
@@ -92,8 +92,8 @@
         }
 
         @include mobile {
-          width: 35vw;
-          height: 45vw;
+          width: 40%;
+          height: 200px;
         }
       }
     }
@@ -118,12 +118,19 @@
       flex-wrap: wrap;
       align-items: stretch;
       justify-content: center;
+      @include mobile {
+        height: 600px;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
       
       .index-img {
         height: 100%;
         position: relative; 
-        width: 53%;
+        width: 55%;
         img {
+          box-sizing: border-box;
+          padding: 16px;
           display: block;
           max-height: 100%;
         }
@@ -136,16 +143,19 @@
 
       .index-info {
         text-align: left;
-        padding: 20px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        padding-right: 50px;
-        width: 47%;
+        width: 45%;
+
+        p {
+          overflow: hidden;
+        }
 
           @include mobile {
+            align-items: center;
             text-align: center;
             width: 100%;
             height: 50%;
@@ -153,7 +163,7 @@
       }
     }
 
-    .copyright__content, .battle__content {
+    .copywrite__content, .battle__content {
       position: absolute;
       max-width: 100%;
       top: 0;
@@ -164,12 +174,20 @@
       justify-content: space-between;
       align-items: stretch;
 
+      @include mobile {
+        height: 600px;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
 
-      .copyright-img, .battle-img {
+
+      .copywrite-img, .battle-img {
         height: 100%;
         position: relative; 
-        width: 53%;
+        width: 55%;
         img {
+          box-sizing: border-box;
+          padding: 16px;
           display: block;
           max-height: 100%;
         }
@@ -180,19 +198,23 @@
         }
       }
 
-      .copyright-info, .battle-info {
-        padding: 0 32px;
+      .copywrite-info, .battle-info {
+        padding-left: 16px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         text-align: left;
-        width: 47%;
+        width: 45%;
         box-sizing: border-box;
         z-index: 2;
-        padding-left: 50px;
+
+          p {
+            overflow: hidden;
+          }
 
           @include mobile {
+            align-items: center;
             text-align: center;
             width: 100%;
             height: 50%;
@@ -204,25 +226,38 @@
       color: $white;
     }
 
-    .home__game-detail__copyright, .home__game-detail__battle {
+    .home__game-detail__copywrite, .home__game-detail__battle {
       display: flex;
       justify-content: space-between;
       align-items: stretch;
-      margin-bottom: 112px;
+      margin-bottom: 140px;
       height: 400px;
       position: relative;
       @include mobile {
         height: 600px;
         flex-wrap: wrap;
         justify-content: space-evenly;
+        margin-bottom: 80px;
       }
 
-      .copyright__layer-img, .battle__layer-img {
+      .copywrite__layer-img, .battle__layer-img {
         background-color: #D3D3D3;
         width: 53%;
+
+        @include mobile {
+          width: 100%;
+          height: 50%;
+        }
       }
 
-      .copyright__layer-info {
+      .copywrite__layer-info, .battle__layer-info {
+        @include mobile {
+          width: 100% !important;
+          height: 50% !important;
+        }
+      }
+
+      .copywrite__layer-info {
         width: 47%;
         background: url('../../../shared/img/background/background_yellow.png') no-repeat center;
       }
@@ -248,7 +283,7 @@
       }
     }
 
-    .copyright__layer {
+    .copywrite__layer {
       right: 0;
     }
 
@@ -265,13 +300,14 @@
       flex-wrap: wrap;
       align-items: stretch;
       justify-content: center;
-      margin-bottom: 112px;
+      margin-bottom: 140px;
       height: 400px;
       position: relative;
       @include mobile {
         flex-wrap: wrap;
         justify-content: space-evenly;
         height: 600px;
+        margin-bottom: 80px;
       }
 
       .index__layer-img {
@@ -282,6 +318,13 @@
       .index__layer-info {
         width: 47%;
         background: url('../../../shared/img/background/background_blue.png') no-repeat center;
+      }
+
+      .index__layer-img, .index__layer-info {
+        @include mobile {
+          width: 100% !important;
+          height: 50% !important;
+        }
       }
     }
 

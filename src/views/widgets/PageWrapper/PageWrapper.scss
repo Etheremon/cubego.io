@@ -3,7 +3,7 @@
 @import '../../styles/variables';
 
 .widget__page-wrapper {
-  height: 100vh;
+  min-height: 700px;
 
   &.dark {
     background: url('../../../shared/img/background/bgr.jpeg') no-repeat center center fixed;

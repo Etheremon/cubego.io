@@ -16,6 +16,7 @@ import {CloneDeep} from "../../../utils/objUtils";
 import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
 import {RangeInput} from "../../widgets/RangeInput/RangeInput.jsx";
 import * as modelUtils from "../../../utils/modelUtils";
+import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -65,8 +66,11 @@ class _ModelEditor extends React.Component {
     this.forceUpdate();
   }
 
-  onCellClicked(cell, cells) {
-    this.toolManager.onCellClicked({cell, cells});
+  onCellClicked(cell) {
+    if (Array.isArray(cell))
+      this.toolManager.onCellClicked(cell);
+    else
+      this.toolManager.onCellClicked([cell]);
     this.forceUpdate();
   }
 
@@ -74,8 +78,11 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     return (
-      <PageWrapper type={PageWrapper.types.DARK}>
-        <Container className={'model-editor'} size={Container.sizes.LARGE}>
+      <PageWrapper className={'model-editor'} type={PageWrapper.types.DARK}>
+
+        <Navbar big/>
+
+        <Container className={'model-editor__container'} size={Container.sizes.BIG}>
 
           <div className={'model-editor__tool-bar'}>
             <div className={'group'}>

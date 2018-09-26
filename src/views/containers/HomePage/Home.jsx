@@ -72,6 +72,7 @@ class HomePage extends React.Component {
       <PageWrapper className="page-container">
         <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home__container'}/>
         <div className={'home__container'} id={'home__container'}>
+        
 
           <div className={'home__section home__banner'} id={'home'}>
             <Slider list={this.renderBanner()}/>
@@ -106,23 +107,23 @@ class HomePage extends React.Component {
 
           <div className="home__section home__game-detail" id={'game-detail'}>
 
-            <div className={'home__game-detail__copyright'}>
-              <Image img={'padding_yellow'} className={'copyright__layer padding'} />
+            <div className={'home__game-detail__copywrite'}>
+              <Image img={'padding_yellow'} className={'copywrite__layer padding'} />
 
-              <div className={'copyright__layer-img'}>
+              <div className={'copywrite__layer-img'}>
               </div>
-              <div className={'copyright__layer-info'}>
+              <div className={'copywrite__layer-info'}>
               </div>
 
-              <Container size={Container.sizes.NORMAL} className={'copyright__content'}>
-                <div className={'copyright-img'}>
-                  <img src={require('../../../shared/img/assets/model_example_1.png')}/>
+              <Container size={Container.sizes.NORMAL} className={'copywrite__content'}>
+                <div className={'copywrite-img'}>
+                  <img src={require('../../../shared/img/banner/copywrite_banner.png')} />
                 </div>
 
-                <div className={'copyright-info'}>
-                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_copyright')} />
-                  <p>{_t('game_detail_copyright_desc')}</p>
-                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'copyright-btn'} label={_t('read_more')} onClick={() => {
+                <div className={'copywrite-info'}>
+                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_copywrite')} />
+                  <p>{_t('game_detail_copywrite_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'copywrite-btn'} label={_t('read_more')} onClick={() => {
                     
                   }}/>
                 </div>
@@ -147,7 +148,7 @@ class HomePage extends React.Component {
                   }}/>
                 </div>
                 <div className={'index-img'}>
-                  <img src={require('../../../shared/img/assets/model_example_2.png')}/>
+                  <img src={require('../../../shared/img/banner/index_banner.png')}/>
                 </div>
               </Container>
             </div>

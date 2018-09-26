@@ -53,7 +53,7 @@
 
   .navbar__content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: stretch;
     min-height: 54px;
 
@@ -88,11 +88,11 @@
       // }
       &.links {
         flex-grow: 1;
-        justify-content: space-evenly;
-        margin: 0 54px;
+        justify-content: space-around;
+        margin: 0 0;
 
         @include mobile {
-          margin-left: 76px;
+          margin: 0 24px;
         }
 
         .widget__dropdown__left {
