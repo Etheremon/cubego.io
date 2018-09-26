@@ -59,7 +59,7 @@ class Carousel extends React.Component {
       <div className={`widget__carousel ${className}`}>
         {list.map((item, idx) => (
           <div className={`item ${current === idx ? 'active' : ''}`} key={idx}>
-            <div className="item__title">{item.text}</div>
+            {/*<div className="item__title">{item.text}</div>*/}
             {item.image}
           </div>
         ))}
@@ -68,7 +68,7 @@ class Carousel extends React.Component {
           {list.map((item, idx) => {
             return  <div className={`dot__container ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx}>
                       <div className={`dot__text`} >{item.text}</div>
-                      <div className="dot"></div>
+                      <div className="dot"/>
                     </div>
           })}
           <Image img={'padding_dot_left'} className="padding-left" />

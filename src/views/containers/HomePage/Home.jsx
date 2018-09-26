@@ -69,18 +69,18 @@ class HomePage extends React.Component {
     ];
 
     return (
-      <PageWrapper className="page-container">
-        <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home__container'}/>
-        <div className={'home__container'} id={'home__container'}>
-        
+      <PageWrapper>
+        <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home-page'}/>
 
-          <div className={'home__section home__banner'} id={'home'}>
+        <div className={'home-page'} id={'home-page'}>
+
+          <div className={'home__banner'} id={'home'}>
             <Slider list={this.renderBanner()}/>
           </div>
           {/* end home__banner */}
 
 
-          <Container size={Container.sizes.SMALL} className="home__section home__intro" id={'intro'}>
+          <Container size={Container.sizes.SMALL} className="home__intro" id={'intro'}>
             <div className="home__intro-board">
               <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
             </div>
@@ -90,95 +90,73 @@ class HomePage extends React.Component {
               <img src={require('../../../shared/img/assets/model_example_3.png')} />
             </div>
           </Container>
-
           {/* end home__intro */}
 
-          <div className="home__section home__modes" id={'modes'}>
+          <Container className="home__modes" id={'modes'}>
             <div className="home__modes-title__container">
               <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
-            <Container size={Container.sizes.NORMAL} className="home__mode-container">
+            <div className="home__mode-container">
               <Carousel list={guildGame} />
-            </Container>
-          </div>
-
+            </div>
+          </Container>
           {/* end home__modes */}
 
-          <div className="home__section home__game-detail" id={'game-detail'}>
+          <div className="home__game-detail" id={'game-detail'}>
 
-            <div className={'home__game-detail__copywrite'}>
-              <Image img={'padding_yellow'} className={'copywrite__layer padding'} />
+            <Container className={'home__game-detail__1 section'}>
+              <div className={'background yellow left'}/>
 
-              <div className={'copywrite__layer-img'}>
-              </div>
-              <div className={'copywrite__layer-info'}>
-              </div>
-
-              <Container size={Container.sizes.NORMAL} className={'copywrite__content'}>
-                <div className={'copywrite-img'}>
-                  <img src={require('../../../shared/img/banner/copywrite_banner.png')} />
+              <div className={'content left'}>
+                <div className={'desc'}>
+                  <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
+                  <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                             className={'btn-btn'} onClick={() => {}}/>
                 </div>
-
-                <div className={'copywrite-info'}>
-                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_copywrite')} />
-                  <p>{_t('game_detail_copywrite_desc')}</p>
-                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'copywrite-btn'} label={_t('read_more')} onClick={() => {
-                    
-                  }}/>
+                <div className={'image'}>
+                  <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
                 </div>
-
-              </Container>
-         
-            </div>
-
-            <div className={'home__game-detail__index'}>
-              <Image img={'padding_blue'} className={'index__layer padding'} />
-              <div className={'index__layer-info'}>
               </div>
-              <div className={'index__layer-img'}>
-              </div>
+            </Container>
 
-              <Container size={Container.sizes.NORMAL} className={'index__content'}>
-                <div className={'index-info'}>
-                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_index')} />
-                  <p>{_t('game_detail_index_desc')}</p>
-                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'index-btn'} label={_t('read_more')} onClick={() => {
-                    
-                  }}/>
+            <Container className={'home__game-detail__2 section'}>
+              <div className={'background blue right'}/>
+
+              <div className={'content right'}>
+                <div className={'desc'}>
+                  <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
+                  <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                             className={'btn-btn'} onClick={() => {}}/>
                 </div>
-                <div className={'index-img'}>
+                <div className={'image'}>
                   <img src={require('../../../shared/img/banner/index_banner.png')}/>
                 </div>
-              </Container>
-            </div>
-
-            <div className={'home__game-detail__battle'}>
-              <Image img={'padding_red'} className={'battle__layer padding'} />
-              <div className={'battle__layer-img'}>
               </div>
-              <div className={'battle__layer-info'}>
+            </Container>
+
+            <Container className={'home__game-detail__3 section'}>
+              <div className={'background red left'}/>
+
+              <div className={'content left'}>
+                <div className={'desc'}>
+                  <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
+                  <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                             className={'btn-btn'} onClick={() => {}}/>
+                </div>
+                <div className={'image'}>
+                  <img src={require('../../../shared/img/banner/index_banner.png')}/>
+                </div>
               </div>
+            </Container>
 
-              <Container size={Container.sizes.NORMAL} className={'battle__content'}>
-                <div className={'battle-img'}>
-                  <img src={require('../../../shared/img/assets/model_example_3.png')}/>
-                </div>
-                <div className={'battle-info'}>
-                  <Text className={'subtitle'} type={Text.types.H1} children={_t('game_detail_battle')} />
-                  <p>{_t('game_detail_battle_desc')}</p>
-                  <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} className={'_battle-btn'} label={_t('read_more')} onClick={() => {
-                    
-                  }}/>
-                </div>
-              </Container>
-
-            </div>
           </div>
+          {/* end home__game-detail */}
 
-          {/* end home__game-play */}
-
-          <div className={'home__section home__partnership'} id={'partners'}>
+          <div className={'home__partnership'} id={'partners'}>
             <HeaderHighlight>
               <b>{_t('in_partnership_with')}</b>
             </HeaderHighlight>
@@ -190,23 +168,22 @@ class HomePage extends React.Component {
           </div>
           {/* end home__partnership */}
 
-          <div className="home__section home__features" id={'features'}>
+          <Container className="home__features" id={'features'}>
             <div className="home__features__title-container">
               <Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />
             </div>
 
-            <Container size={Container.sizes.NORMAL} >
+            <div>
               <div className="home__features-cards">
                 {features.map((ft,index) => {
                   return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
                 } )}
               </div>
-            </Container>
-          </div>
-
+            </div>
+          </Container>
           {/* end home__features */}
 
-          <div className="home__section home__subscription">
+          <div className="home__subscription">
             <HeaderHighlight>
               <b>{_t('get_the_latest_news')}</b>
             </HeaderHighlight>
@@ -224,7 +201,6 @@ class HomePage extends React.Component {
               </div>
             </Container>
           </div>
-
           {/* end home__subscription */}
 
         </div>

@@ -213,9 +213,16 @@ $computer-width: 992px;
 }
 
 @keyframes flip-up-down {
-  5%   {transform: translateY(0%)}
-  50%  {transform: translateY(-5%)}
-  95%   {transform: translateY(0%)}
+  0%   {transform: translateY(0)}
+  50%  {transform: translateY(6%)}
+  100%   {transform: translateY(0)}
+}
+
+@mixin flip-up-down($time: $duration-default) {
+  -webkit-animation: flip-up-down $time infinite ease-in-out;
+  -moz-animation: flip-up-down $time infinite ease-in-out;
+  -o-animation: flip-up-down $time infinite ease-in-out;
+  -ms-animation: flip-up-down $time infinite ease-in-out;
 }
 
 /**
