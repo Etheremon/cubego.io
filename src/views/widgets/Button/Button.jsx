@@ -15,7 +15,7 @@ export const ButtonNew = ({className, label, children, color, size, type, disabl
            onClick && onClick({});
          }}>
 
-      <div className={'content'}>
+      <div className={'content'} >
         {label || children}
       </div>
 

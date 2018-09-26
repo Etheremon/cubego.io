@@ -109,7 +109,7 @@ class App extends React.Component {
           <Route path={`/${URLS.BUILD_HERO}`} component={ComingSoon}/>
           <Route path={`/${URLS.MY_HEROES}`} component={ComingSoon}/>
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
-          <Route path={`/${URLS.INTRO}`} component={ComingSoon}/>
+          <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
           <Route exact path='/' component={Home}/>
           <Route component={Home}/>
         </Switch>

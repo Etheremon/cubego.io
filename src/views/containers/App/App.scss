@@ -238,86 +238,108 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
-[tooltip]{
+[tooltip] {
+
   margin: 20px 60px;
   position: relative;
   display: inline-block;
-}
-[tooltip]::before {
+
+  &:before {
     content: "";
     position: absolute;
-    top: -6px;
-    left: 50%;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    left: 45%;
+    border-top: 0.5px solid $orange;
+    border-left: 0.5px solid $orange;
+    background-color: $white;
     transform: translateX(-50%);
-    border-width: 5px 6px 0 6px;
-    border-style: solid;
-    border-color: $white transparent transparent transparent;
     z-index: 99;
     opacity: 0;
     overflow: hidden;
+  }
+
+  &:after {
+      content: attr(tooltip);
+      position: absolute;
+      left:50%;
+      top:-6px;
+      transform: translateX(-50%)   translateY(-100%);
+      background: $white;
+      border: 0.5px solid $orange;
+      text-align: center;
+      color: $orange;
+      padding:4px 2px;
+      font-size: 14px;
+      min-width: 80px;
+      border-radius: 5px;
+      pointer-events: none;
+      z-index: 98;
+      opacity: 0;
+  }
+
+  &:hover::before, &:hover::after {
+    opacity: 1;
+  }
 }
 
-[tooltip-position='left']::before{
-  left:0%;
-  top:50%;
-  margin-left:-12px;
-  transform:translatey(-50%) rotate(-90deg) 
-}
-[tooltip-position='top']::before{
-  left:50%;
-}
-[tooltip-position='buttom']::before{
-  top:100%;
-  margin-top:9px;
-  transform: translateX(-50%) translatey(-100%) rotate(-180deg)
-}
-[tooltip-position='right']::before{
-  left:100%;
-  top:50%;
-  margin-left:1px;
-  transform:translatey(-50%) rotate(90deg)
+
+[tooltip-position='left'] {
+
+  &:before {
+    left: 0%;
+    top: 50%;
+    margin-left: -13px;
+    transform: translateY(-50%) rotate(135deg);
+  }
+
+  &:after {
+    left:0%;
+    top:50%;
+    margin-left:-8px;
+    transform: translateX(-100%)   translateY(-50%);
+  }
+
 }
 
-[tooltip]::after {
-    content: attr(tooltip);
-    position: absolute;
-    left:50%;
-    top:-6px;
-    transform: translateX(-50%)   translateY(-100%);
-    background: $white;
-    border: 0.5px solid $orange;
-    text-align: center;
-    color: $orange;
-    padding:4px 2px;
-    font-size: 14px;
-    min-width: 80px;
-    border-radius: 5px;
-    pointer-events: none;
-    z-index: 98;
-    opacity: 0;
+[tooltip-position='top'] {
+  &:before {
+    top: 0;
+    margin-top: -10px;
+    transform: rotate(-135deg);
+  }
+
+  &:after {
+    left: 50%;
+  }
+}
+[tooltip-position='bottom'] {
+  &:before {
+    top: 100%;
+    margin-top: 4px;
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    top: 100%;
+    margin-top: 8px;
+    transform: translateX(-50%) translateY(0%);
+  }
 }
 
-[tooltip-position='left']::after{
-  left:0%;
-  top:50%;
-  margin-left:-8px;
-  transform: translateX(-100%)   translateY(-50%);
-}
-[tooltip-position='top']::after{
-  left:50%;
-}
-[tooltip-position='buttom']::after{
-  top:100%;
-  margin-top:8px;
-  transform: translateX(-50%) translateY(0%);
-}
-[tooltip-position='right']::after{
-  left:100%;
-  top:50%;
-  margin-left:8px;
-  transform: translateX(0%)   translateY(-50%);
-}
+[tooltip-position='right'] {
+  &:before {
+    left: 100%;
+    top: 50%;
+    margin-left: 4px;
+    transform: translateY(-50%) rotate(-45deg);
+  }
 
-[tooltip]:hover::after,[tooltip]:hover::before {
-   opacity:1
+  &:after {
+    left: 100%;
+    top: 50%;
+    margin-left: 8px;
+    transform: translateX(0%)   translateY(-50%);
+  }
 }

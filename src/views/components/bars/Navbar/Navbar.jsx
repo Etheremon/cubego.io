@@ -185,7 +185,7 @@ class Navbar extends React.Component {
             {NavbarList[navbarType].map((item, idx) => {
               if (item.link)
                 return (
-                  <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)} tooltip={_t(item.text)} tooltip-position={'buttom'}>
+                  <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx} onClick={() => this.handleNavItemSelect(item.link)} tooltip={_t(item.text)} tooltip-position={'bottom'}>
                     {item.link[0] === '/'
                       ? <Link smooth to={item.link}>
                           <span className={item.highlight ? 'm--noti' : ''}><Image img={`${item.img}`}/></span>
