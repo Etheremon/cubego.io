@@ -65,8 +65,11 @@ class _ModelEditor extends React.Component {
     this.forceUpdate();
   }
 
-  onCellClicked(cell, cells) {
-    this.toolManager.onCellClicked({cell, cells});
+  onCellClicked(cell) {
+    if (Array.isArray(cell))
+      this.toolManager.onCellClicked(cell);
+    else
+      this.toolManager.onCellClicked([cell]);
     this.forceUpdate();
   }
 

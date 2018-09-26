@@ -8,7 +8,7 @@ export class ToolManager {
     this._model = undefined;
     this._layer = undefined;
     this._numLayers = 0;
-    this.drawMode = null;
+    this._drawMode = null;
     this.history = {
       idx: props.models.length - 1,
       models: props.models,
@@ -17,7 +17,7 @@ export class ToolManager {
     Utils.ObjGetValues(props.tools).forEach((tool, idx) => {
       this._tools[tool.key] = tool;
       if (tool.type === ToolTypes.mode && tool.value === true) {
-        this.drawMode = tool;
+        this._drawMode = tool;
       }
     });
 
@@ -56,7 +56,7 @@ export class ToolManager {
       });
 
       // Set mode
-      this.drawMode = this._tools[key];
+      this._drawMode = this._tools[key];
       this._tools[key].value = true;
     }
 
@@ -71,13 +71,13 @@ export class ToolManager {
     }
   }
 
-  onCellClicked({cell, cells=[]}) {
-    if (!this.drawMode) {
+  onCellClicked(cells=[]) {
+    if (!this._drawMode) {
       console.warn("no draw mode!");
     } else {
 
-      let newModel = this.drawMode.onCellClicked({
-        tools: this._tools, model: this._model, cell, cells,
+      let newModel = this._drawMode.onCellClicked({
+        tools: this._tools, model: this._model, cells,
       });
 
       this.history.idx += 1;
@@ -132,6 +132,10 @@ export class ToolManager {
     return this._tools;
   }
 
+  get drawMode() {
+    return this._drawMode;
+  }
+
   getToolValue(toolKey) {
     return this._tools[toolKey].value;
   }
@@ -160,19 +164,23 @@ Tools.draw = ({key='draw', value=true}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({tools, model, cell}) => {
+  onCellClicked: ({tools, model, cells}) => {
     let newModel = CloneDeep(model);
     let updateIdx = 0;
-    if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
-      updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
-      updateIdx = updateIdx ? updateIdx + 1 : 0;
-    }
 
-    newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
-      ...cell,
-      color: CloneDeep(tools.color.value),
-      updateIdx
-    };
+    cells.forEach((cell) => {
+      if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
+        updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
+        updateIdx = updateIdx ? updateIdx + 1 : 0;
+      }
+
+      newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+        ...cell,
+        color: CloneDeep(tools.color.value),
+        updateIdx
+      };
+    });
+
     return newModel;
   },
 });
@@ -181,9 +189,11 @@ Tools.erase = ({key='erase', value=false}) => ({
   key,
   value,
   type: ToolTypes.mode,
-  onCellClicked: ({model, cell}) => {
+  onCellClicked: ({model, cells}) => {
     let newModel = CloneDeep(model);
-    delete newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`];
+    cells.forEach(cell => {
+      delete newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`];
+    });
     return newModel;
   },
 });
@@ -248,22 +258,22 @@ Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => (
     key: 'top',
     label: 'top_view',
   }],
-  x: '+y',
+  x: '-y',
   y: '-z',
   z: '-x',
   onToolClicked: ({toolManager, key, value}) => {
     if (value.key === 'front') {
-      toolManager.tools[key].x = '+y';
+      toolManager.tools[key].x = '-y';
       toolManager.tools[key].y = '-z';
       toolManager.tools[key].z = '-x';
     } else if (value.key === 'side') {
       toolManager.tools[key].x = '+x';
       toolManager.tools[key].y = '-z';
-      toolManager.tools[key].z = '+y';
+      toolManager.tools[key].z = '-y';
     } else if (value.key === 'top') {
-      toolManager.tools[key].x = '+y';
+      toolManager.tools[key].x = '-y';
       toolManager.tools[key].y = '+x';
-      toolManager.tools[key].z = '+z';
+      toolManager.tools[key].z = '-z';
     }
   }
 });
