@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import './Layer2D.scss';
-import PixiX from "../../pixix/index";
-import PaintScene from "../../2d/PaintScene.jsx";
 import PropTypes from "prop-types";
 import {CloneDeep, IsEqual} from "../../../utils/objUtils";
 import * as Utils from "../../../utils/utils";
@@ -37,9 +35,7 @@ export class Layer2D extends Component {
   }
 
   onMouseDown() {
-    // console.log("down");
     this.isMouseDown = true;
-    // this.clickedCells = [];
   }
 
   onMouseUp() {
