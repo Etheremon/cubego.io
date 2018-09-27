@@ -17,6 +17,7 @@ class VoxViewerThree extends Component {
     this.offsetVector = new THREE.Vector3(0, 0, 0);
     this.isShiftDown = false;
     this.boxHelper = null;
+    this.tools = props.tools;
   }
 
   renderVoxel(voxelData) {
@@ -46,18 +47,47 @@ class VoxViewerThree extends Component {
     this.objects = [];
     this.setState({
       data: voxelData || {}
+    }, () => {
+      this.updateHighLightLayer();
     });
   }
 
   setNewTools(tools) {
-    let colorHex = '0x' + fullColorHex(tools.color.value);
+    this.tools = tools;
+    this.updateHoverBoxColor();
+    this.updateHighLightLayer();
+  }
+
+  updateHoverBoxColor() {
+    let colorHex = '0x' + fullColorHex(this.tools.color.value);
     this.rollOverMesh.renderer.material.color.setHex(colorHex);
+  }
+
+  updateHighLightLayer() {
+    console.log(this.tools);
     let center = {
-      x: -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (tools['layer-index'].value - 1) * SIZE,
+      x: 0,
       y: 0,
       z: 0
     };
-    let size = {x: SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
+
+    let size = {x: this.state.data.size.x * SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
+
+    switch (this.tools['view-2d'].value.key) {
+      case 'front':
+        center.x = -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (this.tools['layer-index'].value - 1) * SIZE;
+        size.x = SIZE;
+        break;
+      case 'top':
+        center.y = -SIZE / 2 + this.state.data.size.z * SIZE - this.offsetVector.y - (this.tools['layer-index'].value - 1) * SIZE;
+        size.y = SIZE;
+        break;
+      case 'side':
+        center.z = -SIZE / 2 + this.state.data.size.y * SIZE - this.offsetVector.z - (this.tools['layer-index'].value - 1) * SIZE;
+        size.z = SIZE;
+        break;
+    }
+
     this.boxHelper.setFromCenterAndSize(center, size);
   }
 
@@ -65,8 +95,16 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false)
-    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false)
+    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
+    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
+  }
+
+  componentWillUnmount() {
+    this.canvas = document.getElementById('canvas3D');
+    this.canvas.removeEventListener('mousemove', this.onMouseMove.bind(this), false);
+    this.canvas.removeEventListener('mousedown', this.onMouseDown.bind(this), false);
+    document.removeEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
+    document.removeEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
   }
 
   getRendererObject() {
