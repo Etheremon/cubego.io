@@ -5,6 +5,7 @@ import {ThreeHemisphereLight} from "./threeHemisphereLight";
 import {ThreeMeshBox} from "./threeMeshBox";
 import {ThreeAxis} from "./threeAxis";
 import {ThreeBox3Helper} from "./threeBox3Helper";
+import {ThreeOrthographicCamera} from "./threeOrthographicCamera";
 
 const TYPES = {
   MESH_CONTAINER: 'MESH_CONTAINER',
@@ -13,7 +14,8 @@ const TYPES = {
   HEMISPHERE_LIGHT: 'HEMISPHERE_LIGHT',
   MESH_BOX: 'MESH_BOX',
   AXIS: 'AXIS',
-  BOX_HELPER: 'BOX_HELPER'
+  BOX_HELPER: 'BOX_HELPER',
+  ORTHOGRAPHIC_CAMERA: 'ORTHOGRAPHIC_CAMERA'
 };
 
 let mappingComponents = {};
@@ -24,6 +26,7 @@ mappingComponents[TYPES.HEMISPHERE_LIGHT] = ThreeHemisphereLight;
 mappingComponents[TYPES.MESH_BOX] = ThreeMeshBox;
 mappingComponents[TYPES.AXIS] = ThreeAxis;
 mappingComponents[TYPES.BOX_HELPER] = ThreeBox3Helper;
+mappingComponents[TYPES.ORTHOGRAPHIC_CAMERA] = ThreeOrthographicCamera;
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);

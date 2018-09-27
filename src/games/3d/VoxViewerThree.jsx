@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Axis, BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
+import {
+  Axis,
+  BoxHelper,
+  Grid,
+  HemisphereLight,
+  MeshBox,
+  MeshContainer,
+  OrthographicCamera,
+} from "../threeX";
 import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
@@ -17,6 +25,7 @@ class VoxViewerThree extends Component {
     this.offsetVector = new THREE.Vector3(0, 0, 0);
     this.isShiftDown = false;
     this.boxHelper = null;
+    this.tools = props.tools;
   }
 
   renderVoxel(voxelData) {
@@ -46,18 +55,46 @@ class VoxViewerThree extends Component {
     this.objects = [];
     this.setState({
       data: voxelData || {}
+    }, () => {
+      this.updateHighLightLayer();
     });
   }
 
   setNewTools(tools) {
-    let colorHex = '0x' + fullColorHex(tools.color.value);
+    this.tools = tools;
+    this.updateHoverBoxColor();
+    this.updateHighLightLayer();
+  }
+
+  updateHoverBoxColor() {
+    let colorHex = '0x' + fullColorHex(this.tools.color.value);
     this.rollOverMesh.renderer.material.color.setHex(colorHex);
+  }
+
+  updateHighLightLayer() {
     let center = {
-      x: -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (tools['layer-index'].value - 1) * SIZE,
+      x: 0,
       y: 0,
       z: 0
     };
-    let size = {x: SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
+
+    let size = {x: this.state.data.size.x * SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
+
+    switch (this.tools['view-2d'].value.key) {
+      case 'front':
+        center.x = -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (this.tools['layer-index'].value - 1) * SIZE;
+        size.x = SIZE;
+        break;
+      case 'top':
+        center.y = -SIZE / 2 + this.state.data.size.z * SIZE - this.offsetVector.y - (this.tools['layer-index'].value - 1) * SIZE;
+        size.y = SIZE;
+        break;
+      case 'side':
+        center.z = -SIZE / 2 + this.state.data.size.y * SIZE - this.offsetVector.z - (this.tools['layer-index'].value - 1) * SIZE;
+        size.z = SIZE;
+        break;
+    }
+
     this.boxHelper.setFromCenterAndSize(center, size);
   }
 
@@ -65,8 +102,17 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false)
-    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false)
+    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
+    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
+    this.updateHoverBoxColor();
+  }
+
+  componentWillUnmount() {
+    this.canvas = document.getElementById('canvas3D');
+    this.canvas.removeEventListener('mousemove', this.onMouseMove.bind(this), false);
+    this.canvas.removeEventListener('mousedown', this.onMouseDown.bind(this), false);
+    document.removeEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
+    document.removeEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
   }
 
   getRendererObject() {
@@ -123,15 +169,18 @@ class VoxViewerThree extends Component {
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
     let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
+      this.rollOverMesh.renderer.visible = true;
       let intersect = intersects[0];
       if (this.isShiftDown) {
         let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
-        position.divideScalar(50).floor();
-        position.multiplyScalar(50).addScalar(25);
+        position.divideScalar(SIZE).floor();
+        position.multiplyScalar(SIZE).addScalar(SIZE/2);
         this.rollOverMesh.renderer.position.copy(position);
       } else {
         this.rollOverMesh.renderer.position.copy(intersect.object.position);
       }
+    } else {
+      this.rollOverMesh.renderer.visible = false;
     }
   }
 
@@ -139,9 +188,9 @@ class VoxViewerThree extends Component {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis/>
-        <PerspectiveCamera ref={(ref) => {
+        <OrthographicCamera ref={(ref) => {
           this.camera = ref
-        }} position={{x: 500, y: 800, z: 1300}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
+        }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
         <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref
