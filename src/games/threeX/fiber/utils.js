@@ -142,10 +142,15 @@ function parsePoint(value) {
 }
 
 function getMousePositionOnCanvas(event, canvas) {
+  let canvasStyle = getComputedStyle(canvas);
+  let width = parseInt(canvasStyle.getPropertyValue('width'), 10);
+  let height = parseInt(canvasStyle.getPropertyValue('height'), 10);
+  let scaleX = canvas.width / width;
+  let scaleY = canvas.height / height;
   let rect = canvas.getBoundingClientRect();
   return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top
+    x: (event.clientX - rect.left) * scaleX,
+    y: (event.clientY - rect.top) * scaleY
   }
 }
 

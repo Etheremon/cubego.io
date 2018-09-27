@@ -64,7 +64,6 @@ class VoxViewerThree extends Component {
   }
 
   updateHighLightLayer() {
-    console.log(this.tools);
     let center = {
       x: 0,
       y: 0,
@@ -97,6 +96,7 @@ class VoxViewerThree extends Component {
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
     document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
     document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
+    this.updateHoverBoxColor();
   }
 
   componentWillUnmount() {
@@ -164,8 +164,8 @@ class VoxViewerThree extends Component {
       let intersect = intersects[0];
       if (this.isShiftDown) {
         let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
-        position.divideScalar(50).floor();
-        position.multiplyScalar(50).addScalar(25);
+        position.divideScalar(SIZE).floor();
+        position.multiplyScalar(SIZE).addScalar(SIZE/2);
         this.rollOverMesh.renderer.position.copy(position);
       } else {
         this.rollOverMesh.renderer.position.copy(intersect.object.position);
