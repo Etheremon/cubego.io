@@ -42,6 +42,7 @@
     "react-router-hash-link": "^1.2.0",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
+    "resize-observer-polyfill": "^1.5.0",
     "three": "^0.96.0",
     "three-orbitcontrols": "^2.96.2",
     "tmx-parser": "^1.5.0"

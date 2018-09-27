@@ -8,12 +8,31 @@
 }
 
 .model-editor__container {
-  color: $white95;
+  color: $dark;
+  text-align: right;
+
+  .model-editor__header {
+    display: inline-block;
+    padding: 12px 0;
+
+    .dropdown {
+      border: 1px solid $dark;
+      border-radius: 5px;
+    }
+
+    .model-editor__2d-view-option {
+      padding: 8px 12px;
+    }
+  }
 
   .model-editor__tool-bar {
     display: flex;
     margin: 0 -4px;
-    padding-top: 12px;
+    padding: 12px 0;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    border: 1px solid #BEBEB7;
 
     .group {
       margin: 0 4px;
@@ -29,7 +48,7 @@
     }
   }
 
-  .model-editor__canvas {
+  .model-editor__canvas, .model-editor__tool {
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -39,7 +58,7 @@
     margin: 0 -8px;
   }
 
-  .model-editor__left {
+  .model-editor__left, .model-editor__colors {
     padding: 8px;
     width: 50%;
     flex-direction: column;
@@ -49,7 +68,7 @@
       width: 100%;
     }
   }
-  .model-editor__right {
+  .model-editor__right, .model-editor__layer {
     padding: 8px;
     flex-grow: 1;
   }

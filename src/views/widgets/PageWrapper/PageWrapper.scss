@@ -13,4 +13,9 @@
     background: url('../../../shared/img/background/bgr.jpeg') no-repeat center center fixed;
     background-size: cover;
   }
+
+  &.normal {
+    background: url('../../../shared/img/background/background.png') no-repeat center center fixed;
+    background-size: cover;
+  }
 }

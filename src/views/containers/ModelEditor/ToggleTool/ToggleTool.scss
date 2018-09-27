@@ -10,7 +10,8 @@
 
   .toggle-tool__img {
     img {
-      width: 100%;
+      display: inline-block;
+      width: 44px;
       filter: grayscale(0.5);
     }
   }

@@ -14,9 +14,10 @@ import {ToggleTool} from "./ToggleTool/ToggleTool.jsx";
 import {ToolManager, Tools} from "../../../services/toolManager";
 import {CloneDeep} from "../../../utils/objUtils";
 import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
-import {RangeInput} from "../../widgets/RangeInput/RangeInput.jsx";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
+import { ButtonNew } from '../../widgets/Button/Button.jsx';
+import { SliderInput } from '../../widgets/SliderInput/SliderInput.jsx';
 
 require("style-loader!./ModelEditor.scss");
 
@@ -78,7 +79,7 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     return (
-      <PageWrapper className={'model-editor'} type={PageWrapper.types.DARK}>
+      <PageWrapper className={'model-editor'} type={PageWrapper.types.NORMAL}>
 
         <Navbar big/>
 
@@ -87,7 +88,7 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__tool-bar'}>
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('draw')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('draw')} img={require('../../../shared/img/assets/circle.svg')}
                             active={this.toolManager.getToolValue(this.tools.draw.key)}
                             onClick={() => {
                               let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
@@ -96,7 +97,7 @@ class _ModelEditor extends React.Component {
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('erase')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('erase')} img={require('../../../shared/img/assets/circle.svg')}
                             active={this.toolManager.getToolValue(this.tools.erase.key)}
                             onClick={() => {
                               let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
@@ -108,12 +109,12 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('undo')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('undo')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
                             onClick={() => {this.onToolChange(this.tools.undo.key, true);}}/>
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('redo')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('redo')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
                             onClick={() => {this.onToolChange(this.tools.redo.key, true);}}/>
               </div>
@@ -121,18 +122,37 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('clear')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('clear')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
                             onClick={() => {this.onToolChange(this.tools.clear.key, true);}}/>
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('clear_current_layer')} img={require('../../../shared/img/Icons/heart.png')}
+                <ToggleTool label={_t('clear_current_layer')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                             onClick={() => {this.onToolChange(this.tools.clearLayer.key, true);}}/>
               </div>
             </div>
 
+            <div className={'group'}>
+            <div className={'item'}>
+              <ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {
+                  
+                }}/>
+              </div>
+            </div>
 
+
+          </div>
+
+          <div className="model-editor__header">
+            <Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({
+              content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,
+              onClick: () => {this.onToolChange(this.tools.view2D.key, option)},
+              }))}>
+              <div className={'model-editor__2d-view-option'}>
+                {_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
+              </div>
+            </Dropdown>
           </div>
 
           <div className={'model-editor__canvas'}>
@@ -140,37 +160,30 @@ class _ModelEditor extends React.Component {
               <div className={'model-editor__3d'}>
                 <Model3D model={this.toolManager.model} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
               </div>
-
-              <div className={'model-editor__colors'}>
-                <ColorTool toolKey={this.tools.color.key}
-                           value={this.toolManager.getToolValue(this.tools.color.key)}
-                           options={this.tools.color.options}
-                           onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
-              </div>
             </div>
 
             <div className={'model-editor__right'}>
               <div className={'model-editor__2d'}>
                 <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
               </div>
-              <div className={'model-editor__layer-tool'}>
-                <Dropdown list={this.tools.view2D.options.map(option => ({
-                  content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,
-                  onClick: () => {this.onToolChange(this.tools.view2D.key, option)},
-                }))}>
-                  <div className={'model-editor__2d-view-option'}>
-                    {_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-                  </div>
-                </Dropdown>
-
-                <RangeInput valMin={1} valMax={this.toolManager.numLayers} valSteps={1}
-                            value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
-                            onInput={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
-                />
-              </div>
             </div>
           </div>
 
+          <div className="model-editor__tool">
+            <div className={'model-editor__colors'}>
+              <ColorTool toolKey={this.tools.color.key}
+                          value={this.toolManager.getToolValue(this.tools.color.key)}
+                          options={this.tools.color.options}
+                          onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
+            </div>
+            
+            <div className={'model-editor__layer'}>
+              <SliderInput valMin={1} valMax={this.toolManager.numLayers} valSteps={1}
+                          value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
+                          onInput={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+              />
+            </div>
+          </div>
         </Container>
       </PageWrapper>
     )

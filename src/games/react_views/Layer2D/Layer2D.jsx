@@ -95,7 +95,6 @@ export class Layer2D extends Component {
     let {layer} = this.props;
     let {cells, hoverColor} = this.state;
     let content;
-
     if (!layer || Utils.ObjIsEmpty(layer)) {
       content = null;
     } else {

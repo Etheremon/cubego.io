@@ -4,13 +4,16 @@
 
 
 .color-tool {
+  display: flex;
 
   .color-tool__list {
     display: flex;
+    flex-grow: 1;
     flex-wrap: wrap;
     max-width: calc(40px * 8);
   }
-  .color-tool__cell {
+
+  .color-tool__cell, {
     width: calc(100% / 8);
     cursor: pointer;
     border: 1px solid $c__gray-1;
@@ -22,9 +25,21 @@
       padding-bottom: 100%;
     }
 
-    &.selected {
-      width: 40px;
-      margin-bottom: 4px;
+    &.selected__container {
+      margin-left: 16px;
+      border: 1px solid transparent;
+
+      .selected {
+        border: 1px solid $c__gray-1;
+        position: relative;
+        width: 100%;
+        &:before {
+          content: "";
+          display: block;
+          padding-top: 100%;
+        }
+      }
     }
   }
+
 }
