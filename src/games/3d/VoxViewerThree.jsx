@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Axis, BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, PerspectiveCamera} from "../threeX";
+import {
+  Axis,
+  BoxHelper,
+  Grid,
+  HemisphereLight,
+  MeshBox,
+  MeshContainer,
+  OrthographicCamera,
+} from "../threeX";
 import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
@@ -161,6 +169,7 @@ class VoxViewerThree extends Component {
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
     let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
+      this.rollOverMesh.renderer.visible = true;
       let intersect = intersects[0];
       if (this.isShiftDown) {
         let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
@@ -170,6 +179,8 @@ class VoxViewerThree extends Component {
       } else {
         this.rollOverMesh.renderer.position.copy(intersect.object.position);
       }
+    } else {
+      this.rollOverMesh.renderer.visible = false;
     }
   }
 
@@ -177,9 +188,9 @@ class VoxViewerThree extends Component {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis/>
-        <PerspectiveCamera ref={(ref) => {
+        <OrthographicCamera ref={(ref) => {
           this.camera = ref
-        }} position={{x: 500, y: 800, z: 1300}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
+        }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
         <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref
