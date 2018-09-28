@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js";
-
 const CHILDREN = 'children';
 
 const RESERVED_PROPS = {
@@ -100,19 +98,8 @@ function defaultApplyProps(instance, oldProps, newProps) {
     });
 }
 
-function isPointType(value) {
-  return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint;
-}
-
 function setThreeXValue(instance, propName, value) {
-  if (isPointType(instance[propName]) && isPointType(value)) {
-    instance[propName].copy(value);
-  } else if (isPointType(instance[propName])) {
-    const coordinateData = parsePoint(value);
-    instance[propName].set(coordinateData.shift(), coordinateData.shift());
-  } else {
-    instance[propName] = value;
-  }
+  instance[propName] = value;
 }
 
 function applyProps(instance, oldProps, newProps) {
