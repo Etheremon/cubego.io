@@ -23,9 +23,14 @@ class VoxViewerThree extends Component {
     this.raycaster = new THREE.Raycaster();
     this.objects = [];
     this.offsetVector = new THREE.Vector3(0, 0, 0);
-    this.isShiftDown = false;
+    this.isAddingKeyDown = false;
+    this.isDeleteKeyDown = false;
+    this.isPaintingKeyDown = false;
     this.boxHelper = null;
     this.tools = props.tools;
+    this.objectHovered = null;
+    this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
+    this.selectLayerColor = '0xffff00';
   }
 
   renderVoxel(voxelData) {
@@ -62,13 +67,13 @@ class VoxViewerThree extends Component {
 
   setNewTools(tools) {
     this.tools = tools;
-    this.updateHoverBoxColor();
+    this.hoverColor = '0x' + fullColorHex(this.tools.color.value);
+    this.updateHoverBoxColor(this.hoverColor);
     this.updateHighLightLayer();
   }
 
-  updateHoverBoxColor() {
-    let colorHex = '0x' + fullColorHex(this.tools.color.value);
-    this.rollOverMesh.renderer.material.color.setHex(colorHex);
+  updateHoverBoxColor(color) {
+    this.rollOverMesh.renderer.material.color.setHex(color);
   }
 
   updateHighLightLayer() {
@@ -125,17 +130,30 @@ class VoxViewerThree extends Component {
 
   onDocumentKeyDown(event) {
     switch (event.keyCode) {
-      case 16:
-        this.isShiftDown = true;
-        break
+      case 65:  // a
+        this.isAddingKeyDown = true;
+        console.log('adding');
+        break;
+      case 68: // d
+        this.isDeleteKeyDown = true;
+        break;
+      case 80: //p
+        this.isPaintingKeyDown = true;
+        break;
     }
 
   }
 
   onDocumentKeyUp(event) {
     switch (event.keyCode) {
-      case 16:
-        this.isShiftDown = false;
+      case 65: // a
+        this.isAddingKeyDown = false;
+        break;
+      case 68: // d
+        this.isDeleteKeyDown = false;
+        break;
+      case 80: // p
+        this.isPaintingKeyDown = false;
         break;
     }
   }
@@ -148,7 +166,7 @@ class VoxViewerThree extends Component {
     if (intersects.length > 0) {
       let intersect = intersects[0];
       let position;
-      if (this.isShiftDown) {
+      if (this.isAddingKeyDown) {
         position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
       } else {
         position = intersect.object.position.clone();
@@ -164,23 +182,41 @@ class VoxViewerThree extends Component {
 
   onMouseMove(event) {
     event.preventDefault();
+    if (this.objectHovered) {
+      this.objectHovered.material.opacity = 1;
+    }
+    this.rollOverMesh.renderer.visible = false;
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
     let intersects = this.raycaster.intersectObjects(this.getRendererObject());
     if (intersects.length > 0) {
-      this.rollOverMesh.renderer.visible = true;
       let intersect = intersects[0];
-      if (this.isShiftDown) {
-        let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal);
-        position.divideScalar(SIZE).floor();
-        position.multiplyScalar(SIZE).addScalar(SIZE/2);
-        this.rollOverMesh.renderer.position.copy(position);
+      if (this.isDeleteKeyDown) {
+        intersect.object.material.opacity = 0.5;
+        this.objectHovered = intersect.object;
       } else {
-        this.rollOverMesh.renderer.position.copy(intersect.object.position);
+        this.rollOverMesh.renderer.visible = true;
+        if (!this.isAddingKeyDown && !this.isPaintingKeyDown) {
+          let position = intersect.object.position.clone();
+          this.rollOverMesh.renderer.position.copy(position);
+          this.updateHoverBoxColor(this.selectLayerColor);
+        } else {
+          let position;
+          if (this.isAddingKeyDown) {
+            position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
+            position.divideScalar(SIZE).floor();
+            position.multiplyScalar(SIZE).addScalar(SIZE/2);
+            this.rollOverMesh.renderer.position.copy(position);
+            this.objectHovered = this.rollOverMesh.renderer;
+            this.objectHovered.material.opacity = 0.8;
+          } else {
+            position = intersect.object.position.clone();
+          }
+          this.updateHoverBoxColor(this.hoverColor);
+          this.rollOverMesh.renderer.position.copy(position);
+        }
       }
-    } else {
-      this.rollOverMesh.renderer.visible = false;
     }
   }
 
