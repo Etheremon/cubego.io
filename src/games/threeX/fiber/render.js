@@ -15,9 +15,7 @@ function createRenderer(canvas, options) {
 }
 
 function render(element, container, options = {}) {
-  if (!rootContainer) {
-    rootContainer = createRenderer(container, options);
-  }
+  rootContainer = createRenderer(container, options);
   ThreeXFiberRenderer.updateContainer(element, rootContainer, null);
   return ThreeXFiberRenderer.getPublicRootInstance(rootContainer);
 }
