@@ -310,3 +310,16 @@ export const GetRandomArbitrary = (min, max) => {
   return Math.random() * (max - min) + min;
 };
 
+/**
+ * Capitalize first letter of string
+ */
+export const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
+
+/**
+ * Clamp position between a range
+ */
+export const clamp = (value, min, max) => {
+  return Math.min(Math.max(value, min), max)
+}

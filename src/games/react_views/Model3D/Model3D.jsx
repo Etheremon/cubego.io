@@ -31,7 +31,7 @@ export class Model3D extends Component {
   render() {
     return (
       <div className={'model3D'}>
-        <canvas id='canvas3D' ref={'canvas'} width="640" height="480"/>
+        <canvas id='canvas3D' ref={'canvas'} width="600" height="600"/>
       </div>
     );
   }
