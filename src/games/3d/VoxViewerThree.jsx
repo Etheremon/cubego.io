@@ -187,7 +187,7 @@ class VoxViewerThree extends Component {
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        <Axis/>
+        {/*<Axis/>*/}
         <OrthographicCamera ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>

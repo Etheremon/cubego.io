@@ -1,0 +1,42 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.widget__slider-bar {
+  .label {
+
+  }
+
+  .main-bar {
+    display: flex;
+    align-items: center;
+    .arrow-left, .arrow-right {
+      img {
+        display: block;
+        width: 24px;
+        margin: 4px;
+        &:hover {
+          opacity: 0.9;
+          cursor: pointer;
+        }
+      }
+    }
+    .bar {
+      flex-grow: 1;
+      position: relative;
+      background-color: rgb(255, 237, 163);
+      @include border-radius-without-overflow(10px);
+    }
+    .placeholder {
+      opacity: 0;
+    }
+    .pointer {
+      position: absolute;
+      top: 0;
+      @include transform(translateX(-50%));
+    }
+    .widget__button-new {
+      margin: 0;
+    }
+  }
+}

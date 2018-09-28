@@ -5,15 +5,35 @@ import Loading from "../Loading/Loading.jsx";
 require("style-loader!./Button.scss");
 
 
-export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList, onClick, showDeco}) => {
+export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList,
+                            onClick, onMouseDown, onMouseUp,
+                            style, showDeco}) => {
 
   return (
     <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco ? 'deco' : ''} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
+         style={style}
          onClick={(e) => {
-           e.preventDefault();
-           e.stopPropagation();
-           onClick && onClick({});
-         }}>
+           if (onClick) {
+             e.preventDefault();
+             e.stopPropagation();
+             onClick(e);
+           }
+         }}
+         onMouseDown={(e) => {
+           if (onMouseDown) {
+             e.preventDefault();
+             e.stopPropagation();
+             onMouseDown(e);
+           }
+         }}
+         onMouseUp={(e) => {
+           if (onMouseUp) {
+             e.preventDefault();
+             e.stopPropagation();
+             onMouseUp(e);
+           }
+         }}
+    >
 
       <div className={'content'} >
         {label || children}
@@ -60,12 +80,16 @@ ButtonNew.defaultProps = {
   fluid: false,
   tokenList: ['eth', 'emont'],
   showDeco: false,
+  style: {},
 };
 ButtonNew.propTypes = {
   color: PropTypes.string,
   size: PropTypes.string,
-  handleOnClick: PropTypes.func,
+  onClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
   fluid: PropTypes.bool,
   disabled: PropTypes.bool,
   showDeco: PropTypes.bool,
+  style: PropTypes.object,
 };

@@ -153,14 +153,16 @@ export const ToolTypes = {
 
 export const Tools = {};
 
-Tools.color = ({key='color', value=EDITOR_COLORS[0]}) => ({
+Tools.color = ({key='color', value=EDITOR_COLORS[0], ...extra}) => ({
+  ...extra,
   key,
   value,
   type: ToolTypes.effect,
   options: EDITOR_COLORS,
 });
 
-Tools.draw = ({key='draw', value=true}) => ({
+Tools.draw = ({key='draw', value=true, ...extra}) => ({
+  ...extra,
   key,
   value,
   type: ToolTypes.mode,
@@ -185,7 +187,34 @@ Tools.draw = ({key='draw', value=true}) => ({
   },
 });
 
-Tools.erase = ({key='erase', value=false}) => ({
+Tools.paint = ({key='paint', value=true, ...extra}) => ({
+  ...extra,
+  key,
+  value,
+  type: ToolTypes.mode,
+  onCellClicked: ({tools, model, cells}) => {
+    let newModel = CloneDeep(model);
+    let updateIdx = 0;
+
+    cells.forEach((cell) => {
+      if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
+        updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
+        updateIdx = updateIdx ? updateIdx + 1 : 0;
+      }
+
+      newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+        ...cell,
+        color: CloneDeep(tools.color.value),
+        updateIdx
+      };
+    });
+
+    return newModel;
+  },
+});
+
+Tools.erase = ({key='erase', value=false, ...extra}) => ({
+  ...extra,
   key,
   value,
   type: ToolTypes.mode,
@@ -198,7 +227,8 @@ Tools.erase = ({key='erase', value=false}) => ({
   },
 });
 
-Tools.clear = ({key='clear'}) => ({
+Tools.clear = ({key='clear', ...extra}) => ({
+  ...extra,
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
@@ -210,7 +240,8 @@ Tools.clear = ({key='clear'}) => ({
   isActive: ({toolManager}) => (toolManager._model && !Utils.ObjIsEmpty(toolManager._model.voxels)),
 });
 
-Tools.clearLayer = ({key='clear-layer'}) => ({
+Tools.clearLayer = ({key='clear-layer', ...extra}) => ({
+  ...extra,
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
@@ -225,7 +256,8 @@ Tools.clearLayer = ({key='clear-layer'}) => ({
   isActive: ({toolManager}) => (toolManager._layer && !Utils.ObjIsEmpty(toolManager._layer.voxels)),
 });
 
-Tools.undo = ({key='undo'}) => ({
+Tools.undo = ({key='undo', ...extra}) => ({
+  ...extra,
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
@@ -234,7 +266,8 @@ Tools.undo = ({key='undo'}) => ({
   isActive: ({toolManager}) => (toolManager.history.idx > 0),
 });
 
-Tools.redo = ({key='redo'}) => ({
+Tools.redo = ({key='redo', ...extra}) => ({
+  ...extra,
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
@@ -244,7 +277,8 @@ Tools.redo = ({key='redo'}) => ({
   isActive: ({toolManager}) => (toolManager.history.idx < toolManager.history.models.length - 1),
 });
 
-Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => ({
+Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}, ...extra) => ({
+  ...extra,
   key,
   value,
   type: ToolTypes.action,
@@ -278,7 +312,8 @@ Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}) => (
   }
 });
 
-Tools.layerIndex = ({key='layer-index', value=0}) => ({
+Tools.layerIndex = ({key='layer-index', value=0, ...extra}) => ({
+  ...extra,
   key,
   value,
   type: ToolTypes.action,

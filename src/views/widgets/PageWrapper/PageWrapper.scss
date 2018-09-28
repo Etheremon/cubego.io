@@ -6,16 +6,10 @@
   min-height: 700px;
 
   &.normal {
-    background-image: linear-gradient(#ffffff, rgba(166, 228, 193, 0.31));
+    background-image: linear-gradient(#ffffff, rgba(255, 255, 255, 0.9npm ));
   }
 
   &.dark {
-    background: url('../../../shared/img/background/bgr.jpeg') no-repeat center center fixed;
-    background-size: cover;
-  }
-
-  &.normal {
-    background: url('../../../shared/img/background/background.png') no-repeat center center fixed;
-    background-size: cover;
+    background-image: linear-gradient(#54697c, rgba(104, 197, 198, 0.96));
   }
 }
