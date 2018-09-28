@@ -29,7 +29,7 @@ class VoxViewerThree extends Component {
     this.boxHelper = null;
     this.tools = props.tools;
     this.objectHovered = null;
-    this.hoverColor = null;
+    this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     this.selectLayerColor = '0xffff00';
   }
 
@@ -209,7 +209,7 @@ class VoxViewerThree extends Component {
             position.multiplyScalar(SIZE).addScalar(SIZE/2);
             this.rollOverMesh.renderer.position.copy(position);
             this.objectHovered = this.rollOverMesh.renderer;
-            this.objectHovered.material.opacity = 0.5;
+            this.objectHovered.material.opacity = 0.8;
           } else {
             position = intersect.object.position.clone();
           }
