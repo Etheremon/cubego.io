@@ -84,7 +84,7 @@ export class Layer2D extends Component {
         newState.cells[correctPos.y][correctPos.x] = CloneDeep(cell);
       });
 
-      if (tools && tools.color && tools.draw.value)
+      if (tools && tools.color && (tools.draw.value || tools.paint.value))
         newState.hoverColor = ColorUtils.RgbToHex(tools.color.value);
 
       this.setState(newState);

@@ -8,7 +8,7 @@ import {EDITOR_COLORS} from "../../../../utils/constants";
 
 require("style-loader!./ToggleTool.scss");
 
-export const ToggleTool = ({label, img, active, disabled, onClick}) => {
+export const ToggleTool = ({label, hotKey, img, active, disabled, onClick}) => {
   let activeClass = "";
   if (active === true) activeClass = "active";
   if (active === false) activeClass = "inactive";
@@ -21,7 +21,7 @@ export const ToggleTool = ({label, img, active, disabled, onClick}) => {
         <img src={img}/>
       </div>
        <div className={'toggle-tool__label'}>
-         {label}
+         {hotKey ? `[${hotKey}] `: ''}{label}
       </div>
     </div>
   )

@@ -7,13 +7,23 @@
   width: 100%;
   text-align: center;
   cursor: pointer;
+  position: relative;
 
   .toggle-tool__img {
     img {
       display: inline-block;
-      width: 44px;
+      width: 48px;
       filter: grayscale(0.5);
     }
+  }
+
+  .toggle-tool__label {
+    width: 80px;
+    word-break: break-all;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    @include transform(translateX(-50%));
   }
 
   &.active {

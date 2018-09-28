@@ -17,7 +17,8 @@ import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
-import { SliderInput } from '../../widgets/SliderInput/SliderInput.jsx';
+import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
+import * as Utils from "../../../utils/utils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -30,13 +31,34 @@ class _ModelEditor extends React.Component {
     };
 
     this.tools = {
-      draw: Tools.draw({value: true}),
-      erase: Tools.erase({value: false}),
-
-      clear: Tools.clear({}),
-      clearLayer: Tools.clearLayer({}),
-      undo: Tools.undo({}),
-      redo: Tools.redo({}),
+      draw: Tools.draw({value: true, hotKey: 'D', onClick: () => {
+          let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
+          this.onToolChange(this.tools.draw.key, !currentVal);
+      }}),
+      paint: Tools.paint({value: false, hotKey: 'P', onClick: () => {
+          let currentVal = this.toolManager.getToolValue(this.tools.paint.key);
+          this.onToolChange(this.tools.paint.key, !currentVal);
+        }}),
+      erase: Tools.erase({value: false, hotKey: 'E', onClick: () => {
+          let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
+          this.onToolChange(this.tools.erase.key, !currentVal);
+      }}),
+      clear: Tools.clear({
+        hotKey: 'A',
+        onClick: () => {this.onToolChange(this.tools.clear.key, true);}
+      }),
+      clearLayer: Tools.clearLayer({
+        hotKey: 'C',
+        onClick: () => {this.onToolChange(this.tools.clearLayer.key, true);},
+      }),
+      undo: Tools.undo({
+        hotKey: 'U',
+        onClick: () => {this.onToolChange(this.tools.undo.key, true);}
+      }),
+      redo: Tools.redo({
+        hotKey: 'R',
+        onClick: () => {this.onToolChange(this.tools.redo.key, true);}
+      }),
 
       color: Tools.color({}),
       view2D: Tools.view2D({}),
@@ -51,14 +73,28 @@ class _ModelEditor extends React.Component {
 
     this.onToolChange = this.onToolChange.bind(this);
     this.onCellClicked = this.onCellClicked.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   componentDidMount() {
     let parser = new window.vox.Parser();
     parser.parse(require('../../../games/data/2.vox')).then((voxelData) => {
       this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
-      this.currentModel = modelUtils.ReformatModel(voxelData);
       this.forceUpdate();
+    });
+
+    window.addEventListener("keypress", this.onKeyPress, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keypress", this.onKeyPress);
+  }
+
+  onKeyPress(key) {
+    Utils.ObjGetValues(this.tools).forEach(tool => {
+      if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase()) {
+        tool.onClick();
+      }
     });
   }
 
@@ -88,21 +124,24 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__tool-bar'}>
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('draw')} img={require('../../../shared/img/assets/circle.svg')}
+                <ToggleTool label={_t('add')} img={require('../../../shared/img/assets/circle.svg')}
                             active={this.toolManager.getToolValue(this.tools.draw.key)}
-                            onClick={() => {
-                              let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
-                              this.onToolChange(this.tools.draw.key, !currentVal);
-                            }}
+                            onClick={this.tools.draw.onClick}
+                            hotKey={this.tools.draw.hotKey}
+                />
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('paint')} img={require('../../../shared/img/assets/circle.svg')}
+                            active={this.toolManager.getToolValue(this.tools.paint.key)}
+                            onClick={this.tools.paint.onClick}
+                            hotKey={this.tools.paint.hotKey}
                 />
               </div>
               <div className={'item'}>
                 <ToggleTool label={_t('erase')} img={require('../../../shared/img/assets/circle.svg')}
                             active={this.toolManager.getToolValue(this.tools.erase.key)}
-                            onClick={() => {
-                              let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
-                              this.onToolChange(this.tools.erase.key, !currentVal);
-                            }}
+                            onClick={this.tools.erase.onClick}
+                            hotKey={this.tools.erase.hotKey}
                 />
               </div>
             </div>
@@ -111,25 +150,33 @@ class _ModelEditor extends React.Component {
               <div className={'item'}>
                 <ToggleTool label={_t('undo')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
-                            onClick={() => {this.onToolChange(this.tools.undo.key, true);}}/>
+                            onClick={this.tools.undo.onClick}
+                            hotKey={this.tools.undo.hotKey}
+                />
               </div>
               <div className={'item'}>
                 <ToggleTool label={_t('redo')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
-                            onClick={() => {this.onToolChange(this.tools.redo.key, true);}}/>
+                            onClick={this.tools.redo.onClick}
+                            hotKey={this.tools.redo.hotKey}
+                />
               </div>
             </div>
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('clear')} img={require('../../../shared/img/assets/circle.svg')}
+                <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
-                            onClick={() => {this.onToolChange(this.tools.clear.key, true);}}/>
+                            onClick={this.tools.clear.onClick}
+                            hotKey={this.tools.clear.hotKey}
+                />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('clear_current_layer')} img={require('../../../shared/img/assets/circle.svg')}
+                <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
-                            onClick={() => {this.onToolChange(this.tools.clearLayer.key, true);}}/>
+                            onClick={this.tools.clearLayer.onClick}
+                            hotKey={this.tools.clearLayer.hotKey}
+                />
               </div>
             </div>
 
@@ -178,9 +225,9 @@ class _ModelEditor extends React.Component {
             </div>
             
             <div className={'model-editor__layer'}>
-              <SliderInput valMin={1} valMax={this.toolManager.numLayers} valSteps={1}
-                          value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
-                          onInput={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+              <SlideBar valMin={1} valMax={this.toolManager.numLayers}
+                        value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
+                        onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
               />
             </div>
           </div>
