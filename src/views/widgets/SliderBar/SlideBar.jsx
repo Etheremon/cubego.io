@@ -99,8 +99,6 @@ class _SlideBar extends React.Component {
 
     return (
       <div className={`widget__slider-bar ${className}`}>
-        <div className={'label'}>{label}</div>
-
         <div className={'main-bar'}>
           <div className={'arrow-left'}>
             <img src={require('../../../shared/img/icons/icon_left_arrow.png')}
@@ -109,6 +107,7 @@ class _SlideBar extends React.Component {
           <div className={'bar'} ref={'bar'} onClick={this.onBarClick}>
             <ButtonNew label={`${this.state.value}/${this.props.valMax}`}
                        className={'placeholder'} disabled size={ButtonNew.sizes.NORMAL}/>
+            <div className={'label'}>{label}</div>
             <div className={'pointer'} style={{left: `${this.state.pos*100}%`}} ref={'pt'}>
               <ButtonNew onMouseDown={this.onMouseDown} size={ButtonNew.sizes.NORMAL}>
                 {this.state.value}/{this.props.valMax}

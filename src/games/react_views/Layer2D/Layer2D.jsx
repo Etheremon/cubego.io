@@ -23,14 +23,12 @@ export class Layer2D extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("mousedown", this.onMouseDown);
     window.addEventListener("mouseup", this.onMouseUp);
 
     this.processProps(this.props);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("mousedown", this.onMouseDown);
     window.removeEventListener("mouseup", this.onMouseUp);
   }
 
@@ -108,7 +106,10 @@ export class Layer2D extends Component {
                 return (
                   <div className={'layer2D__cell'} key={colIdx}
                        onMouseEnter={() => {if (this.isMouseDown) this.onCellClicked(layer, rowIdx, colIdx)}}
-                       onMouseDown={() => {this.onCellClicked(layer, rowIdx, colIdx)}}>
+                       onMouseDown={() => {
+                         this.onMouseDown();
+                         this.onCellClicked(layer, rowIdx, colIdx);
+                       }}>
 
                     <div className={'layer2D__cell-real'}
                          style={c ? {backgroundColor: `#${c.hex}`, opacity: c.opacity} : {}}>

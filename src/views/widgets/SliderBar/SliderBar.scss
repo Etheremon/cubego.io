@@ -1,12 +1,9 @@
 @import '../../styles/colors';
 @import '../../styles/mixins';
 @import '../../styles/variables';
+@import '../../styles/fonts';
 
 .widget__slider-bar {
-  .label {
-
-  }
-
   .main-bar {
     display: flex;
     align-items: center;
@@ -20,6 +17,16 @@
           cursor: pointer;
         }
       }
+    }
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translateX(-50%) translateY(-50%));
+      font-family: $f__baloobha;
+      color: #5d350f;
+      font-size: $font-size-big;
+      padding-top: 4px;
     }
     .bar {
       flex-grow: 1;

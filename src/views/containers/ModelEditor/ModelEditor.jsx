@@ -43,6 +43,14 @@ class _ModelEditor extends React.Component {
           let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
           this.onToolChange(this.tools.erase.key, !currentVal);
       }}),
+      copyLayer: Tools.copyLayer({
+        hotKey: 'I',
+        onClick: () => {this.onToolChange(this.tools.copyLayer.key, true);},
+      }),
+      pasteLayer: Tools.pasteLayer({
+        hotKey: 'O',
+        onClick: () => {this.onToolChange(this.tools.pasteLayer.key, true);},
+      }),
       clear: Tools.clear({
         hotKey: 'A',
         onClick: () => {this.onToolChange(this.tools.clear.key, true);}
@@ -165,6 +173,20 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
+                <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/assets/circle.svg')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
+                            onClick={this.tools.copyLayer.onClick}
+                            hotKey={this.tools.copyLayer.hotKey}
+                />
+              </div>
+              <div className={'item'}>
+                <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/assets/circle.svg')}
+                            disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
+                            onClick={this.tools.pasteLayer.onClick}
+                            hotKey={this.tools.pasteLayer.hotKey}
+                />
+              </div>
+              <div className={'item'}>
                 <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/assets/circle.svg')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
                             onClick={this.tools.clear.onClick}
@@ -228,6 +250,7 @@ class _ModelEditor extends React.Component {
               <SlideBar valMin={1} valMax={this.toolManager.numLayers}
                         value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
                         onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+                        label={_t('select_layer')}
               />
             </div>
           </div>

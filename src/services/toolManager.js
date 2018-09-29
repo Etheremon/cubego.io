@@ -62,12 +62,16 @@ export class ToolManager {
 
     // Case Tool Action
     if (this._tools[key].type === ToolTypes.action) {
-      this._tools[key].onToolClicked({
+      let newModel = this._tools[key].onToolClicked({
         toolManager: this,
         key: key,
         value: value,
       });
-      this.updateCurrent();
+      if (newModel) {
+        this.addModel({model: newModel});
+      } else {
+        this.updateCurrent();
+      }
     }
   }
 
@@ -80,10 +84,7 @@ export class ToolManager {
         tools: this._tools, model: this._model, cells,
       });
 
-      this.history.idx += 1;
-      this.history.models[this.history.idx] = newModel;
-
-      this.updateCurrent();
+      this.addModel({model: newModel});
     }
   }
 
@@ -232,10 +233,9 @@ Tools.clear = ({key='clear', ...extra}) => ({
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
-    toolManager.history.idx += 1;
-    toolManager.history.models[toolManager.history.idx] = CloneDeep(toolManager._model);
-    toolManager.history.models[toolManager.history.idx].voxels = {};
-    toolManager.history.models.length = toolManager.history.idx+1;
+    let newModel = CloneDeep(toolManager._model);
+    newModel.voxels = {};
+    return newModel;
   },
   isActive: ({toolManager}) => (toolManager._model && !Utils.ObjIsEmpty(toolManager._model.voxels)),
 });
@@ -245,15 +245,50 @@ Tools.clearLayer = ({key='clear-layer', ...extra}) => ({
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
-    toolManager.history.idx += 1;
-    toolManager.history.models[toolManager.history.idx] = CloneDeep(toolManager._model);
-    toolManager.history.models[toolManager.history.idx].voxels = Utils.ObjFilter(
-      toolManager.history.models[toolManager.history.idx].voxels,
+    let newModel = CloneDeep(toolManager._model);
+    newModel.voxels = Utils.ObjFilter(
+      newModel.voxels,
       (voxel) => voxel[toolManager._layer.z] !== toolManager._layer.idx,
     );
-    toolManager.history.models.length = toolManager.history.idx+1;
+    return newModel;
   },
   isActive: ({toolManager}) => (toolManager._layer && !Utils.ObjIsEmpty(toolManager._layer.voxels)),
+});
+
+Tools.copyLayer = ({key='copy-layer', ...extra}) => ({
+  ...extra,
+  key,
+  type: ToolTypes.action,
+  onToolClicked: ({toolManager}) => {
+    toolManager._copied_layer = CloneDeep(toolManager._layer);
+  },
+  isActive: ({toolManager}) => (toolManager._layer && !Utils.ObjIsEmpty(toolManager._layer.voxels)),
+});
+
+Tools.pasteLayer = ({key='paste-layer', ...extra}) => ({
+  ...extra,
+  key,
+  type: ToolTypes.action,
+  onToolClicked: ({toolManager}) => {
+    console.log(toolManager);
+
+    let newModel = CloneDeep(toolManager._model);
+    let copiedLayer = toolManager._copied_layer;
+    let currentLayer = toolManager._layer;
+
+    if (copiedLayer.z !== currentLayer.z) return;
+
+    newModel.voxels = Utils.ObjFilter(newModel.voxels, (voxel) => {
+      return voxel[currentLayer.z] !== currentLayer.idx;
+    });
+    Utils.ObjGetValues(copiedLayer.voxels).forEach(voxel => {
+      voxel[copiedLayer.z] = currentLayer.idx;
+      newModel.voxels[`${voxel.x}-${voxel.y}-${voxel.z}`] = voxel;
+    });
+
+    return newModel;
+  },
+  isActive: ({toolManager}) => (!!toolManager._copied_layer),
 });
 
 Tools.undo = ({key='undo', ...extra}) => ({
@@ -309,6 +344,7 @@ Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}, ...e
       toolManager.tools[key].y = '+x';
       toolManager.tools[key].z = '-z';
     }
+    toolManager._copied_layer = null;
   }
 });
 
