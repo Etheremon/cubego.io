@@ -45,7 +45,8 @@ export class ToolManager {
 
     // TODO: check if the value is valid
     // Case All Tools (includes effects)
-    this._tools[key].value = value;
+    if (value !== undefined && value !== null)
+      this._tools[key].value = value;
 
     // Case Tool Mode
     if (this._tools[key].type === ToolTypes.mode) {
@@ -92,9 +93,9 @@ export class ToolManager {
     this._model = this.history.models[this.history.idx];
     if (!this._model) return null;
 
-    let x = this._tools['view-2d'].x;
-    let y = this._tools['view-2d'].y;
-    let z = this._tools['view-2d'].z;
+    let x = this._tools['view-2d'].value.x;
+    let y = this._tools['view-2d'].value.y;
+    let z = this._tools['view-2d'].value.z;
     let size = this._model.size;
 
     this._numLayers = size[z[1]];
@@ -270,8 +271,6 @@ Tools.pasteLayer = ({key='paste-layer', ...extra}) => ({
   key,
   type: ToolTypes.action,
   onToolClicked: ({toolManager}) => {
-    console.log(toolManager);
-
     let newModel = CloneDeep(toolManager._model);
     let copiedLayer = toolManager._copied_layer;
     let currentLayer = toolManager._layer;
@@ -312,38 +311,35 @@ Tools.redo = ({key='redo', ...extra}) => ({
   isActive: ({toolManager}) => (toolManager.history.idx < toolManager.history.models.length - 1),
 });
 
-Tools.view2D = ({key='view-2d', value={key: 'front', label: 'front_view'}}, ...extra) => ({
+let view2dOptions = {
+  front: {
+    viewKey: 'front',
+    label: 'front_view',
+    x: '-y', y: '-z', z: '-x',
+  },
+  side: {
+    viewKey: 'side',
+    label: 'side_view',
+    x: '+x', y: '-z', z: '-y',
+  },
+  top: {
+    viewKey: 'top',
+    label: 'top_view',
+    x: '-y', y: '+x', z: '-z',
+  }
+};
+let view2dList = ['front', 'side', 'top'];
+Tools.view2D = ({key='view-2d', value=view2dOptions.front, ...extra}) => ({
   ...extra,
   key,
   value,
   type: ToolTypes.action,
-  options: [{
-    key: 'front',
-    label: 'front_view',
-  }, {
-    key: 'side',
-    label: 'side_view',
-  }, {
-    key: 'top',
-    label: 'top_view',
-  }],
-  x: '-y',
-  y: '-z',
-  z: '-x',
+  options: view2dOptions,
   onToolClicked: ({toolManager, key, value}) => {
-    if (value.key === 'front') {
-      toolManager.tools[key].x = '-y';
-      toolManager.tools[key].y = '-z';
-      toolManager.tools[key].z = '-x';
-    } else if (value.key === 'side') {
-      toolManager.tools[key].x = '+x';
-      toolManager.tools[key].y = '-z';
-      toolManager.tools[key].z = '-y';
-    } else if (value.key === 'top') {
-      toolManager.tools[key].x = '-y';
-      toolManager.tools[key].y = '+x';
-      toolManager.tools[key].z = '-z';
-    }
+    let currentValue = toolManager._tools[key].value.viewKey;
+    let nextValue = value ? value : view2dList[(view2dList.indexOf(currentValue) + 1) % view2dList.length];
+
+    toolManager._tools[key].value = {...view2dOptions[nextValue]};
     toolManager._copied_layer = null;
   }
 });

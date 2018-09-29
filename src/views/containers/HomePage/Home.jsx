@@ -27,7 +27,7 @@ const _features = [
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'auction', desc: 'desc.auction'},
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
-]
+];
 
 class HomePage extends React.Component {
   constructor(props) {

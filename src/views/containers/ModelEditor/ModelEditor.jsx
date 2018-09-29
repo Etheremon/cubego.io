@@ -16,7 +16,6 @@ import {CloneDeep} from "../../../utils/objUtils";
 import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
 import * as Utils from "../../../utils/utils";
 
@@ -69,7 +68,10 @@ class _ModelEditor extends React.Component {
       }),
 
       color: Tools.color({}),
-      view2D: Tools.view2D({}),
+      view2D: Tools.view2D({
+        hotKey: 'R',
+        onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
+      }),
       layerIndex: Tools.layerIndex({value: 1}),
     };
 
@@ -123,7 +125,7 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     return (
-      <PageWrapper className={'model-editor'} type={PageWrapper.types.BLUE}>
+      <PageWrapper className={'model-editor'} type={PageWrapper.types.NORMAL}>
 
         <Navbar big/>
 
@@ -202,6 +204,15 @@ class _ModelEditor extends React.Component {
               </div>
             </div>
 
+            <div className={'group'}>
+              <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
+                          img={require('../../../shared/img/Icons/icon-camera.png')}
+                          disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
+                          onClick={() => {this.tools.view2D.onClick()}}
+                          hotKey={this.tools.clearLayer.hotKey}
+              />
+            </div>
+
             {/*<div className={'group'}>*/}
             {/*<div className={'item'}>*/}
               {/*<ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {*/}
@@ -212,16 +223,16 @@ class _ModelEditor extends React.Component {
 
           </div>
 
-          <div className="model-editor__header">
-            <Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({
-              content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,
-              onClick: () => {this.onToolChange(this.tools.view2D.key, option)},
-              }))}>
-              <div className={'model-editor__2d-view-option'}>
-                {_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-              </div>
-            </Dropdown>
-          </div>
+          {/*<div className="model-editor__header">*/}
+            {/*<Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({*/}
+              {/*content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,*/}
+              {/*onClick: () => {this.onToolChange(this.tools.view2D.key, option)},*/}
+              {/*}))}>*/}
+              {/*<div className={'model-editor__2d-view-option'}>*/}
+                {/*{_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}*/}
+              {/*</div>*/}
+            {/*</Dropdown>*/}
+          {/*</div>*/}
 
           <div className={'model-editor__canvas'}>
             <div className={'model-editor__left'}>
