@@ -9,7 +9,7 @@ const __DEV__ = false;
 const DEFAULT_PROPS = {};
 
 const emptyFnc = (name) => () => {
-  console.log(name);
+  // console.log(name);
 };
 
 const compareVector = (vector1, vector2) => {
@@ -20,7 +20,7 @@ const compareVector = (vector1, vector2) => {
 };
 
 const loggerFnc = (name) => () => {
-  console.log(name);
+  // console.log(name);
 };
 
 const compareProp = (nextProp, lastProp) => {

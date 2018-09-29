@@ -5,15 +5,8 @@
 
 .feature-card__container {
   position: relative;
-  margin: 8px;
   border-radius: 8px;
-  background-color: #528EB0;
-  overflow: hidden;
-
-  background-image: url('../../../../shared/img/assets/model_example_4.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  text-align: center;
 
   .line {
     position: absolute;
@@ -25,13 +18,18 @@
     background-color: #9AC355;
   }
 
+  img {
+    margin-top: 16px;
+    border: 10px solid $white;
+    border-radius: 8px;
+    display: inline-block;
+    width: auto;
+    height: 150px;
+    max-height: 50%;
+  }
+
   .feature-card__main {
-    background-color: $blue-whale;
     color: $white;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
     width: 100%;
     height: 50%;
 

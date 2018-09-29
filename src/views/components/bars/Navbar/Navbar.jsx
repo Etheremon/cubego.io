@@ -146,7 +146,7 @@ class Navbar extends React.Component {
                             <span className={ddItem.highlight ? 'm--noti' : ''}><Image img={`${ddItem.img}`}/></span>
                           </a>
                   })))}>
-                    <div className={`navbar__item--mobile`}>
+                    <div className={`navbar__item`}>
                       <span><Image img={`${item.img}`}/> <Icon name={'angle down icon'}/></span>
                     </div>
                   </Dropdown>

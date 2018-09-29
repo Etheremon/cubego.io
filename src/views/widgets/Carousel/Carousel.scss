@@ -4,27 +4,59 @@
 
 .widget__carousel {
   position: relative;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 
   .next {
-    right: 15%;
-    @include mobile {
-      right: 3%;
+
+    &.horizontal {
+      right: 15%;
+      top: 50%;
+      transform: translateY(-50%);
+      @include mobile {
+        right: 3%;
+      }
+    }
+
+
+    &.vertical {
+      right: 25%;
+      top: -32px;
+      transform: rotate(-90deg) translateY(-30%);
+      @include mobile {
+        right: 50%;
+        transform: rotate(-90deg) translateY(50%);
+      }
     }
   }
 
   .prev {
-    left: 15%;
-    @include mobile {
-      left: 3%;
+
+    &.horizontal { 
+      left: 15%;
+      top: 50%;
+      transform: translateY(-50%);
+      @include mobile {
+        left: 3%;
+      }
+    }
+
+    &.vertical { 
+      right: 25%;
+      top: 95%;
+      transform: rotate(-90deg) translateY(-30%);
+      @include mobile {
+        right: 50%;
+        transform: rotate(-90deg) translateY(50%);
+      }
     }
   }
 
   .nav-arrow {
     z-index: 99;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     border: 0.5px solid $gray;
     padding: 12px;
     border-radius: 8px;
@@ -44,46 +76,68 @@
     }
   }
 
-  .item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    @include transition-duration(1600ms);
+  .widget__carousel-list {
+    height: 400px;
+    display: flex;
+    order: 1;
+    box-sizing: border-box;
+    position: relative;
 
-    &.active {
-      z-index: 1;
-      opacity: 1;
+    @include mobile {
+      width: 100% !important;
     }
 
-    img {
-
-    }
-
-    .item__title {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 0px;
-      padding: 8px;
-      border: 0.5px solid $gray;
-      border-radius: 8px;
+    .item {
+      flex: 1 0 100%;
+      flex-basis: 100%;
+      position: relative;
+      transition-property: opacity;
+      opacity: 0;
+      @include transition-duration(1.3s);
+  
+      &.active {
+        z-index: 1;
+        opacity: 1;
+      }
+  
+      img {
+  
+      }
+  
+      .item__title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0px;
+        padding: 8px;
+        border: 0.5px solid $gray;
+        border-radius: 8px;
+      }
     }
   }
 
-  .dots {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
+  .indicators {
+    flex-grow: 1;
+    display: inline-flex;
+    // flex-direction: row;
     justify-content: space-around;
     align-items: center;
     z-index: 2;
-    left: 50%;
-    @include transform(translateX(-50%));
-    bottom: 0px;
-    max-width: 100%;
+    // left: 50%;
+    // @include transform(translateX(-50%));
+    // bottom: 0px;
+    // max-width: 100%;
+
+    &.custom {
+      @include mobile {
+        display: none;
+        width: 0 !important;
+      }
+    }
+
+    .disabled {
+      display: none;
+    }
 
     .padding-right, .padding-left {
       width: auto;
@@ -106,24 +160,24 @@
       order: 4;
     }
 
-    .dot__container {
+    .indicator__container {
       cursor: pointer;
-      height: 16px;
+      // height: 16px;
       display: block;
       position: relative;
       text-align: center;
       &.active {
-        .dot {
+        .indicator {
           background-color: $c__orange-5;
           box-shadow: 0px 3px 1px 0px $c__red-1;
         }
 
-        .dot__text {
+        .indicator__text {
           color: $c__orange-5;
         }
       }
 
-      .dot {
+      .indicator {
         background-color: $violet;
         width: 16px;
         height: 16px;
@@ -131,7 +185,7 @@
         box-shadow: 0px 3px 1px 0px #54447A;
       }
 
-      .dot__text {
+      .indicator__text {
         position: absolute;
         bottom: -44px;
         left: 50%;

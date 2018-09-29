@@ -30,8 +30,8 @@ export const ImgSource = {
   'icon_youtube': require('../../../shared/img/socialMedia/icon_youtube.png'),
   'icon_telegram': require('../../../shared/img/socialMedia/icon_telegram.png'),
 
-  'padding_dot_left': require('../../../shared/img/assets/padding_dot_left.png'),
-  'padding_dot_right': require('../../../shared/img/assets/padding_dot_right.png'),
+  'padding_indicator_left': require('../../../shared/img/assets/padding_dot_left.png'),
+  'padding_indicator_right': require('../../../shared/img/assets/padding_dot_right.png'),
 };
 
 export const Image = ({className, img, onClick}) => {

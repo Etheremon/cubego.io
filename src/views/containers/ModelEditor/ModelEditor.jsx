@@ -205,7 +205,7 @@ class _ModelEditor extends React.Component {
             <div className={'group'}>
             <div className={'item'}>
               <ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {
-                  
+
                 }}/>
               </div>
             </div>
@@ -245,7 +245,7 @@ class _ModelEditor extends React.Component {
                           options={this.tools.color.options}
                           onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
             </div>
-            
+
             <div className={'model-editor__layer'}>
               <SlideBar valMin={1} valMax={this.toolManager.numLayers}
                         value={this.toolManager.getToolValue(this.tools.layerIndex.key)}

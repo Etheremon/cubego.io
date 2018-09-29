@@ -22,16 +22,12 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 
 require("style-loader!./Home.scss");
 
-const features = [
-  {title: 'build_hero', desc: 'desc.build_hero'},
-  {title: 'auction', desc: 'desc.auction'},
-  {title: 'trading', desc: 'desc.trading'},
-  {title: 'battle', desc: 'desc.battle'},
-  {title: 'build_hero', desc: 'desc.build_hero'},
-  {title: 'auction', desc: 'desc.auction'},
-  {title: 'trading', desc: 'desc.trading'},
-  {title: 'battle', desc: 'desc.battle'},
-];
+const _features = [
+  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'trading', desc: 'desc.trading'},
+  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'auction', desc: 'desc.auction'},
+  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
+  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
+]
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -60,14 +56,20 @@ class HomePage extends React.Component {
   }
 
   render() {
-
+    let {activeCube} = this.state;
     const { _t, pathName } = this.props;
     const guildGame = [
-      {image: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
-      {image: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
-      {image: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
+      {component: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
+      {component: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
+      {component: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
     ];
 
+    const customIndicators = [
+      <div className={'feature-indicator'} key={'btn-1'} >{_t('trading')}</div>,
+      <div className={'feature-indicator'} key={'btn-2'} >{_t('auction')}</div>,
+      <div className={'feature-indicator'} key={'btn-3'} >{_t('market')}</div>,
+      <div className={'feature-indicator'} key={'btn-4'} >{_t('battle')}</div>,
+    ]
     return (
       <PageWrapper>
         <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home-page'}/>
@@ -85,9 +87,13 @@ class HomePage extends React.Component {
               <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
             </div>
             <div className="home__intro-cubego">
-              <img src={require('../../../shared/img/assets/model_example_1.png')} />
-              <img src={require('../../../shared/img/assets/model_example_2.png')} />
-              <img src={require('../../../shared/img/assets/model_example_3.png')} />
+              {[
+                require('../../../shared/img/assets/model_example_1.png'), 
+                require('../../../shared/img/assets/model_example_3.png'),
+                require('../../../shared/img/assets/model_example_2.png')].map((cube, idx) => (
+                  <img key={idx} src={cube}/>
+                ))
+              }              
             </div>
           </Container>
           {/* end home__intro */}
@@ -98,7 +104,7 @@ class HomePage extends React.Component {
             </div>
 
             <div className="home__mode-container">
-              <Carousel list={guildGame} />
+              <Carousel list={guildGame}/>
             </div>
           </Container>
           {/* end home__modes */}
@@ -173,28 +179,31 @@ class HomePage extends React.Component {
               <Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />
             </div>
 
-            <div>
+            {/* <div>
               <div className="home__features-cards">
                 {features.map((ft,index) => {
                   return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
                 } )}
               </div>
-            </div>
+            </div> */}
+            <Carousel className="home__features-cards" orientation={Carousel.orientation.VERTICAL} list={_features.map((ft,index) =>
+                              <FeatureCard key={index} className={'home__features-card'} {...ft} />
+                            )} customIndicators={customIndicators}/>
           </Container>
           {/* end home__features */}
 
           <div className="home__subscription">
-            <HeaderHighlight>
-              <b>{_t('get_the_latest_news')}</b>
-            </HeaderHighlight>
 
             <Container className={'home__subscription-container'}>
               <div className={'home__subscription-img'}>
                 <img src={require('../../../shared/img/assets/model_example_2.png')}/>
               </div>
               <div className={'home__subscription-main'}>
+                <HeaderHighlight>
+                  <b>{_t('get_the_latest_news')}</b>
+                </HeaderHighlight>
                 <p>{_t('get_the_latest_news_desc')}</p>
-                <input type="text" className={'home__subscription-input'} placeholder={_t('your_email_address')} value={this.state.email} readOnly/>
+                <input type="text" className={'home__subscription-input'} placeholder={_t('your_email_address')} value={this.state.email} onChange={() => {}}/>
                 <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('subscribe')} onClick={() => {
                   
                 }}/>

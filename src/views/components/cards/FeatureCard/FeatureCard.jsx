@@ -13,8 +13,10 @@ class FeatureCard extends React.Component {
 
   render() {
     const { _t } = this.props;
+
     return (
       <div className={`feature-card__container ${this.props.className && this.props.className}`}>
+        <img src={this.props.img} />
         <div className="feature-card__main">
           <Text className={'feature-card__title'} type={Text.types.H3} children={_t(this.props.title)} />
           <p>{_t(this.props.desc)}</p>

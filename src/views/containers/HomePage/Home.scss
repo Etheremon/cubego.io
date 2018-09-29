@@ -50,23 +50,38 @@
       width: 100%;
       margin: 0 auto;
       justify-content: center;
+      align-items: flex-end;
       padding-top: 20px !important;
+      padding-bottom: 60px;
       overflow: hidden;
+      // &:hover {
+      //   img {
+      //     opacity: 0.8 !important;
+      //     transform: scale(1) !important;
+      //   }
+      // }
 
       img {
         display: block;
         border-radius: 16px;
         box-shadow: 5px 5px 16px -2px rgba(143,124,120,1) !important;
-        margin: 0 16px 16px 16px;
+        margin: 8px 0 8px 0;
         width: 20%;
         object-fit: cover;
         height: 200px;
+        z-index: 1;
 
         &:nth-child(1) {
           background-image: url('../../../shared/img/background/background_intro_1.png');
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
+          opacity: 0.8;
+          order: 1;
+
+          &:hover ~ img {
+            transform: scale(1);
+          }
         }
 
         &:nth-child(2) {
@@ -74,6 +89,12 @@
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
+          opacity: 0.8;
+          order: 3;
+
+          &:hover ~ img {
+            transform: scale(1);
+          }
         }
 
         &:nth-child(3) {
@@ -81,6 +102,23 @@
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
+          opacity: 0.8;
+
+          transform: scale(1.25);
+          opacity: 1;
+          z-index: 2;
+          
+          order: 2;
+        }
+
+        transition-duration: 0.5s;
+        transition-property: transform, opacity;
+        // transition-delay: 0.1s;
+
+        &:hover {
+          transform: scale(1.25) !important;
+          opacity: 1 !important;
+          z-index: 3 !important;
         }
 
         @include mobile {
@@ -226,7 +264,7 @@
 
   .home__modes {
     text-align: center;
-    padding-top: 80px;
+    padding-top: 20px;
     padding-bottom: 20px;
 
     .home__modes-title__container {
@@ -251,7 +289,7 @@
       width: 100%;
       height: 400px;
       @include mobile {
-        height: 300px;
+        height: auto;
       }
 
       .guild-game {
@@ -301,7 +339,6 @@
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
-    display: none !important;
 
     .home__subscription-container {
       display: flex;
@@ -334,6 +371,7 @@
           border-radius: 8px;
           height: 36px;
           margin-bottom: 16px;
+          padding-left: 24px;
         }
 
         .home__subscription-btn {
@@ -358,13 +396,47 @@
 
   .home__features {
     text-align: center;
-    padding-top: 120px;
-    padding-bottom: 60px;
+    margin-top: 120px;
+    margin-bottom: 10px;
+    background-color: #9755C9;
+    padding: 16px 32px 44px 32px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 8px;
+
+    .indicator__container {
+      &.active {
+        .feature-indicator {
+          background-color: #EE742F;
+        } 
+
+        &:before {
+          content: '';
+          position: absolute;
+          background: url('../../../shared/img/icons/icon_right_arrow_white.png') no-repeat center;
+          display: block;
+          width: 40px;
+          height: 40px;
+          left: -44px;
+          top: 8px;
+        }
+      }
+
+      .feature-indicator {
+        width: 150px;
+        padding: 12px 8px;
+        margin: 8px 0;
+        height: auto !important;
+        background-color: #874CB5;
+        border-radius: 8px;
+        color: $white;
+      }
+    }
 
     .home__features__title-container {
-      margin-bottom: 56px;
-      background-color: rgba(255, 106, 0, 0.6);
-      height: 56px;
+      
+      margin: 18px 0;
+      height: 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -377,15 +449,14 @@
     }
 
     .home__features-cards {
-      overflow: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
+      padding: 16px 0;
+    }
 
-      .home__features-card {
-        display: inline-block;
-        width: 220px;
-        height: 380px;
-      }
+    .home__features-card {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      height: 100%;
     }
   }
 }
