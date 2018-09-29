@@ -179,13 +179,6 @@ class HomePage extends React.Component {
               <Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />
             </div>
 
-            {/* <div>
-              <div className="home__features-cards">
-                {features.map((ft,index) => {
-                  return <FeatureCard key={index} className={'home__features-card'} {...ft} />;
-                } )}
-              </div>
-            </div> */}
             <Carousel className="home__features-cards" orientation={Carousel.orientation.VERTICAL} list={_features.map((ft,index) =>
                               <FeatureCard key={index} className={'home__features-card'} {...ft} />
                             )} customIndicators={customIndicators}/>

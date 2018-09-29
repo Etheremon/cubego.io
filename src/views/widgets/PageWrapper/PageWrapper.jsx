@@ -15,6 +15,7 @@ export const PageWrapper = ({className, children, type}) => {
 PageWrapper.types = {
   NORMAL: 'normal',
   DARK: 'dark',
+  BLUE: 'blue',
 };
 
 PageWrapper.defaultProps = {

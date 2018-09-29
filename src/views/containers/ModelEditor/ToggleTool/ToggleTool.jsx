@@ -19,9 +19,10 @@ export const ToggleTool = ({label, hotKey, img, active, disabled, onClick}) => {
          onClick={() => {onClick && onClick()}}>
       <div className={'toggle-tool__img'}>
         <img src={img}/>
-      </div>
-       <div className={'toggle-tool__label'}>
-         {hotKey ? `[${hotKey}] `: ''}{label}
+
+        <div className={'toggle-tool__label'}>
+          {hotKey ? `[${hotKey}] `: ''}{label}
+        </div>
       </div>
     </div>
   )

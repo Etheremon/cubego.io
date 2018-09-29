@@ -4,29 +4,37 @@
 
 
 .toggle-tool {
-  width: 100%;
-  text-align: center;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   cursor: pointer;
-  position: relative;
+  padding: 4px 8px;
 
   .toggle-tool__img {
+    position: relative;
     img {
       display: inline-block;
-      width: 48px;
+      height: 30px;
       filter: grayscale(0.5);
+      padding-top: 12px;
     }
   }
 
   .toggle-tool__label {
-    width: 80px;
+    width: 70px;
+    text-align: center;
     word-break: break-all;
     position: absolute;
     top: 100%;
     left: 50%;
     @include transform(translateX(-50%));
+    font-size: $font-size-smaller;
   }
 
   &.active {
+    background-color: $primary;
     img {
       filter: none;
     }
@@ -38,5 +46,9 @@
       filter: grayscale(1);
       opacity: 0.5;
     }
+  }
+
+  &:hover {
+    background-color: $primary;
   }
 }

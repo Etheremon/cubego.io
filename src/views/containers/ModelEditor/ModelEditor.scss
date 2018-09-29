@@ -27,24 +27,17 @@
 
   .model-editor__tool-bar {
     display: flex;
-    margin: 0 -4px;
-    padding: 12px 0;
-    justify-content: space-between;
-    align-items: flex-start;
     flex-direction: row;
-    border: 1px solid #BEBEB7;
+    margin: 0 -8px;
 
     .group {
-      margin: 0 4px;
-      padding: 0 8px;
+      margin: 0 8px;
       display: flex;
-      //background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgb(236, 236, 236);
       border-radius: 4px;
     }
 
     .item {
-      width: 80px;
-      padding: 12px;
     }
   }
 
