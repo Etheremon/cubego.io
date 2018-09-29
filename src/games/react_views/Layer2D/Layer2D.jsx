@@ -45,15 +45,17 @@ export class Layer2D extends Component {
   }
 
   onCellClicked(layer, rowIdx, colIdx) {
-    this.state.cells[rowIdx][colIdx].color = this.state.hoverColor;
-    this.setState({cells: this.state.cells});
+    if (this.state.hoverColor !== undefined) {
+      this.state.cells[rowIdx][colIdx].color = this.state.hoverColor;
+      this.setState({cells: this.state.cells});
 
-    let correctPos = layer.cal2dPos ? layer.cal2dPos(colIdx, rowIdx) : {x: colIdx, y: rowIdx};
-    this.clickedCells.push({
-      [layer.x]: correctPos.x,
-      [layer.y]: correctPos.y,
-      [layer.z]: layer.idx,
-    });
+      let correctPos = layer.cal2dPos ? layer.cal2dPos(colIdx, rowIdx) : {x: colIdx, y: rowIdx};
+      this.clickedCells.push({
+        [layer.x]: correctPos.x,
+        [layer.y]: correctPos.y,
+        [layer.z]: layer.idx,
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,7 +68,7 @@ export class Layer2D extends Component {
     let {layer, tools} = props;
     if (layer) {
       let newState = {
-        hoverColor: null,
+        hoverColor: undefined,
         cells: null,
       };
 
@@ -84,6 +86,8 @@ export class Layer2D extends Component {
 
       if (tools && tools.color && (tools.draw.value || tools.paint.value))
         newState.hoverColor = ColorUtils.RgbToHex(tools.color.value);
+      else if (tools && tools.erase.value)
+        newState.hoverColor = null;
 
       this.setState(newState);
     }
@@ -102,6 +106,7 @@ export class Layer2D extends Component {
             <div className={'layer2D__row'} key={rowIdx}>
               {row.map((cell, colIdx) => {
                 let c = ColorUtils.RgbToHex(cell.color);
+                let cellStyle = c ? {backgroundColor: `#${c.hex}`, opacity: c.opacity} : {};
 
                 return (
                   <div className={'layer2D__cell'} key={colIdx}
@@ -112,10 +117,12 @@ export class Layer2D extends Component {
                        }}>
 
                     <div className={'layer2D__cell-real'}
-                         style={c ? {backgroundColor: `#${c.hex}`, opacity: c.opacity} : {}}>
+                         style={cellStyle}>
                     </div>
                     <div className={'layer2D__cell-hover'}
-                         style={hoverColor ? {backgroundColor: `#${hoverColor.hex}`, opacity: hoverColor.opacity} : {}}>
+                         style={hoverColor
+                           ? {backgroundColor: `#${hoverColor.hex}`, opacity : hoverColor.opacity}
+                           : (hoverColor === null ? {} : cellStyle)}>
                     </div>
                   </div>
                 )

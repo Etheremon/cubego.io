@@ -26,6 +26,9 @@ export class ToolManager {
     this.addModel = this.addModel.bind(this);
     this.getToolValue = this.getToolValue.bind(this);
     this.updateCurrent = this.updateCurrent.bind(this);
+    this.onModeChangeTempStart = this.onModeChangeTempStart.bind(this);
+    this.onModeChangeTempStop = this.onModeChangeTempStop.bind(this);
+    this.changeMode = this.changeMode.bind(this);
 
     this.updateCurrent();
   }
@@ -37,6 +40,16 @@ export class ToolManager {
     this.updateCurrent();
   }
 
+  changeMode({key}) {
+    Object.keys(this._tools).forEach((key) => {
+      if (this._tools[key].type === ToolTypes.mode)
+        this._tools[key].value = false;
+    });
+
+    this._drawMode = this._tools[key];
+    this._tools[key].value = true;
+  }
+
   onToolClicked({key, value}) {
     if (!this._tools[key]) {
       console.warn("Unknown tool!");
@@ -44,25 +57,16 @@ export class ToolManager {
     }
 
     // TODO: check if the value is valid
-    // Case All Tools (includes effects)
-    if (value !== undefined && value !== null)
-      this._tools[key].value = value;
+    // ...
 
     // Case Tool Mode
     if (this._tools[key].type === ToolTypes.mode) {
-      // Only 1 mode at a time
-      Object.keys(this._tools).forEach((key) => {
-        if (this._tools[key].type === ToolTypes.mode)
-          this._tools[key].value = false;
-      });
-
-      // Set mode
-      this._drawMode = this._tools[key];
-      this._tools[key].value = true;
+      this.changeMode({key});
     }
 
     // Case Tool Action
     if (this._tools[key].type === ToolTypes.action) {
+      this._tools[key].value = value;
       let newModel = this._tools[key].onToolClicked({
         toolManager: this,
         key: key,
@@ -74,6 +78,25 @@ export class ToolManager {
         this.updateCurrent();
       }
     }
+
+    // Case Effect
+    if (this._tools[key].type === ToolTypes.effect) {
+      this._tools[key].value = value;
+    }
+  }
+
+  onModeChangeTempStart({key}) {
+    if (this._drawMode.key !== key) {
+      this._saved_mode = this._drawMode.key;
+      this.changeMode({key});
+    }
+  }
+
+  onModeChangeTempStop({key}) {
+    if (this._saved_mode) {
+      this.changeMode({key: this._saved_mode});
+      this._saved_mode = null;
+    }
   }
 
   onCellClicked(cells=[]) {
@@ -82,10 +105,15 @@ export class ToolManager {
     } else {
 
       let newModel = this._drawMode.onCellClicked({
+        toolManager: this,
         tools: this._tools, model: this._model, cells,
       });
 
-      this.addModel({model: newModel});
+      if (newModel) {
+        this.addModel({model: newModel});
+      } else {
+        this.updateCurrent();
+      }
     }
   }
 
@@ -161,6 +189,17 @@ Tools.color = ({key='color', value=EDITOR_COLORS[0], ...extra}) => ({
   value,
   type: ToolTypes.effect,
   options: EDITOR_COLORS,
+});
+
+Tools.move = ({key='move', value=true, ...extra}) => ({
+  ...extra,
+  key,
+  value,
+  type: ToolTypes.mode,
+  onCellClicked: ({toolManager, cells}) => {
+    let z = toolManager._tools['view-2d'].value.z;
+    toolManager._tools['layer-index'].value = z[0] === '+' ? cells[0][z[1]]+1 : toolManager._numLayers-cells[0][z[1]];
+  },
 });
 
 Tools.draw = ({key='draw', value=true, ...extra}) => ({

@@ -11,9 +11,8 @@ import {ColorTool} from "./ColorTool/ColorTool.jsx";
 import {Container} from "../../widgets/Container/Container.jsx";
 import {PageWrapper} from "../../widgets/PageWrapper/PageWrapper.jsx";
 import {ToggleTool} from "./ToggleTool/ToggleTool.jsx";
-import {ToolManager, Tools} from "../../../services/toolManager";
+import {ToolManager, Tools, ToolTypes} from "../../../services/toolManager";
 import {CloneDeep} from "../../../utils/objUtils";
-import Dropdown from "../../widgets/Dropdown/Dropdown.jsx";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
@@ -30,7 +29,11 @@ class _ModelEditor extends React.Component {
     };
 
     this.tools = {
-      draw: Tools.draw({value: true, hotKey: 'D', onClick: () => {
+      move: Tools.move({value: true, hotKey: 'M', onClick: () => {
+          let currentVal = this.toolManager.getToolValue(this.tools.move.key);
+          this.onToolChange(this.tools.move.key, !currentVal);
+        }}),
+      draw: Tools.draw({value: false, hotKey: 'D', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
           this.onToolChange(this.tools.draw.key, !currentVal);
       }}),
@@ -83,7 +86,8 @@ class _ModelEditor extends React.Component {
 
     this.onToolChange = this.onToolChange.bind(this);
     this.onCellClicked = this.onCellClicked.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
   }
 
   componentDidMount() {
@@ -93,16 +97,30 @@ class _ModelEditor extends React.Component {
       this.forceUpdate();
     });
 
-    window.addEventListener("keypress", this.onKeyPress, false);
+    window.addEventListener("keydown", this.onKeyDown, false);
+    window.addEventListener("keyup", this.onKeyUp, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keypress", this.onKeyPress);
+    window.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener("keyup", this.onKeyUp);
   }
 
-  onKeyPress(key) {
+  onKeyDown(key) {
     Utils.ObjGetValues(this.tools).forEach(tool => {
-      if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase()) {
+      if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
+        this.toolManager.onModeChangeTempStart({key: tool.key});
+        this.forceUpdate();
+      }
+    });
+  }
+
+  onKeyUp(key) {
+    Utils.ObjGetValues(this.tools).forEach(tool => {
+      if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
+        this.toolManager.onModeChangeTempStop({key: tool.key});
+        this.forceUpdate();
+      } else if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type !== ToolTypes.mode) {
         tool.onClick();
       }
     });
@@ -133,6 +151,13 @@ class _ModelEditor extends React.Component {
 
           <div className={'model-editor__tool-bar'}>
             <div className={'group'}>
+              <div className={'item'}>
+                <ToggleTool label={_t('move')} img={require('../../../shared/img/Icons/icon-move.png')}
+                            active={this.toolManager.getToolValue(this.tools.move.key)}
+                            onClick={this.tools.move.onClick}
+                            hotKey={this.tools.move.hotKey}
+                />
+              </div>
               <div className={'item'}>
                 <ToggleTool label={_t('add')} img={require('../../../shared/img/Icons/icon-draw.png')}
                             active={this.toolManager.getToolValue(this.tools.draw.key)}

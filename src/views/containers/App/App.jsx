@@ -116,7 +116,7 @@ class App extends React.Component {
 
         <TxnBar/>
       </div>
-    ) ) : <Loading className={'main__page-loading'} dark />
+    ) ) : <div className={'page-loading'}><Loading className={'main__page-loading'} dark/></div>
   }
 }
 
