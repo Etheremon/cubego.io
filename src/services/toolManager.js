@@ -66,7 +66,8 @@ export class ToolManager {
 
     // Case Tool Action
     if (this._tools[key].type === ToolTypes.action) {
-      this._tools[key].value = value;
+      if (value !== undefined && value !== null)
+        this._tools[key].value = value;
       let newModel = this._tools[key].onToolClicked({
         toolManager: this,
         key: key,

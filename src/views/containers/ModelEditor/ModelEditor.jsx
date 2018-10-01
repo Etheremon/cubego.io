@@ -88,6 +88,8 @@ class _ModelEditor extends React.Component {
     this.onCellClicked = this.onCellClicked.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+
+    this.isHoldingKey = {};
   }
 
   componentDidMount() {
@@ -107,6 +109,8 @@ class _ModelEditor extends React.Component {
   }
 
   onKeyDown(key) {
+    if (this.isHoldingKey[key.keyCode]) return;
+    this.isHoldingKey[key.keyCode] = true;
     Utils.ObjGetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStart({key: tool.key});
@@ -116,6 +120,7 @@ class _ModelEditor extends React.Component {
   }
 
   onKeyUp(key) {
+    this.isHoldingKey[key.keyCode] = false;
     Utils.ObjGetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStop({key: tool.key});
