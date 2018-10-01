@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Axis,
   BoxHelper,
   Grid,
   HemisphereLight,
@@ -14,10 +13,11 @@ import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
 import * as THREE from "three";
 
 const SIZE = 50;
+const SELECT_TOOL = 'move';
 const DRAW_TOOL = 'draw';
 const PAINT_TOOL = 'paint';
 const ERASE_TOOL = 'erase';
-const TOOL_KEYS = [DRAW_TOOL, PAINT_TOOL, ERASE_TOOL];
+const TOOL_KEYS = [SELECT_TOOL, DRAW_TOOL, PAINT_TOOL, ERASE_TOOL];
 
 class VoxViewerThree extends Component {
   constructor(props) {
@@ -200,7 +200,7 @@ class VoxViewerThree extends Component {
 
   hoverBehaviour(intersect) {
     this.rollOverMesh.renderer.visible = false;
-    switch (this.featureKeyDown) {
+    switch (this.featureSelected) {
       case DRAW_TOOL:
         this.showAddingCube(intersect);
         break;
@@ -211,23 +211,10 @@ class VoxViewerThree extends Component {
         this.showPaintingCube(intersect);
         break;
       default:
-        switch (this.featureSelected) {
-          case DRAW_TOOL:
-            this.showAddingCube(intersect);
-            break;
-          case ERASE_TOOL:
-            this.showDeleteCube(intersect);
-            break;
-          case PAINT_TOOL:
-            this.showPaintingCube(intersect);
-            break;
-          default:
-            this.rollOverMesh.renderer.visible = true;
-            let position = intersect.object.position.clone();
-            this.rollOverMesh.renderer.position.copy(position);
-            this.updateHoverBoxColor(this.selectLayerColor);
-            break;
-        }
+        this.rollOverMesh.renderer.visible = true;
+        let position = intersect.object.position.clone();
+        this.rollOverMesh.renderer.position.copy(position);
+        this.updateHoverBoxColor(this.selectLayerColor);
         break;
     }
   }

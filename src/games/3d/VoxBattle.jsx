@@ -109,22 +109,28 @@ class VoxBattle extends Component {
       data.loadedMeshes[0].rotation.y = -Math.PI / 4;
       data.loadedMeshes[0].scaling = new BABYLON.Vector3(SIZE * 2, SIZE * 2, SIZE * 2);
     });
+
+    BabylonX.loaders.addMesh('test_gltf', '/mons/', 'kyarishake.gltf').then((data) => {
+      console.log(data);
+      this.players[0].skeleton = data.loadedSkeletons[0];
+    });
+
     BabylonX.loaders.load();
 
-    setInterval(() => {
-      this.players[0].playAnimation(['attack', 'scaling', 'jump'], false, 2);
-      setTimeout(() => {
-        this.players[1].hurt(15);
-      }, 500)
-    }, 6000);
-    setTimeout(() => {
-      setInterval(() => {
-        this.players[1].playAnimation(['attack', 'scaling', 'jump'], false, 2);
-        setTimeout(() => {
-          this.players[0].hurt(20);
-        }, 500)
-      }, 6000);
-    }, 3000)
+    // setInterval(() => {
+    //   this.players[0].playAnimation(['attack', 'scaling', 'jump'], false, 2);
+    //   setTimeout(() => {
+    //     this.players[1].hurt(15);
+    //   }, 500)
+    // }, 6000);
+    // setTimeout(() => {
+    //   setInterval(() => {
+    //     this.players[1].playAnimation(['attack', 'scaling', 'jump'], false, 2);
+    //     setTimeout(() => {
+    //       this.players[0].hurt(20);
+    //     }, 500)
+    //   }, 6000);
+    // }, 3000)
   }
 
   render() {
