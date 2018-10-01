@@ -33,7 +33,6 @@ class VoxViewerThree extends Component {
     this.objectHovered = null;
     this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     this.selectLayerColor = '0xffff00';
-    this.featureKeyDown = '';
     this.featureSelected = '';
   }
 
@@ -112,8 +111,6 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.addEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
-    document.addEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
     this.updateHoverBoxColor();
   }
 
@@ -121,8 +118,6 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.removeEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.removeEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.removeEventListener('keydown', this.onDocumentKeyDown.bind(this), false);
-    document.removeEventListener('keyup', this.onDocumentKeyUp.bind(this), false);
   }
 
   getRendererObject() {
@@ -133,34 +128,6 @@ class VoxViewerThree extends Component {
     });
   }
 
-  onDocumentKeyDown(event) {
-    switch (event.keyCode) {
-      case 68: // d
-        if (!this.featureKeyDown)
-          this.featureKeyDown = DRAW_TOOL;
-        break;
-      case 69: // e
-        if (!this.featureKeyDown)
-          this.featureKeyDown = ERASE_TOOL;
-        break;
-      case 80: //p
-        if (!this.featureKeyDown)
-          this.featureKeyDown = PAINT_TOOL;
-        break;
-    }
-
-  }
-
-  onDocumentKeyUp(event) {
-    switch (event.keyCode) {
-      case 68: // d
-      case 69: // e
-      case 80: // p
-        this.featureKeyDown = null;
-        break;
-    }
-  }
-
   onMouseDown(event) {
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
@@ -169,7 +136,7 @@ class VoxViewerThree extends Component {
     if (intersects.length > 0) {
       let intersect = intersects[0];
       let position;
-      if (this.featureKeyDown === 'd') {
+      if (this.featureSelected === PAINT_TOOL) {
         position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
       } else {
         position = intersect.object.position.clone();
