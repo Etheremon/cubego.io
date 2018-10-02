@@ -12,7 +12,7 @@
   .next {
 
     &.horizontal {
-      right: 15%;
+      right: -85%;
       top: 50%;
       transform: translateY(-50%);
       @include mobile {
@@ -22,9 +22,9 @@
 
 
     &.vertical {
-      right: 25%;
-      top: -32px;
-      transform: rotate(-90deg) translateY(-30%);
+      right: 50%;
+      top: calc(100% - 44px);
+      transform: rotate(-90deg) translateY(50%);
       @include mobile {
         right: 50%;
         transform: rotate(-90deg) translateY(50%);
@@ -35,7 +35,7 @@
   .prev {
 
     &.horizontal { 
-      left: 15%;
+      left: 115%;
       top: 50%;
       transform: translateY(-50%);
       @include mobile {
@@ -44,9 +44,9 @@
     }
 
     &.vertical { 
-      right: 25%;
-      top: 95%;
-      transform: rotate(-90deg) translateY(-30%);
+      right: 50%;
+      top: 200%;
+      transform: rotate(-90deg) translateY(50%);
       @include mobile {
         right: 50%;
         transform: rotate(-90deg) translateY(50%);

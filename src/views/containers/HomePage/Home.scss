@@ -340,6 +340,10 @@
     padding-top: 20px;
     padding-bottom: 20px;
 
+    input {
+      outline-style: none;
+    }
+
     .home__subscription-container {
       display: flex;
       align-items: center;
