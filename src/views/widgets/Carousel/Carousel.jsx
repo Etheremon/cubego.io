@@ -15,18 +15,18 @@ const containerStyle = (state) => {
 
   if (!state.sliding) {
     transformValue = `translate${coord}(calc(-100%))`;
-    return { transition: state.sliding ? 'none' : 'transform 1s ease',
+    return { transition: state.sliding ? 'none' : 'transform 0.5s ease',
         transform: transformValue, ...direction, ...width }
   }
 
   if (!state.isNext) {
     transformValue = `translate${coord}(calc(-200%))`;
-    return { transition: state.sliding ? 'none' : 'transform 1s ease',
+    return { transition: state.sliding ? 'none' : 'transform 0.5s ease',
         transform: transformValue, ...direction, ...width }
   }
 
   transformValue = `translate${coord}(0%)`;
-  return { transition: state.sliding ? 'none' : 'transform 1s ease',
+  return { transition: state.sliding ? 'none' : 'transform 0.5s ease',
           transform: transformValue, ...direction, ...width }
 }
 
@@ -108,12 +108,23 @@ class Carousel extends React.Component {
     return (
 
       <div className={`widget__carousel ${className}`} style={carouselStyle}>
+
         <div className="widget__carousel-list" style={containerStyle(this.state)}>
           {list.map((item, idx) => (
             <div className={`item ${position === idx ? 'active' : ''}`} key={idx} style={{ 'order': this.getOrder(idx)}}>
               {item.component ? item.component : item}
             </div>
           ))}
+
+          <div className={`nav-arrow next ${orientation}`} onClick={() => this.handleChangeSlide(true)}>
+            <Image img={'icon_right_arrow'} />
+          </div>
+
+          <div className={`nav-arrow prev ${orientation}`} onClick={() => this.handleChangeSlide(false)}>
+            <Image img={'icon_left_arrow'} />
+          </div>
+
+
         </div>
 
         <div className={`indicators ${customIndicators ? 'custom' : ''}`} style={indicatorStyle}>
@@ -134,13 +145,6 @@ class Carousel extends React.Component {
           
         </div>
 
-        <div className={`nav-arrow next ${orientation}`} onClick={() => this.handleChangeSlide(true)}>
-          <Image img={'icon_right_arrow'} />
-        </div>
-
-        <div className={`nav-arrow prev ${orientation}`} onClick={() => this.handleChangeSlide(false)}>
-          <Image img={'icon_left_arrow'} />
-        </div>
       </div>
     );
   }
