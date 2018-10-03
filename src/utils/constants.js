@@ -1,10 +1,9 @@
 // URLS
 export const URLS = {
-  MODEL_EDITOR: 'model-editor',
-
   INTRO: 'intro',
-  BUILD_HERO: 'build-hero',
-  MY_HEROES: 'my-heroes',
+  BUILD_GON: 'build',
+  REVIEW_GON: 'review',
+  CUBEGONS: 'cubegons',
   STORE: 'store',
   BATTLE: 'battle',
   MARKET: 'market',
@@ -15,6 +14,7 @@ export const URLS = {
   FAQ: 'faq',
 
   ABOUT_US: 'about-us',
+  GUIDE: 'guide',
 };
 
 

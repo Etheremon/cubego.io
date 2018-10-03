@@ -41,13 +41,16 @@
   <script src="https://cdn.rawgit.com/daishihmr/vox.js/1.0.1/build/vox.min.js"></script>
   <!-- End Libs -->
 
-  <!-- External JS -->
-  <!--<script src="/assets/web3.min.js"></script>-->
-  <!-- End External JS-->
-
-  <!-- Internal JS-->
-  <link rel="stylesheet" href="/styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
+  <!-- Internal JS -->
+  <script src="/assets/lib/web3.min.js"></script>
+  <script src="/assets/js/utils.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
+  <script src="/assets/js/core_constants.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
+  <script src="/assets/js/core.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
   <!-- End Internal JS-->
+
+  <!-- Internal CSS-->
+  <link rel="stylesheet" href="/styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
+  <!-- End Internal CSS-->
 
 </head>
 

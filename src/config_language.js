@@ -33,7 +33,7 @@ const fetchLocalization = async () => {
   }
 
   return localization;
-}
+};
 
 let browserLan = navigator.language.slice(0, 2);
 let selectedLan = Languages.map(lan => lan.code).includes(browserLan) ? browserLan : DefaultLanguage;

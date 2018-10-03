@@ -4,10 +4,10 @@
   "description": "CubeGo",
   "main": "app.jsx",
   "scripts": {
-    "startDev": "del-cli public/* && webpack-dev-server --port 8080 --content-base=public --hot --watch-poll --config webpack.dev.js --env.ENV=dev",
-    "startProd": "del-cli public/* && webpack-dev-server  --port 8080 --content-base=public --hot --watch-poll --config webpack.dev.js --env.ENV=prod",
-    "buildDev": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=dev",
-    "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
+    "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
+    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
+    "buildDev": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=dev && node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js",
+    "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod && node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js"
   },
   "keywords": [
     "cubego",
@@ -47,6 +47,8 @@
     "tmx-parser": "^1.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

@@ -2,6 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const BASE_DIR = __dirname;
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const APP_DIR = path.resolve(__dirname, 'src');
 const ASSET_DIR = path.resolve(__dirname, 'assets');
@@ -17,7 +18,6 @@ module.exports = env => {
     output: {
       publicPath: '/',
       path: BUILD_DIR,
-      // filename: 'bundle.js',
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
     },
@@ -35,20 +35,10 @@ module.exports = env => {
             {
               loader: 'image-webpack-loader',
               options: {
-                mozjpeg: {
-                  progressive: true,
-                  quality: IMAGE_QUALITY[0]
-                },
-                optipng: {
-                  enabled: false,
-                },
-                pngquant: {
-                  quality: `${IMAGE_QUALITY[0]}-${IMAGE_QUALITY[1]}`,
-                  speed: 4
-                },
-                gifsicle: {
-                  interlaced: false,
-                },
+                mozjpeg: {progressive: true, quality: IMAGE_QUALITY[0]},
+                optipng: {enabled: false,},
+                pngquant: {quality: `${IMAGE_QUALITY[0]}-${IMAGE_QUALITY[1]}`, speed: 4},
+                gifsicle: {interlaced: false,},
               }
             },
           ],
@@ -76,17 +66,19 @@ module.exports = env => {
       new webpack.DefinePlugin({
         ENV: JSON.stringify(env.ENV)
       }),
-      new CopyWebpackPlugin([
-        {from: APP_DIR + '/../assets/'},
+
+      new CopyWebpackPlugin([{
+          from: ASSET_DIR + '/',
+          to: BUILD_DIR + '/assets',
+        },
       ]),
 
       new HtmlWebpackPlugin({
         inject: false,
-        template: APP_DIR + '/../index.html',
+        template: BASE_DIR + '/index.html',
         filename: BUILD_DIR + '/index.html',
         customHash: ((new Date()).getTime()).toString(),
       }),
-
     ],
     node: {
       fs: 'empty',
@@ -97,6 +89,12 @@ module.exports = env => {
     },
     devServer: {
       historyApiFallback: true,
+      contentBase: BUILD_DIR,
+      port: 8080,
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+      },
     }
   }
 };

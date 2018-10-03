@@ -22,8 +22,8 @@ const NavbarList = {
   default: [
     {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
     {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.BUILD_GON}`, text: 'build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.CUBEGONS}`, text: 'my_heroes', img: 'icon_my_heroes'},
     {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
     {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
   ],
@@ -31,8 +31,8 @@ const NavbarList = {
   home: [
     {link: `/${URLS.ABOUT_US}`, text: 'about_us', img: 'icon_about_us'},
     {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
-    {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
-    {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+    {link: `/${URLS.BUILD_GON}`, text: 'build_hero', img: 'icon_build_hero'},
+    {link: `/${URLS.CUBEGONS}`, text: 'my_heroes', img: 'icon_my_heroes'},
     {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
     {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
   ],
@@ -43,8 +43,8 @@ const NavbarList = {
       {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
     ]},
     {text: 'gameplay', img: 'icon_build_hero', group: [
-      {link: `/${URLS.BUILD_HERO}`, text: 'build_hero', img: 'icon_build_hero'},
-      {link: `/${URLS.MY_HEROES}`, text: 'my_heroes', img: 'icon_my_heroes'},
+      {link: `/${URLS.BUILD_GON}`, text: 'build_hero', img: 'icon_build_hero'},
+      {link: `/${URLS.CUBEGONS}`, text: 'my_heroes', img: 'icon_my_heroes'},
       {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
       {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
     ]}

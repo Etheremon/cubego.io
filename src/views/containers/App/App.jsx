@@ -89,34 +89,51 @@ class App extends React.Component {
   }
 
   render () {
-    const { alreadyFetchedLocalization } = this.props;
+    const {alreadyFetchedLocalization} = this.props;
 
-    return alreadyFetchedLocalization ? ( this.maintenance ? (
-      <div className={'page-container-wrapper'}>
-        <div style={{paddingTop: "80px"}}>
-          <ul className="ui list">
-            We are under maintenance. Please come back later ....
-          </ul>
+    if (this.maintenance) {
+      return (
+        <div className={'page-container-wrapper'}>
+          <div style={{paddingTop: "80px"}}>
+            <ul className="ui list">
+              We are under maintenance. Please come back later ....
+            </ul>
+          </div>
+          <Footer/>
         </div>
-        <Footer/>
-      </div>
-    ) : (
+      );
+    }
+
+    if (!alreadyFetchedLocalization) {
+      return (
+        <div className={'page-loading'}>
+          <Loading className={'main__page-loading'} dark/>
+        </div>
+      );
+    }
+
+    return (
       <div className={'page-container-wrapper'}>
         <Switch>
-          <Route path={`/${URLS.BUILD_HERO}`} component={ModelEditor}/>
-          <Route path={`/${URLS.BATTLE}`} component={Battle}/>
-          <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
-          <Route path={`/${URLS.BUILD_HERO}`} component={ComingSoon}/>
-          <Route path={`/${URLS.MY_HEROES}`} component={ComingSoon}/>
+          <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
+          <Route path={`/${URLS.REVIEW_GON}`} component={ComingSoon}/>
+
+          <Route path={`/${URLS.CUBEGONS}`} component={ComingSoon}/>
+          <Route path={`/${URLS.CUBEGONS}/:id`} component={ComingSoon}/>
+
+          <Route path={`/${URLS.BATTLE}`} component={ComingSoon}/>
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
-          <Route exact path='/' component={Home}/>
+
+          <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
+          <Route path={`/${URLS.GUIDE}`} component={ComingSoon}/>
+
           <Route component={Home}/>
         </Switch>
 
         <TxnBar/>
       </div>
-    ) ) : <div className={'page-loading'}><Loading className={'main__page-loading'} dark/></div>
+    )
   }
 }
 

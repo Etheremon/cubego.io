@@ -52,7 +52,7 @@ class HomePage extends React.Component {
       <div className={'home__banner-item'} key={'banner-1'}>
         <img src={require('../../../shared/img/banner/banner_1.png')}/>
         <ButtonNew showDeco className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_HERO}`)
+          this.props.history.push(`/${URLS.BUILD_GON}`)
         }}/>
       </div>,
     ])

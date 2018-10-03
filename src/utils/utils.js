@@ -136,7 +136,7 @@ export const ObjRename = (obj, oldKey, newKey) => {
 /**
  * Metamask & Web3 related
  */
-export const HasMetamaskInstalled = () => (!!window.hasMetamaskInstalled);
+export const HasMetamaskInstalled = () => (!!window.hasWeb3Injected);
 export const HasMetamaskLoggedIn = () => (!!window.account);
 
 /**
