@@ -27,8 +27,8 @@
 
   .model-editor__tool-bar {
     display: flex;
-    flex-direction: row;
     margin: 0 -8px;
+    justify-content: space-between;
 
     .group {
       margin: 0 8px;

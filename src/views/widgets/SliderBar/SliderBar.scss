@@ -8,15 +8,32 @@
     display: flex;
     align-items: center;
     .arrow-left, .arrow-right {
+      position: relative;
       img {
         display: block;
-        width: 24px;
+        width: 30px;
         margin: 4px;
         &:hover {
           opacity: 0.9;
           cursor: pointer;
         }
       }
+    }
+    .arrow-left:after, .arrow-right:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translateX(-50%) translateY(-50%));
+      color: $white;
+    }
+    .arrow-left:after {
+      content: '[Z]';
+      padding-left: 8px;
+
+    }
+    .arrow-right:after {
+      content: '[C]';
+      padding-right: 8px;
     }
     .label {
       position: absolute;
