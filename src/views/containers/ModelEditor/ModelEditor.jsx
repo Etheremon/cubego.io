@@ -29,50 +29,63 @@ class _ModelEditor extends React.Component {
     };
 
     this.tools = {
-      move: Tools.move({value: true, hotKey: 'M', onClick: () => {
+      move: Tools.move({value: true, hotKey: 'W', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.move.key);
           this.onToolChange(this.tools.move.key, !currentVal);
         }}),
-      draw: Tools.draw({value: false, hotKey: 'D', onClick: () => {
+      draw: Tools.draw({value: false, hotKey: 'A', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.draw.key);
           this.onToolChange(this.tools.draw.key, !currentVal);
       }}),
-      paint: Tools.paint({value: false, hotKey: 'P', onClick: () => {
+      paint: Tools.paint({value: false, hotKey: 'S', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.paint.key);
           this.onToolChange(this.tools.paint.key, !currentVal);
         }}),
-      erase: Tools.erase({value: false, hotKey: 'E', onClick: () => {
+      erase: Tools.erase({value: false, hotKey: 'D', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
           this.onToolChange(this.tools.erase.key, !currentVal);
       }}),
       copyLayer: Tools.copyLayer({
-        hotKey: 'I',
+        hotKey: 'V',
         onClick: () => {this.onToolChange(this.tools.copyLayer.key, true);},
       }),
       pasteLayer: Tools.pasteLayer({
-        hotKey: 'O',
+        hotKey: 'B',
         onClick: () => {this.onToolChange(this.tools.pasteLayer.key, true);},
       }),
       clear: Tools.clear({
-        hotKey: 'A',
+        hotKey: 'H',
         onClick: () => {this.onToolChange(this.tools.clear.key, true);}
       }),
       clearLayer: Tools.clearLayer({
-        hotKey: 'C',
+        hotKey: 'G',
         onClick: () => {this.onToolChange(this.tools.clearLayer.key, true);},
       }),
       undo: Tools.undo({
-        hotKey: 'U',
+        hotKey: 'Q',
         onClick: () => {this.onToolChange(this.tools.undo.key, true);}
       }),
       redo: Tools.redo({
-        hotKey: 'R',
+        hotKey: 'E',
         onClick: () => {this.onToolChange(this.tools.redo.key, true);}
       }),
 
+      nextLayer: {
+        hotKey: 'C',
+        onClick: () => {this.onToolChange(
+          this.tools.layerIndex.key, this.toolManager.getToolValue(this.tools.layerIndex.key) + 1
+        )}
+      },
+      prevLayer: {
+        hotKey: 'Z',
+        onClick: () => {this.onToolChange(
+          this.tools.layerIndex.key, this.toolManager.getToolValue(this.tools.layerIndex.key) - 1
+        )}
+      },
+
       color: Tools.color({}),
       view2D: Tools.view2D({
-        hotKey: 'R',
+        hotKey: 'X',
         onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
       }),
       layerIndex: Tools.layerIndex({value: 1}),
@@ -239,7 +252,7 @@ class _ModelEditor extends React.Component {
                           img={require('../../../shared/img/Icons/icon-camera.png')}
                           disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                           onClick={() => {this.tools.view2D.onClick()}}
-                          hotKey={this.tools.clearLayer.hotKey}
+                          hotKey={this.tools.view2D.hotKey}
               />
             </div>
 
