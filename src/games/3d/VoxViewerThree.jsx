@@ -178,12 +178,16 @@ class VoxViewerThree extends Component {
         this.showPaintingCube(intersect);
         break;
       default:
-        this.rollOverMesh.renderer.visible = true;
-        let position = intersect.object.position.clone();
-        this.rollOverMesh.renderer.position.copy(position);
-        this.updateHoverBoxColor(this.selectLayerColor);
+        this.showSelectingCube(intersect);
         break;
     }
+  }
+
+  showSelectingCube(intersect) {
+    this.rollOverMesh.renderer.visible = true;
+    let position = intersect.object.position.clone();
+    this.rollOverMesh.renderer.position.copy(position);
+    this.updateHoverBoxColor(this.selectLayerColor);
   }
 
   showAddingCube(intersect) {
@@ -199,7 +203,7 @@ class VoxViewerThree extends Component {
   }
 
   showDeleteCube(intersect) {
-    intersect.object.material.opacity = 0.8;
+    intersect.object.material.opacity = 0.3;
     this.objectHovered = intersect.object;
   }
 
@@ -218,9 +222,7 @@ class VoxViewerThree extends Component {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
-        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
-          this.rollOverMesh = ref
-        }}/>
+        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {this.rollOverMesh = ref}} wireFrameColor='000000'/>
         <BoxHelper ref={(ref) => {
           this.boxHelper = ref
         }}/>
