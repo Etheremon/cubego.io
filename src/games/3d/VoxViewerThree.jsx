@@ -199,7 +199,7 @@ class VoxViewerThree extends Component {
   }
 
   showDeleteCube(intersect) {
-    intersect.object.material.opacity = 0.5;
+    intersect.object.material.opacity = 0.8;
     this.objectHovered = intersect.object;
   }
 
