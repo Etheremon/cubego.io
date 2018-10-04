@@ -229,6 +229,19 @@ $computer-width: 992px;
   -ms-animation: flip-up-down $time infinite ease-in-out;
 }
 
+@keyframes flip-right-left {
+  0%   {transform: translateX(0)}
+  50%  {transform: translateX(5px)}
+  100%   {transform: translateX(0)}
+}
+
+@mixin flip-right-left($time: $duration-default) {
+  -webkit-animation: flip-right-left $time infinite ease-in;
+  -moz-animation: flip-right-left $time infinite ease-in;
+  -o-animation: flip-right-left $time infinite ease-in;
+  -ms-animation: flip-right-left $time infinite ease-in;
+}
+
 /**
  * Transition
  */

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
 import { Image } from "../../components/Image/Image.jsx";
 import { ButtonNew } from "../Button/Button.jsx";
+import * as Utils from "../../../utils/utils";
 
 require("style-loader!./Carousel.scss");
 
@@ -37,21 +38,30 @@ class Carousel extends React.Component {
       position: 0,
       isNext: true,
       sliding: false,
-      orientation: this.props.orientation,
+      orientation: Utils.IsMobile ? Carousel.orientation.HORIZONTAL : this.props.orientation,
     };
 
     this.selectItem = this.selectItem.bind(this);
     this.resetInterval = this.resetInterval.bind(this);
     this.clearInterval = this.clearInterval.bind(this);
     this.getOrder = this.getOrder.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
+  updateDimensions() {
+    this.setState((state, props) => {
+      return {orientation: Utils.IsMobile ? Carousel.orientation.HORIZONTAL : props.orientation};
+    });
   }
 
   componentDidMount() {
     // this.resetInterval();
+    window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
     this.clearInterval();
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   getOrder(itemIndex) {
@@ -98,8 +108,8 @@ class Carousel extends React.Component {
   }
 
   render() {
-    let {className, list, customIndicators, orientation} = this.props;
-    let {position} = this.state;
+    let {className, list, customIndicators, showNav} = this.props;
+    let {position, orientation} = this.state;
     const carouselStyle = { flexDirection: orientation === Carousel.orientation.HORIZONTAL ? 'column' : 'row' };
     const indicatorStyle = { order: orientation === Carousel.orientation.HORIZONTAL ? '2' : '0',
                             flexDirection: orientation === Carousel.orientation.HORIZONTAL ? 'row' : 'column',
@@ -116,13 +126,15 @@ class Carousel extends React.Component {
             </div>
           ))}
 
-          <div className={`nav-arrow next ${orientation}`} onClick={() => this.handleChangeSlide(true)}>
+          <div className={`nav-arrow next ${orientation} ${showNav ? 'visible' : 'hidden'}`} onClick={() => this.handleChangeSlide(true)}>
             <Image img={'icon_right_arrow'} />
           </div>
 
-          <div className={`nav-arrow prev ${orientation}`} onClick={() => this.handleChangeSlide(false)}>
+          <div className={`nav-arrow prev ${orientation} ${showNav ? 'visible' : 'hidden'}`} onClick={() => this.handleChangeSlide(false)}>
             <Image img={'icon_left_arrow'} />
           </div>
+
+          
 
 
         </div>

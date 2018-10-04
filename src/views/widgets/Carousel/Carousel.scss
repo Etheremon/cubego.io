@@ -8,6 +8,8 @@
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  overflow-Y: hidden;
+  overflow-x: hidden;
 
   .next {
 
@@ -16,7 +18,7 @@
       top: 50%;
       transform: translateY(-50%);
       @include mobile {
-        right: 3%;
+        right: -100%;
       }
     }
 
@@ -39,7 +41,7 @@
       top: 50%;
       transform: translateY(-50%);
       @include mobile {
-        left: 3%;
+        left: 100%;
       }
     }
 
@@ -60,7 +62,18 @@
     border: 0.5px solid $gray;
     padding: 12px;
     border-radius: 8px;
+    visibility: hidden;
     cursor: pointer;
+
+    &.visible {
+      visibility: visible;
+    }
+
+    &.hidden {
+      @include mobile {
+        visibility: visible;
+      }
+    }
 
     &:hover {
       background-color: $gray-light;

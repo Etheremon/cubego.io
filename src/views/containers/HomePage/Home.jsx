@@ -116,7 +116,7 @@ class HomePage extends React.Component {
             </div>
 
             <div className="home__mode-container">
-              <Carousel list={guildGame}/>
+              <Carousel list={guildGame} showNav={true} />
             </div>
           </Container>
           {/* end home__modes */}

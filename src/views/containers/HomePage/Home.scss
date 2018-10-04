@@ -54,12 +54,6 @@
       padding-top: 20px !important;
       padding-bottom: 60px;
       overflow: hidden;
-      // &:hover {
-      //   img {
-      //     opacity: 0.8 !important;
-      //     transform: scale(1) !important;
-      //   }
-      // }
 
       img {
         display: block;
@@ -113,7 +107,6 @@
 
         transition-duration: 0.5s;
         transition-property: transform, opacity;
-        // transition-delay: 0.1s;
 
         &:hover {
           transform: scale(1.25) !important;
@@ -423,6 +416,7 @@
           height: 40px;
           left: -44px;
           top: 8px;
+          @include flip-right-left(1s);
         }
       }
 

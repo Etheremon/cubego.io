@@ -54,6 +54,12 @@
           height: 32px;
         }
       }
+
+      .navbar__text {
+        img {
+          height: 32px;
+        }
+      }
     }
 
     .user-info {
@@ -65,5 +71,6 @@
 
 .navbar__wrapper-transform {
   background-color: transparent !important;
+  color: $white !important;
   @include gradient-directional(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0), 180deg);
 }
