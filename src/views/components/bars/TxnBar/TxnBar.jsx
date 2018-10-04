@@ -337,7 +337,7 @@ const mapStateToProps = (store) => {
   return {
     _t: getTranslate(store.localeReducer),
     store: {
-      currentTxn: TxnStore.getCurrentTxn(txnStore),
+      currentTxn: TxnStore.GetTxn(txnStore),
     }
   }
 };

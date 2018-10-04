@@ -1,22 +1,17 @@
 import { Actions } from '../actions/index'
 
 
-export const txnStore = (state = {currentTxn: null, txnLogs: []}, action) => {
-  let newState;
-
+export const txnStore = (state={txn: null}, action) => {
   switch (action.type) {
     case Actions.txnAction.types.ADD_TXN:
-      newState = {currentTxn: action.txn, txnLogs: [...state.txnLogs, action.txn]};
-      return newState;
+      return {...state, txn: action.txn};
 
     case Actions.txnAction.types.POP_TXN:
-      newState = {...state, currentTxn: null};
-      return newState;
+      return {...state, txn: null};
 
     default:
       return state;
   }
 };
 
-export const getCurrentTxn = (state) => (state.currentTxn);
-export const getTxnLogs = (state) => (state.txnLogs);
+export const GetTxn = (state) => (state.txn);

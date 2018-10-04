@@ -15,7 +15,7 @@ import { Container } from '../../widgets/Container/Container.jsx';
 import { HeaderHighlight } from '../../widgets/Header/Header.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
 import {URLS} from "../../../utils/constants";
-import FeatureCard from '../../components/cards/FeatureCard/FeatureCard.jsx';
+import FeatureCard from './FeatureCard/FeatureCard.jsx';
 import Carousel from '../../widgets/Carousel/Carousel.jsx';
 import { Image } from '../../components/Image/Image.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';

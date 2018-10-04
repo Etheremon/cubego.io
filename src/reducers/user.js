@@ -1,7 +1,5 @@
 import * as ActionTypes from '../actions/action_types';
-import * as Utils from "../utils/utils";
 import {combineReducers} from "redux";
-import cloneDeep from "lodash/cloneDeep";
 
 const basicInfo = (state = {null: {}}, action) => {
   switch (action.type) {
@@ -19,5 +17,5 @@ const basicInfo = (state = {null: {}}, action) => {
 };
 
 export const user = combineReducers({
-  basicInfo: basicInfo,
+  info: basicInfo,
 });

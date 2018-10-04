@@ -1,6 +1,3 @@
-import isEqual from 'lodash/isEqual'
-
-
 // Check server
 export const IsLiveServer = window.location.hostname === "etheremon.com"
   || window.location.hostname === "www.etheremon.com"
@@ -124,8 +121,6 @@ export const ObjGetValues = (obj) => {
 };
 
 export const ObjIsEmpty = (obj) => (obj ? !Object.keys(obj).length : true);
-
-export const ObjIsEqual = (obj1, obj2) => (isEqual(obj1, obj2));
 
 export const ObjRename = (obj, oldKey, newKey) => {
   if (oldKey === newKey || !obj) return;
@@ -315,11 +310,11 @@ export const GetRandomArbitrary = (min, max) => {
  */
 export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.substr(1)
-}
+};
 
 /**
  * Clamp position between a range
  */
 export const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max)
-}
+};

@@ -1,6 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
-import * as Utils from "../utils/utils";
-import {MONSTER_STATUS} from "../utils/constants";
+import {CloneDeep} from "../utils/objUtils";
 
 
 /**
@@ -8,14 +6,14 @@ import {MONSTER_STATUS} from "../utils/constants";
  */
 export const GetLoggedInUserId = (state) => (state.auth['userId']);
 
+
 /**
  * User
  */
-export const GetUserInfo = (state, userId) => cloneDeep(state.user['monsters'][userId]);
-export const GetUserBasicInfo = (state, userId) => (cloneDeep(state.user['basicInfo'][userId]));
+export const GetUserBasicInfo = (state, userId) => (CloneDeep(state.user['basicInfo'][userId]));
 
 
 /**
  * Localization
  */
-export const GetLocalizationData = (state) => cloneDeep(state.localization.localizationData['fetchedData']);
+export const GetLocalizationData = (state) => CloneDeep(state.localization.localizationData['fetchedData']);

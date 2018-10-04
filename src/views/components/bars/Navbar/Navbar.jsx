@@ -102,8 +102,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {navbarType, _t, fixed} = this.props;
-    let {currentLanguage} = this.props.store;
+    let {currentLanguage, navbarType, _t, fixed} = this.props;
 
     let size = Container.sizes.NORMAL;
     if (this.props.textContainer) size = Container.sizes.SMALL;
@@ -203,15 +202,10 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = (store) => {
-  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
-    store: {
-      userId: GetLoggedInUserId(store),
-      userInfo: GetUserBasicInfo(store, userId),
-      currentLanguage: getActiveLanguage(store.localeReducer),
-    }
-  }
+    currentLanguage: getActiveLanguage(store.localeReducer),
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
