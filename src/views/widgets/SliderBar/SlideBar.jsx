@@ -75,9 +75,12 @@ class _SlideBar extends React.Component {
   }
 
   onMouseMove(e) {
+
     let bar = this.refs['bar'], pointer = this.refs['pt'];
+
     let boundLeft = bar.offsetLeft + pointer.offsetWidth/2, boundRight = bar.offsetLeft + bar.offsetWidth - pointer.offsetWidth/2;
     let pos = Utils.BoundVal(e.pageX, boundLeft, boundRight);
+
     let leftPos = (pos-bar.offsetLeft) / bar.offsetWidth;
 
     let val = this.props.valMin + (pos - boundLeft) * (this.props.valMax - this.props.valMin) / (boundRight - boundLeft);

@@ -19,6 +19,8 @@ import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
 import { GetLocalizationData } from '../../../reducers/selectors';
 import Loading from '../../widgets/Loading/Loading.jsx';
+import ReviewPage from '../ReviewPage/ReviewPage.jsx';
+
 
 require("style-loader!./App.scss");
 
@@ -116,7 +118,7 @@ class App extends React.Component {
       <div className={'page-container-wrapper'}>
         <Switch>
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
-          <Route path={`/${URLS.REVIEW_GON}`} component={ComingSoon}/>
+          <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
           <Route path={`/${URLS.CUBEGONS}`} component={ComingSoon}/>
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ComingSoon}/>
