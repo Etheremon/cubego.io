@@ -1,46 +1,93 @@
 // New Tool Kit Elements
-
+// ...
 // End Tool Kit Elements
 
 
 // Old color
+$c__background-1: #000725;
+$c__background-2: #001025;
 $c__background-white-1: #efefef;
 $c__background-popup-1: #edf9ff;
 
 $c__blue-1: #1faef6;
 $c__blue-2: rgb(0, 140, 236);
+$c__blue-3: rgb(0, 46, 102);
+$c__blue-4: #34668A;
+$c__orange-1: #f9a804;
+$c__orange-2: #ffd576;
 $c__orange-3: #cd8c03;
 $c__orange-4: #f9bb2b;
 $c__orange-5: #EE742F;
+$c__brown-1: #5d350f;
 $c__gray-1: #444444;
 $c__gray-2: #909090;
+$c__gray-3: #d4d4d4;
+$c__gray-4: rgba(212, 212, 212, 0.4);
 
 $c__red-1: #EC4A26;
+
+
+// Self Defined Elements
 $primary: #F2C94C;
+$primary-dark: #e19f00;
+$primary-light: #f2dd5b;
+$primary15: rgba(242, 201, 76, 0.15);
 
 $white: #FFFFFF;
 $white98: rgba(255, 255, 255, 0.98);
 $white95: rgba(255, 255, 255, 0.95);
 $white90: rgba(255, 255, 255, 0.90);
+$white80: rgba(255, 255, 255, 0.80);
 $white70: rgba(255, 255, 255, 0.70);
+$white50: rgba(255, 255, 255, 0.50);
 $white30: rgba(255, 255, 255, 0.30);
+$white10: rgba(255, 255, 255, 0.10);
 
+$white-smoke: #ECECEC;
+$white-dark: #D4D4D4;
 $white-blue: #FAFEFF;
 $gray-light: #EDEFF0;
 $gray: #BDBDBD;
 $gray-dark: #4F4F4F;
+$gray-dark-sub: #82817d;
 $blue-light: #5488ED;
 $blue: #2F80ED;
+$blue-dark: #1D5CCC;
+$blue-border: #015778;
+$blue-sky: #55CFEA;
 $black95: rgba(0, 0, 0, 0.95);
 $black20: rgba(0, 0, 0, 0.2);
 $dark: #2b2f33;
+$dark90: rgba(43, 47, 51, 0.90);
+$darker: #1f2225;
+$darker90: rgba(31, 34, 37, 0.90);
+$dark-blue: rgba(33, 63, 101, 0.8);
+$dark-blue-highlight: rgba(33, 63, 101, 1);
 $border-gray: rgb(203, 203, 203);
+$table-dark: rgba(29, 42, 86, 0.8);
+$table-light: rgba(48, 60, 102, 0.8);
+$table-hover: rgba(60, 75, 128, 0.8);
 
+$yellow-sands: #D6D59A;
+
+$blue-neon-light: rgba(65, 120, 110, 1);
 $blue-neon: #94fee4;
+$blue-neon-brighter: rgb(154, 228, 234);
+$blue-neon-darker: rgb(100, 214, 196);
+$blue-prussian: #003471;
+$blue-whale: #172438;
+
+$background-blue-dark: rgb(21, 26, 46);
+$background-blue-darker: #010618;
+
+$opacity-minor: 0.66;
 
 $green: #27AE60;
+$green-vista: #95D0BE;
 $green-lochinvar: #4C8C82;
 $red: #EB5757;
 $orange: rgb(245, 149, 46);
+$purple: #BB6BD9;
 $grey: #BABABA;
 
+$violet: #9C78CA;
