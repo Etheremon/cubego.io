@@ -170,28 +170,28 @@ class _ModelEditor extends React.Component {
           <div className={'model-editor__tool-bar'}>
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('move')} img={require('../../../shared/img/Icons/icon-move.png')}
+                <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
                             active={this.toolManager.getToolValue(this.tools.move.key)}
                             onClick={this.tools.move.onClick}
                             hotKey={this.tools.move.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('add')} img={require('../../../shared/img/Icons/icon-draw.png')}
+                <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
                             active={this.toolManager.getToolValue(this.tools.draw.key)}
                             onClick={this.tools.draw.onClick}
                             hotKey={this.tools.draw.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('paint')} img={require('../../../shared/img/Icons/icon-draw.png')}
+                <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-draw.png')}
                             active={this.toolManager.getToolValue(this.tools.paint.key)}
                             onClick={this.tools.paint.onClick}
                             hotKey={this.tools.paint.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('erase')} img={require('../../../shared/img/Icons/icon-erase.png')}
+                <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
                             active={this.toolManager.getToolValue(this.tools.erase.key)}
                             onClick={this.tools.erase.onClick}
                             hotKey={this.tools.erase.hotKey}
@@ -201,14 +201,14 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('undo')} img={require('../../../shared/img/Icons/icon-undo.png')}
+                <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
                             onClick={this.tools.undo.onClick}
                             hotKey={this.tools.undo.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('redo')} img={require('../../../shared/img/Icons/icon-redo.png')}
+                <ToggleTool label={_t('redo')} img={require('../../../shared/img/icons/icon-redo.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
                             onClick={this.tools.redo.onClick}
                             hotKey={this.tools.redo.hotKey}
@@ -218,28 +218,28 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <div className={'item'}>
-                <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/Icons/icon-copy.png')}
+                <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/icons/icon-copy.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
                             onClick={this.tools.copyLayer.onClick}
                             hotKey={this.tools.copyLayer.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/Icons/icon-paste.png')}
+                <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/icons/icon-paste.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
                             onClick={this.tools.pasteLayer.onClick}
                             hotKey={this.tools.pasteLayer.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/Icons/icon-clear-all.png')}
+                <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/icons/icon-clear-all.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
                             onClick={this.tools.clear.onClick}
                             hotKey={this.tools.clear.hotKey}
                 />
               </div>
               <div className={'item'}>
-                <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/Icons/icon-clear.png')}
+                <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/icons/icon-clear.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                             onClick={this.tools.clearLayer.onClick}
                             hotKey={this.tools.clearLayer.hotKey}
@@ -249,7 +249,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'group'}>
               <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-                          img={require('../../../shared/img/Icons/icon-camera.png')}
+                          img={require('../../../shared/img/icons/icon-view.png')}
                           disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                           onClick={() => {this.tools.view2D.onClick()}}
                           hotKey={this.tools.view2D.hotKey}

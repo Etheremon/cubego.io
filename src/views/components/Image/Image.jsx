@@ -7,12 +7,12 @@ export const ImgSource = {
 
   'metamask': require('../../../shared/img/assets/metamask.png'),
 
-  'icon_about_us': require('../../../shared/img/icons/icon_about_us.png'),
-  'icon_battle': require('../../../shared/img/icons/icon_battle.png'),
-  'icon_build_hero': require('../../../shared/img/icons/icon_build_hero.png'),
-  'icon_market': require('../../../shared/img/icons/icon_market.png'),
-  'icon_store': require('../../../shared/img/icons/icon_store.png'),
-  'icon_my_heroes': require('../../../shared/img/icons/icon_my_heroes.png'),
+  'icon_about_us': require('../../../shared/img/icons/icon-about.png'),
+  'icon_battle': require('../../../shared/img/icons/icon-battle.png'),
+  'icon_build_hero': require('../../../shared/img/icons/icon-build.png'),
+  'icon_market': require('../../../shared/img/icons/icon-market.png'),
+  'icon_store': require('../../../shared/img/icons/icon-store.png'),
+  'icon_my_heroes': require('../../../shared/img/icons/icon-cubegon.png'),
 
   'icon_left_arrow': require('../../../shared/img/icons/icon_left_arrow.png'),
   'icon_right_arrow': require('../../../shared/img/icons/icon_right_arrow.png'),
