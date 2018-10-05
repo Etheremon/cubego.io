@@ -49,16 +49,20 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.transforming && this.props.scrollingElement) {
-      document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
-      document.getElementById(this.props['scrollingElement']).addEventListener('scroll', this.handleScroll);
+    let {transforming, minifying, scrollingElement} = this.props;
+
+    if (transforming || minifying) {
+      if (transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+      if (scrollingElement) document.getElementById(scrollingElement).addEventListener('scroll', this.handleScroll);
       document.addEventListener('scroll', this.handleScroll);
     }
   }
 
   componentWillUnmount() {
-    if (this.props.transforming && this.props.scrollingElement) {
-      document.getElementById(this.props['scrollingElement']).removeEventListener('scroll', this.handleScroll);
+    let {transforming, minifying, scrollingElement} = this.props;
+
+    if (transforming || minifying) {
+      if (scrollingElement) document.getElementById(scrollingElement).removeEventListener('scroll', this.handleScroll);
       document.removeEventListener('scroll', this.handleScroll);
     }
   }
@@ -69,9 +73,16 @@ class Navbar extends React.Component {
     if (e.target && e.target.scrollingElement) scrollTop = e.target.scrollingElement.scrollTop;
     if (scrollTop !== undefined) {
       if (scrollTop >= 50) {
-        document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
+        if (this.props.transforming)
+          document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
+        console.log("zzcv", this.props.minifying);
+        if (this.props.minifying)
+          document.getElementsByClassName('navbar__wrapper')[0].classList.add('minifying');
       } else {
-        document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+        if (this.props.transforming)
+          document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+        if (this.props.minifying)
+          document.getElementsByClassName('navbar__wrapper')[0].classList.remove('minifying');
       }
     }
   }
@@ -82,11 +93,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {currentLanguage, _t, fixed} = this.props;
-
-    let size = Container.sizes.NORMAL;
-    if (this.props.textContainer) size = Container.sizes.SMALL;
-    if (this.props.big) size = Container.sizes.BIG;
+    let {currentLanguage, _t, fixed, size} = this.props;
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
@@ -134,6 +141,8 @@ class Navbar extends React.Component {
           </div>
 
         </Container>
+
+
       </div>
     );
   }
@@ -155,14 +164,15 @@ const mapDispatchToProps = (dispatch) => ({
 
 Navbar.defaultProps = {
   transforming: false,
-  textContainer: false,
   fixed: true,
   noti: '',
+  minifying: false,
 };
 
 Navbar.propTypes = {
   transforming: PropTypes.bool,
-  textContainer: PropTypes.bool,
+  minifying: PropTypes.bool,
+  size: PropTypes.string,
   fixed: PropTypes.bool,
   noti: PropTypes.string,
 };

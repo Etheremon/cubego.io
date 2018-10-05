@@ -1,6 +1,7 @@
 @import '../../../styles/mixins';
 @import '../../../styles/colors';
 @import '../../../styles/variables';
+@import '../../../styles/fonts';
 
 
 .toggle-tool {
@@ -16,25 +17,26 @@
     position: relative;
     img {
       display: inline-block;
-      height: 30px;
-      filter: grayscale(0.5);
-      padding-top: 12px;
+      height: 42px;
     }
   }
 
   .toggle-tool__label {
     width: 70px;
     text-align: center;
-    word-break: break-all;
+    //word-break: break-all;
+    white-space: nowrap;
     position: absolute;
     top: 100%;
     left: 50%;
     @include transform(translateX(-50%));
-    font-size: $font-size-smaller;
+    font-size: $font-size-tiny;
+    font-family: $f__overpass;
+    font-weight: $font-weight-extra-bold;
   }
 
   &.active {
-    background-color: $primary;
+    background-color: rgba(50, 100, 125, 0.6);
     img {
       filter: none;
     }
@@ -44,11 +46,10 @@
     pointer-events: none;
     img {
       filter: grayscale(1);
-      opacity: 0.5;
     }
   }
 
   &:hover {
-    background-color: $primary;
+    background-color: rgba(50, 100, 125, 0.6);
   }
 }

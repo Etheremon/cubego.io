@@ -9,31 +9,19 @@
 .model-editor__container {
   color: $white;
   text-align: right;
-  padding-top: 80px;
-
-  .model-editor__header {
-    display: inline-block;
-    padding: 12px 0;
-
-    .dropdown {
-      border: 1px solid $dark;
-      border-radius: 5px;
-    }
-
-    .model-editor__2d-view-option {
-      padding: 8px 12px;
-    }
-  }
+  padding-top: 60px;
 
   .model-editor__tool-bar {
     display: flex;
     margin: 0 -8px;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    padding: 16px 0;
 
     .group {
       margin: 0 8px;
       display: flex;
-      background-color: rgb(236, 236, 236);
       border-radius: 4px;
     }
 

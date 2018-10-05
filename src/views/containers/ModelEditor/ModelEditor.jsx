@@ -17,6 +17,7 @@ import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
 import * as Utils from "../../../utils/utils";
+import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -162,152 +163,155 @@ class _ModelEditor extends React.Component {
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_DARK}>
+        <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} onBackClicked={() => {}}/>
 
-        <Navbar big/>
+        <div className={'model-editor__container'}>
 
-        <Container className={'model-editor__container'} size={Container.sizes.BIG}>
+          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
+          <Container size={Container.sizes.BIG} className={'main-tool'}>
+            <div className={'model-editor__tool-bar'}>
+              <div className={'group'}>
+                <div className={'item'}>
+                  <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
+                              active={this.toolManager.getToolValue(this.tools.move.key)}
+                              onClick={this.tools.move.onClick}
+                              hotKey={this.tools.move.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
+                              active={this.toolManager.getToolValue(this.tools.draw.key)}
+                              onClick={this.tools.draw.onClick}
+                              hotKey={this.tools.draw.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-paint.png')}
+                              active={this.toolManager.getToolValue(this.tools.paint.key)}
+                              onClick={this.tools.paint.onClick}
+                              hotKey={this.tools.paint.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
+                              active={this.toolManager.getToolValue(this.tools.erase.key)}
+                              onClick={this.tools.erase.onClick}
+                              hotKey={this.tools.erase.hotKey}
+                  />
+                </div>
+              </div>
 
-          <div className={'model-editor__tool-bar'}>
-            <div className={'group'}>
-              <div className={'item'}>
-                <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
-                            active={this.toolManager.getToolValue(this.tools.move.key)}
-                            onClick={this.tools.move.onClick}
-                            hotKey={this.tools.move.hotKey}
-                />
+              <div className={'group'}>
+                <div className={'item'}>
+                  <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
+                              onClick={this.tools.undo.onClick}
+                              hotKey={this.tools.undo.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('redo')} img={require('../../../shared/img/icons/icon-redo.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
+                              onClick={this.tools.redo.onClick}
+                              hotKey={this.tools.redo.hotKey}
+                  />
+                </div>
               </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
-                            active={this.toolManager.getToolValue(this.tools.draw.key)}
-                            onClick={this.tools.draw.onClick}
-                            hotKey={this.tools.draw.hotKey}
-                />
-              </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-draw.png')}
-                            active={this.toolManager.getToolValue(this.tools.paint.key)}
-                            onClick={this.tools.paint.onClick}
-                            hotKey={this.tools.paint.hotKey}
-                />
-              </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
-                            active={this.toolManager.getToolValue(this.tools.erase.key)}
-                            onClick={this.tools.erase.onClick}
-                            hotKey={this.tools.erase.hotKey}
-                />
-              </div>
-            </div>
 
-            <div className={'group'}>
-              <div className={'item'}>
-                <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
-                            disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
-                            onClick={this.tools.undo.onClick}
-                            hotKey={this.tools.undo.hotKey}
-                />
+              <div className={'group'}>
+                <div className={'item'}>
+                  <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/icons/icon-copy.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
+                              onClick={this.tools.copyLayer.onClick}
+                              hotKey={this.tools.copyLayer.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/icons/icon-paste.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
+                              onClick={this.tools.pasteLayer.onClick}
+                              hotKey={this.tools.pasteLayer.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/icons/icon-clear-all.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
+                              onClick={this.tools.clear.onClick}
+                              hotKey={this.tools.clear.hotKey}
+                  />
+                </div>
+                <div className={'item'}>
+                  <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/icons/icon-clear.png')}
+                              disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
+                              onClick={this.tools.clearLayer.onClick}
+                              hotKey={this.tools.clearLayer.hotKey}
+                  />
+                </div>
               </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('redo')} img={require('../../../shared/img/icons/icon-redo.png')}
-                            disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
-                            onClick={this.tools.redo.onClick}
-                            hotKey={this.tools.redo.hotKey}
-                />
-              </div>
-            </div>
 
-            <div className={'group'}>
-              <div className={'item'}>
-                <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/icons/icon-copy.png')}
-                            disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
-                            onClick={this.tools.copyLayer.onClick}
-                            hotKey={this.tools.copyLayer.hotKey}
-                />
-              </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/icons/icon-paste.png')}
-                            disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
-                            onClick={this.tools.pasteLayer.onClick}
-                            hotKey={this.tools.pasteLayer.hotKey}
-                />
-              </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/icons/icon-clear-all.png')}
-                            disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
-                            onClick={this.tools.clear.onClick}
-                            hotKey={this.tools.clear.hotKey}
-                />
-              </div>
-              <div className={'item'}>
-                <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/icons/icon-clear.png')}
+              <div className={'group'}>
+                <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
+                            img={require('../../../shared/img/icons/icon-view.png')}
                             disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
-                            onClick={this.tools.clearLayer.onClick}
-                            hotKey={this.tools.clearLayer.hotKey}
+                            onClick={() => {this.tools.view2D.onClick()}}
+                            hotKey={this.tools.view2D.hotKey}
                 />
               </div>
-            </div>
 
-            <div className={'group'}>
-              <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-                          img={require('../../../shared/img/icons/icon-view.png')}
-                          disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
-                          onClick={() => {this.tools.view2D.onClick()}}
-                          hotKey={this.tools.view2D.hotKey}
-              />
-            </div>
+              {/*<div className={'group'}>*/}
+              {/*<div className={'item'}>*/}
+                {/*<ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {*/}
 
-            {/*<div className={'group'}>*/}
-            {/*<div className={'item'}>*/}
-              {/*<ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {*/}
-
-                {/*}}/>*/}
+                  {/*}}/>*/}
+                {/*</div>*/}
               {/*</div>*/}
+
+            </div>
+
+            {/*<div className="model-editor__header">*/}
+              {/*<Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({*/}
+                {/*content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,*/}
+                {/*onClick: () => {this.onToolChange(this.tools.view2D.key, option)},*/}
+                {/*}))}>*/}
+                {/*<div className={'model-editor__2d-view-option'}>*/}
+                  {/*{_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}*/}
+                {/*</div>*/}
+              {/*</Dropdown>*/}
             {/*</div>*/}
 
-          </div>
+            <div className={'model-editor__canvas'}>
+              <div className={'model-editor__left'}>
+                <div className={'model-editor__3d'}>
+                  <Model3D model={this.toolManager.model} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                </div>
+              </div>
 
-          {/*<div className="model-editor__header">*/}
-            {/*<Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({*/}
-              {/*content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,*/}
-              {/*onClick: () => {this.onToolChange(this.tools.view2D.key, option)},*/}
-              {/*}))}>*/}
-              {/*<div className={'model-editor__2d-view-option'}>*/}
-                {/*{_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}*/}
-              {/*</div>*/}
-            {/*</Dropdown>*/}
-          {/*</div>*/}
-
-          <div className={'model-editor__canvas'}>
-            <div className={'model-editor__left'}>
-              <div className={'model-editor__3d'}>
-                <Model3D model={this.toolManager.model} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+              <div className={'model-editor__right'}>
+                <div className={'model-editor__2d'}>
+                  <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                </div>
               </div>
             </div>
 
-            <div className={'model-editor__right'}>
-              <div className={'model-editor__2d'}>
-                <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+            <div className="model-editor__tool">
+              <div className={'model-editor__colors'}>
+                <ColorTool toolKey={this.tools.color.key}
+                            value={this.toolManager.getToolValue(this.tools.color.key)}
+                            options={this.tools.color.options}
+                            onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
+              </div>
+
+              <div className={'model-editor__layer'}>
+                <SlideBar valMin={1} valMax={this.toolManager.numLayers}
+                          value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
+                          onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+                          label={_t('select_layer')}
+                />
               </div>
             </div>
-          </div>
+          </Container>
 
-          <div className="model-editor__tool">
-            <div className={'model-editor__colors'}>
-              <ColorTool toolKey={this.tools.color.key}
-                          value={this.toolManager.getToolValue(this.tools.color.key)}
-                          options={this.tools.color.options}
-                          onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
-            </div>
-
-            <div className={'model-editor__layer'}>
-              <SlideBar valMin={1} valMax={this.toolManager.numLayers}
-                        value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
-                        onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
-                        label={_t('select_layer')}
-              />
-            </div>
-          </div>
-        </Container>
+        </div>
       </PageWrapper>
     )
   }

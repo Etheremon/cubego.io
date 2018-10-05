@@ -1,0 +1,110 @@
+@import '../../../styles/mixins';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
+@import '../../../styles/fonts';
+
+.header-bar {
+  height: 40px;
+  width: 100%;
+  background-color: #00000030;
+  color: $white;
+  z-index: 1000;
+  overflow: hidden;
+
+  .header-bar__container {
+    height: 100%;
+    display: flex;
+
+    .content {
+      z-index: 1;
+    }
+
+    .header-bar__arrow {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0 30px;
+      overflow: hidden;
+      img {
+        height: 24px;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: -200px;
+        left: 0;
+        right: 0;
+        padding-top: 100px;
+        background-color: #00000030;
+        @include transform(rotate(20deg));
+        transform-origin: 100% 0;
+      }
+    }
+
+    .header-bar__label {
+      display: flex;
+      align-items: center;
+      font-family: $f__baloobha;
+      font-size: $font-size-header-1;
+      text-transform: uppercase;
+      padding: 8px 20px 0 20px;
+      @include mobile {
+        display: none;
+      }
+    }
+
+    .header-bar__balance {
+      flex-grow: 1;
+      .content {
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .item {
+          position: relative;
+          padding: 6px 40px 0 40px;
+          margin-left: 30px;
+          font-family: $f__baloobha;
+          font-size: $font-size-large;
+
+          .bgr {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            overflow: hidden;
+
+            &:before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 200px;
+              background-color: #00000020;
+              @include transform(rotate(20deg));
+              transform-origin: 100% 0;
+            }
+          }
+
+          img {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            @include transform(translateY(-50%));
+
+            height: 32px;
+            z-index: 1;
+          }
+        }
+      }
+    }
+  }
+
+}

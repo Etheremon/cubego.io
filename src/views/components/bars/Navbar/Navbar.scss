@@ -4,23 +4,8 @@
 @import '../../../styles/fonts';
 
 
-.navbar__logo-text {
-  font-weight: $font-weight-semi-bold;
-  font-size: $font-size-big;
-  padding-left: 8px;
-  text-transform: capitalize;
-  @include mobile {
-    display: none;
-  }
-}
-.navbar__wrapper .widget__container.small {
-  .navbar__logo-text {
-    display: none;
-  }
-}
-
 .navbar__wrapper {
-  @include gradient-directional(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8), 180deg);;
+  @include gradient-directional(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8), 180deg);
   border-bottom: none;
 
   &.fixed {
@@ -32,11 +17,25 @@
     @include transition-duration();
   }
 
+  &.minifying {
+    .navbar__content {
+      height: 40px;
+      img {
+        height: 36px;
+      }
+    }
+  }
+
   .navbar__content {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
     height: 60px;
+    @include transition-duration;
+    img {
+      height: 56px;
+      @include transition-duration;
+    }
 
     .logo {
       height: 100%;
@@ -44,10 +43,6 @@
         height: 100%;
         display: flex;
         align-items: center;
-      }
-      img {
-        height: calc(100% - 12px);
-        display: block;
       }
     }
 
@@ -80,9 +75,6 @@
         height: 100%;
         display: flex;
         align-items: center;
-        img {
-          height: calc(100% - 16px);
-        }
 
         &:hover {
           @include flip-up-down(300ms, 1);

@@ -14,7 +14,7 @@
   }
 
   &.blue-dark {
-    background: url('../../../shared/img/background/background_blue.jpg') no-repeat center center fixed;
+    background: url('../../../shared/img/background/background_blue_dark.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,6 +22,10 @@
   }
 
   &.blue {
-    background: url('../../../shared/img/background/background_blue.jpg') center no-repeat;
+    background: url('../../../shared/img/background/background_blue.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 }
