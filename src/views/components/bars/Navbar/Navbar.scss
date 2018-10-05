@@ -36,28 +36,56 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    min-height: 54px;
+    height: 60px;
 
     .logo {
+      height: 100%;
+      a {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
       img {
-        height: 60px;
+        height: calc(100% - 12px);
+        display: block;
       }
     }
 
-    .links {
+    .text-links {
+      height: 100%;
       display: flex;
-      align-items: center;
-      .navbar__item {
-        padding: 8px 24px;
-        margin: 0;
-        img {
-          height: 32px;
-        }
-      }
 
-      .navbar__text {
+      .navbar__item {
+        padding: 0 20px;
+        margin: 0;
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        font-family: $f__overpass;
+        font-weight: $font-weight-black;
+        font-size: $font-size-smaller;
+      }
+    }
+
+    .img-links {
+      height: 100%;
+      display: flex;
+
+      .navbar__item {
+        padding: 0 20px;
+        margin: 0;
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        align-items: center;
         img {
-          height: 32px;
+          height: calc(100% - 16px);
+        }
+
+        &:hover {
+          @include flip-up-down(300ms, 1);
         }
       }
     }
@@ -65,6 +93,15 @@
     .user-info {
       display: flex;
       align-items: center;
+
+      i {
+        margin-right: 4px;
+        padding-top: 2px;
+      }
+
+      .widget__dropdown {
+        height: 100%;
+      }
     }
   }
 }

@@ -161,7 +161,7 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     return (
-      <PageWrapper className={'model-editor'} type={PageWrapper.types.NORMAL}>
+      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
 
         <Navbar big/>
 

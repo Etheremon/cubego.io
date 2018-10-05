@@ -9,7 +9,7 @@ export const ImgSource = {
 
   'icon_about_us': require('../../../shared/img/icons/icon-about.png'),
   'icon_battle': require('../../../shared/img/icons/icon-battle.png'),
-  'icon_build_hero': require('../../../shared/img/icons/icon-build.png'),
+  'icon_build': require('../../../shared/img/icons/icon-build.png'),
   'icon_market': require('../../../shared/img/icons/icon-market.png'),
   'icon_store': require('../../../shared/img/icons/icon-store.png'),
   'icon_my_heroes': require('../../../shared/img/icons/icon-cubegon.png'),

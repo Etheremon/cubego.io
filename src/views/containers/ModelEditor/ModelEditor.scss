@@ -4,12 +4,12 @@
 
 
 .model-editor {
-  padding-top: 80px;
 }
 
 .model-editor__container {
-  color: $dark;
+  color: $white;
   text-align: right;
+  padding-top: 80px;
 
   .model-editor__header {
     display: inline-block;
