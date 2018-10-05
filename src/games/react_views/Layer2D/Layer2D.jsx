@@ -65,6 +65,7 @@ export class Layer2D extends Component {
   }
 
   processProps(props) {
+
     let {layer, tools} = props;
     if (layer) {
       let newState = {
