@@ -53,3 +53,6 @@ export const EDITOR_COLORS = [
   {r: 251, g: 227, b: 99, a: 1},
   {r: 250, g: 232, b: 96, a: 1},
 ];
+
+/** Errors **/
+export const NETWORK_ERROR = '404 ERROR';
