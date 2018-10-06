@@ -14,7 +14,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    @include transition-duration();
+    @include transition-duration;
   }
 
   &.minifying {
@@ -31,7 +31,6 @@
     justify-content: space-between;
     align-items: stretch;
     height: 60px;
-    @include transition-duration;
     img {
       height: 56px;
       @include transition-duration;

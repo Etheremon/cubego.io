@@ -251,33 +251,39 @@ class _ModelEditor extends React.Component {
 
               <div className={'group'}>
                 <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-                            img={require('../../../shared/img/icons/icon-view.png')}
+                            img={
+                              require(`../../../shared/img/icons/icon-view-${this.toolManager.getToolValue(this.tools.view2D.key).viewKey}.png`)
+                            }
                             disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                             onClick={() => {this.tools.view2D.onClick()}}
                             hotKey={this.tools.view2D.hotKey}
                 />
               </div>
-
-              {/*<div className={'group'}>*/}
-              {/*<div className={'item'}>*/}
-                {/*<ButtonNew color={ButtonNew.colors.ORANGE} label={_t('save')} onClick={() => {*/}
-
-                  {/*}}/>*/}
-                {/*</div>*/}
-              {/*</div>*/}
-
             </div>
 
-            {/*<div className="model-editor__header">*/}
-              {/*<Dropdown className={'dropdown'} list={this.tools.view2D.options.map(option => ({*/}
-                {/*content: <div className={'model-editor__2d-view-option'}>{_t(option.label)}</div>,*/}
-                {/*onClick: () => {this.onToolChange(this.tools.view2D.key, option)},*/}
-                {/*}))}>*/}
-                {/*<div className={'model-editor__2d-view-option'}>*/}
-                  {/*{_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}*/}
-                {/*</div>*/}
-              {/*</Dropdown>*/}
-            {/*</div>*/}
+            <div className={'model-editor__stats'}>
+              <div className={'material'}>
+                <div className={'total'}>
+                  {_t('total')}: <span>300</span>
+                </div>
+                {['diamond', 'glass', 'gold', 'iron', 'plastic', 'silver'].map((type, idx) => (
+                  <div key={idx} className={'cube'} tooltip={_t(type)} tooltip-position="bottom">
+                    <img src={require(`../../../shared/img/cubes/${type}.png`)}/>
+                    50
+                  </div>
+                ))}
+              </div>
+              <div className={'stats'}>
+                <div className={'stat'}>
+                  <img src={require('../../../shared/img/icons/icon-stats.png')}/>
+                  90 - 110
+                </div>
+                <div className={'stat'}>
+                  <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                  0.025
+                </div>
+              </div>
+            </div>
 
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
@@ -290,6 +296,17 @@ class _ModelEditor extends React.Component {
                 <div className={'model-editor__2d'}>
                   <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
                 </div>
+              </div>
+            </div>
+
+            <div className={'model-editor__material'}>
+              {['diamond', 'glass', 'gold', 'iron', 'plastic', 'silver'].map((type, idx) => (
+                <div key={idx} className={`cube ${idx===1 ? 'active' : ''}`} tooltip={_t(type)} tooltip-position="bottom">
+                  <img src={require(`../../../shared/img/cubes/${type}.png`)}/>
+                  50
+                </div>
+              ))}
+              <div className={'space-rest'}>
               </div>
             </div>
 

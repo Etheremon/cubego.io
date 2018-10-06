@@ -75,7 +75,6 @@ class Navbar extends React.Component {
       if (scrollTop >= 50) {
         if (this.props.transforming)
           document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
-        console.log("zzcv", this.props.minifying);
         if (this.props.minifying)
           document.getElementsByClassName('navbar__wrapper')[0].classList.add('minifying');
       } else {

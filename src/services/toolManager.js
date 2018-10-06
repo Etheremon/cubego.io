@@ -364,8 +364,8 @@ let view2dOptions = {
   },
   top: {
     viewKey: 'top',
-    label: 'top_view',
-    x: '-y', y: '+x', z: '-z',
+    label: 'bottom_view',
+    x: '-y', y: '+x', z: '+z',
   }
 };
 let view2dList = ['front', 'side', 'top'];

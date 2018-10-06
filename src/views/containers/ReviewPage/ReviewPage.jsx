@@ -47,7 +47,7 @@ class ReviewPage extends React.Component {
                         {material: 'diamon', quantity: 5, price: 0.001}];
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
+      <PageWrapper type={PageWrapper.types.BLUE}>
 
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} onBackClicked={() => {}}/>
 
