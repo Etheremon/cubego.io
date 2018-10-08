@@ -36,15 +36,15 @@ class ReviewPage extends React.Component {
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
 
-    const statsOverview = [{icon: '', content: '250', name: 'cubego'},
-                          {icon: '', content: 'earth', name: 'type'},
-                          {icon: '', content: '90-110', name: 'stats range'}];
+    const statsOverview = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '250', name: 'cubego'},
+                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: 'earth', name: 'type'},
+                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', name: 'stats range'}];
 
-    const cubeDetails = [{material: 'wood', quantity: 5, price: 0.001},
+    const cubeDetails = [{material: 'silver', quantity: 5, price: 0.001},
                         {material: 'gold', quantity: 5, price: 0.001},
                         {material: 'gold', quantity: 5, price: 0.001},
-                        {material: 'platium', quantity: 5, price: 0.001},
-                        {material: 'diamon', quantity: 5, price: 0.001}];
+                        {material: 'glass', quantity: 5, price: 0.001},
+                        {material: 'diamond', quantity: 5, price: 0.001}];
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
@@ -61,6 +61,11 @@ class ReviewPage extends React.Component {
               </div>
 
               <div className="model-info">
+                <div className="model-logo__container">
+                  <div className="hexagon-img"></div>
+                  <img src={require('../../../shared/img/icons/icon-stats.png')} />
+                </div>
+                <span>VEXIGON</span>
               </div>
             </div>
 
@@ -70,7 +75,7 @@ class ReviewPage extends React.Component {
                 <div className="stats-overview">
                   {statsOverview.map((item, idx) => (
                       <div className={'item'} key={idx}>
-                        <img resource={item.icon} />
+                        <img src={item.icon} />
                         <div className={'content'}>{_t(item.content)}</div>
                         <div className={'name'}>{_t(item.name)}</div>
                       </div>
@@ -90,10 +95,25 @@ class ReviewPage extends React.Component {
                   <tbody>
                     {cubeDetails.map((item, idx) => 
                       <tr key={idx}>
-                        <td>{_t(item.material)}</td>
+                        <td>
+                          <div className="cube">
+                            <img src={require(`../../../shared/img/cubes/${item.material}.png`)}/>
+                            {_t(item.material)}
+                          </div>
+                        </td>
                         <td><span>{item.quantity}</span></td>
-                        <td>{item.price}</td>
-                        <td>{item.quantity * item.price}</td>
+                        <td>
+                          <div className="currency">
+                            <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                            {item.price}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="currency">
+                            <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                            {item.quantity * item.price}
+                          </div>
+                        </td>
                       </tr>
                       )}
                   </tbody>
@@ -108,13 +128,18 @@ class ReviewPage extends React.Component {
                             <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx * 1}px)`}} className="indicator"><div className={'line'}><div>{item}</div></div></div>
                           )
                         }
-                        <input style={{background: `linear-gradient(to right, #f37321 0%, #f37321 ${sliderFilled}%, #dcdbdb ${sliderFilled}%, #dcdbdb 100%)`}} type="range" min={energyRange[0]} max={energyRange[energyRange.length - 1]} value={this.state.sliderValue} className={"slider"} onChange={this.handleSliderChange} />
+                        <div className={"slider"}>
+                          <input style={{background: `linear-gradient(to right, #f37321 0%, #f37321 ${sliderFilled}%, #dcdbdb ${sliderFilled}%, #dcdbdb 100%)`}} type="range" min={energyRange[0]} max={energyRange[energyRange.length - 1]} value={this.state.sliderValue} onChange={this.handleSliderChange} />
+                        </div>
                       </div>
                   </div>
 
                   <div className="total">
                     {`${_t('total')}: `}
-                    <span>0.025</span>
+                    <div className="currency">
+                      <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                      <span>0.025</span>
+                    </div>
                   </div>
                 </div>
 

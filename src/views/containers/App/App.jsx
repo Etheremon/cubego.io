@@ -19,6 +19,8 @@ import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
 import { GetLocalizationData } from '../../../reducers/selectors';
 import Loading from '../../widgets/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
+import ModelDetail from '../ModelDetail/ModelDetail.jsx';
+
 
 
 require("style-loader!./App.scss");
@@ -119,8 +121,8 @@ class App extends React.Component {
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
-          <Route path={`/${URLS.CUBEGONS}`} component={ComingSoon}/>
-          <Route path={`/${URLS.CUBEGONS}/:id`} component={ComingSoon}/>
+          <Route path={`/${URLS.CUBEGONS}`} component={ModelDetail}/>
+          <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
 
           <Route path={`/${URLS.BATTLE}`} component={ComingSoon}/>
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
