@@ -6,6 +6,14 @@ export const ReformatModel = (model) => {
       y: model.size.y,
       z: model.size.z,
     },
+    modelSize: {
+      x: [0, model.size.x-1],
+      y: [0, model.size.y-1],
+      z: [0, model.size.z-1],
+    },
+    spaceSize: {
+
+    }
   };
 
   newModel.voxels = {};
@@ -17,8 +25,10 @@ export const ReformatModel = (model) => {
       z: cell.z,
       color: model.palette[cell['colorIndex']],
     };
-    newModel.voxels[`${v.x}-${v.y}-${v.z}`] = v;
+    newModel.voxels[GetCellKey(v.x, v.y, v.z)] = v;
   });
 
   return newModel;
 };
+
+export const GetCellKey = (x, y, z) => (`${x}_${y}_${z}`);

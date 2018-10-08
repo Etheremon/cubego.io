@@ -18,6 +18,7 @@ import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
 import * as Utils from "../../../utils/utils";
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
+import {MODEL_TEMPLATES} from "../../../constants/model";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -27,6 +28,8 @@ class _ModelEditor extends React.Component {
     super(props);
 
     this.state = {
+      showTemplates: false,
+      scale2D: 1,
     };
 
     this.tools = {
@@ -102,13 +105,17 @@ class _ModelEditor extends React.Component {
     this.onCellClicked = this.onCellClicked.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+    this.onTemplateSelect = this.onTemplateSelect.bind(this);
+    this.onZoomIn = this.onZoomIn.bind(this);
+    this.onZoomOut = this.onZoomOut.bind(this);
+    this.onZoomReset = this.onZoomReset.bind(this);
 
     this.isHoldingKey = {};
   }
 
   componentDidMount() {
     let parser = new window.vox.Parser();
-    parser.parse(require('../../../games/data/2.vox')).then((voxelData) => {
+    parser.parse(require('../../../shared/sample_models/3.vox')).then((voxelData) => {
       this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
       this.forceUpdate();
     });
@@ -158,6 +165,27 @@ class _ModelEditor extends React.Component {
     this.forceUpdate();
   }
 
+  onTemplateSelect(template) {
+    let parser = new window.vox.Parser();
+    parser.parse(template.model).then((voxelData) => {
+      this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+      this.forceUpdate();
+    });
+    this.setState({showTemplates: false});
+  }
+
+  onZoomIn() {
+    this.setState({scale2D: this.state.scale2D + 0.1});
+  }
+
+  onZoomOut() {
+    this.setState({scale2D: Math.max(0.1, this.state.scale2D - 0.1)});
+  }
+
+  onZoomReset() {
+    this.setState({scale2D: 1});
+  }
+
   render() {
     let {_t} = this.props;
 
@@ -169,7 +197,17 @@ class _ModelEditor extends React.Component {
 
           <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
+
             <div className={'model-editor__tool-bar'}>
+              <div className={'group'}>
+                <div className={'item'}>
+                  <ToggleTool label={_t('template')} img={require('../../../shared/img/icons/icon-template.png')}
+                              active={this.state.showTemplates}
+                              onClick={() => {this.setState({showTemplates: !this.state.showTemplates})}}
+                  />
+                </div>
+              </div>
+
               <div className={'group'}>
                 <div className={'item'}>
                   <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
@@ -259,6 +297,19 @@ class _ModelEditor extends React.Component {
                             hotKey={this.tools.view2D.hotKey}
                 />
               </div>
+
+              {this.state.showTemplates ?
+                <div className={'model-editor__templates'}>
+                  {MODEL_TEMPLATES.map((template, idx) => (
+                    <div key={idx} className={'template'} onClick={() => {this.onTemplateSelect(template)}}>
+                      <img className={'img'} src={template.img}/>
+                      <div className={'name'}>
+                        {_t(template.name)}
+                      </div>
+                    </div>
+                  ))}
+                </div> : null
+              }
             </div>
 
             <div className={'model-editor__stats'}>
@@ -294,7 +345,20 @@ class _ModelEditor extends React.Component {
 
               <div className={'model-editor__right'}>
                 <div className={'model-editor__2d'}>
-                  <Layer2D layer={this.toolManager.layer} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                  <Layer2D layer={this.toolManager.layer}
+                           style={{transform: `scale(${this.state.scale2D})`}}
+                           tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                </div>
+                <div className={'model-editor__2d-zoom'}>
+                  <div className={'item'} onClick={this.onZoomIn}>
+                    <img src={require('../../../shared/img/icons/icon-zoom-in.png')}/>
+                  </div>
+                  <div className={'item'} onClick={this.onZoomOut}>
+                    <img src={require('../../../shared/img/icons/icon-zoom-out.png')}/>
+                  </div>
+                  <div className={'item'} onClick={this.onZoomReset}>
+                    <img src={require('../../../shared/img/icons/icon-zoom-reset.png')}/>
+                  </div>
                 </div>
               </div>
             </div>

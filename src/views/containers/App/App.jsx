@@ -13,9 +13,8 @@ import * as Utils from "../../../utils/utils";
 
 import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
-import {URLS} from "../../../utils/constants";
+import {URLS} from "../../../constants/general";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
-import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
 import { GetLocalizationData } from '../../../reducers/selectors';
 import Loading from '../../widgets/Loading/Loading.jsx';

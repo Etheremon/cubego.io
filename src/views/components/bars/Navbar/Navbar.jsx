@@ -10,7 +10,7 @@ import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx'
 import * as Config from '../../../../config_language'
 import * as LS from '../../../../services/localStorageService.js'
 import PropTypes from "prop-types";
-import {URLS} from "../../../../utils/constants";
+import {URLS} from "../../../../constants/general";
 import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import { Icon } from "../../Icon/Icon.jsx";

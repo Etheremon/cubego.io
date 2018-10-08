@@ -11,7 +11,8 @@
   justify-content: center;
   align-items: flex-start;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 2px 4px;
+  @include border-radius(4px);
 
   .toggle-tool__img {
     position: relative;

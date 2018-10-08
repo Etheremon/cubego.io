@@ -258,8 +258,8 @@ input[type="range"]::-moz-range-thumb {
     border-left: 0.5px solid $orange;
     background-color: $white;
     transform: translateX(-50%);
-    z-index: 99;
-    opacity: 0;
+    z-index: 9;
+    display: none;
     overflow: hidden;
   }
 
@@ -278,12 +278,12 @@ input[type="range"]::-moz-range-thumb {
       min-width: 80px;
       border-radius: 5px;
       pointer-events: none;
-      z-index: 98;
-      opacity: 0;
+      z-index: 8;
+      display: none;
   }
 
   &:hover::before, &:hover::after {
-    opacity: 1;
+    display: block;
   }
 }
 
@@ -291,14 +291,14 @@ input[type="range"]::-moz-range-thumb {
 [tooltip-position='left'] {
 
   &:before {
-    left: 0%;
+    left: 0;
     top: 50%;
     margin-left: -13px;
     transform: translateY(-50%) rotate(135deg);
   }
 
   &:after {
-    left:0%;
+    left:0;
     top:50%;
     margin-left:-8px;
     transform: translateX(-100%)   translateY(-50%);

@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions/action_types';
-import { NETWORK_ERROR } from '../utils/constants';
+import { NETWORK_ERROR } from '../constants/general';
 import {combineReducers} from "redux";
 
 export const availableCubegoes = (state={}, action) => {

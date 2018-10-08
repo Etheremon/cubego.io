@@ -65,7 +65,6 @@ export class Layer2D extends Component {
   }
 
   processProps(props) {
-
     let {layer, tools} = props;
     if (layer) {
       let newState = {
@@ -144,7 +143,7 @@ export class Layer2D extends Component {
 
   render() {
     return (
-      <div className={'layer2D'}>
+      <div className={'layer2D'} style={this.props.style}>
         {/*<canvas id='canvas2D' width="640" height="480"/>*/}
         {this.renderLayer()}
       </div>

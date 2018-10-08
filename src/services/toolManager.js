@@ -1,6 +1,7 @@
-import {EDITOR_COLORS} from "../utils/constants";
+import {EDITOR_COLORS} from "../constants/general";
 import * as Utils from "../utils/utils";
 import {CloneDeep} from "../utils/objUtils";
+import {GetCellKey} from "../utils/modelUtils";
 
 export class ToolManager {
   constructor(props) {
@@ -213,12 +214,12 @@ Tools.draw = ({key='draw', value=true, ...extra}) => ({
     let updateIdx = 0;
 
     cells.forEach((cell) => {
-      if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
-        updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
+      if (newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)]) {
+        updateIdx = newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)].updateIdx;
         updateIdx = updateIdx ? updateIdx + 1 : 0;
       }
 
-      newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+      newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)] = {
         ...cell,
         color: CloneDeep(tools.color.value),
         updateIdx
@@ -239,12 +240,12 @@ Tools.paint = ({key='paint', value=true, ...extra}) => ({
     let updateIdx = 0;
 
     cells.forEach((cell) => {
-      if (newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`]) {
-        updateIdx = newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`].updateIdx;
+      if (newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)]) {
+        updateIdx = newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)].updateIdx;
         updateIdx = updateIdx ? updateIdx + 1 : 0;
       }
 
-      newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`] = {
+      newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)] = {
         ...cell,
         color: CloneDeep(tools.color.value),
         updateIdx
@@ -263,7 +264,7 @@ Tools.erase = ({key='erase', value=false, ...extra}) => ({
   onCellClicked: ({model, cells}) => {
     let newModel = CloneDeep(model);
     cells.forEach(cell => {
-      delete newModel['voxels'][`${cell.x}-${cell.y}-${cell.z}`];
+      delete newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)];
     });
     return newModel;
   },

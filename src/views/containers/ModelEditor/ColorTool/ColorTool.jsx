@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
 import withRouter from "react-router-dom/es/withRouter";
-import {EDITOR_COLORS} from "../../../../utils/constants";
+import {EDITOR_COLORS} from "../../../../constants/general";
 
 require("style-loader!./ColorTool.scss");
 

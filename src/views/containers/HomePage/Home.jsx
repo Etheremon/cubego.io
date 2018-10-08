@@ -14,7 +14,7 @@ import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { HeaderHighlight } from '../../widgets/Header/Header.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
-import {URLS} from "../../../utils/constants";
+import {URLS} from "../../../constants/general";
 import FeatureCard from './FeatureCard/FeatureCard.jsx';
 import Carousel from '../../widgets/Carousel/Carousel.jsx';
 import { Image } from '../../components/Image/Image.jsx';

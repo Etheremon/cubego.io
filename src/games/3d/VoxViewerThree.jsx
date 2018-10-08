@@ -11,6 +11,7 @@ import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
 import * as THREE from "three";
+import {GetCellKey} from "../../utils/modelUtils";
 
 const SIZE = 50;
 const SELECT_TOOL = 'move';
@@ -50,11 +51,12 @@ class VoxViewerThree extends Component {
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE} ref={(ref) => {
-        this.objects.push(ref)
-      }}
-                             position={position} color={color} key={`${voxel.x}-${voxel.y}-${voxel.z}`}/>)
+      elements.push(<MeshBox size={SIZE}
+                             ref={(ref) => {this.objects.push(ref)}}
+                             position={position} color={color}
+                             key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
     });
+
     return elements;
   }
 
