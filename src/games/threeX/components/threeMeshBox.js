@@ -22,4 +22,8 @@ export class ThreeMeshBox extends ThreeComponent {
   set color(color) {
     this.renderer.material.color.setHex(parseInt(color, 16));
   }
+
+  set position(position) {
+    this.renderer.position.set(position.x, position.y, position.z);
+  }
 }
