@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Axis,
   BoxHelper,
   Grid,
   HemisphereLight,
@@ -35,15 +36,22 @@ class VoxViewerThree extends Component {
     this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     this.selectLayerColor = '0xffff00';
     this.featureSelected = '';
+    this.updateGridIdx = 0;
   }
 
   renderVoxel(voxelData) {
     if (!voxelData.voxels) {
       return [];
     }
-    let divisions = Math.max(voxelData.size.x, voxelData.size.y);
-    let elements = [<Grid size={divisions * SIZE} divisions={divisions} key='grid' color1={0xffffff} color2={0xffffff}
-                          position={{x: 0, y: -SIZE * voxelData.size.z / 2, z: 0}}/>];
+    let sizeX = voxelData.spaceSize.x[1] - voxelData.spaceSize.x[0] + 1;
+    let sizeY = voxelData.spaceSize.y[1] - voxelData.spaceSize.y[0] + 1;
+    this.updateGridIdx++;
+    let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE/2;
+    let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE/2;
+
+    let elements = [<Grid width={sizeY*SIZE/2} height={sizeX*SIZE/2} linesHeight={sizeX} linesWidth={sizeY} color1={0xffffff} color2={0xffffff}
+                          position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
+                          key={`grid-${this.updateGridIdx}`}/>];
     Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
@@ -52,7 +60,9 @@ class VoxViewerThree extends Component {
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
       elements.push(<MeshBox size={SIZE}
-                             ref={(ref) => {this.objects.push(ref)}}
+                             ref={(ref) => {
+                               this.objects.push(ref)
+                             }}
                              position={position} color={color}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
     });
@@ -87,26 +97,30 @@ class VoxViewerThree extends Component {
   }
 
   updateHighLightLayer() {
-    let center = {x: 0, y: 0, z: 0};
+    let min = {
+      x: SIZE * this.state.data.spaceSize.x[0] - this.offsetVector.x,
+      y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y,
+      z: SIZE * this.state.data.spaceSize.y[0] - this.offsetVector.z
+    };
 
-    let size = {x: this.state.data.size.x * SIZE, y: this.state.data.size.z * SIZE, z: this.state.data.size.y * SIZE};
-
-    switch (this.tools['view-2d'].value.key) {
-      case 'front':
-        center.x = -SIZE / 2 + this.state.data.size.x * SIZE - this.offsetVector.x - (this.tools['layer-index'].value - 1) * SIZE;
-        size.x = SIZE;
-        break;
-      case 'top':
-        center.y = -SIZE / 2 + this.state.data.size.z * SIZE - this.offsetVector.y - (this.tools['layer-index'].value - 1) * SIZE;
-        size.y = SIZE;
-        break;
-      case 'side':
-        center.z = -SIZE / 2 + this.state.data.size.y * SIZE - this.offsetVector.z - (this.tools['layer-index'].value - 1) * SIZE;
-        size.z = SIZE;
-        break;
-    }
-
-    this.boxHelper.setFromCenterAndSize(center, size);
+    let max = {
+      x: SIZE + SIZE * this.state.data.spaceSize.x[1] - this.offsetVector.x,
+      y: SIZE + SIZE * this.state.data.spaceSize.z[1] - this.offsetVector.y,
+      z: SIZE + SIZE * this.state.data.spaceSize.y[1] - this.offsetVector.z
+    };
+    // let center = {
+    //   x: (position2.x + position1.x),
+    //   y: (position2.y + position1.y),
+    //   z: (position2.z + position1.z)
+    // };
+    // let sizeX = this.state.data.spaceSize.x[1] - this.state.data.spaceSize.x[0] + 1;
+    // let sizeZ = this.state.data.spaceSize.y[1] - this.state.data.spaceSize.y[0] + 1;
+    // let sizeY = this.state.data.spaceSize.z[1] - this.state.data.spaceSize.z[0] + 1;
+    // let bottomSize = Math.max(sizeX, sizeZ);
+    // let size = {x: bottomSize * SIZE, y: sizeY * SIZE, z: bottomSize * SIZE};
+    // this.boxHelper.setFromCenterAndSize(center, size);
+    this.boxHelper.min = min;
+    this.boxHelper.max = max;
   }
 
   componentDidMount() {
@@ -219,12 +233,14 @@ class VoxViewerThree extends Component {
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        {/*<Axis/>*/}
+        <Axis/>
         <OrthographicCamera ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
-        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {this.rollOverMesh = ref}} wireFrameColor='000000'/>
+        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
+          this.rollOverMesh = ref
+        }} wireFrameColor='000000'/>
         <BoxHelper ref={(ref) => {
           this.boxHelper = ref
         }}/>
