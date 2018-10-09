@@ -12,7 +12,11 @@ export const ReformatModel = (model) => {
       z: [0, model.size.z-1],
     },
     spaceSize: {
-
+    },
+    layerCount: {
+      x: {},
+      y: {},
+      z: {},
     }
   };
 
@@ -25,7 +29,12 @@ export const ReformatModel = (model) => {
       z: cell.z,
       color: model.palette[cell['colorIndex']],
     };
-    newModel.voxels[GetCellKey(v.x, v.y, v.z)] = v;
+    if (!newModel.voxels[GetCellKey(v.x, v.y, v.z)]) {
+      newModel.voxels[GetCellKey(v.x, v.y, v.z)] = v;
+      newModel.layerCount.x[v.x] = !newModel.layerCount.x[v.x] ? 1 : newModel.layerCount.x[v.x]+1;
+      newModel.layerCount.y[v.y] = !newModel.layerCount.y[v.y] ? 1 : newModel.layerCount.y[v.y]+1;
+      newModel.layerCount.z[v.z] = !newModel.layerCount.z[v.z] ? 1 : newModel.layerCount.z[v.z]+1;
+    }
   });
 
   return newModel;

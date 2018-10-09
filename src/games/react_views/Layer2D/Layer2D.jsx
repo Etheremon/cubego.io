@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {CloneDeep, IsEqual} from "../../../utils/objUtils";
 import * as Utils from "../../../utils/utils";
 import * as ColorUtils from "../../../utils/colorUtils";
+import {ObjIsEmpty} from "../../../utils/utils";
 
 require("style-loader!./Layer2D.scss");
 
@@ -49,10 +50,10 @@ export class Layer2D extends Component {
       this.state.cells[rowIdx][colIdx].color = this.state.hoverColor;
       this.setState({cells: this.state.cells});
 
-      let correctPos = layer.cal2dPos ? layer.cal2dPos(colIdx, rowIdx) : {x: colIdx, y: rowIdx};
+      let originPos = layer.calOriginPos ? layer.calOriginPos(colIdx, rowIdx) : {x: colIdx, y: rowIdx};
       this.clickedCells.push({
-        [layer.x]: correctPos.x,
-        [layer.y]: correctPos.y,
+        [layer.x]: originPos.x,
+        [layer.y]: originPos.y,
         [layer.z]: layer.idx,
       });
     }
@@ -66,22 +67,23 @@ export class Layer2D extends Component {
 
   processProps(props) {
     let {layer, tools} = props;
-    if (layer) {
+    if (layer && !ObjIsEmpty(layer)) {
       let newState = {
         hoverColor: undefined,
         cells: null,
       };
 
       newState.cells = [];
-      for (let i = 0; i < layer.size[layer.y]; i++) {
+      for (let i = 0; i < layer.spaceSize[layer.y][1]-layer.spaceSize[layer.y][0]+1; i++) {
         newState.cells[i] = [];
-        for (let j = 0; j < layer.size[layer.x]; j++) newState.cells[i][j] = {};
+        for (let j = 0; j < layer.spaceSize[layer.x][1]-layer.spaceSize[layer.x][0]+1; j++)
+          newState.cells[i][j] = {};
       }
       Utils.ObjGetValues(layer.voxels).forEach(cell => {
-        let correctPos = layer.cal2dPos
+        let pos2D = layer.cal2dPos
           ? layer.cal2dPos(cell[layer.x], cell[layer.y])
           : {x: cell[layer.x], y: cell[layer.y]};
-        newState.cells[correctPos.y][correctPos.x] = CloneDeep(cell);
+        newState.cells[pos2D.y][pos2D.x] = CloneDeep(cell);
       });
 
       if (tools && tools.color && (tools.draw.value || tools.paint.value))
@@ -110,7 +112,9 @@ export class Layer2D extends Component {
 
                 return (
                   <div className={'layer2D__cell'} key={colIdx}
-                       onMouseEnter={() => {if (this.isMouseDown) this.onCellClicked(layer, rowIdx, colIdx)}}
+                       onMouseEnter={() => {
+                         if (this.isMouseDown) this.onCellClicked(layer, rowIdx, colIdx);
+                       }}
                        onMouseDown={() => {
                          this.onMouseDown();
                          this.onCellClicked(layer, rowIdx, colIdx);

@@ -30,6 +30,8 @@ export class ToolManager {
     this.onModeChangeTempStart = this.onModeChangeTempStart.bind(this);
     this.onModeChangeTempStop = this.onModeChangeTempStop.bind(this);
     this.changeMode = this.changeMode.bind(this);
+    this.convertToSpaceSize = this.convertToSpaceSize.bind(this);
+    this.updateModelSize = this.updateModelSize.bind(this);
 
     this.updateCurrent();
   }
@@ -105,18 +107,46 @@ export class ToolManager {
     if (!this._drawMode) {
       console.warn("no draw mode!");
     } else {
-
       let newModel = this._drawMode.onCellClicked({
         toolManager: this,
         tools: this._tools, model: this._model, cells,
       });
 
       if (newModel) {
+        cells.forEach(cell => {
+          let cellKey = GetCellKey(cell.x, cell.y, cell.z);
+          if (this._model.voxels[cellKey] && !newModel.voxels[cellKey]) {
+            ['x', 'y', 'z'].forEach(d => {newModel.layerCount[d][cell[d]] -= 1});
+          }
+          if (!this._model.voxels[cellKey] && newModel.voxels[cellKey]) {
+            ['x', 'y', 'z'].forEach(d => {newModel.layerCount[d][cell[d]] = (newModel.layerCount[d][cell[d]] || 0)+1});
+          }
+        });
+
         this.addModel({model: newModel});
       } else {
         this.updateCurrent();
       }
     }
+  }
+
+  convertToSpaceSize(modelSize) {
+    let x = modelSize[0], y = modelSize[1];
+    if (y-x+1 < 40) x -= 1;
+    if (y-x+1 < 40) y += 1;
+    return [x, y];
+  }
+
+  updateModelSize(oldSize, countArr) {
+    let newSize = [oldSize[0], oldSize[1]];
+
+    while (countArr[newSize[0]-1]) newSize[0] = newSize[0]-1;
+    while (countArr[newSize[1]+1]) newSize[1] = newSize[1]+1;
+
+    while (oldSize[1]-oldSize[0]+1 > 12 && !countArr[newSize[0]]) newSize[0] = newSize[0]+1;
+    while (oldSize[1]-oldSize[0]+1 > 12 && !countArr[newSize[1]]) newSize[1] = newSize[1]-1;
+
+    return newSize;
   }
 
   updateCurrent() {
@@ -126,23 +156,40 @@ export class ToolManager {
     let x = this._tools['view-2d'].value.x;
     let y = this._tools['view-2d'].value.y;
     let z = this._tools['view-2d'].value.z;
-    let size = this._model.size;
 
-    this._numLayers = size[z[1]];
-    let layerIdx = Utils.BoundVal(this._tools['layer-index'].value, 1, this._numLayers);
-    this._tools['layer-index'].value = layerIdx;
+    let layerCount = this._model.layerCount;
+    let modelSize = {
+      x: this.updateModelSize(this._model.modelSize.x, layerCount.x),
+      y: this.updateModelSize(this._model.modelSize.y, layerCount.y),
+      z: this.updateModelSize(this._model.modelSize.z, layerCount.z),
+    };
+    let spaceSize = {
+      x: this.convertToSpaceSize(modelSize.x),
+      y: this.convertToSpaceSize(modelSize.y),
+      z: this.convertToSpaceSize(modelSize.z),
+    };
 
-    let zIdx = z[0] === '+' ? layerIdx - 1 : this._numLayers - layerIdx;
-    let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z[1]] === zIdx);
+    let idx = Utils.BoundVal(this._tools['layer-index'].value, spaceSize[z[1]][0], spaceSize[z[1]][1]);
+    this._tools['layer-index'].value = idx;
+    let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z[1]] === idx);
 
+    this._model.modelSize = modelSize;
+    this._model.spaceSize = spaceSize;
     this._layer = {
       voxels,
-      idx: zIdx,
-      size: size,
+      idx,
+      spaceSize,
+      fromZ: z[0] === '+' ? spaceSize[z[1]][0] : spaceSize[z[1]][1],
+      toZ: z[0] === '+' ? spaceSize[z[1]][1] : spaceSize[z[1]][0],
       x: x[1], y: y[1], z: z[1],
       cal2dPos: (i, j) => {
-        i = (x[0] === '+') ? i : size[x[1]]-1-i;
-        j = (y[0] === '+') ? j : size[y[1]]-1-j;
+        i = (x[0] === '+') ? i-spaceSize[x[1]][0] : spaceSize[x[1]][1]-i;
+        j = (y[0] === '+') ? j-spaceSize[y[1]][0] : spaceSize[y[1]][1]-j;
+        return {x: i, y: j};
+      },
+      calOriginPos: (i, j) => {
+        i = (x[0] === '+') ? spaceSize[x[1]][0]+i : spaceSize[x[1]][1]-i;
+        j = (y[0] === '+') ? spaceSize[y[1]][0]+j : spaceSize[y[1]][1]-j;
         return {x: i, y: j};
       }
     };
@@ -153,11 +200,7 @@ export class ToolManager {
   }
 
   get layer() {
-    return this._layer;
-  }
-
-  get numLayers() {
-    return this._numLayers;
+    return this._layer || {};
   }
 
   get tools() {
@@ -200,7 +243,7 @@ Tools.move = ({key='move', value=true, ...extra}) => ({
   type: ToolTypes.mode,
   onCellClicked: ({toolManager, cells}) => {
     let z = toolManager._tools['view-2d'].value.z;
-    toolManager._tools['layer-index'].value = z[0] === '+' ? cells[0][z[1]]+1 : toolManager._numLayers-cells[0][z[1]];
+    toolManager._tools['layer-index'].value = cells[0][z[1]];
   },
 });
 

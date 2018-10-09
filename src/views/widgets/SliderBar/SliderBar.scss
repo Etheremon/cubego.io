@@ -25,6 +25,7 @@
       left: 50%;
       @include transform(translateX(-50%) translateY(-50%));
       color: $white;
+      pointer-events: none;
     }
     .arrow-left:after {
       content: '[Z]';
@@ -48,7 +49,7 @@
     .bar {
       flex-grow: 1;
       position: relative;
-      background-color: rgb(255, 237, 163);
+      background-color: rgb(206, 206, 206);
       @include border-radius-without-overflow(10px);
     }
     .placeholder {

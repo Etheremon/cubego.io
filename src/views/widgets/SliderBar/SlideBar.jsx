@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
 import { ButtonNew } from '../Button/Button.jsx';
 import * as Utils from "../../../utils/utils";
+import {IsEqual} from "../../../utils/objUtils";
 
 require("style-loader!./SliderBar.scss");
 
@@ -33,7 +34,7 @@ class _SlideBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
+    if (!IsEqual(this.props, nextProps)) {
       this.processProps(nextProps);
     }
   }
@@ -44,7 +45,7 @@ class _SlideBar extends React.Component {
 
     let bar = this.refs['bar'], pointer = this.refs['pt'];
     let boundLeft = bar.offsetLeft + pointer.offsetWidth/2, boundRight = bar.offsetLeft + bar.offsetWidth - pointer.offsetWidth/2;
-    let pos = boundLeft + (value - this.props.valMin) * (boundRight - boundLeft) / (this.props.valMax - this.props.valMin);
+    let pos = boundLeft + (value - props.valMin) * (boundRight - boundLeft) / (props.valMax - props.valMin);
 
     this.setState({pos: (pos-bar.offsetLeft) / bar.offsetWidth, value: value});
   }
@@ -75,7 +76,6 @@ class _SlideBar extends React.Component {
   }
 
   onMouseMove(e) {
-
     let bar = this.refs['bar'], pointer = this.refs['pt'];
 
     let boundLeft = bar.offsetLeft + pointer.offsetWidth/2, boundRight = bar.offsetLeft + bar.offsetWidth - pointer.offsetWidth/2;
@@ -96,30 +96,28 @@ class _SlideBar extends React.Component {
   }
 
   render() {
-    let {className, label, value} = this.props;
+    let {className, label, value, valStep, valMax, valMin, text} = this.props;
     let currentVal = value !== undefined && value !== null ? value : this.state.value;
 
+    let btnLabel = text ? text : `${Math.abs(currentVal-valMin)+1}/${Math.abs(valMax-valMin)+1}`;
 
     return (
       <div className={`widget__slider-bar ${className}`}>
         <div className={'main-bar'}>
           <div className={'arrow-left'}>
             <img src={require('../../../shared/img/icons/icon_left_arrow.png')}
-                 onClick={() => {this.props.onChange(currentVal-1)}}/>
+                 onClick={() => {this.props.onChange(currentVal-valStep)}}/>
           </div>
           <div className={'bar'} ref={'bar'} onClick={this.onBarClick}>
-            <ButtonNew label={`${this.state.value}/${this.props.valMax}`}
-                       className={'placeholder'} disabled size={ButtonNew.sizes.NORMAL}/>
+            <ButtonNew label={btnLabel} className={'placeholder'} disabled size={ButtonNew.sizes.NORMAL}/>
             <div className={'label'}>{label}</div>
             <div className={'pointer'} style={{left: `${this.state.pos*100}%`}} ref={'pt'}>
-              <ButtonNew onMouseDown={this.onMouseDown} size={ButtonNew.sizes.NORMAL}>
-                {this.state.value}/{this.props.valMax}
-              </ButtonNew>
+              <ButtonNew onMouseDown={this.onMouseDown} size={ButtonNew.sizes.NORMAL} label={btnLabel}/>
             </div>
           </div>
           <div className={'arrow-right'}>
             <img src={require('../../../shared/img/icons/icon_right_arrow.png')}
-                 onClick={() => {this.props.onChange(currentVal+1)}}/>
+                 onClick={() => {this.props.onChange(currentVal+valStep)}}/>
           </div>
         </div>
 
@@ -133,18 +131,16 @@ _SlideBar.defaultProps = {
   label: null,
   valMin: 1,
   valMax: 100,
+  valStep: 1,
   defaultValue: 0,
 };
 
 _SlideBar.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
-
   value: PropTypes.number,
   defaultValue: PropTypes.number,
-
   onChange: PropTypes.func,
-
   text: PropTypes.string,
 };
 

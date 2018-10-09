@@ -292,7 +292,6 @@ class _ModelEditor extends React.Component {
                             img={
                               require(`../../../shared/img/icons/icon-view-${this.toolManager.getToolValue(this.tools.view2D.key).viewKey}.png`)
                             }
-                            disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
                             onClick={() => {this.tools.view2D.onClick()}}
                             hotKey={this.tools.view2D.hotKey}
                 />
@@ -383,7 +382,8 @@ class _ModelEditor extends React.Component {
               </div>
 
               <div className={'model-editor__layer'}>
-                <SlideBar valMin={1} valMax={this.toolManager.numLayers}
+                <SlideBar valMin={this.toolManager.layer.fromZ} valMax={this.toolManager.layer.toZ}
+                          valStep={this.toolManager.layer.fromZ < this.toolManager.layer.toZ ? 1 : -1}
                           value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
                           onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
                           label={_t('select_layer')}
