@@ -138,7 +138,7 @@ class VoxViewerThree extends Component {
     if (intersects.length > 0) {
       let intersect = intersects[0];
       let position;
-      if (this.featureSelected === PAINT_TOOL) {
+      if (this.featureSelected === DRAW_TOOL) {
         position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
       } else {
         position = intersect.object.position.clone();
