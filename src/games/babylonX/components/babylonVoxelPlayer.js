@@ -114,7 +114,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     greenMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
     greenMat.alpha = 0.3;
     let fakeShadow = BABYLON.MeshBuilder.CreateGround("fakeShadow", {width: 2, height: 2}, scene);
-    fakeShadow.position.y = -0.01;
+    fakeShadow.position.y = 0.01;
     fakeShadow.material = greenMat;
     fakeShadow.parent = this.renderer;
     this.shadow = fakeShadow;

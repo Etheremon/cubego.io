@@ -122,6 +122,8 @@ export const DirectionLight = TYPES.DIRECTION_LIGHT;
 export const Animation = TYPES.ANIMATION;
 export const Plane = TYPES.PLANE;
 export const Skybox = TYPES.SKY_BOX;
+export const GUI = TYPES.GUI;
+export const GUISimpleButton = TYPES.GUI_SIMPLE_BUTTON;
 
 function addMesh(id, root, file) {
   return new Promise((resolve, reject) => {

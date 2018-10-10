@@ -1,7 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import {BabylonComponent} from "./babylonComponent";
 import {hexToColor3} from "../utils";
-import {listMesh} from "../index";
 
 export class BabylonSkybox extends BabylonComponent {
   static create({scene}, props) {
