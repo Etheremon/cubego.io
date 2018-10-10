@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "babylonjs": "^3.3.0-rc.0",
+    "babylonjs-inspector": "^3.3.0",
     "babylonjs-loaders": "^3.3.0-rc.0",
     "babylonjs-serializers": "^3.3.0-rc.0",
     "cannon": "^0.6.2",

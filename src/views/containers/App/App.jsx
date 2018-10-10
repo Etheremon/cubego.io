@@ -20,6 +20,7 @@ import { GetLocalizationData } from '../../../reducers/selectors';
 import Loading from '../../widgets/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
+import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 
 
 
@@ -130,6 +131,9 @@ class App extends React.Component {
 
           <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
           <Route path={`/${URLS.GUIDE}`} component={ComingSoon}/>
+
+          <Route path={`/battle_dev`} component={Battle}/>
+
 
           <Route component={Home}/>
         </Switch>

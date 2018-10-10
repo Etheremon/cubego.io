@@ -19,7 +19,7 @@ export class BabylonAnimation extends BabylonComponent {
   static create({scene}, props) {
     let animation = new BabylonAnimation();
     animation.setProps(props, PERMITTED_PROPS);
-    let animationBox = new BABYLON.Animation(props.name || 'animation', props.targetProperty || '', props.targetFPS || 30,
+    let animationBox = new BABYLON.Animation(props.name || 'animation', props.targetProperty || '', props.targetFPS || 30, props.dataType,
       props.loopMode, props.enableBlending);
     animationBox.setKeys(props.keys);
     if (props.bezierCurveEase) {

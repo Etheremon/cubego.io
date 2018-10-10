@@ -13,6 +13,7 @@ let assetsManager = null;
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
   scene = new BABYLON.Scene(engine);
+  // scene.debugLayer.show({popup:true});
   //For debugging
   window.scene = scene;
   // scene.useRightHandedSystem = true;
@@ -115,7 +116,7 @@ export const MeshContainer = TYPES.MESH_CONTAINER;
 export const ArcRotateCamera = TYPES.ARC_ROTATE_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
 export const Axis = TYPES.AXIS;
-export const Voxel = TYPES.VOXEL;
+export const VoxelPlayer = TYPES.VOXEL_PLAYER;
 export const HemisphericLight = TYPES.HEMISPHERIC_LIGHT;
 export const DirectionLight = TYPES.DIRECTION_LIGHT;
 export const Animation = TYPES.ANIMATION;

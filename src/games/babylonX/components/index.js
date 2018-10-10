@@ -5,7 +5,7 @@ import {BabylonMeshCylinder} from "./babylonMeshCylinder";
 import {BabylonArcRotateCamera} from "./babylonArcRotateCamera";
 import {BabylonPointLight} from "./babylonPointLight";
 import {BabylonAxis} from "./babylonAxis";
-import {BabylonVoxel, BabylonVoxelBuilder} from "./babylonVoxel";
+import {BabylonVoxelPlayer, BabylonVoxelBuilder} from "./babylonVoxelPlayer";
 import {BabylonHemisphericLight} from "./babylonHemisphericLight";
 import {BabylonDirectionLight} from "./babylonDirectionLight";
 import {BabylonAnimation} from "./babylonAnimation";
@@ -19,7 +19,7 @@ const TYPES = {
   ARC_ROTATE_CAMERA: 'ARC_ROTATE_CAMERA',
   POINT_LIGHT: 'POINT_LIGHT',
   AXIS: 'AXIS',
-  VOXEL: 'VOXEL',
+  VOXEL_PLAYER: 'VOXEL_PLAYER',
   HEMISPHERIC_LIGHT: 'HEMISPHERIC_LIGHT',
   DIRECTION_LIGHT: 'DIRECTION_LIGHT',
   ANIMATION: 'ANIMATION',
@@ -35,7 +35,7 @@ mappingComponents[TYPES.MESH_CYLINDER] = BabylonMeshCylinder;
 mappingComponents[TYPES.ARC_ROTATE_CAMERA] = BabylonArcRotateCamera;
 mappingComponents[TYPES.POINT_LIGHT] = BabylonPointLight;
 mappingComponents[TYPES.AXIS] = BabylonAxis;
-mappingComponents[TYPES.VOXEL] = BabylonVoxel;
+mappingComponents[TYPES.VOXEL_PLAYER] = BabylonVoxelPlayer;
 mappingComponents[TYPES.HEMISPHERIC_LIGHT] = BabylonHemisphericLight;
 mappingComponents[TYPES.DIRECTION_LIGHT] = BabylonDirectionLight;
 mappingComponents[TYPES.ANIMATION] = BabylonAnimation;
