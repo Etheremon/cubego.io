@@ -76,7 +76,7 @@ class HomePage extends React.Component {
       <div className={'feature-indicator'} key={'btn-2'} >{_t('auction')}</div>,
       <div className={'feature-indicator'} key={'btn-3'} >{_t('market')}</div>,
       <div className={'feature-indicator'} key={'btn-4'} >{_t('battle')}</div>,
-    ]
+    ];
 
     return (
       <PageWrapper>
@@ -91,11 +91,10 @@ class HomePage extends React.Component {
 
           <InviewMonitor
             classNameNotInView='vis-hidden'
-            classNameInView='animated fadeInUp'
-          >
+            classNameInView='animated fadeInUp'>
             <Container size={Container.sizes.SMALL} className="home__intro" id={'intro'}>
               <div className="home__intro-board">
-                <p>{'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'}</p>
+                <p>{_t('home.opening')}</p>
               </div>
               <div className="home__intro-cubego">
                 {[
@@ -115,9 +114,9 @@ class HomePage extends React.Component {
               <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
-            <div className="home__mode-container">
-              <Carousel list={guildGame} showNav={true} />
-            </div>
+            {/*<div className="home__mode-container">*/}
+              {/*<Carousel list={guildGame} showNav={true} />*/}
+            {/*</div>*/}
           </Container>
           {/* end home__modes */}
 
@@ -133,8 +132,8 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInLeft'
                   >
                     <div className={'desc'} >
-                      <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
-                      <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                      <Text className={'header'} type={Text.types.H1} children={_t('creation').toUpperCase()} />
+                      <p className={'text'}>{_t('home.creation')}</p>
                       <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
                                 className={'btn-btn'} onClick={() => {}}/>
                     </div>
@@ -162,8 +161,8 @@ class HomePage extends React.Component {
                   classNameInView='animated fadeInRight'
                 >
                   <div className={'desc'}>
-                    <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
-                    <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                    <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
+                    <p className={'text'}>{_t('home.copyright')}</p>
                     <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
                               className={'btn-btn'} onClick={() => {}}/>
                   </div>
@@ -190,8 +189,8 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H1} children={_t('game_detail_index')} />
-                      <p className={'text'}>{_t('game_detail_index_desc')}</p>
+                      <Text className={'header'} type={Text.types.H1} children={_t('combat').toUpperCase()} />
+                      <p className={'text'}>{_t('home.combat')}</p>
                       <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
                                 className={'btn-btn'} onClick={() => {}}/>
                     </div>
@@ -223,47 +222,46 @@ class HomePage extends React.Component {
           </div>
           {/* end home__partnership */}
 
-          <InviewMonitor
-            classNameNotInView='vis-hidden'
-            classNameInView='animated zoomIn'
-          >
-            <Container className="home__features" id={'features'}>
-              <div className="home__features__title-container">
-                <Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />
-              </div>
+          {/*<InviewMonitor*/}
+            {/*classNameNotInView='vis-hidden'*/}
+            {/*classNameInView='animated zoomIn'*/}
+          {/*>*/}
+            {/*<Container className="home__features" id={'features'}>*/}
+              {/*<div className="home__features__title-container">*/}
+                {/*<Text className={'home__features-title'} type={Text.types.H2} children={_t('features')} />*/}
+              {/*</div>*/}
 
-              <Carousel className="home__features-cards" orientation={Carousel.orientation.VERTICAL} list={_features.map((ft,index) =>
-                                <FeatureCard key={index} className={'home__features-card'} {...ft} />
-                              )} customIndicators={customIndicators}/>
-            </Container>
-          </InviewMonitor>
+              {/*<Carousel className="home__features-cards" orientation={Carousel.orientation.VERTICAL} list={_features.map((ft,index) =>*/}
+                                {/*<FeatureCard key={index} className={'home__features-card'} {...ft} />*/}
+                              {/*)} customIndicators={customIndicators}/>*/}
+            {/*</Container>*/}
+          {/*</InviewMonitor>*/}
           {/* end home__features */}
 
-          <InviewMonitor
-            classNameNotInView='vis-hidden'
-            classNameInView='animated slideInDown' // fadeInLeft, or fadeInRight
-          >
-            <div className="home__subscription">
+          {/*<InviewMonitor*/}
+            {/*classNameNotInView='vis-hidden'*/}
+            {/*classNameInView='animated slideInDown' // fadeInLeft, or fadeInRight*/}
+          {/*>*/}
+            {/*<div className="home__subscription">*/}
 
-              <Container className={'home__subscription-container'}>
-                <div className={'home__subscription-img'}>
-                  <img src={require('../../../shared/img/assets/model_example_2.png')}/>
-                </div>
-                <div className={'home__subscription-main'}>
-                  <HeaderHighlight>
-                    <b>{_t('get_the_latest_news')}</b>
-                  </HeaderHighlight>
-                  <p>{_t('get_the_latest_news_desc')}</p>
-                  <input type="text" name="email" className={'home__subscription-input'} placeholder={_t('your_email_address')} onChange={this.validateEmail}/>
-                  <ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('subscribe')} onClick={() => {
-                    
-                  }}/>
-                </div>
-              </Container>
-            </div>
-          </InviewMonitor>
+              {/*<Container className={'home__subscription-container'}>*/}
+                {/*<div className={'home__subscription-img'}>*/}
+                  {/*<img src={require('../../../shared/img/assets/model_example_2.png')}/>*/}
+                {/*</div>*/}
+                {/*<div className={'home__subscription-main'}>*/}
+                  {/*<HeaderHighlight>*/}
+                    {/*<b>{_t('get_the_latest_news')}</b>*/}
+                  {/*</HeaderHighlight>*/}
+                  {/*<p>{_t('get_the_latest_news_desc')}</p>*/}
+                  {/*<input type="text" name="email" className={'home__subscription-input'} placeholder={_t('your_email_address')} onChange={this.validateEmail}/>*/}
+                  {/*<ButtonNew className={'home__subscription-btn'} color={ButtonNew.colors.GREEN} label={_t('subscribe')} onClick={() => {*/}
+                    {/**/}
+                  {/*}}/>*/}
+                {/*</div>*/}
+              {/*</Container>*/}
+            {/*</div>*/}
+          {/*</InviewMonitor>*/}
           {/* end home__subscription */}
-
         </div>
 
         <Footer />
