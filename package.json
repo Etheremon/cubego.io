@@ -6,8 +6,8 @@
   "scripts": {
     "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
     "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
-    "buildDev": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=dev && node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js",
-    "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod && node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js"
+    "buildDev": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=dev && node node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js",
+    "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod && node node_modules/babel-cli/bin/babel.js public/assets/js --out-dir public/assets/js"
   },
   "keywords": [
     "cubego",
