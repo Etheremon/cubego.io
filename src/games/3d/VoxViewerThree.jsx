@@ -74,7 +74,7 @@ class VoxViewerThree extends Component {
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE} materialId={'gold'}
+      elements.push(<MeshBox size={SIZE}
                              ref={(ref) => {
                                this.objects.push(ref)
                              }}
