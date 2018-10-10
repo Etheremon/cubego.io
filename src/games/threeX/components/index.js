@@ -6,6 +6,7 @@ import {ThreeMeshBox} from "./threeMeshBox";
 import {ThreeAxis} from "./threeAxis";
 import {ThreeBox3Helper} from "./threeBox3Helper";
 import {ThreeOrthographicCamera} from "./threeOrthographicCamera";
+import {ThreePointLight} from "./threePointLight";
 
 const TYPES = {
   MESH_CONTAINER: 'MESH_CONTAINER',
@@ -15,7 +16,8 @@ const TYPES = {
   MESH_BOX: 'MESH_BOX',
   AXIS: 'AXIS',
   BOX_HELPER: 'BOX_HELPER',
-  ORTHOGRAPHIC_CAMERA: 'ORTHOGRAPHIC_CAMERA'
+  ORTHOGRAPHIC_CAMERA: 'ORTHOGRAPHIC_CAMERA',
+  POINT_LIGHT: 'POINT_LIGHT'
 };
 
 let mappingComponents = {};
@@ -23,6 +25,7 @@ mappingComponents[TYPES.MESH_CONTAINER] = ThreeMeshContainer;
 mappingComponents[TYPES.PERSPECTIVE_CAMERA] = ThreePerspectiveCamera;
 mappingComponents[TYPES.GRID] = ThreeGrid;
 mappingComponents[TYPES.HEMISPHERE_LIGHT] = ThreeHemisphereLight;
+mappingComponents[TYPES.POINT_LIGHT] = ThreePointLight;
 mappingComponents[TYPES.MESH_BOX] = ThreeMeshBox;
 mappingComponents[TYPES.AXIS] = ThreeAxis;
 mappingComponents[TYPES.BOX_HELPER] = ThreeBox3Helper;

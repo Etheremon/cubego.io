@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Material",
+    "generator": "Material.toJSON"
+  },
+  "uuid": "2BA4E85B-FC2C-432F-87B3-7110D804458E",
+  "type": "MeshStandardMaterial",
+  "color": 6579300,
+  "roughness": 0.5683579985905567,
+  "metalness": 0,
+  "emissive": 71171,
+  "map": "27C718E2-40B7-4F82-B676-E01C5E6DF265",
+  "lightMap": "80DD1F82-59F5-4369-8FE5-B07930BB5577",
+  "normalMap": "80DD1F82-59F5-4369-8FE5-B07930BB5577",
+  "normalMapType": 0,
+  "normalScale": [1, 1],
+  "side": 2,
+  "opacity": 0.974277660324172,
+  "depthFunc": 3,
+  "depthTest": true,
+  "depthWrite": true,
+  "textures": [{
+    "uuid": "27C718E2-40B7-4F82-B676-E01C5E6DF265",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1023,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/leaf.png"
+  }, {
+    "uuid": "80DD1F82-59F5-4369-8FE5-B07930BB5577",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1023,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/leaf-nm.png"
+  }
+  ]
+}

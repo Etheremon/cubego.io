@@ -1,5 +1,6 @@
 import {ThreeComponent} from "./threeComponent";
 import * as THREE from "three";
+import ThreeX from "../index";
 
 export class ThreeMeshBox extends ThreeComponent {
   static create({scene}, props) {
@@ -7,10 +8,17 @@ export class ThreeMeshBox extends ThreeComponent {
     let size = props.size || 10;
     let color = parseInt(props.color, 16);
     let boxGeo = new THREE.BoxBufferGeometry(size, size, size);
-    let boxMaterial = new THREE.MeshBasicMaterial({color: color, transparent: true});
-    let cubeMesh = new THREE.Mesh(boxGeo, boxMaterial);
+    let material = null;
+
+    if (props.materialId) {
+      material = ThreeX.getMaterial(props.materialId);
+    } else {
+      material = new THREE.MeshBasicMaterial({color: color, transparent: true});
+    }
+    let cubeMesh = new THREE.Mesh(boxGeo, material);
     let wireFrameColor = parseInt(props.wireFrameColor || 'ffffff', 16);
     let boxHelper = new THREE.BoxHelper(cubeMesh, wireFrameColor);
+
     cubeMesh.add(boxHelper);
     if (props.position) {
       cubeMesh.position.set(props.position.x, props.position.y, props.position.z);

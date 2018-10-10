@@ -6,13 +6,27 @@ import {
   HemisphereLight,
   MeshBox,
   MeshContainer,
-  OrthographicCamera,
+  OrthographicCamera, PointLight,
 } from "../threeX";
 import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
 import * as THREE from "three";
 import {GetCellKey} from "../../utils/modelUtils";
+import diamondMaterialConfig from './materials/Diamond.json';
+import goldMaterialConfig from './materials/Gold.json';
+import brickMaterialConfig from './materials/Brick.json';
+import furMaterialConfig from './materials/Fur.json';
+import iceMaterialConfig from './materials/Ice.json';
+import ironMaterialConfig from './materials/Iron.json';
+import leafMaterialConfig from './materials/Leaf.json';
+import paperMaterialConfig from './materials/Paper.json';
+import plasticMaterialConfig from './materials/Plastic.json';
+import silverMaterialConfig from './materials/Silver.json';
+import stoneMaterialConfig from './materials/Stone.json';
+import woodMaterialConfig from './materials/Wood.json';
+
+import ThreeX from "../threeX";
 
 const SIZE = 50;
 const SELECT_TOOL = 'move';
@@ -40,6 +54,7 @@ class VoxViewerThree extends Component {
   }
 
   renderVoxel(voxelData) {
+    console.log(voxelData);
     if (!voxelData.voxels) {
       return [];
     }
@@ -59,7 +74,7 @@ class VoxViewerThree extends Component {
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE}
+      elements.push(<MeshBox size={SIZE} materialId={'gold'}
                              ref={(ref) => {
                                this.objects.push(ref)
                              }}
@@ -127,6 +142,19 @@ class VoxViewerThree extends Component {
     this.canvas = document.getElementById('canvas3D');
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    ThreeX.loadMaterial('diamond', diamondMaterialConfig);
+    ThreeX.loadMaterial('gold', goldMaterialConfig);
+    ThreeX.loadMaterial('brick', brickMaterialConfig);
+    ThreeX.loadMaterial('ice', iceMaterialConfig);
+    ThreeX.loadMaterial('iron', ironMaterialConfig);
+    ThreeX.loadMaterial('leaf', leafMaterialConfig);
+    ThreeX.loadMaterial('paper', paperMaterialConfig);
+    ThreeX.loadMaterial('plastic', plasticMaterialConfig);
+    ThreeX.loadMaterial('silver', silverMaterialConfig);
+    ThreeX.loadMaterial('stone', stoneMaterialConfig);
+    ThreeX.loadMaterial('wood', woodMaterialConfig);
+    ThreeX.loadMaterial('fur', furMaterialConfig);
+
     this.updateHoverBoxColor();
   }
 
@@ -238,6 +266,10 @@ class VoxViewerThree extends Component {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
         <HemisphereLight/>
+        <PointLight position={{x: 0, y: 400, z: 0}}/>
+        <PointLight position={{x: 200, y: 400, z: 200}}/>
+        <PointLight position={{x: -200, y: -400, z: -200}}/>
+
         <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
           this.rollOverMesh = ref
         }} wireFrameColor='000000'/>

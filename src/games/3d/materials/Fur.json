@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Material",
+    "generator": "Material.toJSON"
+  },
+  "uuid": "2BA4E85B-FC2C-432F-87B3-7110D804458E",
+  "type": "MeshStandardMaterial",
+  "color": 7887163,
+  "roughness": 0.7149400986610289,
+  "metalness": 0,
+  "emissive": 2234402,
+  "map": "F4862DA3-DAB7-4454-A6E5-DA67334539B1",
+  "normalMap": "CE0F799C-A747-4C5B-85D0-C7E04C7BEE1C",
+  "normalMapType": 0,
+  "normalScale": [1, 1],
+  "side": 2,
+  "opacity": 0.974277660324172,
+  "depthFunc": 3,
+  "depthTest": true,
+  "depthWrite": true,
+  "textures": [{
+    "uuid": "F4862DA3-DAB7-4454-A6E5-DA67334539B1",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1022,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/fur.jpg"
+  }, {
+    "uuid": "CE0F799C-A747-4C5B-85D0-C7E04C7BEE1C",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1023,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/fur-nm.png"
+  }
+  ]
+}

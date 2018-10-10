@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Material",
+    "generator": "Material.toJSON"
+  },
+  "uuid": "2BA4E85B-FC2C-432F-87B3-7110D804458E",
+  "type": "MeshStandardMaterial",
+  "color": 7032107,
+  "roughness": 0,
+  "metalness": 0,
+  "emissive": 2949120,
+  "map": "93479A61-B1E0-4C76-A581-166FD9E622AC",
+  "normalMap": "AEC06E94-F446-4970-97C0-D3B4B5EE0CA0",
+  "normalMapType": 0,
+  "normalScale": [1, 1],
+  "side": 2,
+  "opacity": 0.974277660324172,
+  "depthFunc": 3,
+  "depthTest": true,
+  "depthWrite": true,
+  "textures": [{
+    "uuid": "93479A61-B1E0-4C76-A581-166FD9E622AC",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1022,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/brick.jpg"
+  }, {
+    "uuid": "AEC06E94-F446-4970-97C0-D3B4B5EE0CA0",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1023,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/brick-nm.png"
+  }
+  ]
+}

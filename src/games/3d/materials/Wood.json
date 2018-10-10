@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Material",
+    "generator": "Material.toJSON"
+  },
+  "uuid": "2BA4E85B-FC2C-432F-87B3-7110D804458E",
+  "type": "MeshStandardMaterial",
+  "color": 9000475,
+  "roughness": 0.44432699083861876,
+  "metalness": 0,
+  "emissive": 4063232,
+  "map": "E716B696-2CC7-4C7F-9DDD-925583782B94",
+  "normalMap": "536F2806-479C-4F51-915C-3B40977CE99E",
+  "normalMapType": 0,
+  "normalScale": [1, 1],
+  "side": 2,
+  "opacity": 0.974277660324172,
+  "depthFunc": 3,
+  "depthTest": true,
+  "depthWrite": true,
+  "textures": [{
+    "uuid": "E716B696-2CC7-4C7F-9DDD-925583782B94",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1022,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/wood.jpg"
+  }, {
+    "uuid": "536F2806-479C-4F51-915C-3B40977CE99E",
+    "name": "",
+    "mapping": 300,
+    "repeat": [1, 1],
+    "offset": [0, 0],
+    "center": [0, 0],
+    "rotation": 0,
+    "wrap": [1001, 1001],
+    "format": 1023,
+    "minFilter": 1008,
+    "magFilter": 1006,
+    "anisotropy": 1,
+    "flipY": true,
+    "image": "./assets/materials/textures/wood-nm.png"
+  }
+  ]
+}
