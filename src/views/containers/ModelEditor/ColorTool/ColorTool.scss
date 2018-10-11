@@ -13,32 +13,19 @@
     max-width: calc(40px * 8);
   }
 
-  .color-tool__cell, {
+  .color-tool__cell {
     width: calc(100% / 8);
     cursor: pointer;
-    border: 1px solid $c__gray-1;
+    border: 1px solid transparent;
     box-sizing: border-box;
 
-    &:after {
-      content: "";
+    img {
       display: block;
-      padding-bottom: 100%;
+      width: 100%;
     }
 
-    &.selected__container {
-      margin-left: 16px;
-      border: 1px solid transparent;
-
-      .selected {
-        border: 1px solid $c__gray-1;
-        position: relative;
-        width: 100%;
-        &:before {
-          content: "";
-          display: block;
-          padding-top: 100%;
-        }
-      }
+    &.selected {
+      border: 2px solid $primary-light;
     }
   }
 

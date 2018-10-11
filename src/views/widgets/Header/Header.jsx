@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types";
-import * as Utils from "../../../utils/utils";
+import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./Header.scss");
 
@@ -47,6 +47,6 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  type: PropTypes.oneOf([...Utils.ObjGetValues(Header.types)]),
-  size: PropTypes.oneOf([...Utils.ObjGetValues(Header.sizes)]),
+  type: PropTypes.oneOf([...GetValues(Header.types)]),
+  size: PropTypes.oneOf([...GetValues(Header.sizes)]),
 };

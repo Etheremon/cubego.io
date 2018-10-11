@@ -5,6 +5,7 @@ import {getTranslate} from 'react-localize-redux';
 
 import withRouter from "react-router-dom/es/withRouter";
 import {EDITOR_COLORS} from "../../../../constants/general";
+import * as ObjUtils from "../../../../utils/objUtils";
 
 require("style-loader!./ColorTool.scss");
 
@@ -31,16 +32,13 @@ class _ColorTool extends React.Component {
     return (
       <div className={'color-tool'}>
         <div className={'color-tool__list'}>
-          {options.map((c, idx) => (
-            <div className={'color-tool__cell'} style={{backgroundColor: `rgba(${c.r},${c.g},${c.b},${c.a})`}} key={idx}
-                 onClick={() => {this.onColorChange(c)}}>
+          {ObjUtils.GetValues(options).map((c, idx) => (
+            <div className={`color-tool__cell ${value['material_id'] === c['material_id'] && value['variant_id'] === c['variant_id'] ? 'selected' : ''}`}
+                 key={idx} onClick={() => {this.onColorChange(c)}}>
+              <img src={c.img}/>
             </div>
           ))}
         </div>
-        
-        <div className="color-tool__cell selected__container">
-          <div className={'selected'} style={{backgroundColor: `rgba(${value.r},${value.g},${value.b},${value.a})`}}></div> 
-        </div>  
       </div>
     )
   }

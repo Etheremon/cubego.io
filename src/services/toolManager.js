@@ -1,6 +1,6 @@
 import {EDITOR_COLORS} from "../constants/general";
 import * as Utils from "../utils/utils";
-import {CloneDeep} from "../utils/objUtils";
+import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
 
 export class ToolManager {
@@ -15,7 +15,7 @@ export class ToolManager {
       models: props.models,
     };
 
-    Utils.ObjGetValues(props.tools).forEach((tool, idx) => {
+    GetValues(props.tools).forEach((tool, idx) => {
       this._tools[tool.key] = tool;
       if (tool.type === ToolTypes.mode && tool.value === true) {
         this._drawMode = tool;
@@ -207,10 +207,6 @@ export class ToolManager {
     return this._tools;
   }
 
-  get drawMode() {
-    return this._drawMode;
-  }
-
   getToolValue(toolKey) {
     return this._tools[toolKey].value;
   }
@@ -364,7 +360,7 @@ Tools.pasteLayer = ({key='paste-layer', ...extra}) => ({
     newModel.voxels = Utils.ObjFilter(newModel.voxels, (voxel) => {
       return voxel[currentLayer.z] !== currentLayer.idx;
     });
-    Utils.ObjGetValues(copiedLayer.voxels).forEach(voxel => {
+    GetValues(copiedLayer.voxels).forEach(voxel => {
       voxel[copiedLayer.z] = currentLayer.idx;
       newModel.voxels[`${voxel.x}-${voxel.y}-${voxel.z}`] = voxel;
     });

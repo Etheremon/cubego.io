@@ -1,7 +1,7 @@
 /**
- * Etheremon
- * https://www.etheremon.com/
- * Copyright 2017 Etheremon Team. All rights reserved.
+ * CubeGo
+ * https://www.cubego.io/
+ * Copyright 2018 CubeGo Team. All rights reserved.
  */
 
 // Global variables

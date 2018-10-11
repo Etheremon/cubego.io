@@ -1,3 +1,9 @@
+/**
+ * CubeGo
+ * https://www.cubego.io/
+ * Copyright 2018 CubeGo Team. All rights reserved.
+ */
+
 const NETWORKS = {
   mainnet: 'mainnet',
   rinkeby: 'rinkeby',

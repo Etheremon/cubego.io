@@ -6,6 +6,8 @@ voxel-web
 +- index.html                   index file
 +- webpack.*                    webpack configs
 +- assets                       files that are served directly outside webpack & react
+    +- js                       js files handling smart contract's communication
+                                & works as a portal talking to the smart contracts only (without touching the game logic)
 +- src                          main files          
     +- app.jsx                  entry
     +- config.js                general config

@@ -108,17 +108,8 @@ export const ObjFilter = (obj, func) => {
   return result;
 };
 
-export const ObjForEach = (obj, func) => {
-  let result = {};
-  Object.keys(obj).forEach((key, idx) => {
-    result[key] = func(obj[key], idx, key);
-  });
-  return result;
-};
 
-export const ObjGetValues = (obj) => {
-  return typeof(obj) === 'object' && obj !== null ? Object.keys(obj).map(key => obj[key]) : obj;
-};
+
 
 export const ObjIsEmpty = (obj) => (obj ? !Object.keys(obj).length : true);
 

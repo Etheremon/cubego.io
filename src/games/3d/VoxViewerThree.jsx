@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
-import {
-  Axis,
-  BoxHelper,
-  Grid,
-  HemisphereLight,
-  MeshBox,
-  MeshContainer,
-  OrthographicCamera, PointLight,
+import ThreeX, {
+  Axis, BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera,
+  PointLight,
 } from "../threeX";
-import * as Utils from "../../utils/utils";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
 import * as THREE from "three";
@@ -25,8 +19,7 @@ import plasticMaterialConfig from './materials/Plastic.json';
 import silverMaterialConfig from './materials/Silver.json';
 import stoneMaterialConfig from './materials/Stone.json';
 import woodMaterialConfig from './materials/Wood.json';
-
-import ThreeX from "../threeX";
+import {GetValues} from "../../utils/objUtils";
 
 const SIZE = 50;
 const SELECT_TOOL = 'move';
@@ -67,7 +60,7 @@ class VoxViewerThree extends Component {
     let elements = [<Grid width={sizeY*SIZE/2} height={sizeX*SIZE/2} linesHeight={sizeX} linesWidth={sizeY} color1={0xffffff} color2={0xffffff}
                           position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
                           key={`grid-${this.updateGridIdx}`}/>];
-    Utils.ObjGetValues(voxelData.voxels).forEach((voxel) => {
+    GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,

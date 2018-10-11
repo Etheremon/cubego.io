@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types";
-import * as Utils from "../../../utils/utils";
+import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./PageWrapper.scss");
 
@@ -24,5 +24,5 @@ PageWrapper.defaultProps = {
 };
 
 PageWrapper.propTypes = {
-  type: PropTypes.oneOf([...Utils.ObjGetValues(PageWrapper.types)]),
+  type: PropTypes.oneOf([...GetValues(PageWrapper.types)]),
 };

@@ -131,13 +131,7 @@
 
     .model-editor__right {
       position: relative;
-      &:before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding-top: 100%;
-      }
+      min-height: 300px;
     }
 
     .model-editor__2d {
@@ -176,11 +170,14 @@
   .model-editor__material {
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: space-between;
     .cube {
+      flex-basis: calc(100%/12);
+      flex-grow: 1;
       display: flex;
       align-items: center;
-      padding: 0 16px 4px 16px;
+      justify-content: center;
+      padding-bottom: 4px;
       font-weight: $font-weight-black;
       font-size: $font-size-small;
       box-sizing: content-box;

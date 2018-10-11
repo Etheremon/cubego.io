@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types";
-import * as Utils from "../../../utils/utils";
+import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./Text.scss");
 
@@ -28,5 +28,5 @@ Text.defaultProps = {
 };
 
 Text.propTypes = {
-  type: PropTypes.oneOf([...Utils.ObjGetValues(Text.types)]),
+  type: PropTypes.oneOf([...GetValues(Text.types)]),
 };

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types";
-import * as Utils from "../../../utils/utils";
+import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./Container.scss");
 
@@ -28,6 +28,6 @@ Container.defaultProps = {
 };
 
 Container.propTypes = {
-  size: PropTypes.oneOf([...Utils.ObjGetValues(Container.sizes)]),
+  size: PropTypes.oneOf([...GetValues(Container.sizes)]),
   text: PropTypes.bool,
 };

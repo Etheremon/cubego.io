@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Container, Rectangle} from "../pixix/index";
 import {fullColorHex} from "../utils";
-import * as Utils from "../../utils/utils";
 import PixiX from "../pixix";
+import {GetValues} from "../../utils/objUtils";
 
 class PaintScene extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class PaintScene extends Component {
       for (let j = 0; j < layer.size[layer.y]; j++) frame[i][j] = {};
     }
 
-    Utils.ObjGetValues(layer.voxels).forEach((voxel) => {
+    GetValues(layer.voxels).forEach((voxel) => {
       frame[voxel[layer.x]][voxel[layer.y]] = {
         voxel: voxel,
         color: voxel['color']['hex'] || fullColorHex(voxel['color']),

@@ -1,3 +1,9 @@
+/**
+ * CubeGo
+ * https://www.cubego.io/
+ * Copyright 2018 CubeGo Team. All rights reserved.
+ */
+
 function isEtherAccountActive() {
   return (account !== null && account !== undefined)
 }

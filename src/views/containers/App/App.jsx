@@ -1,27 +1,26 @@
 import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
+import {Route, Switch, withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-import { getTranslate } from 'react-localize-redux'
+import {getTranslate} from 'react-localize-redux'
 
 import Home from '../HomePage/Home.jsx'
 
-import { Actions } from '../../../actions/index.js'
+import {Actions} from '../../../actions/index.js'
 import * as Tracker from '../../../services/tracker'
 import * as LS from '../../../services/localStorageService';
-import * as Utils from "../../../utils/utils";
 
 import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
 import {URLS} from "../../../constants/general";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
-import { GetLocalizationData } from '../../../reducers/selectors';
+import {GetLocalizationData} from '../../../reducers/selectors';
 import Loading from '../../widgets/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
-
+import {GetValues} from "../../../utils/objUtils";
 
 
 require("style-loader!./App.scss");
@@ -35,7 +34,7 @@ class App extends React.Component {
     // Set window onload
     window.onLoadFunctions = {};
     window.onload = () => {
-      Utils.ObjGetValues(window.onLoadFunctions).forEach(func => {
+      GetValues(window.onLoadFunctions).forEach(func => {
         func && func()
       })
     }

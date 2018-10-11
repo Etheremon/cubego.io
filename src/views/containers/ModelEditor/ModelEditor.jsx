@@ -12,13 +12,14 @@ import {Container} from "../../widgets/Container/Container.jsx";
 import {PageWrapper} from "../../widgets/PageWrapper/PageWrapper.jsx";
 import {ToggleTool} from "./ToggleTool/ToggleTool.jsx";
 import {ToolManager, Tools, ToolTypes} from "../../../services/toolManager";
-import {CloneDeep} from "../../../utils/objUtils";
+import {CloneDeep, GetValues} from "../../../utils/objUtils";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
-import { SlideBar } from '../../widgets/SliderBar/SlideBar.jsx';
-import * as Utils from "../../../utils/utils";
+import {SlideBar} from '../../widgets/SliderBar/SlideBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 import {MODEL_TEMPLATES} from "../../../constants/model";
+import * as ObjUtils from "../../../utils/objUtils";
+import {CUBE_MATERIALS} from "../../../constants/cubego";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -30,6 +31,7 @@ class _ModelEditor extends React.Component {
     this.state = {
       showTemplates: false,
       scale2D: 1,
+      selectedMaterial: CUBE_MATERIALS[12],
     };
 
     this.tools = {
@@ -132,7 +134,7 @@ class _ModelEditor extends React.Component {
   onKeyDown(key) {
     if (this.isHoldingKey[key.keyCode]) return;
     this.isHoldingKey[key.keyCode] = true;
-    Utils.ObjGetValues(this.tools).forEach(tool => {
+    GetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStart({key: tool.key});
         this.forceUpdate();
@@ -142,7 +144,7 @@ class _ModelEditor extends React.Component {
 
   onKeyUp(key) {
     this.isHoldingKey[key.keyCode] = false;
-    Utils.ObjGetValues(this.tools).forEach(tool => {
+    GetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStop({key: tool.key});
         this.forceUpdate();
@@ -188,6 +190,7 @@ class _ModelEditor extends React.Component {
 
   render() {
     let {_t} = this.props;
+    let {selectedMaterial} = this.state;
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_DARK}>
@@ -363,22 +366,25 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__material'}>
-              {['diamond', 'glass', 'gold', 'iron', 'plastic', 'silver'].map((type, idx) => (
-                <div key={idx} className={`cube ${idx===1 ? 'active' : ''}`} tooltip={_t(type)} tooltip-position="bottom">
-                  <img src={require(`../../../shared/img/cubes/${type}.png`)}/>
+              {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => (
+                <div key={idx} className={`cube ${selectedMaterial.name === material.name ? 'active' : ''}`}
+                     tooltip={_t(material.name)} tooltip-position="bottom"
+                     onClick={() => {this.setState({selectedMaterial: material})}}>
+                  <img src={material.img}/>
                   50
                 </div>
               ))}
-              <div className={'space-rest'}>
-              </div>
+              {/*<div className={'space-rest'}>*/}
+              {/*</div>*/}
             </div>
 
             <div className="model-editor__tool">
               <div className={'model-editor__colors'}>
                 <ColorTool toolKey={this.tools.color.key}
-                            value={this.toolManager.getToolValue(this.tools.color.key)}
-                            options={this.tools.color.options}
-                            onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}/>
+                           value={this.toolManager.getToolValue(this.tools.color.key)}
+                           options={selectedMaterial.variants}
+                           onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}
+                />
               </div>
 
               <div className={'model-editor__layer'}>
