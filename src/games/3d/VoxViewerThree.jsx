@@ -47,7 +47,6 @@ class VoxViewerThree extends Component {
   }
 
   renderVoxel(voxelData) {
-    console.log(voxelData);
     if (!voxelData.voxels) {
       return [];
     }
@@ -67,7 +66,7 @@ class VoxViewerThree extends Component {
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
-      elements.push(<MeshBox size={SIZE}
+      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
                              ref={(ref) => {
                                this.objects.push(ref)
                              }}
@@ -116,17 +115,6 @@ class VoxViewerThree extends Component {
       y: SIZE + SIZE * this.state.data.spaceSize.z[1] - this.offsetVector.y,
       z: SIZE + SIZE * this.state.data.spaceSize.y[1] - this.offsetVector.z
     };
-    // let center = {
-    //   x: (position2.x + position1.x),
-    //   y: (position2.y + position1.y),
-    //   z: (position2.z + position1.z)
-    // };
-    // let sizeX = this.state.data.spaceSize.x[1] - this.state.data.spaceSize.x[0] + 1;
-    // let sizeZ = this.state.data.spaceSize.y[1] - this.state.data.spaceSize.y[0] + 1;
-    // let sizeY = this.state.data.spaceSize.z[1] - this.state.data.spaceSize.z[0] + 1;
-    // let bottomSize = Math.max(sizeX, sizeZ);
-    // let size = {x: bottomSize * SIZE, y: sizeY * SIZE, z: bottomSize * SIZE};
-    // this.boxHelper.setFromCenterAndSize(center, size);
     this.boxHelper.min = min;
     this.boxHelper.max = max;
   }

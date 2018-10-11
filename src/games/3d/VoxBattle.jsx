@@ -277,12 +277,16 @@ class VoxBattle extends Component {
     }, 5000)
   }
 
+  castSkill() {
+    this.players[0].createShieldParticle();
+  }
+
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis size={5}/>
         <GUI>
-          <GUISimpleButton left={'-75px'} value={'1'}/>
+          <GUISimpleButton left={'-75px'} value={'1'} onClick={this.castSkill.bind(this)}/>
           <GUISimpleButton left={'-25px'} value={'2'}/>
           <GUISimpleButton left={'25px'} value={'3'}/>
           <GUISimpleButton left={'75px'} value={'4'}/>

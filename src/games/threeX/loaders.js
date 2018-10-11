@@ -7,7 +7,6 @@ function loadMaterial(id, jsonObject) {
   let textures = {};
   let material;
   jsonObject.textures.forEach((texture) => {
-    // textures[texture.uuid] = new THREE.TextureLoader().load('./assets/materials/textures/' + texture.image);
     if (texture.type === 'cube') {
       let path = './assets/skybox/CloudyCrown_01_Midday/CloudyCrown_Midday_';
       let format = '.jpg';

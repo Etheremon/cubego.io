@@ -12,6 +12,10 @@ export class BabylonGUISimpleButton extends BabylonComponent {
     button.background = "green";
     button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     button.left = props.left || "-50px";
+    if (props.onClick) {
+      button.onPointerClickObservable.add(props.onClick);
+    }
+
     guiSimpleButton.renderer = button;
     return guiSimpleButton;
   }
