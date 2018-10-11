@@ -2,7 +2,7 @@ import {call, fork, put, select, take, takeLatest, all} from 'redux-saga/effects
 
 import * as ActionTypes from '../actions/action_types';
 import {Actions} from '../actions/index';
-import * as Api from '../services/api';
+import * as Api from '../services/api/utils';
 import {GetLoggedInUserId, GetUserBasicInfo, GetUserCubegon} from "../reducers/selectors";
 
 function* fetchBasicInfo(userId) {

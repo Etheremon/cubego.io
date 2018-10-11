@@ -14,10 +14,7 @@ class Footer extends React.Component {
   }
 
   render() {
-    let {_t} = this.props;
-    let size = Container.sizes.NORMAL;
-    if (this.props.textContainer) size = Container.sizes.SMALL;
-    if (this.props.big) size = Container.sizes.BIG;
+    let {_t, size} = this.props;
 
     return (
       <div className="footer__wrapper">

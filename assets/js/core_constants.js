@@ -27,7 +27,6 @@ const CONTRACTS = {
   }
 };
 
-// front end callback code
 const RESULT_CODE = {
   SUCCESS: 0,
   ERROR_CLASS_NOT_FOUND: 1,
@@ -40,5 +39,6 @@ const RESULT_CODE = {
   // extra error code
   ERROR_SERVER: 20,
   NO_ACCOUNT_DETECTED: 21,
-  ERROR_PARAMS: 22
+  ERROR_PARAMS: 22,
 };
+

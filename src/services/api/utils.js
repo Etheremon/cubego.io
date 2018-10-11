@@ -1,22 +1,9 @@
-const GOOGLE_SHEET_JSON = 'https://spreadsheets.google.com/feeds/list/16h5Oja2Xw3wgw27VnAgN-W2bel5ms5a5z1U_jTqrCeY/1/public/values?alt=json-in-script';
-
-
-/**
- * Localization
- */
-export const getLocalization = () => {
-  return new Promise(function(resolve, reject) {
-    sendGetRequest({url: GOOGLE_SHEET_JSON, resolve, reject});
-  });
-};
-
-
 /**
  * Convert to promise function
  * @param fn
  * @returns {Function}
  */
-const toPromiseFunction = (fn) => {
+export const toPromiseFunction = (fn) => {
   return function (...args) {
     return new Promise((resolve, reject) => {
       fn(...args, getCallbackFunc(resolve, reject))
@@ -43,7 +30,7 @@ export const getCallbackFunc = (resolve, reject) => {
   }
 };
 
-const sendGetRequest = ({url, resolve, reject}) => {
+export const sendGetRequest = ({url, resolve, reject}) => {
   return $
     .ajax({
       url: url,
@@ -58,7 +45,7 @@ const sendGetRequest = ({url, resolve, reject}) => {
     })
 };
 
-const sendPostRequest = ({url, data, resolve, reject}) => {
+export const sendPostRequest = ({url, data, resolve, reject}) => {
   return $
     .ajax({
       url: url,

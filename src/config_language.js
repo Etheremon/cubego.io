@@ -1,6 +1,6 @@
 import {addTranslation, initialize} from "react-localize-redux";
 import * as LS from "./services/localStorageService";
-import { getLocalization } from './services/api';
+import * as GeneralApi from "./services/api/generalApi";
 
 export const Languages = [
   { name: 'English', code: 'en', country: 'gb'},
@@ -18,7 +18,7 @@ export const DefaultLanguage = 'en';
 // Get localization data
 const fetchLocalization = async () => {
 
-  const data = await getLocalization();
+  const data = await GeneralApi.GetLocalization();
   let localization = {};
 
   const json = JSON.parse(data.response

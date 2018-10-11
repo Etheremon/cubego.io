@@ -15,11 +15,12 @@ import {ToolManager, Tools, ToolTypes} from "../../../services/toolManager";
 import {CloneDeep, GetValues} from "../../../utils/objUtils";
 import * as modelUtils from "../../../utils/modelUtils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
-import {SlideBar} from '../../widgets/SliderBar/SlideBar.jsx';
+import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 import {MODEL_TEMPLATES} from "../../../constants/model";
 import * as ObjUtils from "../../../utils/objUtils";
 import {CUBE_MATERIALS} from "../../../constants/cubego";
+import Footer from "../../components/bars/Footer/Footer.jsx";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -78,15 +79,11 @@ class _ModelEditor extends React.Component {
 
       nextLayer: {
         hotKey: 'C',
-        onClick: () => {this.onToolChange(
-          this.tools.layerIndex.key, this.toolManager.getToolValue(this.tools.layerIndex.key) + 1
-        )}
+        onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.nextLayer()}
       },
       prevLayer: {
         hotKey: 'Z',
-        onClick: () => {this.onToolChange(
-          this.tools.layerIndex.key, this.toolManager.getToolValue(this.tools.layerIndex.key) - 1
-        )}
+        onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
 
       color: Tools.color({}),
@@ -194,7 +191,7 @@ class _ModelEditor extends React.Component {
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_DARK}>
-        <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} onBackClicked={() => {}}/>
+        <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
 
@@ -388,17 +385,20 @@ class _ModelEditor extends React.Component {
               </div>
 
               <div className={'model-editor__layer'}>
-                <SlideBar valMin={this.toolManager.layer.fromZ} valMax={this.toolManager.layer.toZ}
-                          valStep={this.toolManager.layer.fromZ < this.toolManager.layer.toZ ? 1 : -1}
-                          value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
-                          onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
-                          label={_t('select_layer')}
+                <PickerBar ref={bar => {this.pickerBar = bar}}
+                           valMin={this.toolManager.layer.fromZ} valMax={this.toolManager.layer.toZ}
+                           valStep={this.toolManager.layer.fromZ < this.toolManager.layer.toZ ? 1 : -1}
+                           value={this.toolManager.getToolValue(this.tools.layerIndex.key)}
+                           onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
+                           label={_t('select_layer')}
                 />
               </div>
             </div>
           </Container>
 
         </div>
+
+        <Footer size={Container.sizes.BIG} />
       </PageWrapper>
     )
   }
