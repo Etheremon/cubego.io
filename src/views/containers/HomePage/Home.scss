@@ -5,7 +5,6 @@
 
 .home-page {
   color: $gray-dark;
-  padding-bottom: 100px;
 
   .home__banner {
     position: relative;
@@ -56,15 +55,32 @@
       padding-bottom: 60px;
       overflow: hidden;
 
-      img {
-        display: block;
+
+      .cubegon-card {
         border-radius: 16px;
         box-shadow: 5px 5px 16px -2px rgba(143,124,120,1) !important;
         margin: 8px 0 8px 0;
         width: 20%;
-        object-fit: cover;
-        height: 200px;
         z-index: 1;
+
+        .cubegon-name {
+          color: $white;
+          font-family: $f__baloobha;
+          font-size: $font-size-header-1;
+        }
+
+        .cubegon-creator {
+          padding-bottom: 16px;
+          color: $white;
+          font-family: $f__overpass;
+          font-size: $font-size-tiny;
+        }
+
+        img {
+          height: 200px;
+          display: block;
+          object-fit: cover;
+        }
 
         &:nth-child(1) {
           background-image: url('../../../shared/img/background/background_intro_1.png');
@@ -74,7 +90,7 @@
           opacity: 0.8;
           order: 1;
 
-          &:hover ~ img {
+          &:hover ~ div {
             transform: scale(1);
           }
         }
@@ -87,7 +103,7 @@
           opacity: 0.8;
           order: 3;
 
-          &:hover ~ img {
+          &:hover ~ div {
             transform: scale(1);
           }
         }
@@ -262,7 +278,7 @@
     padding-bottom: 20px;
 
     .home__modes-title__container {
-      background-color: rgba(255, 106, 0, 0.6);
+      background-color: rgba(25, 50, 78, 1);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -298,12 +314,108 @@
     //}
   }
 
+  .home__channels {
+    padding-top: 24px;
+    padding-bottom: 48px;
+    text-align: center;
+    .channels__header {
+      b {
+        font-size: $font-size-header-3 !important;
+        color: rgba(238,116,47,1) !important;
+      }
+    }
+
+    .channel-listview {
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      .channel-item {
+        width: 128px;
+        height: 128px;
+        margin: 0 16px;
+        text-align: center;
+        padding: 8px 16px;
+        border: 10px solid $white;
+        border-radius: 8px;
+        box-shadow: 5px 5px 31px 3px rgba(163,124,163,1);
+        position: relative;
+
+        @include mobile {
+          margin-bottom: 16px;
+          width: 88px;
+          height: 88px;
+        }
+
+        .name {
+          font-family: $f__vt323;
+          font-size: $font-size-header-1;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 3px;
+        }
+
+        &:nth-child(1) {
+          background-image: url('../../../shared/img/background/partnership_background_1.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          .name {
+            color: #6e42be;
+          }
+        }
+
+        &:nth-child(2) {
+          background-image: url('../../../shared/img/background/partnership_background_2.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          .name {
+            color: #ff6c00;
+          }
+        }
+
+        &:nth-child(3) {
+          background-image: url('../../../shared/img/background/partnership_background_3.png');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          .name {
+            color: #2294c4;
+          }
+        }
+
+        img {
+          width: 70%;
+          height: auto;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
   .home__partnership {
+    margin-top: 64px;
     padding-top: 20px;
     padding-bottom: 20px;
-    background-color: $white-blue;
+    background-color: rgba(189,223,244,1);
     text-align: center;
-    display: none !important;
+
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-image: url('../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
+    background-clip: padding-box;
+    box-sizing: border-box;
+
+    .partnership-header {
+      b {
+        font-size: $font-size-header-3;
+        color: rgba(25,67,121,1) !important;
+      }
+    }
 
     .home__partnership__imgs {
       display: flex;
@@ -315,7 +427,7 @@
 
       a {
         width: 160px;
-        margin: 0 4px 60px 4px;
+        margin: 0 4px 16px 4px;
         img {
           height: 80px;
           margin-bottom: 8px;

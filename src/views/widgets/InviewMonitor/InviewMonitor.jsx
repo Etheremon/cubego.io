@@ -75,6 +75,9 @@ Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=Int
       ((onInView || onNotInView) && repeatOnInView);
 
     if (nowInView && !toggleBehavior) {
+
+      
+
       this.setState({
         newClassName: classNameInView,
         childProps: childPropsInView
@@ -113,6 +116,7 @@ Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=Int
       // check regular in/out of view
       if (nowInView) {
         // just entered view
+
         this.setState({
           newClassName: classNameInView,
           childProps: childPropsInView
@@ -157,7 +161,7 @@ Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=Int
     //   return React.cloneElement(React.Children.only(children), props);
     // })
 
-    const className = `${children.props.className} ${newClassName}`;
+    const className = `${children.props.className ? children.props.className : ''} ${newClassName}`;
     const props = {
       className,
       ref: e => {

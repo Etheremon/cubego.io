@@ -1,0 +1,60 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.widget__input {
+  padding: 8px 0;
+
+  label, input {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  label {
+    color: $gray-dark-sub;
+    padding-bottom: 2px;
+  }
+
+  input {
+    padding: 16px;
+    font-weight: $font-weight-semi-bold;
+    background-color: transparent;
+    border: solid 1px $gray;
+    @include border-radius(4px);
+    &.with-icon {
+      padding-left: 32px !important;
+    }
+  }
+  input:disabled {
+    border: 0;
+    background-color: $gray-light;
+    color: $gray-dark !important;
+  }
+  input:focus {
+    border: solid 1px $primary;
+    outline: none;
+  }
+  input::placeholder {
+    color: $gray;
+    font-weight: $font-weight-light;
+  }
+
+  .widget__input-box {
+    position: relative;
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      @include transform(translateY(-50%));
+      font-size: 14px;
+    }
+  }
+}
+
+.widget__input.small {
+  input {
+    padding: 8px 12px;
+  }
+}

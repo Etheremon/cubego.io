@@ -7,8 +7,8 @@
   width: 100%;
   font-size: $font-size-small !important;
   padding: 32px 8px;
-  border-top: 40px solid black;
-  border-image: url('../../../../shared/img/assets/wall_pattern.svg') 130 10 round;
+  border-top: 40px solid transparent;
+  border-image: url('../../../../shared/img/assets/wall_pattern_1.svg') 100 0 round;
   background-clip: padding-box;
   background-color: rgb(6, 106, 141);
   box-sizing: border-box;

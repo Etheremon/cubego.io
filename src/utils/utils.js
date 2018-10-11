@@ -129,7 +129,7 @@ export const HasMetamaskLoggedIn = () => (!!window.account);
  * Url, Query related
  */
 
-export const handleFilter = (push, query, filterValues) => {
+export const handleJoinQueryURL = (push, query, filterValues) => {
   let newQuery = {...query, ...filterValues};
 
   let strQuery = [];
@@ -309,3 +309,10 @@ export const capitalize = (str) => {
 export const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max)
 };
+
+/**
+ * nearest position between a range
+ */
+ export const nearestPosition = (value, range, offSet) => {
+   return range.find(ele => Math.abs(value - ele) <= offSet)
+ }

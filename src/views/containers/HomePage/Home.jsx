@@ -29,6 +29,9 @@ const _features = [
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
 ];
+const channels = [{img: require('../../../shared/img/socialMedia/icon_discord.png'), name: 'DISCORD'},
+                  {img: require('../../../shared/img/socialMedia/icon_twitter.png'), name: 'TWITTER'},
+                  {img: require('../../../shared/img/socialMedia/icon_telegram.png'), name: 'TELEGRAM'}];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -70,6 +73,9 @@ class HomePage extends React.Component {
       {component: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
       {component: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
     ];
+    const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'}, 
+                          {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
+                          {img: require('../../../shared/img/assets/model_example_3.png'), name: 'VEXIGON', creator: 'Nhu'}];
 
     const customIndicators = [
       <div className={'feature-indicator'} key={'btn-1'} >{_t('trading')}</div>,
@@ -80,7 +86,7 @@ class HomePage extends React.Component {
 
     return (
       <PageWrapper>
-        <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home-page'}/>
+        <Navbar size={Container.sizes.BIG} pathName={pathName} minifying navbarType={'home'} scrollingElement={'home-page'}/>
 
         <div className={'home-page'} id={'home-page'}>
 
@@ -97,13 +103,13 @@ class HomePage extends React.Component {
                 <p>{_t('home.opening')}</p>
               </div>
               <div className="home__intro-cubego">
-                {[
-                  require('../../../shared/img/assets/model_example_1.png'), 
-                  require('../../../shared/img/assets/model_example_3.png'),
-                  require('../../../shared/img/assets/model_example_2.png')].map((cube, idx) => (
-                    <img key={idx} src={cube}/>
-                  ))
-                }              
+                {introCubegon.map((cubegon, idx) => (
+                  <div className={'cubegon-card'} key={idx}>
+                    <img key={idx} src={cubegon.img}/>
+                    <div className={'cubegon-name'}>{cubegon.name}</div>
+                    <div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>
+                  </div>
+                ))}             
               </div>
             </Container>
           </InviewMonitor>
@@ -139,14 +145,10 @@ class HomePage extends React.Component {
                     </div>
                   </InviewMonitor>
 
-                  <InviewMonitor
-                    classNameNotInView='vis-hidden'
-                    classNameInView='animated zoomIn'
-                  >
-                    <div className={'image'} >
-                      <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
-                    </div>
-                  </InviewMonitor>
+
+                  <div className={'image'} >
+                    <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
+                  </div>
                 </div>
               </Container>
 
@@ -167,14 +169,9 @@ class HomePage extends React.Component {
                               className={'btn-btn'} onClick={() => {}}/>
                   </div>
                 </InviewMonitor>
-                <InviewMonitor
-                  classNameNotInView='vis-hidden'
-                  classNameInView='animated zoomIn'
-                >
-                  <div className={'image'}>
-                    <img src={require('../../../shared/img/banner/index_banner.png')}/>
-                  </div>
-                </InviewMonitor>
+                <div className={'image'}>
+                  <img src={require('../../../shared/img/banner/index_banner.png')}/>
+                </div>
                 </div>
               </Container>
 
@@ -195,14 +192,10 @@ class HomePage extends React.Component {
                                 className={'btn-btn'} onClick={() => {}}/>
                     </div>
                   </InviewMonitor>
-                  <InviewMonitor
-                    classNameNotInView='vis-hidden'
-                    classNameInView='animated zoomIn delay-2s'
-                  >
-                    <div className={'image'}>
-                      <img src={require('../../../shared/img/banner/index_banner.png')}/>
-                    </div>
-                  </InviewMonitor>
+    
+                  <div className={'image'}>
+                    <img src={require('../../../shared/img/banner/index_banner.png')}/>
+                  </div>
                 </div>
               </Container>
     
@@ -211,7 +204,7 @@ class HomePage extends React.Component {
           {/* end home__game-detail */}
 
           <div className={'home__partnership'} id={'partners'}>
-            <HeaderHighlight>
+            <HeaderHighlight className={'partnership-header'}>
               <b>{_t('in_partnership_with')}</b>
             </HeaderHighlight>
             <div className={'home__partnership__imgs'}>
@@ -221,6 +214,24 @@ class HomePage extends React.Component {
             </div>
           </div>
           {/* end home__partnership */}
+
+          <div className="home__channels">
+            <HeaderHighlight className={'channels__header'}>
+              <b>{_t('channels')}</b>
+            </HeaderHighlight>
+            <div className="channel-listview">
+              {
+                channels.map((item, idx) => 
+                  <div className="channel-item" key={idx}>
+                    <img src={item.img}/>
+                    <div className={'name'}>{item.name}</div>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+
+          {/* end home__channels */}
 
           {/*<InviewMonitor*/}
             {/*classNameNotInView='vis-hidden'*/}

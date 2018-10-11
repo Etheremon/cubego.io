@@ -10,6 +10,8 @@ import { Container } from '../../widgets/Container/Container.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
+import * as Utils from "../../../utils/utils";
+import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 
 require("style-loader!./ReviewPage.scss");
 
@@ -21,13 +23,22 @@ class ReviewPage extends React.Component {
     super(props);
     this.state = {
       sliderValue: energyRange[Math.round(energyRange.length / 2)],
+      hiddenSliderIndicators: [0, energyRange[energyRange.length - 1]],
     }
 
     this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
   handleSliderChange(event) {
-    this.setState({sliderValue: event.target.value});
+    const shouldHiddenIndicator = Utils.nearestPosition(event.target.value, energyRange, 2);
+
+    let newHidden = [0, energyRange[energyRange.length - 1]];
+    if (shouldHiddenIndicator && newHidden.indexOf(shouldHiddenIndicator) === -1) {
+      newHidden.push(shouldHiddenIndicator);
+    }
+
+    this.setState({sliderValue: event.target.value, hiddenSliderIndicators: newHidden});
+    
   }
 
   render() {
@@ -61,11 +72,25 @@ class ReviewPage extends React.Component {
               </div>
 
               <div className="model-info">
+                {/* <InviewMonitor
+                  classNameNotInView='vis-hidden'
+                  classNameInView='animated swirl-in-fwd'
+                > */}
                 <div className="model-logo__container">
                   <div className="hexagon-img"></div>
                   <img src={require('../../../shared/img/icons/icon-stats.png')} />
                 </div>
-                <span>VEXIGON</span>
+                {/* </InviewMonitor> */}
+      
+                {/* <InviewMonitor
+                  classNameNotInView='vis-hidden'
+                  classNameInView='animated scale-in-hor-left'
+                > */}
+                <span>VEXIGON <img src={require('../../../shared/img/icons/icon_pencil.png')} /> </span>
+                
+                {/* </InviewMonitor> */}
+                  
+
               </div>
             </div>
 
@@ -125,11 +150,20 @@ class ReviewPage extends React.Component {
                       <div className="slider-bar__container">
                         {
                           energyRange.map((item, idx) => 
-                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx * 1}px)`}} className="indicator"><div className={'line'}><div>{item}</div></div></div>
+                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx * 1}px)`}} 
+                            className="indicator">
+                              <div className={`line ${this.state.hiddenSliderIndicators.indexOf(item) === -1 ? '' : 'hidden'}`}>
+                                <div>{item}</div>
+                              </div>
+                            </div>
                           )
                         }
                         <div className={"slider"}>
-                          <input style={{background: `linear-gradient(to right, #f37321 0%, #f37321 ${sliderFilled}%, #dcdbdb ${sliderFilled}%, #dcdbdb 100%)`}} type="range" min={energyRange[0]} max={energyRange[energyRange.length - 1]} value={this.state.sliderValue} onChange={this.handleSliderChange} />
+                          <input style={{background: `linear-gradient(to right, #f37321 0%, #f37321 ${sliderFilled}%, #dcdbdb ${sliderFilled}%, #dcdbdb 100%)`}} 
+                          type="range" min={energyRange[0]} 
+                          max={energyRange[energyRange.length - 1]} 
+                          value={this.state.sliderValue} 
+                          onChange={this.handleSliderChange} />
                         </div>
                       </div>
                   </div>
