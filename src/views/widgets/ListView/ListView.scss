@@ -1,0 +1,86 @@
+@import '../../styles/mixins';
+@import '../../styles/colors';
+@import '../../styles/variables';
+
+.list-view__wrapper {
+  width: 100%;
+  position: relative;
+}
+.list-view__header {
+  text-align: left;
+  color: inherit;
+}
+.list-view__header .list-view__num-cell {
+  display: inline-block;
+  margin: 0 !important;
+  color: inherit;
+  opacity: 0.8;
+}
+.list-view__lefts {
+  float: left;
+  height: 42px;
+  display: flex;
+  align-items: center;
+}
+.list-view__rights {
+  float: right;
+}
+.list-view__rights .list-view__right-item {
+  display: inline-block;
+}
+
+.list-view__sort-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.list-view__sort-box:hover .dropdown.item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white !important;
+}
+.list-view__sort-box .dropdown.item {
+  color: white;
+}
+
+.list-view__search-box input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  padding: 13px 16px !important;
+  font-size: 1rem !important;
+}
+@media only screen and (max-width: 500px) {
+  .list-view__search-box input {
+    width: 120px;
+  }
+}
+.list-view__search-box .icon {
+  color: white;
+  opacity: 1;
+}
+.list-view__search-box input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.list-view__search-box input::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.list-view__search-box input:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.list-view__search-box input:-moz-placeholder { /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+.list-view__items-container--extra {
+  color: inherit;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.list-view__pagination {
+  margin-top: 24px;
+  text-align: center;
+}

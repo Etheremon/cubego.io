@@ -44,7 +44,7 @@ class ModelDetail extends React.Component {
                 3: {offset: 0.02},
                 4: {offset: 0.02}
           },
-      chartArea: {width:'90%', height:'90%'},
+      chartArea: {width:'85%', height:'85%'},
       pieHole: 0.1,
       animation:{
         duration: 1000,
@@ -90,8 +90,16 @@ class ModelDetail extends React.Component {
                   <div className="hexagon-img"></div>
                   <img src={require('../../../shared/img/icons/icon-stats.png')} />
                 </div>
-                <span>VEXIGON</span>
+                <span>VEXIGON <img src={require('../../../shared/img/icons/icon_pencil.png')} /></span>
               </div>
+
+              <div className="model-action">
+                <ButtonNew label={_t('destroy')}
+                        className={'destroy__button'} size={ButtonNew.sizes.NORMAL}/>
+                <ButtonNew label={_t('rebuild')}
+                        className={'rebuild__button'} size={ButtonNew.sizes.NORMAL}/>
+              </div>
+
             </div>
 
             <div className="model-stats">
@@ -115,7 +123,13 @@ class ModelDetail extends React.Component {
               <div className="profile__container">
                 <div className={'cube-statistic'}>
                 </div>
-                <div id={'piechart'} className="pie-chart"></div>
+                <div className="pie-chart__container">
+                  <div id={'piechart'} className="pie-chart"></div>
+                  <img src={require('../../../shared/img/background/background_circle.png')} />
+                  <div className="octagon-img">
+                  {250}
+                  </div>
+                </div>
               </div>
 
               <Text className={'detail-moves header'} type={Text.types.H2} children={_t('moves')} />
@@ -134,6 +148,21 @@ class ModelDetail extends React.Component {
                         <div className={'name'}>{_t(item.name)}</div>
                       </div>
                     ))}
+              </div>
+
+              <div className="profile-action__container">
+                <ButtonNew label={_t('go_to_battle')}
+                        className={'go-to-battle__button'} size={ButtonNew.sizes.NORMAL}/>
+
+                <div className="trade__container">
+                  <ButtonNew label={_t('transfer')}
+                          className={'transfer__button'} size={ButtonNew.sizes.NORMAL}/>
+                  <ButtonNew label={_t('sell')}
+                  className={'sell__button'} size={ButtonNew.sizes.NORMAL}/>
+                </div>
+                
+                <ButtonNew label={_t('top_up_energy')}
+                        className={'top-up-energy__button'} size={ButtonNew.sizes.NORMAL}/>
               </div>
             </div>
 

@@ -40,6 +40,7 @@
     @include mobile {
       height: 500px;
       width: 100%;
+      margin-bottom: 24px;
     }
 
     .model-review {
@@ -47,18 +48,30 @@
       width: 90%;
       background: blue;
       border-radius: 16px;
+      margin-bottom: 24px;
     }
 
     .model-info {
+      width: 60%;
       height: 20%;
       display: flex;
       align-items: center;
 
       span {
+        text-align: center;
+        flex-grow: 1;
         margin-left: 3px;
         padding: 16px 32px;
         border-top: 1px solid $white;
         border-bottom: 1px solid $white;
+        display: flex;
+        align-items: center;
+        img {
+          display: block;
+          margin-left: 16px;
+          height: 8px;
+          transform: rotate(-240deg);
+        }
       }
 
       .model-logo__container {
@@ -236,16 +249,14 @@
               margin-bottom: 32px;
               border-radius: 5px;
 
+              &.hidden {
+                background: transparent;
+              }
+
               div {
                 position: absolute;
                 bottom: -100%;
                 left: -50%;
-              }
-            }
-
-            &:nth-child(1), &:nth-last-child(2) {
-              .line {
-                background: transparent;
               }
             }
           }

@@ -1,7 +1,7 @@
 @import '../../styles/colors';
 @import '../../styles/mixins';
 @import '../../styles/variables';
-
+@import '../../styles/fonts';
 
 .widget__header-highlight {
   font-size: 22px;
@@ -9,6 +9,7 @@
   font-weight: $font-weight-normal;
   margin-bottom: 40px;
   line-height: 30px;
+  font-family: $f__vt323;
 
   b {
     font-size: $font-size-header-2;

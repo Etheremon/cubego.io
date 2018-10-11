@@ -21,7 +21,7 @@ import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import {GetValues} from "../../../utils/objUtils";
-
+import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
 
 require("style-loader!./App.scss");
 
@@ -123,6 +123,7 @@ class App extends React.Component {
 
           <Route path={`/${URLS.CUBEGONS}`} component={ModelDetail}/>
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
+          <Route path={`/${URLS.MY_CUBEGOES}`} component={MyCubegoes}/>
 
           <Route path={`/${URLS.BATTLE}`} component={ComingSoon}/>
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>

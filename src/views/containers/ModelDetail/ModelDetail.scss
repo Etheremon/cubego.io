@@ -22,10 +22,11 @@
     @include mobile {
       height: 500px;
       width: 100%;
+      margin-bottom: 24px;
     }
 
     .model-review {
-      height: 80%;
+      height: 70%;
       width: 90%;
       background: blue;
       border-radius: 16px;
@@ -35,12 +36,23 @@
       height: 20%;
       display: flex;
       align-items: center;
+      margin-top: 24px;
+      margin-bottom: 26px;
 
       span {
         margin-left: 3px;
         padding: 16px 32px;
         border-top: 1px solid $white;
         border-bottom: 1px solid $white;
+
+        display: flex;
+        align-items: center;
+        img {
+          display: block;
+          margin-left: 16px;
+          height: 8px;
+          transform: rotate(-240deg);
+        }
       }
 
       .model-logo__container {
@@ -106,10 +118,44 @@
 
     }
 
-    .profile__container {
-      .pie-chart {
-        width: 50%;
+    .profile-action__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
 
+    .profile__container {
+
+      .pie-chart__container {
+        position: relative;
+        width: 50%;
+        img {
+          position: absolute;
+          top: calc(50% - 3px);
+          left: calc(50% - 3px);
+          height: 130%;
+          transform: translate(-50%, -50%);
+          display: block;
+        }
+
+        .octagon-img {
+          color: $dark;
+          line-height: 44px;
+          text-align: center;
+          position: absolute;
+          background: $white;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 44px;
+          height: 44px;
+          -webkit-clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+          clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+      }
+      
+      .pie-chart {
         path {
           stroke-width: 0;
         }

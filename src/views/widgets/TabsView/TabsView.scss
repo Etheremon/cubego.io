@@ -1,0 +1,87 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.tabs-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 32px solid $regal_blue;
+
+  .group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    text-transform: capitalize;
+    height: 44px;
+    width: 168px;
+    background: $regal_blue;
+    margin: 0 24px;
+    color: $white;
+
+    &:before {
+      position: absolute;
+      box-sizing: border-box;
+      content: '';
+      width: 24px;
+      height: 44px;
+      transform: skewX(-20deg);
+      left: -12px;
+      top: 0px;
+      background: $regal_blue;
+    }
+
+    &:after {
+      position: absolute;
+      box-sizing: border-box;
+      content: '';
+      width: 24px;
+      height: 44px;
+      transform: skewX(20deg);
+      right: -12px;
+      top: 0px;
+      background: $regal_blue;
+    }
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 12px;
+      transform: translateX(-50%);
+    }
+
+    &.active {
+      font-size: $font-size-bigger;
+      color: yellow;
+      border-top: 2px solid yellow;
+
+      &:before, &:after {
+        border-top: 2px solid yellow;
+        top: -2px; 
+      }
+
+      &:before {
+        border-left: 2px solid yellow;
+      }
+
+      &:after {
+        border-right: 2px solid yellow;
+      }
+      
+    }
+    &.active, &:hover {
+
+    }
+  }
+
+  &.centered {
+    justify-content: center;
+  }
+}
