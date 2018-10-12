@@ -89,7 +89,7 @@ class MyCubegoes extends React.Component {
             }}/>
 
             <ListView
-              itemList={Utils.ObjGetValues(sampleCubegon)}
+              itemList={Object.values(sampleCubegon)}
               listItemName={_t('cubegons')}
               handleGenerateCardView={this.handleGenerateCubegonCard}
               filters={[

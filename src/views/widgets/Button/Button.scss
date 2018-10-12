@@ -61,6 +61,15 @@
     }
   }
 
+  &.turquoise {
+    background-color: #77E9E5;
+    border-bottom: 4px solid #4FA6AB;
+
+    &:hover {
+      background-color: rgb(100, 163, 161);
+    }
+  }
+
   &.black_no_shadow {
     background-color: $black20;
     border-bottom: 0px solid transparent;

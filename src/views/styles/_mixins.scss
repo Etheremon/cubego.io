@@ -374,3 +374,21 @@ $computer-width: 992px;
   animation: scale-in-ver-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   animation-delay: $delay;
 }
+
+@keyframes expand {
+  0% {
+    opacity: 0;
+    padding: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    padding: 24px 0 48px 0;
+    height: auto;
+  }
+}
+
+@mixin expand($delay: 0s) {
+  animation: expand 0.8s cubic-bezier(.81,.09,.77,.17) both;
+  animation-delay: $delay;
+}
