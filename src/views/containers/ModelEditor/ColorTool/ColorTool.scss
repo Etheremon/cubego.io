@@ -5,16 +5,15 @@
 
 .color-tool {
   display: flex;
+  justify-content: center;
 
   .color-tool__list {
     display: flex;
-    flex-grow: 1;
     flex-wrap: wrap;
-    max-width: calc(40px * 8);
   }
 
   .color-tool__cell {
-    width: calc(100% / 8);
+    width: 40px;
     cursor: pointer;
     border: 1px solid transparent;
     box-sizing: border-box;
