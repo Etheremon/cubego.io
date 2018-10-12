@@ -51,7 +51,7 @@
     .widget__picker-bar-holder {
       min-width: 100%;
       display: inline-flex;
-      background-color: $c__gray;
+      background-color: #f7f7f7;
       @include border-radius-without-overflow(4px);
 
       .item {
@@ -63,7 +63,7 @@
         padding: 4px;
         min-width: 24px;
         cursor: pointer;
-        border-right: 1px solid $gray-light;
+        border-right: 1px solid #b0b0b060;
         &:last-child {
           border-right: none;
         }
@@ -73,7 +73,7 @@
           z-index: 1;
           font-size: $font-size-small;
           font-family: $f__baloobha;
-          color: $c__gray-1;
+          color: #b0b0b0;
         }
 
         &:hover {
@@ -83,6 +83,7 @@
         &.active {
           .text {
             font-size: $font-size-big;
+            color: #213750;
           }
           &:before {
             content: "";
@@ -92,8 +93,8 @@
             right: -1px;
             top: -2px;
             @include border-radius(4px);
-            background-color: $c__orange-2;
-            border-bottom: 6px solid $c__orange-1;
+            background-color: #fab818;
+            border-bottom: 6px solid #ff9001;
           }
           &:last-child:before {
             right: 0;

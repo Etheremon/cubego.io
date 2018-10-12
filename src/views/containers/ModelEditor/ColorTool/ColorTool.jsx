@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
 import withRouter from "react-router-dom/es/withRouter";
-import {EDITOR_COLORS} from "../../../../constants/general";
 import * as ObjUtils from "../../../../utils/objUtils";
 
 require("style-loader!./ColorTool.scss");
@@ -35,7 +34,8 @@ class _ColorTool extends React.Component {
           {ObjUtils.GetValues(options).map((c, idx) => (
             <div className={`color-tool__cell ${value['material_id'] === c['material_id'] && value['variant_id'] === c['variant_id'] ? 'selected' : ''}`}
                  key={idx} onClick={() => {this.onColorChange(c)}}>
-              <img src={c.img}/>
+              <img src={c.img ? c.img : require('../../../../shared/img/cubego-variants/placeholder.png')}
+                   style={c.r !== undefined ? {backgroundColor: `rgba(${c.r},${c.g},${c.b},${c.a})`} : {}}/>
             </div>
           ))}
         </div>

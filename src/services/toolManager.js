@@ -8,7 +8,6 @@ export class ToolManager {
     this._tools = {};
     this._model = undefined;
     this._layer = undefined;
-    this._numLayers = 0;
     this._drawMode = null;
     this.history = {
       idx: props.models.length - 1,

@@ -19,7 +19,7 @@ import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 import {MODEL_TEMPLATES} from "../../../constants/model";
 import * as ObjUtils from "../../../utils/objUtils";
-import {CUBE_MATERIALS} from "../../../constants/cubego";
+import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 
 require("style-loader!./ModelEditor.scss");
@@ -32,7 +32,7 @@ class _ModelEditor extends React.Component {
     this.state = {
       showTemplates: false,
       scale2D: 1,
-      selectedMaterial: CUBE_MATERIALS[12],
+      selectedMaterial: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic],
     };
 
     this.tools = {

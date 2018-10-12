@@ -32,6 +32,9 @@ const _features = [
 const channels = [{img: require('../../../shared/img/socialMedia/icon_discord.png'), name: 'DISCORD'},
                   {img: require('../../../shared/img/socialMedia/icon_twitter.png'), name: 'TWITTER'},
                   {img: require('../../../shared/img/socialMedia/icon_telegram.png'), name: 'TELEGRAM'}];
+const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'},
+  {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
+  {img: require('../../../shared/img/assets/model_example_3.png'), name: 'VEXIGON', creator: 'Nhu'}];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -39,7 +42,7 @@ class HomePage extends React.Component {
 
     this.state = {
       email: '',
-    }
+    };
 
     this.validateEmail = this.validateEmail.bind(this);
   }
@@ -66,27 +69,24 @@ class HomePage extends React.Component {
   }
 
   render() {
-    let {activeCube} = this.state;
+    // let {activeCube} = this.state;
     const { _t, pathName } = this.props;
-    const guildGame = [
-      {component: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
-      {component: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
-      {component: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
-    ];
-    const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'}, 
-                          {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
-                          {img: require('../../../shared/img/assets/model_example_3.png'), name: 'VEXIGON', creator: 'Nhu'}];
+    // const guildGame = [
+    //   {component: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
+    //   {component: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
+    //   {component: <img className={'guild-game'} key={'guild-game-3'} src={require('../../../shared/img/assets/model_example_3.png')}/>, text: _t('battle')} ,
+    // ];
 
-    const customIndicators = [
-      <div className={'feature-indicator'} key={'btn-1'} >{_t('trading')}</div>,
-      <div className={'feature-indicator'} key={'btn-2'} >{_t('auction')}</div>,
-      <div className={'feature-indicator'} key={'btn-3'} >{_t('market')}</div>,
-      <div className={'feature-indicator'} key={'btn-4'} >{_t('battle')}</div>,
-    ];
+    // const customIndicators = [
+    //   <div className={'feature-indicator'} key={'btn-1'} >{_t('trading')}</div>,
+    //   <div className={'feature-indicator'} key={'btn-2'} >{_t('auction')}</div>,
+    //   <div className={'feature-indicator'} key={'btn-3'} >{_t('market')}</div>,
+    //   <div className={'feature-indicator'} key={'btn-4'} >{_t('battle')}</div>,
+    // ];
 
     return (
       <PageWrapper>
-        <Navbar size={Container.sizes.BIG} pathName={pathName} minifying navbarType={'home'} scrollingElement={'home-page'}/>
+        <Navbar pathName={pathName} transforming navbarType={'home'} scrollingElement={'home-page'}/>
 
         <div className={'home-page'} id={'home-page'}>
 

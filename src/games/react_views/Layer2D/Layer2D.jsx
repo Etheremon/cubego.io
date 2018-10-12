@@ -109,7 +109,21 @@ export class Layer2D extends Component {
             <div className={'layer2D__row'} key={rowIdx}>
               {row.map((cell, colIdx) => {
                 let c = cell ? cell.color : null;
-                let cellStyle = c && c.img ? {backgroundImage: `url(${c.img})`, opacity: c.opacity || 1} : {};
+
+                let cellStyle = {}, hoverStyle = {};
+                if (c && c.img)
+                  cellStyle = {backgroundImage: `url(${c.img})`, opacity: c.opacity || 1};
+                else if (c && c.r !== null)
+                  cellStyle = {backgroundColor: `rgb(${c.r},${c.g},${c.b})`, opacity: c.opacity || 1};
+
+                if (hoverColor && hoverColor.img)
+                  hoverStyle = {backgroundImage: `url(${hoverColor.img})`, opacity : hoverColor.opacity || 1};
+                else if (hoverColor && hoverColor.r)
+                  hoverStyle = {backgroundColor: `rgb(${hoverColor.r},${hoverColor.g},${hoverColor.b})`, opacity: hoverColor.opacity || 1};
+                else if (hoverColor === null)
+                  hoverStyle = {};
+                else
+                  hoverStyle = cellStyle;
 
                 return (
                   <div className={'layer2D__cell'} key={colIdx}
@@ -121,14 +135,8 @@ export class Layer2D extends Component {
                          this.onCellClicked(layer, rowIdx, colIdx);
                        }}>
 
-                    <div className={'layer2D__cell-real'}
-                         style={cellStyle}>
-                    </div>
-                    <div className={'layer2D__cell-hover'}
-                         style={hoverColor
-                           ? {backgroundImage: `url(${hoverColor.img})`, opacity : hoverColor.opacity || 1}
-                           : (hoverColor === null ? {} : cellStyle)}>
-                    </div>
+                    <div className={'layer2D__cell-real'} style={cellStyle}/>
+                    <div className={'layer2D__cell-hover'} style={hoverStyle}/>
                   </div>
                 )
               })}
