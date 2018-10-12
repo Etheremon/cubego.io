@@ -54,14 +54,11 @@ class ReviewPage extends React.Component {
                           {icon: require('../../../shared/img/cubegon/earth.png'), content: 'earth', label: 'type'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', label: 'stats range'}];
 
-    const cubeDetails = [{material: 'silver', quantity: 5, price: 0.001},
-                        {material: 'gold', quantity: 5, price: 0.001},
-                        {material: 'gold', quantity: 5, price: 0.001},
-                        {material: 'glass', quantity: 5, price: 0.001},
-                        {material: 'diamond', quantity: 5, price: 0.001}];
-
-    console.log(allowChangeName)
-
+    const cubeDetails = [{material: '001', quantity: 5, price: 0.001},
+                        {material: '002', quantity: 5, price: 0.001},
+                        {material: '003', quantity: 5, price: 0.001},
+                        {material: '004', quantity: 5, price: 0.001},
+                        {material: '005', quantity: 5, price: 0.001}];
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
@@ -132,7 +129,7 @@ class ReviewPage extends React.Component {
                       <tr key={idx}>
                         <td>
                           <div className="cube">
-                            <img src={require(`../../../shared/img/cubes/${item.material}.png`)}/>
+                            <img src={require(`../../../shared/img/cubegoes/${item.material}.png`)}/>
                             {_t(item.material)}
                           </div>
                         </td>

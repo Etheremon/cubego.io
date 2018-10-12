@@ -70,6 +70,34 @@ class MyCubegoes extends React.Component {
       
           <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
           <Container className={'mycubegoes-page__main'} size={Container.sizes.NORMAL}>
+            <div className="my-cubegon-info__container">
+              <div className="group">
+                <div className="item">
+                  <div className="owner-name">
+                  </div>
+                  <div className="id">
+                  </div>
+                </div>
+              </div>
+              <div className="group">
+                <div className="item">
+                  <div className="label">{`${_t('cubegoes')}:`}</div>
+                  <div className="icon-value">
+                    {`250/12`}
+                    <img src=""/>
+                  </div>
+                </div>
+                <div className="item">
+                  <div className="label">{`${_t('cubegons')}:`}</div>
+                  <div className="icon-value">
+                    {`45/10`}
+                    <img src=""/>
+                  </div>
+                </div>
+              </div>
+              <div className="group">
+              </div>
+            </div>
             <Text className={'combat-title'} type={Text.types.H2} children={_t('combat')}/>
             <div className="combat-stats__container">
               {combatStats.map((item, idx) => (
