@@ -168,6 +168,8 @@ class VoxBattle extends Component {
       skeletonViewer2.color = BABYLON.Color3.Red();
 
       this.players[0].scene.beginAnimation(ske2, 0, 50, true, 1.0);
+      this.players[0].opponent = this.players[1];
+      this.players[1].opponent = this.players[0];
     }, 5000)
   }
 
