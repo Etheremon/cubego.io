@@ -12,7 +12,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   constructor() {
     super();
     this.healthPercent = 100;
-    this.collisionMesh = null;
+    this._opponent = null;
     this.isCollision = false;
   }
 
@@ -45,16 +45,20 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   }
 
   registerBeforeRender() {
-    this.scene.registerBeforeRender(() => {
-      if (!this.collisionMesh) return;
-      if (this.playerMesh.intersectsMesh(this.collisionMesh, true)) {
-        if (!this.isCollision) {
-          this.isCollision = true;
-        }
-      } else {
-        this.isCollision = false;
-      }
-    });
+    // this.scene.registerBeforeRender(() => {
+    //   if (!this._opponent.playerMesh) return;
+    //   if (this.playerMesh.intersectsMesh(this._opponent.playerMesh, true)) {
+    //     if (!this.isCollision) {
+    //       this.isCollision = true;
+    //     }
+    //   } else {
+    //     this.isCollision = false;
+    //   }
+    // });
+  }
+
+  set opponent(opponent) {
+    this._opponent = opponent;
   }
 
   hurt(percent) {
@@ -63,6 +67,10 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       this.healthPercent = 0;
     }
     this.updateHealthBar();
+    this.isCollision = true;
+    setTimeout(() => {
+      this.isCollision = false;
+    }, 100);
   }
 
   createPlayerMesh(size, data, rotate) {
@@ -161,46 +169,43 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     let position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     position.y += 1;
     let emitter = position;
-    let particleSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
-    particleSystem.particleTexture = new BABYLON.Texture("assets/particle/circle_01.png", this.scene);
+    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
 
-    particleSystem.emitter = emitter; // the starting object, the emitter
+    pSystem.emitter = emitter; // the starting object, the emitter
     let emitterType = new BABYLON.SphereParticleEmitter();
-    emitterType.radius = 3;
+    emitterType.radius = 2;
     emitterType.radiusRange = 0;
-    particleSystem.particleEmitterType = emitterType;
+    pSystem.particleEmitterType = emitterType;
 
-    particleSystem.minSize = 0.1;
-    particleSystem.maxSize = 0.5;
+    pSystem.minSize = 0.1;
+    pSystem.maxSize = 0.5;
 
-    particleSystem.minLifeTime = 50.0;
-    particleSystem.maxLifeTime = 50.0;
+    pSystem.isBillboardBased = false;
 
-    particleSystem.emitRate = 1500;
+    pSystem.minLifeTime = 50.0;
+    pSystem.maxLifeTime = 50.0;
 
-    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    pSystem.emitRate = 20;
+    pSystem.manualEmitCount = 150;
+    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
 
-    particleSystem.minAngularSpeed = 0;
-    particleSystem.maxAngularSpeed = Math.PI;
+    pSystem.minAngularSpeed = 0;
+    pSystem.maxAngularSpeed = Math.PI;
 
-    particleSystem.minEmitPower = 0;
-    particleSystem.maxEmitPower = 0;
-    particleSystem.updateSpeed = 0.005;
-
-    particleSystem.isBillboardBased = false;
-
-    particleSystem.start();
-    setTimeout(() => {
-      particleSystem.dispose();
-    }, 6000);
+    pSystem.minEmitPower = 0;
+    pSystem.maxEmitPower = 0;
+    pSystem.updateSpeed = 0.005;
+    pSystem.isBillboardBased = false;
+    pSystem.start();
   }
 
   createFireParticle() {
     let fistMesh = BABYLON.Mesh.CreateBox("fist", 0.4, this.scene);
     let matrix = this.playerMesh.getWorldMatrix();
-
+    let isCollision = false;
     fistMesh.position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
     pSystem.emitter = fistMesh;
@@ -209,7 +214,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     // pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     // pSystem.light.range = 15;
 
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/circle_05.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
@@ -230,28 +235,39 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.updateSpeed = 0.008;
     let alpha = fistMesh.position.z;
     this.scene.registerBeforeRender(() => {
-      pSystem.emitter.position = new BABYLON.Vector3(0, 1, alpha);
-      for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
-        if (pSystem.particles[i2].age >= (pSystem.particles[i2].lifeTime * 0.05)) {
-          pSystem.particles[i2].size -= 0.15;
+      if (!isCollision) {
+        if (fistMesh.intersectsMesh(this._opponent.playerMesh, false)) {
+          this.createHitParticle(fistMesh.position);
+          isCollision = true;
+          this._opponent.hurt(15);
+          pSystem.stop();
+          fistMesh.dispose();
+        } else {
+          pSystem.emitter.position = new BABYLON.Vector3(0, 1, alpha);
+          for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
+            if (pSystem.particles[i2].age >= (pSystem.particles[i2].lifeTime * 0.05)) {
+              pSystem.particles[i2].size -= 0.15;
+            }
+          }
+          alpha -= 0.2;
         }
       }
-      alpha -= 0.15;
     });
     pSystem.start();
   }
 
-  createHitParticle() {
+  createHitParticle(emitter) {
     let matrix = this.playerMesh.getWorldMatrix();
-    let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
-    emitter = new BABYLON.Vector3(0, 4, 0);
+    // let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    if (!emitter)
+      emitter = new BABYLON.Vector3(0, 4, 0);
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
     pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
     pSystem.minSize = 0.2;
     pSystem.maxSize = 0.5;
-    pSystem.manualEmitCount = 50;
+    pSystem.manualEmitCount = 20;
     pSystem.minEmitPower = 20;
     pSystem.maxEmitPower = 20;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -259,9 +275,13 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.maxAngularSpeed = Math.PI;
     pSystem.minLifeTime = 0.05;
     pSystem.maxLifeTime = 0.1;
-
+    pSystem.disposeOnStop = true;
+    // pSystem.color1 = new BABYLON.Color4(1.0, 1.0, 1.0, 1);
+    // pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, 1);
+    // pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, 1);
     pSystem.createSphereEmitter(0.2);
     pSystem.start();
+    return pSystem;
   }
 
   create
