@@ -9,6 +9,7 @@ import {
   VoxelPlayer
 } from '../babylonX';
 import BabylonX from "../babylonX";
+import idleGroundAnimation from "./animations/idle_ground";
 
 const SIZE = 0.2;
 
@@ -46,67 +47,13 @@ class VoxBattle extends Component {
       {frame: 60, value: 0},
       {frame: 100, value: 0}
     ];
-
-    this.playerAttackAnimations = [];
-    this.playerJumpAnimations = [];
     this.players = [];
-
-    this.testAnimationKeys = [
-      {
-        "frame": 0,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
-      }, {
-        "frame": 1,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.02640176, 0.0, 1.0]
-      }, {
-        "frame": 2,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0559476577, 0.0, 1.0]
-      }, {
-        "frame": 3,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.087528, 0.0, 1.0]
-      }, {
-        "frame": 4,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.120033078, 0.0, 1.0]
-      }, {
-        "frame": 5,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.152353212, 0.0, 1.0]
-      }, {
-        "frame": 6,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.183378711, 0.0, 1.0]
-      }, {
-        "frame": 7,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.211999863, 0.0, 1.0]
-      }, {
-        "frame": 8,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.237107, 0.0, 1.0]
-      }, {
-        "frame": 9,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.257590383, 0.0, 1.0]
-      }, {
-        "frame": 10,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.272340328, 0.0, 1.0]
-      }, {
-        "frame": 11,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.280247152, 0.0, 1.0]
-      }, {
-        "frame": 12,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.2706265, 0.0, 1.0]
-      }, {
-        "frame": 13,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.200099319, 0.0, 1.0]
-      }, {
-        "frame": 14,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0967690647, 0.0, 1.0]
-      }, {
-        "frame": 15,
-        "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
-      }
-    ]
   }
 
   createAttackAnimationKeys(rotate) {
     return [
       {frame: 0, value: 0},
+      {frame: 10, value: -1 * rotate},
       {frame: 60, value: 9 * rotate},
       {frame: 70, value: 9 * rotate},
       {frame: 100, value: 0}
@@ -197,88 +144,47 @@ class VoxBattle extends Component {
 
   componentDidMount() {
     BabylonX.loaders.addMesh('battlemap1', '/assets/battleground/map_1/unity/', 'BattleMap1.babylon').then((data) => {
-      console.log(data);
-      // data.loadedMeshes[3].position = new BABYLON.Vector3(0, -6.4, 0);
       data.loadedMeshes[2].rotation.y = -Math.PI / 4;
-      // data.loadedMeshes[0].scaling = new BABYLON.Vector3(SIZE * 2, SIZE * 2, SIZE * 2);
     });
 
 
-    fetch(`/assets/animations/run_ground.json`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        let skeleton = BABYLON.Skeleton.Parse(json, this.players[1].scene);
-        this.mount(this.players[1].playerMesh, skeleton, 'rootJT');
-
-        let skeletonViewer = new BABYLON.Debug.SkeletonViewer(skeleton, this.players[1].playerMesh, this.players[1].scene);
-        skeletonViewer.isEnabled = true;
-        skeletonViewer.color = BABYLON.Color3.Red();
-
-        this.players[1].scene.beginAnimation(skeleton, 0, 50, true, 1.0);
-
-        let ske2 = skeleton.clone('ske2', 'ske2');
-        this.mount(this.players[0].playerMesh, ske2, 'rootJT');
-
-        let skeletonViewer2 = new BABYLON.Debug.SkeletonViewer(ske2, this.players[0].playerMesh, this.players[0].scene);
-        skeletonViewer2.isEnabled = true;
-        skeletonViewer2.color = BABYLON.Color3.Red();
-
-        this.players[0].scene.beginAnimation(ske2, 0, 50, true, 1.0);
-
-        // let ske2 = skeleton.clone('clonedSkeleton', 'clonedSkeleton');
-        // this.players[0].skeleton = new BABYLON.Skeleton('player', 'player', this.players[0].scene);
-        // this.players[0].skeleton.copyAnimationRange(skeleton, 'Mmotion_idle_fly', true);
-        // console.log("this.players[0].playerMesh");
-        // console.log(this.players[0].playerMesh);
-        // let anim = this.players[0].scene.beginAnimation(this.players[0].skeleton, 0, 15, false, 1.0);
-        // console.log("this.players[0].skeleton");
-        // console.log(this.players[0].skeleton);
-        // anim.waitAsync().then((data) => {
-        //   console.log(data)
-        // });
-      });
-
-    // BabylonX.loaders.addMesh('test_gltf', '/mons/', 'kyarishake.gltf').then((data) => {
-    //   console.log(data);
-    //   data.loadedMeshes[0].autoAnimate  = false;
-    //   data.loadedMeshes[0].autoAnimateLoop  = false;
-    // scene.stopAnimation(newMeshes[0])
-    // this.players[0].skeleton = data.loadedSkeletons[0].clone("clonedSke");
-    // this.players[0].skeleton.beginAnimation();
-    //   this.players[0].scene.stopAnimation(data.loadedMeshes[0]);
-    // });
-
     BabylonX.loaders.load();
-    // setInterval(() => {
-    //   this.players[0].playAnimation(['attack', 'scaling', 'jump'], false, 2);
-    //   this.players[0].isAttacking = true;
-    //   this.players[1].isAttacking = false;
-    //
-    //   setTimeout(() => {
-    //     this.players[1].hurt(15);
-    //   }, 500)
-    // }, 6000);
     setTimeout(() => {
-      // setInterval(() => {
-      //   this.players[1].playAnimation(['attack', 'scaling', 'jump'], false, 2);
-      //   this.players[0].isAttacking = false;
-      //   this.players[1].isAttacking = true;
-      //   setTimeout(() => {
-      //     this.players[0].hurt(20);
-      //   }, 500)
-      // }, 6000);
-      // this.players[0].collisionMesh = this.players[1].playerMesh;
-      // this.players[1].collisionMesh = this.players[0].playerMesh;
-      // this.players[0].playAnimation(['attack'], true, 1);
-      // this.players[0].playAnimation(['test'], true, 2);
-      // this.players[1].createFistParticle();
+      let json = idleGroundAnimation;
+      let skeleton = BABYLON.Skeleton.Parse(json, this.players[1].scene);
+      this.mount(this.players[1].playerMesh, skeleton, 'rootJT');
+
+      let skeletonViewer = new BABYLON.Debug.SkeletonViewer(skeleton, this.players[1].playerMesh, this.players[1].scene);
+      skeletonViewer.isEnabled = true;
+      skeletonViewer.color = BABYLON.Color3.Red();
+
+      this.players[1].scene.beginAnimation(skeleton, 0, 50, true, 1.0);
+
+      let ske2 = skeleton.clone('ske2', 'ske2');
+      this.mount(this.players[0].playerMesh, ske2, 'rootJT');
+
+      let skeletonViewer2 = new BABYLON.Debug.SkeletonViewer(ske2, this.players[0].playerMesh, this.players[0].scene);
+      skeletonViewer2.isEnabled = true;
+      skeletonViewer2.color = BABYLON.Color3.Red();
+
+      this.players[0].scene.beginAnimation(ske2, 0, 50, true, 1.0);
     }, 5000)
   }
 
-  castSkill() {
+  createShieldParticle() {
     this.players[0].createShieldParticle();
+  }
+
+  createFistParticle() {
+    this.players[1].createFireParticle();
+  }
+
+  createHitAnimation() {
+    this.players[0].playAnimation('attack', false, 3);
+  }
+
+  createHitParticle() {
+    this.players[0].createHitParticle();
   }
 
   render() {
@@ -286,10 +192,10 @@ class VoxBattle extends Component {
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis size={5}/>
         <GUI>
-          <GUISimpleButton left={'-75px'} value={'1'} onClick={this.castSkill.bind(this)}/>
-          <GUISimpleButton left={'-25px'} value={'2'}/>
-          <GUISimpleButton left={'25px'} value={'3'}/>
-          <GUISimpleButton left={'75px'} value={'4'}/>
+          <GUISimpleButton left={'-75px'} value={'1'} onClick={this.createShieldParticle.bind(this)}/>
+          <GUISimpleButton left={'-25px'} value={'2'} onClick={this.createFistParticle.bind(this)}/>
+          <GUISimpleButton left={'25px'} value={'3'} onClick={this.createHitAnimation.bind(this)}/>
+          <GUISimpleButton left={'75px'} value={'4'} onClick={this.createHitParticle.bind(this)}/>
         </GUI>
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} attachControl={true}/>
         <HemisphericLight/>
