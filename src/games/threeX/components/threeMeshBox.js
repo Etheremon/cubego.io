@@ -1,6 +1,7 @@
 import {ThreeComponent} from "./threeComponent";
 import * as THREE from "three";
 import ThreeX from "../index";
+import {fullColorHex} from "../../utils";
 
 export class ThreeMeshBox extends ThreeComponent {
   static create({scene}, props) {
@@ -11,7 +12,9 @@ export class ThreeMeshBox extends ThreeComponent {
     let material = null;
 
     if (props.materialId) {
-      material = ThreeX.getMaterial(props.materialId);
+      material = ThreeX.getMaterial(props.materialId).clone();
+      let variantColor = parseInt(props.variant.color.replace('#', ''), 16);
+      material.color.setHex(variantColor);
     } else {
       material = new THREE.MeshBasicMaterial({color: color, transparent: true});
     }

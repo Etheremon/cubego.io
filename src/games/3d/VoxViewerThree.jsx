@@ -53,10 +53,11 @@ class VoxViewerThree extends Component {
     let sizeX = voxelData.spaceSize.x[1] - voxelData.spaceSize.x[0] + 1;
     let sizeY = voxelData.spaceSize.y[1] - voxelData.spaceSize.y[0] + 1;
     this.updateGridIdx++;
-    let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE/2;
-    let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE/2;
+    let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE / 2;
+    let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
 
-    let elements = [<Grid width={sizeY*SIZE/2} height={sizeX*SIZE/2} linesHeight={sizeX} linesWidth={sizeY} color1={0xffffff} color2={0xffffff}
+    let elements = [<Grid width={sizeY * SIZE / 2} height={sizeX * SIZE / 2} linesHeight={sizeX} linesWidth={sizeY}
+                          color1={0xffffff} color2={0xffffff}
                           position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
                           key={`grid-${this.updateGridIdx}`}/>];
     GetValues(voxelData.voxels).forEach((voxel) => {
@@ -67,9 +68,7 @@ class VoxViewerThree extends Component {
       };
       let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
       elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
-                             ref={(ref) => {
-                               this.objects.push(ref)
-                             }}
+                             ref={(ref) => this.objects.push(ref)} variant={voxel.color.variant}
                              position={position} color={color}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
     });
