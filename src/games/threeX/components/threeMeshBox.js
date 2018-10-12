@@ -13,8 +13,14 @@ export class ThreeMeshBox extends ThreeComponent {
 
     if (props.materialId) {
       material = ThreeX.getMaterial(props.materialId).clone();
-      let variantColor = parseInt(props.variant.color.replace('#', ''), 16);
-      material.color.setHex(variantColor);
+      if (props.variant.color) {
+        let variantColor = parseInt(props.variant.color.replace('#', ''), 16);
+        material.color.setHex(variantColor);
+      }
+      if (props.variant.emissive) {
+        let variantEmissive = parseInt(props.variant.emissive.replace('#', ''), 16);
+        material.color.setHex(variantEmissive);
+      }
     } else {
       material = new THREE.MeshBasicMaterial({color: color, transparent: true});
     }
