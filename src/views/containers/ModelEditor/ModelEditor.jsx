@@ -195,7 +195,7 @@ class _ModelEditor extends React.Component {
 
         <div className={'model-editor__container'}>
 
-          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
+          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
 
             <div className={'model-editor__tool-bar'}>
@@ -318,7 +318,7 @@ class _ModelEditor extends React.Component {
                 </div>
                 {['diamond', 'glass', 'gold', 'iron', 'plastic', 'silver'].map((type, idx) => (
                   <div key={idx} className={'cube'} tooltip={_t(type)} tooltip-position="bottom">
-                    <img src={require(`../../../shared/img/cubes/${type}.png`)}/>
+                    <img src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
                     50
                   </div>
                 ))}
