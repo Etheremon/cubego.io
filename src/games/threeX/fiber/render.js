@@ -9,7 +9,7 @@ let scene;
 function createRenderer(canvas, options) {
   scene = ThreeScene.create();
   scene.renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
-  scene.renderer.setClearColor(0x203040, 0.8);
+  // scene.renderer.setClearColor(0x203040, 0.8);
   scene.canvas = canvas;
   return ThreeXFiberRenderer.createContainer(scene);
 }

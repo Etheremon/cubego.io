@@ -15,8 +15,10 @@ export class Model3D extends Component {
 
   componentDidMount() {
     // this.voxel = BabylonX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
-    this.voxel = ThreeX.render(<VoxViewerThree data={this.props.model} onCellClicked={this.props.onCellClicked}
-                                               tools={this.props.tools}/>, document.getElementById('canvas3D'));
+    this.voxel = ThreeX.render(
+      <VoxViewerThree data={this.props.model} onCellClicked={this.props.onCellClicked} tools={this.props.tools} viewOnly={this.props.viewOnly}/>,
+      document.getElementById('canvas3D'),
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,12 +40,14 @@ export class Model3D extends Component {
 }
 
 Model3D.propTypes = {
+  viewOnly: PropTypes.bool,
   model: PropTypes.object,
   tools: PropTypes.object,
   onCellClicked: PropTypes.func,
 };
 
 Model3D.defaultProps = {
+  viewOnly: false,
   model: null,
   tools: {},
   onCellClicked: () => {

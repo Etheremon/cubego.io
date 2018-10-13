@@ -46,7 +46,6 @@
 
     .home__intro-cubego {
       display: flex;
-      flex-wrap: wrap;
       width: 100%;
       margin: 0 auto;
       justify-content: center;
@@ -62,6 +61,7 @@
         margin: 8px 0 8px 0;
         width: 20%;
         z-index: 1;
+        text-align: center;
 
         .cubegon-name {
           color: $white;
@@ -70,6 +70,7 @@
         }
 
         .cubegon-creator {
+          opacity: 0;
           padding-bottom: 16px;
           color: $white;
           font-family: $f__overpass;
@@ -80,11 +81,17 @@
           height: 200px;
           display: block;
           object-fit: cover;
+          transform: translateX(-50%);
+          left: 50%;
+          position: relative;
+          @include mobile {
+            max-width: 100%;
+          }
         }
 
         &:nth-child(1) {
           background-image: url('../../../shared/img/background/background_intro_1.png');
-          filter: grayscale(100%);
+          filter: grayscale(20%);
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
@@ -93,7 +100,7 @@
 
           &:hover ~ div {
             transform: scale(1);
-            filter: grayscale(1000%);
+            filter: grayscale(20%);
           }
         }
 
@@ -104,11 +111,11 @@
           background-repeat: no-repeat;
           opacity: 0.8;
           order: 3;
-          filter: grayscale(100%);
+          filter: grayscale(20%);
 
           &:hover ~ div {
             transform: scale(1);
-            filter: grayscale(100%);
+            filter: grayscale(20%);
           }
         }
 
@@ -319,8 +326,7 @@
   }
 
   .home__channels {
-    padding-top: 24px;
-    padding-bottom: 48px;
+    margin-top: 20px;
     text-align: center;
 
     .channels__header {
@@ -336,32 +342,16 @@
       align-items: center;
 
       .channel-item {
-        width: 128px;
-        height: 128px;
-        margin: 0 16px;
+        width: 120px;
+        height: 120px;
+        margin: 16px 24px;
         text-align: center;
-        padding: 8px 16px;
+        padding: 12px;
         border: 10px solid $white;
         border-radius: 8px;
-        box-shadow: 5px 5px 31px -5px rgba(163,124,163,1);
+        box-shadow: 0 0 20px -4px rgb(178, 174, 180);
         position: relative;
         cursor: pointer;
-
-        &:hover {
-          .name {
-            bottom: 3px;
-            opacity: 1;
-          }
-          img {
-            width: 70%;
-          }
-        }
-
-        @include mobile {
-          margin-bottom: 16px;
-          width: 88px;
-          height: 88px;
-        }
 
         .name {
           font-family: $f__vt323;
@@ -369,11 +359,37 @@
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          bottom: -8px;
-          opacity: 0;
+          bottom: 0;
+          opacity: 1;
           transition: bottom 0.5s, opacity 0.5s;
           transition-timing-function: ease-out;
         }
+        img {
+          width: 70%;
+          height: auto;
+          display: inline-block;
+          transition: width 0.35s;
+          transition-timing-function: ease-out;
+        }
+        &:hover {
+          .name {
+            bottom: 3px;
+            opacity: 0;
+          }
+          img {
+            width: 80%;
+          }
+        }
+
+        @include mobile {
+          width: 60px;
+          height: 60px;
+          margin: 8px;
+          .name {
+            font-size: $font-size-large;
+          }
+        }
+
 
         &:nth-child(1) {
           background-image: url('../../../shared/img/background/partnership_background_1.png');
@@ -404,20 +420,13 @@
             color: #2294c4;
           }
         }
-
-        img {
-          width: 80%;
-          height: auto;
-          display: inline-block;
-          transition: width 0.5s;
-          transition-timing-function: ease-out;
-        }
       }
     }
   }
 
   .home__partnership {
-    margin-top: 64px;
+    margin-top: 100px;
+    margin-bottom: -32px;
     padding-top: 20px;
     padding-bottom: 20px;
     background-color: rgba(189,223,244,1);
@@ -446,6 +455,7 @@
         width: 160px;
         margin: 0 4px 16px 4px;
         text-decoration: none;
+        font-style: normal;
         img {
           height: 72px;
           margin-bottom: 8px;

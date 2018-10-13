@@ -63,7 +63,7 @@
 
   &.turquoise {
     background-color: #77E9E5;
-    border-bottom: 4px solid #4FA6AB;
+    border-bottom: 4px solid #448f93;
 
     &:hover {
       background-color: rgb(100, 163, 161);
@@ -196,7 +196,7 @@
     filter: grayscale(1);
   }
 
-  &.deco {
+  &.both, &.left {
     &:before {
       content: '';
       position: absolute;
@@ -207,7 +207,8 @@
       left: -44px;
       top: 0;
     }
-
+  }
+  &.both, &.right {
     &:after {
       content: '';
       position: absolute;

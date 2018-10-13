@@ -109,7 +109,11 @@ class App extends React.Component {
 
     if (!alreadyFetchedLocalization) {
       return (
-        <div className={'page-loading'}>
+        <div className={'page-loading'} style={{
+          width: '100%',
+          textAlign: 'center',
+          paddingTop: '300px',
+        }}>
           <Loading className={'main__page-loading'} dark/>
         </div>
       );

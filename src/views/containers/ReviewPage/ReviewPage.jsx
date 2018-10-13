@@ -13,6 +13,9 @@ import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
+import {CUBE_MATERIALS} from "../../../constants/cubego";
+import {GetSavedModel} from "../../../reducers/selectors";
+import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
 
 require("style-loader!./ReviewPage.scss");
 
@@ -27,7 +30,7 @@ class ReviewPage extends React.Component {
       hiddenSliderIndicators: [0, energyRange[energyRange.length - 1]],
       allowChangeName: false,
       cubegonName: '',
-    }
+    };
 
     this.handleSliderChange = this.handleSliderChange.bind(this);
   }
@@ -45,33 +48,35 @@ class ReviewPage extends React.Component {
   }
 
   render() {
-
-    const {_t} = this.props;
+    const {_t, savedModel} = this.props;
     const { allowChangeName } = this.state;
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
 
     const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: '250', label: 'cubego'},
-                          {icon: require('../../../shared/img/cubegon/earth.png'), content: 'earth', label: 'type'},
+                          {icon: require('../../../shared/img/types/earth.png'), content: 'earth', label: 'type'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', label: 'stats range'}];
 
-    const cubeDetails = [{material: '001', quantity: 5, price: 0.001},
-                        {material: '002', quantity: 5, price: 0.001},
-                        {material: '003', quantity: 5, price: 0.001},
-                        {material: '004', quantity: 5, price: 0.001},
-                        {material: '005', quantity: 5, price: 0.001}];
+    const cubeDetails = [{material_id: 1, quantity: 5, price: 0.001},
+                        {material_id: 2, quantity: 5, price: 0.001},
+                        {material_id: 3, quantity: 5, price: 0.001},
+                        {material_id: 4, quantity: 5, price: 0.001},
+                        {material_id: 5, quantity: 5, price: 0.001}];
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
-        <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} onBackClicked={() => {}}/>
+        <Navbar minifying />
 
         <div className="review-page__container">
       
-          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
-          <Container className={'review-page__main'} size={Container.sizes.BIG}>
+          <HeaderBar label={_t('review cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
+          <Container className={'review-page__main'}>
 
             <div className="model-review__container">
               <div className="model-review">
+                {savedModel ?
+                  <Model3D model={savedModel} viewOnly/> : null
+                }
               </div>
 
               <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
@@ -80,8 +85,8 @@ class ReviewPage extends React.Component {
                   classNameInView='animated swirl-in-fwd'
                 > */}
                 <div className="model-logo__container">
-                  <div className="hexagon-img"></div>
-                  <img src={require('../../../shared/img/cubegon/earth.png')} />
+                  {/*<div className="hexagon-img"></div>*/}
+                  <img src={require('../../../shared/img/types/earth.png')} />
                 </div>
                 {/* </InviewMonitor> */}
       
@@ -90,10 +95,11 @@ class ReviewPage extends React.Component {
                   classNameInView='animated scale-in-hor-left'
                 > */}
                 <span>
-                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} disabled={!allowChangeName} onChange={() => {}}/>
-                  <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
-                    this.setState({ allowChangeName: !allowChangeName })
-                  }}/> 
+                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} onChange={() => {}}
+                         onFocus={() => {this.setState({allowChangeName: true})}}
+                         onBlur={() => {this.setState({allowChangeName: false})}}
+                  />
+                  <img src={require('../../../shared/img/icons/icon_pencil.png')} />
                 </span>
                 
                 {/* </InviewMonitor> */}
@@ -103,7 +109,9 @@ class ReviewPage extends React.Component {
             </div>
 
             <div className="model-stats">
-              <Text className={'overview__header'} type={Text.types.H3} children={_t('overview')} />
+              <div className={'overview__header'}>
+                {_t('overview')}
+              </div>
               <div className="overview-details">
                 <div className="stats-overview">
                   {statsOverview.map((item, idx) => (
@@ -126,40 +134,47 @@ class ReviewPage extends React.Component {
                   </thead>
 
                   <tbody>
-                    {cubeDetails.map((item, idx) => 
-                      <tr key={idx}>
-                        <td>
-                          <div className="cube">
-                            <img src={require(`../../../shared/img/cubegoes/${item.material}.png`)}/>
-                            {_t(item.material)}
-                          </div>
-                        </td>
-                        <td><span>{item.quantity}</span></td>
-                        <td>
-                          <div className="currency">
-                            <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                            {item.price}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="currency">
-                            <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                            {item.quantity * item.price}
-                          </div>
-                        </td>
-                      </tr>
-                      )}
+                    {cubeDetails.map((item, idx) => {
+                      let material = CUBE_MATERIALS[item.material_id];
+                      return (
+                        <tr key={idx}>
+                          <td>
+                            <div className="cube">
+                              <img src={material.img}/>
+                              {_t(material.name)}
+                            </div>
+                          </td>
+                          <td><span>{item.quantity}</span></td>
+                          <td>
+                            <div className="currency">
+                              <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                              {item.price}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="currency">
+                              <img src={require('../../../shared/img/icons/icon-ether.png')}/>
+                              {item.quantity * item.price}
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
 
-                <div className="energy__label">{_t('energy')}</div>
+                <div className="energy__label">
+                  {_t('energy')}:
+                  <div className={'value'}>{this.state.sliderValue}</div>
+                  <div className={'note'} tooltip={_t('energy_note')} tooltip-position={'bottom'}><i className="fas fa-question-circle"/></div>
+                </div>
                 <div className="total__container">
                   <div className="energy__container">
                       <div className="slider-bar__container">
                         {
                           energyRange.map((item, idx) => 
-                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx * 1}px)`}} 
-                            className="indicator">
+                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx}px)`}}
+                                 className="indicator">
                               <div className={`line ${this.state.hiddenSliderIndicators.indexOf(item) === -1 ? '' : 'hidden'}`}>
                                 <div>{item}</div>
                               </div>
@@ -184,12 +199,12 @@ class ReviewPage extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className={'energy__note'}></div>
 
                 <div className="checkout__container">
-                  <ButtonNew label={_t('back')} color={ButtonNew.colors.TURQUOISE}
-                          className={'back__button'} size={ButtonNew.sizes.NORMAL}/>
-                  <ButtonNew label={_t('check_out')}
-                          className={'check-out__button'} size={ButtonNew.sizes.NORMAL}/>
+                  <ButtonNew label={_t('back')} color={ButtonNew.colors.TURQUOISE} className={'back__button'}
+                             onClick={() => {this.props.history.goBack()}}/>
+                  <ButtonNew label={_t('check_out')} className={'check-out__button'}/>
                 </div>
 
               </div>
@@ -198,7 +213,7 @@ class ReviewPage extends React.Component {
           </Container>
         </div>
 
-        <Footer size={Container.sizes.BIG} />
+        <Footer type={Footer.types.BRIGHT} />
       </PageWrapper>
     )
   }
@@ -207,6 +222,7 @@ class ReviewPage extends React.Component {
 const mapStateToProps = (store, props) => {
   return {
     _t: getTranslate(store.localeReducer),
+    savedModel: GetSavedModel(store),
   }
 };
 

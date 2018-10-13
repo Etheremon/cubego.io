@@ -17,8 +17,9 @@
     display: flex;
     align-items: center;
     img {
-      height: 24px;
+      height: 32px;
     }
+    text-transform: capitalize;
   }
 
   .currency {
@@ -44,36 +45,39 @@
     }
 
     .model-review {
-      height: 80%;
+      min-height: 500px;
       width: 90%;
-      background: rgba($color: #369ead, $alpha: 0.5);
+      background: rgba(0, 0, 0, 0.2);
       border-radius: 16px;
       margin-bottom: 24px;
+      display: flex;
+      align-items: center;
     }
 
     .model-info {
-      height: 20%;
       display: flex;
       align-items: center;
-      width: 55%;
-      transition: all 0.5s;
-      transition-timing-function: ease-in-out;
 
       &.expand {
-        width: 70%;
+        span {
+          input[type=text] {
+            width: 200px;
+          }
+        }
       }
 
       span {
         text-align: center;
         flex-grow: 1;
         margin-left: 3px;
-        padding: 8px 8px;
+        padding: 6px;
         border-top: 1px solid $white;
         border-bottom: 1px solid $white;
         display: flex;
         align-items: center;
         background: #3e4e63;
         justify-content: center;
+        cursor: pointer;
 
         input[type=text] {
           font-family: $f__baloobha;
@@ -83,14 +87,25 @@
           background: transparent;
           outline: none;
           text-align: center;
+          padding-top: 8px;
+          padding-left: 32px;
+          width: 120px;
+          max-width: 100%;
+          @include transition-duration;
         }
 
         img {
-          cursor: pointer;
           display: block;
           margin-left: 8px;
-          height: 5px;
-          transform: rotate(-240deg);
+          height: 12px;
+          transform: rotate(120deg);
+          @include transition-duration;
+        }
+
+        &:hover {
+          img {
+            transform: rotate(60deg);
+          }
         }
       }
 
@@ -127,13 +142,13 @@
             background-color: inherit;
             left: 9.9835px;
           }
-  
+
           &:before {
             top: -26.5165px;
             border-top: solid 1.4142px $white;
             border-right: solid 1.4142px $white;
           }
-  
+
           &:after {
             bottom: -26.5165px;
             border-bottom: solid 1.4142px $white;
@@ -164,6 +179,9 @@
 
     .overview__header {
       color: $dark;
+      text-transform: uppercase;
+      font-weight: $font-weight-black;
+      font-size: $font-size-small;
     }
 
     .overview-details {
@@ -172,6 +190,7 @@
         flex-direction: row;
         justify-content: space-around;
 
+        margin-top: 4px;
         border-top: 1px solid #69ffcb;
         border-bottom: 1px solid #69ffcb;
         padding: 16px 0;
@@ -183,11 +202,13 @@
           .content {
             font-family: $f__baloobha;
             font-size: $font-size-bigger;
+            text-transform: capitalize;
           }
 
           .label {
             font-size: $font-size-smaller;
             color: #02edf7;
+            text-transform: capitalize;
           }
 
           img {
@@ -205,6 +226,25 @@
         margin-top: 16px;
         font-size: $font-size-small;
         color: #02edf7;
+        display: flex;
+        align-items: center;
+
+        .value {
+          font-family: $f__baloobha;
+          font-size: $font-size-header-1;
+          padding-top: 6px;
+          padding-left: 8px;
+        }
+
+        .note {
+          padding-left: 2px;
+          font-size: $font-size-tiny;
+        }
+      }
+
+      .energy__note {
+        padding-top: 20px;
+        font-size: $font-size-small;
       }
 
       .total__container {
@@ -235,7 +275,7 @@
       }
 
       .checkout__container {
-        padding-top: 32px;
+        padding-top: 24px;
         text-align: right;
       }
 
@@ -304,6 +344,7 @@
                 position: absolute;
                 bottom: -100%;
                 left: -50%;
+                font-family: $f__baloobha;
               }
             }
           }
@@ -314,7 +355,9 @@
         width: 100%;
         text-align: center;
         thead {
-          font-size: $font-size-tiny;
+          font-size: $font-size-smaller;
+          text-transform: capitalize;
+          padding-bottom: 2px;
         }
 
         tbody {

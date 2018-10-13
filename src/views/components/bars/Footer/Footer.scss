@@ -11,8 +11,8 @@
   border-image: url('../../../../shared/img/assets/wall_pattern_1.svg') 100 0 round;
   background-clip: padding-box;
   background-color: rgb(6, 106, 141);
+  color: $white;
   box-sizing: border-box;
-  
 
   .footer__divider {
     margin-bottom: 40px;
@@ -55,7 +55,6 @@
     
     .footer__copyright {
       font-size: $font-size-small;
-      color: $white;
       text-align: center;
     }
   }
@@ -80,14 +79,14 @@
 
         a, p {
           text-decoration: none;
+          color: inherit;
         }
 
         a, p {
-          color: $white;
           font-style: normal;
           cursor: pointer;
         }
-        a, p:hover {
+        a:hover, p:hover {
           color: $blue-light;
         }
       }
@@ -108,4 +107,9 @@
     }
   }
 
+  &.bright {
+    border-image: url('../../../../shared/img/assets/wall_pattern_2.svg') 100 0 round;
+    background-color: rgba(189, 223, 244, 1);
+    color: $c__gray-1;
+  }
 }

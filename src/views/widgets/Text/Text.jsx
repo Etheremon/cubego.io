@@ -4,9 +4,10 @@ import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./Text.scss");
 
-export const Text = ({className, children, type, onClick}) => {
+export const Text = ({className, children, type, uppercase, capitalize, onClick}) => {
   return (
-    <div className={`widget__text ${className} ${type}`} onClick={() => {onClick && onClick()}}>
+    <div className={`widget__text ${className} ${type} ${uppercase ? 'uppercase' : ''} ${capitalize ? 'capitalize' : ''}`}
+         onClick={() => {onClick && onClick()}}>
       {children}
     </div>
   );

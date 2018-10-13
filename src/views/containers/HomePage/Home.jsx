@@ -28,10 +28,10 @@ const _features = [
 ];
 const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
-  {img: require('../../../shared/img/assets/model_example_3.png'), name: 'VEXIGON', creator: 'Nhu'}];
-const channels = [{img: require('../../../shared/img/socialMedia/icon_discord.png'), name: 'DISCORD', link: 'https://discordapp.com/'},
-                  {img: require('../../../shared/img/socialMedia/icon_twitter.png'), name: 'TWITTER', link: 'https://twitter.com/'},
-                  {img: require('../../../shared/img/socialMedia/icon_telegram.png'), name: 'TELEGRAM', link: 'https://telegram.org/'}];
+  {img: require('../../../shared/img/assets/model_example_3.png'), name: 'DILOOM', creator: 'Nhu'}];
+const channels = [{img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/'},
+                  {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/'},
+                  {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://telegram.org/'}];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class HomePage extends React.Component {
     return ([
       <div className={'home__banner-item'} key={'banner-1'}>
         <img src={require('../../../shared/img/banner/banner_1.png')}/>
-        <ButtonNew showDeco className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
+        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
           this.props.history.push(`/${URLS.BUILD_GON}`)
         }}/>
       </div>,

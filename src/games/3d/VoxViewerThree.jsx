@@ -38,12 +38,15 @@ class VoxViewerThree extends Component {
     this.offsetVector = new THREE.Vector3(0, 0, 0);
 
     this.boxHelper = null;
-    this.tools = props.tools;
     this.objectHovered = null;
-    this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     this.selectLayerColor = '0xffff00';
     this.featureSelected = '';
     this.updateGridIdx = 0;
+
+    if (!props.tools) {
+      this.tools = props.tools;
+      this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
+    }
   }
 
   renderVoxel(voxelData) {
@@ -120,8 +123,10 @@ class VoxViewerThree extends Component {
 
   componentDidMount() {
     this.canvas = document.getElementById('canvas3D');
-    this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
-    this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    if (!this.props.viewOnly) {
+      this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
+      this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    }
     ThreeX.loadMaterial('diamond', diamondMaterialConfig);
     ThreeX.loadMaterial('gold', goldMaterialConfig);
     ThreeX.loadMaterial('brick', brickMaterialConfig);
@@ -135,7 +140,12 @@ class VoxViewerThree extends Component {
     ThreeX.loadMaterial('wood', woodMaterialConfig);
     ThreeX.loadMaterial('fur', furMaterialConfig);
 
-    this.updateHoverBoxColor();
+    if (!this.props.viewOnly) {
+      this.updateHoverBoxColor();
+    }
+    if (this.props.data) {
+      this.setNewVoxelData(this.props.data);
+    }
   }
 
   componentWillUnmount() {
@@ -241,7 +251,7 @@ class VoxViewerThree extends Component {
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        {/*<Axis/>*/}
+        {/*/!*<Axis/>*!/*/}
         <OrthographicCamera ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>

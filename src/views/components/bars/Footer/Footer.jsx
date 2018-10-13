@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 import {URLS} from "../../../../constants/general";
 import { Container } from '../../../widgets/Container/Container.jsx';
 import { Image } from "../../Image/Image.jsx";
+import PropTypes from "prop-types";
+import {GetValues} from "../../../../utils/objUtils";
 
 require("style-loader!./Footer.scss");
 
@@ -14,11 +16,11 @@ class Footer extends React.Component {
   }
 
   render() {
-    let {_t, size} = this.props;
+    let {_t, size, type} = this.props;
 
     return (
-      <div className="footer__wrapper">
-        <Container size={size} className={'footer__content'}>
+      <div className={`footer__wrapper ${type}`}>
+        <Container size={size} className={`footer__content`}>
 
           <div className={'footer__main'}>
             <div className="footer__left">
@@ -61,8 +63,22 @@ class Footer extends React.Component {
       </div>
     );
   }
-
 }
+
+Footer.types = {
+  DARK: 'dark',
+  BRIGHT: 'bright',
+};
+
+Footer.defaultProps = {
+  size: Container.sizes.NORMAL,
+  type: Footer.types.DARK,
+};
+
+Footer.propTypes = {
+  size: PropTypes.string,
+  type: PropTypes.oneOf([...GetValues(Footer.types)]),
+};
 
 const mapStateToProps = (store) => ({_t: getTranslate(store.localeReducer)});
 
