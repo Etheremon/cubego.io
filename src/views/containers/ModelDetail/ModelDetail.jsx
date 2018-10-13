@@ -10,6 +10,7 @@ import { Container } from '../../widgets/Container/Container.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
+import Footer from '../../components/bars/Footer/Footer.jsx';
 
 require("style-loader!./ModelDetail.scss");
 
@@ -20,6 +21,7 @@ class ModelDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      allowChangeName: false,
     }
 
     this.dataPieChart = this.dataPieChart.bind(this);
@@ -36,8 +38,8 @@ class ModelDetail extends React.Component {
     ]);
 
     var options = {
-      backgroundColor: 'transparent',
       legend: 'none',
+      backgroundColor: 'transparent',
       slices: {  0: {offset: 0.02},
                 1: {offset: 0.02},
                 2: {offset: 0.02},
@@ -46,10 +48,7 @@ class ModelDetail extends React.Component {
           },
       chartArea: {width:'85%', height:'85%'},
       pieHole: 0.1,
-      animation:{
-        duration: 1000,
-        easing: 'out',
-      },
+      pieSliceText: 'label',
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -58,16 +57,19 @@ class ModelDetail extends React.Component {
   }
 
   componentDidMount() {
-    google.charts.setOnLoadCallback(this.dataPieChart());
+    google.charts.setOnLoadCallback(() => {
+      this.dataPieChart();
+    });
   }
 
   render() {
 
     const {_t} = this.props;
+    const {allowChangeName} = this.state;
 
-    const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '250', name: 'cubego'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: 'earth', name: 'type'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', name: 'stats range'}];
+    const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '45', label: 'win'},
+                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '35', label: 'lose'},
+                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '10/40', label: 'energy'}];
 
     const moves = ['icon-stats', 'icon-stats', 'icon-stats', 'icon-stats'];
 
@@ -85,18 +87,23 @@ class ModelDetail extends React.Component {
               <div className="model-review">
               </div>
 
-              <div className="model-info">
+              <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 <div className="model-logo__container">
                   <div className="hexagon-img"></div>
-                  <img src={require('../../../shared/img/icons/icon-stats.png')} />
+                  <img src={require('../../../shared/img/cubegon/earth.png')} />
                 </div>
-                <span>VEXIGON <img src={require('../../../shared/img/icons/icon_pencil.png')} /></span>
+                <span>
+                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} disabled={!allowChangeName} onChange={() => {}}/>
+                  <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
+                    this.setState({ allowChangeName: !allowChangeName })
+                  }}/> 
+                </span>
               </div>
 
               <div className="model-action">
                 <ButtonNew label={_t('destroy')}
                         className={'destroy__button'} size={ButtonNew.sizes.NORMAL}/>
-                <ButtonNew label={_t('rebuild')}
+                <ButtonNew label={_t('rebuild')} color={ButtonNew.colors.TURQUOISE}
                         className={'rebuild__button'} size={ButtonNew.sizes.NORMAL}/>
               </div>
 
@@ -110,10 +117,10 @@ class ModelDetail extends React.Component {
                 </div>
 
                 <div className="timestamp">
-                  {_t('create_time')}
+                  {`${_t('create_time')}:`}
                   <span>20/10/2018</span>
 
-                  {_t('patent_id')}
+                  {`${_t('patent_id')}:`}
                   <span>23456789</span>
                 </div>
 
@@ -126,8 +133,9 @@ class ModelDetail extends React.Component {
                 <div className="pie-chart__container">
                   <div id={'piechart'} className="pie-chart"></div>
                   <img src={require('../../../shared/img/background/background_circle.png')} />
-                  <div className="octagon-img">
-                  {250}
+                  <img className={'octagon-img'} src={require('../../../shared/img/icons/icon-total.png')} />
+                  <div className="total">
+                    {250}
                   </div>
                 </div>
               </div>
@@ -145,7 +153,7 @@ class ModelDetail extends React.Component {
                       <div className={'item'} key={idx}>
                         <img src={item.icon} />
                         <div className={'content'}>{_t(item.content)}</div>
-                        <div className={'name'}>{_t(item.name)}</div>
+                        <div className={'label'}>{_t(item.label)}</div>
                       </div>
                     ))}
               </div>
@@ -157,7 +165,7 @@ class ModelDetail extends React.Component {
                 <div className="trade__container">
                   <ButtonNew label={_t('transfer')}
                           className={'transfer__button'} size={ButtonNew.sizes.NORMAL}/>
-                  <ButtonNew label={_t('sell')}
+                  <ButtonNew label={_t('sell')} color={ButtonNew.colors.TURQUOISE}
                   className={'sell__button'} size={ButtonNew.sizes.NORMAL}/>
                 </div>
                 
@@ -168,6 +176,7 @@ class ModelDetail extends React.Component {
 
           </Container>
         </div>
+        <Footer size={Container.sizes.BIG} />
       </PageWrapper>
     )
   }

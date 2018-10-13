@@ -25,6 +25,9 @@
     background: $regal_blue;
     margin: 0 24px;
     color: $white;
+    font-family: $f__overpass;
+    font-size: $font-size-big;
+    font-weight: $font-weight-bold;
 
     &:before {
       position: absolute;

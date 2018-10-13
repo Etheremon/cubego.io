@@ -6,6 +6,12 @@
   opacity: 0 !important;
 }
 
+.vis-collapse {
+  opacity: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+}
+
 .animated {
   &.swirl-in-fwd {
     @include swirl-in-fwd;
@@ -13,5 +19,9 @@
 
   &.scale-in-hor-left {
     @include scale-in-hor-left(1s);
+  }
+
+  &.custom {
+    @include expand;
   }
 }

@@ -54,12 +54,14 @@ class CubegonCard extends React.Component {
           </div>
 
           <div className="type__container">
+          
             <div className="type-content">
               <div className="content">
-              Vexigon
+                Vexigon
               </div>
               <div className="border-layer"></div>
             </div>
+
             <div className="shadow-layer"></div>
           </div>
       </div>

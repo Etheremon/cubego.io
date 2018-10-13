@@ -12,6 +12,7 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
+import Footer from "../../components/bars/Footer/Footer.jsx";
 
 require("style-loader!./ReviewPage.scss");
 
@@ -24,6 +25,8 @@ class ReviewPage extends React.Component {
     this.state = {
       sliderValue: energyRange[Math.round(energyRange.length / 2)],
       hiddenSliderIndicators: [0, energyRange[energyRange.length - 1]],
+      allowChangeName: false,
+      cubegonName: '',
     }
 
     this.handleSliderChange = this.handleSliderChange.bind(this);
@@ -44,19 +47,19 @@ class ReviewPage extends React.Component {
   render() {
 
     const {_t} = this.props;
+    const { allowChangeName } = this.state;
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
 
-    const statsOverview = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '250', name: 'cubego'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: 'earth', name: 'type'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', name: 'stats range'}];
+    const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: '250', label: 'cubego'},
+                          {icon: require('../../../shared/img/cubegon/earth.png'), content: 'earth', label: 'type'},
+                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', label: 'stats range'}];
 
-    const cubeDetails = [{material: 'silver', quantity: 5, price: 0.001},
-                        {material: 'gold', quantity: 5, price: 0.001},
-                        {material: 'gold', quantity: 5, price: 0.001},
-                        {material: 'glass', quantity: 5, price: 0.001},
-                        {material: 'diamond', quantity: 5, price: 0.001}];
-
+    const cubeDetails = [{material: '001', quantity: 5, price: 0.001},
+                        {material: '002', quantity: 5, price: 0.001},
+                        {material: '003', quantity: 5, price: 0.001},
+                        {material: '004', quantity: 5, price: 0.001},
+                        {material: '005', quantity: 5, price: 0.001}];
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
@@ -71,14 +74,14 @@ class ReviewPage extends React.Component {
               <div className="model-review">
               </div>
 
-              <div className="model-info">
+              <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 {/* <InviewMonitor
                   classNameNotInView='vis-hidden'
                   classNameInView='animated swirl-in-fwd'
                 > */}
                 <div className="model-logo__container">
                   <div className="hexagon-img"></div>
-                  <img src={require('../../../shared/img/icons/icon-stats.png')} />
+                  <img src={require('../../../shared/img/cubegon/earth.png')} />
                 </div>
                 {/* </InviewMonitor> */}
       
@@ -86,7 +89,12 @@ class ReviewPage extends React.Component {
                   classNameNotInView='vis-hidden'
                   classNameInView='animated scale-in-hor-left'
                 > */}
-                <span>VEXIGON <img src={require('../../../shared/img/icons/icon_pencil.png')} /> </span>
+                <span>
+                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} disabled={!allowChangeName} onChange={() => {}}/>
+                  <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
+                    this.setState({ allowChangeName: !allowChangeName })
+                  }}/> 
+                </span>
                 
                 {/* </InviewMonitor> */}
                   
@@ -95,14 +103,14 @@ class ReviewPage extends React.Component {
             </div>
 
             <div className="model-stats">
-              <Text className={'overview__header'} type={Text.types.H2} children={_t('overview')} />
+              <Text className={'overview__header'} type={Text.types.H3} children={_t('overview')} />
               <div className="overview-details">
                 <div className="stats-overview">
                   {statsOverview.map((item, idx) => (
                       <div className={'item'} key={idx}>
                         <img src={item.icon} />
                         <div className={'content'}>{_t(item.content)}</div>
-                        <div className={'name'}>{_t(item.name)}</div>
+                        <div className={'label'}>{_t(item.label)}</div>
                       </div>
                     ))}
                 </div>
@@ -122,7 +130,7 @@ class ReviewPage extends React.Component {
                       <tr key={idx}>
                         <td>
                           <div className="cube">
-                            <img src={require(`../../../shared/img/cubes/${item.material}.png`)}/>
+                            <img src={require(`../../../shared/img/cubegoes/${item.material}.png`)}/>
                             {_t(item.material)}
                           </div>
                         </td>
@@ -144,7 +152,7 @@ class ReviewPage extends React.Component {
                   </tbody>
                 </table>
 
-                <div className="label">{_t('energy')}</div>
+                <div className="energy__label">{_t('energy')}</div>
                 <div className="total__container">
                   <div className="energy__container">
                       <div className="slider-bar__container">
@@ -178,7 +186,7 @@ class ReviewPage extends React.Component {
                 </div>
 
                 <div className="checkout__container">
-                  <ButtonNew label={_t('back')}
+                  <ButtonNew label={_t('back')} color={ButtonNew.colors.TURQUOISE}
                           className={'back__button'} size={ButtonNew.sizes.NORMAL}/>
                   <ButtonNew label={_t('check_out')}
                           className={'check-out__button'} size={ButtonNew.sizes.NORMAL}/>
@@ -189,6 +197,8 @@ class ReviewPage extends React.Component {
 
           </Container>
         </div>
+
+        <Footer size={Container.sizes.BIG} />
       </PageWrapper>
     )
   }

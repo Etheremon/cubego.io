@@ -12,14 +12,11 @@ import Footer from '../../components/bars/Footer/Footer.jsx'
 import Slider from '../../widgets/Slider/Slider.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
-import { HeaderHighlight } from '../../widgets/Header/Header.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
 import {URLS} from "../../../constants/general";
-import FeatureCard from './FeatureCard/FeatureCard.jsx';
-import Carousel from '../../widgets/Carousel/Carousel.jsx';
-import { Image } from '../../components/Image/Image.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
+import * as Utils from "../../../utils/utils";
 
 require("style-loader!./Home.scss");
 
@@ -29,12 +26,12 @@ const _features = [
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
   {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
 ];
-const channels = [{img: require('../../../shared/img/socialMedia/icon_discord.png'), name: 'DISCORD'},
-                  {img: require('../../../shared/img/socialMedia/icon_twitter.png'), name: 'TWITTER'},
-                  {img: require('../../../shared/img/socialMedia/icon_telegram.png'), name: 'TELEGRAM'}];
 const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_3.png'), name: 'VEXIGON', creator: 'Nhu'}];
+const channels = [{img: require('../../../shared/img/socialMedia/icon_discord.png'), name: 'DISCORD', link: 'https://discordapp.com/'},
+                  {img: require('../../../shared/img/socialMedia/icon_twitter.png'), name: 'TWITTER', link: 'https://twitter.com/'},
+                  {img: require('../../../shared/img/socialMedia/icon_telegram.png'), name: 'TELEGRAM', link: 'https://telegram.org/'}];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -117,7 +114,7 @@ class HomePage extends React.Component {
 
           <Container className="home__modes" id={'modes'}>
             <div className="home__modes-title__container">
-              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
+              <Text className={'home__modes-title'} type={Text.types.H1} children={_t('how_to_play')} />
             </div>
 
             {/*<div className="home__mode-container">*/}
@@ -140,20 +137,18 @@ class HomePage extends React.Component {
                     <div className={'desc'} >
                       <Text className={'header'} type={Text.types.H1} children={_t('creation').toUpperCase()} />
                       <p className={'text'}>{_t('home.creation')}</p>
-                      <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                                className={'btn-btn'} onClick={() => {}}/>
+                      {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                                className={'btn-btn'} onClick={() => {}}/> */}
                     </div>
                   </InviewMonitor>
 
 
                   <div className={'image'} >
-                    <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
+                    <img src={require('../../../shared/img/banner/creation_banner.png')}/>
                   </div>
                 </div>
               </Container>
 
-
-            
               <Container className={'home__game-detail__2 section'}>
                 <div className={'background blue right'}/>
 
@@ -165,12 +160,12 @@ class HomePage extends React.Component {
                   <div className={'desc'}>
                     <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
                     <p className={'text'}>{_t('home.copyright')}</p>
-                    <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                              className={'btn-btn'} onClick={() => {}}/>
+                    {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                              className={'btn-btn'} onClick={() => {}}/> */}
                   </div>
                 </InviewMonitor>
                 <div className={'image'}>
-                  <img src={require('../../../shared/img/banner/index_banner.png')}/>
+                  <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
                 </div>
                 </div>
               </Container>
@@ -188,13 +183,13 @@ class HomePage extends React.Component {
                     <div className={'desc'}>
                       <Text className={'header'} type={Text.types.H1} children={_t('combat').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
-                      <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                                className={'btn-btn'} onClick={() => {}}/>
+                      {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
+                                className={'btn-btn'} onClick={() => {}}/> */}
                     </div>
                   </InviewMonitor>
     
                   <div className={'image'}>
-                    <img src={require('../../../shared/img/banner/index_banner.png')}/>
+                    <img src={require('../../../shared/img/banner/combat_banner.png')}/>
                   </div>
                 </div>
               </Container>
@@ -204,32 +199,35 @@ class HomePage extends React.Component {
           {/* end home__game-detail */}
 
           <div className={'home__partnership'} id={'partners'}>
-            <HeaderHighlight className={'partnership-header'}>
-              <b>{_t('in_partnership_with')}</b>
-            </HeaderHighlight>
+            <Text className={'partnership__header'} type={Text.types.H1} children={_t('in_partnership_with')} />
             <div className={'home__partnership__imgs'}>
-              <a href={'https://etheremon.com/'} target={'_blank'}><img src={'https://www.etheremon.com/assets/images/banner_facebook.png'}/><p>ETHEREMON</p></a>
-              <a href={'https://etheremon.com/'} target={'_blank'}><img src={'https://www.etheremon.com/assets/images/banner_facebook.png'}/><p>ETHEREMON</p></a>
-              <a href={'https://etheremon.com/'} target={'_blank'}><img src={'https://www.etheremon.com/assets/images/banner_facebook.png'}/><p>ETHEREMON</p></a>
+              <a href={'https://decentraland.org/'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>
+              <a href={'https://kyber.network/'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
+              <a href={'https://opskins.com/'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSKINS</p></a>
+              <a href={'https://www.toshi.org/'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.png')} /><p>TOSHI</p></a>
+              <a href={'https://opensea.io/'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OPEN SEA</p></a>
+              <a href={'https://ginco.io/en/'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>GINCO</p></a>
             </div>
           </div>
           {/* end home__partnership */}
-
-          <div className="home__channels">
-            <HeaderHighlight className={'channels__header'}>
-              <b>{_t('channels')}</b>
-            </HeaderHighlight>
-            <div className="channel-listview">
-              {
-                channels.map((item, idx) => 
-                  <div className="channel-item" key={idx}>
-                    <img src={item.img}/>
-                    <div className={'name'}>{item.name}</div>
-                  </div>
-                )
-              }
+          
+          <InviewMonitor
+            classNameNotInView='vis-collapse'
+            classNameInView='animated custom'>
+            <div className="home__channels">
+              <Text className={'channels__header'} type={Text.types.H1} children={_t('channels')} />
+              <div className="channel-listview">
+                {
+                  channels.map((item, idx) => 
+                    <div className="channel-item" key={idx} onClick={() => { Utils.OpenInNewTab(item.link)} }>
+                      <img src={item.img}/>
+                      <div className={'name'}>{item.name}</div>
+                    </div>
+                  )
+                }
+              </div>
             </div>
-          </div>
+          </InviewMonitor>
 
           {/* end home__channels */}
 

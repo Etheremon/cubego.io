@@ -6,8 +6,60 @@
 .mycubegoes-page__container {
   margin-top: 60px;
 
-  .combat-title {
+  .my-cubegon-info__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 0;
+    background: rgba(59, 83, 99, 1);
 
+    .group {
+      display: flex;
+      flex-direction: row;
+
+      .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &.info {
+          background: rgba(49, 60, 73, 1);
+          border-radius: 8px;
+          margin: 0 8px;
+          padding: 5px 8px;
+          color: $white;
+
+          .label {
+            font-size: $font-size-small;
+            margin-right: 8px;
+          }
+
+        }
+
+        .owner-name {
+          font-family: $f__baloobha;
+          color: $white;
+          font-size: $font-size-large;
+        }
+
+        .icon-value {
+          display: flex;
+          align-items: flex-end;
+
+          font-family: $f__baloobha;
+          font-size: $font-size-big;
+
+          img {
+            height: 24px;
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+
+  .combat-title {
+    margin-top: 16px;
   }
 
   .combat-stats__container {
