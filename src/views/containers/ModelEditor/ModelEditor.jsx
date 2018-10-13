@@ -214,6 +214,7 @@ class _ModelEditor extends React.Component {
   }
 
   reviewModel() {
+    this.props.dispatch(Actions.model.saveModel(this.toolManager.model));
     this.props.history.push(`/${URLS.REVIEW_GON}`);
   }
 
