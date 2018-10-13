@@ -1,12 +1,13 @@
 @import '../../styles/colors';
 @import '../../styles/mixins';
 @import '../../styles/variables';
+@import '../../styles/fonts';
 
 
 .cubego-card__container {
   width: 20%;
   display: inline-block;
-  border: 1px solid $dark;
+  border: 2px solid $regal_blue;
   text-align: center;
   margin: 16px;
 
@@ -17,8 +18,17 @@
   }
 
   .quantity {
+    padding: 8px 0;
     width: 100%;
-    background: cyan;
+    background: $regal_blue;
+    color: $white;
+    font-size: $font-size-small;
+
+    span {
+      margin-left: 8px;
+      font-family: $f__baloobha;
+      font-size: $font-size-large;
+    }
   }
 
   .type__container {
@@ -30,6 +40,8 @@
       left: 50%;
       transform: translate(-50%, -50%) skewX(-20deg);
       color: $white;
+      font-family: $f__baloobha;
+      font-size: $font-size-large;
     }
 
     .type-content {
@@ -38,7 +50,7 @@
       height: 36px;
       width: calc(100% + 16px);
       left: -8px;
-      background: blue;
+      background: $regal_blue;
       overflow: hidden;
       z-index: 2;
     }
@@ -60,7 +72,7 @@
       left: -8px;
       width: calc(100% + 16px);
       height: 60%;
-      background: black;
+      background: rgba(69, 103, 120, 1);
       clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
       z-index: 1;
     }

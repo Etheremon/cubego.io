@@ -10,6 +10,7 @@ import { Container } from '../../widgets/Container/Container.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
+import Footer from '../../components/bars/Footer/Footer.jsx';
 
 require("style-loader!./ModelDetail.scss");
 
@@ -175,6 +176,7 @@ class ModelDetail extends React.Component {
 
           </Container>
         </div>
+        <Footer size={Container.sizes.BIG} />
       </PageWrapper>
     )
   }

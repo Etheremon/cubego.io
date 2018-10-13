@@ -12,6 +12,7 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
+import Footer from "../../components/bars/Footer/Footer.jsx";
 
 require("style-loader!./ReviewPage.scss");
 
@@ -196,6 +197,8 @@ class ReviewPage extends React.Component {
 
           </Container>
         </div>
+
+        <Footer size={Container.sizes.BIG} />
       </PageWrapper>
     )
   }
