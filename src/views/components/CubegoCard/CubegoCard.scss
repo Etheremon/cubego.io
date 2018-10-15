@@ -5,11 +5,10 @@
 
 
 .cubego-card__container {
-  width: 20%;
+  width: 100%;
   display: inline-block;
   border: 2px solid $regal_blue;
   text-align: center;
-  margin: 16px;
 
   img {
     display: block;
@@ -22,7 +21,7 @@
     width: 100%;
     background: $regal_blue;
     color: $white;
-    font-size: $font-size-small;
+    font-size: $font-size-smaller;
 
     span {
       margin-left: 8px;
@@ -33,6 +32,7 @@
 
   .type__container {
     position: relative;
+    background: $regal_blue;
 
     .content {
       position: absolute;
@@ -45,6 +45,7 @@
     }
 
     .type-content {
+      top: 2px;
       position: relative;
       transform: skewX(20deg);
       height: 36px;

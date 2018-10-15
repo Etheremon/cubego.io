@@ -6,11 +6,17 @@
 .cubegon-card__container {
   border: 2px solid $regal_blue;
   position: relative;
-  width: 20%;
+  width: 100%;
   display: inline-block;
   text-align: center;
   margin: 16px;
   box-sizing: border-box;
+
+  .cubegon__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
   .type__image {
     position: absolute;
@@ -21,15 +27,17 @@
   }
 
   .shopping__image {
+    background: rgba(204, 81, 80, 1);
     position: absolute;
     height: 32px;
     width: auto;
-    top: 0;
-    right: 0;
+    top: -5px;
+    right: 5px;
   }
 
   .type__container {
     position: relative;
+    background: $regal_blue;
 
     .content {
       position: absolute;
@@ -45,6 +53,7 @@
       position: relative;
       transform: skewX(20deg);
       height: 36px;
+      top: 2px;
       width: calc(100% + 16px);
       left: -8px;
       background: $regal_blue;
@@ -79,18 +88,20 @@
   .cubegon-info {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     background: $regal_blue;
     color: $white;
     font-size: $font-size-nano;
-    padding-bottom: 8px;
 
     .id {
       width: 50%;
     }
 
     .energy {
-      width: 50%;
+      background: rgba(238, 116, 47, 1);
+      padding: 3px 16px;
+      border-radius: 5px;
     }
   }
 

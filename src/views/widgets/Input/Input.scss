@@ -21,7 +21,10 @@
     padding: 16px;
     font-weight: $font-weight-semi-bold;
     background-color: transparent;
-    border: solid 1px $gray;
+    border: 0;
+    outline: none;
+    border-bottom: 1px solid $white;
+    color: $white;
     @include border-radius(4px);
     &.with-icon {
       padding-left: 32px !important;
@@ -33,7 +36,7 @@
     color: $gray-dark !important;
   }
   input:focus {
-    border: solid 1px $primary;
+    border-bottom: 2px solid $white;
     outline: none;
   }
   input::placeholder {
@@ -43,7 +46,8 @@
 
   .widget__input-box {
     position: relative;
-    .icon {
+    i {
+      color: $white;
       position: absolute;
       top: 50%;
       left: 10px;

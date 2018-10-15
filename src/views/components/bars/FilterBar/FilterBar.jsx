@@ -3,6 +3,7 @@ import {getTranslate} from "react-localize-redux"
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import { Input } from '../../../widgets/Input/Input.jsx';
+import { Select } from "../../../widgets/Select/Select.jsx";
 
 require("style-loader!./FilterBar.scss");
 
@@ -117,7 +118,17 @@ class FilterBar extends React.Component {
     else if (filter.type === 'select') {
       return (
         <div key={filter.key} className={'filter-bar__filter'}>
-          
+          <Select size={'small'}
+                  options={filter.options}
+                  defaultValue={filter.value || filter.defaultValue}
+                  icon={filter.icon}
+                  onChange={v => {
+                    this.values[filter.key] = v;
+                    onChange && onChange({[filter.key]: v}, this.values);
+                  }}
+                  position={filter.right ? 'right' : 'left'}
+                  enableSearch={filter.enableSearch}
+          />
         </div>
       );
     } else if (filter.type === 'range-input') {

@@ -27,7 +27,6 @@ import {ModelActions} from "../../../actions/model";
 
 require("style-loader!./ModelEditor.scss");
 
-
 class _ModelEditor extends React.Component {
   constructor(props) {
     super(props);

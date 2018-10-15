@@ -185,6 +185,11 @@
     }
 
     .profile__container {
+      display: flex;
+
+      .cube-statistic {
+        width: 50%;
+      }
 
       .pie-chart__container {
         position: relative;
