@@ -14,6 +14,8 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.healthPercent = 100;
     this._opponent = null;
     this.isCollision = false;
+    this.ske = null;
+    this.isAttacking = false;
   }
 
   static create({scene}, props) {
@@ -30,6 +32,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     voxelPlayer.createPlayerMesh(props.size, props.data, props.rotate);
     voxelPlayer.createFakeShadow();
     voxelPlayer.createHealthBar();
+    voxelPlayer.createHurtPoint();
     scene.registerBeforeRender(() => {
       voxelPlayer.renderer.position.z = voxelPlayer.playerMesh.position.z;
       voxelPlayer.playerMesh.position.z = 0;
@@ -45,16 +48,17 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   }
 
   registerBeforeRender() {
-    // this.scene.registerBeforeRender(() => {
-    //   if (!this._opponent.playerMesh) return;
-    //   if (this.playerMesh.intersectsMesh(this._opponent.playerMesh, true)) {
-    //     if (!this.isCollision) {
-    //       this.isCollision = true;
-    //     }
-    //   } else {
-    //     this.isCollision = false;
-    //   }
-    // });
+    this.scene.registerBeforeRender(() => {
+      if (!this._opponent.playerMesh || !this._opponent.isAttacking) return;
+      if (this.playerMesh.intersectsMesh(this._opponent.playerMesh, true)) {
+        if (!this.isCollision) {
+          this.hurt(15);
+          this.isCollision = true;
+        }
+      } else {
+        this.isCollision = false;
+      }
+    });
   }
 
   set opponent(opponent) {
@@ -65,12 +69,59 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.healthPercent -= percent;
     if (this.healthPercent < 0) {
       this.healthPercent = 0;
+      this.die();
+    } else {
+      this.isCollision = true;
+      setTimeout(() => {
+        this.isCollision = false;
+      }, 100);
     }
+    this.animateHurtPoint(percent);
     this.updateHealthBar();
-    this.isCollision = true;
-    setTimeout(() => {
-      this.isCollision = false;
-    }, 100);
+  }
+
+  createHurtPoint() {
+    let texture = new BABYLON.DynamicTexture("dynamic texture", 512, this.scene, true);
+    texture.hasAlpha = true;
+    this.hpPlane = BABYLON.MeshBuilder.CreatePlane('hpPlane', {width: 2, height: 2}, this.scene);
+    this.hpPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+    this.hpPlane.material = new BABYLON.StandardMaterial("outputplane", this.scene);
+    this.hpPlane.position.y = 2.5;
+    this.hpPlane.material.opacityTexture = texture;
+    this.hpPlane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+    this.hpPlane.material.emissiveColor = new BABYLON.Color3(1, 0, 0);
+    this.hpPlane.material.backFaceCulling = false;
+    this.hpPlane.parent = this.renderer;
+  }
+
+  animateHurtPoint(hurtPoint) {
+    let texture = this.hpPlane.material.opacityTexture;
+    let context2D = texture.getContext();
+    context2D.clearRect(0, 0, 512, 512);
+    let size = 150 + Math.random() * 100;
+    let x = Math.random() * 100;
+    texture.drawText(hurtPoint.toString(), x, 200, "bold " + size + "px verdana", "white", "transparent");
+    let anim = new BABYLON.Animation("anim", "position.y", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    let keys = [
+      {frame: 0, value: this.hpPlane.position.y},
+      {frame: 60, value: this.hpPlane.position.y + 1}
+    ];
+    anim.setKeys(keys);
+    this.hpPlane.animations.push(anim);
+
+    let animFade = new BABYLON.Animation("anim", "material.alpha", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    let fadeKeys = [
+      {frame: 0, value: 1},
+      {frame: 60, value: 0}
+    ];
+    animFade.setKeys(fadeKeys);
+    this.hpPlane.animations.push(animFade);
+
+    this.scene.beginAnimation(this.hpPlane, 0, 100, false, 1, () => {
+      context2D.clearRect(0, 0, 512, 512);
+      this.hpPlane.position.y -= 1;
+    });
+
   }
 
   createPlayerMesh(size, data, rotate) {
@@ -135,7 +186,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     let healthMat = new BABYLON.StandardMaterial("redMat", scene);
     healthMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
 
-    this.healthBarBg = BABYLON.MeshBuilder.CreatePlane('healthBar', {width: 5, height: 0.3}, scene);
+    this.healthBarBg = BABYLON.MeshBuilder.CreatePlane('healthBar', {width: 5, height: 0.3}, this.scene);
     this.healthBarBg.position.y = 5;
     this.healthBarBg.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
     this.healthBarBg.material = greenMat;
@@ -172,7 +223,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
     pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
 
-    pSystem.emitter = emitter; // the starting object, the emitter
+    pSystem.emitter = emitter;
     let emitterType = new BABYLON.SphereParticleEmitter();
     emitterType.radius = 2;
     emitterType.radiusRange = 0;
@@ -186,8 +237,8 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.minLifeTime = 50.0;
     pSystem.maxLifeTime = 50.0;
 
-    pSystem.emitRate = 20;
-    pSystem.manualEmitCount = 150;
+    pSystem.emitRate = 50;
+    pSystem.manualEmitCount = 100;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
     pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
@@ -195,11 +246,19 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.minAngularSpeed = 0;
     pSystem.maxAngularSpeed = Math.PI;
 
+    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
+    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
+    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+
     pSystem.minEmitPower = 0;
     pSystem.maxEmitPower = 0;
     pSystem.updateSpeed = 0.005;
     pSystem.isBillboardBased = false;
     pSystem.start();
+    setTimeout(() => {
+      pSystem.stop();
+      pSystem.dispose();
+    }, 2000);
   }
 
   createFireParticle() {
@@ -214,7 +273,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     // pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     // pSystem.light.range = 15;
 
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture("assets/particle/flare.png", this.scene);
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
@@ -246,7 +305,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
           pSystem.emitter.position = new BABYLON.Vector3(0, 1, alpha);
           for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
             if (pSystem.particles[i2].age >= (pSystem.particles[i2].lifeTime * 0.05)) {
-              pSystem.particles[i2].size -= 0.15;
+              pSystem.particles[i2].size -= 0.1;
             }
           }
           alpha -= 0.2;
@@ -284,5 +343,53 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     return pSystem;
   }
 
-  create
+  mountSkeleton(skeletonData, boneName) {
+    let ske = BABYLON.Skeleton.Parse(skeletonData, this.scene);
+    let obj = this.playerMesh;
+    let matricesWeights = [];
+    let floatIndices = [];
+    let boneIndice = -1;
+    for (let i = 0; i < ske.bones.length; i++) {
+      if (ske.bones[i].name === boneName) {
+        boneIndice = i;
+        break;
+      }
+    }
+    if (boneIndice === -1) {
+      console.log("Could not find bone");
+      return;
+    }
+    for (let ii = 0; ii < obj.getTotalVertices(); ii++) {
+      matricesWeights[ii * 4 + 0] = 1.0;
+      matricesWeights[ii * 4 + 1] = 0.0;
+      matricesWeights[ii * 4 + 2] = 0.0;
+      matricesWeights[ii * 4 + 3] = 0.0;
+      floatIndices[ii * 4 + 0] = boneIndice;
+      floatIndices[ii * 4 + 1] = boneIndice;
+      floatIndices[ii * 4 + 2] = boneIndice;
+      floatIndices[ii * 4 + 3] = boneIndice;
+    }
+    obj.skeleton = ske;
+
+    obj.setVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, matricesWeights, false);
+    obj.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, floatIndices, false);
+    this.skeleton = ske;
+  };
+
+  playSkeletonAnimation(animationName, loop, scaleSpeed) {
+    let animation = this.skeleton.beginAnimation(animationName, loop, scaleSpeed);
+    return animation.waitAsync();
+  }
+
+  die() {
+    //Implement in view side
+  }
+
+  destroyAll() {
+    this.playerMesh.dispose();
+    this.shadow.dispose();
+    this.healthBar.dispose();
+    this.healthBarBg.dispose();
+  }
+
 }
