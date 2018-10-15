@@ -67,7 +67,7 @@ function* watchLoadUserCubegon() {
 
 export function* watchAll() {
   yield all([
-    fork(watchLoadUserBasicInfo),
-    fork(watchLoadUserCubegon),
+    // fork(watchLoadUserBasicInfo),
+    // fork(watchLoadUserCubegon),
   ]);
 }
