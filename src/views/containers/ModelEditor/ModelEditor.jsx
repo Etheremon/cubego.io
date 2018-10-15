@@ -22,12 +22,10 @@ import * as ObjUtils from "../../../utils/objUtils";
 import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
-import {Actions} from "../../../actions";
 import {GetLoggedInUserId, GetSavedModel} from "../../../reducers/selectors";
 import {ModelActions} from "../../../actions/model";
 
 require("style-loader!./ModelEditor.scss");
-
 
 
 class _ModelEditor extends React.Component {

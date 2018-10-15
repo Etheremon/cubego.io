@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import {getTranslate} from 'react-localize-redux'
 
