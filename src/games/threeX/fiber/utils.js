@@ -12,7 +12,14 @@ const emptyFnc = (name) => () => {
   // console.log(name);
 };
 
+const compareNullUndefined = (nextProps, lastProps) => {
+  return (nextProps === null || nextProps === undefined) && (lastProps === null || lastProps === undefined)
+};
+
 const compareVector = (vector1, vector2) => {
+  if (typeof vector1 !== 'object' || typeof vector2 !== 'object') {
+    return false;
+  }
   if (vector1.x && vector2.x && vector1.y && vector2.y && vector1.z && vector2.z) {
     return vector1.x === vector2.x && vector1.y === vector2.y && vector1.z === vector2.z;
   }
@@ -24,7 +31,7 @@ const loggerFnc = (name) => () => {
 };
 
 const compareProp = (nextProp, lastProp) => {
-  return nextProp === lastProp || (nextProp == null && lastProp == null) || compareVector(nextProp, lastProp);
+  return nextProp === lastProp || compareNullUndefined(nextProp, lastProp) || compareVector(nextProp, lastProp);
 };
 
 const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerElement) => {

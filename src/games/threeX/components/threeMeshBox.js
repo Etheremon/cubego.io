@@ -4,7 +4,13 @@ import ThreeX from "../index";
 import {fullColorHex} from "../../utils";
 
 export class ThreeMeshBox extends ThreeComponent {
+  constructor() {
+    super();
+    this.props = {};
+  }
+
   static create({scene}, props) {
+    this.props = props;
     let meshContainer = new ThreeMeshBox();
     let size = props.size || 10;
     let color = parseInt(props.color, 16);
@@ -42,5 +48,30 @@ export class ThreeMeshBox extends ThreeComponent {
 
   set position(position) {
     this.renderer.position.set(position.x, position.y, position.z);
+  }
+
+  set variant(variant) {
+    this.props.variant = variant;
+    if (this.props.variant.color) {
+      let variantColor = parseInt(this.props.variant.color.replace('#', ''), 16);
+      this.renderer.material.color.setHex(variantColor);
+    }
+    if (this.props.variant.emissive) {
+      let variantEmissive = parseInt(this.props.variant.emissive.replace('#', ''), 16);
+      this.renderer.material.color.setHex(variantEmissive);
+    }
+  }
+
+  set materialId(id) {
+    let material = ThreeX.getMaterial(id).clone();
+    if (this.props.variant.color) {
+      let variantColor = parseInt(this.props.variant.color.replace('#', ''), 16);
+      material.color.setHex(variantColor);
+    }
+    if (this.props.variant.emissive) {
+      let variantEmissive = parseInt(this.props.variant.emissive.replace('#', ''), 16);
+      material.color.setHex(variantEmissive);
+    }
+    this.renderer.material = material;
   }
 }

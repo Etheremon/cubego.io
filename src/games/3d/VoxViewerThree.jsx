@@ -149,7 +149,6 @@ class VoxViewerThree extends Component {
   }
 
   componentWillUnmount() {
-    this.canvas = document.getElementById('canvas3D');
     this.canvas.removeEventListener('mousemove', this.onMouseMove.bind(this), false);
     this.canvas.removeEventListener('mousedown', this.onMouseDown.bind(this), false);
   }
@@ -180,7 +179,8 @@ class VoxViewerThree extends Component {
         ['x']: cubePos.x,
         ['y']: cubePos.z,
         ['z']: cubePos.y,
-      })
+      });
+      this.rollOverMesh.renderer.visible = false;
     }
   }
 
