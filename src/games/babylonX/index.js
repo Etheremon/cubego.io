@@ -23,7 +23,7 @@ const createRenderer = (canvas) => {
   root.canvas = canvas;
   assetsManager = new BABYLON.AssetsManager(scene);
   rootContainer = BabylonRenderer.createContainer(root);
-  startLoop();
+  assetsManager.onFinish = startLoop;
   return rootContainer;
 };
 

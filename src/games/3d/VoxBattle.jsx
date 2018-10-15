@@ -13,10 +13,6 @@ import idleGroundAnimation from "./animations/idle_ground";
 
 const SIZE = 0.2;
 
-const skill = (player) => {
-
-};
-
 class VoxBattle extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +43,7 @@ class VoxBattle extends Component {
       {frame: 60, value: 0},
       {frame: 100, value: 0}
     ];
-    this.players = [];
+    this.players = [null, null];
   }
 
   createAttackAnimationKeys(rotate) {
@@ -60,9 +56,30 @@ class VoxBattle extends Component {
     ]
   };
 
+  initPlayerAnimation(player, idx) {
+    if (this.players[0]) {
+      this.players[0].opponent = player;
+      player.opponent = this.players[0];
+    }
+    player.mountSkeleton(idleGroundAnimation, 'rootJT');
+    player.playSkeletonAnimation('idle_ground', true, 1);
+    player.die = () => {
+      player.playSkeletonAnimation('die', false, 1);
+      if (idx === 0) {
+        this.players[1].playSkeletonAnimation('winning', true, 1);
+      } else {
+        this.players[0].playSkeletonAnimation('winning', true, 1);
+      }
+      setTimeout(() => {
+        player.destroyAll();
+      }, 5000);
+    };
+    this.players[idx] = player;
+  }
+
   renderPlayer(data, rotate, idx) {
     return <VoxelPlayer data={data} key={idx} size={SIZE * 0.9} rotate={rotate} ref={(ref) => {
-      this.players[idx] = ref
+      this.initPlayerAnimation(ref, idx);
     }}>
       <Animation name='idle' targetProperty='scaling' targetFPS={60} loopMode={BABYLON.Animation.ANIMATIONTYPE_VECTOR3}
                  dataType={BABYLON.Animation.ANIMATIONTYPE_VECTOR3}
@@ -111,78 +128,72 @@ class VoxBattle extends Component {
     })
   }
 
-  mount(obj, ske, boneName) {
-    let matricesWeights = [];
-    let floatIndices = [];
-    let boneIndice = -1;
-    for (let i = 0; i < ske.bones.length; i++) {
-      if (ske.bones[i].name === boneName) {
-        boneIndice = i;
-        break;
-      }
-    }
-    if (boneIndice === -1) {
-      console.log("Could not find bone");
-      return;
-    }
-    for (let ii = 0; ii < obj.getTotalVertices(); ii++) {
-      matricesWeights[ii * 4 + 0] = 1.0;
-      matricesWeights[ii * 4 + 1] = 0.0;
-      matricesWeights[ii * 4 + 2] = 0.0;
-      matricesWeights[ii * 4 + 3] = 0.0;
-      floatIndices[ii * 4 + 0] = boneIndice;
-      floatIndices[ii * 4 + 1] = boneIndice;
-      floatIndices[ii * 4 + 2] = boneIndice;
-      floatIndices[ii * 4 + 3] = boneIndice;
-    }
-    obj.skeleton = ske;
-
-    obj.setVerticesData(BABYLON.VertexBuffer.MatricesWeightsKind, matricesWeights, false);
-    obj.setVerticesData(BABYLON.VertexBuffer.MatricesIndicesKind, floatIndices, false);
-  };
-
 
   componentDidMount() {
     BabylonX.loaders.addMesh('battlemap1', '/assets/battleground/map_1/unity/', 'BattleMap1.babylon').then((data) => {
-      data.loadedMeshes[2].rotation.y = -Math.PI / 4;
+      data.loadedMeshes.forEach((mesh) => {
+        if (mesh.name.match(/^Cloud_\d+_l$/g)) {
+          let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+          let keys = [];
+          keys.push({
+            frame: 0,
+            value: mesh.position.z
+          });
+          keys.push({
+            frame: 100,
+            value: mesh.position.z + 100
+          });
+          anim.setKeys(keys);
+          mesh.animations.push(anim);
+          this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
+            mesh.dispose();
+          });
+        } else if (mesh.name.match(/^Cloud_\d+_r$/g)) {
+          let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+          let keys = [];
+
+          keys.push({
+            frame: 0,
+            value: mesh.position.z
+          });
+
+          keys.push({
+            frame: 100,
+            value: mesh.position.z - 100
+          });
+          anim.setKeys(keys);
+          mesh.animations.push(anim);
+          this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
+            mesh.dispose();
+          });
+        }
+      })
     });
-
-
     BabylonX.loaders.load();
-    setTimeout(() => {
-      let json = idleGroundAnimation;
-      let skeleton = BABYLON.Skeleton.Parse(json, this.players[1].scene);
-      this.mount(this.players[1].playerMesh, skeleton, 'rootJT');
-
-      let skeletonViewer = new BABYLON.Debug.SkeletonViewer(skeleton, this.players[1].playerMesh, this.players[1].scene);
-      skeletonViewer.isEnabled = true;
-      skeletonViewer.color = BABYLON.Color3.Red();
-
-      this.players[1].scene.beginAnimation(skeleton, 0, 50, true, 1.0);
-
-      let ske2 = skeleton.clone('ske2', 'ske2');
-      this.mount(this.players[0].playerMesh, ske2, 'rootJT');
-
-      let skeletonViewer2 = new BABYLON.Debug.SkeletonViewer(ske2, this.players[0].playerMesh, this.players[0].scene);
-      skeletonViewer2.isEnabled = true;
-      skeletonViewer2.color = BABYLON.Color3.Red();
-
-      this.players[0].scene.beginAnimation(ske2, 0, 50, true, 1.0);
-      this.players[0].opponent = this.players[1];
-      this.players[1].opponent = this.players[0];
-    }, 5000)
   }
 
   createShieldParticle() {
-    this.players[0].createShieldParticle();
+    this.players[0].playSkeletonAnimation('roar', false, 1).then(() => {
+    });
+    setTimeout(() => {
+      this.players[0].createShieldParticle();
+    }, 150);
   }
 
   createFistParticle() {
-    this.players[1].createFireParticle();
+    this.players[1].playSkeletonAnimation('attack_normal', false, 1).then(() => {
+    });
+    setTimeout(() => {
+      this.players[1].createFireParticle();
+    }, 150);
   }
 
   createHitAnimation() {
+    this.players[0].isAttacking = true;
     this.players[0].playAnimation('attack', false, 3);
+    setTimeout(() => {
+      this.players[0].isAttacking = false;
+    }, 1000);
   }
 
   createHitParticle() {
@@ -197,10 +208,10 @@ class VoxBattle extends Component {
           <GUISimpleButton left={'-75px'} value={'1'} onClick={this.createShieldParticle.bind(this)}/>
           <GUISimpleButton left={'-25px'} value={'2'} onClick={this.createFistParticle.bind(this)}/>
           <GUISimpleButton left={'25px'} value={'3'} onClick={this.createHitAnimation.bind(this)}/>
-          <GUISimpleButton left={'75px'} value={'4'} onClick={this.createHitParticle.bind(this)}/>
+          <GUISimpleButton left={'75px'} value={'4'}/>
         </GUI>
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} attachControl={true}/>
-        <HemisphericLight/>
+        <HemisphericLight position={{x: 0, y: 10, z: 0}}/>
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
         <Skybox/>
