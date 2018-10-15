@@ -259,13 +259,20 @@
           margin-top: -30px;
         }
 
-        img {
+        .img {
           position: absolute;
           max-width: 180%;
-          max-height: 150%;
+          max-height: 140%;
           top: 50%;
           left: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           @include transform(translateY(-50%));
+
+          .widget__sprite-sheet {
+            @include transform(scale(0.8));
+          }
         }
 
         //@include flip-up-down(3s);

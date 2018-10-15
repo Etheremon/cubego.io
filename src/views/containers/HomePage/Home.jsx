@@ -17,6 +17,8 @@ import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
+import {SpriteSheet} from "../../widgets/SpriteSheet/SpriteSheet.jsx";
+import {SpriteSource} from "../../../constants/sprite";
 
 require("style-loader!./Home.scss");
 
@@ -144,7 +146,17 @@ class HomePage extends React.Component {
 
 
                   <div className={'image'} >
-                    <img src={require('../../../shared/img/banner/creation_banner.png')}/>
+                    {/*<img src={require('../../../shared/img/banner/creation_banner.png')}/>*/}
+
+                    <div className={'img'}>
+                      <SpriteSheet image={SpriteSource.BUILD_GON.image}
+                                   frameWidth={SpriteSource.BUILD_GON.frameWidth}
+                                   frameHeight={SpriteSource.BUILD_GON.frameHeight}
+                                   steps={SpriteSource.BUILD_GON.steps}
+                                   cols={SpriteSource.BUILD_GON.cols}
+                                   fps={SpriteSource.BUILD_GON.fps}
+                      />
+                    </div>
                   </div>
                 </div>
               </Container>
@@ -165,13 +177,11 @@ class HomePage extends React.Component {
                   </div>
                 </InviewMonitor>
                 <div className={'image'}>
-                  <img src={require('../../../shared/img/banner/copywrite_banner.png')}/>
+                  <img className={'img'} src={require('../../../shared/img/banner/copywrite_banner.png')}/>
                 </div>
                 </div>
               </Container>
 
-
-            
               <Container className={'home__game-detail__3 section'}>
                 <div className={'background red left'}/>
 
@@ -189,7 +199,7 @@ class HomePage extends React.Component {
                   </InviewMonitor>
     
                   <div className={'image'}>
-                    <img src={require('../../../shared/img/banner/battle_banner.png')}/>
+                    <img className={'img'} src={require('../../../shared/img/banner/battle_banner.png')}/>
                   </div>
                 </div>
               </Container>

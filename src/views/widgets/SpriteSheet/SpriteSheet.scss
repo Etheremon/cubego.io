@@ -1,0 +1,21 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.widget__sprite-sheet {
+  margin: 0 auto;
+
+  .widget__sprite-window {
+    position: relative;
+    overflow: hidden;
+
+    .widget__image-holder {
+      position: absolute;
+      img {
+        display: block;
+        width: auto !important;
+        height: auto !important;
+      }
+    }
+  }
+}
