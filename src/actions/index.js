@@ -5,6 +5,7 @@ import * as user from './user';
 import * as stats from './user';
 import * as cubegon from './user';
 import * as store from './user';
+import * as model from './model';
 import * as localization from './localization';
 
 export const Actions = {
@@ -14,6 +15,8 @@ export const Actions = {
   stats,
   cubegon,
   store,
+
+  model,
 
   localization,
 };

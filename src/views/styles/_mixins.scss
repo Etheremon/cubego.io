@@ -379,16 +379,16 @@ $computer-width: 992px;
   0% {
     opacity: 0;
     padding: 0;
-    height: 0;
+    max-height: 0;
   }
   100% {
     opacity: 1;
     padding: 24px 0 48px 0;
-    height: auto;
+    max-height: 1000px;
   }
 }
 
-@mixin expand($delay: 0s) {
-  animation: expand 0.8s cubic-bezier(.81,.09,.77,.17) both;
+@mixin expand($delay: 0s, $duration: 0.8s) {
+  animation: expand $duration ease-in-out both;
   animation-delay: $delay;
 }

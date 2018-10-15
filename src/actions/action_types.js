@@ -41,3 +41,9 @@ export const LOAD_AVAILABLE_CUBEGOES = 'LOAD_AVAILABLE_CUBEGOES';
 export const FETCH_AVAILABLE_CUBEGOES = createRequestTypes('FETCH_AVAILABLE_CUBEGOES');
 export const LOAD_AUCTION_CUBEGONS = 'LOAD_AUCTION_CUBEGONS';
 export const FETCH_AUCTION_CUBEGONS = createRequestTypes('FETCH_AUCTION_CUBEGONS');
+
+/**
+ * model related
+ */
+export const SAVE_MODEL = 'SAVE_MODEL';
+export const CLEAR_MODEL = 'CLEAR_MODEL';

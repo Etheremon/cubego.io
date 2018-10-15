@@ -21,8 +21,13 @@ import {MODEL_TEMPLATES} from "../../../constants/model";
 import * as ObjUtils from "../../../utils/objUtils";
 import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
+import {ButtonNew} from "../../widgets/Button/Button.jsx";
+import {Actions} from "../../../actions";
+import {GetSavedModel} from "../../../reducers/selectors";
+import {URLS} from "../../../constants/general";
 
 require("style-loader!./ModelEditor.scss");
+
 
 
 class _ModelEditor extends React.Component {
@@ -33,6 +38,7 @@ class _ModelEditor extends React.Component {
       showTemplates: false,
       scale2D: 1,
       selectedMaterial: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic],
+      saved: false,
     };
 
     this.tools = {
@@ -109,15 +115,24 @@ class _ModelEditor extends React.Component {
     this.onZoomOut = this.onZoomOut.bind(this);
     this.onZoomReset = this.onZoomReset.bind(this);
 
+    this.saveModel = this.saveModel.bind(this);
+    this.reviewModel = this.reviewModel.bind(this);
+    this.onSavedModelSelect = this.onSavedModelSelect.bind(this);
+
     this.isHoldingKey = {};
   }
 
   componentDidMount() {
-    let parser = new window.vox.Parser();
-    parser.parse(require('../../../shared/sample_models/3.vox')).then((voxelData) => {
-      this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+    if (this.props.savedModel) {
+      this.toolManager.addModel({model: this.props.savedModel});
       this.forceUpdate();
-    });
+    } else {
+      let parser = new window.vox.Parser();
+      parser.parse(require('../../../shared/sample_models/3.vox')).then((voxelData) => {
+        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+        this.forceUpdate();
+      });
+    }
 
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
@@ -173,6 +188,14 @@ class _ModelEditor extends React.Component {
     this.setState({showTemplates: false});
   }
 
+  onSavedModelSelect() {
+    let {savedModel} = this.props;
+    if (savedModel) {
+      this.toolManager.addModel({model: savedModel});
+    }
+    this.setState({showTemplates: false});
+  }
+
   onZoomIn() {
     this.setState({scale2D: this.state.scale2D + 0.1});
   }
@@ -185,9 +208,25 @@ class _ModelEditor extends React.Component {
     this.setState({scale2D: 1});
   }
 
+  saveModel() {
+    this.setState({saved: true});
+    this.props.dispatch(Actions.model.saveModel(this.toolManager.model));
+  }
+
+  reviewModel() {
+    this.props.dispatch(Actions.model.saveModel(this.toolManager.model));
+    this.props.history.push(`/${URLS.REVIEW_GON}`);
+  }
+
   render() {
-    let {_t} = this.props;
-    let {selectedMaterial} = this.state;
+    let {_t, savedModel} = this.props;
+    let {selectedMaterial, saved} = this.state;
+
+    let btns = [
+      <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
+                 onMouseOut={() => {this.setState({saved: false})}}/>,
+      <ButtonNew label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1} onClick={this.reviewModel}/>,
+    ];
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_DARK}>
@@ -307,6 +346,14 @@ class _ModelEditor extends React.Component {
                       </div>
                     </div>
                   ))}
+                  {savedModel ?
+                    <div className={'template'} onClick={this.onSavedModelSelect}>
+                      <img className={'img'} src={require('../../../shared/sample_models/0.png')} />
+                      <div className={'name'}>
+                        {_t('saved model')}
+                      </div>
+                    </div> : null
+                  }
                 </div> : null
               }
             </div>
@@ -392,13 +439,26 @@ class _ModelEditor extends React.Component {
                            onChange={(val) => {this.onToolChange(this.tools.layerIndex.key, val)}}
                            label={_t('select_layer')}
                 />
+
+                {selectedMaterial && Object.keys(selectedMaterial.variants).length >= 16 ?
+                  <div className={'model-editor__layer-btns'}>
+                    {btns}
+                  </div> : null
+                }
               </div>
             </div>
+
+            {selectedMaterial && Object.keys(selectedMaterial.variants).length < 16 ?
+              <div className={'model-editor__btns'}>
+                {btns}
+              </div> : null
+            }
+
           </Container>
 
         </div>
 
-        <Footer size={Container.sizes.BIG} />
+        <Footer size={Container.sizes.BIG} type={Footer.types.BRIGHT} />
       </PageWrapper>
     )
   }
@@ -409,6 +469,7 @@ const mapStateToProps = (store, props) => {
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
+    savedModel: GetSavedModel(store),
   }
 };
 

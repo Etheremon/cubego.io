@@ -6,11 +6,11 @@ require("style-loader!./Button.scss");
 
 
 export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList,
-                            onClick, onMouseDown, onMouseUp,
-                            style, showDeco}) => {
+                           onClick, onMouseDown, onMouseUp, onMouseOut,
+                           style, showDeco}) => {
 
   return (
-    <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco ? 'deco' : ''} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
+    <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
          style={style}
          onClick={(e) => {
            if (onClick) {
@@ -31,6 +31,11 @@ export const ButtonNew = ({className, label, children, color, size, type, disabl
              e.preventDefault();
              e.stopPropagation();
              onMouseUp(e);
+           }
+         }}
+         onMouseOut={(e) => {
+           if (onMouseOut) {
+             onMouseOut(e);
            }
          }}
     >
@@ -75,12 +80,17 @@ ButtonNew.sizes = {
 ButtonNew.types = {
   TOKEN: 'token',
 };
+ButtonNew.deco = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  BOTH: 'both',
+};
 ButtonNew.defaultProps = {
   color: ButtonNew.colors.ORANGE,
   size: ButtonNew.sizes.NORMAL,
   fluid: false,
   tokenList: ['eth', 'emont'],
-  showDeco: false,
+  showDeco: '',
   style: {},
 };
 ButtonNew.propTypes = {
@@ -91,6 +101,6 @@ ButtonNew.propTypes = {
   onMouseUp: PropTypes.func,
   fluid: PropTypes.bool,
   disabled: PropTypes.bool,
-  showDeco: PropTypes.bool,
+  showDeco: PropTypes.string,
   style: PropTypes.object,
 };

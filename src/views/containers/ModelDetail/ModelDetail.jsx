@@ -90,7 +90,7 @@ class ModelDetail extends React.Component {
               <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 <div className="model-logo__container">
                   <div className="hexagon-img"></div>
-                  <img src={require('../../../shared/img/cubegon/earth.png')} />
+                  <img src={require('../../../shared/img/types/earth.png')} />
                 </div>
                 <span>
                   <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} disabled={!allowChangeName} onChange={() => {}}/>

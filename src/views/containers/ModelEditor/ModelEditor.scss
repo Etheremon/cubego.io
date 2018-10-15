@@ -10,7 +10,7 @@
   color: $white;
   text-align: right;
   padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 
   .model-editor__tool-bar {
     position: relative;
@@ -56,6 +56,7 @@
       .name {
         padding-top: 4px;
         font-family: $f__baloobha;
+        text-transform: capitalize;
       }
     }
   }
@@ -135,6 +136,10 @@
       min-height: 300px;
     }
 
+    .model-editor__3d {
+      background-color: #354662;
+    }
+
     .model-editor__2d {
       position: absolute;
       top: 8px;
@@ -201,7 +206,6 @@
   .model-editor__tool {
     padding-top: 12px;
     width: 100%;
-    overflow: hidden;
     display: flex;
 
     @include mobile {
@@ -224,7 +228,17 @@
       .widget__picker-bar {
         padding-left: 8px;
       }
+
+      .model-editor__layer-btns {
+        padding-top: 12px;
+        padding-right: 28px;
+      }
     }
+  }
+
+  .model-editor__btns {
+    text-align: center;
+    padding-top: 12px;
   }
 
 }
