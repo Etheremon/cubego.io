@@ -46,7 +46,7 @@ class ModelDetail extends React.Component {
                 3: {offset: 0.02},
                 4: {offset: 0.02}
           },
-      chartArea: {width:'85%', height:'85%'},
+      chartArea: {left: '2px', top: '-3px', width:'85%', height:'85%'},
       pieHole: 0.1,
       pieSliceText: 'label',
     };
@@ -76,11 +76,11 @@ class ModelDetail extends React.Component {
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
-        <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} onBackClicked={() => {}}/>
+        <Navbar minifying/>
 
         <div className="detail-page__container">
       
-          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {}}/>
+          <HeaderBar size={Container.sizes.BIG} label={_t('cubegon_detail')} onBackClicked={() => this.props.history.goBack()}/>
           <Container className={'model-detail__main'} size={Container.sizes.BIG}>
 
             <div className="model-detail__container">
@@ -176,7 +176,7 @@ class ModelDetail extends React.Component {
 
           </Container>
         </div>
-        <Footer size={Container.sizes.BIG} />
+        <Footer size={Container.sizes.BIG} type={Footer.types.BRIGHT}/>
       </PageWrapper>
     )
   }

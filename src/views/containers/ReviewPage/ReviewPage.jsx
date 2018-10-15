@@ -86,7 +86,7 @@ class ReviewPage extends React.Component {
 
         <div className="review-page__container">
       
-          <HeaderBar label={_t('review cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
+          <HeaderBar label={_t('review_cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
           <Container className={'review-page__main'}>
 
             <div className="model-review__container">
@@ -233,7 +233,7 @@ class ReviewPage extends React.Component {
           </Container>
         </div>
 
-        <Footer type={Footer.types.BRIGHT} />
+        <Footer type={Footer.types.BRIGHT} type={Footer.types.BRIGHT} />
       </PageWrapper>
     )
   }

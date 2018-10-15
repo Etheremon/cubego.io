@@ -47,8 +47,8 @@ class Pagination extends React.Component {
           {
             btns.map((btn, idx) => 
               btn === '-' ?
-              <item key={idx} disabled>...</item>
-              : <item key={idx} name={`${btn}`} active={this.state.activeItem === btn} onClick={() => this.handleItemClick(btn)} />
+              <div className={'item disabled'} key={idx}>...</div>
+              : <div className={`item ${this.state.activeItem === btn ? 'active' : ''}`} key={idx}  onClick={() => this.handleItemClick(btn)}>{`${btn}`}</div>
             )
           }
         </div>

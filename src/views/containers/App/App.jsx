@@ -138,7 +138,6 @@ class App extends React.Component {
 
           <Route path={`/battle_dev`} component={Battle}/>
 
-
           <Route component={Home}/>
         </Switch>
 

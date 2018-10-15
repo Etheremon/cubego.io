@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import * as Utils from "../../../utils/utils";
 import { Icon } from '../../components/Icon/Icon.jsx';
 import { orderBy } from '../../../utils/arrayUtils';
+import { CUBE_TYPES } from '../../../constants/cubego';
+import { GetValues } from "../../../utils/objUtils";
 
 require("style-loader!./Filters.scss");
 
@@ -10,10 +12,10 @@ export const FilterSearch = ({_t, searchFields, value, key}) => {
   return {
     key: key || 'search',
     type: 'input',
-    placeholder: `${_t('txt.search')}...`,
+    placeholder: `${_t('search')}...`,
     defaultValue: '',
     value: Utils.ConvertNonNullToString(value),
-    icon: <Icon name={'search'} />,
+    icon: <Icon name={'fas fa-search'} />,
     filterFunc: (objs, searchText) => {
       searchText = `${searchText}`.toLowerCase();
       return objs.filter(obj => searchFields.some(field => obj[field]
@@ -24,7 +26,7 @@ export const FilterSearch = ({_t, searchFields, value, key}) => {
 };
 
 export const FilterSort = ({_t, sortTypes, defaultSort, value, right, key}) => {
-  let options = sortTypes.map(sortType => ({value: sortType[0], label: _t(sortType[1])}));
+  let options = sortTypes.map(sortType => ({value: sortType[0], label: (sortType[1])}));
 
   return {
     key: key || 'sort',
@@ -33,7 +35,7 @@ export const FilterSort = ({_t, sortTypes, defaultSort, value, right, key}) => {
     defaultValue: defaultSort,
     value: Utils.ConvertNonNullToString(value),
     right: right || false,
-    icon: <Icon name={'sort'}/>,
+    icon: <Icon name={'fas fa-sort'}/>,
     filterFunc: (list, val) => {
       let keys = val.split(' ');
       list = list.map(e => ({...e}));
@@ -42,14 +44,14 @@ export const FilterSort = ({_t, sortTypes, defaultSort, value, right, key}) => {
   }
 };
 
-export const FilterType = ({_t, key, value}) => {
-  let types = sortBy(Utils.ObjGetValues(MONSTER_TYPES)).map(k => {
+export const FilterType = ({_t, key, value, right}) => {
+  let types = orderBy(GetValues(CUBE_TYPES), ['name'], ['asc']).map(k => {
     return {
-      value: `${k}`,
+      value: `${k.name}`,
       label: (
-        <div className={'filter-monster-type'}>
-          <MonsterTypeImage type={k}/>
-          {_t(`type.${GetTypeName(k)}`)}
+        <div className={'filter-cubegon-type'}>
+          <img src={require(`../../../shared/img/types/${k.name}.png`)} />
+          {_t(`${k.name}`)}
         </div>
       ),
     }
@@ -62,19 +64,20 @@ export const FilterType = ({_t, key, value}) => {
       {
         value: 'all',
         label: (
-          <div className={'filter-monster-type'}>
-            <Image img={'ball32'}/>
-            {_t('txt.all_types')}
+          <div className={'filter-cubegon-type'}>
+            <img src={require(`../../../shared/img/types/${'air'}.png`)} />
+            {_t('all_types')}
           </div>
         ),
       },
       ...types,
     ],
+    right: right || false,
     defaultValue: 'all',
     value: Utils.ConvertNonNullToString(value),
-    filterFunc: (monsters, typ) => {
-      if (typ === 'all') return monsters;
-      return monsters.filter(monster => monster.types.includes(parseInt(typ)))
+    filterFunc: (cubegons, typ) => {
+      if (typ === 'all') return cubegons;
+      return cubegons.filter(cubegon => cubegon.type === typ)
     }
   }
 };

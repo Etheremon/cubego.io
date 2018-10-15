@@ -10,7 +10,7 @@ import Pagination from '../Pagination/Pagination.jsx';
 
 require("style-loader!./ListView.scss");
 
-const DEFAULT_PAGE_SIZE = 32;
+const DEFAULT_PAGE_SIZE = 4;
 
 class ListView extends React.Component {
   constructor(props) {

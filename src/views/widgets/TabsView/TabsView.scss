@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  border-bottom: 32px solid $regal_blue;
+  border-bottom: 44px solid $regal_blue;
 
   .group {
     display: flex;
@@ -19,7 +19,6 @@
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
-    text-transform: capitalize;
     height: 44px;
     width: 168px;
     background: $regal_blue;
@@ -58,6 +57,7 @@
       left: 50%;
       top: 12px;
       transform: translateX(-50%);
+      text-transform: uppercase;
     }
 
     &.active {
