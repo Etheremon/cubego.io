@@ -162,6 +162,11 @@
     }
 
     .background {
+      &:before, &:after {
+        @include border-radius(4px);
+        background-size: 100% 100%;
+      }
+
       &.red {
         &:before {
           background-image: url('../../../shared/img/background/background_red.png');
@@ -263,7 +268,7 @@
           @include transform(translateY(-50%));
         }
 
-        @include flip-up-down(3s);
+        //@include flip-up-down(3s);
       }
 
       &.left {

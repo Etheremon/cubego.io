@@ -189,7 +189,7 @@ class HomePage extends React.Component {
                   </InviewMonitor>
     
                   <div className={'image'}>
-                    <img src={require('../../../shared/img/banner/combat_banner.png')}/>
+                    <img src={require('../../../shared/img/banner/battle_banner.png')}/>
                   </div>
                 </div>
               </Container>
