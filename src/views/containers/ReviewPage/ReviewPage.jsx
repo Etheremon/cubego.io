@@ -14,8 +14,11 @@ import * as Utils from "../../../utils/utils";
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {CUBE_MATERIALS} from "../../../constants/cubego";
-import {GetSavedModel} from "../../../reducers/selectors";
+import {GetValidatedModel} from "../../../reducers/selectors";
 import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
+import {URLS} from "../../../constants/general";
+import {Actions} from "../../../actions";
+import {ModelActions} from "../../../actions/model";
 
 require("style-loader!./ReviewPage.scss");
 
@@ -33,6 +36,14 @@ class ReviewPage extends React.Component {
     };
 
     this.handleSliderChange = this.handleSliderChange.bind(this);
+    this.checkOut = this.checkOut.bind(this);
+  }
+
+  componentDidMount() {
+    if (!this.props.validatedModel) {
+      this.props.history.push(`/${URLS.BUILD_GON}`)
+    }
+    console.log("hihi", this.props.validatedModel);
   }
 
   handleSliderChange(event) {
@@ -44,11 +55,20 @@ class ReviewPage extends React.Component {
     }
 
     this.setState({sliderValue: event.target.value, hiddenSliderIndicators: newHidden});
-    
+  }
+
+  checkOut() {
+    this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
+      model: this.props.validatedModel.model,
+      structure: this.props.validatedModel.model.structure,
+      energy: parseInt(this.state.sliderValue),
+      name: this.nameInput ? this.nameInput.value : '',
+      image: this.modelCanvas.getBase64Image(),
+    }));
   }
 
   render() {
-    const {_t, savedModel} = this.props;
+    const {_t, validatedModel} = this.props;
     const { allowChangeName } = this.state;
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
@@ -57,11 +77,8 @@ class ReviewPage extends React.Component {
                           {icon: require('../../../shared/img/types/earth.png'), content: 'earth', label: 'type'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', label: 'stats range'}];
 
-    const cubeDetails = [{material_id: 1, quantity: 5, price: 0.001},
-                        {material_id: 2, quantity: 5, price: 0.001},
-                        {material_id: 3, quantity: 5, price: 0.001},
-                        {material_id: 4, quantity: 5, price: 0.001},
-                        {material_id: 5, quantity: 5, price: 0.001}];
+    if (!validatedModel) return null;
+
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
@@ -74,8 +91,8 @@ class ReviewPage extends React.Component {
 
             <div className="model-review__container">
               <div className="model-review">
-                {savedModel ?
-                  <Model3D model={savedModel} viewOnly/> : null
+                {validatedModel ?
+                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
                 }
               </div>
 
@@ -95,9 +112,10 @@ class ReviewPage extends React.Component {
                   classNameInView='animated scale-in-hor-left'
                 > */}
                 <span>
-                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} onChange={() => {}}
+                  <input type="text" defaultValue={'Vexigon'} size={10} onChange={() => {}}
                          onFocus={() => {this.setState({allowChangeName: true})}}
                          onBlur={() => {this.setState({allowChangeName: false})}}
+                         ref={(input) => {this.nameInput = input}}
                   />
                   <img src={require('../../../shared/img/icons/icon_pencil.png')} />
                 </span>
@@ -134,8 +152,8 @@ class ReviewPage extends React.Component {
                   </thead>
 
                   <tbody>
-                    {cubeDetails.map((item, idx) => {
-                      let material = CUBE_MATERIALS[item.material_id];
+                    {validatedModel['info']['topup_materials'].map((item, idx) => {
+                      let material = CUBE_MATERIALS[item['material_class']];
                       return (
                         <tr key={idx}>
                           <td>
@@ -144,17 +162,17 @@ class ReviewPage extends React.Component {
                               {_t(material.name)}
                             </div>
                           </td>
-                          <td><span>{item.quantity}</span></td>
+                          <td><span>{item.count}</span></td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {item.price}
+                              {item.eth_price / item.count}
                             </div>
                           </td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {item.quantity * item.price}
+                              {item.eth_price}
                             </div>
                           </td>
                         </tr>
@@ -199,12 +217,14 @@ class ReviewPage extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className={'energy__note'}></div>
+                <div className={'energy__note'}/>
 
                 <div className="checkout__container">
                   <ButtonNew label={_t('back')} color={ButtonNew.colors.TURQUOISE} className={'back__button'}
                              onClick={() => {this.props.history.goBack()}}/>
-                  <ButtonNew label={_t('check_out')} className={'check-out__button'}/>
+                  <ButtonNew label={_t('check_out')} className={'check-out__button'}
+                             onClick={this.checkOut}
+                  />
                 </div>
 
               </div>
@@ -222,7 +242,7 @@ class ReviewPage extends React.Component {
 const mapStateToProps = (store, props) => {
   return {
     _t: getTranslate(store.localeReducer),
-    savedModel: GetSavedModel(store),
+    validatedModel: GetValidatedModel(store),
   }
 };
 

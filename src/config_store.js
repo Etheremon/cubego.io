@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { localeReducer } from 'react-localize-redux'
 import createSagaMiddleware from 'redux-saga'
 import { voxelStoreReducers } from './reducers'
-import { LanguageActions, InitialActions } from './config_language.js'
+import { LanguageActions } from './config_language.js'
 import rootSagas from './sagas'
 import { Actions } from './actions/index';
 

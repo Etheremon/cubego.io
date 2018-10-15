@@ -30,6 +30,10 @@ export class Model3D extends Component {
     }
   }
 
+  getBase64Image() {
+    return this.refs['canvas'].toDataURL()
+  }
+
   render() {
     return (
       <div className={'model3D'}>

@@ -23,8 +23,8 @@ import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cube
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {Actions} from "../../../actions";
-import {GetSavedModel} from "../../../reducers/selectors";
-import {URLS} from "../../../constants/general";
+import {GetLoggedInUserId, GetSavedModel} from "../../../reducers/selectors";
+import {ModelActions} from "../../../actions/model";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -39,6 +39,7 @@ class _ModelEditor extends React.Component {
       scale2D: 1,
       selectedMaterial: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic],
       saved: false,
+      validating: false,
     };
 
     this.tools = {
@@ -210,12 +211,12 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     this.setState({saved: true});
-    this.props.dispatch(Actions.model.saveModel(this.toolManager.model));
+    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
   }
 
   reviewModel() {
-    this.props.dispatch(Actions.model.saveModel(this.toolManager.model));
-    this.props.history.push(`/${URLS.REVIEW_GON}`);
+    this.setState({validating: true});
+    this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({model: this.toolManager.model, history: this.props.history}));
   }
 
   render() {
@@ -225,7 +226,8 @@ class _ModelEditor extends React.Component {
     let btns = [
       <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
                  onMouseOut={() => {this.setState({saved: false})}}/>,
-      <ButtonNew label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1} onClick={this.reviewModel}/>,
+      <ButtonNew loading={this.state.validating}
+                 label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1} onClick={this.reviewModel}/>,
     ];
 
     return (
@@ -470,6 +472,7 @@ const mapStateToProps = (store, props) => {
     pathName,
     _t: getTranslate(store.localeReducer),
     savedModel: GetSavedModel(store),
+    userId: GetLoggedInUserId(store),
   }
 };
 

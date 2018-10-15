@@ -1,5 +1,7 @@
-import {action} from "./action_utils";
-import * as types from "./action_types";
+import {createActionTypes} from "./action_utils";
 
-export const saveModel = (model) => action(types.SAVE_MODEL, {model});
-export const clearModel = (model) => action(types.CLEAR_MODEL, {model});
+export const ModelActions = {
+  SAVE_MODEL: createActionTypes('SAVE_MODEL'),
+  VALIDATE_MODEL: createActionTypes('VALIDATE_MODEL'),
+  SUBMIT_MODEL: createActionTypes('SUBMIT_MODEL')
+};

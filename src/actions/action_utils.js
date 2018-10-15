@@ -30,20 +30,38 @@ export function createFlowTypes(name: string): FlowActionType {
   };
 }
 
-/**
- * Network Requests / Action Requests, with 3 related actions
- * REQUESTED means the network request is just sent / Action started
- * SUCCESS means the request is returned with 200 and no error field in response / Action success
- * FAILED means either a 50x, 40x, or response contains error field / Action failed
- */
+export function action(type: string, data: Object = {}): ActionType {
+  return {type, ...data};
+}
+
+export const createAction = (type) => ((data) => action(type, {...data}));
+
 export function createRequestTypes(name: string): RequestActionType {
   return {
+    INIT: `${name}_INIT`,
     REQUESTED: `${name}_REQUESTED`,
     SUCCESS: `${name}_SUCCESS`,
     FAILED: `${name}_FAILED`,
   };
 }
 
-export function action(type: string, data: Object = {}): ActionType {
-  return {type, ...data};
+export function createActionTypes(name: string): RequestActionType {
+  return {
+    init: {
+      key: `${name}_INIT`,
+      func: createAction(`${name}_INIT`),
+    },
+    request: {
+      key: `${name}_REQUEST`,
+      func: createAction(`${name}_REQUEST`),
+    },
+    success: {
+      key: `${name}_SUCCESS`,
+      func: createAction(`${name}_SUCCESS`),
+    },
+    fail: {
+      key: `${name}_FAIL`,
+      func: createAction(`${name}_FAIL`),
+    },
+  };
 }

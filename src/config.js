@@ -1,1 +1,1 @@
-export const SERVER_URL = 'https://www.cubego.io/';
+export const SERVER_URL = 'https://www.cubego.io';

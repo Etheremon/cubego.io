@@ -7,7 +7,7 @@ require("style-loader!./Button.scss");
 
 export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList,
                            onClick, onMouseDown, onMouseUp, onMouseOut,
-                           style, showDeco}) => {
+                           style, showDeco, loading}) => {
 
   return (
     <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
@@ -41,7 +41,7 @@ export const ButtonNew = ({className, label, children, color, size, type, disabl
     >
 
       <div className={'content'} >
-        {label || children}
+        {loading ? <Loading/> : label || children}
       </div>
 
       {type === ButtonNew.types.TOKEN ?
@@ -92,6 +92,7 @@ ButtonNew.defaultProps = {
   tokenList: ['eth', 'emont'],
   showDeco: '',
   style: {},
+  loading: false,
 };
 ButtonNew.propTypes = {
   color: PropTypes.string,
@@ -103,4 +104,5 @@ ButtonNew.propTypes = {
   disabled: PropTypes.bool,
   showDeco: PropTypes.string,
   style: PropTypes.object,
+  loading: PropTypes.bool,
 };

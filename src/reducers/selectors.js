@@ -16,6 +16,7 @@ export const GetUserBasicInfo = (state, userId) => (CloneDeep(state.user['basicI
  * Model
  */
 export const GetSavedModel = (state) => CloneDeep(state.model['savedModel']);
+export const GetValidatedModel = (state) => CloneDeep(state.model['validatedModel']);
 
 
 /**

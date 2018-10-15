@@ -20,7 +20,7 @@ export const toPromiseFunction = (fn) => {
 export const getCallbackFunc = (resolve, reject) => {
   return function(code, data) {
     switch (code) {
-      case window.RESULT_CODE.SUCCESS:
+      case RESULT_CODE.SUCCESS:
         resolve({response: data});
         break;
 
@@ -38,7 +38,10 @@ export const sendGetRequest = ({url, resolve, reject}) => {
       contentType: 'application/json',
     })
     .done(function(data) {
-      resolve({response: data});
+      if (data.result !== undefined)
+        getCallbackFunc(resolve, reject)(data.result, data.data);
+      else
+        resolve({response: data});
     })
     .fail(function(err) {
       reject({error: err});
@@ -55,7 +58,10 @@ export const sendPostRequest = ({url, data, resolve, reject}) => {
       data: JSON.stringify(data)
     })
     .done(function(data) {
-      resolve({response: data});
+      if (data.result !== undefined)
+        getCallbackFunc(resolve, reject)(data.result, data.data);
+      else
+        resolve({response: data});
     })
     .fail(function(err) {
       reject({error: err});

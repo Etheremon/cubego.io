@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import {getTranslate} from 'react-localize-redux'
 
@@ -121,7 +122,7 @@ class App extends React.Component {
 
     return (
       <div className={'page-container-wrapper'}>
-        <Switch>
+        <Switch history={history}>
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
