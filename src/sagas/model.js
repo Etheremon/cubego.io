@@ -37,11 +37,13 @@ function* submitModel({userId, model, structure, energy, name, image, history}) 
   userId = userId || '0xf65e814c5150738c9b0a10df5328322a2b7af95a';
 
   if (!structure) structure = ModelUtils.GetStructure(model);
+  if (image) image = image.split(',')[1];
 
   yield put(ModelActions.SUBMIT_MODEL.request.func({userId, structure, name, energy, image}));
 
   const {response, error} = yield call(ModelApi.SubmitModel, userId, structure, name, energy, image);
   console.log("submit model:", response, error);
+
   if (!error) {
     yield put(ModelActions.SUBMIT_MODEL.success.func({userId, structure, name, energy, image, response}));
     alert("submitted");
