@@ -10,7 +10,7 @@ export const GetLoggedInUserId = (state) => (state.auth['userId']);
 /**
  * User
  */
-export const GetUserBasicInfo = (state, userId) => (CloneDeep(state.user['basicInfo'][userId]));
+export const GetUserInfo = (state, userId) => (CloneDeep(state.user.info[userId]));
 
 /**
  * Model

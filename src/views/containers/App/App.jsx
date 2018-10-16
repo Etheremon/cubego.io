@@ -6,11 +6,10 @@ import {getTranslate} from 'react-localize-redux'
 
 import Home from '../HomePage/Home.jsx'
 
-import {Actions} from '../../../actions/index.js'
 import * as Tracker from '../../../services/tracker'
 import * as LS from '../../../services/localStorageService';
 
-import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx'
+// import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
 import {URLS} from "../../../constants/general";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
@@ -22,6 +21,7 @@ import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import {GetValues} from "../../../utils/objUtils";
 import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
+import {AuthActions} from "../../../actions/auth";
 
 require("style-loader!./App.scss");
 
@@ -45,32 +45,17 @@ class App extends React.Component {
     if (window.rpcConnected) Tracker.EnableMetamask();
 
     // Check for Ether Account from window.core
-    let acc = undefined, test_acc = undefined;
-    window.test_account = LS.GetItem(LS.Fields.account) || undefined;
+    let acc = undefined;
 
     setInterval(function() {
       if (window.account === undefined) return;
 
-      if (window.account !== acc || window.test_account !== test_acc) {
-        let selected_acc;
-        if (window.account) {
-          selected_acc = window.account;
-          acc = window.account;
-          test_acc = null;
-          window.test_account = null;
-        } else if (!window.account && account) {
-          selected_acc = null;
-          acc = window.account;
-          window.test_account = null;
-          test_acc = null;
-        } else {
-          selected_acc = window.test_account || null;
-          test_acc = window.test_account;
-          acc = window.account;
-        }
-        this.props.dispatch(Actions.auth.login(selected_acc));
-        if (selected_acc)
-          LS.SetItem(LS.Fields.account, selected_acc);
+      if (window.account !== acc) {
+        if (acc === undefined) acc = LS.GetItem(LS.Fields.account) || window.account;
+          else acc = window.account;
+        this.props.dispatch(AuthActions.LOGIN.init.func({userId: acc}));
+        if (acc)
+          LS.SetItem(LS.Fields.account, acc);
         else
           LS.DeleteItem(LS.Fields.account);
       }
@@ -141,7 +126,7 @@ class App extends React.Component {
           <Route component={Home}/>
         </Switch>
 
-        <TxnBar/>
+        {/*<TxnBar/>*/}
       </div>
     )
   }

@@ -3,7 +3,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import { Text } from '../../widgets/Text/Text.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
 import { Container } from '../../widgets/Container/Container.jsx';
@@ -17,7 +16,6 @@ import {CUBE_MATERIALS} from "../../../constants/cubego";
 import {GetValidatedModel} from "../../../reducers/selectors";
 import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
 import {URLS} from "../../../constants/general";
-import {Actions} from "../../../actions";
 import {ModelActions} from "../../../actions/model";
 
 require("style-loader!./ReviewPage.scss");
@@ -233,7 +231,7 @@ class ReviewPage extends React.Component {
           </Container>
         </div>
 
-        <Footer type={Footer.types.BRIGHT} type={Footer.types.BRIGHT} />
+        <Footer type={Footer.types.BRIGHT} />
       </PageWrapper>
     )
   }

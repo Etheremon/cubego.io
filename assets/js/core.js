@@ -5,16 +5,17 @@
  */
 
 // Global variables
-let currentNetwork = '';
-let contractInstances = {};
-let rpcConnected = null;
-let hasWeb3Injected = null;
-let account = undefined;
+var currentNetwork = '';
+var contractInstances = {};
+var rpcConnected = null;
+var hasWeb3Injected = null;
+var account = undefined;
 
 
-function initContractInstance(network=NETWORKS.mainnet) {
-  let contracts = CONTRACTS[network];
-  let instances = {};
+function initContractInstance(network) {
+  if (!network) network = NETWORKS.mainnet;
+  var contracts = CONTRACTS[network];
+  var instances = {};
   instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contracts.ETHEREMON_DATA_ADDRESS);
   return instances;
 }
@@ -38,7 +39,7 @@ window.addEventListener('load', function() {
       }
     }, 500);
 
-    web3.version.getNetwork((err, netId) => {
+    web3.version.getNetwork(function(err, netId) {
       switch (netId) {
         case "1":
           currentNetwork = NETWORKS.mainnet;

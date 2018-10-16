@@ -51,6 +51,10 @@ export function createActionTypes(name: string): RequestActionType {
       key: `${name}_INIT`,
       func: createAction(`${name}_INIT`),
     },
+    stop: {
+      key: `${name}_STOP`,
+      func: createAction(`${name}_STOP`),
+    },
     request: {
       key: `${name}_REQUEST`,
       func: createAction(`${name}_REQUEST`),

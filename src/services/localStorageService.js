@@ -1,4 +1,4 @@
-const storageKey = 'voxel';
+const storageKey = 'cubego';
 
 export const Fields = {
   language: 'language',

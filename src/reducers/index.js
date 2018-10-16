@@ -1,4 +1,4 @@
-import { txnStore } from './txnStore'
+// import { txnStore } from './txnStore'
 import { user } from './user'
 import { auth } from './auth'
 import { model } from  './model'
@@ -8,7 +8,7 @@ export const voxelStoreReducers = {
   auth,
   user,
   model,
-  txnStore,
+  // txnStore,
   localization
 };
 

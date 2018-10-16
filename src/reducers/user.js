@@ -1,9 +1,9 @@
-import * as ActionTypes from '../actions/action_types';
 import {combineReducers} from "redux";
+import {UserActions} from "../actions/user";
 
-const basicInfo = (state = {null: {}}, action) => {
+const info = (state = {null: {}}, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_USER_BASIC_INFO.SUCCESS:
+    case UserActions.LOAD_USER_INFO.success.key:
       return {
         ...state,
         [action.userId]: {
@@ -17,5 +17,5 @@ const basicInfo = (state = {null: {}}, action) => {
 };
 
 export const user = combineReducers({
-  info: basicInfo,
+  info: info,
 });

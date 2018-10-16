@@ -1,19 +1,19 @@
-import * as ActionTypes from '../actions/action_types';
 import {combineReducers} from "redux";
+import {LocalizeActions} from "../actions/localization";
 
 const localizationData = (state={}, action) => {
   switch(action.type) {
-    case ActionTypes.FETCH_LOCALIZATION.REQUESTED:
+    case LocalizeActions.LOAD_LOCALIZATION.init.key:
       return {
         ...state,
         fetchedData: undefined,
       };
-    case ActionTypes.FETCH_LOCALIZATION.SUCCESS:
+    case LocalizeActions.LOAD_LOCALIZATION.success.key:
       return {
         ...state,
         fetchedData: true,
       };
-    case ActionTypes.FETCH_LOCALIZATION.FAILED:
+    case LocalizeActions.LOAD_LOCALIZATION.fail.key:
       return {
         ...state,
         fetchedData: false,

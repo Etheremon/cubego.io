@@ -9,7 +9,7 @@ function isEtherAccountActive() {
 }
 
 function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
+  return new Promise(function(resolve) {return setTimeout(resolve, time)});
 }
 
 function isValidEtherAddress(address) {
@@ -23,8 +23,8 @@ function convertObjToEther(value) {
 }
 
 function callFuncWithRpcCheck(func) {
-  let intervalId = null;
-  let checkRPCLoaded = function() {
+  var intervalId = null;
+  var checkRPCLoaded = function() {
     if (rpcConnected != null) {
       func();
       clearInterval(intervalId);
@@ -34,19 +34,19 @@ function callFuncWithRpcCheck(func) {
 }
 
 function getFunctionHashes(abi) {
-  let hashes = [];
-  for (let i=0; i<abi.length; i++) {
-    let item = abi[i];
+  var hashes = [];
+  for (var i=0; i<abi.length; i++) {
+    var item = abi[i];
     if (item.type !== "function") continue;
-    let signature = item.name + "(" + item.inputs.map(function(input) {return input.type;}).join(",") + ")";
-    let hash = web3.sha3(signature);
+    var signature = item.name + "(" + item.inputs.map(function(input) {return input.type;}).join(",") + ")";
+    var hash = web3.sha3(signature);
     hashes.push({name: item.name, hash: hash});
   }
   return hashes;
 }
 
 function findFunctionByHash(hashes, functionHash) {
-  for (let i=0; i<hashes.length; i++) {
+  for (var i=0; i<hashes.length; i++) {
     if (hashes[i].hash.substring(0, 10) === functionHash.substring(0, 10))
       return hashes[i].name;
   }
