@@ -22,6 +22,7 @@ import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import {GetValues} from "../../../utils/objUtils";
 import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
 import {AuthActions} from "../../../actions/auth";
+import SignUp from '../SignUp/SignUp.jsx';  
 
 require("style-loader!./App.scss");
 
@@ -118,7 +119,7 @@ class App extends React.Component {
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
 
-          <Route path={`/${URLS.ABOUT_US}`} component={ComingSoon}/>
+          <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={ComingSoon}/>
 
           <Route path={`/battle_dev`} component={Battle}/>
