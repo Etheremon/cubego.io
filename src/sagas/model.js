@@ -1,13 +1,11 @@
-import {call, fork, put, select, take, takeLatest, all} from 'redux-saga/effects';
+import {call, fork, put, select, takeLatest, all} from 'redux-saga/effects';
 
-import * as ActionTypes from '../actions/action_types';
-import {Actions} from '../actions/index';
 import {GetLoggedInUserId} from "../reducers/selectors";
 import * as ModelUtils from "../utils/logicUtils";
-import * as ModelApi from "../services/api/modelApi";
 
 import {URLS} from "../constants/general";
 import {ModelActions} from "../actions/model";
+import {ModelApi} from "../services/api/modelApi";
 
 
 function* validateModel({userId, model, history}) {

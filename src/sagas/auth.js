@@ -1,20 +1,20 @@
 import {put, fork, takeLatest, all} from 'redux-saga/effects';
-
-import * as ActionTypes from '../actions/action_types';
-import { Actions } from '../actions/index';
+import {AuthActions} from "../actions/auth";
+import {UserActions} from "../actions/user";
 
 
 export function* login({userId}) {
   if (window.isValidEtherAddress(userId) || userId === null) {
-    yield put(Actions.auth.loginSuccess(userId));
-    yield put(Actions.user.loadUserBasicInfo.start(true));
+    yield put(AuthActions.LOGIN.success.func({userId}));
+
+    yield put(UserActions.LOAD_USER_INFO.init.func({}));
   } else {
-    yield put(Actions.auth.loginFailed(userId, 'err.invalid_ether_address'));
+    yield put(AuthActions.LOGIN.fail.func({userId, err: 'err.invalid_ether_address'}));
   }
 }
 
 function* watchLogin() {
-  yield takeLatest(ActionTypes.LOGIN, login);
+  yield takeLatest(AuthActions.LOGIN.init.key, login);
 }
 
 export function* watchAll() {

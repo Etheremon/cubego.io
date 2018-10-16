@@ -4,10 +4,7 @@ import {SERVER_URL} from "../../config";
 const URL_VALIDATE_MODEL = SERVER_URL + '/api/cubego/validate';
 const URL_SUBMIT_MODEL = SERVER_URL + '/api/cubego/register';
 
-/**
- * Model
- */
-export const ValidateModel = (userId, structure) => {
+const ValidateModel = (userId, structure) => {
   return new Promise(function(resolve, reject) {
     sendPostRequest({
       url: URL_VALIDATE_MODEL,
@@ -17,7 +14,7 @@ export const ValidateModel = (userId, structure) => {
   });
 };
 
-export const SubmitModel = (userId, structure, name, energy, image) => {
+const SubmitModel = (userId, structure, name, energy, image) => {
   return new Promise(function(resolve, reject) {
     sendPostRequest({
       url: URL_SUBMIT_MODEL,
@@ -31,4 +28,9 @@ export const SubmitModel = (userId, structure, name, energy, image) => {
       resolve, reject
     })
   });
+};
+
+export const ModelApi = {
+  ValidateModel,
+  SubmitModel,
 };

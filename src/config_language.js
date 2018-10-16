@@ -1,6 +1,6 @@
 import {addTranslation, initialize} from "react-localize-redux";
 import * as LS from "./services/localStorageService";
-import * as GeneralApi from "./services/api/generalApi";
+import {GeneralApi} from "./services/api/generalApi";
 
 export const Languages = [
   { name: 'English', code: 'en', country: 'gb'},
