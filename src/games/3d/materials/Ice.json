@@ -36,7 +36,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/ice.png"
+    "image": "./assets/materials/textures/ice.jpg"
   }, {
     "uuid": "AF3EC784-94B7-4B6A-BA21-406468226F08",
     "name": "",
