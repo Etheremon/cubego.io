@@ -69,10 +69,9 @@ class VoxViewerThree extends Component {
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
-      let color = voxel['color']['hex'] ? voxel['color']['hex'].replace('#', '') : fullColorHex(voxel['color']);
       elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
-                             ref={(ref) => this.objects.push(ref)} variant={voxel.color.variant}
-                             position={position} color={color}
+                             ref={(ref) => this.objects.push(ref)} variantColor={voxel.color.color}
+                             position={position} variantEmissive={voxel.color.emissive}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
     });
 

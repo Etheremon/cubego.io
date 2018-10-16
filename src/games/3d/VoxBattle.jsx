@@ -128,7 +128,6 @@ class VoxBattle extends Component {
     })
   }
 
-
   componentDidMount() {
     BabylonX.loaders.addMesh('battlemap1', '/assets/battleground/map_1/unity/', 'BattleMap1.babylon').then((data) => {
       data.loadedMeshes.forEach((mesh) => {

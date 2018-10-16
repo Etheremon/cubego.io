@@ -1,4 +1,4 @@
-import render from "./fiber/render";
+import {render, stopRender} from "./fiber/render";
 import {TYPES} from "./components";
 import {getMaterial, loadMaterial} from "./loaders";
 
@@ -12,5 +12,5 @@ export const BoxHelper = TYPES.BOX_HELPER;
 export const OrthographicCamera = TYPES.ORTHOGRAPHIC_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
 
-const ThreeX = {render, loadMaterial, getMaterial};
+const ThreeX = {render, loadMaterial, getMaterial, stopRender};
 export default ThreeX;

@@ -2,6 +2,11 @@ import {ThreeComponent} from "./threeComponent";
 import * as THREE from "three";
 
 export class ThreeOrthographicCamera extends ThreeComponent {
+  constructor() {
+    super();
+    this.requestAnimationFrameId = null;
+  }
+
   static create({renderer, canvas, scene}, props) {
     let threeCamera = new ThreeOrthographicCamera();
     let camera = new THREE.OrthographicCamera(-canvas.width, canvas.width, canvas.height, -canvas.height, 1, 10000);
@@ -14,12 +19,13 @@ export class ThreeOrthographicCamera extends ThreeComponent {
     let controls = new THREE.OrbitControls(camera, canvas);
     controls.update();
     const animate = () => {
-      requestAnimationFrame(animate);
+      threeCamera.requestAnimationFrameId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
     animate();
     threeCamera.renderer = camera;
+    renderer.camera = threeCamera;
     return threeCamera;
   }
 

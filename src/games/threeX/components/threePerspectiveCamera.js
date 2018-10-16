@@ -14,12 +14,13 @@ export class ThreePerspectiveCamera extends ThreeComponent {
     let controls = new THREE.OrbitControls(camera, canvas);
     controls.update();
     const animate = () => {
-      requestAnimationFrame(animate);
+      threeCamera.requestAnimationFrameId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
     animate();
     threeCamera.renderer = camera;
+    renderer.camera = threeCamera;
     return threeCamera;
   }
 

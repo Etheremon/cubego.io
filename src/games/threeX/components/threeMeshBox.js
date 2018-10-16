@@ -19,13 +19,13 @@ export class ThreeMeshBox extends ThreeComponent {
 
     if (props.materialId) {
       material = ThreeX.getMaterial(props.materialId).clone();
-      if (props.variant.color) {
-        let variantColor = parseInt(props.variant.color.replace('#', ''), 16);
+      if (props.variantColor) {
+        let variantColor = parseInt(props.variantColor.replace('#', ''), 16);
         material.color.setHex(variantColor);
       }
-      if (props.variant.emissive) {
-        let variantEmissive = parseInt(props.variant.emissive.replace('#', ''), 16);
-        material.color.setHex(variantEmissive);
+      if (props.variantEmissive) {
+        let variantEmissive = parseInt(props.variantEmissive.replace('#', ''), 16);
+        material.emissive.setHex(variantEmissive);
       }
     } else {
       material = new THREE.MeshBasicMaterial({color: color, transparent: true});
@@ -50,27 +50,30 @@ export class ThreeMeshBox extends ThreeComponent {
     this.renderer.position.set(position.x, position.y, position.z);
   }
 
-  set variant(variant) {
-    this.props.variant = variant;
-    if (this.props.variant.color) {
-      let variantColor = parseInt(this.props.variant.color.replace('#', ''), 16);
-      this.renderer.material.color.setHex(variantColor);
-    }
-    if (this.props.variant.emissive) {
-      let variantEmissive = parseInt(this.props.variant.emissive.replace('#', ''), 16);
-      this.renderer.material.color.setHex(variantEmissive);
-    }
+  set variantColor(color) {
+    this.props.variantColor = color;
+    let variantColor = parseInt(this.props.variantColor.replace('#', ''), 16);
+    this.renderer.material.color.setHex(variantColor);
+  }
+
+  set variantEmissive(color) {
+    this.props.variantEmissive = color;
+    let variantEmissive = parseInt(this.props.variantEmissive.replace('#', ''), 16);
+    this.renderer.material.emissive.setHex(variantEmissive);
   }
 
   set materialId(id) {
+    if (!id) {
+      return;
+    }
     let material = ThreeX.getMaterial(id).clone();
-    if (this.props.variant.color) {
-      let variantColor = parseInt(this.props.variant.color.replace('#', ''), 16);
+    if (this.props.variantColor) {
+      let variantColor = parseInt(this.props.variantColor.replace('#', ''), 16);
       material.color.setHex(variantColor);
     }
-    if (this.props.variant.emissive) {
-      let variantEmissive = parseInt(this.props.variant.emissive.replace('#', ''), 16);
-      material.color.setHex(variantEmissive);
+    if (this.props.variantEmissive) {
+      let variantEmissive = parseInt(this.props.variantEmissive.replace('#', ''), 16);
+      material.emissive.setHex(variantEmissive);
     }
     this.renderer.material = material;
   }

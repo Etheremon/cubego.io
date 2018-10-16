@@ -14,11 +14,15 @@ export class Model3D extends Component {
   }
 
   componentDidMount() {
-    // this.voxel = BabylonX.render(<VoxViewer data={this.props.model}/>, document.getElementById('canvas3D'));
     this.voxel = ThreeX.render(
-      <VoxViewerThree data={this.props.model} onCellClicked={this.props.onCellClicked} tools={this.props.tools} viewOnly={this.props.viewOnly}/>,
+      <VoxViewerThree data={this.props.model} onCellClicked={this.props.onCellClicked} tools={this.props.tools}
+                      viewOnly={this.props.viewOnly}/>,
       document.getElementById('canvas3D'),
     );
+  }
+
+  componentWillUnmount() {
+    ThreeX.stopRender();
   }
 
   componentWillReceiveProps(nextProps) {

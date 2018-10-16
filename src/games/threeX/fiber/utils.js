@@ -53,7 +53,7 @@ const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerEleme
   }
   for (propKey in nextProps) {
     const nextProp = nextProps[propKey];
-    const lastProp = lastProps != null ? lastProps[propKey] : undefined;
+    const lastProp = lastProps[propKey];
     if (!nextProps.hasOwnProperty(propKey) || compareProp(nextProp, lastProp)) {
       continue;
     }
