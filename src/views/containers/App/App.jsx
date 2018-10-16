@@ -15,14 +15,15 @@ import {URLS} from "../../../constants/general";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
 import {GetLocalizationData} from '../../../reducers/selectors';
-import Loading from '../../widgets/Loading/Loading.jsx';
+import Loading from '../../components/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
 import {GetValues} from "../../../utils/objUtils";
 import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
 import {AuthActions} from "../../../actions/auth";
-import SignUp from '../SignUp/SignUp.jsx';  
+import SignUp from '../SignIn/SigInForm/SignInForm.jsx';
+import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
 
 require("style-loader!./App.scss");
 
@@ -121,6 +122,8 @@ class App extends React.Component {
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={ComingSoon}/>
+
+          <Route path={`/${URLS.SIGN_IN}`} component={SignInPage}/>
 
           <Route path={`/battle_dev`} component={Battle}/>
 

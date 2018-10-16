@@ -32,9 +32,13 @@ function* loadUserInfo({userId, forceUpdate}) {
   }
 }
 
+function* updateUserInfo({}) {
+
+}
 
 export function* watchAll() {
   yield all([
     takeLatest(UserActions.LOAD_USER_INFO.init.key, loadUserInfo),
+    takeLatest(UserActions.UPDATE_USER_INFO.init.key, updateUserInfo),
   ]);
 }

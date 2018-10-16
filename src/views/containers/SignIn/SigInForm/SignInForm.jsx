@@ -3,14 +3,13 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
+import { ButtonNew } from '../../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
-import { Container } from '../../widgets/Container/Container.jsx';
-import * as Utils from "../../../utils/utils";
+import { Container } from '../../../widgets/Container/Container.jsx';
 
-require("style-loader!./SignUp.scss");
+require("style-loader!./SignInForm.scss");
 
-class SignUp extends React.Component {
+class SignInForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -29,14 +28,14 @@ class SignUp extends React.Component {
     const {_t} = this.props;
 
     return (  
-      <Container className={'signup__container'} size={Container.sizes.SMALL}>
+      <div className={'signup__container'}>
         <div className="welcome-to">
           {_t('welcome_to_cubego')}
-          <img className={'cube_red'} src={require('../../../shared/img/assets/cube_red.png')}/>
-          <img className={'cube_yellow'} src={require('../../../shared/img/assets/cube_yellow.png')}/>
-          <img className={'cube_blue'} src={require('../../../shared/img/assets/cube_blue.png')}/>
-          <img className={'plus_image'} src={require('../../../shared/img/assets/plus_image.png')}/>
-          <img className={'cubegon_image'} src={require('../../../shared/img/assets/cubegon_image.png')}/>
+          <img className={'cube_red'} src={require('../../../../shared/img/assets/cube_red.png')}/>
+          <img className={'cube_yellow'} src={require('../../../../shared/img/assets/cube_yellow.png')}/>
+          <img className={'cube_blue'} src={require('../../../../shared/img/assets/cube_blue.png')}/>
+          <img className={'plus_image'} src={require('../../../../shared/img/assets/plus_image.png')}/>
+          <img className={'cubegon_image'} src={require('../../../../shared/img/assets/cubegon_image.png')}/>
         </div>
         <div className="signup-form__container">
           <div className="signup__label">
@@ -60,7 +59,7 @@ class SignUp extends React.Component {
             <ButtonNew className={'register__button'} showDeco={ButtonNew.deco.RIGHT} label={_t('register')} onClick={() => {}}/>
           </form>
         </div>
-      </Container>
+      </div>
     )
   }
 }
@@ -78,4 +77,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUp));
+)(SignInForm));
