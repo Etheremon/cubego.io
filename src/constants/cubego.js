@@ -21,120 +21,162 @@ export const CUBE_TYPES = {
 
 const _CUBE_MATERIALS = {
   1: {
+    class_id: 1,
     name: 'diamond',
     variants: {
-      1: {color: '#123456'},
-      2: {color: '#654321'},
+      1: {color: '#93A2B3', emissive: '#1B0F55'},
+      2: {color: '#ff0000', emissive: '#0c0043'},
+      3: {color: '#00b35f', emissive: '#021409'},
+      4: {color: '#c88d00', emissive: '#390000'},
+      5: {color: '#c80046', emissive: '#0d0039'}
     },
   },
   2: {
+    class_id: 2,
     name: 'gold',
     variants: {
-      1: {color: '#2e5626'},
-      2: {color: '#652837'},
+      1: {color: '#ffffff', emissive: '#573107'}
     },
   },
   3: {
+    class_id: 3,
     name: 'ice',
     variants: {
-      1: {color: '#195610'},
-      2: {color: '#311f65'},
+      1: {color: '#5d6569', emissive: '#222222'},
+      2: {color: '#8c2e44', emissive: '#250505'},
+      3: {color: '#4b7046', emissive: '#13191e'},
+      4: {color: '#823228', emissive: '#25051c'},
+      5: {color: '#725e1a', emissive: '#250505'}
     },
   },
   4: {
+    class_id: 4,
     name: 'silver',
     variants: {
-      1: {color: '#45ed2c'},
-      2: {color: '#126545'},
+      1: {color: '#afafaf', emissive: '#181818'},
+      2: {color: '#907898', emissive: '#100425'},
+      3: {color: '#4eaafc', emissive: '#100425'},
+      4: {color: '#dc3b3b', emissive: '#901090'},
+      5: {color: '#af750d', emissive: '#4d0048'}
     },
   },
   5: {
     class_id: 5,
     name: 'iron',
     variants: {
-      1: {color: '#195610'},
-      2: {color: '#bca247'},
+      1: {color: '#7a8287', emissive: '#1f1431'},
+      2: {color: '#9d2f2f', emissive: '#100425'},
+      3: {color: '#972f9d', emissive: '#100425'},
+      4: {color: '#2f769d', emissive: '#2f0331'},
+      5: {color: '#2f9d49', emissive: '#310319'},
+      6: {color: '#9b810a', emissive: '#310319'},
+      7: {color: '#9b450a', emissive: '#311303'},
+      8: {color: '#665252', emissive: '#180c05'}
     },
   },
   6: {
+    class_id: 6,
     name: 'stone',
     variants: {
-      1: {color: '#562247'},
-      2: {color: '#126545'},
+      1: {color: '#4a4a48', emissive: '#1e130c'},
+      2: {color: '#5f2929', emissive: '#1e0c01'},
+      3: {color: '#5f295b', emissive: '#1b0c02'},
+      4: {color: '#0f2a3e', emissive: '#1b0c02'},
+      5: {color: '#18433b', emissive: '#1b0c02'},
+      6: {color: '#52451b', emissive: '#1b0c02'},
+      7: {color: '#552d1c', emissive: '#160303'},
+      8: {color: '#39261e', emissive: '#220501'}
     },
   },
   7: {
+    class_id: 7,
     name: 'wood',
     variants: {
-      1: {color: '#195610'},
-      2: {color: '#655a2e'},
+      1: {color: '#89561b', emissive: '#3e0000'},
+      2: {color: '#6b3030', emissive: '#340000'},
+      3: {color: '#993cb6', emissive: '#340000'},
+      4: {color: '#3e68a4', emissive: '#170822'},
+      5: {color: '#7a3ea4', emissive: '#170822'},
+      6: {color: '#3ea462', emissive: '#021100'},
+      7: {color: '#b69034', emissive: '#66170c'},
+      8: {color: '#cab47e', emissive: '#412a27'}
     },
   },
   8: {
+    class_id: 8,
     name: 'brick',
     variants: {
-      1: {color: '#155636'},
-      2: {color: '#126545'},
+      1: {color: '#6b4d2b', emissive: '#2d0000'},
+      2: {color: '#611717', emissive: '#160707'},
+      3: {color: '#5c2c4e', emissive: '#0f0303'},
+      4: {color: '#2c315c', emissive: '#000709'},
+      5: {color: '#2c5c56', emissive: '#010009'},
+      6: {color: '#2c5c34', emissive: '#050f00'},
+      7: {color: '#825920', emissive: '#2f1b00'},
+      8: {color: '#696969', emissive: '#2f1b00'},
+      9: {color: '#10110d', emissive: '#090909'},
+
     },
   },
   9: {
+    class_id: 9,
     name: 'leaf',
     variants: {
-      1: {color: '#202c1a'},
-      2: {color: '#576513'},
+      1: {color: '#646464', emissive: '#011603'},
+      2: {color: '#441ba7', emissive: '#0d0d43'},
+      3: {color: '#911414', emissive: '#200b25'},
+      4: {color: '#e84603', emissive: '#221746'},
+      5: {color: '#6608ed', emissive: '#160320'},
+      6: {color: '#781a6d', emissive: '#0e0a1b'},
     },
   },
   10: {
+    class_id: 10,
     name: 'fur',
     variants: {
-      1: {color: '#26a4e4'},
-      2: {color: '#4b4b4b'},
+      1: {color: '#78593b', emissive: '#221822'},
+      2: {color: '#7d2323', emissive: '#220808'},
+      3: {color: '#7454c0', emissive: '#220808'},
+      4: {color: '#3d78cd', emissive: '#000034'},
+      5: {color: '#227553', emissive: '#0f2500'},
+
+      6: {color: '#be9126', emissive: '#250000'},
+      7: {color: '#a75419', emissive: '#250000'},
+      8: {color: '#6e472c', emissive: '#2a0707'},
+      9: {color: '#7e7e7f', emissive: '#090909'},
+      10: {color: '#363637', emissive: '#090909'},
+
     },
   },
   11: {
+    class_id: 11,
     name: 'paper',
     variants: {
-      1: {color: '#565530', emissive: '#dddddd'},
-      2: {color: '#874c44'},
+      1: {color: '#7f0000', emissive: '#7d2424'},
+      2: {color: '#7f0043', emissive: '#91253f'},
+      3: {color: '#0b3787', emissive: '#183f9d'},
+      4: {color: '#450b87', emissive: '#4d1f82'},
+      5: {color: '#0b8778', emissive: '#0a5178'},
+
+      6: {color: '#0b8719', emissive: '#194d31'},
+      7: {color: '#756808', emissive: '#8e6212'},
+      8: {color: '#ac681c', emissive: '#8e3012'},
+      9: {color: '#757575', emissive: '#64544f'},
+      10: {color: '#2a2a29', emissive: '#0c0b0b'}
     },
   },
   12: {
+    class_id: 12,
     name: 'plastic',
     variants: {
-      1: {r: 140, g: 102, b: 177, a: 1, color: '#8c66b1'},
-      2: {r: 163, g: 77, b: 163, a: 1, color: '#a34da3'},
-      3: {r: 228, g: 55, b: 153, a: 1, color: '#E43799'},
-      4: {r: 248, g: 79, b: 175, a: 1, color: '#F84FAF'},
-      5: {r: 221, g: 147, b: 223, a: 1, color: '#DD93DF'},
-      6: {r: 210, g: 211, b: 253, a: 1, color: '#D2D3FD'},
-      7: {r: 236, g: 246, b: 254, a: 1, color: '#ECF6FE'},
-      8: {r: 250, g: 254, b: 255, a: 1, color: '#FAFEFF'},
-      9: {r: 255, g: 106, b: 112, a: 1, color: '#FF6A70'},
-      10: {r: 255, g: 91, b: 98, a: 1, color: '#FF5B62'},
-      11: {r: 251, g: 75, b: 87, a: 1, color: '#FB4B57'},
-      12: {r: 199, g: 67, b: 79, a: 1, color: '#C7434F'},
-      13: {r: 119, g: 64, b: 74, a: 1, color: '#77404A'},
-      14: {r: 64, g: 61, b: 67, a: 1, color: '#403D43'},
-      15: {r: 47, g: 54, b: 56, a: 1, color: '#2F3638'},
-      16: {r: 63, g: 66, b: 66, a: 1, color: '#3F4242'},
-      17: {r: 49, g: 166, b: 138, a: 1, color: '#31A68A'},
-      18: {r: 28, g: 167, b: 119, a: 1, color: '#1CA777'},
-      19: {r: 44, g: 180, b: 101, a: 1, color: '#2CB465'},
-      20: {r: 90, g: 174, b: 102, a: 1, color: '#5AAE66'},
-      21: {r: 139, g: 157, b: 129, a: 1, color: '#8B9D81'},
-      22: {r: 144, g: 161, b: 167, a: 1, color: '#90A1A7'},
-      23: {r: 106, g: 189, b: 195, a: 1, color: '#6ABDC3'},
-      24: {r: 95, g: 205, b: 207, a: 1, color: '#5FCDCF'},
-      25: {r: 56, g: 159, b: 198, a: 1, color: '#389FC6'},
-      26: {r: 75, g: 150, b: 175, a: 1, color: '#4B96AF'},
-      27: {r: 154, g: 149, b: 132, a: 1, color: '#9A9584'},
-      28: {r: 213, g: 162, b: 123, a: 1, color: '#D5A27B'},
-      29: {r: 244, g: 189, b: 139, a: 1, color: '#F4BD8B'},
-      30: {r: 251, g: 213, b: 133, a: 1, color: '#FBD585'},
-      31: {r: 251, g: 227, b: 99, a: 1, color: '#FBE363'},
-      32: {r: 250, g: 232, b: 96, a: 1, color: '#FAE860'},
+      1: {color: '#d70000', emissive: '#000000'},
+      2: {color: '#6500d7', emissive: '#7d2424'},
+      3: {color: '#0032d7', emissive: '#7d2424'},
+      4: {color: '#0071d7', emissive: '#7d2424'},
+      5: {color: '#006919', emissive: '#7d2424'},
+      6: {color: '#695000', emissive: '#7d2424'},
     },
-  },
+  }
 };
 
 export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, cube) => {
@@ -144,11 +186,11 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
     img: require(`../shared/img/cubegoes/${Utils.AddHeadingZero(cKey, 3)}.png`),
     variants: ObjUtils.CloneWithModify(cube.variants, (vKey, variant) => ({
       ...variant,
-      variant: variant,
       material_id: parseInt(cKey),
       variant_id: parseInt(vKey),
       materialKey: cube.name,
-      img: cKey === '12' ? null : require(`../shared/img/cubego-variants/${Utils.AddHeadingZero(cKey, 3)}_${Utils.AddHeadingZero(vKey, 2)}.png`),
+      // img: cKey === '12' ? null : require(`../shared/img/cubego-variants/${Utils.AddHeadingZero(cKey, 3)}_${Utils.AddHeadingZero(vKey, 2)}.png`),
+      img: cKey === '12' ? null : require(`../shared/img/cubego-variants/001_01.png`),
     })),
   }
 });
