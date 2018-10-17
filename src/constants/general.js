@@ -11,7 +11,7 @@ export const URLS = {
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',
-  SIGN_IN: 'sign-in',
+  SIGN_IN: 'account',
   FAQ: 'faq',
 
   ABOUT_US: 'about-us',

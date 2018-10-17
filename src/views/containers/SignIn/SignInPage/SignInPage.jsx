@@ -16,6 +16,8 @@ import {PageWrapper} from "../../../widgets/PageWrapper/PageWrapper.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
 import Loading from "../../../components/Loading/Loading.jsx";
 import SignInForm from "../SigInForm/SignInForm.jsx";
+import {AuthActions} from "../../../../actions/auth";
+import {URLS} from "../../../../constants/general";
 
 require("style-loader!./SignInPage.scss");
 
@@ -93,12 +95,12 @@ class SignInPage extends React.Component {
   }
 
   handleManualLogin() {
-    let add = this.manualLoginInput.getValue();
-    if (!window.isValidEtherAddress(add)) {
+    let address = this.manualLoginInput.getValue();
+    if (!window.isValidEtherAddress(address)) {
       this.setState({manualLoginErr: this.props._t('err.invalid_ether_address')})
     } else {
-      window.test_account = add;
-      this.props.history.push(`${URLS.SIGN_IN}?type=register`);
+      this.props.dispatch(AuthActions.LOGIN.init.func({userId: address}));
+      this.props.history.push(`/${URLS.SIGN_IN}?type=setting`)
     }
   }
 
@@ -160,19 +162,25 @@ class SignInPage extends React.Component {
   }
 
   renderRegistration() {
+    let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm/>
+      <SignInForm onBack={!hasWalletUnlocked ? () => {
+        this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+      } : null}/>
     )
   }
 
   renderSetting() {
+    let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm/>
+      <SignInForm onBack={!hasWalletUnlocked ? () => {
+        this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+      } : null}/>
     )
   }
 
   render() {
-    let {userId, userInfo} = this.props;
+    let {userId, userInfo, type} = this.props;
 
     let hasWalletSupported = Utils.HasWalletSupported();
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
@@ -181,14 +189,18 @@ class SignInPage extends React.Component {
 
     if (userId === undefined || userInfo === undefined) {
       content = this.renderLoading();
-    } else if (userId && (!userInfo.username || userInfo.username === '')) {
-      content = this.renderRegistration();
-    } else if (userId && userInfo.username) {
-      content = this.renderSetting();
-    } else if (!hasWalletSupported) {
-      content = this.renderNotInstalledWallet();
-    } else if (!hasWalletUnlocked) {
-      content = this.renderLockedWallet();
+    } else if (!hasWalletUnlocked && (!userId || type === 'sign-in')) {
+      if (!hasWalletSupported) {
+        content = this.renderNotInstalledWallet();
+      } else if (!hasWalletUnlocked) {
+        content = this.renderLockedWallet();
+      }
+    } else {
+      if (userId && (!userInfo.username || userInfo.username === '')) {
+        content = this.renderRegistration();
+      } else if (userId && userInfo.username) {
+        content = this.renderSetting();
+      }
     }
 
     return (
@@ -212,6 +224,7 @@ const mapStateToProps = (store, props) => {
     userId: userId,
     userInfo: GetUserInfo(store, userId),
     inviteCode: Utils.ParseQueryString(props.location.search)['code'] || '',
+    type: Utils.ParseQueryString(props.location.search)['type'] || '',
   }
 };
 

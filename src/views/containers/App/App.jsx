@@ -53,13 +53,10 @@ class App extends React.Component {
       if (window.account === undefined) return;
 
       if (window.account !== acc) {
-        if (acc === undefined) acc = LS.GetItem(LS.Fields.account) || window.account;
-          else acc = window.account;
-        this.props.dispatch(AuthActions.LOGIN.init.func({userId: acc}));
-        if (acc)
-          LS.SetItem(LS.Fields.account, acc);
-        else
-          LS.DeleteItem(LS.Fields.account);
+        if (acc === undefined) this.props.dispatch(AuthActions.LOGIN.init.func({userId: LS.GetItem(LS.Fields.account) || window.account}));
+          else this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account}));
+
+        acc = window.account;
       }
     }.bind(this), 1000);
 

@@ -6,6 +6,7 @@ import {getTranslate} from 'react-localize-redux';
 import { ButtonNew } from '../../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
 import { Container } from '../../../widgets/Container/Container.jsx';
+import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 
 require("style-loader!./SignInForm.scss");
 
@@ -25,7 +26,7 @@ class SignInForm extends React.Component {
   }
 
   render() {
-    const {_t} = this.props;
+    const {_t, onBack, userId} = this.props;
 
     return (  
       <div className={'signup__container'}>
@@ -43,7 +44,8 @@ class SignInForm extends React.Component {
           </div>
           <form>
             <label>{_t('wallet')}</label>
-            <input type="text" value={this.wallet} onChange={this.handleValidateInput}/>
+            <input type="text" value={userId}/>
+
             <label>{_t('user_email')}</label>
             <input type="text" value={this.email} onChange={this.handleValidateInput}/>
             <label>{_t('display_name')}</label>
@@ -56,6 +58,9 @@ class SignInForm extends React.Component {
             <div className={`error__label ${this.state.error !== '' ? 'visibility' : 'hidden'}`}>
               {_t(this.state.error)}
             </div>
+            {onBack ?
+              <ButtonNew className={'register__button'} color={ButtonNew.colors.GREY} label={_t('back')} onClick={onBack}/> : null
+            }
             <ButtonNew className={'register__button'} showDeco={ButtonNew.deco.RIGHT} label={_t('register')} onClick={() => {}}/>
           </form>
         </div>
@@ -65,8 +70,12 @@ class SignInForm extends React.Component {
 }
 
 const mapStateToProps = (store, props) => {
+  let userId = GetLoggedInUserId(store);
+
   return {
     _t: getTranslate(store.localeReducer),
+    userId: userId,
+    userInfo: GetUserInfo(store, userId),
   }
 };
 
