@@ -62,7 +62,7 @@ module.exports = env => {
           filename: 'styles.css',
           chunkFilename: 'styles.css',
         }),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
       ],
 
       mode: 'production',

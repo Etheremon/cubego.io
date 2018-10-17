@@ -13,7 +13,7 @@ module.exports = env => {
   return {
     entry: {
       app: APP_DIR + '/app.jsx',
-      vendor: [/*'pixi.js', 'three',*/ 'react', 'redux'],
+      vendor: [/*'pixi.js', 'three',*/ 'babylonjs', 'react', 'redux'],
     },
     output: {
       publicPath: '/',

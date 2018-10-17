@@ -189,8 +189,8 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
       material_id: parseInt(cKey),
       variant_id: parseInt(vKey),
       materialKey: cube.name,
-      // img: cKey === '12' ? null : require(`../shared/img/cubego-variants/${Utils.AddHeadingZero(cKey, 3)}_${Utils.AddHeadingZero(vKey, 2)}.png`),
-      img: cKey === '12' ? null : require(`../shared/img/cubego-variants/001_01.png`),
+      img: require(`../shared/img/cubego-variants/${Utils.AddHeadingZero(cKey, 3)}_${Utils.AddHeadingZero(vKey, 2)}.png`),
+      // img: cKey === '12' ? null : require(`../shared/img/cubego-variants/001_01.png`),
     })),
   }
 });
