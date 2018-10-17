@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from 'prop-types';
-import Loading from "../Loading/Loading.jsx";
+import Loading from "../../components/Loading/Loading.jsx";
 
 require("style-loader!./Button.scss");
 

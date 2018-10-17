@@ -21,6 +21,7 @@ class CubegoCard extends React.Component {
 
     return(
       <div className={`cubego-card__container ${className && className}`}>
+          <img className={'background__image'} src={require(`../../../shared/img/background/cubegon_background/${'background_air'}.png`)} />
           <img src={require(`../../../shared/img/cubegoes/001.png`)}/>
           <div className="quantity">
             {`${_t('quantity')}:`}

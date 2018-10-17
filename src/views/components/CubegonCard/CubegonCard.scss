@@ -17,6 +17,17 @@
     display: block;
     width: 100%;
     height: auto;
+    z-index: 2;
+    position: relative;
+  }
+
+  .cubegon-background__image {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 
   .type__image {
@@ -25,6 +36,7 @@
     width: auto;
     top: 0;
     left: 0;
+    z-index: 3;
   }
 
   .shopping__image {
@@ -34,6 +46,7 @@
     width: auto;
     top: -5px;
     right: 5px;
+    z-index: 3;
   }
 
   .type__container {
@@ -100,9 +113,7 @@
     }
 
     .energy {
-      background: rgba(238, 116, 47, 1);
-      padding: 3px 16px;
-      border-radius: 5px;
+      
     }
   }
 
@@ -112,6 +123,8 @@
     background: $regal_blue;
     color: $white;
     padding: 8px 0;
+    position: relative;
+    z-index: 2;
 
     .number {
       font-size: $font-size-big;

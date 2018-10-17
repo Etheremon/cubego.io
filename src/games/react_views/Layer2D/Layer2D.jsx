@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {CloneDeep, IsEqual, GetValues} from "../../../utils/objUtils";
 import * as Utils from "../../../utils/utils";
 import {ObjIsEmpty} from "../../../utils/utils";
-import * as ColorUtils from "../../../utils/colorUtils";
 
 require("style-loader!./Layer2D.scss");
 
@@ -113,13 +112,13 @@ export class Layer2D extends Component {
                 let cellStyle = {}, hoverStyle = {};
                 if (c && c.img)
                   cellStyle = {backgroundImage: `url(${c.img})`, opacity: c.opacity || 1};
-                else if (c && c.r !== null)
-                  cellStyle = {backgroundColor: `rgb(${c.r},${c.g},${c.b})`, opacity: c.opacity || 1};
+                else if (c && c.color)
+                  cellStyle = {backgroundColor: `${c.color}`, opacity: c.opacity || 1};
 
                 if (hoverColor && hoverColor.img)
                   hoverStyle = {backgroundImage: `url(${hoverColor.img})`, opacity : hoverColor.opacity || 1};
-                else if (hoverColor && hoverColor.r)
-                  hoverStyle = {backgroundColor: `rgb(${hoverColor.r},${hoverColor.g},${hoverColor.b})`, opacity: hoverColor.opacity || 1};
+                else if (hoverColor && hoverColor.color)
+                  hoverStyle = {backgroundColor: `${hoverColor.color}`, opacity: hoverColor.opacity || 1};
                 else if (hoverColor === null)
                   hoverStyle = {};
                 else

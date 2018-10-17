@@ -2,6 +2,17 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
+
+.loading {
+  max-height: 100px;
+
+  &.dog {
+    @include transform(scale(0.2));
+  }
+
+
+}
+
 @keyframes dot-keyframes {
   0% {
     opacity: .4;

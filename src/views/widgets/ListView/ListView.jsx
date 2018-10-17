@@ -2,7 +2,7 @@ import React from "react"
 import {getTranslate} from "react-localize-redux"
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import Loading from "../Loading/Loading.jsx";
+import Loading from "../../components/Loading/Loading.jsx";
 import * as Utils from "../../../utils/utils";
 import { IsEqual } from '../../../utils/objUtils';
 import FilterBar from "../../components/bars/FilterBar/FilterBar.jsx";

@@ -1,5 +1,5 @@
 import {ThreeComponent} from "./threeComponent";
-import * as THREE from "three";
+
 
 export class ThreeBox3Helper extends ThreeComponent {
   constructor() {
@@ -9,10 +9,10 @@ export class ThreeBox3Helper extends ThreeComponent {
 
   static create({scene}, props) {
     let threeBox = new ThreeBox3Helper();
-    let min = new THREE.Vector3();
-    let max = new THREE.Vector3(1, 1, 1);
-    let box = new THREE.Box3(min, max);
-    let helper = new THREE.Box3Helper(box, 0xffff00);
+    let min = new window.THREE.Vector3();
+    let max = new window.THREE.Vector3(1, 1, 1);
+    let box = new window.THREE.Box3(min, max);
+    let helper = new window.THREE.Box3Helper(box, 0xffff00);
     threeBox.renderer = helper;
     threeBox.boxMesh = box;
     return threeBox;

@@ -1,5 +1,5 @@
 import {ThreeComponent} from "./threeComponent";
-import * as THREE from "three";
+
 
 export class ThreeGrid extends ThreeComponent {
   static create({scene}, props) {
@@ -13,16 +13,16 @@ export class ThreeGrid extends ThreeComponent {
       color: props.color || 0xffffff
     };
 
-    let material = new THREE.LineBasicMaterial({vertexColors: THREE.VertexColors});
+    let material = new window.THREE.LineBasicMaterial({vertexColors: THREE.VertexColors});
 
-    let gridGeo = new THREE.BufferGeometry(),
+    let gridGeo = new window.THREE.BufferGeometry(),
       stepw = 2 * config.width / config.linesWidth,
       steph = 2 * config.height / config.linesHeight;
 
     //width
     let j = 0;
     let colors = [];
-    let color = new THREE.Color(config.color);
+    let color = new window.THREE.Color(config.color);
     let vertices = [];
     for (let i = -config.width; i <= config.width; i += stepw) {
       vertices.push(-config.height, 0, i, config.height, 0, i);
@@ -39,9 +39,9 @@ export class ThreeGrid extends ThreeComponent {
       color.toArray(colors, j);
       j += 3;
     }
-    gridGeo.addAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    gridGeo.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    let line = new THREE.LineSegments(gridGeo, material);
+    gridGeo.addAttribute('position', new window.THREE.Float32BufferAttribute(vertices, 3));
+    gridGeo.addAttribute('color', new window.THREE.Float32BufferAttribute(colors, 3));
+    let line = new window.THREE.LineSegments(gridGeo, material);
     if (props.position) {
       line.position.set(props.position.x, props.position.y, props.position.z);
     }

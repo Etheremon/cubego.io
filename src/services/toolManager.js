@@ -223,7 +223,7 @@ export const ToolTypes = {
 
 export const Tools = {};
 
-Tools.color = ({key='color', value=EDITOR_COLORS[0], ...extra}) => ({
+Tools.color = ({key='color', value, ...extra}) => ({
   ...extra,
   key,
   value,

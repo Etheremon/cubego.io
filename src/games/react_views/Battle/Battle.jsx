@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import './Battle.scss';
 import BabylonX from "../../babylonX";
 import VoxBattle from "../../3d/VoxBattle.jsx";
+
+require("style-loader!./Battle.scss");
+
 
 export class Battle extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ export class Battle extends Component {
 
   render() {
     return (
-      <div>
+      <div className={'battle-3d-view'}>
         <canvas id='battle' width="960" height="540"/>
       </div>
     );

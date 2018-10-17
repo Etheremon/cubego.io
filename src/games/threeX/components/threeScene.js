@@ -1,4 +1,4 @@
-import * as THREE from "three";
+
 import {FiberNode} from "../fiber/FiberNode";
 
 export class ThreeScene extends FiberNode {
@@ -10,8 +10,7 @@ export class ThreeScene extends FiberNode {
 
   static create() {
     let threeScene = new ThreeScene();
-    let scene = new THREE.Scene();
-    threeScene.scene = scene;
+    threeScene.scene = new window.THREE.Scene();
     return threeScene;
   }
 

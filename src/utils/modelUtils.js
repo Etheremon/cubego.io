@@ -1,9 +1,9 @@
 import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../constants/cubego";
 import * as ObjUtils from "./objUtils";
+import * as ColorUtils from "./colorUtils";
 
 export const ReformatModel = (model) => {
   let newModel = {
-    palette: model.palette,
     size: {
       x: model.size.x,
       y: model.size.y,
@@ -27,9 +27,14 @@ export const ReformatModel = (model) => {
 
   newModel.voxels = {};
   model.voxels.forEach(cell => {
-    let bar = 20;
-    let cellColor = newModel.palette[cell.colorIndex];
-    let variant = variants.find((va) => (Math.abs(va.r-cellColor.r) <= bar && Math.abs(va.g-cellColor.g) <= bar && Math.abs(va.b-cellColor.b) <= bar)) || variants[0];
+    let bar = 30;
+    let cellColor = model.palette[cell.colorIndex];
+    let variant = variants.find(
+      (va) => {
+        let v = ColorUtils.HexToRgb(va.color);
+        return Math.abs(v.r-cellColor.r) <= bar && Math.abs(v.g-cellColor.g) <= bar && Math.abs(v.b-cellColor.b) <= bar
+      }
+    ) || variants[0];
 
     let v = {
       ...cell,

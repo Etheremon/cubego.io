@@ -194,6 +194,7 @@
       .pie-chart__container {
         position: relative;
         width: 50%;
+        text-align: center;
         img {
           position: absolute;
           top: calc(50% - 3px);
@@ -228,9 +229,6 @@
       }
       
       .pie-chart {
-        path {
-          stroke-width: 0;
-        }
       }
     }
 

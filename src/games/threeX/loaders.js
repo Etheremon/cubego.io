@@ -1,4 +1,4 @@
-import * as THREE from "three";
+
 
 let materialStorage = {};
 
@@ -16,14 +16,14 @@ function loadMaterial(id, jsonObject) {
         path + 'pz' + format, path + 'nz' + format
       ];
 
-      let reflectionCube = new THREE.CubeTextureLoader().load(urls);
+      let reflectionCube = new window.THREE.CubeTextureLoader().load(urls);
       reflectionCube.format = THREE.RGBFormat;
       textures[texture.uuid] = reflectionCube;
     } else {
-      textures[texture.uuid] = new THREE.TextureLoader().load(texture.image);
+      textures[texture.uuid] = new window.THREE.TextureLoader().load(texture.image);
     }
   });
-  let loader = new THREE.MaterialLoader();
+  let loader = new window.THREE.MaterialLoader();
   loader.setTextures(textures);
   material = loader.parse(jsonObject);
   materialStorage[id] = material;

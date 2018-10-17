@@ -1,0 +1,9 @@
+@import '../../../styles/mixins';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
+
+.sign-in-page__container {
+  min-height: 400px;
+  padding: 100px 0;
+  text-align: center;
+}

@@ -5,7 +5,7 @@ import ThreeX, {
 } from "../threeX";
 import {fullColorHex} from "../utils";
 import {getMousePositionOnCanvas} from "../threeX/fiber/utils";
-import * as THREE from "three";
+
 import {GetCellKey} from "../../utils/modelUtils";
 import diamondMaterialConfig from './materials/Diamond.json';
 import goldMaterialConfig from './materials/Gold.json';
@@ -32,10 +32,10 @@ class VoxViewerThree extends Component {
   constructor(props) {
     super(props);
     this.state = {data: {}};
-    this.mouse = new THREE.Vector2();
-    this.raycaster = new THREE.Raycaster();
+    this.mouse = new window.THREE.Vector2();
+    this.raycaster = new window.THREE.Raycaster();
     this.objects = [];
-    this.offsetVector = new THREE.Vector3(0, 0, 0);
+    this.offsetVector = new window.THREE.Vector3(0, 0, 0);
 
     this.boxHelper = null;
     this.objectHovered = null;
@@ -79,7 +79,7 @@ class VoxViewerThree extends Component {
   }
 
   setNewVoxelData(voxelData) {
-    this.offsetVector = new THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
+    this.offsetVector = new window.THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
     this.objects = [];
     this.setState({
       data: voxelData || {}
@@ -169,7 +169,7 @@ class VoxViewerThree extends Component {
       let intersect = intersects[0];
       let position;
       if (this.featureSelected === DRAW_TOOL) {
-        position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
+        position = new window.THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
       } else {
         position = intersect.object.position.clone();
       }
@@ -225,7 +225,7 @@ class VoxViewerThree extends Component {
 
   showAddingCube(intersect) {
     this.rollOverMesh.renderer.visible = true;
-    let position = new THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
+    let position = new window.THREE.Vector3().copy(intersect.point).add(intersect.face.normal).clone();
     position.divideScalar(SIZE).floor();
     position.multiplyScalar(SIZE).addScalar(SIZE / 2);
     this.rollOverMesh.renderer.position.copy(position);

@@ -1,6 +1,5 @@
 import {renderer as ThreeXFiberRenderer} from "./renderer";
-import * as THREE from "three";
-import 'three-orbitcontrols';
+
 import {ThreeScene} from "../components/threeScene";
 
 let rootContainer = null;
@@ -8,7 +7,9 @@ let scene;
 
 function createRenderer(canvas, options) {
   scene = ThreeScene.create();
-  scene.renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+  scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+  // scene.renderer = new window.THREE.CanvasRenderer({canvas, antialias: true, alpha: true});
+
   scene.canvas = canvas;
   return ThreeXFiberRenderer.createContainer(scene);
 }

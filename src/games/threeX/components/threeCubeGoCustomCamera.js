@@ -1,15 +1,15 @@
 import {ThreeComponent} from "./threeComponent";
-import * as THREE from "three";
+
 import render from "../fiber/render";
 import {getMousePositionOnCanvas} from "../fiber/utils";
 
 export class ThreeCubeGoCustomCamera extends ThreeComponent {
   static create({renderer, canvas, scene}, props) {
     let threeCamera = new ThreeCubeGoCustomCamera();
-    let camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
+    let camera = new window.THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
     camera.position.set(500, 800, 1300);
     camera.lookAt(0, 0, 0);
-    let controls = new THREE.OrbitControls(camera, canvas);
+    let controls = new window.THREE.OrbitControls(camera, canvas);
     controls.update();
     const animate = () => {
       requestAnimationFrame(animate);
@@ -18,14 +18,14 @@ export class ThreeCubeGoCustomCamera extends ThreeComponent {
     };
     animate();
     threeCamera.renderer = camera;
-    threeCamera.mouse = new THREE.Vector2();
-    threeCamera.raycaster = new THREE.Raycaster();
-    threeCamera.cacheCubeGeo = new THREE.BoxBufferGeometry(50, 50, 50);
-    threeCamera.cacheCubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+    threeCamera.mouse = new window.THREE.Vector2();
+    threeCamera.raycaster = new window.THREE.Raycaster();
+    threeCamera.cacheCubeGeo = new window.THREE.BoxBufferGeometry(50, 50, 50);
+    threeCamera.cacheCubeMaterial = new window.THREE.MeshBasicMaterial({color: 0x0000ff});
     threeCamera.canvas = canvas;
-    let rollOverGeo = new THREE.BoxBufferGeometry(50, 50, 50);
-    let rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
-    threeCamera.rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
+    let rollOverGeo = new window.THREE.BoxBufferGeometry(50, 50, 50);
+    let rollOverMaterial = new window.THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
+    threeCamera.rollOverMesh = new window.THREE.Mesh(rollOverGeo, rollOverMaterial);
     scene.add(rollOverMesh);
     canvas.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     canvas.addEventListener('mousedown', this.onDocumentMouseDown.bind(this), false);
@@ -41,7 +41,7 @@ export class ThreeCubeGoCustomCamera extends ThreeComponent {
     let intersects = raycaster.intersectObjects(objects);
     if (intersects.length > 0) {
       let intersect = intersects[0];
-      let voxel = new THREE.Mesh(this.cacheCubeGeo, this.cacheCubeMaterial);
+      let voxel = new window.THREE.Mesh(this.cacheCubeGeo, this.cacheCubeMaterial);
       voxel.position.copy(intersect.point).add(intersect.face.normal);
       voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
       this.parent.add(voxel);

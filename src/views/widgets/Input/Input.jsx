@@ -35,6 +35,7 @@ Input.defaultProps = {
   disabled: false,
   label: '',
   value: '',
+  defaultValue: '',
   placeholder: '',
   type: 'text',
   inverted: false,
@@ -45,6 +46,7 @@ Input.defaultProps = {
 Input.propTypes = {
   label: PropTypes.any,
   value: PropTypes.string,
+  defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   color: PropTypes.string,
   img: PropTypes.string,

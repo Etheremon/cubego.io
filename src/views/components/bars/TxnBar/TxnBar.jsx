@@ -117,8 +117,8 @@ class TxnBar extends React.Component {
 
   getMetamaskPopup() {
     let {_t} = this.props;
-    let hasMetamaskInstalled = Utils.HasMetamaskInstalled();
-    let hasMetamaskLoggedIn = Utils.HasMetamaskLoggedIn();
+    let hasMetamaskInstalled = Utils.HasWalletSupported();
+    let hasMetamaskLoggedIn = Utils.hasWalletUnlocked();
     let metamaskPopup = LS.GetItem(LS.Fields.metamaskPopup);
 
     if (metamaskPopup === 'false') return null;

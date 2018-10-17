@@ -1,13 +1,13 @@
-@import '../../styles/mixins';
-@import '../../styles/colors';
-@import '../../styles/variables';
-@import '../../styles/fonts';
+@import '../../../styles/mixins';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
+@import '../../../styles/fonts';
 
 .signup__container {
   display: flex;
   flex-wrap: wrap;
   color: $white;
-  background: url('../../../shared/img/background/background_blue_dark.jpg') no-repeat center center fixed;
+  background: url('../../../../shared/img/background/background_blue_dark.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -86,6 +86,7 @@
       margin-top: 24px;
       font-size: $font-size-small;
       font-weight: $font-weight-semi-bold;
+      color: $white !important;
     }
 
     input[type=text] {
@@ -95,6 +96,14 @@
       color: $curious_blue;
       font-size: $font-size-smaller;
       outline: none;
+      padding: 8px;
+
+      &:disabled {
+        color: $white-dark !important;
+        &:hover {
+          border-bottom: 1px solid $white-dark !important;
+        } 
+      }
 
       &:hover {
         border-bottom: 2px solid $white;

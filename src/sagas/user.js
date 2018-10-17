@@ -4,6 +4,7 @@ import {GetLoggedInUserId, GetUserInfo} from "../reducers/selectors";
 import {UserActions} from "../actions/user";
 import {AuthActions} from "../actions/auth";
 import {UserApi} from "../services/api/userApi";
+import * as Utils from "../utils/utils";
 
 
 function* loadUserInfo({userId, forceUpdate}) {
@@ -32,9 +33,19 @@ function* loadUserInfo({userId, forceUpdate}) {
   }
 }
 
+function* updateUserInfo({userId, email, username, inviteCode, signature, termsAgreed, callbackFunc}) {
+  if (!Utils.VerifyEmail(email)) {
+    callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.invalid_email'});
+  } else if (!termsAgreed) {
+    callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.agree_tos_pp', error_values: {}});
+  } else {
+    callbackFunc(window.RESULT_CODE.SUCCESS, {});
+  }
+}
 
 export function* watchAll() {
   yield all([
     takeLatest(UserActions.LOAD_USER_INFO.init.key, loadUserInfo),
+    takeLatest(UserActions.UPDATE_USER_INFO.init.key, updateUserInfo),
   ]);
 }
