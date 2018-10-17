@@ -11,12 +11,12 @@ const Loading = ({type, dark, className}) => {
   if (type === Loading.types.DOG)
     return (
       <div className={'loading dog'}>
-        <SpriteSheet image={SpriteSource.BUILD_GON.image}
-                     frameWidth={SpriteSource.BUILD_GON.frameWidth}
-                     frameHeight={SpriteSource.BUILD_GON.frameHeight}
-                     steps={SpriteSource.BUILD_GON.steps}
-                     cols={SpriteSource.BUILD_GON.cols}
-                     fps={SpriteSource.BUILD_GON.fps}
+        <SpriteSheet image={SpriteSource.DOG_VERTICAL.image}
+                     frameWidth={SpriteSource.DOG_VERTICAL.frameWidth}
+                     frameHeight={SpriteSource.DOG_VERTICAL.frameHeight}
+                     steps={SpriteSource.DOG_VERTICAL.steps}
+                     cols={SpriteSource.DOG_VERTICAL.cols}
+                     fps={SpriteSource.DOG_VERTICAL.fps}
         />
       </div>
     );

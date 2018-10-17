@@ -460,7 +460,7 @@ class _ModelEditor extends React.Component {
 
         </div>
 
-        <Footer size={Container.sizes.BIG} type={Footer.types.BRIGHT} />
+        <Footer size={Container.sizes.BIG} type={Footer.types.DARK} />
       </PageWrapper>
     )
   }

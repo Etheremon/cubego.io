@@ -66,13 +66,14 @@ class Footer extends React.Component {
 }
 
 Footer.types = {
+  NORMAL: 'normal',
   DARK: 'dark',
   BRIGHT: 'bright',
 };
 
 Footer.defaultProps = {
   size: Container.sizes.NORMAL,
-  type: Footer.types.DARK,
+  type: Footer.types.NORMAL,
 };
 
 Footer.propTypes = {

@@ -39,7 +39,7 @@ class ReviewPage extends React.Component {
 
   componentDidMount() {
     if (!this.props.validatedModel) {
-      this.props.history.push(`/${URLS.BUILD_GON}`)
+      this.props.history.push(`/${URLS.DOG_VERTICAL}`)
     }
     console.log("hihi", this.props.validatedModel);
   }
@@ -231,7 +231,7 @@ class ReviewPage extends React.Component {
           </Container>
         </div>
 
-        <Footer type={Footer.types.BRIGHT} />
+        <Footer type={Footer.types.DARK} />
       </PageWrapper>
     )
   }

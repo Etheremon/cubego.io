@@ -149,12 +149,12 @@ class HomePage extends React.Component {
                     {/*<img src={require('../../../shared/img/banner/creation_banner.png')}/>*/}
 
                     <div className={'img'}>
-                      <SpriteSheet image={SpriteSource.BUILD_GON.image}
-                                   frameWidth={SpriteSource.BUILD_GON.frameWidth}
-                                   frameHeight={SpriteSource.BUILD_GON.frameHeight}
-                                   steps={SpriteSource.BUILD_GON.steps}
-                                   cols={SpriteSource.BUILD_GON.cols}
-                                   fps={SpriteSource.BUILD_GON.fps}
+                      <SpriteSheet image={SpriteSource.DOG_HORIZONTAL.image}
+                                   frameWidth={SpriteSource.DOG_HORIZONTAL.frameWidth}
+                                   frameHeight={SpriteSource.DOG_HORIZONTAL.frameHeight}
+                                   steps={SpriteSource.DOG_HORIZONTAL.steps}
+                                   cols={SpriteSource.DOG_HORIZONTAL.cols}
+                                   fps={SpriteSource.DOG_HORIZONTAL.fps}
                       />
                     </div>
                   </div>

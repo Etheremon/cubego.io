@@ -204,7 +204,7 @@ class MyCubegoes extends React.Component {
             
           </Container>
         </div>
-        <Footer size={Container.sizes.BIG} type={Footer.types.BRIGHT}/>
+        <Footer size={Container.sizes.BIG} type={Footer.types.DARK}/>
       </PageWrapper>
     )
   }
