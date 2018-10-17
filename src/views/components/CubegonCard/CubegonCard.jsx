@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
+import { ButtonNew } from '../../widgets/Button/Button.jsx';
 
 require("style-loader!./CubegonCard.scss");
 
@@ -21,9 +22,8 @@ class CubegonCard extends React.Component {
 
     return(
       <div className={`cubegon-card__container ${className && className}`}>
-        <div className="cubegon__image">
-          <img className={'cubegon__image'} src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
-        </div>
+        <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/${'background_air'}.png`)} />
+        <img className={'cubegon__image'} src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
         <img className={'type__image'} src={require(`../../../shared/img/types/${'water'}.png`)}/>
         <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
 
@@ -50,9 +50,7 @@ class CubegonCard extends React.Component {
             <div className="id">
             {`ID ${12345}`}
             </div>
-            <div className="energy">
-            10/40+
-            </div>
+            <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={'10/40+'} onClick={() => {}}/>
           </div>
 
           <div className="type__container">

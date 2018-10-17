@@ -10,11 +10,22 @@
   border: 2px solid $regal_blue;
   text-align: center;
   border-radius: 5px;
+  position: relative;
 
   img {
     display: block;
     width: 100%;
     height: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .background__image {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 0;
   }
 
   .quantity {
@@ -23,7 +34,8 @@
     background: $regal_blue;
     color: $white;
     font-size: $font-size-smaller;
-
+    position: relative;
+    z-index: 1;
     span {
       margin-left: 8px;
       font-family: $f__baloobha;
