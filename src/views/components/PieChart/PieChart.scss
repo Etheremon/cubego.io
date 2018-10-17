@@ -1,13 +1,27 @@
-
+@import '../../styles/mixins';
+@import '../../styles/colors';
+@import '../../styles/variables';
+@import '../../styles/fonts';
 
 svg {
   display: inline-block;
   vertical-align: middle;
 	transform-origin: 50% 50%;
 	animation: scale .6s;
-  margin: 10px;
+  margin: 8px;
 	
   text {
-    font-size: 12px;
+    
+    tspan {
+      &:nth-child(1) {
+        font-size: 8px;
+      }
+
+      &:nth-child(2) {
+        font-size: 10px;
+        font-family: $f__baloobha;
+        font-weight: $font-weight-bold;
+      }
+    }
   }
 }

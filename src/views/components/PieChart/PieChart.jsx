@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 require("style-loader!./PieChart.scss");
 
 const getAnglePoint = (startAngle, endAngle, radius, x, y) => {
-	var x1, y1, x2, y2;
+	let x1, y1, x2, y2;
 
 	x1 = x + radius * Math.cos(Math.PI * startAngle / 180);
 	y1 = y + radius * Math.sin(Math.PI * startAngle / 180);
@@ -23,13 +23,21 @@ class Slice extends React.Component {
 			y: 0
     }
     this.draw = this.draw.bind(this);
+    this.animate = this.animate.bind(this);
   }
 
 	componentWillReceiveProps () {
-		this.setState({ path: '' });
+    this.setState({ path: '' });
+    this.animate();
   }
   
 	componentDidMount () {
+    this._mounted = true;
+    this.animate();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
   
 	animate () {
@@ -37,11 +45,11 @@ class Slice extends React.Component {
   }
   
 	draw (s) {
-		if (!this.isMounted()) {
+		if (!this._mounted) {
 			return;
 		}
 
-		let p = this.props, path = [], a, b, c, self = this, step;
+		let p = this.props, path = [], a, b, c, step;
 
 		step = p.angle / (37.5 / 2);
 
@@ -64,8 +72,8 @@ class Slice extends React.Component {
 		this.setState({ path: path.join(' ') });
 
 		if (s < p.angle) {
-			setTimeout(function () { self.draw(s + step) } , 16);
-		} else if (p.showLabel) {
+			setTimeout(function () { this.draw(s + step) }.bind(this) , 16);
+		} else if (p.showLabels) {
 			c = getAnglePoint(p.startAngle, p.startAngle + (p.angle / 2), (p.radius / 2 + p.trueHole / 2), p.radius, p.radius);
 
 			this.setState({
@@ -84,9 +92,11 @@ class Slice extends React.Component {
 					stroke={ this.props.stroke }
 					strokeWidth={ this.props.strokeWidth ? this.props.strokeWidth : 3 }
 					 />
-				{ this.props.showLabel && this.props.percentValue > 5 ?
+				{ this.props.showLabels && this.props.percentValue > 5 ?
 					<text x={ this.state.x } y={ this.state.y } fill="#fff" textAnchor="middle">
-						{ this.props.percent ? this.props.percentValue + '%' : this.props.value }
+            {/* { this.props.percent ? this.props.percentValue + '%' : this.props.value } */}
+            <tspan x={ this.state.x } y={this.state.y} >{this.props.label}</tspan>
+            <tspan x={ this.state.x } y={this.state.y + 12}>{this.props.value}</tspan>
 					</text>
 				: null }
 			</g>
@@ -94,26 +104,26 @@ class Slice extends React.Component {
 	}
 }
 
-const PieChart = ({data, percent, stroke, strokeWidth, colors, colorsLength, labels, hole, radius}) => {
+const PieChart = ({data, stroke, strokeWidth, showLabels, hole, radius}) => {
   let diameter = radius * 2,
       sum, startAngle, d = null;
       
-  sum = data.reduce(function (carry, current) { return carry + current }, 0);
+  sum = data.reduce(function (carry, current) { return carry + current.value  }, 0);
     startAngle = 0;
     
   return (
     <svg width={ diameter } height={ diameter } viewBox={ '0 0 ' + diameter + ' ' + diameter } xmlns="http://www.w3.org/2000/svg" version="1.1">
       { data.map(function (slice, sliceIndex) {
-        var angle, nextAngle, percent;
+        let angle, nextAngle, percent;
 
         nextAngle = startAngle;
-        angle = (slice / sum) * 360;
-        percent = (slice / sum) * 100;
+        angle = (slice.value / sum) * 360;
+        percent = (slice.value / sum) * 100;
         startAngle += angle;
 
         return <Slice
           key={ sliceIndex }
-          value={ slice }
+          value={ slice.value }
           percent={ percent }
           percentValue={ percent.toFixed(1) }
           startAngle={ nextAngle }
@@ -121,9 +131,10 @@ const PieChart = ({data, percent, stroke, strokeWidth, colors, colorsLength, lab
           radius={ radius }
           hole={ radius - hole }
           trueHole={ hole }
-          showLabel= { labels }
-          fill={ colors[sliceIndex % colorsLength] }
+          fill={ slice.color }
+          label={ slice.label }
           stroke={ stroke }
+          showLabels={ showLabels }
           strokeWidth={ strokeWidth }
         />
       }) }

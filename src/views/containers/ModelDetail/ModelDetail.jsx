@@ -15,8 +15,6 @@ import PieChart from '../../components/PieChart/PieChart.jsx';
 
 require("style-loader!./ModelDetail.scss");
 
-google.charts.load('current', {'packages':['corechart']});
-
 class ModelDetail extends React.Component {
 
   constructor(props) {
@@ -24,43 +22,10 @@ class ModelDetail extends React.Component {
     this.state = {
       allowChangeName: false,
     }
-
-    this.dataPieChart = this.dataPieChart.bind(this);
-  }
-
-  dataPieChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['Work',     11],
-      ['Eat',      2],
-      ['Commute',  2],
-      ['Watch TV', 2],
-      ['Sleep',    7]
-    ]);
-
-    var options = {
-      legend: 'none',
-      backgroundColor: 'transparent',
-      slices: {  0: {offset: 0.02},
-                1: {offset: 0.02},
-                2: {offset: 0.02},
-                3: {offset: 0.02},
-                4: {offset: 0.02}
-          },
-      chartArea: {left: '2px', top: '-3px', width:'85%', height:'85%'},
-      pieHole: 0.1,
-      pieSliceText: 'label',
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
   }
 
   componentDidMount() {
-    google.charts.setOnLoadCallback(() => {
-      this.dataPieChart();
-    });
+
   }
 
   render() {
@@ -74,13 +39,10 @@ class ModelDetail extends React.Component {
 
     const moves = ['icon-stats', 'icon-stats', 'icon-stats', 'icon-stats'];
 
-    const slices = [
-      { color: '#468966', value: 10 },
-      { color: '#FFF0A5', value: 20 },
-      { color: '#FFB03B', value: 30 },
-      { color: '#B64926', value: 40 },
-      { color: '#8E2800', value: 50 },
-    ];
+    const samplePieData = [{label: 'Defense', value: 70, color: '#81d8d0'},
+                          {label: 'Attack', value: 100, color: '#52b7bd'},
+                          {label: 'Health', value: 40, color: '#332216'},
+                          {label: 'Speed', value: 40, color: '#003366'}]
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
@@ -138,19 +100,18 @@ class ModelDetail extends React.Component {
               <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
               <div className="profile__container">
                 <div className={'cube-statistic'}>
-                  {<PieChart
-                    data={ [5, 12, 8, 3, 10] }
-                    radius={ 150 }
-                    hole={ 50 }
-                    colors={ ['#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'] }
-                    labels={ true }
-                    percent={ true }
-                    strokeWidth={ 3 }
-                    stroke={ '#fff' }
-                  />}
+                  
                 </div>
                 <div className="pie-chart__container">
-                  <div id={'piechart'} className="pie-chart">
+                  <div className="pie-chart">
+                  {<PieChart
+                    data={ samplePieData }
+                    radius={ 100 }
+                    hole={ 15 }
+                    showLabels={ true }
+                    strokeWidth={ 3 }
+                    stroke={ 'transparent' }
+                  />}
                   </div>
                   <img src={require('../../../shared/img/background/background_circle.png')} />
                   <img className={'octagon-img'} src={require('../../../shared/img/icons/icon-total.png')} />
