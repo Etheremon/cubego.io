@@ -183,7 +183,7 @@ class VoxBattle extends Component {
     this.players[1].playSkeletonAnimation('attack_normal', false, 1).then(() => {
     });
     setTimeout(() => {
-      this.players[1].createFireParticle();
+      this.players[1].createFistParticle();
     }, 150);
   }
 
@@ -199,15 +199,42 @@ class VoxBattle extends Component {
     this.players[0].createHitParticle();
   }
 
+  createWaterParticle() {
+    this.players[1].playSkeletonAnimation('attack_normal', false, 1).then(() => {
+    });
+    setTimeout(() => {
+      this.players[1].createWaterParticle();
+    }, 150);
+  }
+
+  createFireParticle() {
+    this.players[0].createFireParticle();
+  }
+
+  createMissileParticle() {
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        this.players[1].createMissileParticle();
+      }, i * 100);
+    }
+  }
+
+  createTackleAnimation() {
+    this.players[1].playSkeletonAnimation('smashup', false, 1);
+  }
+
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis size={5}/>
         <GUI>
-          <GUISimpleButton left={'-75px'} value={'1'} onClick={this.createShieldParticle.bind(this)}/>
-          <GUISimpleButton left={'-25px'} value={'2'} onClick={this.createFistParticle.bind(this)}/>
-          <GUISimpleButton left={'25px'} value={'3'} onClick={this.createHitAnimation.bind(this)}/>
-          <GUISimpleButton left={'75px'} value={'4'}/>
+          <GUISimpleButton left={'-175px'} value={'1'} onClick={this.createTackleAnimation.bind(this)}/>
+          <GUISimpleButton left={'-125px'} value={'2'} onClick={this.createFireParticle.bind(this)}/>
+          <GUISimpleButton left={'-75px'} value={'3'} onClick={this.createShieldParticle.bind(this)}/>
+          <GUISimpleButton left={'-25px'} value={'4'} onClick={this.createFistParticle.bind(this)}/>
+          <GUISimpleButton left={'25px'} value={'5'} onClick={this.createHitAnimation.bind(this)}/>
+          <GUISimpleButton left={'75px'} value={'6'} onClick={this.createWaterParticle.bind(this)}/>
+          <GUISimpleButton left={'125px'} value={'7'} onClick={this.createMissileParticle.bind(this)}/>
         </GUI>
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} attachControl={true}/>
         <HemisphericLight position={{x: 0, y: 10, z: 0}}/>

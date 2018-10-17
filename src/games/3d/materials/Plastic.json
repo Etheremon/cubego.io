@@ -35,7 +35,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/plastic.jpg"
+    "image": "./assets/materials/textures/plastic.png"
   }, {
     "uuid": "A62731E9-BE5A-4F2E-BA5D-1F07AE14822E",
     "name": "",
