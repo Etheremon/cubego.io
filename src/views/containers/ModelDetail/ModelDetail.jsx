@@ -11,6 +11,7 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import Footer from '../../components/bars/Footer/Footer.jsx';
+import PieChart from '../../components/PieChart/PieChart.jsx';
 
 require("style-loader!./ModelDetail.scss");
 
@@ -73,6 +74,14 @@ class ModelDetail extends React.Component {
 
     const moves = ['icon-stats', 'icon-stats', 'icon-stats', 'icon-stats'];
 
+    const slices = [
+      { color: '#468966', value: 10 },
+      { color: '#FFF0A5', value: 20 },
+      { color: '#FFB03B', value: 30 },
+      { color: '#B64926', value: 40 },
+      { color: '#8E2800', value: 50 },
+    ];
+
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
@@ -129,9 +138,20 @@ class ModelDetail extends React.Component {
               <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
               <div className="profile__container">
                 <div className={'cube-statistic'}>
+                  {<PieChart
+                    data={ [5, 12, 8, 3, 10] }
+                    radius={ 150 }
+                    hole={ 50 }
+                    colors={ ['#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'] }
+                    labels={ true }
+                    percent={ true }
+                    strokeWidth={ 3 }
+                    stroke={ '#fff' }
+                  />}
                 </div>
                 <div className="pie-chart__container">
-                  <div id={'piechart'} className="pie-chart"></div>
+                  <div id={'piechart'} className="pie-chart">
+                  </div>
                   <img src={require('../../../shared/img/background/background_circle.png')} />
                   <img className={'octagon-img'} src={require('../../../shared/img/icons/icon-total.png')} />
                   <div className="total">

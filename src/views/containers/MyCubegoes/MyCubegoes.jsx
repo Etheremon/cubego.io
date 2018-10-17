@@ -123,7 +123,7 @@ class MyCubegoes extends React.Component {
             <div className="my-cubegon-info__container">
               <div className="avatar__container">
                 <div className="avatar">
-                
+                  <img src={require('../../../shared/img/background/background_avatar.png')}/>
                 </div>
               </div>
 

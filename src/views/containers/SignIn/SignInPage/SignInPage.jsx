@@ -32,8 +32,6 @@ class SignInPage extends React.Component {
       registering: false,
       manualLoginErr: '',
     };
-    this.submit = this.submit.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
     this.handleManualLogin = this.handleManualLogin.bind(this);
 
     this.renderManualSignIn = this.renderManualSignIn.bind(this);
@@ -54,46 +52,6 @@ class SignInPage extends React.Component {
   componentWillReceiveProps(nextProps) {
   }
 
-  submit() {
-    let userId = this.props.userId;
-    let email = this.input_email.getValue();
-    let username = this.input_username.getValue();
-    let inviteCode = this.input_invite_code ? this.input_invite_code.getValue() || '' : '';
-    let signature = this.input_signature ? this.input_signature.getValue() : undefined;
-    let checked = this.input_checkbox.getValue();
-
-    if (!Utils.VerifyEmail(email)) {
-      this.setState({submitError: this.props._t('err.invalid_email')})
-    } else if (username.length < 6 || username.length > 18) {
-      this.setState({submitError: this.props._t('err.invalid_length', {field: this.props._t('txt.display_name'), from: 6, to: 18})})
-    } else if (signature === '') {
-      this.setState({submitError: this.props._t('err.invalid_signature')});
-    } else if (!checked) {
-      this.setState({submitError: this.props._t('err.agree_tos_pp')});
-    } else {
-      this.setState({registering: true, submitError: '', submitMsg: ''});
-
-      let callback = function(code, data) {
-        if (data.error) {
-          this.setState({registering: false, submitError: this.props._t('err.invalid_singature')})
-        } else {
-          // re-login
-          this.props.dispatch(Actions.auth.login(this.props.userId));
-          this.setState({registering: false, submitError: '', submitMsg: this.props._t('txt.account_is_updated')})
-
-          // Case new user -> redirect
-          if (!(this.props.userInfo && this.props.userInfo.username))
-            this.props.history.push(`${URLS.MY_MONS}`);
-        }
-      }.bind(this);
-
-      if (signature === undefined)
-        window.updateTrainerInfo(email, username, inviteCode, callback);
-      else
-        window.updateTrainerInfoByMEW(userId, signature, email, username, inviteCode, callback);
-    }
-  }
-
   handleManualLogin() {
     let address = this.manualLoginInput.getValue();
     if (!window.isValidEtherAddress(address)) {
@@ -101,18 +59,6 @@ class SignInPage extends React.Component {
     } else {
       this.props.dispatch(AuthActions.LOGIN.init.func({userId: address}));
       this.props.history.push(`/${URLS.SIGN_IN}?type=setting`)
-    }
-  }
-
-  handleOnChange() {
-    let email = this.input_email.getValue();
-    let username = this.input_username.getValue();
-    let checked = this.input_checkbox.getValue();
-    let signature = this.input_signature ? this.input_signature.getValue() : undefined;
-    if (email !== '' && username !== '' && checked && (signature === undefined || signature !== '')) {
-      if (!this.state.verified) this.setState({verified: true});
-    } else {
-      if (this.state.verified) this.setState({verified: false});
     }
   }
 
@@ -131,7 +77,7 @@ class SignInPage extends React.Component {
         <Input label={_t('txt.ether_address')}
                placeholder={'0x9876...'}
                value={userId}
-               onChange={() => {if (this.state.manualLoginErr !== '') this.setState({manualLoginErr: ''})}}
+               onChange={(e) => {if (this.state.manualLoginErr !== '') this.setState({manualLoginErr: ''})}}
                ref={(inp) => {this.manualLoginInput = inp}}/>
         {this.state.manualLoginErr}<br/>
         <ButtonNew label={_t('sign in')} onClick={this.handleManualLogin}/>
@@ -143,39 +89,65 @@ class SignInPage extends React.Component {
     let {_t} = this.props;
 
     return (
-      <div className={'sign-in-page__app'}>
-        {_t('wallet_not_installed')}
-        {this.renderManualSignIn()}
-      </div>
+        Utils.IsMobile
+                  ? <div className={'sign-in-page__app'}>
+                      <img src={require('../../../../shared/img/assets/lock.png')}/>
+                      <p>{_t('mobile_app_not_installed')}</p>
+                      <span>{_t('please_install_mobile_app')}</span>
+                      <br/><br/>
+                      <ButtonNew label={_t('install_toshi')}
+                              color={ButtonNew.colors.BLUE}
+                              onClick={() => {Utils.OpenToshiInstallation()}} />
+                      <ButtonNew label={_t('install_cipher')}
+                              color={ButtonNew.colors.BLUE}
+                              onClick={() => {Utils.OpenCipherInstallation()}} />
+                              {this.renderManualSignIn()}
+                    </div>
+                  : <div className={'sign-in-page__app'}>
+                      <img src={require('../../../../shared/img/assets/metamask.png')}/>
+                      <p>{_t('metamask_not_installed')}</p>
+                      <span>{_t('please_install_metamask')}</span>
+                      <br/><br/>
+                      <ButtonNew label={_t('install_metamask')}
+                              color={ButtonNew.colors.BLUE}
+                              onClick={() => {Utils.OpenMetamaskInstallation()}} />
+                      {this.renderManualSignIn()}
+                    </div>
     )
   }
 
   renderLockedWallet() {
     let {_t} = this.props;
 
-    return (
-      <div className={'sign-in-page__app'}>
-        {_t('wallet_is_locked')}
-        {this.renderManualSignIn()}
-      </div>
+    return ( Utils.IsMobile
+      ? <div className={'sign-in-page__app'}>
+          <img src={require('../../../../shared/img/assets/lock.png')}/>
+          <p>{_t('mobile_app_is_locked')}</p>
+          <span>{_t('please_unlock_mobile_app')}</span>
+          {this.renderManualSignIn()}
+        </div>
+      : <div className={'sign-in-page__app'}>
+          <img src={require('../../../../shared/img/assets/metamask.png')}/>
+          <p>{_t('metamask_is_locked')}</p>
+          <span>{_t('please_unlock_metamask')}</span>
+          {this.renderManualSignIn()}
+        </div>
     )
   }
 
   renderRegistration() {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm onBack={!hasWalletUnlocked ? () => {
+      <SignInForm metamask={hasWalletUnlocked} onBack={!hasWalletUnlocked ? () => {
         this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-      } : null}/>
+      } : null} />
     )
   }
 
   renderSetting() {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm onBack={!hasWalletUnlocked ? () => {
-        this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-      } : null}/>
+      <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SETTINGINFO}/>
     )
   }
 

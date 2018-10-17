@@ -19,7 +19,7 @@
     .avatar__container {
       position: absolute;
       top: 0;
-      right: 100%;
+      left: -56px;
       width: 80px;
       height: 72px;
       background: rgba(59, 83, 99, 1);
@@ -31,14 +31,11 @@
         left: 10px;
         top: 50%;
         width: 60%;
-        border: 1px solid $white;
-        border-radius: 8px;
-        
 
-        &:before{
-          content: "";
+        img {
           display: block;
-          padding-top: 100%; 	/* initial ratio of 1:1*/
+          width: 100%;
+          height: auto;
         }
       }
     }
@@ -59,6 +56,7 @@
           padding: 5px 8px;
           color: $white;
 
+
           .label {
             font-size: $font-size-small;
             margin-right: 8px;
@@ -66,14 +64,17 @@
 
         }
 
-        .owner-name {
-          font-family: $f__baloobha;
-          color: $white;
-          font-size: $font-size-medium;
-        }
-      
-        .id {
-          font-size: $font-size-smaller;
+        .owner-info {
+          padding-left: 32px;
+          .owner-name {
+            font-family: $f__baloobha;
+            color: $white;
+            font-size: $font-size-medium;
+          }
+        
+          .id {
+            font-size: $font-size-smaller;
+          }
         }
 
         .icon-value {
