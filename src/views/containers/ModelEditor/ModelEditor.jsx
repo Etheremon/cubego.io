@@ -90,7 +90,7 @@ class _ModelEditor extends React.Component {
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
 
-      color: Tools.color({}),
+      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic].variants[1]}),
       view2D: Tools.view2D({
         hotKey: 'X',
         onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
@@ -412,7 +412,10 @@ class _ModelEditor extends React.Component {
               {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => (
                 <div key={idx} className={`cube ${selectedMaterial.name === material.name ? 'active' : ''}`}
                      tooltip={_t(material.name)} tooltip-position="bottom"
-                     onClick={() => {this.setState({selectedMaterial: material})}}>
+                     onClick={() => {
+                       this.setState({selectedMaterial: material});
+                       this.onToolChange(this.tools.color.key, material.variants[1]);
+                     }}>
                   <img src={material.img}/>
                   50
                 </div>

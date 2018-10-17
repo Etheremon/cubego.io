@@ -43,9 +43,9 @@ module.exports = env => {
         runtimeChunk: true,
         minimizer: [
           new OptimizeCSSAssetsPlugin({}),
-          // new UglifyJSPlugin({
-          //   sourceMap: true,
-          // }),
+          new UglifyJSPlugin({
+            sourceMap: true,
+          }),
         ],
       },
 
@@ -62,7 +62,7 @@ module.exports = env => {
           filename: 'styles.css',
           chunkFilename: 'styles.css',
         }),
-        // new BundleAnalyzerPlugin(),
+        new BundleAnalyzerPlugin(),
       ],
 
       mode: 'production',
