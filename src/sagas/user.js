@@ -5,6 +5,7 @@ import {UserActions} from "../actions/user";
 import {AuthActions} from "../actions/auth";
 import {UserApi} from "../services/api/userApi";
 import * as Utils from "../utils/utils";
+import {ToPromiseFunction} from "../services/api/utils";
 
 
 function* loadUserInfo({userId, forceUpdate}) {
@@ -34,13 +35,39 @@ function* loadUserInfo({userId, forceUpdate}) {
 }
 
 function* updateUserInfo({userId, email, username, inviteCode, signature, termsAgreed, callbackFunc}) {
+  let hasWalletUnlocked = Utils.hasWalletUnlocked();
+
   if (!Utils.VerifyEmail(email)) {
     callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.invalid_email'});
+  } else if (!username || username.length < 6 || username.length > 18) {
+    callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.invalid_username', error_values: {}});
+  } else if (!hasWalletUnlocked && !signature) {
+    callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.invalid_signature', error_values: {}});
   } else if (!termsAgreed) {
     callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.agree_tos_pp', error_values: {}});
   } else {
-    callbackFunc(window.RESULT_CODE.SUCCESS, {});
+    if (hasWalletUnlocked) {
+      let {response, error} = yield call(ToPromiseFunction(window.signMessage), email, userId);
+
+      if (!error) {
+        signature = response.signature;
+      } else {
+        callbackFunc(window.RESULT_CODE.ERROR_PARAMS, error);
+        return;
+      }
+    }
+
+    let {response, error} = yield call(UserApi.UpdateUserInfo, userId, email, username, signature, inviteCode);
+
+    if (!error) {
+      callbackFunc(window.RESULT_CODE.SUCCESS, response);
+      yield put(UserActions.LOAD_USER_INFO.init.func({userId, forceUpdate: true}));
+    } else {
+      callbackFunc(window.RESULT_CODE.ERROR_PARAMS, error);
+    }
   }
+
+
 }
 
 export function* watchAll() {

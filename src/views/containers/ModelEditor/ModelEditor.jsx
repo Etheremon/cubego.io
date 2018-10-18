@@ -22,8 +22,10 @@ import * as ObjUtils from "../../../utils/objUtils";
 import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
-import {GetLoggedInUserId, GetSavedModel} from "../../../reducers/selectors";
+import {GetLoggedInUserId, GetSavedModel, GetUserInfo} from "../../../reducers/selectors";
 import {ModelActions} from "../../../actions/model";
+import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
+import Popup from "../../widgets/Popup/Popup.jsx";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -142,6 +144,7 @@ class _ModelEditor extends React.Component {
   }
 
   onKeyDown(key) {
+    if (this.state.showRegisterPopup) return;
     if (this.isHoldingKey[key.keyCode]) return;
     this.isHoldingKey[key.keyCode] = true;
     GetValues(this.tools).forEach(tool => {
@@ -153,6 +156,7 @@ class _ModelEditor extends React.Component {
   }
 
   onKeyUp(key) {
+    if (this.state.showRegisterPopup) return;
     this.isHoldingKey[key.keyCode] = false;
     GetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
@@ -211,9 +215,20 @@ class _ModelEditor extends React.Component {
     this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
   }
 
-  reviewModel() {
-    this.setState({validating: true});
-    this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({model: this.toolManager.model, history: this.props.history}));
+  reviewModel(verified=false) {
+
+    console.log(verified);
+
+    if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
+      this.setState({showRegisterPopup: true});
+    } else {
+      this.setState({validating: true});
+      this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
+      this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
+        model: this.toolManager.model,
+        history: this.props.history
+      }));
+    }
   }
 
   render() {
@@ -224,7 +239,8 @@ class _ModelEditor extends React.Component {
       <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
                  onMouseOut={() => {this.setState({saved: false})}}/>,
       <ButtonNew loading={this.state.validating}
-                 label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1} onClick={this.reviewModel}/>,
+                 label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1}
+                 onClick={() => {this.reviewModel()}}/>,
     ];
 
     return (
@@ -232,6 +248,15 @@ class _ModelEditor extends React.Component {
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
+
+          {this.state.showRegisterPopup !== undefined ?
+            <Popup onUnmount={() => {this.setState({showRegisterPopup: false})}}
+                   open={this.state.showRegisterPopup}>
+              <RegisterPopup onRegistered={() => {
+                this.reviewModel(true);
+              }}/>
+            </Popup> : null
+          }
 
           <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
@@ -468,11 +493,13 @@ class _ModelEditor extends React.Component {
 
 const mapStateToProps = (store, props) => {
   let pathName = props.pathname;
+  let userId = GetLoggedInUserId(store);
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
     savedModel: GetSavedModel(store),
-    userId: GetLoggedInUserId(store),
+    userId,
+    userInfo: GetUserInfo(store, userId),
   }
 };
 

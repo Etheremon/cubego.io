@@ -5,21 +5,26 @@
 
 .signup__container {
   display: flex;
-  flex-wrap: wrap;
   color: $white;
   background: url('../../../../shared/img/background/background_blue_dark.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding: 32px 24px;
+  padding: 32px 32px 24px 32px;
 
   .welcome-to {
     position: relative;
     width: 30%;
     font-family: $f__baloobha;
-    font-size: $font-size-header-3;
-    font-weight: $font-weight-bold;
+    font-size: 40px;
+    border-right: 1px solid $dark;
+    text-align: left;
+    text-transform: uppercase;
+    padding-right: 20px;
+    @include mobile {
+      display: none;
+    }
 
     img {
       position: absolute;
@@ -30,84 +35,71 @@
       left: 80%;
       width: 44px;
       height: auto;
+      @include flip-up-down-10px(5.5s);
     }
 
     .cube_blue {
       top: 20%;
       left: -26px;
       width: 44px;
+      @include flip-up-down-10px(5.7s);
     }
 
     .cube_yellow {
       right: -26px;
       width: 72px;
       bottom: 24px;
+      @include flip-up-down-10px(5.9s);
     }
 
     .plus_image {
       top: 50%;
       right: 50%;
       width: 24px;
+      @include flip-up-down-10px(6.3s);
     }
 
     .cubegon_image {
-      bottom: -44px;
-      left: -56px;
+      bottom: 0;
+      right: 0;
       width: 120%;
     }
   }
 
   .signup-form__container {
     flex-grow: 1;
-    padding-left: 44px;
-    border-left: 1px solid $dark;
+    padding-left: 48px;
     position: relative;
+    @include mobile {
+      padding-left: 0;
+    }
+
     .signup__label {
       font-family: $f__baloobha;
       font-size: $font-size-header-2;
-      color: $c__orange-5;
+      color: $c__text__orange;
+      text-align: left;
+      padding-bottom: 12px;
     }
 
     .error__label {
       margin-top: 8px;
-      color: $c__orange-5;
-      .visibility {
-        display: block !important;
-      }
+      color: $c__text__red;
+    }
 
-      .hidden {
-        display: none;
-      }
+    .success__label {
+      margin-top: 8px;
+      color: $c__text__green;
     }
 
     label {
-      display: block;
-      text-transform: uppercase;
-      margin-top: 24px;
-      font-size: $font-size-small;
-      font-weight: $font-weight-semi-bold;
-      color: $white !important;
+      font-size: $font-size-smaller;
+      padding-top: 8px;
+      color: $c__text__blue;
     }
 
     input[type=text] {
-      background: transparent;
-      border: 0;
-      border-bottom: 1px solid $white-dark;
-      color: $curious_blue;
-      font-size: $font-size-smaller;
-      outline: none;
-      padding: 8px;
-
-      &:disabled {
-        color: $white-dark !important;
-        &:hover {
-          border-bottom: 1px solid $white-dark !important;
-        } 
-      }
-
-      &:hover {
-        border-bottom: 2px solid $white;
-      }
+      //color: $c__text__blue-2;
     }
 
     input[type=checkbox] {
@@ -115,75 +107,10 @@
       margin-top: 16px;
     }
 
-    // .checkbox__container {
-    //   margin-top: 24px;
-    //   margin-right: 8px;
-    //   position: relative;
-
-    //   display: block;
-    //   padding-left: 35px;
-    //   margin-bottom: 12px;
-    //   cursor: pointer;
-    //   font-size: 22px;
-    //   -webkit-user-select: none;
-    //   -moz-user-select: none;
-    //   -ms-user-select: none;
-    //   user-select: none;
-
-    //   input:checked ~ .checkmark {
-    //     background: yellow;
-    //   }
-
-    //   input:checked ~ .checkmark:after {
-    //     display: block;
-    //   }
-
-    //   &:hover {
-    //     input ~ .checkmark {
-    //       background: $gray;
-    //     }
-    //   }
-
-    //   input[type=checkbox] {
-    //     position: absolute;
-    //     opacity: 0;
-    //     cursor: pointer;
-    //     height: 0;
-    //     width: 0;
-    //   }
-
-    //   .checkmark {
-    //       position: absolute;
-    //       top: 0;
-    //       left: 0;
-    //       height: 25px;
-    //       width: 25px;
-    //       background-color: $white;
-
-    //       &:after {
-    //         content: "";
-    //         position: absolute;
-    //         display: none;
-
-    //         left: 9px;
-    //         top: 5px;
-    //         width: 5px;
-    //         height: 10px;
-    //         border: solid white;
-    //         border-width: 0 3px 3px 0;
-    //         -webkit-transform: rotate(45deg);
-    //         -ms-transform: rotate(45deg);
-    //         transform: rotate(45deg);
-    //       }
-    //   }
-    // }
-
-    
-
-    .invite-code__description {
-      margin-top: 5px;
-      color: $c__orange-5;
+    .field-note {
+      color: $c__text__orange;
       font-size: $font-size-tiny;
+      text-align: left;
     }
 
     .term-policy__label {

@@ -60,7 +60,7 @@ class Popup extends React.Component {
   }
 
   render() {
-    let {size, scroll, children, className, onUnmount, _t} = this.props;
+    let {size, scroll, children, className, onUnmount} = this.props;
     let open = this.props.open !== undefined ? this.props.open : this.state.open;
 
     return (
@@ -69,10 +69,14 @@ class Popup extends React.Component {
           <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
             {children}
           </div>
-          <Icon className={'widget__popup-close'} name={'close'} onClick={() => {
-            if (onUnmount !== undefined) onUnmount();
-            this.close();
-            }}/>
+          <div className={'widget__popup-close'}
+               onClick={() => {
+                 if (onUnmount !== undefined) onUnmount();
+                 this.close();
+               }}
+          >
+            x
+          </div>
         </div>
       </div>
     )

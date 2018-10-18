@@ -3,7 +3,7 @@
  * @param fn
  * @returns {Function}
  */
-export const toPromiseFunction = (fn) => {
+export const ToPromiseFunction = (fn) => {
   return function (...args) {
     return new Promise((resolve, reject) => {
       fn(...args, getCallbackFunc(resolve, reject))
@@ -67,3 +67,4 @@ export const sendPostRequest = ({url, data, resolve, reject}) => {
       reject({error: err});
     });
 };
+

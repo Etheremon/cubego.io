@@ -15,7 +15,7 @@ function isStateLessComponent(type) {
 
 function isStateFullComponent(type) {
   return (typeof type === 'function' &&
-    (/^class(\s|\{\}$)/.test(toString.call(type)) ||
+    (/class/.test(toString.call(type)) ||
       (/^.*classCallCheck\(/.test(fnBody(type))))
   );
 }

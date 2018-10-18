@@ -2,6 +2,27 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
+@keyframes popup-open {
+  0%   {
+    opacity: 0;
+    @include transform(translateY(-5%));
+  }
+  100%   {
+    opacity: 1;
+    @include transform(translateY(0));
+  }
+}
+
+@keyframes popup-close {
+  0%   {
+    opacity: 1;
+    @include transform(translateY(0));
+  }
+  100%   {
+    opacity: 0;
+    @include transform(translateY(-5%));
+  }
+}
 
 .widget__popup {
   position: fixed;
@@ -10,18 +31,21 @@
   left: 0;
   right: 0;
   z-index: 1001;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.65);
   padding-top: 80px;
   text-align: center;
   @include mobile {
     padding-top: 60px;
   }
+  @include transition-duration;
 
   &.open {
     display: block;
+    @include animation-keyframes(popup-open, 0.2s, 1);
   }
   &.close {
     display: none;
+    @include animation-keyframes(popup-close, 0.2s, 1);
   }
 
   .widget__popup-wrap {
@@ -72,8 +96,7 @@
     margin: 0 auto;
     // padding: 16px;
     background-color: $c__background-popup-1;
-    @include border-radius-without-overflow(10px);
-    box-shadow: 0 0 60px $c__blue-2;
+    box-shadow: 0 0 10px -1px $c__blue-2;
 
     overflow: visible;
     position: relative;
