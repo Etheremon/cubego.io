@@ -73,7 +73,7 @@ class SignInForm extends React.Component {
 
             {submitError && submitError.error ?
               <div className={`error__label`}>
-                {_t(submitError.error, submitError.error_values)}
+                {_t(submitError.error, submitError.error_values || {})}
               </div> : null
             }
             {submitSuccess?

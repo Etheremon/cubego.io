@@ -58,7 +58,7 @@ class SignInPage extends React.Component {
       this.setState({manualLoginErr: this.props._t('err.invalid_ether_address')})
     } else {
       this.props.dispatch(AuthActions.LOGIN.init.func({userId: address}));
-      this.props.history.push(`/${URLS.SIGN_UP}?type=setting`)
+      this.props.history.push(`/${URLS.SIGN_IN}?type=setting`)
     }
   }
 
@@ -148,16 +148,20 @@ class SignInPage extends React.Component {
   renderRegistration() {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm metamask={hasWalletUnlocked} onBack={!hasWalletUnlocked ? () => {
-        this.props.history.push(`/${URLS.SIGN_UP}?type=sign-in`)
-      } : null} />
+      <SignInForm metamask={hasWalletUnlocked}
+                  onBack={!hasWalletUnlocked ? () => {
+                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+                  } : null} />
     )
   }
 
   renderSetting() {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SETTING_INFO}/>
+      <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SETTING_INFO}
+                  onBack={!hasWalletUnlocked ? () => {
+                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+                  } : null} />
     )
   }
 
