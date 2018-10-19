@@ -3,13 +3,13 @@
 @import '../../../styles/variables';
 @import '../../../styles/fonts';
 
-.sign-in-page__container {
+.register-popup {
   text-align: center;
-  padding-top: 100px;
-  padding-bottom: 40px;
   color: $white95;
 
-  .sign-in-page__app {
+  .register-popup__app {
+    background-color: $regal_blue;
+    padding: 32px;
     img {
       width: 160px;
     }
@@ -32,7 +32,6 @@
 
     .header {
       color: $c__text__blue;
-      font-size: $font-size-large;
     }
 
     .err {

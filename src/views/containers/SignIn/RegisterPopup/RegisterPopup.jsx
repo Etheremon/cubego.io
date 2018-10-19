@@ -1,28 +1,19 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
 
-import Navbar from '../../../components/bars/Navbar/Navbar.jsx'
-import Footer from '../../../components/bars/Footer/Footer.jsx'
-import {Container} from "../../../widgets/Container/Container.jsx";
-import {
-  GetLoggedInUserId, GetUserInfo,
-} from "../../../../reducers/selectors";
 import * as Utils from "../../../../utils/utils";
-import {getTranslate} from "react-localize-redux/lib/index";
-import {Input} from "../../../widgets/Input/Input.jsx";
-import * as Tracker from "../../../../services/tracker";
-import {PageWrapper} from "../../../widgets/PageWrapper/PageWrapper.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
 import Loading from "../../../components/Loading/Loading.jsx";
 import SignInForm from "../SigInForm/SignInForm.jsx";
-import {AuthActions} from "../../../../actions/auth";
 import {URLS} from "../../../../constants/general";
+import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
+import withRouter from "react-router-dom/es/withRouter";
+import connect from "react-redux/es/connect/connect";
+import {getTranslate} from 'react-localize-redux';
 
-require("style-loader!./SignInPage.scss");
+require("style-loader!./RegisterPopup.scss");
 
 
-class SignInPage extends React.Component {
+class RegisterPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,36 +21,21 @@ class SignInPage extends React.Component {
       submitMsg: '',
       verified: false,
       registering: false,
-      manualLoginErr: '',
     };
-    this.handleManualLogin = this.handleManualLogin.bind(this);
 
-    this.renderManualSignIn = this.renderManualSignIn.bind(this);
     this.renderLoading = this.renderLoading.bind(this);
     this.renderNotInstalledWallet = this.renderNotInstalledWallet.bind(this);
     this.renderLockedWallet = this.renderLockedWallet.bind(this);
     this.renderRegistration = this.renderRegistration.bind(this);
-    this.renderSetting = this.renderSetting.bind(this);
   };
 
   componentWillMount() {
   }
 
   componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.signin);
   }
 
   componentWillReceiveProps(nextProps) {
-  }
-
-  handleManualLogin() {
-    let address = this.manualLoginInput.getValue();
-    if (!window.isValidEtherAddress(address)) {
-      this.setState({manualLoginErr: this.props._t('err.invalid_ether_address')})
-    } else {
-      this.props.dispatch(AuthActions.LOGIN.init.func({userId: address}));
-      this.props.history.push(`/${URLS.SIGN_IN}?type=setting`)
-    }
   }
 
   renderLoading() {
@@ -68,52 +44,35 @@ class SignInPage extends React.Component {
     )
   }
 
-  renderManualSignIn() {
-    let {userId, _t} = this.props;
-
-    return (
-      <div className={'sign-in-manual'}>
-        <div className={'header'}>{_t('manual_sign_in.intro')}</div>
-        <Input label={_t('Ether Address')}
-               placeholder={'0x9876...'}
-               value={userId}
-               onChange={(e) => {if (this.state.manualLoginErr !== '') this.setState({manualLoginErr: ''})}}
-               ref={(inp) => {this.manualLoginInput = inp}}/>
-        <div className={'err'}>
-          {this.state.manualLoginErr}
-          </div>
-        <br/>
-        <ButtonNew label={_t('sign in')}
-                   color={ButtonNew.colors.BLUE}
-                   onClick={this.handleManualLogin}
-        />
-      </div>
-    );
-  }
-
   renderNotInstalledWallet() {
     let {_t} = this.props;
 
     return (
       Utils.IsMobile
-        ? <div className={'sign-in-page__app'}>
+        ? <div className={'register-popup__app'}>
             <img src={require('../../../../shared/img/assets/lock.png')}/>
             <div className={'header'}>{_t('mobile_app_not_installed')}</div>
             <div className={'desc'}>{_t('please_install_mobile_app')}</div>
             <div className={'btns'}>
-              <ButtonNew label={_t('install Coinbase Wallet')}
+              <ButtonNew label={_t('Sign In Manually')}
+                         color={ButtonNew.colors.GREY}
+                         onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
+              <ButtonNew label={_t('Install Coinbase Wallet')}
                          onClick={() => {Utils.OpenToshiInstallation()}} />
-              <ButtonNew label={_t('install Cipher')}
+              <ButtonNew label={_t('Install Cipher')}
                          onClick={() => {Utils.OpenCipherInstallation()}} />
             </div>
 
             {this.renderManualSignIn()}
           </div>
-        : <div className={'sign-in-page__app'}>
+        : <div className={'register-popup__app'}>
             <img src={require('../../../../shared/img/assets/metamask.png')}/>
             <div className={'header'}>{_t('metamask_not_installed')}</div>
             <div className={'desc'}>{_t('please_install_metamask')}</div>
             <div className={'btns'}>
+              <ButtonNew label={_t('Sign In Manually')}
+                         color={ButtonNew.colors.GREY}
+                         onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
               <ButtonNew label={_t('Install Metamask')}
                          showDeco={ButtonNew.deco.BOTH}
                          onClick={() => {Utils.OpenMetamaskInstallation()}} />
@@ -128,19 +87,27 @@ class SignInPage extends React.Component {
     let {_t} = this.props;
 
     return ( Utils.IsMobile
-      ? <div className={'sign-in-page__app'}>
+      ? <div className={'register-popup__app'}>
           <img src={require('../../../../shared/img/assets/lock.png')}/>
           <div className={'header'}>{_t('mobile_app_is_locked')}</div>
           <div className={'desc'}>{_t('please_unlock_mobile_app')}</div>
 
-          {this.renderManualSignIn()}
+          <div className={'btns'}>
+            <ButtonNew label={_t('Sign In Manually')}
+                       color={ButtonNew.colors.GREY}
+                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
+          </div>
         </div>
-      : <div className={'sign-in-page__app'}>
+      : <div className={'register-popup__app'}>
           <img src={require('../../../../shared/img/assets/metamask.png')}/>
           <div className={'header'}>{_t('metamask_is_locked')}</div>
           <div className={'desc'}>{_t('please_unlock_metamask')}</div>
 
-          {this.renderManualSignIn()}
+          <div className={'btns'}>
+            <ButtonNew label={_t('Sign In Manually')}
+                       color={ButtonNew.colors.GREY}
+                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
+          </div>
         </div>
     )
   }
@@ -149,24 +116,14 @@ class SignInPage extends React.Component {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
       <SignInForm metamask={hasWalletUnlocked}
-                  onBack={!hasWalletUnlocked ? () => {
-                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-                  } : null} />
-    )
-  }
-
-  renderSetting() {
-    let hasWalletUnlocked = Utils.hasWalletUnlocked();
-    return (
-      <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SETTING_INFO}
-                  onBack={!hasWalletUnlocked ? () => {
-                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-                  } : null} />
+                  type={SignInForm.types.REGISTER_POPUP}
+                  onRegistered={this.props.onRegistered}
+      />
     )
   }
 
   render() {
-    let {userId, userInfo, type} = this.props;
+    let {userId, userInfo} = this.props;
 
     let hasWalletSupported = Utils.HasWalletSupported();
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
@@ -175,30 +132,20 @@ class SignInPage extends React.Component {
 
     if (userId === undefined || userInfo === undefined) {
       content = this.renderLoading();
-    } else if (!hasWalletUnlocked && (!userId || type === 'sign-in')) {
+    } else if (!hasWalletUnlocked) {
       if (!hasWalletSupported) {
         content = this.renderNotInstalledWallet();
       } else if (!hasWalletUnlocked) {
         content = this.renderLockedWallet();
       }
     } else {
-      if (userId && (!userInfo.username || userInfo.username === '')) {
-        content = this.renderRegistration();
-      } else if (userId && userInfo.username) {
-        content = this.renderSetting();
-      }
+      content = this.renderRegistration();
     }
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
-        <Navbar size={Container.sizes.SMALL}/>
-
-        <Container className={'sign-in-page__container'} size={Container.sizes.SMALL}>
-          {content}
-        </Container>
-
-        <Footer size={Container.sizes.SMALL} type={Footer.types.DARK}/>
-      </PageWrapper>
+      <div className={'register-popup'}>
+        {content}
+      </div>
     );
   }
 }
@@ -221,4 +168,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignInPage));
+)(RegisterPopup));

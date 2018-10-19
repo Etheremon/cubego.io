@@ -4,7 +4,7 @@ function signMessage(message, address, callbackFunc) {
     web3.personal.sign(web3.toHex(message), address, function(err, sig) {
       if (err) {
         callbackFunc(RESULT_CODE.ERROR_TXN_FAILED, {
-          error: "Blockchain call failed" ,
+          error: "Sign failed!" ,
           error_detail: err,
         });
       } else {

@@ -15,11 +15,14 @@
   label {
     color: $gray-dark-sub;
     padding-bottom: 2px;
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
   }
 
   input {
+    font-size: $font-size-small;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 8px 0;
     font-weight: $font-weight-semi-bold;
     background-color: transparent;
     border: 0;
@@ -32,11 +35,14 @@
   }
   input:disabled {
     border: 0;
-    background-color: $gray-light;
-    color: $gray-dark !important;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 8px;
+
+    cursor: not-allowed;
   }
   input:focus {
     border-bottom: 2px solid $white;
+    margin-bottom: -1px;
     outline: none;
   }
   input::placeholder {

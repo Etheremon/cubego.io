@@ -1,7 +1,8 @@
-import {sendGetRequest} from "./utils";
+import {sendGetRequest, sendPostRequest} from "./utils";
 import {SERVER_URL} from "../../config";
 
 const URL_GET_USER_INFO = SERVER_URL + '/api/user/get_info';
+const URL_UPDATE_USER_INFO = SERVER_URL + '/api/user/update_info';
 
 const GetUserInfo = (userId) => {
   return new Promise(function(resolve, reject) {
@@ -13,6 +14,24 @@ const GetUserInfo = (userId) => {
 };
 
 
+const UpdateUserInfo = (userId, email, username, signature, refer_code) => {
+  return new Promise(function(resolve, reject) {
+    sendPostRequest({
+      url: URL_UPDATE_USER_INFO,
+      data: {
+        trainer_address: userId,
+        email,
+        username,
+        signature,
+        refer_code,
+      },
+      resolve, reject
+    });
+  });
+};
+
+
 export const UserApi = {
   GetUserInfo,
+  UpdateUserInfo,
 };

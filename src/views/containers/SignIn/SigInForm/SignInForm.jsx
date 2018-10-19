@@ -5,12 +5,9 @@ import {getTranslate} from 'react-localize-redux';
 
 import { ButtonNew } from '../../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
-import { Container } from '../../../widgets/Container/Container.jsx';
 import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import { Input } from '../../../widgets/Input/Input.jsx';
-import { AuthActions } from '../../../../actions/auth.js';
 import { UserActions } from '../../../../actions/user';
-import { IsEqual } from '../../../../utils/objUtils.js';
 
 require("style-loader!./SignInForm.scss");
 
@@ -31,8 +28,7 @@ class SignInForm extends React.Component {
 
   render() {
     const {_t, onBack, userId, type, metamask, userInfo} = this.props;
-    const { submitError } = this.state;
-    console.log(userInfo)
+    const { submitError, submitSuccess } = this.state;
 
     return (  
       <div className={'signup__container'}>
@@ -46,42 +42,73 @@ class SignInForm extends React.Component {
         </div>
         <div className="signup-form__container">
           <div className="signup__label">
-            {_t('signup_label')}
+            {_t(`sign_up_label.${type}`)}
           </div>
           <form>
-            <Input label={_t('wallet')} value={userId} disabled={true} />
-            <Input label={_t('user_email')} value={userInfo.email} placeholder={'xxxx@gmail.com'} onChange={e => this.input_email = e} />
-            <Input label={_t('display_name')} value={userInfo.username} onChange={e => this.input_username = e} />
-            <Input label={_t('invite_code')} value={userInfo.refer_code} onChange={e => this.input_invite_code = e} />
+            <Input label={_t('Wallet')} value={userId} disabled={true} />
+            <Input label={_t('Email')} placeholder={type === SignInForm.types.SIGN_UP ? 'contact@cubego.io' : userInfo.email}
+                   onChange={e => this.input_email = e} />
+            <Input label={_t('Username')} placeholder={_t('desc.username')}
+                   value={userInfo.username}
+                   onChange={e => this.input_username = e} />
 
-            {
-              !metamask ? <Input label={_t('signature')} onChange={e => this.input_signature = e}/> : null
+            {type === SignInForm.types.SIGN_UP ?
+              <React.Fragment>
+                <Input label={_t('Invite Code')} placeholder={_t('Optional')} value={userInfo.refer_code}
+                       onChange={e => this.input_invite_code = e}/>
+                <div className={'field-note'}>{_t('desc.invite_code')}</div>
+              </React.Fragment> : null
             }
 
-            <div className={'invite-code__description'}>{_t('desc.invite_code')}</div>
-            <input type="checkbox" onChange={e => this.input_checkbox = e}/>
+            {!metamask ?
+              <React.Fragment>
+                <Input label={_t('Signature')} onChange={e => this.input_signature = e}/>
+                <div className={'field-note'}>{_t('desc.sign_in_signature')}</div>
+              </React.Fragment> : null
+            }
+
+            <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
             <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
-            <div className={`error__label ${!IsEqual(submitError, {}) ? 'visibility' : 'hidden'}`}>
-              {!IsEqual(submitError, {}) && _t(submitError.error, submitError.error_values)}
-            </div>
+
+
+            {submitError && submitError.error ?
+              <div className={`error__label`}>
+                {_t(submitError.error, submitError.error_values || {})}
+              </div> : null
+            }
+            {submitSuccess?
+              <div className={`success__label`}>
+                {_t(submitSuccess)}
+              </div> : null
+            }
+
             {onBack ?
               <ButtonNew className={'back__button'} color={ButtonNew.colors.GREY} label={_t('back')} onClick={onBack}/> : null
             }
-            <ButtonNew className={'register__button'} showDeco={ButtonNew.deco.RIGHT} label={_t(`${type === SignInForm.types.SIGNIN ? 'register': 'setting'}`)} onClick={() => { 
-              this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({userId: userId, 
-                email: this.input_email, 
-                username: this.input_username, 
-                inviteCode: this.input_invite_code, 
-                signature: metamask ? undefined : this.input_signature, 
-                termsAgreed: this.input_checkbox, 
-                callbackFunc: (code, data) => {
-                  if (code !== window.SUCCESS) {
-                    this.setState({submitError: data})
-                  } else {
-                    this.setState({submitError: {}})
-                  }
-              }}))
-             }}/>
+
+            <ButtonNew className={'register__button'}
+                       color={ButtonNew.colors.BLUE}
+                       label={_t(`${type === SignInForm.types.SETTING_INFO ? 'Update': 'Register'}`)}
+                       onClick={() => {
+                        this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({userId: userId,
+                          email: this.input_email,
+                          username: this.input_username === undefined ? userInfo.username : this.input_username,
+                          inviteCode: this.input_invite_code,
+                          signature: metamask ? undefined : this.input_signature,
+                          termsAgreed: this.input_checkbox,
+                          callbackFunc: (code, data) => {
+                            if (code !== window.RESULT_CODE.SUCCESS) {
+                              this.setState({submitError: data, submitSuccess: null});
+                            } else {
+                              this.setState({submitError: {}, submitSuccess: _t('Your information is updated!'), showNext: true})
+                            }
+                        }}))
+                       }}/>
+
+            {this.state.showNext && this.props.onRegistered ?
+              <ButtonNew className={'back__button'} label={_t('Continue')} showDeco={ButtonNew.deco.RIGHT}
+                         onClick={() => {this.props.onRegistered && this.props.onRegistered();}}/> : null
+            }
           </form>
         </div>
       </div>
@@ -90,12 +117,14 @@ class SignInForm extends React.Component {
 }
 
 SignInForm.types = {
-  SIGNIN: 'sign-in',
-  SETTINGINFO: 'setting-info'
-}
+  REGISTER_POPUP: 'register-popup',
+  SIGN_UP: 'sign-up',
+  SETTING_INFO: 'setting-info'
+};
 
 SignInForm.defaultProps = {
-  type: SignInForm.types.SIGNIN,
+  type: SignInForm.types.SIGN_UP,
+  onRegistered: null,
 };
 
 const mapStateToProps = (store, props) => {
