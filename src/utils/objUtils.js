@@ -45,3 +45,18 @@ export const CloneWithModify = (obj, func) => {
 export const GetValues = (obj) => {
   return typeof(obj) === 'object' && obj !== null ? Object.keys(obj).map(key => obj[key]) : obj;
 };
+
+export const ForEach = (obj, func) => {
+  Object.keys(obj).forEach((key) => {
+    result[key] = func(key, obj[key]);
+  });
+};
+
+export const Map = (obj, func) => {
+  let result = [];
+  if (!obj) return result;
+  Object.keys(obj).forEach((key) => {
+    result.push(func(key, obj[key]));
+  });
+  return result;
+};

@@ -21,11 +21,11 @@ export const getCallbackFunc = (resolve, reject) => {
   return function(code, data) {
     switch (code) {
       case RESULT_CODE.SUCCESS:
-        resolve({response: data});
+        resolve({response: data, response_code: code});
         break;
 
       default:
-        resolve({error: data});
+        resolve({error: data, response_code: code});
     }
   }
 };

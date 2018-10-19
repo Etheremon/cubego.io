@@ -59,10 +59,12 @@ class VoxViewerThree extends Component {
     let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE / 2;
     let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
 
-    let elements = [<Grid width={sizeY * SIZE / 2} height={sizeX * SIZE / 2} linesHeight={sizeX} linesWidth={sizeY}
-                          color1={0xffffff} color2={0xffffff}
-                          position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
-                          key={`grid-${this.updateGridIdx}`}/>];
+    let elements = !this.props.viewOnly
+      ? [<Grid width={sizeY * SIZE / 2} height={sizeX * SIZE / 2} linesHeight={sizeX} linesWidth={sizeY}
+               color1={0xffffff} color2={0xffffff}
+               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
+               key={`grid-${this.updateGridIdx}`}/>]
+      : [];
     GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
@@ -116,8 +118,8 @@ class VoxViewerThree extends Component {
       y: SIZE + SIZE * this.state.data.spaceSize.z[1] - this.offsetVector.y,
       z: SIZE + SIZE * this.state.data.spaceSize.y[1] - this.offsetVector.z
     };
-    this.boxHelper.min = min;
-    this.boxHelper.max = max;
+    if (this.boxHelper) this.boxHelper.min = min;
+    if (this.boxHelper) this.boxHelper.max = max;
   }
 
   componentDidMount() {
@@ -259,12 +261,17 @@ class VoxViewerThree extends Component {
         <PointLight position={{x: 200, y: 400, z: 200}}/>
         <PointLight position={{x: -200, y: -400, z: -200}}/>
 
-        <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
-          this.rollOverMesh = ref
-        }} wireFrameColor='000000'/>
-        <BoxHelper ref={(ref) => {
-          this.boxHelper = ref
-        }}/>
+        {!this.props.viewOnly ?
+          <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
+            this.rollOverMesh = ref
+          }} wireFrameColor='000000'/> : null
+        }
+
+        {!this.props.viewOnly ?
+          <BoxHelper ref={(ref) => {
+            this.boxHelper = ref
+          }}/> : null
+        }
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
     );

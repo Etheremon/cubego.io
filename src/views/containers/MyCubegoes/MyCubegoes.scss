@@ -8,18 +8,20 @@
   margin-bottom: 32px;
 
   .my-cubegon-info__container {
+    margin-top: 4px;
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 12px 0;
+    padding: 12px 0 12px 88px;
     background: rgba(59, 83, 99, 1);
     color: $white;
+    @include border-radius-without-overflow(4px);
 
     .avatar__container {
       position: absolute;
       top: 0;
-      left: -56px;
+      left: 0;
       width: 80px;
       height: 72px;
       background: rgba(59, 83, 99, 1);
@@ -65,7 +67,6 @@
         }
 
         .owner-info {
-          padding-left: 32px;
           .owner-name {
             font-family: $f__baloobha;
             color: $white;
@@ -94,7 +95,7 @@
   }
 
   .combat-title {
-    margin-top: 16px;
+    margin-top: 32px;
   }
 
   .combat-stats__container {
@@ -115,8 +116,8 @@
       box-sizing: border-box;
 
       .content {
-        font-size: $font-size-large;
-        font-weight: $font-weight-bold;
+        font-size: $font-size-header-1;
+        font-family: $f__baloobha;
       }
 
       .label {

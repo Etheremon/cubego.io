@@ -108,9 +108,6 @@ export const ObjFilter = (obj, func) => {
   return result;
 };
 
-
-
-
 export const ObjIsEmpty = (obj) => (obj ? !Object.keys(obj).length : true);
 
 export const ObjRename = (obj, oldKey, newKey) => {

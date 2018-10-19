@@ -30,7 +30,10 @@ export class Battle extends Component {
 
   render() {
     return (
-      <div className={'battle-3d-view'}>
+      <div className={'battle-3d-view'}
+           onWheel={(e) => {
+             e.preventDefault();
+           }}>
         <canvas id='battle' width="960" height="540"/>
       </div>
     );

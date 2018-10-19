@@ -3,25 +3,24 @@ import {call, fork, put, select, takeLatest, all} from 'redux-saga/effects';
 import {GetLoggedInUserId} from "../reducers/selectors";
 import * as ModelUtils from "../utils/logicUtils";
 
-import {URLS} from "../constants/general";
 import {ModelActions} from "../actions/model";
 import {ModelApi} from "../services/api/modelApi";
 
 
-function* validateModel({userId, model, history}) {
+function* validateModel({userId, model, callbackFunc}) {
   if (!userId) userId = yield select(GetLoggedInUserId);
   userId = userId || '0xf65e814c5150738c9b0a10df5328322a2b7af95a';
   let structure = ModelUtils.GetStructure(model);
 
   yield put(ModelActions.VALIDATE_MODEL.request.func({userId, model, structure}));
 
-  const {response, error} = yield call(ModelApi.ValidateModel, userId, structure);
+  const {response, error, response_code} = yield call(ModelApi.ValidateModel, userId, structure);
   if (!error) {
     yield put(ModelActions.VALIDATE_MODEL.success.func({userId, model, structure, response}));
-    history && history.push(`/${URLS.REVIEW_GON}`);
+    callbackFunc && callbackFunc(response_code, response);
   } else {
     yield put(ModelActions.VALIDATE_MODEL.fail.func({userId, model, structure, error}));
-
+    callbackFunc && callbackFunc(response_code, error);
   }
 }
 

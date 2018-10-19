@@ -70,7 +70,6 @@
     "node-sass": "^4.7.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "sass-loader": "^7.1.0",
-    "semantic-ui-react": "0.82.3",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.1.1",

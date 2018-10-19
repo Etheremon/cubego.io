@@ -39,9 +39,8 @@ class ReviewPage extends React.Component {
 
   componentDidMount() {
     if (!this.props.validatedModel) {
-      this.props.history.push(`/${URLS.DOG_VERTICAL}`)
+      this.props.history.push(`/${URLS.BUILD_GON}`)
     }
-    console.log("hihi", this.props.validatedModel);
   }
 
   handleSliderChange(event) {
@@ -89,6 +88,10 @@ class ReviewPage extends React.Component {
 
             <div className="model-review__container">
               <div className="model-review">
+                <div className={'note'}>
+                  <img src={require('../../../shared/img/icons/icon-info.png')}/>
+                  <p>{_t('review.image_note')}</p>
+                </div>
                 {validatedModel ?
                   <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
                 }
@@ -164,13 +167,13 @@ class ReviewPage extends React.Component {
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {item.eth_price / item.count}
+                              {item['eth_price'] / item.count}
                             </div>
                           </td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {item.eth_price}
+                              {Utils.RoundToDecimalFloat(item['eth_price'], 4)}
                             </div>
                           </td>
                         </tr>
