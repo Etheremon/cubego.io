@@ -79,7 +79,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.skeleton.beginAnimation('hit', false, 1);
     setTimeout(() => {
       this.skeleton.beginAnimation('idle_ground', true, 1);
-    }, 1000);
+    }, 200);
     this.animateHurtPoint(percent);
     this.updateHealthBar();
   }
@@ -575,6 +575,41 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       }
       // i = (i + 1) % (60 - 1);
     });
+  }
+
+  createScratchParticle() {
+    let matrix = this.playerMesh.getWorldMatrix();
+    let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    emitter.y = 1.5;
+    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    pSystem.emitter = emitter;
+    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    pSystem.particleTexture = new BABYLON.Texture("assets/particle/scratch_01.png", this.scene);
+
+    pSystem.minInitialRotation = 0;
+    pSystem.maxInitialRotation = 4;
+    pSystem.color1 = new BABYLON.Color4(0.0, 0.95, 1, 1);
+    pSystem.color2 = new BABYLON.Color4(0.0, 0.9, 1, 1);
+    pSystem.colorDead = new BABYLON.Color4(0, .06, 1, .5);
+    pSystem.minSize = 5.0;
+    pSystem.maxSize = 5.0;
+    pSystem.minLifeTime = 3;
+    pSystem.maxLifeTime = 5;
+//    pSystem.emitRate = 1;
+    pSystem.manualEmitCount = 1;
+    pSystem.minAngularSpeed = 0;
+    pSystem.maxAngularSpeed = 0;
+    pSystem.minEmitPower = 0;
+    pSystem.maxEmitPower = 0;
+    pSystem.updateSpeed = 0.1;
+    pSystem.minScaleX = 1;
+    pSystem.minScaleY = 1;
+    pSystem.start();
+    this.hurt(15);
+    setTimeout(() => {
+      pSystem.stop();
+    }, 50);
   }
 
   die() {
