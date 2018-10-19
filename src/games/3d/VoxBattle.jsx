@@ -45,7 +45,6 @@ class VoxBattle extends Component {
     ];
     this.players = [null, null];
     this.backgroundIdx = Math.floor(1 + Math.random() * 4);
-    console.log(this.backgroundIdx);
   }
 
   createAttackAnimationKeys(rotate) {
@@ -132,43 +131,50 @@ class VoxBattle extends Component {
 
   componentDidMount() {
     BabylonX.loaders.addMesh('battlemap1', '/assets/battleground/map_1/unity/', 'BattleMap1.babylon').then((data) => {
-      data.loadedMeshes.forEach((mesh) => {
-        if (mesh.name.match(/^Cloud_\d+_l$/g)) {
-          let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-          let keys = [];
-          keys.push({
-            frame: 0,
-            value: mesh.position.z
-          });
-          keys.push({
-            frame: 100,
-            value: mesh.position.z + 100
-          });
-          anim.setKeys(keys);
-          mesh.animations.push(anim);
-          this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
-            mesh.dispose();
-          });
-        } else if (mesh.name.match(/^Cloud_\d+_r$/g)) {
-          let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-          let keys = [];
+      setTimeout(()=>{
+        data.loadedMeshes.forEach((mesh) => {
+          if (mesh.name.match(/^Cloud_\d+_l$/g)) {
+            let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+            let keys = [];
+            keys.push({
+              frame: 0,
+              value: mesh.position.z
+            });
+            keys.push({
+              frame: 100,
+              value: mesh.position.z + 100
+            });
+            anim.setKeys(keys);
+            mesh.animations.push(anim);
+            this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
+              mesh.dispose();
+            });
+          } else if (mesh.name.match(/^Cloud_\d+_r$/g)) {
+            let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+            let keys = [];
 
-          keys.push({
-            frame: 0,
-            value: mesh.position.z
-          });
+            keys.push({
+              frame: 0,
+              value: mesh.position.z
+            });
 
-          keys.push({
-            frame: 100,
-            value: mesh.position.z - 100
-          });
-          anim.setKeys(keys);
-          mesh.animations.push(anim);
-          this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
-            mesh.dispose();
-          });
-        }
-      })
+            keys.push({
+              frame: 100,
+              value: mesh.position.z - 100
+            });
+            anim.setKeys(keys);
+            mesh.animations.push(anim);
+            this.players[0].scene.beginAnimation(mesh, 0, 100, false, 0.5, () => {
+              mesh.dispose();
+            });
+          }
+          let loadingDiv = document.getElementById('cubegoLoadingDiv');
+          if (loadingDiv) {
+            document.body.removeChild(loadingDiv);
+          }
+        })
+      }, 1000);
+
     });
     BabylonX.loaders.load();
   }

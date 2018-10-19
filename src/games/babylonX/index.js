@@ -3,15 +3,19 @@ import 'babylonjs-loaders';
 import {renderer as BabylonRenderer} from "./renderer/index";
 import {TYPES} from './components';
 import {BabylonMeshContainer} from "./components/babylonMeshContainer";
+import {LoadingScreen} from "./loading/LoadingScreen";
 
 let rootContainer = null;
 let scene, engine;
 let loopStarted = false;
 let root = null;
 let assetsManager = null;
+let loadingScreen = null;
 
 const createRenderer = (canvas) => {
   engine = new BABYLON.Engine(canvas, true);
+  loadingScreen = new LoadingScreen(canvas);
+  engine.loadingScreen = loadingScreen;
   scene = new BABYLON.Scene(engine);
   // scene.debugLayer.show({popup:true});
   //For debugging
@@ -92,6 +96,7 @@ export function changeToARMode() {
   });
 }*/
 
+
 const startLoop = () => {
   if (!loopStarted) {
     loopStarted = true;
@@ -102,9 +107,9 @@ const startLoop = () => {
 };
 
 const render = (element, canvas) => {
-  if (!rootContainer) {
-    rootContainer = createRenderer(canvas);
-  }
+  // if (!rootContainer) {
+  rootContainer = createRenderer(canvas);
+  // }
   BabylonRenderer.updateContainer(element, rootContainer, null);
   return BabylonRenderer.getPublicRootInstance(rootContainer);
 };
