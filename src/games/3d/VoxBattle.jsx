@@ -44,6 +44,8 @@ class VoxBattle extends Component {
       {frame: 100, value: 0}
     ];
     this.players = [null, null];
+    this.backgroundIdx = Math.floor(1 + Math.random() * 4);
+    console.log(this.backgroundIdx);
   }
 
   createAttackAnimationKeys(rotate) {
@@ -190,6 +192,7 @@ class VoxBattle extends Component {
   createHitAnimation() {
     this.players[0].isAttacking = true;
     this.players[0].playAnimation('attack', false, 3);
+    this.players[0].playSkeletonAnimation('tackle', false, 1);
     setTimeout(() => {
       this.players[0].isAttacking = false;
     }, 1000);
@@ -220,6 +223,18 @@ class VoxBattle extends Component {
   }
 
   createTackleAnimation() {
+    this.players[1].playSkeletonAnimation('tackle', false, 1);
+  }
+
+  createScratchParticle() {
+    this.players[1].playSkeletonAnimation('roar', false, 1).then(() => {
+    });
+    setTimeout(() => {
+      this.players[0].createScratchParticle();
+    }, 150);
+  }
+
+  createSmashUpParticle() {
     this.players[1].playSkeletonAnimation('smashup', false, 1);
   }
 
@@ -228,19 +243,21 @@ class VoxBattle extends Component {
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         <Axis size={5}/>
         <GUI>
-          <GUISimpleButton left={'-175px'} value={'1'} onClick={this.createTackleAnimation.bind(this)}/>
-          <GUISimpleButton left={'-125px'} value={'2'} onClick={this.createFireParticle.bind(this)}/>
-          <GUISimpleButton left={'-75px'} value={'3'} onClick={this.createShieldParticle.bind(this)}/>
-          <GUISimpleButton left={'-25px'} value={'4'} onClick={this.createFistParticle.bind(this)}/>
-          <GUISimpleButton left={'25px'} value={'5'} onClick={this.createHitAnimation.bind(this)}/>
-          <GUISimpleButton left={'75px'} value={'6'} onClick={this.createWaterParticle.bind(this)}/>
-          <GUISimpleButton left={'125px'} value={'7'} onClick={this.createMissileParticle.bind(this)}/>
+          <GUISimpleButton left={'-225px'} value={'1'} onClick={this.createScratchParticle.bind(this)}/>
+          <GUISimpleButton left={'-175px'} value={'2'} onClick={this.createTackleAnimation.bind(this)}/>
+          <GUISimpleButton left={'-125px'} value={'3'} onClick={this.createFireParticle.bind(this)}/>
+          <GUISimpleButton left={'-75px'} value={'4'} onClick={this.createShieldParticle.bind(this)}/>
+          <GUISimpleButton left={'-25px'} value={'5'} onClick={this.createFistParticle.bind(this)}/>
+          <GUISimpleButton left={'25px'} value={'6'} onClick={this.createHitAnimation.bind(this)}/>
+          <GUISimpleButton left={'75px'} value={'7'} onClick={this.createWaterParticle.bind(this)}/>
+          <GUISimpleButton left={'125px'} value={'8'} onClick={this.createMissileParticle.bind(this)}/>
+          <GUISimpleButton left={'175px'} value={'9'} onClick={this.createSmashUpParticle.bind(this)}/>
         </GUI>
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} attachControl={true}/>
         <HemisphericLight position={{x: 0, y: 10, z: 0}}/>
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
-        <Skybox/>
+        <Skybox texture={"assets/skybox/" + this.backgroundIdx + "/skybox"}/>
         {this.renderPlayers(this.state.battle.player)}
       </MeshContainer>
     );
