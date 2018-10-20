@@ -130,11 +130,7 @@ class _ModelEditor extends React.Component {
       this.toolManager.addModel({model: this.props.savedModel});
       this.forceUpdate();
     } else {
-      let parser = new window.vox.Parser();
-      parser.parse(require('../../../shared/sample_models/3.vox')).then((voxelData) => {
-        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
-        this.forceUpdate();
-      });
+      this.onTemplateSelect(MODEL_TEMPLATES[0]);
     }
 
     window.addEventListener("keydown", this.onKeyDown, false);
