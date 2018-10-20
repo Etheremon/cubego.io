@@ -1,7 +1,10 @@
 import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
-import { Text } from '../../widgets/Text/Text.jsx';
+import {PageWrapper} from "../../widgets/PageWrapper/PageWrapper.jsx";
+import {Container} from "../../widgets/Container/Container.jsx";
+import Navbar from "../bars/Navbar/Navbar.jsx";
+import Footer from "../bars/Footer/Footer.jsx";
 
 require("style-loader!./ComingSoon.scss");
 
@@ -21,9 +24,15 @@ class ComingSoon extends React.Component {
     let {_t} = this.props;
 
     return(
-      <div className={`coming-soon`}>
-        <Text type={Text.types.H1}>{_t('coming_soon')}</Text>
-      </div>
+      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
+        <Navbar/>
+
+        <Container className={'coming-soon'}>
+          {_t('Coming Soon')}
+        </Container>
+
+        <Footer type={Footer.types.DARK}/>
+      </PageWrapper>
     )
   }
 }

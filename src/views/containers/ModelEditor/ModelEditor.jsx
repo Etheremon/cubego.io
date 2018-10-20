@@ -12,8 +12,8 @@ import {Container} from "../../widgets/Container/Container.jsx";
 import {PageWrapper} from "../../widgets/PageWrapper/PageWrapper.jsx";
 import {ToggleTool} from "./ToggleTool/ToggleTool.jsx";
 import {ToolManager, Tools, ToolTypes} from "../../../services/toolManager";
-import {CloneDeep, GetValues} from "../../../utils/objUtils";
 import * as modelUtils from "../../../utils/modelUtils";
+import * as Utils from "../../../utils/utils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
@@ -26,6 +26,8 @@ import {GetLoggedInUserId, GetSavedModel, GetUserInfo} from "../../../reducers/s
 import {ModelActions} from "../../../actions/model";
 import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
+import {URLS} from "../../../constants/general";
+import {SERVER_URL} from "../../../config";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -102,7 +104,7 @@ class _ModelEditor extends React.Component {
 
     // NOTE: Tool Manager does not touch UI Component. It is only managing the tools & model history.
     this.toolManager = new ToolManager({
-      tools: CloneDeep(this.tools),
+      tools: ObjUtils.CloneDeep(this.tools),
       models: [],
     });
 
@@ -118,6 +120,7 @@ class _ModelEditor extends React.Component {
     this.saveModel = this.saveModel.bind(this);
     this.reviewModel = this.reviewModel.bind(this);
     this.onSavedModelSelect = this.onSavedModelSelect.bind(this);
+    this.renderError = this.renderError.bind(this);
 
     this.isHoldingKey = {};
   }
@@ -127,11 +130,7 @@ class _ModelEditor extends React.Component {
       this.toolManager.addModel({model: this.props.savedModel});
       this.forceUpdate();
     } else {
-      let parser = new window.vox.Parser();
-      parser.parse(require('../../../shared/sample_models/3.vox')).then((voxelData) => {
-        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
-        this.forceUpdate();
-      });
+      this.onTemplateSelect(MODEL_TEMPLATES[0]);
     }
 
     window.addEventListener("keydown", this.onKeyDown, false);
@@ -147,7 +146,7 @@ class _ModelEditor extends React.Component {
     if (this.state.showRegisterPopup) return;
     if (this.isHoldingKey[key.keyCode]) return;
     this.isHoldingKey[key.keyCode] = true;
-    GetValues(this.tools).forEach(tool => {
+    ObjUtils.GetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStart({key: tool.key});
         this.forceUpdate();
@@ -158,7 +157,7 @@ class _ModelEditor extends React.Component {
   onKeyUp(key) {
     if (this.state.showRegisterPopup) return;
     this.isHoldingKey[key.keyCode] = false;
-    GetValues(this.tools).forEach(tool => {
+    ObjUtils.GetValues(this.tools).forEach(tool => {
       if (tool.hotKey && tool.onClick && key.key === tool.hotKey.toLowerCase() && tool.type === ToolTypes.mode) {
         this.toolManager.onModeChangeTempStop({key: tool.key});
         this.forceUpdate();
@@ -182,11 +181,16 @@ class _ModelEditor extends React.Component {
   }
 
   onTemplateSelect(template) {
-    let parser = new window.vox.Parser();
-    parser.parse(template.model).then((voxelData) => {
-      this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+    if (template.model_str) {
+      this.toolManager.addModel({model: JSON.parse(template.model_str)});
       this.forceUpdate();
-    });
+    } else {
+      let parser = new window.vox.Parser();
+      parser.parse(template.model).then((voxelData) => {
+        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+        this.forceUpdate();
+      });
+    }
     this.setState({showTemplates: false});
   }
 
@@ -216,9 +220,6 @@ class _ModelEditor extends React.Component {
   }
 
   reviewModel(verified=false) {
-
-    console.log(verified);
-
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
@@ -226,13 +227,59 @@ class _ModelEditor extends React.Component {
       this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
       this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
         model: this.toolManager.model,
-        history: this.props.history
+        callbackFunc: (code, data) => {
+          if (code === window.RESULT_CODE.SUCCESS) {
+            this.props.history.push(`/${URLS.REVIEW_GON}`);
+          } else {
+            this.setState({
+              validating: false,
+              showModelReview: true,
+              reviewError: {code, data},
+            });
+          }
+        }
       }));
     }
   }
 
+  renderError() {
+    let {code, data} = this.state.reviewError;
+    let {_t} = this.props;
+
+    let content = null;
+    if (code === window.RESULT_CODE.ERROR_CUBEGO_SHAPE_MATCH) {
+      content = (
+        <React.Fragment>
+          <div className={'header'}>
+            {_t('err.shape_already_registered')}
+          </div>
+          <div className={'matched-gons'}>
+            {data['match_cubegons'].map((gon, idx) => (
+              <div className={'matched-gon'} key={idx}>
+                <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
+                <p>{_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+              </div>
+            ))}
+          </div>
+        </React.Fragment>
+      )
+    } else if (code === window.RESULT_CODE.ERROR_CUBEGO_MODEL_MATCH) {
+      content = (
+        <div className={'header'}>
+          {_t('err.model_already_registered')}
+        </div>
+      )
+    }
+
+    return (
+      <div className={'model-editor__error'}>
+        {content}
+      </div>
+    )
+  }
+
   render() {
-    let {_t, savedModel} = this.props;
+    let {_t, savedModel, userInfo} = this.props;
     let {selectedMaterial, saved} = this.state;
 
     let btns = [
@@ -251,14 +298,25 @@ class _ModelEditor extends React.Component {
 
           {this.state.showRegisterPopup !== undefined ?
             <Popup onUnmount={() => {this.setState({showRegisterPopup: false})}}
-                   open={this.state.showRegisterPopup}>
+                   open={this.state.showRegisterPopup} scroll={true}>
               <RegisterPopup onRegistered={() => {
                 this.reviewModel(true);
               }}/>
             </Popup> : null
           }
 
-          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
+          {this.state.showModelReview ?
+            <Popup onUnmount={() => {this.setState({showModelReview: false})}}
+                   open={this.state.showModelReview}>
+              <div>
+                {this.renderError()}
+              </div>
+            </Popup> : null
+          }
+
+          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')}
+                     userInfo={userInfo}
+                     onBackClicked={() => {this.props.history.goBack()}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
 
             <div className={'model-editor__tool-bar'}>
@@ -385,23 +443,35 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__stats'}>
               <div className={'material'}>
                 <div className={'total'}>
-                  {_t('total')}: <span>300</span>
+                  {_t('total')}: <span>{this.toolManager.stats.total}</span>
                 </div>
-                {['diamond', 'glass', 'gold', 'iron', 'plastic', 'silver'].map((type, idx) => (
-                  <div key={idx} className={'cube'} tooltip={_t(type)} tooltip-position="bottom">
-                    <img src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
-                    50
-                  </div>
-                ))}
+
+
+
+                {ObjUtils.Map(this.toolManager.stats.materials, (materialId, count) => {
+                  let cube = CUBE_MATERIALS[materialId];
+                  return (
+                    <div key={materialId} className={'cube'}
+                         tooltip={_t(cube.name)}
+                         tooltip-position="bottom">
+                      <img src={cube.img}/>
+                      {count}
+                    </div>
+                  )
+                })}
               </div>
               <div className={'stats'}>
-                <div className={'stat'}>
+                <div className={'stat'}
+                     tooltip={_t('Estimated Power')}
+                     tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
-                  90 - 110
+                  {this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}
                 </div>
-                <div className={'stat'}>
+                <div className={'stat'}
+                     tooltip={_t('Estimated Cost')}
+                     tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                  0.025
+                  {this.toolManager.stats.cost}
                 </div>
               </div>
             </div>
@@ -409,7 +479,9 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
                 <div className={'model-editor__3d'}>
-                  <Model3D model={this.toolManager.model} tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                  <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
+                           ref={(canvas) => {window.modelCanvas = canvas}}
+                  />
                 </div>
               </div>
 
@@ -417,7 +489,7 @@ class _ModelEditor extends React.Component {
                 <div className={'model-editor__2d'}>
                   <Layer2D layer={this.toolManager.layer}
                            style={{transform: `scale(${this.state.scale2D})`}}
-                           tools={CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
+                           tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
                 </div>
                 <div className={'model-editor__2d-zoom'}>
                   <div className={'item'} onClick={this.onZoomIn}>
@@ -442,7 +514,7 @@ class _ModelEditor extends React.Component {
                        this.onToolChange(this.tools.color.key, material.variants[1]);
                      }}>
                   <img src={material.img}/>
-                  50
+                  &#x221e;
                 </div>
               ))}
               {/*<div className={'space-rest'}>*/}

@@ -149,13 +149,7 @@ class HomePage extends React.Component {
                     {/*<img src={require('../../../shared/img/banner/creation_banner.png')}/>*/}
 
                     <div className={'img'}>
-                      <SpriteSheet image={SpriteSource.DOG_HORIZONTAL.image}
-                                   frameWidth={SpriteSource.DOG_HORIZONTAL.frameWidth}
-                                   frameHeight={SpriteSource.DOG_HORIZONTAL.frameHeight}
-                                   steps={SpriteSource.DOG_HORIZONTAL.steps}
-                                   cols={SpriteSource.DOG_HORIZONTAL.cols}
-                                   fps={SpriteSource.DOG_HORIZONTAL.fps}
-                      />
+                      <SpriteSheet {...SpriteSource.CREATION}/>
                     </div>
                   </div>
                 </div>
@@ -199,7 +193,9 @@ class HomePage extends React.Component {
                   </InviewMonitor>
     
                   <div className={'image'}>
-                    <img className={'img'} src={require('../../../shared/img/banner/battle_banner.png')}/>
+                    <div className={'img combat'}>
+                      <SpriteSheet {...SpriteSource.BATTLE}/>
+                    </div>
                   </div>
                 </div>
               </Container>

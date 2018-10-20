@@ -1,11 +1,13 @@
 @import '../../styles/colors';
 @import '../../styles/mixins';
 @import '../../styles/variables';
+@import '../../styles/fonts';
 
 .coming-soon {
-  padding-bottom: -100px;
+  padding-top: 200px;
   text-align: center;
-  font-size: $font-size-header-1 !important;
-  color: $c__blue-1;
-
+  color: $c__text__orange;
+  min-height: 400px;
+  font-size: 50px;
+  font-family: $f__baloobha;
 }

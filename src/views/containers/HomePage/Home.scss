@@ -273,6 +273,12 @@
           .widget__sprite-sheet {
             width: 512px;
           }
+          &.combat {
+            left: 60%;
+            .widget__sprite-sheet {
+              width: 700px;
+            }
+          }
         }
 
         //@include flip-up-down(3s);

@@ -105,9 +105,8 @@ class App extends React.Component {
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
-          <Route path={`/${URLS.CUBEGONS}`} component={ModelDetail}/>
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
-          <Route path={`/${URLS.MY_CUBEGOES}`} component={MyCubegoes}/>
+          <Route path={`/${URLS.CUBEGONS}`} component={MyCubegoes}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={ComingSoon}/>

@@ -241,4 +241,31 @@
     padding-top: 12px;
   }
 
+  .model-editor__error {
+    padding: 30px;
+    background-color: $regal_blue;
+    color: $white95;
+
+    .header {
+      padding-top: 6px;
+      font-family: $f__baloobha;
+      color: $c__text__orange;
+      font-size: $font-size-header-2;
+    }
+
+    .matched-gons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+
+    .matched-gon {
+      padding: 12px 4px 4px 4px;
+      img {
+        width: 200px;
+        background-color: rgba(0, 0, 0, 0.6);
+        @include border-radius(6px);
+      }
+    }
+  }
 }

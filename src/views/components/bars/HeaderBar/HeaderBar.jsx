@@ -1,10 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types";
 import {Container} from "../../../widgets/Container/Container.jsx";
+import * as Utils from "../../../../utils/utils";
 
 require("style-loader!./HeaderBar.scss");
 
-export const HeaderBar = ({className, label, ethBalance, emontBalance, onBackClicked, size}) => {
+export const HeaderBar = ({className, label, userInfo, onBackClicked, size}) => {
   return (
     <div className={`header-bar ${className}`}>
       <Container size={size} className={'header-bar__container'}>
@@ -27,12 +28,12 @@ export const HeaderBar = ({className, label, ethBalance, emontBalance, onBackCli
             <div className={'item'}>
               <div className={'bgr'}/>
               <img src={require('../../../../shared/img/icons/icon-emont.png')}/>
-              {emontBalance}
+              {userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_emont, 4) : 0}
             </div>
             <div className={'item'}>
               <div className={'bgr'}/>
               <img src={require('../../../../shared/img/icons/icon-ether.png')}/>
-              {ethBalance}
+              {userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_eth, 6) : 0}
             </div>
           </div>
         </div>

@@ -176,18 +176,18 @@
   &.small {
     padding: 2px 8px;
     font-size: $font-size-tiny;
-    @include border-radius-without-overflow(6px);
+    @include border-radius-without-overflow(4px);
     text-transform: lowercase;
   }
   &.normal {
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-size: $font-size-small;
-    @include border-radius-without-overflow(10px);
+    @include border-radius-without-overflow(6px);
   }
   &.big {
     padding: 12px 24px;
     font-size: $font-size-normal;
-    @include border-radius-without-overflow(10px);
+    @include border-radius-without-overflow(6px);
   }
 
   &.disabled {

@@ -118,7 +118,7 @@ class MyCubegoes extends React.Component {
 
         <div className="mycubegoes-page__container">
       
-          <HeaderBar size={Container.sizes.BIG} label={_t(`my_${query.tab}`)} onBackClicked={() => {}}/>
+          <HeaderBar size={Container.sizes.NORMAL} label={_t(`my_${query.tab}`)} onBackClicked={() => {}}/>
           <Container className={'mycubegoes-page__main'} size={Container.sizes.NORMAL}>
             <div className="my-cubegon-info__container">
               <div className="avatar__container">
@@ -204,7 +204,7 @@ class MyCubegoes extends React.Component {
             
           </Container>
         </div>
-        <Footer size={Container.sizes.BIG} type={Footer.types.DARK}/>
+        <Footer size={Container.sizes.NORMAL} type={Footer.types.DARK}/>
       </PageWrapper>
     )
   }

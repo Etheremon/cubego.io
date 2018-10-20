@@ -1,5 +1,6 @@
 import {EDITOR_COLORS} from "../constants/general";
 import * as Utils from "../utils/utils";
+import * as ObjUtils from "../utils/objUtils";
 import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
 
@@ -9,6 +10,7 @@ export class ToolManager {
     this._model = undefined;
     this._layer = undefined;
     this._drawMode = null;
+    this._stats = {};
     this.history = {
       idx: props.models.length - 1,
       models: props.models,
@@ -192,6 +194,18 @@ export class ToolManager {
         return {x: i, y: j};
       }
     };
+
+    this._stats.materials = {};
+    this._stats.total = ObjUtils.GetValues(this._model.voxels).length;
+    ObjUtils.GetValues(this._model.voxels).forEach((cell) => {
+      this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
+    });
+    this._stats.cost = Utils.RoundDownToDecimal(this._stats.total * 0.01, 4);
+    this._stats.power = [this._stats.total - 10, this._stats.total + 10];
+  }
+
+  get stats() {
+    return this._stats;
   }
 
   get model() {

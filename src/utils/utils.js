@@ -1,7 +1,6 @@
 // Check server
-export const IsLiveServer = window.location.hostname === "etheremon.com"
-  || window.location.hostname === "www.etheremon.com"
-  || window.location.hostname === "localhost";
+export const IsLiveServer = window.location.hostname === "cubego.io"
+  || window.location.hostname === "www.cubego.io";
 
 export const CutoffString = (s, p) => (!s || s.length <= p ? s : `${s.substr(0, p)}...`);
 
@@ -107,9 +106,6 @@ export const ObjFilter = (obj, func) => {
   });
   return result;
 };
-
-
-
 
 export const ObjIsEmpty = (obj) => (obj ? !Object.keys(obj).length : true);
 

@@ -7,7 +7,7 @@ let scene;
 
 function createRenderer(canvas, options) {
   scene = ThreeScene.create();
-  scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+  scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
   // scene.renderer = new window.THREE.CanvasRenderer({canvas, antialias: true, alpha: true});
 
   scene.canvas = canvas;
