@@ -33,7 +33,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/wood.jpg"
+    "image": "wood.jpg"
   }, {
     "uuid": "536F2806-479C-4F51-915C-3B40977CE99E",
     "name": "",
@@ -48,7 +48,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/wood-nm.png"
+    "image": "wood-nm.png"
   }
   ]
 }

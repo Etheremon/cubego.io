@@ -35,7 +35,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/rock.jpg"
+    "image": "rock.jpg"
   }, {
     "uuid": "86E309E8-42B2-4505-9232-4EF3E1394622",
     "name": "",
@@ -50,7 +50,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/rock-nm.png"
+    "image": "rock-nm.png"
   }, {
     "uuid": "C3408171-6364-421F-9075-2ACBB2BEC93F",
     "type": "cube",
@@ -66,7 +66,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/iron.jpg"
+    "image": "iron.jpg"
   }, {
     "uuid": "77B4B752-7938-4A31-B66D-470482830E08",
     "type": "cube",

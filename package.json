@@ -5,8 +5,8 @@
   "main": "app.jsx",
   "scripts": {
     "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
-    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
-    "buildDev": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=dev",
+    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.prod.js --env.ENV=prod",
+    "buildDev": "del-cli public/* && webpack -p --config webpack.dev.js --env.ENV=dev",
     "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
   },
   "keywords": [
@@ -55,6 +55,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babylon-file-loader": "^0.2.1",
     "build": "^0.1.4",
     "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.5.1",

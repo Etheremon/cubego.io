@@ -3,14 +3,11 @@
 @import '../../styles/colors';
 @import '../../styles/fonts';
 @import '../../styles/animation';
-
 //@import url('https://fonts.googleapis.com/css?family=Muli:300,400,400i,500,600,700');
 //@import url('https://fonts.googleapis.com/css?family=Candal');
-
 @import url('https://fonts.googleapis.com/css?family=Overpass:300,400,600,700,800,900');
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
 @import url('https://fonts.googleapis.com/css?family=VT323');
-
 
 body {
   font-family: $f__overpass;
@@ -87,7 +84,6 @@ body {
   background: #555;
 }
 
-
 /* Overwrite Semantic UI */
 a {
   color: #6aadef;
@@ -98,12 +94,12 @@ a {
   }
 }
 
-
 /* Modifiers */
 .m--sub {
   font-style: italic;
   font-size: $font-size-smaller;
 }
+
 .m--hidden {
   display: none !important;
 }
@@ -140,12 +136,15 @@ a {
 .m--color--green {
   color: #21ba45;
 }
+
 .m--color--red {
   color: #db2828;
 }
+
 .m--color--yellow {
   color: #fbbd08;
 }
+
 .m--color--orange {
   color: #f2711c;
 }
@@ -155,13 +154,14 @@ a {
 }
 
 .m--no-scroll-bar::-webkit-scrollbar {
-  width: 0;                 /* remove scrollbar space */
-  background: transparent;  /* optional: just make scrollbar invisible */
+  width: 0; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
 }
 
 .m--noti {
   position: relative;
 }
+
 .m--noti::after {
   content: "";
   position: absolute;
@@ -176,9 +176,11 @@ a {
 .m--line-height-100 {
   line-height: 100%;
 }
+
 .m--no-text-transform {
   text-transform: none !important;
 }
+
 .m--no-wrap {
   white-space: nowrap;
 }
@@ -222,7 +224,7 @@ input[type="range"]::-moz-focus-outer {
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-//border: 1px solid #ddd;
+  //border: 1px solid #ddd;
   height: 1.5rem;
   width: 1.5rem;
   background: #fff;
@@ -235,7 +237,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-moz-range-thumb {
-//border: 1px solid #ddd;
+  //border: 1px solid #ddd;
   height: 1.5rem;
   width: 1.5rem;
   background: #fff;
@@ -250,7 +252,6 @@ input[type="range"]::-moz-range-thumb {
 .txn-bar__toc {
   font-size: 10px;
 }
-
 
 [tooltip] {
   position: relative;
@@ -273,29 +274,28 @@ input[type="range"]::-moz-range-thumb {
   }
 
   &:after {
-      content: attr(tooltip);
-      position: absolute;
-      left:50%;
-      top:-6px;
-      transform: translateX(-50%)  translateY(-100%);
-      background: $white;
-      border: 0.5px solid $orange;
-      text-align: center;
-      color: $orange;
-      padding:4px 2px;
-      font-size: 14px;
-      min-width: 80px;
-      border-radius: 5px;
-      pointer-events: none;
-      z-index: 8;
-      display: none;
+    content: attr(tooltip);
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    transform: translateX(-50%) translateY(-100%);
+    background: $white;
+    border: 0.5px solid $orange;
+    text-align: center;
+    color: $orange;
+    padding: 4px 2px;
+    font-size: 14px;
+    min-width: 80px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 8;
+    display: none;
   }
 
   &:hover::before, &:hover::after {
     display: block;
   }
 }
-
 
 [tooltip-position='left'] {
 
@@ -307,10 +307,10 @@ input[type="range"]::-moz-range-thumb {
   }
 
   &:after {
-    left:0;
-    top:50%;
-    margin-left:-8px;
-    transform: translateX(-100%)   translateY(-50%);
+    left: 0;
+    top: 50%;
+    margin-left: -8px;
+    transform: translateX(-100%) translateY(-50%);
   }
 
 }
@@ -326,6 +326,7 @@ input[type="range"]::-moz-range-thumb {
     left: 50%;
   }
 }
+
 [tooltip-position='bottom'] {
   &:before {
     top: 100%;
@@ -352,6 +353,15 @@ input[type="range"]::-moz-range-thumb {
     left: 100%;
     top: 50%;
     margin-left: 8px;
-    transform: translateX(0%)   translateY(-50%);
+    transform: translateX(0%) translateY(-50%);
   }
+}
+
+#cubegoLoadingDiv {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  pointerEvents: none;
+  background-size: cover;
+  background-image: url("../../../shared/loading/loading.png");
+
 }

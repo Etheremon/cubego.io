@@ -225,7 +225,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     position.y += 1;
     let emitter = position;
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/window_04.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/window_04.png"), this.scene);
 
     pSystem.emitter = emitter;
     let emitterType = new BABYLON.SphereParticleEmitter();
@@ -276,7 +276,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     // pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     // pSystem.light.range = 15;
 
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/flare.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/flare.png"), this.scene);
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
@@ -336,7 +336,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/cube.png"), this.scene);
     pSystem.minSize = 0.2;
     pSystem.maxSize = 0.5;
     pSystem.manualEmitCount = 20;
@@ -360,7 +360,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
     let fountain = this.playerMesh;
     let smokeSystem = new BABYLON.ParticleSystem("particles", 1000, this.scene);
-    smokeSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
+    smokeSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/cube.png"), this.scene);
     smokeSystem.emitter = fountain;
 
     smokeSystem.minEmitBox = new BABYLON.Vector3(-0.2, 1.5, 1.5);
@@ -396,7 +396,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
     let fireSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
 
-    fireSystem.particleTexture = new BABYLON.Texture("assets/particle/cube.png", this.scene);
+    fireSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/cube.png"), this.scene);
 
     fireSystem.emitter = fountain;
 
@@ -484,7 +484,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.emitter = fistMesh;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/flare.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/flare.png"), this.scene);
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(0.0, 0.95, 1, 1);
@@ -585,7 +585,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture("assets/particle/scratch_01.png", this.scene);
+    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/scratch_01.png"), this.scene);
 
     pSystem.minInitialRotation = 0;
     pSystem.maxInitialRotation = 4;

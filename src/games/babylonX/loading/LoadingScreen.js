@@ -12,13 +12,7 @@ export class LoadingScreen {
     }
 
     this._loadingDiv = document.createElement("div");
-
     this._loadingDiv.id = "cubegoLoadingDiv";
-    this._loadingDiv.style.opacity = "0";
-    this._loadingDiv.style.transition = "opacity 1.5s ease";
-    this._loadingDiv.style.pointerEvents = "none";
-    this._loadingDiv.style.backgroundSize = 'cover';
-    this._loadingDiv.style.backgroundImage = 'url("assets/loading/loading.png")';
 
     this._loadingTextDiv = document.createElement("div");
     this._loadingTextDiv.style.position = "absolute";

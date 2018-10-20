@@ -33,7 +33,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/fur.jpg"
+    "image": "fur.jpg"
   }, {
     "uuid": "CE0F799C-A747-4C5B-85D0-C7E04C7BEE1C",
     "name": "",
@@ -48,7 +48,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/fur-nm.png"
+    "image": "fur-nm.png"
   }
   ]
 }

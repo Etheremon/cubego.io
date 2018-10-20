@@ -34,7 +34,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/leaf.png"
+    "image": "leaf.png"
   }, {
     "uuid": "80DD1F82-59F5-4369-8FE5-B07930BB5577",
     "name": "",
@@ -49,7 +49,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/leaf-nm.png"
+    "image": "leaf-nm.png"
   }
   ]
 }

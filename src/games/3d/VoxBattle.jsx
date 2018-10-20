@@ -9,9 +9,19 @@ import {
   VoxelPlayer
 } from '../babylonX';
 import BabylonX from "../babylonX";
-import idleGroundAnimation from "./animations/idle_ground";
+import idleGroundAnimation from "./animations/shareAnimation";
 
 const SIZE = 0.2;
+
+//Load map texture
+const loadMapTexture = () => {
+  let req = require.context('../../shared/battleground/map_1/', false, /.*\.png/);
+  console.log(req);
+  req.keys().forEach(function (key) {
+    req(key);
+  });
+};
+loadMapTexture();
 
 class VoxBattle extends Component {
   constructor(props) {
@@ -45,6 +55,14 @@ class VoxBattle extends Component {
     ];
     this.players = [null, null];
     this.backgroundIdx = Math.floor(1 + Math.random() * 4);
+    this.skyboxImages = [
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_px.jpg'),
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_py.jpg'),
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_pz.jpg'),
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_nx.jpg'),
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_ny.jpg'),
+      require('../../shared/skybox/' + this.backgroundIdx + '/skybox_nz.jpg')
+    ];
   }
 
   createAttackAnimationKeys(rotate) {
@@ -130,8 +148,10 @@ class VoxBattle extends Component {
   }
 
   componentDidMount() {
-    BabylonX.loaders.addMesh('battlemap1', '/assets/battleground/map_1/unity/', 'BattleMap1.babylon').then((data) => {
-      setTimeout(()=>{
+    let battleGroundFileName = require('../../shared/battleground/map_1/BattleMap1.babylon');
+    battleGroundFileName = battleGroundFileName.substr(1);
+    BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
+      setTimeout(() => {
         data.loadedMeshes.forEach((mesh) => {
           if (mesh.name.match(/^Cloud_\d+_l$/g)) {
             let anim = new BABYLON.Animation("cloudFly", "position.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
@@ -263,7 +283,7 @@ class VoxBattle extends Component {
         <HemisphericLight position={{x: 0, y: 10, z: 0}}/>
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
-        <Skybox texture={"assets/skybox/" + this.backgroundIdx + "/skybox"}/>
+        <Skybox imageUrls={this.skyboxImages}/>
         {this.renderPlayers(this.state.battle.player)}
       </MeshContainer>
     );

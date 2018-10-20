@@ -43,7 +43,7 @@ module.exports = env => {
             },
           ],
         }, {
-          test: /\.(gltf|tmx|tsx|vox|obj)$/,
+          test: /\.(gltf|tmx|tsx|vox|obj|babylon)$/,
           include: APP_DIR,
           use: 'file-loader',
         }, {
@@ -55,10 +55,10 @@ module.exports = env => {
             skipEmptyLines: true,
           }
         }, {
-          test: /\.font.png/,
+          test: /\.o.png/,
           include: APP_DIR,
           use: 'url-loader?limit=1&name=[name].[ext]',
-        },
+        }
       ],
     },
 

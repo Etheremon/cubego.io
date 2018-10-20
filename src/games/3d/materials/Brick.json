@@ -33,7 +33,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/brick.jpg"
+    "image": "brick.jpg"
   }, {
     "uuid": "AEC06E94-F446-4970-97C0-D3B4B5EE0CA0",
     "name": "",
@@ -48,7 +48,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/brick-nm.png"
+    "image": "brick-nm.png"
   }
   ]
 }

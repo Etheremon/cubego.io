@@ -36,7 +36,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/diamond.png"
+    "image": "diamond.png"
   }, {
     "uuid": "C35F3A80-7030-43A9-AEFC-57DEE0757DFF",
     "name": "",
@@ -51,7 +51,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/diamond-nm.png"
+    "image": "diamond-nm.png"
   }, {
     "uuid": "42BDA54C-87BF-4AC5-A752-7BF27537FA67",
     "type": "cube",
@@ -67,7 +67,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": false,
-    "image": "./assets/materials/textures/diamond.png"
+    "image": "diamond.png"
   }
   ]
 }

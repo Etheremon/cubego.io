@@ -33,7 +33,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/paper.png"
+    "image": "paper.png"
   }, {
     "uuid": "C933BEEE-C54F-4B88-9003-53C51539FCB3",
     "name": "",
@@ -48,7 +48,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/paper-nm.png"
+    "image": "paper-nm.png"
   }
   ]
 }

@@ -4,11 +4,19 @@ import {hexToColor3} from "../utils";
 
 export class BabylonSkybox extends BabylonComponent {
   static create({scene}, props) {
-
-    let skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:1000.0}, scene);
+    let cubeTexture = null;
+    if (props.rootUrl) {
+      cubeTexture = new BABYLON.CubeTexture(props.texture, scene);
+    } else if (props.imageUrls) {
+      cubeTexture = new BABYLON.CubeTexture.CreateFromImages(props.imageUrls, scene);
+    }
+    if (!cubeTexture) {
+      return;
+    }
+    let skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size: 1000.0}, scene);
     let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(props.texture, scene);
+    skyboxMaterial.reflectionTexture = cubeTexture;
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);

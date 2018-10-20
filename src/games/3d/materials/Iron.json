@@ -35,7 +35,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/iron.jpg"
+    "image": "iron.jpg"
   }, {
     "uuid": "67BEDE3A-EAAD-4FAD-A0C3-1EE2269320FF",
     "name": "",
@@ -50,7 +50,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/iron-nm.png"
+    "image": "iron-nm.png"
   }, {
     "uuid": "77B4B752-7938-4A31-B66D-470482830E08",
     "type": "cube",

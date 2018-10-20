@@ -35,7 +35,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/silver.jpg"
+    "image": "silver.jpg"
   }, {
     "uuid": "9FA1A00E-F2C6-407B-A38D-67D2002EEC56",
     "name": "",
@@ -50,7 +50,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/silver-nm.png"
+    "image": "silver-nm.png"
   }, {
     "uuid": "77B4B752-7938-4A31-B66D-470482830E08",
     "type": "cube",

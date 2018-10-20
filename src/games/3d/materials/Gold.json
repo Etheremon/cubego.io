@@ -33,7 +33,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/gold.jpg"
+    "image": "gold.jpg"
   }, {
     "uuid": "53F2AC74-E2A8-4C2A-9905-AC214FDBDE8B",
     "name": "",
@@ -48,7 +48,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "./assets/materials/textures/gold-nm.png"
+    "image": "gold-nm.png"
   }, {
     "uuid": "84966F54-F661-4619-8AA1-CB0D09D645F7",
     "type": "cube",
