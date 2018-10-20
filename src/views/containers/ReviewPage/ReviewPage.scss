@@ -11,7 +11,7 @@
   display: flex;
   flex-wrap: wrap;
   color: $white;
-  padding: 64px 24px 44px 24px;
+  padding: 40px 24px 44px 24px;
 
   .cube {
     display: flex;
@@ -37,16 +37,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-right: 16px;
 
     @include mobile {
-      height: 500px;
       width: 100%;
       margin-bottom: 24px;
+      padding-right: 0;
     }
 
     .model-review {
       min-height: 500px;
-      width: 90%;
+      width: 100%;
+      @include mobile {
+        min-height: auto;
+      }
       background: rgba(0, 0, 0, 0.2);
       border-radius: 16px;
       margin-bottom: 24px;
@@ -60,7 +64,9 @@
         position: absolute;
         bottom: 8px;
         left: 50%;
+        width: 90%;
         @include transform(translateX(-50%));
+        justify-content: center;
 
         img {
           width: 20px;
@@ -240,7 +246,7 @@
       .energy__label {
         margin-top: 16px;
         font-size: $font-size-small;
-        color: #02edf7;
+        color: $c__text__blue-2;
         display: flex;
         align-items: center;
 
@@ -276,6 +282,8 @@
           border-radius: 5px;
           background: #dedede;
           color: $dark;
+          min-width: 120px;
+          justify-content: center;
 
           .currency {
             margin-left: 8px;
@@ -297,6 +305,7 @@
       .energy__container {
         flex-grow: 1;
         display: inline-block;
+
         .slider-bar__container {
           position: relative;
 
@@ -304,10 +313,10 @@
             height: 12px;
             -webkit-transition: .2s;
             transition: opacity .2s;
-            // opacity: 0.7;
-            border: 0px;
+            border: 0;
             border-radius: 5px;
             overflow: visible;
+            opacity: 1;
 
             &:hover {
               opacity: 1;
@@ -321,6 +330,7 @@
               border-radius: 5px;
               background: #f8b717;
               cursor: pointer;
+              z-index: 1;
             }
             
             &::-ms-thumb {
@@ -409,6 +419,28 @@
 
 
       }
+    }
+  }
+}
+
+.review-page__result {
+  padding: 32px 16px;
+
+  .header {
+    font-family: $f__baloobha;
+    color: $c__text__orange;
+    font-size: $font-size-header-3;
+  }
+  .note {
+    padding-top: 12px;
+  }
+  .image {
+    margin: 12px 0;
+
+    img {
+      background-color: rgba(0, 0, 0, 0.6);
+      @include border-radius(4px);
+      width: 200px;
     }
   }
 }

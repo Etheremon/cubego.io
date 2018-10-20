@@ -12,6 +12,9 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import Footer from '../../components/bars/Footer/Footer.jsx';
 import PieChart from '../../components/PieChart/PieChart.jsx';
+import * as Tracker from "../../../services/tracker";
+import {CubegonActions} from "../../../actions/cubegon";
+import {GetCubegonInfo, GetLoggedInUserId, GetUserInfo} from "../../../reducers/selectors";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -25,12 +28,20 @@ class ModelDetail extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: false}));
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.gonId !== nextProps.gonId) {
+      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: nextProps.gonId, forceUpdate: false}));
+    }
   }
 
   render() {
+    const {_t, gonInfo, userInfo} = this.props;
 
-    const {_t} = this.props;
+    console.log("zzzz", gonInfo);
+
     const {allowChangeName} = this.state;
 
     const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '45', label: 'win'},
@@ -50,9 +61,11 @@ class ModelDetail extends React.Component {
         <Navbar minifying/>
 
         <div className="detail-page__container">
-      
-          <HeaderBar size={Container.sizes.BIG} label={_t('cubegon_detail')} onBackClicked={() => this.props.history.goBack()}/>
-          <Container className={'model-detail__main'} size={Container.sizes.BIG}>
+          <HeaderBar size={Container.sizes.NORMAL} label={_t('cubegon_detail')}
+                     userInfo={userInfo}
+                     onBackClicked={() => this.props.history.goBack()}/>
+
+          <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>
 
             <div className="model-detail__container">
               <div className="model-review">
@@ -60,7 +73,9 @@ class ModelDetail extends React.Component {
 
               <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 <div className="model-logo__container">
-                  <div className="hexagon-img"></div>
+                  <div className="hexagon-img">
+                    {/*<Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null*/}
+                  </div>
                   <img src={require('../../../shared/img/types/earth.png')} />
                 </div>
                 <span>
@@ -156,16 +171,21 @@ class ModelDetail extends React.Component {
             </div>
 
           </Container>
+
         </div>
-        <Footer size={Container.sizes.BIG} type={Footer.types.DARK}/>
+        <Footer size={Container.sizes.NORMAL} type={Footer.types.DARK}/>
       </PageWrapper>
     )
   }
 }
 
 const mapStateToProps = (store, props) => {
+  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
+    userInfo: GetUserInfo(store, userId),
+    gonId: props.match.params.id,
+    gonInfo: GetCubegonInfo(store, props.match.params.id),
   }
 };
 

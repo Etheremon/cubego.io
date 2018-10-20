@@ -1,6 +1,7 @@
 import {addTranslation, initialize} from "react-localize-redux";
 import * as LS from "./services/localStorageService";
 import {GeneralApi} from "./services/api/generalApi";
+import {IsLiveServer} from "./utils/utils";
 
 export const Languages = [
   { name: 'English', code: 'en', country: 'gb'},
@@ -17,22 +18,33 @@ export const DefaultLanguage = 'en';
 // ------------------------------------
 // Get localization data
 const fetchLocalization = async () => {
+  let oldData = LS.GetItem(LS.Fields.localization);
+  if (oldData) oldData = JSON.parse(oldData);
 
-  const data = await GeneralApi.GetLocalization();
-  let localization = {};
+  if (oldData && parseFloat(oldData['expireTime']) > Date.now()/1000) {
+    return oldData['data'];
+  } else {
+    const data = await GeneralApi.GetLocalization();
+    let localization = {};
 
-  const json = JSON.parse(data.response
-  .replace('gdata.io.handleScriptLoaded(', '')
-  .replace('});', '}')
-  .replace(/gsx\$/g, ''));
+    const json = JSON.parse(data.response
+      .replace('gdata.io.handleScriptLoaded(', '')
+      .replace('});', '}')
+      .replace(/gsx\$/g, ''));
 
-  if (json['feed'] && json['feed'].entry.length) {
-    json['feed'].entry.map(entryObj => {
-      localization[entryObj['key']['$t']] = Languages.map(l => l.code).map(l => entryObj[l]['$t'] || entryObj[DefaultLanguage]['$t']);
-    })
+    if (json['feed'] && json['feed'].entry.length) {
+      json['feed'].entry.map(entryObj => {
+        localization[entryObj['key']['$t']] = Languages.map(l => l.code).map(l => entryObj[l]['$t'] || entryObj[DefaultLanguage]['$t']);
+      })
+    }
+
+    LS.SetItem(LS.Fields.localization, JSON.stringify({
+      expireTime: Date.now()/1000 + (IsLiveServer ? 15*60 : 0),
+      data: localization,
+    }));
+
+    return localization;
   }
-
-  return localization;
 };
 
 let browserLan = navigator.language.slice(0, 2);

@@ -185,11 +185,16 @@ class _ModelEditor extends React.Component {
   }
 
   onTemplateSelect(template) {
-    let parser = new window.vox.Parser();
-    parser.parse(template.model).then((voxelData) => {
-      this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+    if (template.model_str) {
+      this.toolManager.addModel({model: JSON.parse(template.model_str)});
       this.forceUpdate();
-    });
+    } else {
+      let parser = new window.vox.Parser();
+      parser.parse(template.model).then((voxelData) => {
+        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
+        this.forceUpdate();
+      });
+    }
     this.setState({showTemplates: false});
   }
 
@@ -278,7 +283,7 @@ class _ModelEditor extends React.Component {
   }
 
   render() {
-    let {_t, savedModel} = this.props;
+    let {_t, savedModel, userInfo} = this.props;
     let {selectedMaterial, saved} = this.state;
 
     let btns = [
@@ -307,13 +312,15 @@ class _ModelEditor extends React.Component {
           {this.state.showModelReview ?
             <Popup onUnmount={() => {this.setState({showModelReview: false})}}
                    open={this.state.showModelReview}>
-              <div style={{color: "black"}}>
+              <div>
                 {this.renderError()}
               </div>
             </Popup> : null
           }
 
-          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')} onBackClicked={() => {this.props.history.goBack()}}/>
+          <HeaderBar size={Container.sizes.BIG} label={_t('build_cubegon')}
+                     userInfo={userInfo}
+                     onBackClicked={() => {this.props.history.goBack()}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
 
             <div className={'model-editor__tool-bar'}>
