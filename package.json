@@ -5,7 +5,7 @@
   "main": "app.jsx",
   "scripts": {
     "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
-    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.prod.js --env.ENV=prod",
+    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
     "buildDev": "del-cli public/* && webpack -p --config webpack.dev.js --env.ENV=dev",
     "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
   },
