@@ -75,19 +75,10 @@ export class LoadingScreen {
       return;
     }
 
-    const onTransitionEnd = () => {
-      if (!this._loadingDiv) {
-        return;
-      }
+    setTimeout(() => {
       document.body.removeChild(this._loadingDiv);
       window.removeEventListener("resize", this._resizeLoadingUI);
-
-      this._loadingDiv = null;
-    };
-    window.removeEventListener("resize", this._resizeLoadingUI);
-
-    // this._loadingDiv.style.opacity = "0";
-    // this._loadingDiv.addEventListener("transitionend", onTransitionEnd);
+    }, 2000);
   };
 
   _resizeLoadingUI() {

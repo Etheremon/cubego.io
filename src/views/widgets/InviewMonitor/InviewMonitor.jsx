@@ -194,7 +194,7 @@ Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=Int
 }
 
 InviewMonitor.propTypes = {
-  // common usage: animate classes in onScrollIntoView, to trigger fade in etc animations
+  // neutral usage: animate classes in onScrollIntoView, to trigger fade in etc animations
   classNameInView: PropTypes.string,
   // can be used to hide elements to be animated in.
   classNameNotInView: PropTypes.string,

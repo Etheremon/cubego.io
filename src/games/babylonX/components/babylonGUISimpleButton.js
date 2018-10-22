@@ -6,11 +6,11 @@ export class BabylonGUISimpleButton extends BabylonComponent {
     let guiSimpleButton = new BabylonGUISimpleButton();
     let button = GUI.Button.CreateSimpleButton("but1", props.value || "");
     button.width = 0.2;
-    button.height = "40px";
-    button.width = "40px";
+    button.height = props.height || "40px";
+    button.width = props.width || "40px";
     button.color = "white";
     button.background = "green";
-    button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
     button.left = props.left || "-50px";
     if (props.onClick) {
       button.onPointerClickObservable.add(props.onClick);
@@ -23,5 +23,9 @@ export class BabylonGUISimpleButton extends BabylonComponent {
   set parent(parent) {
     this._parent = parent;
     parent.renderer.addControl(this.renderer);
+  }
+
+  set visible(isVisible) {
+    this.renderer.isVisible = isVisible;
   }
 }

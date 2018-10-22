@@ -13,6 +13,9 @@ import {BabylonPlane} from "./babylonPlane";
 import {BabylonSkybox} from "./babylonSkybox";
 import {BabylonGUI} from "./babylonGUI";
 import {BabylonGUISimpleButton} from "./babylonGUISimpleButton";
+import {CastorGUIButton} from "./castorGUIButton";
+import {CastorGUITexture} from "./castorGUITexture";
+import {CastorGUIText} from "./castorGUIText";
 const TYPES = {
   MESH_SPHERE: 'MESH_SPHERE',
   MESH_BOX: 'MESH_BOX',
@@ -28,7 +31,10 @@ const TYPES = {
   PLANE: 'PLANE',
   SKY_BOX: 'SKYBOX',
   GUI: 'GUI',
-  GUI_SIMPLE_BUTTON: 'GUI_SIMPLE_BUTTON'
+  GUI_SIMPLE_BUTTON: 'GUI_SIMPLE_BUTTON',
+  CASTOR_GUI_BUTTON: 'CASTOR_GUI_BUTTON',
+  CASTOR_GUI_TEXTURE: 'CASTOR_GUI_TEXTURE',
+  CASTOR_GUI_TEXT: 'CASTOR_GUI_TEXT'
 };
 
 let mappingComponents = {};
@@ -47,6 +53,10 @@ mappingComponents[TYPES.PLANE] = BabylonPlane;
 mappingComponents[TYPES.SKY_BOX] = BabylonSkybox;
 mappingComponents[TYPES.GUI] = BabylonGUI;
 mappingComponents[TYPES.GUI_SIMPLE_BUTTON] = BabylonGUISimpleButton;
+mappingComponents[TYPES.CASTOR_GUI_BUTTON] = CastorGUIButton;
+mappingComponents[TYPES.CASTOR_GUI_TEXTURE] = CastorGUITexture;
+mappingComponents[TYPES.CASTOR_GUI_TEXT] = CastorGUIText;
+
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);
