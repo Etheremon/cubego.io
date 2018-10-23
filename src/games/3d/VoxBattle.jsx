@@ -11,10 +11,8 @@ import {
 import BabylonX from "../babylonX";
 import idleGroundAnimation from "./animations/shareAnimation";
 import {GetRandomInt} from "../../utils/utils";
-import RockThrow from "./moves/earth/RockThrow";
-import HydroGun from "./moves/water/HydroGun";
-import DoubleCannon from "./moves/water/DoubleCannon";
 import MOVES from "./moves";
+import MilkDrink from "./moves/neutral/MilkDrink";
 
 const SIZE = 0.2;
 
@@ -69,8 +67,10 @@ class VoxBattle extends Component {
     ];
     this.clouds = [];
     this.startGame = this.startGame.bind(this);
+    this.restartGame = this.restartGame.bind(this);
     this.startBtn = null;
     this.mainCamera = null;
+    this.rePlayBtn = null;
   }
 
   startGame() {
@@ -87,7 +87,17 @@ class VoxBattle extends Component {
     setTimeout(() => {
       this.playGameSequence(logs);
     }, 5000);
+  }
 
+  restartGame() {
+    this.rePlayBtn.visible = false;
+    this.mainCamera.attachControl = true;
+    let logs = this.createDummyBattleLog();
+    this.players[0].init();
+    this.players[1].init();
+    setTimeout(() => {
+      this.playGameSequence(logs);
+    }, 5000);
   }
 
   createDummyBattleLog() {
@@ -102,8 +112,13 @@ class VoxBattle extends Component {
     logs.forEach((turn, idx) => {
       setTimeout(() => {
         MOVES[turn.moveId].play(this.players[turn.player], turn.effects);
+        // MilkDrink.play(this.players[turn.player], turn.effects);
       }, 5000 * idx);
     });
+    setTimeout(() => {
+      this.mainCamera.attachControl = false;
+      this.rePlayBtn.visible = true;
+    }, 5000 * logs.length + 1000);
   }
 
   createAttackAnimationKeys(rotate) {
@@ -165,10 +180,6 @@ class VoxBattle extends Component {
     ]
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   setPlayer(playerData) {
     this.setState({
       battle: {
@@ -180,6 +191,13 @@ class VoxBattle extends Component {
   componentDidMount() {
     let battleGroundFileName = require('../../shared/battleground/map_1/BattleMap1.babylon');
     battleGroundFileName = battleGroundFileName.substr(1);
+    BabylonX.loaders.addTexture('particle_circle_01', require('../../shared/particles/textures/circle_01.png'));
+    BabylonX.loaders.addTexture('particle_circle_05', require('../../shared/particles/textures/circle_05.png'));
+    BabylonX.loaders.addTexture('particle_cube', require('../../shared/particles/textures/cube.png'));
+    BabylonX.loaders.addTexture('particle_flare', require('../../shared/particles/textures/flare.png'));
+    BabylonX.loaders.addTexture('particle_projectile_141', require('../../shared/particles/textures/projectile_141.png'));
+    BabylonX.loaders.addTexture('particle_scratch_01', require('../../shared/particles/textures/scratch_01.png'));
+    BabylonX.loaders.addTexture('particle_window_04', require('../../shared/particles/textures/window_04.png'));
     BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
       data.loadedMeshes.forEach((mesh) => {
         if (mesh.name.match(/^Cloud_\d+_l$/g)) {
@@ -214,77 +232,12 @@ class VoxBattle extends Component {
           this.clouds.push(mesh);
         }
       });
-
     });
     BabylonX.loaders.load();
   }
 
   componentWillUnmount() {
     this.mainCamera.attachControl = false;
-  }
-
-  createShieldParticle() {
-    this.players[0].playSkeletonAnimation('roar', false, 1).then(() => {
-    });
-    setTimeout(() => {
-      this.players[0].createShieldParticle();
-    }, 150);
-  }
-
-  createFistParticle() {
-    this.players[1].playSkeletonAnimation('attack_normal', false, 1);
-    setTimeout(() => {
-      this.players[1].createFistParticle();
-    }, 150);
-  }
-
-  createHitAnimation() {
-    this.players[0].isAttacking = true;
-    this.players[0].playAnimation('attack', false, 3);
-    this.players[0].playSkeletonAnimation('tackle', false, 1);
-    setTimeout(() => {
-      this.players[0].isAttacking = false;
-    }, 1000);
-  }
-
-  createHitParticle() {
-    this.players[0].createHitParticle();
-  }
-
-  createWaterParticle() {
-    this.players[1].playSkeletonAnimation('attack_normal', false, 1).then(() => {
-    });
-    setTimeout(() => {
-      this.players[1].createWaterParticle();
-    }, 150);
-  }
-
-  createFireParticle() {
-    this.players[0].createFireParticle();
-  }
-
-  createMissileParticle() {
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => {
-        this.players[1].createMissileParticle();
-      }, i * 100);
-    }
-  }
-
-  createTackleAnimation() {
-    this.players[1].playSkeletonAnimation('tackle', false, 1);
-  }
-
-  createScratchParticle() {
-    this.players[1].playSkeletonAnimation('roar', false, 1).then(() => {
-    });
-    setTimeout(() => {
-      this.players[0].createScratchParticle();
-    }, 150);
-  }
-
-  createSmashUpParticle() {
-    this.players[1].playSkeletonAnimation('smashup', false, 1);
   }
 
   render() {
@@ -306,7 +259,10 @@ class VoxBattle extends Component {
           <GUISimpleButton left={'0px'} value={'START GAME'} onClick={this.startGame} width={'200px'} ref={(button) => {
             this.startBtn = button
           }}/>
-
+          <GUISimpleButton left={'0px'} value={'REPLAY GAME'} onClick={this.restartGame} width={'200px'}
+                           ref={(button) => {
+                             this.rePlayBtn = button
+                           }} visible={false}/>
         </GUI>
 
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} ref={(camera) => {

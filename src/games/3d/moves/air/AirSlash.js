@@ -1,5 +1,6 @@
 import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
+import BabylonX from "../../../babylonX";
 
 export default class AirSlash extends BaseMove {
   constructor(player, {damage}) {
@@ -23,7 +24,8 @@ export default class AirSlash extends BaseMove {
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/scratch_01.png"), this.scene);
+    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/scratch_01.png"), this.scene);
+    pSystem.particleTexture = BabylonX.loaders.get('particle_scratch_01').clone();
 
     pSystem.minInitialRotation = 0;
     pSystem.maxInitialRotation = 4;

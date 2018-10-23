@@ -93,8 +93,8 @@ class App extends React.Component {
 
     if (!alreadyFetchedLocalization) {
       return (
-        <div className={'app-page-loading'}>
-          <Loading className={'main__page-loading'} type={Loading.types.DOG}/>
+        <div className={'app-page-loader'}>
+          <Loading className={'main__page-loader'} type={Loading.types.DOG}/>
         </div>
       );
     }

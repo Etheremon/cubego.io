@@ -9,7 +9,7 @@ const __DEV__ = false;
 const DEFAULT_PROPS = {};
 
 const emptyFnc = (name) => () => {
-  // console.log(name);
+  console.log(name);
 };
 
 const compareNullUndefined = (nextProps, lastProps) => {

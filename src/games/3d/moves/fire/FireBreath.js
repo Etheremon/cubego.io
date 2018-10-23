@@ -1,5 +1,6 @@
 import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
+import BabylonX from "../../../babylonX";
 
 export default class FireBreath extends BaseMove {
   constructor(player, {damage}) {
@@ -17,7 +18,8 @@ export default class FireBreath extends BaseMove {
   _createFireBreathParticle() {
     let fountain = this.player.playerMesh;
     let smokeSystem = new BABYLON.ParticleSystem("particles", 1000, this.scene);
-    smokeSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
+    // smokeSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
+    smokeSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
     smokeSystem.emitter = fountain;
 
     smokeSystem.minEmitBox = new BABYLON.Vector3(-0.2, 1.5, 1.5);
@@ -53,7 +55,9 @@ export default class FireBreath extends BaseMove {
 
     let fireSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
 
-    fireSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
+    // fireSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
+    fireSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
+
 
     fireSystem.emitter = fountain;
 

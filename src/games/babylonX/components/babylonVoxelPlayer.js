@@ -18,6 +18,13 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.isAttacking = false;
   }
 
+  init() {
+    this.healthPercent = 100;
+    this.isDying = false;
+    this.playSkeletonAnimation('idle_ground', true, 1);
+    this.updateHealthBar();
+  }
+
   static create({scene}, props) {
     let voxelPlayer = new BabylonVoxelPlayer();
     let containerMesh = BabylonMeshContainer.create({scene}, {
@@ -38,27 +45,12 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       voxelPlayer.playerMesh.position.z = 0;
       voxelPlayer.sps.setParticles();
     });
-    voxelPlayer.registerBeforeRender();
     return voxelPlayer;
   }
 
   set parent(parent) {
     this._parent = parent;
     this.renderer.parent = parent;
-  }
-
-  registerBeforeRender() {
-    this.scene.registerBeforeRender(() => {
-      if (!this._opponent.playerMesh || !this._opponent.isAttacking) return;
-      if (this.playerMesh.intersectsMesh(this._opponent.playerMesh, true)) {
-        if (!this.isCollision) {
-          this.hurt(15);
-          this.isCollision = true;
-        }
-      } else {
-        this.isCollision = false;
-      }
-    });
   }
 
   set opponent(opponent) {
@@ -219,51 +211,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     });
   }
 
-  createShieldParticle() {
-    let matrix = this.playerMesh.getWorldMatrix();
-    let position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
-    position.y += 1;
-    let emitter = position;
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../shared/particles/textures/window_04.png"), this.scene);
-
-    pSystem.emitter = emitter;
-    let emitterType = new BABYLON.SphereParticleEmitter();
-    emitterType.radius = 2;
-    emitterType.radiusRange = 0;
-    pSystem.particleEmitterType = emitterType;
-
-    pSystem.minSize = 0.5;
-    pSystem.maxSize = 1;
-
-    pSystem.isBillboardBased = false;
-
-    pSystem.minLifeTime = 50.0;
-    pSystem.maxLifeTime = 50.0;
-
-    pSystem.emitRate = 50;
-    pSystem.manualEmitCount = 100;
-    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
-
-    pSystem.minAngularSpeed = 0;
-    pSystem.maxAngularSpeed = Math.PI;
-
-    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, 1);
-    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, 1);
-    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
-
-    pSystem.minEmitPower = 0;
-    pSystem.maxEmitPower = 0;
-    pSystem.updateSpeed = 0.005;
-    pSystem.start();
-    setTimeout(() => {
-      pSystem.stop();
-      pSystem.dispose();
-    }, 2000);
-  }
-
   createHitParticle(emitter) {
     // let matrix = this.playerMesh.getWorldMatrix();
     // let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
@@ -335,9 +282,9 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.playSkeletonAnimation('die', false, 1);
     this.opponent.playSkeletonAnimation('winning', true, 1);
 
-    setTimeout(() => {
-      this.destroyAll();
-    }, 5000);
+    // setTimeout(() => {
+    //   this.destroyAll();
+    // }, 5000);
   }
 
   get opponent() {

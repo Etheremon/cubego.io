@@ -9,7 +9,7 @@ PIXI.loader.onProgress.add((_, data) => {
 });
 
 PIXI.loader.onError.add((_, data) => {
-  console.warn('Error loading ' + data.name);
+  console.warn('Error loader ' + data.name);
 });
 
 function addAsset(id, path) {
