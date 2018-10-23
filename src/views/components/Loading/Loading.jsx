@@ -10,7 +10,7 @@ require("style-loader!./Loading.scss");
 const Loading = ({type, dark, className}) => {
   if (type === Loading.types.DOG)
     return (
-      <div className={'loader dog'}>
+      <div className={'loading dog'}>
         <SpriteSheet image={SpriteSource.DOG_VERTICAL.image}
                      frameWidth={SpriteSource.DOG_VERTICAL.frameWidth}
                      frameHeight={SpriteSource.DOG_VERTICAL.frameHeight}

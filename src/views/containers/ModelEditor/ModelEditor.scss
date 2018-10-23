@@ -138,7 +138,7 @@
       @include transition-duration;
 
       img {
-        width: 24px;
+        width: 36px;
         @include transition-duration;
       }
 
@@ -154,7 +154,7 @@
       }
       &.active {
         img {
-          width: 28px;
+          width: 40px;
         }
       }
     }
@@ -246,7 +246,7 @@
       }
       &.overused {
         color: $c__text__red;
-        font-size: $font-size-big;
+        font-size: $font-size-small;
       }
       &.for-sale.overused {
         color: $c__text__orange;
