@@ -112,7 +112,7 @@ class ReviewPage extends React.Component {
     const { allowChangeName } = this.state;
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
-    const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + stats.total_cost, 6);
+    const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + Math.max(0, stats.total_cost), 6);
 
     const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: stats.total, label: 'cubego'},
                           {icon: require('../../../shared/img/types/earth.png'), content: 'earth', label: 'type'},

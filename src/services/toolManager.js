@@ -432,7 +432,7 @@ Tools.pasteLayer = ({key='paste-layer', ...extra}) => ({
     });
     GetValues(copiedLayer.voxels).forEach(voxel => {
       voxel[copiedLayer.z] = currentLayer.idx;
-      newModel.voxels[`${voxel.x}-${voxel.y}-${voxel.z}`] = voxel;
+      newModel.voxels[GetCellKey(voxel.x, voxel.y, voxel.z)] = voxel;
     });
 
     return newModel;

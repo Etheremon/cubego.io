@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ArcRotateCamera, Axis, HemisphericLight, MeshBox, MeshContainer, PointLight} from '../babylonX';
 import {fullColorHex} from "../utils";
 import {GetValues} from "../../utils/objUtils";
+import {GetCellKey} from "../../utils/modelUtils";
 
 const SIZE = 0.5;
 
@@ -25,7 +26,7 @@ class VoxViewer extends Component {
                                y: -SIZE * voxelData.size.y / 2 + SIZE * voxel.y,
                                z: SIZE * voxelData.size.z / 2 - SIZE * voxel.z
                              }}
-                             key={`${voxel.x}-${voxel.y}-${voxel.z}-${voxel.updateIdx}`}
+                             key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}_${voxel.updateIdx}`}
                              color={color}/>)
     });
     return elements;
