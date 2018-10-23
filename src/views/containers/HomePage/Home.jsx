@@ -139,19 +139,15 @@ class HomePage extends React.Component {
                     <div className={'desc'} >
                       <Text className={'header'} type={Text.types.H1} children={_t('creation').toUpperCase()} />
                       <p className={'text'}>{_t('home.creation')}</p>
-                      {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                                className={'btn-btn'} onClick={() => {}}/> */}
                     </div>
                   </InviewMonitor>
 
-
                   <div className={'image'} >
-                    {/*<img src={require('../../../shared/img/banner/creation_banner.png')}/>*/}
-
                     <div className={'img'}>
                       <SpriteSheet {...SpriteSource.CREATION}/>
                     </div>
                   </div>
+
                 </div>
               </Container>
 
@@ -159,20 +155,21 @@ class HomePage extends React.Component {
                 <div className={'background blue right'}/>
 
                 <div className={'content right'}>
-                <InviewMonitor
-                  classNameNotInView='vis-hidden'
-                  classNameInView='animated fadeInRight'
-                >
-                  <div className={'desc'}>
-                    <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
-                    <p className={'text'}>{_t('home.copyright')}</p>
-                    {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                              className={'btn-btn'} onClick={() => {}}/> */}
+                  <InviewMonitor
+                    classNameNotInView='vis-hidden'
+                    classNameInView='animated fadeInRight'
+                  >
+                    <div className={'desc'}>
+                      <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
+                      <p className={'text'}>{_t('home.copyright')}</p>
+                    </div>
+                  </InviewMonitor>
+
+                  <div className={'image'} >
+                    <div className={'img'}>
+                      <SpriteSheet {...SpriteSource.COPYRIGHT}/>
+                    </div>
                   </div>
-                </InviewMonitor>
-                <div className={'image'}>
-                  <img className={'img'} src={require('../../../shared/img/banner/copywrite_banner.png')}/>
-                </div>
                 </div>
               </Container>
 
@@ -187,15 +184,16 @@ class HomePage extends React.Component {
                     <div className={'desc'}>
                       <Text className={'header'} type={Text.types.H1} children={_t('combat').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
-                      {/* <ButtonNew color={ButtonNew.colors.BLACK_NO_SHADOW} label={_t('read_more')}
-                                className={'btn-btn'} onClick={() => {}}/> */}
                     </div>
                   </InviewMonitor>
     
                   <div className={'image'}>
-                    <div className={'img combat'}>
-                      <SpriteSheet {...SpriteSource.BATTLE}/>
+                    <div className={'img'}>
+                      <img className={'img-real'} src={require('../../../shared/img/banner/battle_banner.png')}/>
                     </div>
+                    {/*<div className={'img combat'}>*/}
+                      {/*<SpriteSheet {...SpriteSource.BATTLE}/>*/}
+                    {/*</div>*/}
                   </div>
                 </div>
               </Container>
@@ -206,15 +204,16 @@ class HomePage extends React.Component {
 
           <div className={'home__partnership'} id={'partners'}>
             <Text className={'partnership__header'} type={Text.types.H1} children={_t('in_partnership_with')} />
-            <div className={'home__partnership__imgs'}>
+            <Container className={'home__partnership__imgs'}>
               <a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>
               <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
               <a href={'https://zilliqa.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/zilliqa-logo.png')} /><p>ZILLIQA</p></a>
+              <a href={'http://emontalliance.com?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/emont-alliance.png')} /><p>EMONT ALLIANCE</p></a>
               <a href={'https://opskins.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSKINS</p></a>
               <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>COINBASE WALLET</p></a>
               <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OPEN SEA</p></a>
               <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>GINCO</p></a>
-            </div>
+            </Container>
           </div>
           {/* end home__partnership */}
           

@@ -33,5 +33,14 @@ export const SpriteSource = {
     steps: 54,
     cols: 7,
     fps: 18,
-  }
+  },
+
+  COPYRIGHT: {
+    image: require('../shared/img/spritesheets/copyright.png'),
+    frameWidth: 512,
+    frameHeight: 512,
+    steps: 53,
+    cols: 7,
+    fps: 35,
+  },
 };

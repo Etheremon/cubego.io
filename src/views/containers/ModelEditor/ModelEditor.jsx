@@ -314,7 +314,7 @@ class _ModelEditor extends React.Component {
       <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
                  onMouseOut={() => {this.setState({saved: false})}}/>,
       <ButtonNew loading={this.state.validating}
-                 label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1}
+                 label={_t('preview')} color={ButtonNew.colors.ORANGE} key={1}
                  onClick={() => {this.reviewModel(false, totalCost)}}/>,
     ];
 

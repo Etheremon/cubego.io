@@ -259,9 +259,9 @@
 
   .model-editor__color-note {
     text-align: center;
-    font-size: $font-size-big;
+    font-size: $font-size-normal;
     padding-top: 4px;
-    font-weight: $font-weight-black;
+    font-weight: $font-weight-bold;
 
     a {
       //text-decoration: none;
@@ -317,7 +317,7 @@
 
   .model-editor__btns {
     text-align: center;
-    padding-top: 12px;
+    padding-top: 16px;
   }
 
   .model-editor__error {
