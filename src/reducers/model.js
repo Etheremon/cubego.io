@@ -2,12 +2,13 @@ import {combineReducers} from "redux";
 import {CloneDeep} from "../utils/objUtils";
 import * as LS from "../services/localStorageService";
 import {ModelActions} from "../actions/model";
+import * as LogicUtils from "../utils/logicUtils";
 
-const savedModel = (state=LS.GetItem(LS.Fields.savedModel), action) => {
+const savedModel = (state=LogicUtils.GetFullModel(LS.GetItem(LS.Fields.savedModel)), action) => {
   switch (action.type) {
     case ModelActions.SAVE_MODEL.init.key:
       let savedModel = CloneDeep(action.model);
-      LS.SetItem(LS.Fields.savedModel, savedModel);
+      LS.SetItem(LS.Fields.savedModel, LogicUtils.GetSimplifiedModel(savedModel));
       return savedModel;
 
     default:

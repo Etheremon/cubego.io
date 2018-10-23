@@ -12,7 +12,6 @@ import {Container} from "../../widgets/Container/Container.jsx";
 import {PageWrapper} from "../../widgets/PageWrapper/PageWrapper.jsx";
 import {ToggleTool} from "./ToggleTool/ToggleTool.jsx";
 import {ToolManager, Tools, ToolTypes} from "../../../services/toolManager";
-import * as modelUtils from "../../../utils/modelUtils";
 import * as Utils from "../../../utils/utils";
 import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
@@ -31,6 +30,7 @@ import {SERVER_URL} from "../../../config";
 import {IsEqual} from "../../../utils/objUtils";
 import {GON_TIER} from "../../../constants/cubegon";
 import {CloneDeep} from "../../../utils/objUtils";
+import * as LogicUtils from "../../../utils/logicUtils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -194,14 +194,8 @@ class _ModelEditor extends React.Component {
 
   onTemplateSelect(template) {
     if (template.model_str) {
-      this.toolManager.addModel({model: JSON.parse(template.model_str)});
+      this.toolManager.addModel({model: LogicUtils.GetFullModel(JSON.parse(template.model_str))});
       this.forceUpdate();
-    } else {
-      let parser = new window.vox.Parser();
-      parser.parse(template.model).then((voxelData) => {
-        this.toolManager.addModel({model: modelUtils.ReformatModel(voxelData)});
-        this.forceUpdate();
-      });
     }
     this.setState({showTemplates: false});
   }

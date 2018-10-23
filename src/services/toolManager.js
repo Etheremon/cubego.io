@@ -39,7 +39,6 @@ export class ToolManager {
     this.onModeChangeTempStop = this.onModeChangeTempStop.bind(this);
     this.changeMode = this.changeMode.bind(this);
     this.convertToSpaceSize = this.convertToSpaceSize.bind(this);
-    this.updateModelSize = this.updateModelSize.bind(this);
     this.updateUserCubes = this.updateUserCubes.bind(this);
 
     this.updateCurrent();
@@ -126,16 +125,6 @@ export class ToolManager {
       });
 
       if (newModel) {
-        cells.forEach(cell => {
-          let cellKey = GetCellKey(cell.x, cell.y, cell.z);
-          if (this._model.voxels[cellKey] && !newModel.voxels[cellKey]) {
-            ['x', 'y', 'z'].forEach(d => {newModel.layerCount[d][cell[d]] -= 1});
-          }
-          if (!this._model.voxels[cellKey] && newModel.voxels[cellKey]) {
-            ['x', 'y', 'z'].forEach(d => {newModel.layerCount[d][cell[d]] = (newModel.layerCount[d][cell[d]] || 0)+1});
-          }
-        });
-
         this.addModel({model: newModel});
       } else {
         this.updateCurrent();
@@ -145,21 +134,13 @@ export class ToolManager {
 
   convertToSpaceSize(modelSize) {
     let x = modelSize[0], y = modelSize[1];
+    if (y-x+1 < 12) {
+      let val = 12 - (y-x+1);
+      return [x-Math.floor(val/2), y+Math.ceil(val/2)]
+    }
     if (y-x+1 < 40) x -= 1;
     if (y-x+1 < 40) y += 1;
     return [x, y];
-  }
-
-  updateModelSize(oldSize, countArr) {
-    let newSize = [oldSize[0], oldSize[1]];
-
-    while (countArr[newSize[0]-1]) newSize[0] = newSize[0]-1;
-    while (countArr[newSize[1]+1]) newSize[1] = newSize[1]+1;
-
-    while (oldSize[1]-oldSize[0]+1 > 12 && !countArr[newSize[0]]) newSize[0] = newSize[0]+1;
-    while (oldSize[1]-oldSize[0]+1 > 12 && !countArr[newSize[1]]) newSize[1] = newSize[1]-1;
-
-    return newSize;
   }
 
   updateCurrent() {
@@ -170,22 +151,33 @@ export class ToolManager {
     let y = this._tools['view-2d'].value.y;
     let z = this._tools['view-2d'].value.z;
 
-    let layerCount = this._model.layerCount;
-    let modelSize = {
-      x: this.updateModelSize(this._model.modelSize.x, layerCount.x),
-      y: this.updateModelSize(this._model.modelSize.y, layerCount.y),
-      z: this.updateModelSize(this._model.modelSize.z, layerCount.z),
-    };
-    let spaceSize = {
-      x: this.convertToSpaceSize(modelSize.x),
-      y: this.convertToSpaceSize(modelSize.y),
-      z: this.convertToSpaceSize(modelSize.z),
-    };
+    // Calculate modelSize;
+    let modelSize = {x: [1000, -1000], y: [1000, -1000], z: [1000, -1000]};
+    let spaceSize = {};
+
+    ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
+      ['x', 'y', 'z'].forEach(k => {
+        modelSize[k][0] = Math.min(modelSize[k][0], cell[k]);
+        modelSize[k][1] = Math.max(modelSize[k][1], cell[k]);
+      });
+    });
+    ['x', 'y', 'z'].forEach(k => {
+      if (modelSize[k][0] > modelSize[k][1]) {
+        modelSize[k][0] = 0;
+        modelSize[k][1] = 0;
+      }
+      spaceSize[k] = this.convertToSpaceSize(modelSize[k]);
+    });
 
     let idx = Utils.BoundVal(this._tools['layer-index'].value, spaceSize[z[1]][0], spaceSize[z[1]][1]);
     this._tools['layer-index'].value = idx;
     let voxels = Utils.ObjFilter(this._model.voxels, cell => cell[z[1]] === idx);
 
+    this._model.size = {
+      x: modelSize.x[1]-modelSize.x[0]+1,
+      y: modelSize.y[1]-modelSize.y[0]+1,
+      z: modelSize.z[1]-modelSize.z[0]+1,
+    };
     this._model.modelSize = modelSize;
     this._model.spaceSize = spaceSize;
     this._layer = {
@@ -213,6 +205,7 @@ export class ToolManager {
     // Calculate #materials & points
     this._stats.materials = {};
     this._stats.points = 0;
+
     ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
       this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
       this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
