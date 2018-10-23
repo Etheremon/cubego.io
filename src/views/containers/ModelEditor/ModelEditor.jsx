@@ -28,6 +28,8 @@ import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import {URLS} from "../../../constants/general";
 import {SERVER_URL} from "../../../config";
+import {IsEqual} from "../../../utils/objUtils";
+import {GON_TIER} from "../../../constants/cubegon";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -133,6 +135,9 @@ class _ModelEditor extends React.Component {
       this.onTemplateSelect(MODEL_TEMPLATES[0]);
     }
 
+    if (this.props.userCubes)
+      this.toolManager.updateUserCubes(this.props.userCubes);
+
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
   }
@@ -140,6 +145,12 @@ class _ModelEditor extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("keyup", this.onKeyUp);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
+      this.toolManager.updateUserCubes(nextProps.userCubes);
+    }
   }
 
   onKeyDown(key) {
@@ -219,11 +230,21 @@ class _ModelEditor extends React.Component {
     this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
   }
 
-  reviewModel(verified=false) {
+  reviewModel(verified=false, text) {
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
-      this.setState({validating: true});
+      if (this.toolManager.stats.cost && this.toolManager.stats.cost.total < 0) {
+        this.setState({
+          validating: false,
+          showModelReview: true,
+          reviewError: {code: "not_enough_cube", data: text},
+          showRegisterPopup: false,
+        });
+        return;
+      }
+
+      this.setState({validating: true, showRegisterPopup: false});
       this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
       this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
         model: this.toolManager.model,
@@ -247,7 +268,14 @@ class _ModelEditor extends React.Component {
     let {_t} = this.props;
 
     let content = null;
-    if (code === window.RESULT_CODE.ERROR_CUBEGO_SHAPE_MATCH) {
+
+    if (code === 'not_enough_cube') {
+      content = (
+        <div className={'header'}>
+          {data || _t('err.not_enough_cube')}
+        </div>
+      )
+    } else if (code === window.RESULT_CODE.ERROR_CUBEGO_SHAPE_MATCH) {
       content = (
         <React.Fragment>
           <div className={'header'}>
@@ -279,7 +307,7 @@ class _ModelEditor extends React.Component {
   }
 
   render() {
-    let {_t, savedModel, userInfo} = this.props;
+    let {_t, savedModel, userInfo, userCubes} = this.props;
     let {selectedMaterial, saved} = this.state;
 
     let btns = [
@@ -287,8 +315,35 @@ class _ModelEditor extends React.Component {
                  onMouseOut={() => {this.setState({saved: false})}}/>,
       <ButtonNew loading={this.state.validating}
                  label={_t('preview')} color={ButtonNew.colors.ORANGE} showDeco={ButtonNew.deco.RIGHT} key={1}
-                 onClick={() => {this.reviewModel()}}/>,
+                 onClick={() => {this.reviewModel(false, totalCost)}}/>,
     ];
+
+    let colorNote = null;
+    let numSelectedCubes = userCubes[selectedMaterial.class_id] || 0;
+    let numSelectedCubesUsed = (this.toolManager.stats.materials || {})[selectedMaterial.class_id] || 0;
+    if (numSelectedCubes-numSelectedCubesUsed < 0 && selectedMaterial.is_for_sale) {
+      colorNote = (
+        <div className={'model-editor__color-note warning'}>
+          {_t('color.overused_warning', {type: _t(selectedMaterial.name)})}
+        </div>
+      );
+    } else if (numSelectedCubes-numSelectedCubesUsed <= 0 && !selectedMaterial.is_for_sale) {
+      colorNote = (
+        <div className={'model-editor__color-note error'}>
+          {_t('color.overused_error', {type: _t(selectedMaterial.name)})}
+        </div>
+      );
+    }
+
+    let totalCost = null;
+    if (this.toolManager.stats.cost) {
+      if (this.toolManager.stats.cost.total >= 0) totalCost = this.toolManager.stats.cost.total;
+      else {
+        let text = this.toolManager.stats.cost.invalid_materials.map(t => _t(t)).join(', ');
+        totalCost = this.toolManager.stats.cost.invalid_materials.length > 1
+          ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
+      }
+    }
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_DARK}>
@@ -446,8 +501,6 @@ class _ModelEditor extends React.Component {
                   {_t('total')}: <span>{this.toolManager.stats.total}</span>
                 </div>
 
-
-
                 {ObjUtils.Map(this.toolManager.stats.materials, (materialId, count) => {
                   let cube = CUBE_MATERIALS[materialId];
                   return (
@@ -465,15 +518,31 @@ class _ModelEditor extends React.Component {
                      tooltip={_t('Estimated Power')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
-                  {this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}
+                  {/*{this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}*/}
+                  {this.toolManager.stats.points}
                 </div>
                 <div className={'stat'}
                      tooltip={_t('Estimated Cost')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                  {this.toolManager.stats.cost}
+                  {totalCost}
                 </div>
               </div>
+            </div>
+
+            <div className={'model-editor__tier-bar'}>
+              <div className={'bar'} style={{width: `${this.toolManager.stats.gonTier.showPoints/70000*100}%`}}>
+              </div>
+              {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
+                <div key={idx}
+                     className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active'
+                       : (tier.id < this.toolManager.stats.gonTier.id ? 'smaller' : 'greater')}`}
+                     style={{left: `${tier.points[0]/70000*100}%`}}
+                     tooltip={_t(tier.name)} tooltip-position={'bottom'}
+                >
+                  <img src={tier.img}/>
+                </div>
+              ))}
             </div>
 
             <div className={'model-editor__canvas'}>
@@ -506,17 +575,23 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__material'}>
-              {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => (
-                <div key={idx} className={`cube ${selectedMaterial.name === material.name ? 'active' : ''}`}
-                     tooltip={_t(material.name)} tooltip-position="bottom"
-                     onClick={() => {
-                       this.setState({selectedMaterial: material});
-                       this.onToolChange(this.tools.color.key, material.variants[1]);
-                     }}>
-                  <img src={material.img}/>
-                  &#x221e;
-                </div>
-              ))}
+              {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => {
+                let numCubes = userCubes[material.class_id] || 0;
+                let numCubesUsed = (this.toolManager.stats.materials || {})[material.class_id] || 0;
+
+                return (
+                  <div key={idx}
+                       className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
+                       tooltip={_t(material.name)} tooltip-position="bottom"
+                       onClick={() => {
+                         this.setState({selectedMaterial: material});
+                         this.onToolChange(this.tools.color.key, material.variants[1]);
+                       }}>
+                    <img src={material.img}/>
+                    {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}
+                  </div>
+                )
+              })}
               {/*<div className={'space-rest'}>*/}
               {/*</div>*/}
             </div>
@@ -528,6 +603,7 @@ class _ModelEditor extends React.Component {
                            options={selectedMaterial.variants}
                            onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}
                 />
+                {colorNote}
               </div>
 
               <div className={'model-editor__layer'}>
@@ -572,6 +648,20 @@ const mapStateToProps = (store, props) => {
     savedModel: GetSavedModel(store),
     userId,
     userInfo: GetUserInfo(store, userId),
+    userCubes: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
+      8: 0,
+      9: 0,
+      10: 0,
+      11: 0,
+      12: 400,
+    },
   }
 };
 

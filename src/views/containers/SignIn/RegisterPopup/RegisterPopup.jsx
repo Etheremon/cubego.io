@@ -62,8 +62,6 @@ class RegisterPopup extends React.Component {
               <ButtonNew label={_t('Install Cipher')}
                          onClick={() => {Utils.OpenCipherInstallation()}} />
             </div>
-
-            {this.renderManualSignIn()}
           </div>
         : <div className={'register-popup__app'}>
             <img src={require('../../../../shared/img/assets/metamask.png')}/>
@@ -74,11 +72,9 @@ class RegisterPopup extends React.Component {
                          color={ButtonNew.colors.GREY}
                          onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
               <ButtonNew label={_t('Install Metamask')}
-                         showDeco={ButtonNew.deco.BOTH}
+                         showDeco={ButtonNew.deco.RIGHT}
                          onClick={() => {Utils.OpenMetamaskInstallation()}} />
             </div>
-
-            {this.renderManualSignIn()}
           </div>
     )
   }

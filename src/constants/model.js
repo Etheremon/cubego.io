@@ -6,13 +6,23 @@ export const MODEL_TEMPLATES = [
     name: 'Emont',
   },
   {
-    model: require('../shared/sample_models/2.vox'),
-    img: require('../shared/sample_models/2.png'),
-    name: 'Vexigon',
+    model: require('../shared/sample_models/bull.vox'),
+    img: require('../shared/sample_models/bull.png'),
+    name: 'Bull',
   },
   {
-    model: require('../shared/sample_models/3.vox'),
-    img: require('../shared/sample_models/3.png'),
-    name: 'Kyari',
+    model: require('../shared/sample_models/dog.vox'),
+    img: require('../shared/sample_models/dog.png'),
+    name: 'Puppy',
+  },
+  {
+    model: require('../shared/sample_models/bird.vox'),
+    img: require('../shared/sample_models/bird.png'),
+    name: 'Birdy',
+  },
+  {
+    model: require('../shared/sample_models/dragon.vox'),
+    img: require('../shared/sample_models/dragon.png'),
+    name: 'T-Rex',
   },
 ];

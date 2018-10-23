@@ -15,6 +15,8 @@ import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import { Icon } from "../../Icon/Icon.jsx";
 import withRouter from "react-router-dom/es/withRouter";
+import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
+import * as Utils from "../../../../utils/utils";
 
 require("style-loader!./Navbar.scss");
 
@@ -92,7 +94,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {currentLanguage, _t, fixed, size} = this.props;
+    let {currentLanguage, _t, fixed, size, userId, userInfo} = this.props;
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
@@ -128,6 +130,11 @@ class Navbar extends React.Component {
           </div>
 
           <div className={'user-info'}>
+            <div className={'user-info__username'}>
+              <Link to={`/${URLS.SIGN_IN}`}>
+                {(userInfo.username || userId) ? Utils.CutoffString(userInfo.username || userId, 6) : _t('sign in')}
+              </Link>
+            </div>
             <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
               content: <span className={'navbar__text'}><Icon name={lan.country + ' flag'}/>{lan.code}</span>,
               onClick: () => {this.handleLanguageChange(lan.code)},
@@ -148,9 +155,12 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = (store) => {
+  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
     currentLanguage: getActiveLanguage(store.localeReducer),
+    userId,
+    userInfo: GetUserInfo(store, userId) || {},
   };
 };
 

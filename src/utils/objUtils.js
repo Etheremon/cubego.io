@@ -48,7 +48,7 @@ export const GetValues = (obj) => {
 
 export const ForEach = (obj, func) => {
   Object.keys(obj).forEach((key) => {
-    result[key] = func(key, obj[key]);
+    func(key, obj[key]);
   });
 };
 
