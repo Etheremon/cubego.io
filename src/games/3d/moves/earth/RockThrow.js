@@ -2,6 +2,7 @@ import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
 import {GetRandomInt} from "../../../../utils/utils";
 import {hexToColor3} from "../../../babylonX/utils";
+import BabylonX from "../../../babylonX";
 
 export default class RockThrow extends BaseMove {
   constructor(player, {damage}) {
@@ -48,7 +49,9 @@ export default class RockThrow extends BaseMove {
     pSystem.emitter = seed;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
+
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(0.059, 0.714, 0.110, .9);

@@ -1,5 +1,6 @@
 import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
+import BabylonX from "../../../babylonX";
 
 export default class FireBall extends BaseMove {
   constructor(player, {damage}) {
@@ -35,7 +36,9 @@ export default class FireBall extends BaseMove {
     pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     pSystem.light.range = 15;
 
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
+
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);

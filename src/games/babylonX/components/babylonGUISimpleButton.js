@@ -15,8 +15,10 @@ export class BabylonGUISimpleButton extends BabylonComponent {
     if (props.onClick) {
       button.onPointerClickObservable.add(props.onClick);
     }
-
     guiSimpleButton.renderer = button;
+    if (props.visible === false) {
+      guiSimpleButton.visible = false;
+    }
     return guiSimpleButton;
   }
 

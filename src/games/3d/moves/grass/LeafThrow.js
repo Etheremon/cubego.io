@@ -1,5 +1,6 @@
 import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
+import BabylonX from "../../../babylonX";
 
 export default class LeafThrow extends BaseMove {
   constructor(player, {damage}) {
@@ -32,7 +33,10 @@ export default class LeafThrow extends BaseMove {
     pSystem.emitter = fireBall;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
+    pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
+
+
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.color1 = new BABYLON.Color4(0.059, 0.714, 0.110, .9);

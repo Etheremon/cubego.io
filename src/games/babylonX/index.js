@@ -3,13 +3,14 @@ import 'babylonjs-loaders';
 import {renderer as BabylonRenderer} from "./renderer/index";
 import {TYPES} from './components';
 import {BabylonMeshContainer} from "./components/babylonMeshContainer";
-import {LoadingScreen} from "./loading/LoadingScreen";
+import {LoadingScreen} from "./loader/LoadingScreen";
+import {_createAssetsManager} from './loader';
+import loaders from "./loader";
 
 let rootContainer = null;
 let scene, engine;
 let loopStarted = false;
 let root = null;
-let assetsManager = null;
 let loadingScreen = null;
 
 const createRenderer = (canvas) => {
@@ -17,15 +18,12 @@ const createRenderer = (canvas) => {
   loadingScreen = new LoadingScreen(canvas);
   engine.loadingScreen = loadingScreen;
   scene = new BABYLON.Scene(engine);
-
-  // scene.useRightHandedSystem = true;
   root = BabylonMeshContainer.create(scene, {name: 'root', position: {x: 0, y: 0, z: 0}});
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
-  assetsManager = new BABYLON.AssetsManager(scene);
+  _createAssetsManager(scene, startLoop);
   rootContainer = BabylonRenderer.createContainer(root);
-  assetsManager.onFinish = startLoop;
   return rootContainer;
 };
 
@@ -62,28 +60,6 @@ export const GUISimpleButton = TYPES.GUI_SIMPLE_BUTTON;
 export const HTMLGUIButton = TYPES.CASTOR_GUI_BUTTON;
 export const HTMLGUIImage = TYPES.CASTOR_GUI_TEXTURE;
 export const HTMLGUIText = TYPES.CASTOR_GUI_TEXT;
-
-function addMesh(id, root, file) {
-  return new Promise((resolve, reject) => {
-    let task = assetsManager.addMeshTask(id, "", root, file);
-    task.onSuccess = (taskData) => {
-      resolve(taskData)
-    };
-    task.onError = (taskData, message, exception) => {
-      console.error(message);
-      reject(message)
-    }
-  });
-}
-
-function load() {
-  assetsManager.load();
-}
-
-const loaders = {
-  addMesh,
-  load
-};
 
 const BabylonX = {render, loaders};
 export default BabylonX;

@@ -2,6 +2,7 @@ import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
 import {GetRandomInt} from "../../../../utils/utils";
 import {hexToColor3} from "../../../babylonX/utils";
+import BabylonX from "../../../babylonX";
 
 export default class DoubleCannon extends BaseMove {
   constructor(player, {damage}) {
@@ -49,7 +50,10 @@ export default class DoubleCannon extends BaseMove {
     pSystem.emitter = water;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/projectile_141.png"), this.scene);
+    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/projectile_141.png"), this.scene);
+    pSystem.particleTexture = BabylonX.loaders.get('particle_projectile_141').clone();
+
+
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.minScaleX = 2;
