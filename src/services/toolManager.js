@@ -14,7 +14,7 @@ export class ToolManager {
     this._drawMode = null;
     this._stats = {
       gonTier: {
-        stats: {}
+        stats: [0, 0]
       },
     };
     this.history = {
@@ -239,7 +239,7 @@ export class ToolManager {
     this._stats.storage = this._userCubes;
 
     // Calculate gon tier
-    this._stats.gonTier = {id: -1, showPoints: 0};
+    this._stats.gonTier = {id: -1, showPoints: 0, stats: [0, 0]};
     if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER.legend]) {
       this._stats.gonTier = {...GON_TIER.god, showPoints: Math.min(this._stats.points, GON_TIER.god.points[1])};
     } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER.epic]) {

@@ -221,7 +221,9 @@
 
   .model-editor__material {
     display: flex;
-    flex-wrap: wrap;
+    @include mobile {
+      flex-wrap: wrap;
+    }
     justify-content: space-between;
     .cube {
       flex-basis: calc(100%/12);
