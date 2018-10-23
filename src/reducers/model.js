@@ -22,6 +22,7 @@ const validatedModel = (state=null, action) => {
       return {
         model: action.model,
         structure: action.structure,
+        stats: action.stats,
         info: action.response,
       };
 

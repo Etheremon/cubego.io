@@ -43,6 +43,7 @@ class ReviewPage extends React.Component {
     if (!this.props.validatedModel) {
       this.props.history.push(`/${URLS.BUILD_GON}`)
     }
+    Utils.ScrollTop();
   }
 
   handleSliderChange(event) {
@@ -57,22 +58,24 @@ class ReviewPage extends React.Component {
   }
 
   checkOut() {
-    this.setState({submitting: true});
-    this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
-      model: this.props.validatedModel.model,
-      structure: this.props.validatedModel.model.structure,
-      energy: parseInt(this.state.sliderValue),
-      name: this.nameInput ? this.nameInput.value : '',
-      image: this.modelCanvas.getBase64Image(),
-      callbackFunc: (code, data) => {
-        this.setState({
-          submitting: false,
-          showPopup: true,
-          submitResponse: data,
-          isSuccess: code === window.RESULT_CODE.SUCCESS,
-        });
-      }
-    }));
+    this.setState({showError: true});
+
+    // this.setState({submitting: true});
+    // this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
+    //   model: this.props.validatedModel.model,
+    //   structure: this.props.validatedModel.model.structure,
+    //   energy: parseInt(this.state.sliderValue),
+    //   name: this.nameInput ? this.nameInput.value : '',
+    //   image: this.modelCanvas.getBase64Image(),
+    //   callbackFunc: (code, data) => {
+    //     this.setState({
+    //       submitting: false,
+    //       showPopup: true,
+    //       submitResponse: data,
+    //       isSuccess: code === window.RESULT_CODE.SUCCESS,
+    //     });
+    //   }
+    // }));
   }
 
   renderSubmitResult() {
@@ -104,19 +107,32 @@ class ReviewPage extends React.Component {
     const {_t, validatedModel, userInfo} = this.props;
     if (!validatedModel) return null;
 
+    let {stats, info} = validatedModel;
+
     const { allowChangeName } = this.state;
     const sliderValue = parseInt(this.state.sliderValue);
     const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
-    const cost = Utils.RoundToDecimalFloat(sliderValue * 0.01 + validatedModel['info']['topup_materials'].reduce((sum, m) => sum + m['eth_price'], 0), 6);
+    const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + stats.total_cost, 6);
 
-    const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: '250', label: 'cubego'},
+    const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: stats.total, label: 'cubego'},
                           {icon: require('../../../shared/img/types/earth.png'), content: 'earth', label: 'type'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90-110', label: 'stats range'}];
+                          {icon: require('../../../shared/img/icons/icon-stats.png'),
+                            content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`,
+                            label: 'stats range'}];
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
 
         <Navbar minifying />
+
+        {this.state.showError ?
+          <Popup onUnmount={() => {this.setState({showError: false})}}
+                 open={this.state.showError}>
+            <div className={'review-page__ready-error'}>
+              {_t('err.cubego_release_soon')}
+            </div>
+          </Popup> : null
+        }
 
         {this.state.showPopup ?
           <Popup onUnmount={() => {this.setState({showPopup: false})}}
@@ -168,7 +184,7 @@ class ReviewPage extends React.Component {
                   {statsOverview.map((item, idx) => (
                       <div className={'item'} key={idx}>
                         <img src={item.icon} />
-                        <div className={'content'}>{_t(item.content)}</div>
+                        <div className={'content'}>{item.content}</div>
                         <div className={'label'}>{_t(item.label)}</div>
                       </div>
                     ))}
@@ -179,13 +195,14 @@ class ReviewPage extends React.Component {
                     <tr>
                       <th>{_t('Material')}</th>
                       <th>{_t('Quantity')}</th>
-                      <th>{_t('Price')}</th>
+                      <th>{_t('To Purchase')}</th>
+                      <th>{_t('Price/Unit')}</th>
                       <th>{_t('Total')}</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {validatedModel['info']['topup_materials'].map((item, idx) => {
+                    {info['topup_materials'].map((item, idx) => {
                       let material = CUBE_MATERIALS[item['material_class']];
                       return (
                         <tr key={idx}>
@@ -195,17 +212,18 @@ class ReviewPage extends React.Component {
                               {_t(material.name)}
                             </div>
                           </td>
-                          <td><span>{item.count}</span></td>
+                          <td><span>{item.count}/{stats.storage[material.class_id]}</span></td>
+                          <td><span>{Math.max(0, item.count-stats.storage[material.class_id])}</span></td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {item['eth_price'] / item.count}
+                              {material.price || 'N.A'}
                             </div>
                           </td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {Utils.RoundToDecimalFloat(item['eth_price'], 4)}
+                              {Utils.RoundToDecimalFloat(Math.max(0, item.count-stats.storage[material.class_id])*(material.price||0), 4)}
                             </div>
                           </td>
                         </tr>

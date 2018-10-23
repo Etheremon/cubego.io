@@ -87,7 +87,8 @@ body {
 /* Overwrite Semantic UI */
 a {
   color: #6aadef;
-  font-style: italic;
+  font-style: inherit;
+
 
   &:hover {
     color: #5195ca;

@@ -1,6 +1,14 @@
 import * as ObjUtils from "../utils/objUtils";
 import * as Utils from "../utils/utils";
 
+export const CUBE_TIER = {
+  legend: 1,
+  epic: 2,
+  rare: 3,
+  common: 4,
+  basic: 5,
+};
+
 export const CUBE_TYPES = {
   1: {
     name: 'air',
@@ -30,6 +38,8 @@ const _CUBE_MATERIALS = {
       4: {color: '#c88d00', emissive: '#390000'},
       5: {color: '#c80046', emissive: '#0d0039'}
     },
+    point: 3000,
+    tier: CUBE_TIER.legend,
   },
   2: {
     class_id: 2,
@@ -37,6 +47,8 @@ const _CUBE_MATERIALS = {
     variants: {
       1: {color: '#ffffff', emissive: '#573107'}
     },
+    point: 350,
+    tier: CUBE_TIER.epic,
   },
   3: {
     class_id: 3,
@@ -48,6 +60,8 @@ const _CUBE_MATERIALS = {
       4: {color: '#823228', emissive: '#25051c'},
       5: {color: '#725e1a', emissive: '#250505'}
     },
+    point: 300,
+    tier: CUBE_TIER.epic,
   },
   4: {
     class_id: 4,
@@ -59,6 +73,8 @@ const _CUBE_MATERIALS = {
       4: {color: '#dc3b3b', emissive: '#901090'},
       5: {color: '#af750d', emissive: '#4d0048'}
     },
+    point: 300,
+    tier: CUBE_TIER.epic,
   },
   5: {
     class_id: 5,
@@ -73,6 +89,8 @@ const _CUBE_MATERIALS = {
       7: {color: '#9b450a', emissive: '#311303'},
       8: {color: '#665252', emissive: '#180c05'}
     },
+    point: 55,
+    tier: CUBE_TIER.rare,
   },
   6: {
     class_id: 6,
@@ -87,6 +105,8 @@ const _CUBE_MATERIALS = {
       7: {color: '#552d1c', emissive: '#160303'},
       8: {color: '#39261e', emissive: '#220501'}
     },
+    point: 50,
+    tier: CUBE_TIER.rare,
   },
   7: {
     class_id: 7,
@@ -101,6 +121,8 @@ const _CUBE_MATERIALS = {
       7: {color: '#b69034', emissive: '#66170c'},
       8: {color: '#cab47e', emissive: '#412a27'}
     },
+    point: 50,
+    tier: CUBE_TIER.rare,
   },
   8: {
     class_id: 8,
@@ -115,8 +137,11 @@ const _CUBE_MATERIALS = {
       7: {color: '#825920', emissive: '#2f1b00'},
       8: {color: '#696969', emissive: '#2f1b00'},
       9: {color: '#10110d', emissive: '#090909'},
-
     },
+    price: 0.0005,
+    is_for_sale: true,
+    point: 5,
+    tier: CUBE_TIER.common,
   },
   9: {
     class_id: 9,
@@ -129,6 +154,10 @@ const _CUBE_MATERIALS = {
       5: {color: '#6608ed', emissive: '#160320'},
       6: {color: '#781a6d', emissive: '#0e0a1b'},
     },
+    price: 0.0005,
+    is_for_sale: true,
+    point: 5,
+    tier: CUBE_TIER.common,
   },
   10: {
     class_id: 10,
@@ -145,8 +174,11 @@ const _CUBE_MATERIALS = {
       8: {color: '#6e472c', emissive: '#2a0707'},
       9: {color: '#7e7e7f', emissive: '#090909'},
       10: {color: '#363637', emissive: '#090909'},
-
     },
+    price: 0.0005,
+    is_for_sale: true,
+    point: 5,
+    tier: CUBE_TIER.common,
   },
   11: {
     class_id: 11,
@@ -164,6 +196,10 @@ const _CUBE_MATERIALS = {
       9: {color: '#757575', emissive: '#64544f'},
       10: {color: '#2a2a29', emissive: '#0c0b0b'}
     },
+    price: 0.0005,
+    is_for_sale: true,
+    point: 5,
+    tier: CUBE_TIER.common,
   },
   12: {
     class_id: 12,
@@ -176,7 +212,9 @@ const _CUBE_MATERIALS = {
       5: {color: '#006919', emissive: '#7d2424'},
       6: {color: '#695000', emissive: '#7d2424'},
     },
-  }
+    point: 1,
+    tier: CUBE_TIER.basic,
+  },
 };
 
 export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, cube) => {
@@ -196,5 +234,16 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
 });
 
 export const CUBE_MATERIALS_NAME_TO_ID = {
+  diamond: 1,
+  gold: 2,
+  ice: 3,
+  silver: 4,
+  iron: 5,
+  stone: 6,
+  wood: 7,
+  brick: 8,
+  leaf: 9,
+  fur: 10,
+  paper: 11,
   plastic: 12,
 };

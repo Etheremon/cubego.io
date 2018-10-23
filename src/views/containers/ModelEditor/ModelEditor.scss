@@ -63,7 +63,6 @@
 
   .model-editor__stats {
     margin-top: 16px;
-    border-bottom: 2px solid $gray-light;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -109,6 +108,53 @@
         img {
           height: 30px;
           margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .model-editor__tier-bar {
+    margin-top: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 6px;
+    position: relative;
+    @include border-radius-without-overflow(2px);
+    z-index: 3;
+
+    .bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background-color: $c__orange-1;
+      @include border-radius-without-overflow(2px);
+      @include transition-duration;
+      max-width: 100%;
+    }
+    .tier {
+      position: absolute;
+      top: 50%;
+      @include transform(translateX(-50%) translateY(-50%));
+      @include transition-duration;
+
+      img {
+        width: 24px;
+        @include transition-duration;
+      }
+
+      &.smaller {
+        img {
+          filter: grayscale(0.5);
+        }
+      }
+      &.greater {
+        img {
+          filter: grayscale(1);
+        }
+      }
+      &.active {
+        img {
+          width: 28px;
         }
       }
     }
@@ -175,7 +221,9 @@
 
   .model-editor__material {
     display: flex;
-    flex-wrap: wrap;
+    @include mobile {
+      flex-wrap: wrap;
+    }
     justify-content: space-between;
     .cube {
       flex-basis: calc(100%/12);
@@ -196,10 +244,37 @@
       &.active {
         border-bottom: 3px solid #ff9001;
       }
+      &.overused {
+        color: $c__text__red;
+        font-size: $font-size-big;
+      }
+      &.for-sale.overused {
+        color: $c__text__orange;
+        font-size: $font-size-small;
+      }
     }
     .space-rest {
       flex-grow: 1;
       border-bottom: 2px solid $gray-light;
+    }
+  }
+
+  .model-editor__color-note {
+    text-align: center;
+    font-size: $font-size-normal;
+    padding-top: 4px;
+    font-weight: $font-weight-bold;
+
+    a {
+      //text-decoration: none;
+      font-style: normal;
+    }
+
+    &.error {
+      color: $c__text__red;
+    }
+    &.warning {
+      color: $c__text__orange;
     }
   }
 
@@ -220,10 +295,16 @@
       .color-tool {
         padding-right: 8px;
       }
+      @include mobile {
+        flex-basis: 100%;
+      }
     }
     .model-editor__layer {
       width: 1px;
       flex-basis: 50%;
+      @include mobile {
+        flex-basis: 100%;
+      }
 
       .widget__picker-bar {
         padding-left: 8px;
@@ -238,7 +319,7 @@
 
   .model-editor__btns {
     text-align: center;
-    padding-top: 12px;
+    padding-top: 16px;
   }
 
   .model-editor__error {

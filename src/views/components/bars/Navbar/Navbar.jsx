@@ -15,15 +15,18 @@ import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import { Icon } from "../../Icon/Icon.jsx";
 import withRouter from "react-router-dom/es/withRouter";
+import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
+import * as Utils from "../../../../utils/utils";
 
 require("style-loader!./Navbar.scss");
 
 const NavbarTextList = [
-  {link: `/${URLS.ABOUT_US}`, text: 'about_us'},
-  {link: `/${URLS.GUIDE}`, text: 'game_intro'},
+  // {link: `/${URLS.ABOUT_US}`, text: 'about_us'},
+  // {link: `/${URLS.GUIDE}`, text: 'game_intro'},
 ];
 
 const NavbarList = [
+  {link: `/${URLS.GUIDE}`, text: 'game_intro', img: 'icon_intro'},
   {link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build'},
   {link: `/${URLS.CUBEGONS}`, text: 'my_cubegons', img: 'icon_my_heroes'},
   {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
@@ -92,28 +95,28 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {currentLanguage, _t, fixed, size} = this.props;
+    let {currentLanguage, _t, fixed, size, userId, userInfo} = this.props;
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
         <Container size={size} className={'navbar__content'}>
 
-          <div className={'logo'}>
+          <div className={'logo m--computer-only'}>
             <Link smooth to="/#home">
               <Image img={'logo_cubego'}/>
             </Link>
           </div>
 
-          <div className={'text-links'}>
-            {NavbarTextList.map((item, idx) => (
-              <div className={`navbar__item`} key={idx}
-                   onClick={() => {
-                     this.props.history.push(item.link);
-                   }}>
-                {_t(item.text)}
-              </div>
-            ))}
-          </div>
+          {/*<div className={'text-links'}>*/}
+            {/*{NavbarTextList.map((item, idx) => (*/}
+              {/*<div className={`navbar__item`} key={idx}*/}
+                   {/*onClick={() => {*/}
+                     {/*this.props.history.push(item.link);*/}
+                   {/*}}>*/}
+                {/*{_t(item.text)}*/}
+              {/*</div>*/}
+            {/*))}*/}
+          {/*</div>*/}
 
           <div className={'img-links'}>
             {NavbarList.map((item, idx) => (
@@ -125,9 +128,47 @@ class Navbar extends React.Component {
                 <Image img={`${item.img}`}/>
               </div>
             ))}
+
+            <Dropdown className={'mobile-menu m--mobile-only'} position={'left'}
+                      list={[
+                        {
+                          content: (
+                            <div className={`navbar__item-dropdown`}>
+                              <Image img={'logo_cubego'}/>
+                              {_t('Home')}
+                            </div>
+                          ),
+                          onClick: () => {
+                            this.props.history.push('/#home');
+                          },
+                        },
+                        ...NavbarList.map((item, idx) => ({
+                          content: (
+                            <div className={`navbar__item-dropdown`} key={idx}>
+                              <Image img={`${item.img}`}/>
+                              {_t(item.text)}
+                            </div>
+                          ),
+                          onClick: () => {
+                            this.handleNavItemSelect(item.link);
+                            this.props.history.push(item.link);
+                          },
+                        }))
+                      ]}>
+              <span>
+                <i className="fas fa-bars"/>
+              </span>
+            </Dropdown>
           </div>
 
           <div className={'user-info'}>
+            <div className={'user-info__username'}>
+              <Link to={`/${URLS.SIGN_IN}`}>
+                {(userInfo.username || userId)
+                  ? <span><i className="fas fa-user"/>{Utils.CutoffString(userInfo.username || userId, 6)}</span>
+                  : _t('sign in')}
+              </Link>
+            </div>
             <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
               content: <span className={'navbar__text'}><Icon name={lan.country + ' flag'}/>{lan.code}</span>,
               onClick: () => {this.handleLanguageChange(lan.code)},
@@ -148,9 +189,12 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = (store) => {
+  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
     currentLanguage: getActiveLanguage(store.localeReducer),
+    userId,
+    userInfo: GetUserInfo(store, userId) || {},
   };
 };
 

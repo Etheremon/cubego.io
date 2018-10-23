@@ -7,6 +7,7 @@ export const ImgSource = {
 
   'metamask': require('../../../shared/img/assets/metamask.png'),
 
+  'icon_intro': require('../../../shared/img/icons/icon-intro.png'),
   'icon_about_us': require('../../../shared/img/icons/icon-about.png'),
   'icon_battle': require('../../../shared/img/icons/icon-battle.png'),
   'icon_build': require('../../../shared/img/icons/icon-build.png'),

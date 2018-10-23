@@ -429,7 +429,7 @@
   .header {
     font-family: $f__baloobha;
     color: $c__text__orange;
-    font-size: $font-size-header-3;
+    font-size: $font-size-header-1;
   }
   .note {
     padding-top: 12px;
@@ -443,4 +443,11 @@
       width: 200px;
     }
   }
+}
+
+.review-page__ready-error {
+  padding: 32px;
+  font-family: $f__baloobha;
+  color: $c__text__orange;
+  font-size: $font-size-header-1;
 }

@@ -3,6 +3,8 @@ import * as Utils from "../utils/utils";
 import * as ObjUtils from "../utils/objUtils";
 import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
+import {CUBE_MATERIALS, CUBE_TIER} from "../constants/cubego";
+import {GON_TIER} from "../constants/cubegon";
 
 export class ToolManager {
   constructor(props) {
@@ -10,11 +12,16 @@ export class ToolManager {
     this._model = undefined;
     this._layer = undefined;
     this._drawMode = null;
-    this._stats = {};
+    this._stats = {
+      gonTier: {
+        stats: [0, 0]
+      },
+    };
     this.history = {
       idx: props.models.length - 1,
       models: props.models,
     };
+    this._userCubes = {};
 
     GetValues(props.tools).forEach((tool, idx) => {
       this._tools[tool.key] = tool;
@@ -33,6 +40,7 @@ export class ToolManager {
     this.changeMode = this.changeMode.bind(this);
     this.convertToSpaceSize = this.convertToSpaceSize.bind(this);
     this.updateModelSize = this.updateModelSize.bind(this);
+    this.updateUserCubes = this.updateUserCubes.bind(this);
 
     this.updateCurrent();
   }
@@ -40,7 +48,11 @@ export class ToolManager {
   addModel({model}) {
     this.history.idx += 1;
     this.history.models[this.history.idx] = CloneDeep(model);
+    this.updateCurrent();
+  }
 
+  updateUserCubes(cubes) {
+    this._userCubes = cubes;
     this.updateCurrent();
   }
 
@@ -195,17 +207,62 @@ export class ToolManager {
       }
     };
 
-    this._stats.materials = {};
+    // Number of cubes
     this._stats.total = ObjUtils.GetValues(this._model.voxels).length;
-    ObjUtils.GetValues(this._model.voxels).forEach((cell) => {
+
+    // Calculate #materials & points
+    this._stats.materials = {};
+    this._stats.points = 0;
+    ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
       this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
+      this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
     });
-    this._stats.cost = Utils.RoundDownToDecimal(this._stats.total * 0.01, 4);
+
+    // Calculate power from points
     this._stats.power = [this._stats.total - 10, this._stats.total + 10];
+
+    // Calculate cost & tier
+    this._stats.cubeTiers = {};
+    this._stats.total_cost = 0;
+    this._stats.invalid_materials = [];
+
+    ObjUtils.ForEach(this._stats.materials, (key, value) => {
+      this._stats.cubeTiers[CUBE_MATERIALS[key].tier] = (this._stats.cubeTiers[CUBE_MATERIALS[key].tier] || 0) + value;
+      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0)
+        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - this._userCubes[key]);
+      else if (!CUBE_MATERIALS[key].is_for_sale && this._userCubes[key] < value) {
+        this._stats.invalid_materials.push(CUBE_MATERIALS[key].name);
+        this._stats.total_cost = -1;
+      }
+    });
+    this._stats.total_cost = Utils.RoundDownToDecimal(this._stats.total_cost, 4);
+    this._stats.storage = this._userCubes;
+
+    // Calculate gon tier
+    this._stats.gonTier = {id: -1, showPoints: 0, stats: [0, 0]};
+    if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER.legend]) {
+      this._stats.gonTier = {...GON_TIER.god, showPoints: Math.min(this._stats.points, GON_TIER.god.points[1])};
+    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER.epic]) {
+      this._stats.gonTier = {...GON_TIER.champion, showPoints: Math.min(this._stats.points, GON_TIER.champion.points[1])};
+    } else if (this._stats.points >= GON_TIER.elite.points[0]) {
+      this._stats.gonTier = {...GON_TIER.elite, showPoints: Math.min(this._stats.points, GON_TIER.elite.points[1])};
+    } else if (this._stats.points >= GON_TIER.challenger.points[0]) {
+      this._stats.gonTier = {...GON_TIER.challenger, showPoints: Math.min(this._stats.points, GON_TIER.challenger.points[1])};
+    }
+
+    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER.epic]) {
+      this._stats.gonTier.note = ('tier.need_epic');
+    } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER.legend]) {
+      this._stats.gonTier.note = ('tier.need_legend');
+    }
   }
 
   get stats() {
     return this._stats;
+  }
+
+  get userCubes() {
+    return this._userCubes || {};
   }
 
   get model() {
