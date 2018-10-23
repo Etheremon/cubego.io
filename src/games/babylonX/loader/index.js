@@ -41,7 +41,6 @@ function load() {
 }
 
 function get(id) {
-  console.log(loaderStorage[id]);
   return loaderStorage[id];
 }
 

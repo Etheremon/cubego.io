@@ -10,6 +10,9 @@ export default class MilkDrink extends BaseMove {
   playMove() {
     this.player.playSkeletonAnimation('roar', false, 1);
     this._createMilkAnimation();
+    setTimeout(() => {
+      this.player.heal(this.damage);
+    }, 200);
   }
 
   _createMilkAnimation() {

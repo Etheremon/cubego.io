@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   Animation,
   ArcRotateCamera,
-  GUI, GUISimpleButton,
+  GUI, GUIImage, GUISimpleButton,
   HemisphericLight,
   MeshContainer,
   PointLight, Skybox,
@@ -12,7 +12,6 @@ import BabylonX from "../babylonX";
 import idleGroundAnimation from "./animations/shareAnimation";
 import {GetRandomInt} from "../../utils/utils";
 import MOVES from "./moves";
-import MilkDrink from "./moves/neutral/MilkDrink";
 
 const SIZE = 0.2;
 
@@ -71,10 +70,13 @@ class VoxBattle extends Component {
     this.startBtn = null;
     this.mainCamera = null;
     this.rePlayBtn = null;
+    this.startImage = null;
+    this.resultImage = null;
   }
 
   startGame() {
     this.startBtn.visible = false;
+    this.startImage.visible = false;
     this.mainCamera.attachControl = true;
     if (this.clouds.length) {
       this.clouds.forEach((cloud) => {
@@ -91,6 +93,7 @@ class VoxBattle extends Component {
 
   restartGame() {
     this.rePlayBtn.visible = false;
+    this.resultImage.visible = false;
     this.mainCamera.attachControl = true;
     let logs = this.createDummyBattleLog();
     this.players[0].init();
@@ -118,6 +121,7 @@ class VoxBattle extends Component {
     setTimeout(() => {
       this.mainCamera.attachControl = false;
       this.rePlayBtn.visible = true;
+      this.resultImage.visible = true;
     }, 5000 * logs.length + 1000);
   }
 
@@ -245,24 +249,21 @@ class VoxBattle extends Component {
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         {/*<Axis size={5}/>*/}
         <GUI>
-          {/*<GUISimpleButton left={'-225px'} value={'1'} onClick={this.createScratchParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'-175px'} value={'2'} onClick={this.createTackleAnimation.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'-125px'} value={'3'} onClick={this.createFireParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'-75px'} value={'4'} onClick={this.createShieldParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'-25px'} value={'5'} onClick={this.createFistParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'25px'} value={'6'} onClick={this.createHitAnimation.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'75px'} value={'7'} onClick={this.createWaterParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'125px'} value={'8'} onClick={this.createMissileParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'175px'} value={'9'} onClick={this.createSmashUpParticle.bind(this)}/>*/}
-          {/*<GUISimpleButton left={'225px'} value={'10'} onClick={this.createSmashUpParticle.bind(this)}/>*/}
-
-          <GUISimpleButton left={'0px'} value={'START GAME'} onClick={this.startGame} width={'200px'} ref={(button) => {
-            this.startBtn = button
+          <GUIImage url={require('../../shared/img/game_ui/open.png')} width={'960px'} height={'540px'} ref={(image) => {
+            this.startImage = image
           }}/>
-          <GUISimpleButton left={'0px'} value={'REPLAY GAME'} onClick={this.restartGame} width={'200px'}
+          <GUIImage url={require('../../shared/img/game_ui/result.png')} width={'960px'} height={'540px'} visible={false} ref={(image) => {
+            this.resultImage = image
+          }}/>
+
+          <GUISimpleButton left={'0px'} top={'200px'} value={'REPLAY GAME'} onClick={this.restartGame} width={'200px'}
                            ref={(button) => {
                              this.rePlayBtn = button
                            }} visible={false}/>
+          <GUISimpleButton left={'0px'} top={'200px'} value={'START GAME'} onClick={this.startGame} width={'200px'} ref={(button) => {
+            this.startBtn = button
+          }}/>
+
         </GUI>
 
         <ArcRotateCamera alpha={3.148} beta={1.124} radius={60} ref={(camera) => {

@@ -76,6 +76,14 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.updateHealthBar();
   }
 
+  heal(percent) {
+    this.healthPercent += percent;
+    if (this.healthPercent > 100) {
+      this.healthPercent = 100;
+    }
+    this.updateHealthBar();
+  }
+
   createHurtPoint() {
     let texture = new BABYLON.DynamicTexture("dynamic texture", 512, this.scene, true);
     texture.hasAlpha = true;
