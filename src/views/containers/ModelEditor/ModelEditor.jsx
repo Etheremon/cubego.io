@@ -30,6 +30,7 @@ import {URLS} from "../../../constants/general";
 import {SERVER_URL} from "../../../config";
 import {IsEqual} from "../../../utils/objUtils";
 import {GON_TIER} from "../../../constants/cubegon";
+import {CloneDeep} from "../../../utils/objUtils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -234,7 +235,7 @@ class _ModelEditor extends React.Component {
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
-      if (this.toolManager.stats.cost && this.toolManager.stats.cost.total < 0) {
+      if (this.toolManager.stats.cost && this.toolManager.stats.total_cost < 0) {
         this.setState({
           validating: false,
           showModelReview: true,
@@ -247,7 +248,8 @@ class _ModelEditor extends React.Component {
       this.setState({validating: true, showRegisterPopup: false});
       this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
       this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
-        model: this.toolManager.model,
+        model: CloneDeep(this.toolManager.model),
+        stats: CloneDeep(this.toolManager.stats),
         callbackFunc: (code, data) => {
           if (code === window.RESULT_CODE.SUCCESS) {
             this.props.history.push(`/${URLS.REVIEW_GON}`);
@@ -336,11 +338,11 @@ class _ModelEditor extends React.Component {
     }
 
     let totalCost = null;
-    if (this.toolManager.stats.cost) {
-      if (this.toolManager.stats.cost.total >= 0) totalCost = this.toolManager.stats.cost.total;
+    if (this.toolManager.stats.total_cost !== undefined) {
+      if (this.toolManager.stats.total_cost >= 0) totalCost = this.toolManager.stats.total_cost;
       else {
-        let text = this.toolManager.stats.cost.invalid_materials.map(t => _t(t)).join(', ');
-        totalCost = this.toolManager.stats.cost.invalid_materials.length > 1
+        let text = this.toolManager.stats.invalid_materials.map(t => _t(t)).join(', ');
+        totalCost = this.toolManager.stats.invalid_materials.length > 1
           ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
       }
     }
@@ -519,7 +521,7 @@ class _ModelEditor extends React.Component {
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
                   {/*{this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}*/}
-                  {this.toolManager.stats.points}
+                  {this.toolManager.stats.gonTier.stats[0]} - {this.toolManager.stats.gonTier.stats[1]}
                 </div>
                 <div className={'stat'}
                      tooltip={_t('Estimated Cost')}

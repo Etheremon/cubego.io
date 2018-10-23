@@ -13,7 +13,9 @@ export class ToolManager {
     this._layer = undefined;
     this._drawMode = null;
     this._stats = {
-      gonTier: {},
+      gonTier: {
+        stats: {}
+      },
     };
     this.history = {
       idx: props.models.length - 1,
@@ -221,17 +223,20 @@ export class ToolManager {
 
     // Calculate cost & tier
     this._stats.cubeTiers = {};
-    this._stats.cost = {total: 0, invalid_materials: []};
+    this._stats.total_cost = 0;
+    this._stats.invalid_materials = [];
+
     ObjUtils.ForEach(this._stats.materials, (key, value) => {
       this._stats.cubeTiers[CUBE_MATERIALS[key].tier] = (this._stats.cubeTiers[CUBE_MATERIALS[key].tier] || 0) + value;
-      if (CUBE_MATERIALS[key].is_for_sale && this._stats.cost.total >= 0)
-        this._stats.cost.total += CUBE_MATERIALS[key].price * Math.max(0, value - this._userCubes[key]);
+      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0)
+        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - this._userCubes[key]);
       else if (!CUBE_MATERIALS[key].is_for_sale && this._userCubes[key] < value) {
-        this._stats.cost.invalid_materials.push(CUBE_MATERIALS[key].name);
-        this._stats.cost.total = -1;
+        this._stats.invalid_materials.push(CUBE_MATERIALS[key].name);
+        this._stats.total_cost = -1;
       }
     });
-    this._stats.cost.total = Utils.RoundDownToDecimal(this._stats.cost.total, 4);
+    this._stats.total_cost = Utils.RoundDownToDecimal(this._stats.total_cost, 4);
+    this._stats.storage = this._userCubes;
 
     // Calculate gon tier
     this._stats.gonTier = {id: -1, showPoints: 0};
