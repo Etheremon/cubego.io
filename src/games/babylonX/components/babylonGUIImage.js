@@ -4,7 +4,7 @@ import * as GUI from 'babylonjs-gui';
 export class BabylonGUIImage extends BabylonComponent {
   static create({scene}, props) {
     let guiImage = new BabylonGUIImage();
-    let image = new BABYLON.GUI.Image("but", props.url);
+    let image = new BABYLON.GUI.Image("but", props.image);
     image.height = props.height || "40px";
     image.width = props.width || "40px";
     image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;

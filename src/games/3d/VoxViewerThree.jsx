@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  Axis, BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera,
+  BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera,
   PointLight,
 } from "../threeX";
 import {fullColorHex} from "../utils";
@@ -42,11 +42,16 @@ class VoxViewerThree extends Component {
     this.selectLayerColor = '0xffff00';
     this.featureSelected = '';
     this.updateGridIdx = 0;
-
+    this.selectedDimension = null;
+    this.selectedIdx = null;
     if (!props.tools) {
       this.tools = props.tools;
       this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     }
+  }
+
+  isSelectedLayer(position) {
+    return position[this.selectedDimension] === this.selectedIdx;
   }
 
   renderVoxel(voxelData) {
@@ -71,7 +76,7 @@ class VoxViewerThree extends Component {
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
-      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
+      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey} highlight={this.isSelectedLayer(voxel)}
                              ref={(ref) => this.objects.push(ref)} variantColor={voxel.color.color}
                              position={position} variantEmissive={voxel.color.emissive}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
@@ -86,7 +91,7 @@ class VoxViewerThree extends Component {
     this.setState({
       data: voxelData || {}
     }, () => {
-      this.updateHighLightLayer();
+      this.updateBoundingBox();
     });
   }
 
@@ -99,14 +104,33 @@ class VoxViewerThree extends Component {
       }
     });
     this.updateHoverBoxColor(this.hoverColor);
-    this.updateHighLightLayer();
+    if (this.state.data.spaceSize) {
+      this.updateBoundingBox();
+    }
+    this.calculateSelectedLayer();
+    this.forceUpdate();
+  }
+
+  calculateSelectedLayer() {
+    switch (this.tools['view-2d'].value.viewKey) {
+      case 'front':
+        this.selectedDimension = 'x';
+        break;
+      case 'top':
+        this.selectedDimension = 'z';
+        break;
+      case 'side':
+        this.selectedDimension = 'y';
+        break;
+    }
+    this.selectedIdx = this.tools['layer-index'].value;
   }
 
   updateHoverBoxColor(color) {
     this.rollOverMesh.renderer.material.color.setHex(color);
   }
 
-  updateHighLightLayer() {
+  updateBoundingBox() {
     let min = {
       x: SIZE * this.state.data.spaceSize.x[0] - this.offsetVector.x,
       y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y,
@@ -118,8 +142,15 @@ class VoxViewerThree extends Component {
       y: SIZE + SIZE * this.state.data.spaceSize.z[1] - this.offsetVector.y,
       z: SIZE + SIZE * this.state.data.spaceSize.y[1] - this.offsetVector.z
     };
+
+    let center = {
+      x: (max.x + min.x) / 2,
+      y: (max.y + min.y) / 2,
+      z: (max.z + min.z) / 2
+    };
     if (this.boxHelper) this.boxHelper.min = min;
     if (this.boxHelper) this.boxHelper.max = max;
+    this.camera.orbitControlTarget = center;
   }
 
   componentDidMount() {
@@ -146,6 +177,9 @@ class VoxViewerThree extends Component {
     }
     if (this.props.data) {
       this.setNewVoxelData(this.props.data);
+    }
+    if (this.props.tools) {
+      this.setNewTools(this.props.tools);
     }
   }
 
@@ -253,9 +287,9 @@ class VoxViewerThree extends Component {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         {/*/!*<Axis/>*!/*/}
-        <OrthographicCamera ref={(ref) => {
+        <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
-        }} position={{x: 1000, y: 1600, z: 2600}} lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000}/>
+        }} position={{x: 1000, y: 1600, z: 2600}}/>
         <HemisphereLight/>
         <PointLight position={{x: 0, y: 400, z: 0}}/>
         <PointLight position={{x: 200, y: 400, z: 200}}/>

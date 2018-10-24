@@ -65,7 +65,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.skeleton.beginAnimation('hit', false, 1);
     this.animateHurtPoint(percent);
     this.healthPercent -= percent;
-    if (this.healthPercent <= 0) {
+    if (this.healthPercent <= 1) {
       this.healthPercent = 0;
       this.die();
     } else {

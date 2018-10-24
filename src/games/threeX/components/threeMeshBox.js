@@ -7,6 +7,7 @@ export class ThreeMeshBox extends ThreeComponent {
   constructor() {
     super();
     this.props = {};
+    this.originalOpacity = 1;
   }
 
   static create({scene}, props) {
@@ -19,6 +20,7 @@ export class ThreeMeshBox extends ThreeComponent {
 
     if (props.materialId) {
       material = ThreeX.getMaterial(props.materialId).clone();
+      this.originalOpacity = material.opacity;
       if (props.variantColor) {
         let variantColor = parseInt(props.variantColor.replace('#', ''), 16);
         material.color.setHex(variantColor);
@@ -30,8 +32,12 @@ export class ThreeMeshBox extends ThreeComponent {
     } else {
       material = new window.THREE.MeshBasicMaterial({color: color, transparent: true});
     }
+    if (props.highlight) {
+      material.opacity = 0.8;
+    }
     let cubeMesh = new window.THREE.Mesh(boxGeo, material);
-    let wireFrameColor = parseInt(props.wireFrameColor || 'ffffff', 16);
+    let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'ffffff';
+    let wireFrameColor = parseInt(frameColor, 16);
     let boxHelper = new window.THREE.BoxHelper(cubeMesh, wireFrameColor);
 
     cubeMesh.add(boxHelper);
@@ -76,5 +82,13 @@ export class ThreeMeshBox extends ThreeComponent {
       material.emissive.setHex(variantEmissive);
     }
     this.renderer.material = material;
+  }
+
+  set highlight(isHighLight) {
+    let opacity = this.originalOpacity;
+    if (isHighLight) {
+      opacity = this.originalOpacity - 0.2;
+    }
+    this.renderer.material.opacity = opacity;
   }
 }
