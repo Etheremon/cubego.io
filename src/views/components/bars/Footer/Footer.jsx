@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import {getTranslate} from "react-localize-redux"
 import {connect} from "react-redux";
-import {URLS} from "../../../../constants/general";
 import { Container } from '../../../widgets/Container/Container.jsx';
 import { Image } from "../../Image/Image.jsx";
 import PropTypes from "prop-types";
@@ -26,7 +25,7 @@ class Footer extends React.Component {
             <div className="footer__left">
               <img className={'footer__logo'} src={require('../../../../shared/img/logo/cubego.png')}/>
               <div className={'footer__copyright'}>
-                © Cubego. All Rights Reserved.
+                © CubeGo. All Rights Reserved.
               </div>
             </div>
 
@@ -39,23 +38,22 @@ class Footer extends React.Component {
                   <Link to={'/tos'} target={'_blank'}>
                     <p>{_t('footer.terms_of_sale')}</p>
                   </Link>
-                  <a href="mailto:contact@etheremon.com?Subject=Hello" target="_blank"><p>{_t('email')}</p></a>
+                  <a href="mailto:contact@cubego.io?Subject=Hello" target="_blank"><p>{_t('email')}</p></a>
                 </div>
                 <div className="footer__service-customer">
-                  <a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a>
-                  <a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('faq')}</p></a>
-
+                  {/*<a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a>*/}
+                  {/*<a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('faq')}</p></a>*/}
                 </div>
               </div>
               <div className="footer__right-social">
-                <a href="https://discord.gg/xgJpuzc" target="_blank"><Image img={'icon_discord'} /></a>
-                <a href="https://t.me/myetheremon" target="_blank"><Image img={'icon_telegram'} /></a>
-                <a href="https://www.reddit.com/r/etheremon/" target="_blank"><Image img={'icon_reddit'} /></a>
-                <a href="https://www.facebook.com/etheremon" target="_blank"><Image img={'icon_facebook'} /></a>
-                <a href="https://twitter.com/myetheremon" target="_blank"><Image img={'icon_twitter'} /></a>
-                <a href="https://www.instagram.com/etheremon_official/" target="_blank"><Image img={'icon_instagram'} /></a>
-                <a href="https://medium.com/etheremon" target="_blank"><Image img={'icon_medium'} /></a>
-                <a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><Image img={'icon_youtube'} /></a>
+                <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
+                <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
+                <a href="https://www.reddit.com/r/cubego/" target="_blank"><Image img={'icon_reddit'} /></a>
+                <a href="https://www.facebook.com/cubego.io/" target="_blank"><Image img={'icon_facebook'} /></a>
+                <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
+                {/*<a href="https://www.instagram.com/etheremon_official/" target="_blank"><Image img={'icon_instagram'} /></a>*/}
+                <a href="https://medium.com/cubego" target="_blank"><Image img={'icon_medium'} /></a>
+                {/*<a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><Image img={'icon_youtube'} /></a>*/}
               </div>
             </div>
           </div>

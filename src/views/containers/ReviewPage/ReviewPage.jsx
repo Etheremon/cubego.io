@@ -11,7 +11,7 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import Footer from "../../components/bars/Footer/Footer.jsx";
-import {CUBE_MATERIALS} from "../../../constants/cubego";
+import {CUBE_MATERIALS, CUBE_TYPES} from "../../../constants/cubego";
 import {GetLoggedInUserId, GetUserInfo, GetValidatedModel} from "../../../reducers/selectors";
 import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
 import {URLS} from "../../../constants/general";
@@ -115,7 +115,7 @@ class ReviewPage extends React.Component {
     const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + Math.max(0, stats.total_cost), 6);
 
     const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: stats.total, label: 'cubego'},
-                          {icon: require('../../../shared/img/types/earth.png'), content: 'earth', label: 'type'},
+                          {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'),
                             content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`,
                             label: 'stats range'}];
@@ -160,7 +160,7 @@ class ReviewPage extends React.Component {
 
               <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 <div className="model-logo__container">
-                  <img src={require('../../../shared/img/types/earth.png')} />
+                  <img src={CUBE_TYPES[validatedModel.stats.type].img}/>
                 </div>
 
                 <span>
@@ -193,11 +193,11 @@ class ReviewPage extends React.Component {
                 <table>
                   <thead>
                     <tr>
-                      <th>{_t('Material')}</th>
-                      <th>{_t('Quantity')}</th>
-                      <th>{_t('To Purchase')}</th>
-                      <th>{_t('Price/Unit')}</th>
-                      <th>{_t('Total')}</th>
+                      <th>{_t('material')}</th>
+                      <th>{_t('quantity')}</th>
+                      <th>{_t('to purchase')}</th>
+                      <th>{_t('price/unit')}</th>
+                      <th>{_t('total')}</th>
                     </tr>
                   </thead>
 

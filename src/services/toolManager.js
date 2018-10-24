@@ -217,10 +217,17 @@ export class ToolManager {
     this._stats.materials = {};
     this._stats.points = 0;
 
+    let typePoints = [0, 0, 0, 0, 0];
+
     ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
       this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
       this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
+      for (let i = 0; i <= 4; i += 1)
+        typePoints[i] += cell.color.type_points[i];
     });
+
+    this._stats.type = typePoints.reduce((res, val, idx, arr) => (val > 0 && (res === -1 || arr[res] < val)) ? idx : res, -1);
+    if (this._stats.type >= 0) this._stats.type += 1;
 
     // Calculate power from points
     this._stats.power = [this._stats.total - 10, this._stats.total + 10];
@@ -259,6 +266,8 @@ export class ToolManager {
     } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER.legend]) {
       this._stats.gonTier.note = ('tier.need_legend');
     }
+
+    // this.stats.type = ;
   }
 
   get stats() {

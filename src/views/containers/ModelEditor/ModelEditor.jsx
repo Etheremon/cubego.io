@@ -18,7 +18,7 @@ import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 import {MODEL_TEMPLATES} from "../../../constants/model";
 import * as ObjUtils from "../../../utils/objUtils";
-import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID} from "../../../constants/cubego";
+import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID, CUBE_TYPES} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {GetLoggedInUserId, GetSavedModel, GetUserInfo} from "../../../reducers/selectors";
@@ -510,15 +510,25 @@ class _ModelEditor extends React.Component {
                 })}
               </div>
               <div className={'stats'}>
+                {this.toolManager.stats.type >= 0 ?
+                  <div className={'stat'}
+                       tooltip={_t('current type')}
+                       tooltip-position="bottom">
+                    <img src={CUBE_TYPES[this.toolManager.stats.type].img}/>
+                    {_t(CUBE_TYPES[this.toolManager.stats.type].name)}
+                  </div> : null
+                }
+
                 <div className={'stat'}
-                     tooltip={_t('Estimated Power')}
+                     tooltip={_t('estimated power')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
                   {/*{this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}*/}
                   {this.toolManager.stats.gonTier.stats[0]} - {this.toolManager.stats.gonTier.stats[1]}
                 </div>
+
                 <div className={'stat'}
-                     tooltip={_t('Estimated Cost')}
+                     tooltip={_t('estimated cost')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-ether.png')}/>
                   {totalCost}
@@ -531,12 +541,12 @@ class _ModelEditor extends React.Component {
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
-                     className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active'
-                       : (tier.id < this.toolManager.stats.gonTier.id ? 'smaller' : 'greater')}`}
+                     className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
                      style={{left: `${tier.points[0]/70000*100}%`}}
                      tooltip={_t(tier.name)} tooltip-position={'bottom'}
                 >
-                  <img src={tier.img}/>
+                  <img className={'with-effect'} src={tier.img}/>
+                  <img className={'no-effect'} src={tier.img_ne}/>
                 </div>
               ))}
             </div>

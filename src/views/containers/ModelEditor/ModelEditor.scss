@@ -67,7 +67,8 @@
     flex-wrap: wrap;
     align-items: center;
     padding-bottom: 4px;
-
+    position: relative;
+    z-index: 4;
 
     .material {
       display: flex;
@@ -114,12 +115,13 @@
   }
 
   .model-editor__tier-bar {
-    margin-top: 8px;
+    margin-top: 16px;
+    margin-bottom: 12px;
     background-color: rgba(255, 255, 255, 0.3);
     height: 6px;
     position: relative;
-    @include border-radius-without-overflow(2px);
     z-index: 3;
+    @include border-radius-without-overflow(2px);
 
     .bar {
       position: absolute;
@@ -132,29 +134,44 @@
       max-width: 100%;
     }
     .tier {
+      &.Challenger, &.challenger {
+        padding-left: 24px;
+      }
+      &.Elite, &.elite {
+        padding-left: 32px;
+      }
+
       position: absolute;
       top: 50%;
       @include transform(translateX(-50%) translateY(-50%));
       @include transition-duration;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       img {
-        width: 36px;
+        pointer-events: none;
+        width: 80px;
         @include transition-duration;
+        &.with-effect {
+          display: none;
+        }
+        &.no-effect {
+          display: block;
+        }
       }
 
-      &.smaller {
-        img {
-          filter: grayscale(0.5);
-        }
-      }
-      &.greater {
-        img {
-          filter: grayscale(1);
-        }
-      }
       &.active {
         img {
-          width: 40px;
+          width: 120px;
+          &.with-effect {
+            display: block;
+          }
+          &.no-effect {
+            display: none;
+          }
         }
       }
     }

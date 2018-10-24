@@ -31,9 +31,9 @@ const _features = [
 const introCubegon = [{img: require('../../../shared/img/assets/model_example_1.png'), name: 'KYARI', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_3.png'), name: 'DILOOM', creator: 'Nhu'}];
-const channels = [{img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/'},
-                  {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/'},
-                  {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://telegram.org/'}];
+const channels = [{img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/invite/pYD5tss'},
+                  {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/cubego_io'},
+                  {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://t.me/cubego'}];
 
 class HomePage extends React.Component {
   constructor(props) {
