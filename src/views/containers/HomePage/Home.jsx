@@ -143,9 +143,12 @@ class HomePage extends React.Component {
                   </InviewMonitor>
 
                   <div className={'image'} >
-                    <div className={'img'}>
-                      <SpriteSheet {...SpriteSource.CREATION}/>
+                    <div className={'img creation'}>
+                      <img className={'img-real'} src={require('../../../shared/img/banner/banner-world.png')}/>
                     </div>
+                    {/*<div className={'img'}>*/}
+                      {/*<SpriteSheet {...SpriteSource.CREATION}/>*/}
+                    {/*</div>*/}
                   </div>
 
                 </div>
@@ -167,8 +170,11 @@ class HomePage extends React.Component {
 
                   <div className={'image'} >
                     <div className={'img'}>
-                      <SpriteSheet {...SpriteSource.COPYRIGHT}/>
+                      <img className={'img-real'} src={require('../../../shared/img/banner/banner-copyright.png')}/>
                     </div>
+                    {/*<div className={'img'}>*/}
+                      {/*<SpriteSheet {...SpriteSource.COPYRIGHT}/>*/}
+                    {/*</div>*/}
                   </div>
                 </div>
               </Container>
@@ -189,7 +195,7 @@ class HomePage extends React.Component {
     
                   <div className={'image'}>
                     <div className={'img'}>
-                      <img className={'img-real'} src={require('../../../shared/img/banner/battle_banner.png')}/>
+                      <img className={'img-real'} src={require('../../../shared/img/banner/banner-battle.png')}/>
                     </div>
                     {/*<div className={'img combat'}>*/}
                       {/*<SpriteSheet {...SpriteSource.BATTLE}/>*/}

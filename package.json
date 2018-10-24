@@ -6,6 +6,7 @@
   "scripts": {
     "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
     "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
+    "startLive": "del-cli public/* && webpack-dev-server --host 0.0.0.0 --port 80 --hot --config webpack.dev.js --env.ENV=prod",
     "buildDev": "del-cli public/* && webpack -p --config webpack.dev.js --env.ENV=dev",
     "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
   },

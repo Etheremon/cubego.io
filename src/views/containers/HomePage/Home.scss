@@ -268,8 +268,14 @@
           align-items: center;
           @include transform(translateY(-50%) translateX(-50%));
 
+          &.creation {
+            img {
+              @include flip-up-down-10px(3.6s);
+            }
+          }
+
           .img-real {
-            width: 480px;
+            width: 500px;
             @include mobile {
               margin-top: 100px;
               width: 240px;

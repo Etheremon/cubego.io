@@ -18,6 +18,12 @@ class InviewMonitor extends Component {
     if (!window.IntersectionObserver) {
       console.error(`react-inview-monitor found no support for IntersectionObserver.
 Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver ?`)
+
+      this.setState({
+        newClassName: this.props.classNameInView,
+        childProps: this.props.childPropsInView,
+        browserNotSupported: true
+      });
       return
     }
     const { useInviewMonitor, intoViewMargin } = this.props;
