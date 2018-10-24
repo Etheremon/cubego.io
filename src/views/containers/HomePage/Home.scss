@@ -276,6 +276,9 @@
 
           .img-real {
             width: 500px;
+            &.combat {
+              width: 600px;
+            }
             @include mobile {
               margin-top: 100px;
               width: 240px;
