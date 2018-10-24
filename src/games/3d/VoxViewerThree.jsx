@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
+  Axis,
   BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera,
   PointLight,
 } from "../threeX";
@@ -92,12 +93,13 @@ class VoxViewerThree extends Component {
       let correctLabel = {x: 'x', y: 'z', z: 'y'};
       ['x', 'y', 'z'].forEach((k) => {
         hSize[correctLabel[k]] = (k === this.selectedDimension) ? SIZE : size[k] * SIZE;
-        hPos[correctLabel[k]] = (k === this.selectedDimension) ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]] : 0;
+        hPos[correctLabel[k]] = (k === this.selectedDimension)
+          ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]]
+          : SIZE * (voxelData.spaceSize[k][1]+voxelData.spaceSize[k][0])/2 - this.offsetVector[correctLabel[k]] + SIZE/2;
       });
       elements.push(<MeshBox size={hSize} position={hPos} color={'ffffff'} opacity={0.15}
                              key={`highlight-layer-${this.selectedDimension}`}/>);
     }
-
     return elements;
   }
 
@@ -302,7 +304,7 @@ class VoxViewerThree extends Component {
   render() {
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        {/*/!*<Axis/>*!/*/}
+        {/*<Axis/>*/}
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
