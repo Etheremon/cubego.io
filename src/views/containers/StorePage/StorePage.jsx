@@ -9,13 +9,9 @@ import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {URLS} from "../../../constants/general";
-import Popup from "../../widgets/Popup/Popup.jsx";
 import Slider from '../../widgets/Slider/Slider.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
-import StoreCubegoCard from './StoreCubegoCard/StoreCubegoCard.jsx';
-import { CustomRectangle, QuantityBar } from '../../widgets/SVGManager/SVGManager.jsx';
-import { TextImage } from '../../widgets/Text/Text.jsx';
 import CubegoesView from './CubegoesView/CubegoesView.jsx';
 import Countdown from '../../widgets/Countdown/Countdown.jsx';
 
@@ -40,9 +36,9 @@ class StorePage extends React.Component {
     return ([
       <div className={'store__banner-item'} key={'banner-1'}>
         <img src={require('../../../shared/img/banner/banner_store.png')}/>
-        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'store__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_GON}`)
-        }}/>
+        {/*<ButtonNew showDeco={ButtonNew.deco.BOTH} className={'store__banner-btn'} label={_t('build_model')} onClick={() => {*/}
+          {/*this.props.history.push(`/${URLS.BUILD_GON}`)*/}
+        {/*}}/>*/}
       </div>,
     ])
   }
