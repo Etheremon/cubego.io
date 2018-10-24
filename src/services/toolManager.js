@@ -132,15 +132,26 @@ export class ToolManager {
     }
   }
 
-  convertToSpaceSize(modelSize) {
+  convertToSpaceSize(modelSize, oldSpaceSize, k) {
+    if (!oldSpaceSize) oldSpaceSize = modelSize;
+
     let x = modelSize[0], y = modelSize[1];
-    if (y-x+1 < 12) {
-      let val = 12 - (y-x+1);
-      return [x-Math.floor(val/2), y+Math.ceil(val/2)]
-    }
     if (y-x+1 < 40) x -= 1;
     if (y-x+1 < 40) y += 1;
-    return [x, y];
+
+
+    if (y-x+1 < 12) {
+      if (oldSpaceSize[1]-oldSpaceSize[0]+1 === 12) {
+        return [oldSpaceSize[0], oldSpaceSize[1]];
+      } else {
+        let v = 12-(y-x+1);
+        x -= Math.ceil(v/2);
+        y += Math.floor(v/2);
+        return [x, y]
+      }
+    } else {
+      return [x, y];
+    }
   }
 
   updateCurrent() {
@@ -166,7 +177,7 @@ export class ToolManager {
         modelSize[k][0] = 0;
         modelSize[k][1] = 0;
       }
-      spaceSize[k] = this.convertToSpaceSize(modelSize[k]);
+      spaceSize[k] = this.convertToSpaceSize(modelSize[k], (this._model.spaceSize||{})[k], k);
     });
 
     let idx = Utils.BoundVal(this._tools['layer-index'].value, spaceSize[z[1]][0], spaceSize[z[1]][1]);
