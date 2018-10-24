@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   Animation,
   ArcRotateCamera,
-  GUI, GUIImage, GUISimpleButton,
+  GUI, GUIImage, GUIImageButton, GUISimpleButton,
   HemisphericLight,
   MeshContainer,
   PointLight, Skybox,
@@ -249,18 +249,21 @@ class VoxBattle extends Component {
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         {/*<Axis size={5}/>*/}
         <GUI>
-          <GUIImage url={require('../../shared/img/game_ui/open.png')} width={'960px'} height={'540px'} ref={(image) => {
+          <GUIImage image={require('../../shared/img/game_ui/open.png')} width={'960px'} height={'540px'} ref={(image) => {
             this.startImage = image
           }}/>
-          <GUIImage url={require('../../shared/img/game_ui/result.png')} width={'960px'} height={'540px'} visible={false} ref={(image) => {
+          <GUIImage image={require('../../shared/img/game_ui/battle-result.png')} width={'542px'} height={'489px'} visible={false} ref={(image) => {
             this.resultImage = image
           }}/>
 
-          <GUISimpleButton left={'0px'} top={'200px'} value={'REPLAY GAME'} onClick={this.restartGame} width={'200px'}
+          <GUIImageButton left={'0px'} top={'200px'} value={'REPLAY GAME'} onClick={this.restartGame} width={'200px'}
+                          image={require('../../shared/img/game_ui/replay_game.png')} height={'75px'}
                            ref={(button) => {
                              this.rePlayBtn = button
                            }} visible={false}/>
-          <GUISimpleButton left={'0px'} top={'200px'} value={'START GAME'} onClick={this.startGame} width={'200px'} ref={(button) => {
+          <GUIImageButton left={'0px'} top={'200px'} value={'START GAME'} onClick={this.startGame} width={'200px'}
+                          image={require('../../shared/img/game_ui/start_game.png')} height={'75px'}
+                          ref={(button) => {
             this.startBtn = button
           }}/>
 

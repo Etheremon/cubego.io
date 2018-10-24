@@ -5,6 +5,7 @@ export class ThreeOrthographicCamera extends ThreeComponent {
   constructor() {
     super();
     this.requestAnimationFrameId = null;
+    this.orbitControl = null;
   }
 
   static create({renderer, canvas, scene}, props) {
@@ -17,7 +18,11 @@ export class ThreeOrthographicCamera extends ThreeComponent {
       camera.lookAt(props.lookAt.x, props.lookAt.y, props.lookAt.z);
     }
     let controls = new window.THREE.OrbitControls(camera, canvas);
+    if (props.orbitControlTarget) {
+      controls.target.set(props.orbitControlTarget.x, props.orbitControlTarget.y, props.orbitControlTarget.z);
+    }
     controls.update();
+    threeCamera.orbitControl = controls;
     const animate = () => {
       threeCamera.requestAnimationFrameId = requestAnimationFrame(animate);
       controls.update();
@@ -31,5 +36,9 @@ export class ThreeOrthographicCamera extends ThreeComponent {
 
   lookAt(position) {
     this.renderer.lookAt(position.x, position.y, position.z);
+  }
+
+  set orbitControlTarget(target) {
+    this.orbitControl.target.set(target.x, target.y, target.z);
   }
 }

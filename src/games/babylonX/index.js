@@ -57,6 +57,7 @@ export const Plane = TYPES.PLANE;
 export const Skybox = TYPES.SKY_BOX;
 export const GUI = TYPES.GUI;
 export const GUISimpleButton = TYPES.GUI_SIMPLE_BUTTON;
+export const GUIImageButton = TYPES.GUI_IMAGE_BUTTON;
 export const GUIImage = TYPES.GUI_IMAGE;
 export const HTMLGUIButton = TYPES.CASTOR_GUI_BUTTON;
 export const HTMLGUIImage = TYPES.CASTOR_GUI_TEXTURE;
