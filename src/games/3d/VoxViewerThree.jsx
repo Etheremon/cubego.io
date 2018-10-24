@@ -20,6 +20,7 @@ import silverMaterialConfig from './materials/Silver.json';
 import stoneMaterialConfig from './materials/Stone.json';
 import woodMaterialConfig from './materials/Wood.json';
 import {GetValues} from "../../utils/objUtils";
+import {ObjIsEmpty} from "../../utils/utils";
 
 const SIZE = 50;
 const SELECT_TOOL = 'move';
@@ -58,14 +59,17 @@ class VoxViewerThree extends Component {
     if (!voxelData.voxels) {
       return [];
     }
-    let sizeX = voxelData.spaceSize.x[1] - voxelData.spaceSize.x[0] + 1;
-    let sizeY = voxelData.spaceSize.y[1] - voxelData.spaceSize.y[0] + 1;
+    let size = {};
+    size.x = voxelData.spaceSize.x[1] - voxelData.spaceSize.x[0] + 1;
+    size.y = voxelData.spaceSize.y[1] - voxelData.spaceSize.y[0] + 1;
+    size.z = voxelData.spaceSize.z[1] - voxelData.spaceSize.z[0] + 1;
+
     this.updateGridIdx++;
     let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE / 2;
     let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
 
     let elements = !this.props.viewOnly
-      ? [<Grid width={sizeY * SIZE / 2} height={sizeX * SIZE / 2} linesHeight={sizeX} linesWidth={sizeY}
+      ? [<Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
                color1={0xffffff} color2={0xffffff}
                position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
                key={`grid-${this.updateGridIdx}`}/>]
@@ -76,11 +80,23 @@ class VoxViewerThree extends Component {
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
-      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey} highlight={this.isSelectedLayer(voxel)}
+      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
                              ref={(ref) => this.objects.push(ref)} variantColor={voxel.color.color}
                              position={position} variantEmissive={voxel.color.emissive}
-                             key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>)
+                             key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });
+
+    if (!this.props.viewOnly) {
+      let hPos = {};
+      let hSize = {};
+      let correctLabel = {x: 'x', y: 'z', z: 'y'};
+      ['x', 'y', 'z'].forEach((k) => {
+        hSize[correctLabel[k]] = (k === this.selectedDimension) ? SIZE : size[k] * SIZE;
+        hPos[correctLabel[k]] = (k === this.selectedDimension) ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]] : 0;
+      });
+      elements.push(<MeshBox size={hSize} position={hPos} color={'ffffff'} opacity={0.15}
+                             key={`highlight-layer-${this.selectedDimension}`}/>);
+    }
 
     return elements;
   }
@@ -178,7 +194,7 @@ class VoxViewerThree extends Component {
     if (this.props.data) {
       this.setNewVoxelData(this.props.data);
     }
-    if (this.props.tools) {
+    if (this.props.tools && !ObjIsEmpty(this.props.tools)) {
       this.setNewTools(this.props.tools);
     }
   }
@@ -301,11 +317,11 @@ class VoxViewerThree extends Component {
           }} wireFrameColor='000000'/> : null
         }
 
-        {!this.props.viewOnly ?
-          <BoxHelper ref={(ref) => {
-            this.boxHelper = ref
-          }}/> : null
-        }
+        {/*{!this.props.viewOnly ?*/}
+          {/*<BoxHelper ref={(ref) => {*/}
+            {/*this.boxHelper = ref*/}
+          {/*}}/> : null*/}
+        {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
     );

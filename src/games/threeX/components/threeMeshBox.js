@@ -15,7 +15,9 @@ export class ThreeMeshBox extends ThreeComponent {
     let meshContainer = new ThreeMeshBox();
     let size = props.size || 10;
     let color = parseInt(props.color, 16);
-    let boxGeo = new window.THREE.BoxBufferGeometry(size, size, size);
+    let boxGeo = typeof(size) === 'number'
+      ? new window.THREE.BoxBufferGeometry(size, size, size)
+      : new window.THREE.BoxBufferGeometry(size.x, size.y, size.z);
     let material = null;
 
     if (props.materialId) {
@@ -32,15 +34,18 @@ export class ThreeMeshBox extends ThreeComponent {
     } else {
       material = new window.THREE.MeshBasicMaterial({color: color, transparent: true});
     }
-    if (props.highlight) {
-      material.opacity = 0.8;
+    if (props.opacity) {
+      material.opacity = props.opacity;
     }
     let cubeMesh = new window.THREE.Mesh(boxGeo, material);
     let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'ffffff';
     let wireFrameColor = parseInt(frameColor, 16);
-    let boxHelper = new window.THREE.BoxHelper(cubeMesh, wireFrameColor);
 
-    cubeMesh.add(boxHelper);
+    if (!props.noBox) {
+      let boxHelper = new window.THREE.BoxHelper(cubeMesh, wireFrameColor);
+      cubeMesh.add(boxHelper);
+    }
+
     if (props.position) {
       cubeMesh.position.set(props.position.x, props.position.y, props.position.z);
     }
