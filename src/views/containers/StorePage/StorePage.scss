@@ -1,0 +1,189 @@
+@import '../../styles/mixins';
+@import '../../styles/colors';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.store-page__container {
+  margin-top: 60px;
+  margin-bottom: 32px;
+  text-align: center;
+
+  .countdown__container {
+    margin: 44px;
+  }
+
+  .store__banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    .store__banner-item {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      @include mobile {
+        height: 320px;
+      }
+      img {
+        position: absolute;
+        height: 100%;
+        display: block;
+        left: 50%;
+        object-fit: cover;
+        @include transform(translateX(-50%));
+      }
+      .store__banner-btn {
+        position: absolute;
+        left: 50%;
+        @include transform(translateX(-50%));
+        bottom: 50px;
+      }
+    }
+  }
+
+  .store-page__main {
+    .pack-view__container {
+      margin-top: 64px;
+      margin-bottom: 44px;
+      padding: 24px 0;
+      text-align: center;
+      display: inline-block;
+      color: $white;
+      font-family: $f__baloobha;
+      background: rgba(25, 49, 77, 1);
+      border-radius: 5px;
+      position: relative;
+
+      .price__container {
+        display: flex;
+        flex-wrap: wrap;
+        .widget__text-image {
+          flex-grow: 1;
+          &:nth-child(1) {
+            border-right: 1px solid $white;
+          }
+        }
+      }
+
+      .header__label {
+        font-size: $font-size-large;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 50px;
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .total-quantity {
+        margin-top: 24px;
+        font-size: $font-size-header-1;
+      }
+
+      .combo-detail__container {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .chest__image {
+          width: auto;
+          height: auto;
+          display: inline-block;
+        }
+
+        .cubego__listview {
+          display: flex;
+          flex-wrap: wrap;
+          width: 300px;
+
+          .cubego__item {
+            box-sizing: border-box;
+            // padding: 0 8px;
+            width: 33%;
+            height: auto;
+            position: relative;
+
+            .quantity {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            .image__container {
+              width: 100%;
+              position: relative;
+              img {
+                width: 100%;
+                height: auto;
+              }
+            }
+          }
+        }
+      }
+
+      .parallelogram__container {
+        background: $regal_blue;
+        width: 250px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -8px;
+    
+        .content {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) skewX(-20deg);
+          color: $white;
+          font-family: $f__baloobha;
+          font-size: $font-size-large;
+          width: 100%;
+        }
+    
+        .main-content {
+          top: 2px;
+          position: relative;
+          transform: skewX(20deg);
+          height: 44px;
+          width: calc(100% + 16px);
+          left: -8px;
+          background: $regal_blue;
+          overflow: hidden;
+          z-index: 2;
+        }
+    
+        .border-layer {
+          position: absolute;
+          transform: translate(-50%, -50%);
+          height: calc(100% - 8px);
+          width: calc(100% - 8px);
+          left: 50%;
+          top: 50%;
+          z-index: 3;
+          box-sizing: border-box;
+          border: 1px solid $white;
+        }
+    
+        .shadow-layer {
+          position: absolute;
+          left: -8px;
+          width: calc(100% + 16px);
+          height: 60%;
+          background: rgba(69, 103, 120, 1);
+          clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
+          z-index: 1;
+        }
+        
+      }
+
+    }
+  }
+
+}

@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
+import { Pentagon } from '../SVGManager/SVGManager.jsx';
 
 require("style-loader!./TabsView.scss");
 
@@ -24,6 +25,8 @@ class TabsView extends React.Component {
             <div key={idx}
                  className={`${selectedTab === tab.key ? "active" : ""} item`}
                  onClick={() => {handleOnTabSelect && handleOnTabSelect(tab.key)}}>
+                 <Pentagon active={selectedTab === tab.key} />
+                 {/* <img src={require(`../../../shared/img/icons/icon-tab${selectedTab === tab.key ? "-active" : ""}.svg`)}/> */}
                  <span>{tab.content}</span>
             </div>
           ))}

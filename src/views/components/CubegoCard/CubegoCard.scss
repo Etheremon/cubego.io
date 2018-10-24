@@ -43,7 +43,7 @@
     }
   }
 
-  .type__container {
+  .parallelogram__container {
     position: relative;
     background: $regal_blue;
 
@@ -57,7 +57,7 @@
       font-size: $font-size-large;
     }
 
-    .type-content {
+    .main-content {
       top: 2px;
       position: relative;
       transform: skewX(20deg);

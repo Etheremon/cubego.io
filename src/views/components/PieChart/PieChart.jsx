@@ -41,7 +41,7 @@ class Slice extends React.Component {
   }
   
 	animate () {
-		this.draw(0);
+		this.draw(this.props.angle);
   }
   
 	draw (s) {

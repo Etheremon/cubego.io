@@ -53,9 +53,9 @@ class CubegonCard extends React.Component {
             <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={'10/40+'} onClick={() => {}}/>
           </div>
 
-          <div className="type__container">
+          <div className="parallelogram__container">
           
-            <div className="type-content">
+            <div className="main-content">
               <div className="content">
                 Vexigon
               </div>

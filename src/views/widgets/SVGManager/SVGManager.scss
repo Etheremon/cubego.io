@@ -1,0 +1,23 @@
+
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+#quantity-bar__next-button {
+  &:hover ~ #plus {
+    stroke: $white;
+  }
+}
+
+#plus, #subtract {
+  &:hover {
+    stroke: $white;
+  }
+}
+
+#quantity-bar__prev-button {
+  &:hover ~ #subtract {
+    stroke: $white;
+  }
+}

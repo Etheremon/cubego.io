@@ -27,8 +27,8 @@ class CubegoCard extends React.Component {
             {`${_t('Quantity')}:`}
             <span>{quantity}</span>
           </div>
-          <div className="type__container">
-            <div className="type-content">
+          <div className="parallelogram__container">
+            <div className="main-content">
               <div className="content">
               {type}
               </div>

@@ -24,6 +24,8 @@ import {AuthActions} from "../../../actions/auth";
 import SignUp from '../SignIn/SigInForm/SignInForm.jsx';
 import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
 import {BattlePage} from "../BattlePage/BattlePage.jsx";
+import StorePage from "../StorePage/StorePage.jsx";
+
 
 require("style-loader!./App.scss");
 
@@ -109,7 +111,7 @@ class App extends React.Component {
           <Route path={`/${URLS.CUBEGONS}`} component={MyCubegoes}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
-          <Route path={`/${URLS.STORE}`} component={ComingSoon}/>
+          <Route path={`/${URLS.STORE}`} component={StorePage}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>

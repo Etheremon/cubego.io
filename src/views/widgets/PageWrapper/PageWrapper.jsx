@@ -17,6 +17,7 @@ PageWrapper.types = {
   DARK: 'dark',
   BLUE: 'blue',
   BLUE_DARK: 'blue-dark',
+  GRADIENT_BLUE: 'gradient-blue',
 };
 
 PageWrapper.defaultProps = {

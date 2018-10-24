@@ -40,8 +40,6 @@ class ModelDetail extends React.Component {
   render() {
     const {_t, gonInfo, userInfo} = this.props;
 
-    console.log("zzzz", gonInfo);
-
     const {allowChangeName} = this.state;
 
     const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '45', label: 'win'},
@@ -73,16 +71,18 @@ class ModelDetail extends React.Component {
 
               <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
                 <div className="model-logo__container">
-                  <div className="hexagon-img">
-                    {/*<Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null*/}
-                  </div>
+                  {/* <div className="hexagon-img">
+                    <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
+                  </div> */}
                   <img src={require('../../../shared/img/types/earth.png')} />
                 </div>
                 <span>
-                  <input type="text" defaultValue={'VEXIGON'} value={this.cubegonName} size={10} disabled={!allowChangeName} onChange={() => {}}/>
-                  <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
-                    this.setState({ allowChangeName: !allowChangeName })
-                  }}/> 
+                  <input type="text" defaultValue={'VEXIGON'} size={10} onChange={() => {}}
+                  onFocus={() => {this.setState({allowChangeName: true})}}
+                  onBlur={() => {this.setState({allowChangeName: false})}}
+                  ref={(input) => {this.cubegonName = input}}
+                  />
+                  <img src={require('../../../shared/img/icons/icon_pencil.png')} /> 
                 </span>
               </div>
 

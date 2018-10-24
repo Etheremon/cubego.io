@@ -61,3 +61,21 @@
     text-transform: capitalize;
   }
 }
+
+.widget__text-image {
+  &.uppercase {
+    text-transform: uppercase;
+  }
+  &.capitalize {
+    text-transform: capitalize;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    height: 24px !important;
+    width: auto !important;
+    margin-left: 8px !important;
+  }
+}

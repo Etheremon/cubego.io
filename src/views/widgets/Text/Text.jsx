@@ -31,3 +31,12 @@ Text.defaultProps = {
 Text.propTypes = {
   type: PropTypes.oneOf([...GetValues(Text.types)]),
 };
+
+export const TextImage = ({className, text, imgSource, uppercase, capitalize}) => {
+  return (
+    <div className={`widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`}>
+      <span>{text}</span>
+      <img src={imgSource}/>
+    </div>
+  )
+}

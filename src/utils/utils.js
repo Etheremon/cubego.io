@@ -312,3 +312,21 @@ export const clamp = (value, min, max) => {
  export const nearestPosition = (value, range, offSet) => {
    return range.find(ele => Math.abs(value - ele) <= offSet)
  }
+
+ /**
+ * convert time
+ */
+export const ConvertTimeUnix = (fromDay, toDay) => {
+  let from = new Date(fromDay);
+  let to = new Date(toDay);
+  let seconds = to.getTime() - from.getTime();
+  seconds = seconds / 1000;
+  let days = Math.floor(seconds / (3600*24));
+  seconds  -= days*3600*24;
+  let hrs   = Math.floor(seconds / 3600);
+  seconds  -= hrs*3600;
+  let mnts = Math.floor(seconds / 60);
+  seconds  -= mnts*60;
+  seconds = parseInt(seconds)
+  return {days: days, hours: hrs, minutes: mnts, seconds: seconds};
+}
