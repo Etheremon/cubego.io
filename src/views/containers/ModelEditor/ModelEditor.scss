@@ -214,6 +214,7 @@
       justify-content: center;
       overflow: auto;
       background-color: #edfbee;
+      @include smooth-scroll;
     }
 
     .model-editor__2d-zoom {

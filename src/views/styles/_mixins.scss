@@ -96,6 +96,10 @@ $computer-width: 992px;
   }
 }
 
+@mixin smooth-scroll() {
+  -webkit-overflow-scrolling: touch;
+}
+
 // no scroll bar
 @mixin no-scroll-bar() {
   &::-webkit-scrollbar {

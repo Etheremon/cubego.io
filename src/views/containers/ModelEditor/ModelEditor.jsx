@@ -229,7 +229,7 @@ class _ModelEditor extends React.Component {
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
-      if (this.toolManager.stats.cost && this.toolManager.stats.total_cost < 0) {
+      if (this.toolManager.stats.total_cost < 0) {
         this.setState({
           validating: false,
           showModelReview: true,
@@ -528,7 +528,7 @@ class _ModelEditor extends React.Component {
                 </div>
 
                 <div className={'stat'}
-                     tooltip={_t('estimated cost')}
+                     tooltip={isNaN(parseInt(totalCost)) ? undefined : _t('estimated cost')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-ether.png')}/>
                   {totalCost}
@@ -561,7 +561,7 @@ class _ModelEditor extends React.Component {
               </div>
 
               <div className={'model-editor__right'}>
-                <div className={'model-editor__2d'}>
+                <div className={'model-editor__2d'} onWheel={(e) => {e.stopPropagation();}}>
                   <Layer2D layer={this.toolManager.layer}
                            style={{transform: `scale(${this.state.scale2D})`}}
                            tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
@@ -666,7 +666,7 @@ const mapStateToProps = (store, props) => {
       9: 0,
       10: 0,
       11: 0,
-      12: 400,
+      12: 300,
     },
   }
 };
