@@ -3,8 +3,28 @@
 @import '../../../styles/variables';
 @import '../../../styles/fonts';
 
+@keyframes store__blinking {
+  0%   {
+    box-shadow: 0 0 60px -10px #fcff93;
+  }
+  50%   {
+    box-shadow: 0 0 75px -10px #fcff93;
+  }
+  100%   {
+    box-shadow: 0 0 60px -10px #fcff93;
+  }
+}
+
 .cubegoes-view__container {
   .pack-view__container {
+    cursor: pointer;
+    &:hover {
+      .chest__image {
+        @include flip-up-down(2s);
+      }
+    }
+
+    @include animation-keyframes(store__blinking, 2s);
     margin-top: 64px;
     margin-bottom: 44px;
     padding: 24px 0;
@@ -23,6 +43,7 @@
       display: flex;
       flex-wrap: wrap;
       .widget__text-image {
+        padding-top: 3px;
         flex-grow: 1;
         &:nth-child(1) {
           border-right: 1px solid $white;
@@ -31,7 +52,6 @@
     }
 
     .header__label {
-      font-size: $font-size-large;
       position: absolute;
       top: 0;
       left: 50%;
@@ -39,27 +59,32 @@
       height: 50px;
 
       span {
+        padding-top: 4px;
+        font-size: $font-size-header-1;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        width: 100%;
+        color: $c__text__neon;
       }
     }
 
     .total-quantity {
       margin-top: 24px;
-      font-size: $font-size-header-1;
+      font-size: $font-size-header-2;
     }
 
     .combo-detail__container {
       display: inline-flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
+      padding-top: 12px;
 
       .chest__image {
-        width: auto;
-        height: auto;
-        display: inline-block;
+        width: 380px;
+        max-width: 100%;
       }
 
       .cubego__listview {
@@ -69,7 +94,7 @@
 
         .cubego__item {
           box-sizing: border-box;
-          // padding: 0 8px;
+          padding: 8px 4px;
           width: 33%;
           height: auto;
           position: relative;
@@ -79,18 +104,20 @@
           }
 
           .quantity {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            font-size: $font-size-large;
+            margin-top: -6px;
           }
 
           .image__container {
-            width: 100%;
+            margin: 0 auto;
+            max-width: 100%;
+            width: 70px;
             position: relative;
             img {
               width: 100%;
               height: auto;
+              position: relative;
+              z-index: 1;
             }
           }
         }
@@ -155,12 +182,16 @@
   }
   
   .pack-detail__container {
+    padding-top: 30px;
+
     .cubego__listview {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
   
       .item {
-        width: 33%;
+        width: 260px;
+        max-width: 100%;
         padding: 36px 24px;
         box-sizing: border-box;
         position: relative;

@@ -24,7 +24,7 @@ class StoreCubegoCard extends React.Component {
     return(
       <div className={`store-cubego-card__container ${className && className} ${tier}`}  onClick={() => { onClick && onClick() }}>
           {/* <img className={'background__image'} src={require(`../../../../shared/img/background/cubegon_background/${'background_air'}.png`)} /> */}
-          <img src={require(`../../../../shared/img/store_cubegoes/${type}.png`)}/>
+          <img className={'cube-img'} src={require(`../../../../shared/img/store_cubegoes/${type}.png`)}/>
           <div className="header__label">
             <CustomRectangle tier={tier}/>
             <span>{`${type} Pack`}</span>
@@ -35,9 +35,7 @@ class StoreCubegoCard extends React.Component {
             }
           </div>
           <div className="power-score">
-            {
-              `${_t('power_score')}: ${power}/Cubego`
-            }
+            {_t('power_score')}: <span>{power}</span>/{_t('cubego')}
           </div>
           <div className="parallelogram__container">
             <div className="main-content">

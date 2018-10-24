@@ -14,6 +14,12 @@
   position: relative;
   color: $white;
   font-family: $f__baloobha;
+  cursor: pointer;
+  &:hover {
+    .cube-img {
+      @include flip-up-down(2.5s);
+    }
+  }
 
   &.epic {
     border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
@@ -54,21 +60,22 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      color: $white;
       font-size: $font-size-large;
       white-space: nowrap;
+      color: $c__text__neon;
+      text-transform: capitalize;
     }
   }
 
-  
-
-
-  img {
+  .cube-img {
     display: block;
-    width: 100%;
+    max-width: 100%;
+    width: 180px;
     height: auto;
+    margin: 0 auto;
     position: relative;
     z-index: 1;
+    padding-top: 60px;
   }
 
   .background__image {
@@ -82,16 +89,21 @@
   .quantity {
     position: relative;
     z-index: 1;
-    font-size: $font-size-big;
-    padding: 8px 0;
+    font-size: $font-size-header-1;
+    padding-top: 6px;
     text-transform: capitalize;
   }
 
   .power-score {
     position: relative;
     z-index: 1;
-    font-size: $font-size-bigger;
+    font-size: $font-size-normal;
     padding: 8px 0;
+    color: $c__text__neon;
+
+    span {
+      font-size: $font-size-large;
+    }
   }
 
   .parallelogram__container {
@@ -109,9 +121,11 @@
 
       .price__container {
         display: flex;
-        flex-wrap: wrap;
         .widget__text-image {
           flex-grow: 1;
+          display: flex;
+          align-items: center;
+          padding-top: 3px;
           &:nth-child(1) {
             border-right: 1px solid $white;
           }

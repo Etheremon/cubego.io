@@ -71,7 +71,7 @@ class StorePage extends React.Component {
             }
 
           </Container>
-        </div>12
+        </div>
 
         <Footer type={Footer.types.DARK} />
       </PageWrapper>
