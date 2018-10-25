@@ -10,12 +10,12 @@
   color: $white;
   text-align: right;
   padding-top: 60px;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 
   .model-editor__tool-bar {
     position: relative;
     display: flex;
-    margin: 24px -8px 0 -8px;
+    margin: 32px -8px 0 -8px;
     justify-content: space-between;
     @include mobile {
       flex-wrap: wrap;
@@ -62,7 +62,7 @@
   }
 
   .model-editor__stats {
-    margin-top: 16px;
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -90,7 +90,7 @@
         font-size: $font-size-small;
 
         img {
-          height: 30px;
+          height: 26px;
           margin-right: 4px;
         }
       }
@@ -108,7 +108,7 @@
         padding-left: 20px;
         font-weight: $font-weight-black;
         img {
-          height: 30px;
+          height: 26px;
           margin-right: 8px;
         }
       }
@@ -116,21 +116,21 @@
   }
 
   .model-editor__tier-bar {
-    margin-top: 16px;
-    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-bottom: 16px;
     background-color: rgba(255, 255, 255, 0.3);
     height: 6px;
     position: relative;
     z-index: 3;
-    @include border-radius-without-overflow(2px);
+    @include border-radius-without-overflow(8px);
 
     .bar {
       position: absolute;
       top: 0;
       left: 0;
       bottom: 0;
-      background-color: $c__orange-1;
-      @include border-radius-without-overflow(2px);
+      background-color: rgb(29, 220, 244);
+      @include border-radius-without-overflow(8px);
       @include transition-duration;
       max-width: 100%;
     }
@@ -239,6 +239,7 @@
   }
 
   .model-editor__material {
+    margin-top: 8px;
     display: flex;
     @include mobile {
       flex-wrap: wrap;
@@ -256,7 +257,7 @@
       box-sizing: content-box;
       cursor: pointer;
       img {
-        height: 30px;
+        height: 26px;
         margin-right: 4px;
       }
 

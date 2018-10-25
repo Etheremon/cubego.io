@@ -36,4 +36,12 @@
     -o-background-size: cover;
     background-size: cover;
   }
+
+  &.blue-new {
+    background: url('../../../shared/img/background/background-new.jpg') repeat center center;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -o-background-size: 100% auto;
+    background-size: 100% auto;
+  }
 }

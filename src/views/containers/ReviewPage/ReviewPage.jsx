@@ -121,7 +121,7 @@ class ReviewPage extends React.Component {
                             label: 'stats range'}];
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
 
         <Navbar minifying />
 

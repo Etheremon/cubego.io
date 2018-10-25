@@ -342,7 +342,7 @@ class _ModelEditor extends React.Component {
     }
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
