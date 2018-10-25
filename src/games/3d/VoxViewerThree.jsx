@@ -95,7 +95,7 @@ class VoxViewerThree extends Component {
       let hSize = {};
       let correctLabel = {x: 'x', y: 'z', z: 'y'};
       ['x', 'y', 'z'].forEach((k) => {
-        hSize[correctLabel[k]] = (k === this.selectedDimension) ? SIZE : size[k] * SIZE;
+        hSize[correctLabel[k]] = (k === this.selectedDimension) ? SIZE + 1 : size[k] * SIZE;
         hPos[correctLabel[k]] = (k === this.selectedDimension)
           ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]]
           : SIZE * (voxelData.spaceSize[k][1] + voxelData.spaceSize[k][0]) / 2 - this.offsetVector[correctLabel[k]] + SIZE / 2;
