@@ -6,10 +6,13 @@
 .header-bar {
   height: 40px;
   width: 100%;
-  background-color: #00000030;
+  //background-color: #00000030;
+  @include gradient-directional(#305cd6, #27a5c1, 360deg);
   color: $white;
-  z-index: 1000;
-  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  //overflow: hidden;
+  box-shadow: 0 0 20px 0 rgb(0, 0, 0);
 
   .header-bar__container {
     height: 100%;
@@ -39,7 +42,7 @@
         left: 0;
         right: 0;
         padding-top: 100px;
-        background-color: #00000040;
+        background-color: #00000060;
         @include transform(rotate(20deg));
         transform-origin: 100% 0;
       }
@@ -71,7 +74,13 @@
           margin-left: 30px;
           font-family: $f__baloobha;
           font-size: $font-size-large;
+          color: $white;
 
+          .text {
+            position: relative;
+            z-index: 1;
+            color: $white;
+          }
           .bgr {
             position: absolute;
             top: 0;
@@ -79,6 +88,7 @@
             right: 0;
             left: 0;
             overflow: hidden;
+            z-index: 0;
 
             &:before {
               content: "";

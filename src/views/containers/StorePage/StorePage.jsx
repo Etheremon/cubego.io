@@ -17,7 +17,7 @@ import Countdown from '../../widgets/Countdown/Countdown.jsx';
 
 require("style-loader!./StorePage.scss");
 
-const storeTabs = [ {key: 'cubegons', content: 'cubegons'}, {key: 'cubegoes', content: 'cubegoes'}];
+const storeTabs = [ {key: 'cubegons', content: 'cubegons'}];//, {key: 'cubegoes', content: 'cubegoes'}];
 
 class StorePage extends React.Component {
 
@@ -25,7 +25,7 @@ class StorePage extends React.Component {
     super(props);
     this.state = {
       selectedItem: -1,
-    }
+    };
 
     this.renderBanner = this.renderBanner.bind(this);
   }
@@ -47,7 +47,7 @@ class StorePage extends React.Component {
     const {_t, query} = this.props;
 
     return (
-      <PageWrapper type={PageWrapper.types.GRADIENT_BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar minifying />
 
         <div className="store-page__container">
@@ -67,7 +67,8 @@ class StorePage extends React.Component {
 
           <Container className={'store-page__main'}>
             {
-              query.tab === storeTabs[0].key ? <CubegoesView /> : null
+              // query.tab === storeTabs[1].key ? <CubegoesView history={this.props.history} /> : null
+              <CubegoesView history={this.props.history} />
             }
 
           </Container>

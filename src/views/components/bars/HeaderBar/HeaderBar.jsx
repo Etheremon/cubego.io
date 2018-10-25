@@ -28,12 +28,12 @@ export const HeaderBar = ({className, label, userInfo, onBackClicked, size}) => 
             <div className={'item'}>
               <div className={'bgr'}/>
               <img src={require('../../../../shared/img/icons/icon-emont.png')}/>
-              {userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_emont, 4) : 0}
+              <div className={'text'}>{userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_emont, 4) : 0}</div>
             </div>
             <div className={'item'}>
               <div className={'bgr'}/>
               <img src={require('../../../../shared/img/icons/icon-ether.png')}/>
-              {userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_eth, 6) : 0}
+              <div className={'text'}>{userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_eth, 6) : 0}</div>
             </div>
           </div>
         </div>

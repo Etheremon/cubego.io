@@ -121,7 +121,7 @@ class ReviewPage extends React.Component {
                             label: 'stats range'}];
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
 
         <Navbar minifying />
 
@@ -208,7 +208,7 @@ class ReviewPage extends React.Component {
                         <tr key={idx}>
                           <td>
                             <div className="cube">
-                              <img src={material.img}/>
+                              <img src={material.icon}/>
                               {_t(material.name)}
                             </div>
                           </td>

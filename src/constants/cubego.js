@@ -320,6 +320,7 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
     ...cube,
     class_id: parseInt(cKey),
     img: require(`../shared/img/cubegoes/${Utils.AddHeadingZero(cKey, 3)}.png`),
+    icon: require(`../shared/img/cubego-icons/${Utils.AddHeadingZero(cKey, 3)}.png`),
     variants: ObjUtils.CloneWithModify(cube.variants, (vKey, variant) => ({
       ...variant,
       material_id: parseInt(cKey),

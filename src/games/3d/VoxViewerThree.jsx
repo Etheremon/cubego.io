@@ -30,6 +30,7 @@ const PAINT_TOOL = 'paint';
 const ERASE_TOOL = 'erase';
 const TOOL_KEYS = [SELECT_TOOL, DRAW_TOOL, PAINT_TOOL, ERASE_TOOL];
 const ARROW_DISTANCE = 100;
+
 class VoxViewerThree extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +91,7 @@ class VoxViewerThree extends Component {
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });
 
-    if (!this.props.viewOnly) {
+    if (!this.props.viewOnly && this.state.showLayer) {
       let hPos = {};
       let hSize = {};
       let correctLabel = {x: 'x', y: 'z', z: 'y'};
@@ -130,6 +131,10 @@ class VoxViewerThree extends Component {
     }
     this.calculateSelectedLayer();
     this.forceUpdate();
+  }
+
+  toggleLayer(isShowingLayer) {
+    this.setState({showLayer: isShowingLayer});
   }
 
   calculateSelectedLayer() {
@@ -202,6 +207,7 @@ class VoxViewerThree extends Component {
     if (this.props.tools && !ObjIsEmpty(this.props.tools)) {
       this.setNewTools(this.props.tools);
     }
+    this.toggleLayer(!!this.props.showLayer);
   }
 
   destroy() {
@@ -307,8 +313,7 @@ class VoxViewerThree extends Component {
 
   render() {
     if (this.state.unMounted) {
-      console.log('garbage collector');
-      return null;
+      return <MeshContainer/>;
     }
 
     return (
@@ -336,9 +341,9 @@ class VoxViewerThree extends Component {
         }
 
         {/*{!this.props.viewOnly ?*/}
-        {/*<BoxHelper ref={(ref) => {*/}
-        {/*this.boxHelper = ref*/}
-        {/*}}/> : null*/}
+          {/*<BoxHelper ref={(ref) => {*/}
+            {/*this.boxHelper = ref*/}
+          {/*}}/> : null*/}
         {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>

@@ -6,6 +6,8 @@ import StoreCubegoCard from '../StoreCubegoCard/StoreCubegoCard.jsx';
 import { TextImage } from '../../../widgets/Text/Text.jsx';
 import Popup from '../../../widgets/Popup/Popup.jsx';
 import { ButtonNew } from '../../../widgets/Button/Button.jsx';
+import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx';
+import { URLS } from '../../../../constants/general';
 
 require("style-loader!./CubegoesView.scss");
 
@@ -20,49 +22,110 @@ class CubegoesView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItem: -1, 
+      selectedItem: -1,
+      selectedPackObj: {},
     }
 
     this.renderPurchaseView = this.renderPurchaseView.bind(this);
+    this.renderPresaleView = this.renderPresaleView.bind(this);
+  }
+
+  renderPresaleView () {
+    const {_t} = this.props;
+    return (
+      <div className="presale-info__container">
+        <span>
+          {
+            _t('presale_info_on_store_page')
+          }
+        </span>
+        <ButtonNew className={'register__button'} label={_t('register')} onClick={() => {
+            this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+        }}/>
+      </div>
+    )
   }
 
   renderPurchaseView () {
     const {_t} = this.props;
     const item = presaleCubegoes[this.state.selectedItem];
+    const { selectedPackObj } = this.state;
+    const selectedPack = Object.keys(selectedPackObj)[0], selectedCurrency = selectedPackObj[selectedPack];
     return (
-      <div className="purchase__container">
+      <div className={`purchase__container ${item && item.tier || 'pack'}`}>
         <div className="header__container">
           <CustomRectangle tier={item && item.tier || 'pack'}/>
-          <span>{`${item && item.tier || 'Ultimate'} Pack`}</span>
+          <span>{`${item ? item.type : 'ultimate'} pack`}</span>
         </div>
         <div className="main__container">
           <div className="pack__listview">
             {
-              [1,3,6,9].map((ele, idx) => 
-                <div className="pack__item" key={idx}>
-                  <img src={require(`../../../../shared/img/store_cubegoes/${'gold'}.png`)}/>
-                  <div className="detail__label">
-                    <div className="header__label">
-                      {`${ele} Packs`}
+              [1,3,6,10].map((ele, idx) => {
+                return <div className="pack__item" key={idx} onClick={() => {
+                  if (selectedPack !== idx) {
+                    this.setState({
+                      selectedPackObj: {[`${idx}`]: 'ether'}
+                    })
+                  }
+                }}>
+                  <div className={`item__container ${selectedPack === `${idx}` ? 'active' : ''}`}>
+                    <div className="border-gradient__layer">
+                      <img src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
+                      <div className="detail__label">
+                        <div className="header__label">
+                          {`${ele} Packs`}
+                        </div>
+                        <div className="cubegoes-quantity__label">
+                          Cubegoes: 200
+                        </div>
+                      </div>
+                      <div className="purchase-action__container">
+                        <div className={`discount ${idx >= 2 ? 'visibility' : 'hidden'}`}>
+                          <TextImage text={0.5} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+                          <TextImage text={500} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
+                        </div>
+                        <div className="purchase__group-button">
+                          <Parallelogram className={'popup-parallelogram'} children={
+                            <div className="price__container">
+                                <TextImage 
+                                  className={`${selectedPack === `${idx}` && selectedCurrency === 'ether' ? 'active' : ''}`}
+                                  text={0.5} 
+                                  imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}
+                                  onClick={() => {
+                                    this.setState({
+                                      selectedPackObj: {[`${idx}`]: 'ether'}
+                                    })
+                                  }}
+                                />
+                                <TextImage 
+                                  className={`${selectedPack === `${idx}` && selectedCurrency === 'emont' ? 'active' : ''}`}
+                                  text={500} 
+                                  imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}
+                                  onClick={() => {
+                                    this.setState({
+                                      selectedPackObj: {[`${idx}`]: 'emont'}
+                                    }) 
+                                  }}
+                                />
+                            </div>
+                          }/>
+                        </div>
+                      </div>
                     </div>
-                    <div className="cubegoes-quantity__label">
-                      Cubegoes: 200
-                    </div>
-                  </div>
-                  <div className="purchase__group-button">
-                    <ButtonNew  onClick={() => {}}>
-                      <TextImage text={0.5} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
-                    </ButtonNew>
-                    <ButtonNew  onClick={() => {}}>
-                      <TextImage text={500} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
-                    </ButtonNew>
                   </div>
                 </div>
+                }
               )
             }
           </div>
-
-          <img className={'cubego__image'} src={require(`../../../../shared/img/store_cubegoes/${'gold'}.png`)}/>
+          <div className="confirm-action__container">
+            <img className={'cubego__image'} src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
+            <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
+              this.setState({
+                selectedItem: -2
+              })
+            }}/>
+          </div>
         </div>
       </div>
     )
@@ -82,7 +145,7 @@ class CubegoesView extends React.Component {
             180 Cubegoes
             </div>
             <div className="combo-detail__container">
-              <img src={require(`../../../../shared/img/assets/${'chest'}.png`)} className={'chest__image'} />
+              <img src={require(`../../../../shared/img/store_cubegoes/${'chest'}.png`)} className={'chest__image'} />
               <div className="cubego__listview">
                 {
                   presaleCubegoes.map((cubego, idx) => 
@@ -104,19 +167,12 @@ class CubegoesView extends React.Component {
               </div>
             </div>
 
-          <div className="parallelogram__container">
-            <div className="main-content">
-              <div className="content">
-                <div className="price__container">
-                  <TextImage text={0.5} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
-                  <TextImage text={500} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
-                </div>
-                
-              </div>
-              <div className="border-layer"></div>
+          <Parallelogram className={'pack-parallelogram'} children={
+            <div className="price__container">
+              <TextImage text={0.5} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+              <TextImage text={500} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
             </div>
-            <div className="shadow-layer"></div>
-          </div>
+          }/>
 
         </div>
 
@@ -134,9 +190,14 @@ class CubegoesView extends React.Component {
           </div>
         </div>
         
-        <Popup size={Popup.sizes.BIG} className={'popup-purchase'} onUnmount={() => {this.setState({selectedItem: -1})}}
-              open={this.state.selectedItem !== -1} >
+        <Popup className={'popup-purchase'} onUnmount={() => {this.setState({selectedItem: -1, selectedPack: {}})}}
+              open={this.state.selectedItem > -1} >
           {this.renderPurchaseView()}
+        </Popup>
+
+        <Popup  className={'popup-purchase'} onUnmount={() => {this.setState({selectedItem: -1, selectedPack: {}})}}
+              open={this.state.selectedItem === -2} >
+          {this.renderPresaleView()}
         </Popup>
       </div>
     )

@@ -170,7 +170,7 @@ class HomePage extends React.Component {
 
                   <div className={'image'} >
                     <div className={'img'}>
-                      <img className={'img-real'} src={require('../../../shared/img/banner/banner-copyright.png')}/>
+                      <img className={'img-real copyright'} src={require('../../../shared/img/banner/banner-copyright.png')}/>
                     </div>
                     {/*<div className={'img'}>*/}
                       {/*<SpriteSheet {...SpriteSource.COPYRIGHT}/>*/}
@@ -195,7 +195,7 @@ class HomePage extends React.Component {
     
                   <div className={'image'}>
                     <div className={'img'}>
-                      <img className={'img-real'} src={require('../../../shared/img/banner/banner-battle.png')}/>
+                      <img className={'img-real combat'} src={require('../../../shared/img/banner/battle_banner.png')}/>
                     </div>
                     {/*<div className={'img combat'}>*/}
                       {/*<SpriteSheet {...SpriteSource.BATTLE}/>*/}

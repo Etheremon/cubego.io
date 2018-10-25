@@ -158,6 +158,9 @@
       height: 320px;
       @include mobile {
         height: auto;
+        &:nth-child(1) {
+          margin-top: 40px;
+        }
       }
     }
 
@@ -276,9 +279,18 @@
 
           .img-real {
             width: 500px;
+            &.combat {
+              width: 600px;
+            }
+            &.copyright {
+              width: 420px;
+            }
             @include mobile {
               margin-top: 100px;
-              width: 240px;
+              width: 160px;
+              &.combat {
+                width: 220px;
+              }
             }
           }
           .widget__sprite-sheet {
