@@ -14,7 +14,9 @@
   position: relative;
   color: $white;
   font-family: $f__baloobha;
+  box-shadow: 0px 1px 65px 1px #07192B;
   cursor: pointer;
+
   &:hover {
     .cube-img {
       @include flip-up-down(2.5s);
@@ -25,7 +27,7 @@
     border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
     background: #05192C;
 
-    .parallelogram__container {
+    .parallelogram {
       background: #05192C;
       .main-content {
         background: #05192C;
@@ -37,7 +39,7 @@
     border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
     background: #15314E;
 
-    .parallelogram__container {
+    .parallelogram {
       background: #15314E;
       .main-content {
         background: #15314E;
@@ -106,65 +108,17 @@
     }
   }
 
-  .parallelogram__container {
-    position: relative;
-
-    .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) skewX(-20deg);
-      color: $white;
-      font-family: $f__baloobha;
-      font-size: $font-size-large;
-      width: 100%;
-
-      .price__container {
-        display: flex;
-        .widget__text-image {
-          flex-grow: 1;
-          display: flex;
-          align-items: center;
-          padding-top: 3px;
-          &:nth-child(1) {
-            border-right: 1px solid $white;
-          }
+  .parallelogram {
+    bottom: -5px;
+    .price__container {
+      display: flex;
+      .widget__text-image {
+        flex-grow: 1;
+        padding-top: 3px;
+        &:nth-child(1) {
+          border-right: 1px solid $white;
         }
       }
     }
-
-    .main-content {
-      top: 5px;
-      position: relative;
-      transform: skewX(20deg);
-      height: 44px;
-      width: calc(100% + 26px);
-      left: -13px;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .border-layer {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      height: calc(100% - 8px);
-      width: calc(100% - 8px);
-      left: 50%;
-      top: 50%;
-      z-index: 3;
-      box-sizing: border-box;
-      border: 1px solid $white;
-    }
-
-    .shadow-layer {
-      position: absolute;
-      left: -8px;
-      width: calc(100% + 16px);
-      height: 60%;
-      background: rgba(69, 103, 120, 1);
-      clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
-      z-index: 1;
-    }
-    
   }
 }

@@ -32,9 +32,12 @@ Text.propTypes = {
   type: PropTypes.oneOf([...GetValues(Text.types)]),
 };
 
-export const TextImage = ({className, text, imgSource, uppercase, capitalize}) => {
+export const TextImage = ({className, text, imgSource, uppercase, capitalize, onClick}) => {
   return (
-    <div className={`widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`}>
+    <div className={`widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`}
+    onClick={(e) => { e.stopPropagation();
+    onClick && onClick(e)
+    }}>
       <span>{text}</span>
       <img src={imgSource}/>
     </div>
