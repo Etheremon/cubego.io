@@ -8,7 +8,9 @@ export class BabylonArcRotateCamera extends BabylonComponent {
       props.target || new BABYLON.Vector3.Zero(), scene);
     babylonCamera.lowerRadiusLimit = 10;
     babylonCamera.upperRadiusLimit = 60;
+    babylonCamera.wheelPrecision = 50;
     camera.canvas = canvas;
+    camera.scene = scene;
     camera.renderer = babylonCamera;
 
     if (props.attachControl)
@@ -22,5 +24,12 @@ export class BabylonArcRotateCamera extends BabylonComponent {
     } else {
       this.renderer.detachControl(this.canvas);
     }
+  }
+
+  beginAnimation(name, keys, prop) {
+    let anim = new BABYLON.Animation(name, prop, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    anim.setKeys(keys);
+    this.renderer.animations.push(anim);
+    this.scene.beginAnimation(this.renderer, 0, 100, false);
   }
 }
