@@ -16,6 +16,36 @@
 }
 
 .cubegoes-view__container {
+  .presale-info__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-family: $f__baloobha;
+    font-size: $font-size-header-3;
+
+    span {
+      margin: 36px 0;
+    }
+
+    .register__button {
+      margin-bottom: 24px;
+    }
+  }
+
+  .price__container {
+    display: flex;
+    flex-wrap: wrap;
+    .widget__text-image {
+      padding-top: 3px;
+      flex-grow: 1;
+      &:nth-child(1) {
+        border-right: 1px solid $white;
+      }
+    }
+  }
+
   .pack-view__container {
     cursor: pointer;
     &:hover {
@@ -39,16 +69,12 @@
     border-style: solid;
     border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
 
-    .price__container {
-      display: flex;
-      flex-wrap: wrap;
-      .widget__text-image {
-        padding-top: 3px;
-        flex-grow: 1;
-        &:nth-child(1) {
-          border-right: 1px solid $white;
-        }
-      }
+    .pack-parallelogram {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -8px;
+      width: 250px;
     }
 
     .header__label {
@@ -124,61 +150,7 @@
       }
     }
 
-    .parallelogram__container {
-      background: $regal_blue;
-      width: 250px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -8px;
-  
-      .content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) skewX(-20deg);
-        color: $white;
-        font-family: $f__baloobha;
-        font-size: $font-size-large;
-        width: 100%;
-      }
-  
-      .main-content {
-        top: 2px;
-        position: relative;
-        transform: skewX(20deg);
-        height: 44px;
-        width: calc(100% + 16px);
-        left: -8px;
-        background: $regal_blue;
-        overflow: hidden;
-        z-index: 2;
-      }
-  
-      .border-layer {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        height: calc(100% - 8px);
-        width: calc(100% - 8px);
-        left: 50%;
-        top: 50%;
-        z-index: 3;
-        box-sizing: border-box;
-        border: 1px solid $white;
-      }
-  
-      .shadow-layer {
-        position: absolute;
-        left: -8px;
-        width: calc(100% + 16px);
-        height: 60%;
-        background: rgba(69, 103, 120, 1);
-        clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
-        z-index: 1;
-      }
-      
-    }
-
+    
   }
   
   .pack-detail__container {
@@ -202,12 +174,35 @@
   .purchase__container {
     position: relative;
     padding: 24px 16px;
+    border-width: 5px;
+    border-style: solid;
+
+    &.epic {
+      border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
+      background: #05192C;
+    }
+  
+    &.rare {
+      border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
+      background: #15314E;
+    }
+
+    &.pack {
+      background: rgba(25, 49, 77, 1);
+      border-width: 5px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
+    }
+
     .header__container {
       position: absolute;
       top: 0;
       left: 50%;
       transform: translate(-50%, -50%);
       text-transform: capitalize;
+      @include mobile {
+        top: 56px;
+      }
 
       span {
         position: absolute;
@@ -226,10 +221,19 @@
       justify-content: center;
       align-items: center;
 
-      .cubego__image {
-        width: auto;
-        height: 150px;
-        display: block;
+      @include mobile {
+        flex-direction: column;
+        margin-top: 56px;
+        box-sizing: border-box;
+      }
+
+      .confirm-action__container {
+        margin-left: 16px;
+        .cubego__image {
+          width: auto;
+          height: 150px;
+          display: block;
+        }  
       }
 
       .pack__listview {
@@ -237,18 +241,48 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        @include mobile {
+          width: 350px;
+        }
         .pack__item {
           width: 50%;
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          padding: 44px 0;
+          padding: 36px 8px;
           box-sizing: border-box;
+          cursor: pointer;
+
+          .item__container {
+            border-radius: 10px;
+            padding: 5px;
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom, #2CA4F6 0%, #AAF0FE 100%);
+
+            &.active {
+              background-image: linear-gradient(to bottom, red 0%, yellow 100%);
+            }
+
+            .border-gradient__layer {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: center;
+              position: relative;
+              background: linear-gradient(to bottom, #58FCFC, #2183CB);
+              border-radius: 10px;
+              padding-bottom: 36px;
+            }
+          }
 
           .detail__label {
             padding: 24px 0;
+            .header__label {
+              color: $regal_blue;
+              font-size: $font-size-large;
+              font-family: $f__baloobha;
+
+              .cubegoes-quantity__label {
+                font-family: $f__overpass;
+              }
+            }
           }
           img {
             height: 64px;
@@ -257,13 +291,63 @@
         }
       }
     }
-
-    .purchase__group-button {
+    
+    .purchase-action__container {
       position: absolute;
       bottom: 0;
       left: 50%;
-      transform: translate(-50%, 0%);
-      display: flex;
+      transform: translate(-50%, 50%);
+      .purchase__group-button {
+        .popup-parallelogram {
+          width: 130px;
+          .main-content {
+            height: 36px;
+          }
+
+          .shadow-layer {
+            background: transparent !important;
+          }
+
+          .price__container {
+            width: 105%;
+            position: relative;
+            left: -5px;
+            .widget__text-image {
+              &.active {
+                background: #0562B1;
+              }
+            }
+          }
+        }
+
+        
+      }
+      .discount {
+        display: flex;
+        justify-content: center;
+        background-image: url('../../../../shared/img/assets/ribbon.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-origin: border-box;
+        font-style: italic;
+        font-family: $f__overpass;
+        position: relative;
+        &.hidden {
+          display: none;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 90%;
+          height: 1px;
+          background: $white;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
   }
 }

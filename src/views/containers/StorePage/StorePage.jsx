@@ -67,7 +67,7 @@ class StorePage extends React.Component {
 
           <Container className={'store-page__main'}>
             {
-              query.tab === storeTabs[0].key ? <CubegoesView /> : null
+              query.tab === storeTabs[1].key ? <CubegoesView history={this.props.history} /> : null
             }
 
           </Container>
