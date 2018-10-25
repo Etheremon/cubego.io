@@ -282,6 +282,9 @@
             &.combat {
               width: 600px;
             }
+            &.copyright {
+              width: 420px;
+            }
             @include mobile {
               margin-top: 100px;
               width: 160px;

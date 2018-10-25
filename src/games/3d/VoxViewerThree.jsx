@@ -67,14 +67,16 @@ class VoxViewerThree extends Component {
 
     this.updateGridIdx++;
     let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE / 2;
+    let y = SIZE * (voxelData.spaceSize.z[1] + voxelData.spaceSize.z[0]) / 2 - this.offsetVector.y + SIZE / 2;
     let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
 
     let elements = !this.props.viewOnly
-      ? [<Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
+      ? [
+        <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
                color1={0xffffff} color2={0xffffff}
                position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
-               key={`grid-${this.updateGridIdx}`}/>]
-      : [];
+               key={`grid1-${this.updateGridIdx}`}/>,
+      ] : [];
     GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
@@ -87,7 +89,7 @@ class VoxViewerThree extends Component {
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });
 
-    if (!this.props.viewOnly) {
+    if (!this.props.viewOnly && this.state.showLayer) {
       let hPos = {};
       let hSize = {};
       let correctLabel = {x: 'x', y: 'z', z: 'y'};
@@ -127,6 +129,10 @@ class VoxViewerThree extends Component {
     }
     this.calculateSelectedLayer();
     this.forceUpdate();
+  }
+
+  toggleLayer(isShowingLayer) {
+    this.setState({showLayer: isShowingLayer});
   }
 
   calculateSelectedLayer() {
@@ -199,6 +205,7 @@ class VoxViewerThree extends Component {
     if (this.props.tools && !ObjIsEmpty(this.props.tools)) {
       this.setNewTools(this.props.tools);
     }
+    this.toggleLayer(!!this.props.showLayer);
   }
 
   componentWillUnmount() {

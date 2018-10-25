@@ -5,6 +5,7 @@ export const Fields = {
   account: 'account',
   metamaskPopup: 'metamask-popup',
   savedModel: 'saved-model',
+  showLayer: 'show-layer',
 };
 
 export const SetItem = (key, value)  => {

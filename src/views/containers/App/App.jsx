@@ -25,6 +25,7 @@ import SignUp from '../SignIn/SigInForm/SignInForm.jsx';
 import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
 import {BattlePage} from "../BattlePage/BattlePage.jsx";
 import StorePage from "../StorePage/StorePage.jsx";
+import * as Utils from "../../../utils/utils";
 
 
 require("style-loader!./App.scss");
@@ -108,7 +109,7 @@ class App extends React.Component {
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
-          <Route path={`/${URLS.CUBEGONS}`} component={MyCubegoes}/>
+          <Route path={`/${URLS.CUBEGONS}`} component={Utils.IsLiveServer ? ComingSoon : MyCubegoes}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>

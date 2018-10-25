@@ -1,4 +1,23 @@
 .model3D {
+  position: relative;
+
+  .model3D__buttons {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    .layer {
+      cursor: pointer;
+      overflow: visible;
+      width: 40px;
+      height: 40px;
+      background-image: url('../../../shared/img/icons/icon-view.png');
+      background-size: 100% auto;
+      &.active {
+        background-image: url('../../../shared/img/icons/icon-view-front.png');
+
+      }
+    }
+  }
 
   canvas {
     width: 100%;

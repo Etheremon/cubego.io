@@ -90,7 +90,8 @@
         font-size: $font-size-small;
 
         img {
-          height: 32px;
+          height: 30px;
+          margin-right: 4px;
         }
       }
     }
@@ -134,12 +135,12 @@
       max-width: 100%;
     }
     .tier {
-      &.Challenger, &.challenger {
-        padding-left: 24px;
-      }
-      &.Elite, &.elite {
-        padding-left: 32px;
-      }
+      //&.Challenger, &.challenger {
+      //  padding-left: 24px;
+      //}
+      //&.Elite, &.elite {
+      //  padding-left: 32px;
+      //}
 
       position: absolute;
       top: 50%;
@@ -255,7 +256,8 @@
       box-sizing: content-box;
       cursor: pointer;
       img {
-        height: 32px;
+        height: 30px;
+        margin-right: 4px;
       }
 
       border-bottom: 3px solid $gray-light;

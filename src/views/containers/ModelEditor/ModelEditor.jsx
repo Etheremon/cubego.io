@@ -503,7 +503,7 @@ class _ModelEditor extends React.Component {
                     <div key={materialId} className={'cube'}
                          tooltip={_t(cube.name)}
                          tooltip-position="bottom">
-                      <img src={cube.img}/>
+                      <img src={cube.icon}/>
                       {count}
                     </div>
                   )
@@ -542,7 +542,7 @@ class _ModelEditor extends React.Component {
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
-                     style={{left: `${tier.points[0]/70000*100}%`}}
+                     style={{left: `${(tier.points[0] + (idx <= 1 ? 1200 : 0))/70000*100}%`}}
                      tooltip={_t(tier.name)} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>
@@ -556,6 +556,7 @@ class _ModelEditor extends React.Component {
                 <div className={'model-editor__3d'}>
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
                            ref={(canvas) => {window.modelCanvas = canvas}}
+                           _t={_t}
                   />
                 </div>
               </div>
@@ -593,7 +594,7 @@ class _ModelEditor extends React.Component {
                          this.setState({selectedMaterial: material});
                          this.onToolChange(this.tools.color.key, material.variants[1]);
                        }}>
-                    <img src={material.img}/>
+                    <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}
                   </div>
                 )

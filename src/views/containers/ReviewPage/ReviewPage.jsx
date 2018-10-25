@@ -208,7 +208,7 @@ class ReviewPage extends React.Component {
                         <tr key={idx}>
                           <td>
                             <div className="cube">
-                              <img src={material.img}/>
+                              <img src={material.icon}/>
                               {_t(material.name)}
                             </div>
                           </td>
