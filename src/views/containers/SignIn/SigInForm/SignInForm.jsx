@@ -45,16 +45,16 @@ class SignInForm extends React.Component {
             {_t(`sign_up_label.${type}`)}
           </div>
           <form>
-            <Input label={_t('Wallet')} value={userId} disabled={true} />
-            <Input label={_t('Email')} placeholder={type === SignInForm.types.SIGN_UP ? 'contact@cubego.io' : userInfo.email}
+            <Input label={_t('wallet')} value={userId} disabled={true} />
+            <Input label={_t('email')} placeholder={type === SignInForm.types.SIGN_UP ? 'contact@cubego.io' : userInfo.email}
                    onChange={e => this.input_email = e} />
-            <Input label={_t('Username')} placeholder={_t('desc.username')}
+            <Input label={_t('username')} placeholder={_t('desc.username')}
                    value={userInfo.username}
                    onChange={e => this.input_username = e} />
 
             {type === SignInForm.types.SIGN_UP ?
               <React.Fragment>
-                <Input label={_t('Invite Code')} placeholder={_t('Optional')} value={userInfo.refer_code}
+                <Input label={_t('invite code')} placeholder={_t('optional')} value={userInfo.refer_code}
                        onChange={e => this.input_invite_code = e}/>
                 <div className={'field-note'}>{_t('desc.invite_code')}</div>
               </React.Fragment> : null
@@ -62,7 +62,7 @@ class SignInForm extends React.Component {
 
             {!metamask ?
               <React.Fragment>
-                <Input label={_t('Signature')} onChange={e => this.input_signature = e}/>
+                <Input label={_t('signature')} onChange={e => this.input_signature = e}/>
                 <div className={'field-note'}>{_t('desc.sign_in_signature')}</div>
               </React.Fragment> : null
             }
@@ -88,7 +88,7 @@ class SignInForm extends React.Component {
 
             <ButtonNew className={'register__button'}
                        color={ButtonNew.colors.BLUE}
-                       label={_t(`${type === SignInForm.types.SETTING_INFO ? 'Update': 'Register'}`)}
+                       label={_t(`${type === SignInForm.types.SETTING_INFO ? 'update': 'register'}`)}
                        onClick={() => {
                         this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({userId: userId,
                           email: this.input_email,

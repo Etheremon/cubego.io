@@ -27,11 +27,11 @@ class StoreCubegoCard extends React.Component {
           <img className={'cube-img'} src={require(`../../../../shared/img/store_cubegoes/${type}.png`)}/>
           <div className="header__label">
             <CustomRectangle tier={tier}/>
-            <span>{`${type} Pack`}</span>
+            <span>{_t(`${type} pack`)}</span>
           </div>
           <div className="quantity">
             {
-              `${quantity} ${type}`
+              `${quantity} ${_t(type)}`
             }
           </div>
           <div className="power-score">

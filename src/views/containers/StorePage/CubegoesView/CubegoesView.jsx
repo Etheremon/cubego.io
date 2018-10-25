@@ -21,7 +21,7 @@ class CubegoesView extends React.Component {
     super(props);
     this.state = {
       selectedItem: -1, 
-    }
+    };
 
     this.renderPurchaseView = this.renderPurchaseView.bind(this);
   }
@@ -33,7 +33,7 @@ class CubegoesView extends React.Component {
       <div className="purchase__container">
         <div className="header__container">
           <CustomRectangle tier={item && item.tier || 'pack'}/>
-          <span>{`${item && item.tier || 'Ultimate'} Pack`}</span>
+          <span>{_t(`${item ? item.tier : 'ultimate'} pack`)}</span>
         </div>
         <div className="main__container">
           <div className="pack__listview">
