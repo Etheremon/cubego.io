@@ -11,6 +11,8 @@ export const Axis = TYPES.AXIS;
 export const BoxHelper = TYPES.BOX_HELPER;
 export const OrthographicCamera = TYPES.ORTHOGRAPHIC_CAMERA;
 export const PointLight = TYPES.POINT_LIGHT;
+export const Plane = TYPES.PLANE;
+export const AmbientLight = TYPES.AMBIENT_LIGHT;
 
 const ThreeX = {render, loadMaterial, getMaterial, stopRender};
 export default ThreeX;

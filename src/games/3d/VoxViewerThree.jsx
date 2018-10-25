@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  Axis,
-  BoxHelper, Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera,
+  AmbientLight,
+  Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera, Plane,
   PointLight,
 } from "../threeX";
 import {fullColorHex} from "../utils";
@@ -29,11 +29,11 @@ const DRAW_TOOL = 'draw';
 const PAINT_TOOL = 'paint';
 const ERASE_TOOL = 'erase';
 const TOOL_KEYS = [SELECT_TOOL, DRAW_TOOL, PAINT_TOOL, ERASE_TOOL];
-
+const ARROW_DISTANCE = 100;
 class VoxViewerThree extends Component {
   constructor(props) {
     super(props);
-    this.state = {data: {}};
+    this.state = {data: {}, unMounted: false};
     this.mouse = new window.THREE.Vector2();
     this.raycaster = new window.THREE.Raycaster();
     this.objects = [];
@@ -50,10 +50,8 @@ class VoxViewerThree extends Component {
       this.tools = props.tools;
       this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     }
-  }
-
-  isSelectedLayer(position) {
-    return position[this.selectedDimension] === this.selectedIdx;
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
   }
 
   renderVoxel(voxelData) {
@@ -70,10 +68,15 @@ class VoxViewerThree extends Component {
     let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
 
     let elements = !this.props.viewOnly
-      ? [<Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
-               color1={0xffffff} color2={0xffffff}
-               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
-               key={`grid-${this.updateGridIdx}`}/>]
+      ? [
+        <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
+               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + x + ARROW_DISTANCE}}
+               rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
+        />,
+        <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
+              color1={0xffffff} color2={0xffffff}
+              position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
+              key={`grid-${this.updateGridIdx}`}/>]
       : [];
     GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
@@ -95,16 +98,16 @@ class VoxViewerThree extends Component {
         hSize[correctLabel[k]] = (k === this.selectedDimension) ? SIZE : size[k] * SIZE;
         hPos[correctLabel[k]] = (k === this.selectedDimension)
           ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]]
-          : SIZE * (voxelData.spaceSize[k][1]+voxelData.spaceSize[k][0])/2 - this.offsetVector[correctLabel[k]] + SIZE/2;
+          : SIZE * (voxelData.spaceSize[k][1] + voxelData.spaceSize[k][0]) / 2 - this.offsetVector[correctLabel[k]] + SIZE / 2;
       });
       elements.push(<MeshBox size={hSize} position={hPos} color={'ffffff'} opacity={0.15}
-                             key={`highlight-layer-${this.selectedDimension}`}/>);
+                             key={`highlight-layer-${this.updateGridIdx}`}/>);
     }
     return elements;
   }
 
   setNewVoxelData(voxelData) {
-    this.offsetVector = new window.THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * voxelData.size.z / 2, Math.floor(SIZE * voxelData.size.y / 2));
+    this.offsetVector = new window.THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * Math.floor(voxelData.size.z / 2), Math.floor(SIZE * voxelData.size.y / 2));
     this.objects = [];
     this.setState({
       data: voxelData || {}
@@ -174,8 +177,8 @@ class VoxViewerThree extends Component {
   componentDidMount() {
     this.canvas = document.getElementById('canvas3D');
     if (!this.props.viewOnly) {
-      this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
-      this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+      this.canvas.addEventListener('mousemove', this.onMouseMove, false);
+      this.canvas.addEventListener('mousedown', this.onMouseDown, false);
     }
     ThreeX.loadMaterial('diamond', diamondMaterialConfig);
     ThreeX.loadMaterial('gold', goldMaterialConfig);
@@ -201,9 +204,10 @@ class VoxViewerThree extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.canvas.removeEventListener('mousemove', this.onMouseMove.bind(this), false);
-    this.canvas.removeEventListener('mousedown', this.onMouseDown.bind(this), false);
+  destroy() {
+    this.canvas.removeEventListener('mousemove', this.onMouseMove, false);
+    this.canvas.removeEventListener('mousedown', this.onMouseDown, false);
+    this.setState({unMounted: true});
   }
 
   getRendererObject() {
@@ -302,27 +306,39 @@ class VoxViewerThree extends Component {
   }
 
   render() {
+    if (this.state.unMounted) {
+      console.log('garbage collector');
+      return null;
+    }
+
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         {/*<Axis/>*/}
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
+        <AmbientLight/>
         <HemisphereLight/>
+
         <PointLight position={{x: 0, y: 400, z: 0}}/>
-        <PointLight position={{x: 200, y: 400, z: 200}}/>
-        <PointLight position={{x: -200, y: -400, z: -200}}/>
+        <PointLight position={{x: 0, y: -400, z: 0}}/>
+
+        <PointLight position={{x: 400, y: 0, z: 0}}/>
+        <PointLight position={{x: -400, y: 0, z: 0}}/>
+
+        <PointLight position={{x: 0, y: 0, z: -400}}/>
+        <PointLight position={{x: 0, y: 0, z: 400}}/>
 
         {!this.props.viewOnly ?
           <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
-            this.rollOverMesh = ref
-          }} wireFrameColor='000000'/> : null
+            this.rollOverMesh = ref;
+          }} wireFrameColor='000000' visible={false}/> : null
         }
 
         {/*{!this.props.viewOnly ?*/}
-          {/*<BoxHelper ref={(ref) => {*/}
-            {/*this.boxHelper = ref*/}
-          {/*}}/> : null*/}
+        {/*<BoxHelper ref={(ref) => {*/}
+        {/*this.boxHelper = ref*/}
+        {/*}}/> : null*/}
         {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>

@@ -1,7 +1,6 @@
 import {ThreeComponent} from "./threeComponent";
 
 import ThreeX from "../index";
-import {fullColorHex} from "../../utils";
 
 export class ThreeMeshBox extends ThreeComponent {
   constructor() {
@@ -34,11 +33,12 @@ export class ThreeMeshBox extends ThreeComponent {
     } else {
       material = new window.THREE.MeshBasicMaterial({color: color, transparent: true});
     }
+    this.originalOpacity = material.opacity;
     if (props.opacity) {
       material.opacity = props.opacity;
     }
     let cubeMesh = new window.THREE.Mesh(boxGeo, material);
-    let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'ffffff';
+    let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'cccccc';
     let wireFrameColor = parseInt(frameColor, 16);
 
     if (!props.noBox) {
@@ -48,6 +48,9 @@ export class ThreeMeshBox extends ThreeComponent {
 
     if (props.position) {
       cubeMesh.position.set(props.position.x, props.position.y, props.position.z);
+    }
+    if (props.visible === false) {
+      cubeMesh.visible = false;
     }
     meshContainer.renderer = cubeMesh;
     return meshContainer;
@@ -95,5 +98,9 @@ export class ThreeMeshBox extends ThreeComponent {
       opacity = this.originalOpacity - 0.2;
     }
     this.renderer.material.opacity = opacity;
+  }
+
+  set size(size) {
+
   }
 }

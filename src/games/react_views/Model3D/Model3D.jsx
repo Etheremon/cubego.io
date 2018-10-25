@@ -23,6 +23,8 @@ export class Model3D extends Component {
 
   componentWillUnmount() {
     ThreeX.stopRender();
+    this.voxel.destroy();
+    this.voxel = null;
   }
 
   componentWillReceiveProps(nextProps) {

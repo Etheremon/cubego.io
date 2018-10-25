@@ -42,6 +42,17 @@ const render = (element, canvas) => {
   return BabylonRenderer.getPublicRootInstance(rootContainer);
 };
 
+const stopRender = () => {
+  scene.dispose();
+  engine.stopRenderLoop();
+  rootContainer = null;
+  scene = null;
+  engine = null;
+  loopStarted = false;
+  root = null;
+  loadingScreen = null;
+};
+
 export const MeshSphere = TYPES.MESH_SPHERE;
 export const MeshCylinder = TYPES.MESH_CYLINDER;
 export const MeshBox = TYPES.MESH_BOX;
@@ -63,5 +74,5 @@ export const HTMLGUIButton = TYPES.CASTOR_GUI_BUTTON;
 export const HTMLGUIImage = TYPES.CASTOR_GUI_TEXTURE;
 export const HTMLGUIText = TYPES.CASTOR_GUI_TEXT;
 
-const BabylonX = {render, loaders};
+const BabylonX = {render, loaders, stopRender};
 export default BabylonX;

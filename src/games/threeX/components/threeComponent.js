@@ -35,5 +35,6 @@ export class ThreeComponent extends FiberNode {
     child._renderer.geometry.dispose();
     child._renderer.material.dispose();
     child = undefined;
+    console.log('removeChild');
   }
 }
