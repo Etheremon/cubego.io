@@ -38,7 +38,7 @@ class Footer extends React.Component {
                   <Link to={'/tos'} target={'_blank'}>
                     <p>{_t('footer.terms_of_sale')}</p>
                   </Link>
-                  <a href="mailto:contact@cubego.io?Subject=Hello" target="_blank"><p>{_t('email')}</p></a>
+                  <a href="mailto:contact@cubego.io?Subject=Hello"><p>{_t('email')}</p></a>
                 </div>
                 <div className="footer__service-customer">
                   {/*<a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a>*/}

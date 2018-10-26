@@ -78,6 +78,7 @@ export class Layer2D extends Component {
         for (let j = 0; j < layer.spaceSize[layer.x][1]-layer.spaceSize[layer.x][0]+1; j++)
           newState.cells[i][j] = {};
       }
+
       GetValues(layer.voxels).forEach(cell => {
         let pos2D = layer.cal2dPos
           ? layer.cal2dPos(cell[layer.x], cell[layer.y])

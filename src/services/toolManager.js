@@ -3,7 +3,7 @@ import * as Utils from "../utils/utils";
 import * as ObjUtils from "../utils/objUtils";
 import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
-import {CUBE_MATERIALS, CUBE_TIER} from "../constants/cubego";
+import {CUBE_MATERIALS, CUBE_TIER_MAP} from "../constants/cubego";
 import {GON_TIER} from "../constants/cubegon";
 
 export class ToolManager {
@@ -133,25 +133,15 @@ export class ToolManager {
   }
 
   convertToSpaceSize(modelSize, oldSpaceSize, k) {
-    if (!oldSpaceSize) oldSpaceSize = modelSize;
+    if (!oldSpaceSize) oldSpaceSize = [0, 11];
+
+    console.log("zz", modelSize);
 
     let x = modelSize[0], y = modelSize[1];
     if (y-x+1 < 40) x -= 1;
     if (y-x+1 < 40) y += 1;
 
-
-    if (y-x+1 < 12) {
-      if (oldSpaceSize[1]-oldSpaceSize[0]+1 === 12) {
-        return [oldSpaceSize[0], oldSpaceSize[1]];
-      } else {
-        let v = 12-(y-x+1);
-        x -= Math.ceil(v/2);
-        y += Math.floor(v/2);
-        return [x, y]
-      }
-    } else {
-      return [x, y];
-    }
+    return [Math.min(x, oldSpaceSize[0]), Math.max(oldSpaceSize[1], y)];
   }
 
   updateCurrent() {
@@ -251,9 +241,9 @@ export class ToolManager {
 
     // Calculate gon tier
     this._stats.gonTier = {id: -1, showPoints: 0, stats: [0, 0]};
-    if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER.legend]) {
+    if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier = {...GON_TIER.god, showPoints: Math.min(this._stats.points, GON_TIER.god.points[1])};
-    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER.epic]) {
+    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
       this._stats.gonTier = {...GON_TIER.champion, showPoints: Math.min(this._stats.points, GON_TIER.champion.points[1])};
     } else if (this._stats.points >= GON_TIER.elite.points[0]) {
       this._stats.gonTier = {...GON_TIER.elite, showPoints: Math.min(this._stats.points, GON_TIER.elite.points[1])};
@@ -261,9 +251,9 @@ export class ToolManager {
       this._stats.gonTier = {...GON_TIER.challenger, showPoints: Math.min(this._stats.points, GON_TIER.challenger.points[1])};
     }
 
-    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER.epic]) {
+    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
       this._stats.gonTier.note = ('tier.need_epic');
-    } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER.legend]) {
+    } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_legend');
     }
 
@@ -478,17 +468,17 @@ let view2dOptions = {
   front: {
     viewKey: 'front',
     label: 'front_view',
-    x: '-y', y: '-z', z: '-x',
+    x: '+x', y: '-z', z: '-y',
   },
   side: {
     viewKey: 'side',
     label: 'side_view',
-    x: '+x', y: '-z', z: '-y',
+    x: '-y', y: '-z', z: '-x',
   },
   top: {
     viewKey: 'top',
     label: 'bottom_view',
-    x: '-y', y: '+x', z: '+z',
+    x: '+x', y: '-y', z: '+z',
   }
 };
 let view2dList = ['front', 'side', 'top'];

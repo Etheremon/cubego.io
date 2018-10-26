@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  AmbientLight, Axis,
+  AmbientLight,
   Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera, Plane,
   PointLight,
 } from "../threeX";
@@ -80,11 +80,7 @@ class VoxViewerThree extends Component {
                width={size.y * SIZE} height={size.x * SIZE}
         />,
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
-               position={{
-                 x: x,
-                 y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y,
-                 z: z + size.y * SIZE / 2 + ARROW_DISTANCE
-               }}
+               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + x + ARROW_DISTANCE}}
                rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
         />,
         <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
@@ -157,13 +153,13 @@ class VoxViewerThree extends Component {
   calculateSelectedLayer() {
     switch (this.tools['view-2d'].value.viewKey) {
       case 'front':
-        this.selectedDimension = 'x';
+        this.selectedDimension = 'y';
         break;
       case 'top':
         this.selectedDimension = 'z';
         break;
       case 'side':
-        this.selectedDimension = 'y';
+        this.selectedDimension = 'x';
         break;
     }
     this.selectedIdx = this.tools['layer-index'].value;
@@ -338,7 +334,7 @@ class VoxViewerThree extends Component {
 
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        <Axis/>
+        {/*<Axis/>*/}
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
@@ -361,9 +357,9 @@ class VoxViewerThree extends Component {
         }
 
         {/*{!this.props.viewOnly ?*/}
-        {/*<BoxHelper ref={(ref) => {*/}
-        {/*this.boxHelper = ref*/}
-        {/*}}/> : null*/}
+          {/*<BoxHelper ref={(ref) => {*/}
+            {/*this.boxHelper = ref*/}
+          {/*}}/> : null*/}
         {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>

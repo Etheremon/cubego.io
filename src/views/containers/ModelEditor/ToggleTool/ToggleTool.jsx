@@ -1,11 +1,5 @@
 import React from 'react';
 
-import {connect} from "react-redux";
-import {getTranslate} from 'react-localize-redux';
-
-import withRouter from "react-router-dom/es/withRouter";
-import {EDITOR_COLORS} from "../../../../constants/general";
-
 require("style-loader!./ToggleTool.scss");
 
 export const ToggleTool = ({label, hotKey, img, active, disabled, onClick}) => {

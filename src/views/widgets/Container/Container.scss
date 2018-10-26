@@ -8,6 +8,9 @@
   max-width: 100%;
   margin: 0 auto;
 
+  &.text {
+    width: 700px;
+  }
   &.normal {
     width: 1000px;
   }

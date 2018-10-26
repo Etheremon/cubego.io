@@ -293,6 +293,12 @@ class _ModelEditor extends React.Component {
           {_t('err.model_already_registered')}
         </div>
       )
+    } else {
+      content = (
+        <div className={'header'}>
+          {_t('err.model_not_valid')}
+        </div>
+      )
     }
 
     return (
@@ -582,7 +588,7 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__material'}>
-              {ObjUtils.GetValues(CUBE_MATERIALS).sort((a, b) => (b.class_id - a.class_id)).map((material, idx) => {
+              {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => {
                 let numCubes = userCubes[material.class_id] || 0;
                 let numCubesUsed = (this.toolManager.stats.materials || {})[material.class_id] || 0;
 

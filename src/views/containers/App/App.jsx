@@ -26,7 +26,10 @@ import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
 import {BattlePage} from "../BattlePage/BattlePage.jsx";
 import StorePage from "../StorePage/StorePage.jsx";
 import * as Utils from "../../../utils/utils";
+import TosPage from "../TosPage/TosPage.jsx";
+import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
+import GameIntro from "../GameIntro/GameIntro.jsx";
 
 require("style-loader!./App.scss");
 
@@ -116,9 +119,12 @@ class App extends React.Component {
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
-          <Route path={`/${URLS.GUIDE}`} component={ComingSoon}/>
+          <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
 
           <Route path={`/${URLS.SIGN_IN}`} component={SignInPage}/>
+
+          <Route path={`/${URLS.TERM_OF_SALE}`} component={TosPage}/>
+          <Route path={`/${URLS.PRIVACY}`} component={PrivacyPage}/>
 
           <Route component={Home}/>
         </Switch>
