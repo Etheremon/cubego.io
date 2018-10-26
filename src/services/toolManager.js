@@ -133,25 +133,13 @@ export class ToolManager {
   }
 
   convertToSpaceSize(modelSize, oldSpaceSize, k) {
-    if (!oldSpaceSize) oldSpaceSize = modelSize;
+    if (!oldSpaceSize) oldSpaceSize = [-6, 5];
 
     let x = modelSize[0], y = modelSize[1];
     if (y-x+1 < 40) x -= 1;
     if (y-x+1 < 40) y += 1;
 
-
-    if (y-x+1 < 12) {
-      if (oldSpaceSize[1]-oldSpaceSize[0]+1 === 12) {
-        return [oldSpaceSize[0], oldSpaceSize[1]];
-      } else {
-        let v = 12-(y-x+1);
-        x -= Math.ceil(v/2);
-        y += Math.floor(v/2);
-        return [x, y]
-      }
-    } else {
-      return [x, y];
-    }
+    return [Math.min(x, oldSpaceSize[0]), Math.max(oldSpaceSize[1], y)];
   }
 
   updateCurrent() {
