@@ -2,6 +2,29 @@ import * as ObjUtils from "../utils/objUtils";
 import * as Utils from "../utils/utils";
 
 export const CUBE_TIER = {
+  1: {
+    id: 1,
+    name: 'legend',
+  },
+  2: {
+    id: 1,
+    name: 'epic',
+  },
+  3: {
+    id: 1,
+    name: 'rare',
+  },
+  4: {
+    id: 1,
+    name: 'common',
+  },
+  5: {
+    id: 1,
+    name: 'basic',
+  },
+};
+
+export const CUBE_TIER_MAP = {
   legend: 1,
   epic: 2,
   rare: 3,
@@ -137,7 +160,7 @@ const _CUBE_MATERIALS = {
       5: {color: '#c80046', emissive: '#0d0039',}
     },
     point: 3000,
-    tier: CUBE_TIER.legend,
+    tier: CUBE_TIER_MAP.legend,
   },
   2: {
     class_id: 2,
@@ -146,7 +169,7 @@ const _CUBE_MATERIALS = {
       1: {color: '#ffffff', emissive: '#573107'}
     },
     point: 350,
-    tier: CUBE_TIER.epic,
+    tier: CUBE_TIER_MAP.epic,
   },
   3: {
     class_id: 3,
@@ -159,7 +182,7 @@ const _CUBE_MATERIALS = {
       5: {color: '#725e1a', emissive: '#250505'}
     },
     point: 300,
-    tier: CUBE_TIER.epic,
+    tier: CUBE_TIER_MAP.epic,
   },
   4: {
     class_id: 4,
@@ -172,7 +195,7 @@ const _CUBE_MATERIALS = {
       5: {color: '#af750d', emissive: '#4d0048'}
     },
     point: 300,
-    tier: CUBE_TIER.epic,
+    tier: CUBE_TIER_MAP.epic,
   },
   5: {
     class_id: 5,
@@ -188,7 +211,7 @@ const _CUBE_MATERIALS = {
       8: {color: '#665252', emissive: '#180c05'}
     },
     point: 55,
-    tier: CUBE_TIER.rare,
+    tier: CUBE_TIER_MAP.rare,
   },
   6: {
     class_id: 6,
@@ -204,7 +227,7 @@ const _CUBE_MATERIALS = {
       8: {color: '#39261e', emissive: '#220501'}
     },
     point: 50,
-    tier: CUBE_TIER.rare,
+    tier: CUBE_TIER_MAP.rare,
   },
   7: {
     class_id: 7,
@@ -220,7 +243,7 @@ const _CUBE_MATERIALS = {
       8: {color: '#cab47e', emissive: '#412a27'}
     },
     point: 50,
-    tier: CUBE_TIER.rare,
+    tier: CUBE_TIER_MAP.rare,
   },
   8: {
     class_id: 8,
@@ -239,7 +262,7 @@ const _CUBE_MATERIALS = {
     price: 0.0005,
     is_for_sale: true,
     point: 5,
-    tier: CUBE_TIER.common,
+    tier: CUBE_TIER_MAP.common,
   },
   9: {
     class_id: 9,
@@ -255,7 +278,7 @@ const _CUBE_MATERIALS = {
     price: 0.0005,
     is_for_sale: true,
     point: 5,
-    tier: CUBE_TIER.common,
+    tier: CUBE_TIER_MAP.common,
   },
   10: {
     class_id: 10,
@@ -276,7 +299,7 @@ const _CUBE_MATERIALS = {
     price: 0.0005,
     is_for_sale: true,
     point: 5,
-    tier: CUBE_TIER.common,
+    tier: CUBE_TIER_MAP.common,
   },
   11: {
     class_id: 11,
@@ -297,7 +320,7 @@ const _CUBE_MATERIALS = {
     price: 0.0005,
     is_for_sale: true,
     point: 5,
-    tier: CUBE_TIER.common,
+    tier: CUBE_TIER_MAP.common,
   },
   12: {
     class_id: 12,
@@ -311,7 +334,7 @@ const _CUBE_MATERIALS = {
       6: {color: '#695000', emissive: '#7d2424'},
     },
     point: 1,
-    tier: CUBE_TIER.basic,
+    tier: CUBE_TIER_MAP.basic,
   },
 };
 

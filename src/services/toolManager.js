@@ -3,7 +3,7 @@ import * as Utils from "../utils/utils";
 import * as ObjUtils from "../utils/objUtils";
 import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
-import {CUBE_MATERIALS, CUBE_TIER} from "../constants/cubego";
+import {CUBE_MATERIALS, CUBE_TIER_MAP} from "../constants/cubego";
 import {GON_TIER} from "../constants/cubegon";
 
 export class ToolManager {
@@ -251,9 +251,9 @@ export class ToolManager {
 
     // Calculate gon tier
     this._stats.gonTier = {id: -1, showPoints: 0, stats: [0, 0]};
-    if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER.legend]) {
+    if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier = {...GON_TIER.god, showPoints: Math.min(this._stats.points, GON_TIER.god.points[1])};
-    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER.epic]) {
+    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
       this._stats.gonTier = {...GON_TIER.champion, showPoints: Math.min(this._stats.points, GON_TIER.champion.points[1])};
     } else if (this._stats.points >= GON_TIER.elite.points[0]) {
       this._stats.gonTier = {...GON_TIER.elite, showPoints: Math.min(this._stats.points, GON_TIER.elite.points[1])};
@@ -261,9 +261,9 @@ export class ToolManager {
       this._stats.gonTier = {...GON_TIER.challenger, showPoints: Math.min(this._stats.points, GON_TIER.challenger.points[1])};
     }
 
-    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER.epic]) {
+    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
       this._stats.gonTier.note = ('tier.need_epic');
-    } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER.legend]) {
+    } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_legend');
     }
 
