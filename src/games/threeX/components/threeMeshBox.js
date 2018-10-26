@@ -31,9 +31,9 @@ export class ThreeMeshBox extends ThreeComponent {
         material.emissive.setHex(variantEmissive);
       }
     } else {
-      material = new window.THREE.MeshBasicMaterial({color: color, transparent: true});
+      material = new window.THREE.MeshBasicMaterial({color: color, transparent: true, depthWrite: false});
     }
-    this.originalOpacity = material.opacity;
+
     if (props.opacity) {
       material.opacity = props.opacity;
     }
@@ -51,6 +51,9 @@ export class ThreeMeshBox extends ThreeComponent {
     }
     if (props.visible === false) {
       cubeMesh.visible = false;
+    }
+    if (props.renderOrder) {
+      cubeMesh.renderOrder = props.renderOrder;
     }
     meshContainer.renderer = cubeMesh;
     return meshContainer;

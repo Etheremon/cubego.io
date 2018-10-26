@@ -21,7 +21,7 @@
   "transparent": true,
   "depthFunc": 3,
   "depthTest": true,
-  "depthWrite": true,
+  "depthWrite": false,
   "textures": [{
     "uuid": "284CC3DC-4F0C-4E50-B794-2AF7FA0784A2",
     "name": "",
