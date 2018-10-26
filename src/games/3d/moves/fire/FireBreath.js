@@ -3,6 +3,10 @@ import * as BABYLON from "babylonjs";
 import BabylonX from "../../../babylonX";
 
 export default class FireBreath extends BaseMove {
+  static getId() {
+    return "fire_breath"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.damage = damage;

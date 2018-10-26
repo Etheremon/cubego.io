@@ -5,6 +5,10 @@ import {hexToColor3} from "../../../babylonX/utils";
 import BabylonX from "../../../babylonX";
 
 export default class RockThrow extends BaseMove {
+  static getId() {
+    return "rock_throw"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

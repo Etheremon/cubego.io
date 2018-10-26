@@ -2,6 +2,10 @@ import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
 
 export default class MilkDrink extends BaseMove {
+  static getId() {
+    return "milk_drink"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.damage = damage;
@@ -12,18 +16,18 @@ export default class MilkDrink extends BaseMove {
     this._createMilkAnimation();
     setTimeout(() => {
       this.player.heal(this.damage);
-    }, 200);
+    }, 4000);
   }
 
   _createMilkAnimation() {
-    let spriteManagerPlayer = new BABYLON.SpriteManager("milkSprite", require("../../../../shared/spritesheet/drink_milk.png"), 2, {
+    let spriteManagerPlayer = new BABYLON.SpriteManager("milkSprite", require("../../../../shared/spritesheet/bottle.png"), 2, {
       width: 128,
       height: 128
     }, this.player.scene);
     let milk = new BABYLON.Sprite("player", spriteManagerPlayer);
     let startMatrix = this.player.playerMesh.getWorldMatrix();
     let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
-    milk.playAnimation(0, 25, false, 100, () => {
+    milk.playAnimation(0, 40, false, 100, () => {
     });
     milk.position = startPosition;
     let time = 0;

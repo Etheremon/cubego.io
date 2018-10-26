@@ -5,6 +5,10 @@ import {hexToColor3} from "../../../babylonX/utils";
 import BabylonX from "../../../babylonX";
 
 export default class DoubleCannon extends BaseMove {
+  static getId() {
+    return "double_cannon"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

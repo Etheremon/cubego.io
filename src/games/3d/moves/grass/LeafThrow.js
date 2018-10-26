@@ -3,6 +3,10 @@ import * as BABYLON from "babylonjs";
 import BabylonX from "../../../babylonX";
 
 export default class LeafThrow extends BaseMove {
+  static getId() {
+    return "leaf_throw"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

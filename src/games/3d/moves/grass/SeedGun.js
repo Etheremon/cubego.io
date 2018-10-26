@@ -1,11 +1,14 @@
 import {BaseMove} from "../BaseMove";
 import * as BABYLON from "babylonjs";
 import {GetRandomInt} from "../../../../utils/utils";
-import {BabylonMeshBox} from "../../../babylonX/components/babylonMeshBox";
 import {hexToColor3} from "../../../babylonX/utils";
 import BabylonX from "../../../babylonX";
 
 export default class SeedGun extends BaseMove {
+  static getId() {
+    return "seed_gun"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

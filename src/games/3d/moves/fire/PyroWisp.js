@@ -3,6 +3,10 @@ import * as BABYLON from "babylonjs";
 import BabylonX from "../../../babylonX";
 
 export default class PyroWisp extends BaseMove {
+  static getId() {
+    return "pyro_wisp"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

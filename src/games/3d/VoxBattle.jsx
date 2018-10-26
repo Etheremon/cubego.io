@@ -12,9 +12,36 @@ import BabylonX from "../babylonX";
 import idleGroundAnimation from "./animations/shareAnimation";
 import {GetRandomInt} from "../../utils/utils";
 import MOVES from "./moves";
+import HydroGun from "./moves/water/HydroGun";
+import FireBall from "./moves/fire/FireBall";
+import AirSlash from "./moves/air/AirSlash";
+import FireBreath from "./moves/fire/FireBreath";
+import MilkDrink from "./moves/neutral/MilkDrink";
+import GuardianShield from "./moves/neutral/GuardianShield";
+import RockThrow from "./moves/earth/RockThrow";
+import LeafThrow from "./moves/grass/LeafThrow";
+import PyroWisp from "./moves/fire/PyroWisp";
+import Tackle from "./moves/neutral/Tackle";
 
 const SIZE = 0.2;
-
+const DEMO_BATTLE_LOGS = [
+  {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
+  {moveId: FireBall.getId(), effects: {damage: 20}, player: 0},
+  {moveId: AirSlash.getId(), effects: {damage: 20}, player: 1},
+  {moveId: FireBreath.getId(), effects: {damage: 20}, player: 0},
+  {moveId: MilkDrink.getId(), effects: {damage: 20}, player: 1},
+  {moveId: GuardianShield.getId(), effects: {damage: 0}, player: 0},
+  {moveId: LeafThrow.getId(), effects: {damage: 0}, player: 1},
+  {moveId: PyroWisp.getId(), effects: {damage: 20}, player: 0},
+  {moveId: Tackle.getId(), effects: {damage: 20}, player: 1},
+  {moveId: MilkDrink.getId(), effects: {damage: 30}, player: 0},
+  {moveId: RockThrow.getId(), effects: {damage: 20}, player: 1},
+  {moveId: FireBall.getId(), effects: {damage: 20}, player: 0},
+  {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
+  {moveId: PyroWisp.getId(), effects: {damage: 20}, player: 0},
+  {moveId: AirSlash.getId(), effects: {damage: 20}, player: 1},
+  {moveId: FireBreath.getId(), effects: {damage: 20}, player: 0}
+];
 //Load map texture
 const loadMapTexture = () => {
   let req = require.context('../../shared/battleground/map_1/', false, /.*\.png/);
@@ -93,6 +120,7 @@ class VoxBattle extends Component {
   }
 
   createDummyBattleLog() {
+    return DEMO_BATTLE_LOGS;
     let logs = [];
     for (let i = 0; i < 9; i++) {
       logs.push({moveId: GetRandomInt(0, MOVES.length - 1), effects: {damage: 20}, player: i % 2})

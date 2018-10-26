@@ -1,6 +1,10 @@
 import {BaseMove} from "../BaseMove";
 
 export default class Tackle extends BaseMove {
+  static getId() {
+    return "tackle"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.damage = damage;

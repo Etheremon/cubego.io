@@ -5,6 +5,10 @@ import {hexToColor3} from "../../../babylonX/utils";
 import BabylonX from "../../../babylonX";
 
 export default class HydroGun extends BaseMove {
+  static getId() {
+    return "hydro_gun"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;

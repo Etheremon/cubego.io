@@ -3,6 +3,10 @@ import * as BABYLON from "babylonjs";
 import BabylonX from "../../../babylonX";
 
 export default class AirSlash extends BaseMove {
+  static getId() {
+    return "air_slash"
+  }
+
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;
