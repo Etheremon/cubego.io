@@ -1,0 +1,566 @@
+@import '../../styles/mixins';
+@import '../../styles/colors';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.game-intro-page__container {
+  margin-top: 60px;
+  margin-bottom: 32px;
+  font-family: $f__overpass;
+
+  .background {
+    &:before, &:after {
+      @include border-radius(4px);
+      background-size: 100% 100%;
+    }
+
+    &.red {
+      &:before {
+        background-image: url('../../../shared/img/background/background_red.png');
+      }
+      &:after {
+        background-image: url('../../../shared/img/background/padding_red.png');
+      }
+    }
+    &.yellow {
+      &:before {
+        background-image: url('../../../shared/img/background/background_yellow.png');
+      }
+      &:after {
+        background-image: url('../../../shared/img/background/padding_yellow.png');
+      }
+    }
+    &.blue {
+      &:before {
+        background-image: url('../../../shared/img/background/background_blue.jpg');
+      }
+      &:after {
+        background-image: url('../../../shared/img/background/padding_blue.png');
+      }
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -30px;
+      bottom: -30px;
+      left: 0;
+      right: 0;
+    }
+
+    @include not-mobile {
+      &.left {
+        &:before {
+          left: calc(50% - 10px);
+        }
+        &:after {
+          left: calc(50% + 60px);
+        }
+      }
+      &.right {
+        &:before {
+          right: calc(50% - 10px);
+        }
+        &:after {
+          right: calc(50% + 60px);
+        }
+      }
+    }
+  }
+
+  .sub-background {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    &.yellow {
+      &.left {
+        background-image: url('../../../shared/img/game_intro/sub_background_yellow_left.png');
+      }
+  
+      &.right {
+        background-image: url('../../../shared/img/game_intro/sub_background_yellow_right.png');
+      }
+    }
+
+    &.blue {
+      &.left {
+        background-image: url('../../../shared/img/game_intro/sub_background_blue_left.png');
+      }
+  
+      &.right {
+        background-image: url('../../../shared/img/game_intro/sub_background_blue_right.png');
+      }
+    }
+    
+  }
+
+  .widget__text {
+    position: relative;
+    display: inline-block;
+
+    font-family: $f__baloobha;
+      &.h1 {
+        font-size: 44px;
+        text-transform: lowercase;
+        display: inline-block;
+        z-index: 2;
+        position: relative;
+        padding: 0 24px;
+      }
+
+      &.h2 {
+        font-size: $font-size-header-3;
+        color: #FF6C00;
+        text-transform: capitalize;
+        font-family: $f__overpass;
+      }
+
+      &.h3 {
+        font-size: $font-size-header-1;
+        color: #08477B;
+        text-transform: capitalize;
+      }
+
+      &.h4 {
+        font-size: $font-size-large;
+        text-transform: capitalize;
+        color: #45146D;
+      }
+  }
+
+  .main__header {
+    font-family: $f__baloobha;
+    position: relative;
+    display: inline-block;
+    .header {
+      font-size: 44px;
+      text-transform: capitalize;
+      color: $white;
+      position: relative;
+      z-index: 2;
+      padding: 8px 16px;
+    }
+    
+    &:after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 1000px;
+      top: 0;
+      background: #0C4A7E;
+      z-index: 1;
+    }
+
+    &.left  {
+      float: left;
+      &:after {
+        right: 0;
+      }
+      // &:before {
+      //   content: "."; 
+      //   visibility: hidden; 
+      //   display: block; 
+      //   height: 0; 
+      //   clear: both;
+      // }
+    }
+
+    &.right  {
+      float: right;
+      &:after {
+        left: 0;
+      }
+      &:before {
+        content: "."; 
+        visibility: hidden; 
+        display: block; 
+        height: 0; 
+        clear: both;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    clear: both;
+    position: relative;
+    justify-content: space-between;
+    z-index: 2;
+
+    .content-desc {
+      width: 45%;
+      height: 100%;
+      @include mobile {
+        width: 100%;
+        text-align: center;
+      }
+      p {
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .content-image {
+      width: 45%;
+      img {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+      }
+      @include mobile {
+        display: none;
+      }
+    }
+
+    &.left {
+      .content-desc {
+        padding-left: 36px;
+      }
+    }
+
+    &.right {
+      .content-desc {
+        padding-right: 36px;
+        order: 2;
+      }
+    }
+  }
+
+  .guild__game-intro {
+    margin-bottom: 88px;
+    .content-desc {
+      .game-intro__header {
+        border-bottom: 3px solid #FF6C00;
+        display: inline-block;
+        font-size: $font-size-header-3;
+        color: #FF6C00;
+        text-transform: capitalize;
+        font-family: $f__baloobha;
+      }
+    }
+    
+    .principles {
+      margin-top: 44px;
+      text-align: center;
+      .header__label {
+        margin-bottom: 24px;
+        color: #48E8FF;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-large;
+      }
+
+      .principles__list-item {
+        display: flex;
+
+        .item {
+          margin: 8px;
+
+          .principles-types {
+            font-weight: $font-weight-bold;
+            font-size: $font-size-bigger;
+            margin-bottom: 32px;
+            position: relative;
+
+            &:after {
+              content: '';
+              position: absolute;
+              left: 50%;
+              bottom: -16px;
+              transform: translateX(-50%);
+              width: 32px;
+              height: 5px;
+              background: #48E8FF;
+            }
+          }
+
+          p {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-small;
+          }
+        }
+      }
+    }
+  }
+
+  .guild__cubego-intro {
+    
+    
+    .content-desc {
+    
+    }
+    .tier-type-cubego {
+      margin-top: 56px;
+      margin-bottom: 56px;
+      .intro-tier-type__container {
+        text-align: center;
+        margin-bottom: 44px;
+        .intro-tier-type__label {
+
+        }
+        p {
+          font-weight: $font-weight-bold;
+        }
+      }
+
+      .tier-detail__container {
+        text-align: center;
+        p {
+          font-weight: $font-weight-medium;
+          font-size: $font-size-small;
+        }
+
+        .tiers__list-view {
+          padding: 8px 72px;
+          @include mobile {
+            padding: 0;
+          }
+          .item {
+            display: flex;
+            align-items: center;
+            img {
+              height: 150px;
+              margin-right: 16px;
+            }
+
+            .tier__content {
+              text-align: left;
+
+              .tier__label {
+                position: relative;
+
+                &:after {
+                  position: absolute;
+                  content: '';
+                  width: 36px;
+                  height: 2px;
+                  background: #EBCA00;
+                  left: 0;
+                }
+              }
+
+              p {
+                font-size: $font-size-tiny;
+                font-weight: $font-weight-extra-light;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .cubego-stats__container {
+    text-align: center;
+
+    .header__container {
+      .attributes__header {
+        font-family: $f__baloobha;
+        font-size: $font-size-large;
+        color: #00E5FD;
+      }
+    }
+
+    .sub-header__container {
+      display: flex;
+
+      .sub-header {
+        font-family: $f__baloobha;
+        font-size: $font-size-big;
+        color: #00E5FD;
+
+        .type__label, .strength__label {
+          position: relative;
+          &:after {
+            position: absolute;
+            width: 24px;
+            height: 3px;;
+            content: '';
+            background: #F95523;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+
+      p {
+        color: $white;
+        font-family: $f__overpass;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  .guild__cubegon-intro {
+    margin-top: 88px;
+    .cubegon-logic__container {
+      text-align: center;
+      position: relative;
+      margin-top: 24px;
+
+      .cubegon-logic__sub-section {
+        position: relative;
+        margin-top: 88px;
+        margin-bottom: 88px;
+
+        .content-desc {
+          .cubegon__header {
+            font-size: $font-size-bigger;
+            font-family: $f__baloobha;
+            color: $white;
+          }
+        }
+      }
+
+      .header {
+        p {
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+
+    .cubegon-properties__container {
+      text-align: center;
+
+      img {
+        display: inline-block;
+        max-height: 350px;
+        width: auto;
+      }
+
+      p {
+        font-weight: $font-weight-bold;
+      }
+
+      div {
+        p {
+          font-weight: $font-weight-medium;
+        }
+      }
+
+      .cubegon-types {
+        margin-top: 44px;
+      }
+
+      .cubegon-stats {
+        margin-top: 44px;
+        .content {
+          display: flex;
+          justify-content: center;
+          img {
+            height: 300px;
+          }
+        }
+      }
+
+      .cubegon-tiers {
+        margin-top: 44px;
+        .cubegon-tiers__listview {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          flex-wrap: wrap;
+          .item {
+            &:nth-child(1) {
+              .cubegon-tier__label {
+                color: #2D3047;
+              }
+            }
+
+            &:nth-child(2) {
+              .cubegon-tier__label {
+                color: #CA481F;
+              }
+            }
+
+            &:nth-child(3) {
+              .cubegon-tier__label {
+                color: #229AD7;
+              }
+            }
+
+            &:nth-child(4) {
+              .cubegon-tier__label {
+                color: #F51878;
+              }
+            }
+
+            width: 25%;
+
+            @include mobile {
+              width: 45%;
+            }
+
+            img {
+              display: block;
+              width: 100%;
+              height: auto;
+            }
+
+            .value {
+              color: #F95523;
+              font-family: $f__baloobha;
+              font-size: $font-size-big;
+            }
+
+            p {
+              font-size: $font-size-tiny;
+              font-weight: $font-weight-extra-light;
+            }
+
+            .cubegon-tier__label {
+              font-family: $f__baloobha;
+              font-size: $font-size-bigger;
+            }
+          }
+        }
+      }
+
+      .cubegon-skills {
+        margin-top: 44px;
+      }
+
+      .cubegon-energy {
+        margin-top: 44px;
+      }
+
+    }
+
+    .cubegon-dismantle-reassemble__container {
+      margin-top: 44px;
+      text-align: center;
+
+      p {
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  .guild__combat-intro {
+    margin-top: 88px;
+    text-align: center;
+  }
+
+  .guild__what-next {
+    margin-top: 88px;
+    text-align: center;
+
+    .build-your-cubegon__header {
+      margin-top: 44px;
+      margin-bottom: 24px;
+      font-family: $f__baloobha;
+      color: #FFBE02;
+    }
+  }
+}

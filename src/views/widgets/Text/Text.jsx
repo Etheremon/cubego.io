@@ -8,7 +8,9 @@ export const Text = ({className, children, type, uppercase, capitalize, onClick}
   return (
     <div className={`widget__text ${className} ${type} ${uppercase ? 'uppercase' : ''} ${capitalize ? 'capitalize' : ''}`}
          onClick={() => {onClick && onClick()}}>
-      {children}
+         <div className="content">
+          {children}
+         </div>
     </div>
   );
 };
