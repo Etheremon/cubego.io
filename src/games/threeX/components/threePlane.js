@@ -14,13 +14,15 @@ export class ThreePlane extends ThreeComponent {
     if (props.materialId) {
       material = ThreeX.getMaterial(props.materialId).clone();
     } else if (props.imageUrl) {
-      let texture = window.THREE.ImageUtils.loadTexture(props.imageUrl);
+      let texture = new window.THREE.TextureLoader().load(props.imageUrl);
 
       material = new window.THREE.MeshBasicMaterial({
         map: texture
       });
       material.transparent = true;
       material.color.setHex(0xffffff);
+    } else {
+      material = new window.THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, depthWrite: false, opacity: 0});
     }
 
     let geometry = new window.THREE.PlaneGeometry(props.width || 50, props.height || 50);

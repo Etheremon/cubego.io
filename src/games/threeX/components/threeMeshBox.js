@@ -21,7 +21,6 @@ export class ThreeMeshBox extends ThreeComponent {
 
     if (props.materialId) {
       material = ThreeX.getMaterial(props.materialId).clone();
-      this.originalOpacity = material.opacity;
       if (props.variantColor) {
         let variantColor = parseInt(props.variantColor.replace('#', ''), 16);
         material.color.setHex(variantColor);

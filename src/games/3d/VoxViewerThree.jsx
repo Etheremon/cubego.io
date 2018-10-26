@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  AmbientLight,
+  AmbientLight, Axis,
   Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera, Plane,
   PointLight,
 } from "../threeX";
@@ -51,6 +51,8 @@ class VoxViewerThree extends Component {
       this.tools = props.tools;
       this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
     }
+    this.plane = null;
+    this.rendererObjects = [];
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
   }
@@ -70,8 +72,19 @@ class VoxViewerThree extends Component {
 
     let elements = !this.props.viewOnly
       ? [
+        <Plane key={`plane-${this.updateGridIdx}`}
+               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
+               rotation={{x: Math.PI / 2, y: Math.PI, z: 0}} ref={(plane) => {
+          this.plane = plane
+        }}
+               width={size.y * SIZE} height={size.x * SIZE}
+        />,
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
-               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + x + ARROW_DISTANCE}}
+               position={{
+                 x: x,
+                 y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y,
+                 z: z + size.y * SIZE / 2 + ARROW_DISTANCE
+               }}
                rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
         />,
         <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
@@ -108,13 +121,17 @@ class VoxViewerThree extends Component {
   }
 
   setNewVoxelData(voxelData) {
-    this.offsetVector = new window.THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * Math.floor(voxelData.size.z / 2), Math.floor(SIZE * voxelData.size.y / 2));
+    this.offsetVector = new window.THREE.Vector3(SIZE * Math.floor(voxelData.size.x / 2), SIZE * Math.floor(voxelData.size.z / 2), SIZE * Math.floor(voxelData.size.y / 2));
     this.objects = [];
     this.setState({
       data: voxelData || {}
     }, () => {
       this.updateBoundingBox();
     });
+  }
+
+  componentDidUpdate() {
+    this.rendererObjects = this.getRendererObjects();
   }
 
   setNewTools(tools) {
@@ -216,19 +233,21 @@ class VoxViewerThree extends Component {
     this.setState({unMounted: true});
   }
 
-  getRendererObject() {
+  getRendererObjects() {
     return this.objects.filter((object) => {
       return !!object
     }).map((object) => {
       return object.renderer
-    });
+    })
   }
 
   onMouseDown(event) {
+    event.preventDefault();
+
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
-    let intersects = this.raycaster.intersectObjects(this.getRendererObject());
+    let intersects = this.raycaster.intersectObjects(this.rendererObjects);
     if (intersects.length > 0) {
       let intersect = intersects[0];
       let position;
@@ -249,6 +268,7 @@ class VoxViewerThree extends Component {
 
   onMouseMove(event) {
     event.preventDefault();
+
     if (this.objectHovered) {
       this.objectHovered.material.opacity = 1;
     }
@@ -256,7 +276,7 @@ class VoxViewerThree extends Component {
     let mousePos = getMousePositionOnCanvas(event, this.canvas);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(this.mouse, this.camera._renderer);
-    let intersects = this.raycaster.intersectObjects(this.getRendererObject());
+    let intersects = this.raycaster.intersectObjects(this.rendererObjects);
     if (intersects.length > 0) {
       this.hoverBehaviour(intersects[0]);
     }
@@ -318,7 +338,7 @@ class VoxViewerThree extends Component {
 
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        {/*<Axis/>*/}
+        <Axis/>
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
@@ -341,9 +361,9 @@ class VoxViewerThree extends Component {
         }
 
         {/*{!this.props.viewOnly ?*/}
-          {/*<BoxHelper ref={(ref) => {*/}
-            {/*this.boxHelper = ref*/}
-          {/*}}/> : null*/}
+        {/*<BoxHelper ref={(ref) => {*/}
+        {/*this.boxHelper = ref*/}
+        {/*}}/> : null*/}
         {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
