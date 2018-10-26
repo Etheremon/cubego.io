@@ -478,17 +478,17 @@ let view2dOptions = {
   front: {
     viewKey: 'front',
     label: 'front_view',
-    x: '-y', y: '-z', z: '-x',
+    x: '+x', y: '-z', z: '-y',
   },
   side: {
     viewKey: 'side',
     label: 'side_view',
-    x: '+x', y: '-z', z: '-y',
+    x: '-y', y: '-z', z: '-x',
   },
   top: {
     viewKey: 'top',
     label: 'bottom_view',
-    x: '-y', y: '+x', z: '+z',
+    x: '+x', y: '-y', z: '+z',
   }
 };
 let view2dList = ['front', 'side', 'top'];

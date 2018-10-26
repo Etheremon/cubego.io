@@ -13,7 +13,7 @@ export class Model3D extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLayer: LS.GetItem(LS.Fields.showLayer) === 'true' || LS.GetItem(LS.Fields.showLayer) === null,
+      showLayer: LS.GetItem(LS.Fields.showLayer) === true || LS.GetItem(LS.Fields.showLayer) === null,
     };
 
     this.toggleShowLayer = this.toggleShowLayer.bind(this);

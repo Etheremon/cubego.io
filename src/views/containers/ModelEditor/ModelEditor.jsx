@@ -293,6 +293,12 @@ class _ModelEditor extends React.Component {
           {_t('err.model_already_registered')}
         </div>
       )
+    } else {
+      content = (
+        <div className={'header'}>
+          {_t('err.model_not_valid')}
+        </div>
+      )
     }
 
     return (

@@ -71,7 +71,7 @@ class VoxViewerThree extends Component {
     let elements = !this.props.viewOnly
       ? [
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
-               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + x + ARROW_DISTANCE}}
+               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + ARROW_DISTANCE}}
                rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
         />,
         <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
@@ -140,13 +140,13 @@ class VoxViewerThree extends Component {
   calculateSelectedLayer() {
     switch (this.tools['view-2d'].value.viewKey) {
       case 'front':
-        this.selectedDimension = 'x';
+        this.selectedDimension = 'y';
         break;
       case 'top':
         this.selectedDimension = 'z';
         break;
       case 'side':
-        this.selectedDimension = 'y';
+        this.selectedDimension = 'x';
         break;
     }
     this.selectedIdx = this.tools['layer-index'].value;
