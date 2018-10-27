@@ -135,8 +135,6 @@ export class ToolManager {
   convertToSpaceSize(modelSize, oldSpaceSize, k) {
     if (!oldSpaceSize) oldSpaceSize = [0, 11];
 
-    console.log("zz", modelSize);
-
     let x = modelSize[0], y = modelSize[1];
     if (y-x+1 < 40) x -= 1;
     if (y-x+1 < 40) y += 1;

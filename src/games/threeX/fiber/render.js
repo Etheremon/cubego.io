@@ -20,8 +20,23 @@ function render(element, container, options = {}) {
   return ThreeXFiberRenderer.getPublicRootInstance(rootContainer);
 }
 
+function unmountComponentAtNode(container) {
+  if (container._reactRootContainer) {
+    ThreeXFiberRenderer.unbatchedUpdates(() => {
+      ThreeXFiberRenderer.updateContainer(null, null, null, () => {
+        container._reactRootContainer = null;
+      });
+    });
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function stopRender() {
+  unmountComponentAtNode(scene.canvas);
   cancelAnimationFrame(scene.renderer.camera.requestAnimationFrameId);
+
 }
 
 export {

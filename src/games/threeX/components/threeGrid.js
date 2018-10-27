@@ -1,7 +1,6 @@
-import {ThreeComponent} from "./threeComponent";
+import {ThreeObject3DComponent} from "./threeObject3DComponent";
 
-
-export class ThreeGrid extends ThreeComponent {
+export class ThreeGrid extends ThreeObject3DComponent {
   static create({scene}, props) {
     let threeGrid = new ThreeGrid();
 

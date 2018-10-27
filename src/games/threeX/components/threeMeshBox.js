@@ -1,8 +1,7 @@
-import {ThreeComponent} from "./threeComponent";
-
 import ThreeX from "../index";
+import {ThreeObject3DComponent} from "./threeObject3DComponent";
 
-export class ThreeMeshBox extends ThreeComponent {
+export class ThreeMeshBox extends ThreeObject3DComponent {
   constructor() {
     super();
     this.props = {};

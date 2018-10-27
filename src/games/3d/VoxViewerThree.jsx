@@ -329,7 +329,7 @@ class VoxViewerThree extends Component {
 
   render() {
     if (this.state.unMounted) {
-      return null;
+      return <MeshContainer/>;
     }
 
     return (

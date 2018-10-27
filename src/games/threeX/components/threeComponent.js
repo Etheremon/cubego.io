@@ -31,10 +31,14 @@ export class ThreeComponent extends FiberNode {
 
   removeChild(child) {
     super.removeChild(child);
-    this._renderer.remove(child._renderer);
-    child._renderer.geometry.dispose();
-    child._renderer.material.dispose();
+    if (this._renderer && child._renderer) {
+      this._renderer.remove(child._renderer);
+    }
+    child.destroy();
     child = undefined;
-    console.log('removeChild');
+  }
+
+  destroy() {
+
   }
 }

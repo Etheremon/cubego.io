@@ -1,7 +1,7 @@
-import {ThreeComponent} from "./threeComponent";
+import {ThreeObject3DComponent} from "./threeObject3DComponent";
 
 
-export class ThreeMeshContainer extends ThreeComponent {
+export class ThreeMeshContainer extends ThreeObject3DComponent {
   static create({scene}, props) {
     let meshContainer = new ThreeMeshContainer();
     let container = new window.THREE.Object3D();
