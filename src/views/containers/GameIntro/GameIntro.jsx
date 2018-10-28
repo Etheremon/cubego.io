@@ -5,20 +5,21 @@ import withRouter from 'react-router/es/withRouter';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
-import * as Utils from "../../../utils/utils";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {URLS} from "../../../constants/general";
 import { Text } from '../../widgets/Text/Text.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
+import {CUBE_MATERIALS, CUBE_TIER, CUBE_TYPES} from "../../../constants/cubego";
+import * as ObjUtils from "../../../utils/objUtils";
 
 require("style-loader!./GameIntro.scss");
 
 const cubegonTiers = [
   {tier: 'challenger', value: 0},
-  {tier: 'ellite', value: 6000},
+  {tier: 'elite', value: 6000},
   {tier: 'champion', value: 26000},
   {tier: 'god', value: 68000},
-]
+];
 
 class GameIntro extends React.Component {
 
@@ -28,40 +29,45 @@ class GameIntro extends React.Component {
 
   render() {
     const {_t} = this.props;
+    
+    let containerSize = Container.sizes.NORMAL;
+    let typeList = ObjUtils.GetValues(CUBE_TYPES);
 
     return (
-      <PageWrapper type={PageWrapper.types.NORMAL}>
-        <Navbar minifying />
+      <PageWrapper>
+        <Navbar minifying size={containerSize}/>
 
         <div className="game-intro-page__container">
 
-          <Container className={'guild__game-intro sub-background yellow right'}>
+          <Container size={containerSize} className={'guide__game-intro sub-background yellow right'}>
             <div className="content right">
               <div className="content-desc">
-                <div className="game-intro__header">
+                <div className="header--orange">
                   {_t('what_is_cubego')}
                 </div>
-                <p>{_t('desc.what_is_cubego')}</p>
+                <div className={'header--detail'}>
+                  {_t('desc.what_is_cubego')}
+                </div>
               </div>
               <div className="content-image">
                 <img src={require('../../../shared/img/game_intro/whatiscubegon.png')}/>
               </div>
             </div>
             <div className="principles">
-              <div className="header__label">
+              <div className="header--blue">
                 {_t('principles_of_creation')}
               </div>
 
               <div className="principles__list-item">
                 {
-                  ['diversity', 'uniqueness', 'value_of_synergies'].map((ele, idx) => 
+                  ['diversity', 'uniqueness', 'value_of_synergies'].map((ele, idx) =>
                     <div className="item" key={idx}>
-                      <div className="principles-types">
+                      <div className="header--sub">
                         {_t(`${ele}`)}
                       </div>
-                      <p>
+                      <div className="text--normal">
                         {_t(`desc.${ele}`)}
-                      </p>
+                      </div>
                     </div>
                   )
                 }
@@ -69,40 +75,49 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container className={'guild__cubego-intro'}>
+          <Container size={containerSize} className={'guide__cubego-intro sub-background blue left'}>
             <div className="main__header cubego-intro__header left">
               <div className="header">
                 {_t('cubego')}
               </div>
             </div>
-            <div className="content left sub-background blue left">
-              <div className="content-desc">
+            <div className="content left">
+              <div className="content-desc header--detail">
                 <p>{_t('desc.cubego-desc-1')}</p>
                 <p>{_t('desc.cubego-desc-2')}</p>
               </div>
               <div className="content-image">
                 <img src={require('../../../shared/img/game_intro/cubego_illustration.png')}/>
-              </div>  
+              </div>
             </div>
 
             <div className="tier-type-cubego">
               <div className="intro-tier-type__container">
-                <Text className={'intro-tier-type__label'} type={Text.types.H2} children={_t('tiers_types_cubegoes')} />
-                <p>{_t('desc.tiers_types_cubegoes')}</p>
+                <div className={'header--orange-small'}>
+                  {_t('tiers_types_cubegoes')}
+                </div>
+                <div className={'header--detail'}>
+                  {_t('desc.tiers_types_cubegoes')}
+                </div>
               </div>
 
-              <div className="tier-detail__container">
-                <Text className={'tiers__label'} type={Text.types.H3} children={_t('tiers')} />
-                <p>{_t('desc.tiers')}</p>
-                <div className="tiers__list-view sub-background blue right">
+              <div className="tier-detail__container sub-background blue right">
+                <div className={'header--blue-small'}>
+                  {_t('tiers')}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t('desc.tiers')}
+                </div>
+
+                <div className="tiers__list-view">
                   {
-                    ['legendary', 'epic', 'rare', 'common', 'basic'].map((ele, idx) => 
+                    ['legendary', 'epic', 'rare', 'common', 'basic'].map((ele, idx) =>
                       <div className="item" key={idx}>
                         <img src={require(`../../../shared/img/game_intro/${ele}.png`)}/>
                         <div className="tier__content">
-                          <Text className={'tier__label'} type={Text.types.H4} children={_t(`${ele}`)} />
-                          <p>{_t(`desc.${ele}`)}</p>
-                        </div>  
+                          <div className={'tier__label'}>{_t(`${ele}`)}</div>
+                          <div className={'tier__desc'}>{_t(`desc.${ele}`)}</div>
+                        </div>
                       </div>
                     )
                   }
@@ -110,12 +125,13 @@ class GameIntro extends React.Component {
               </div>
 
             </div>
-          
+
           </Container>
 
-          <Container className={'cubego-stats__container'}>
-            <div className="header__container">
-              <div className="attributes__header">
+          <div className={'cubego-stats__container'}>
+
+            <Container size={containerSize} className="header__container">
+              <div className="attributes__header header--blue-small">
                 {_t('attributes')}
               </div>
               <div className="sub-header__container">
@@ -132,14 +148,47 @@ class GameIntro extends React.Component {
                   <p>{_t('desc.strength')}</p>
                 </div>
               </div>
-            </div>
+            </Container>
 
             <div className="cubego-stats-details__container">
-                  
+              <table className={'attribute-table'}>
+                <thead>
+                  <tr className={'header'}>
+                    <th>{_t('tier')}</th>
+                    <th>{_t('material')}</th>
+                    <th>{_t('strength')}</th>
+                    <th colSpan={5}>{_t('type')}</th>
+                  </tr>
+                  <tr className={'sub-header'}>
+                    <th colSpan={3}/>
+                    {typeList.map((t, tIdx) => (
+                      <th key={tIdx}>{_t(t.name)}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {ObjUtils.GetValues(CUBE_MATERIALS).map((material, mIdx) => {
+                    return (
+                      <tr key={mIdx} className={`tier-${material.class_id}`}>
+                        <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>
+                        <td className={'material-icon'}><img src={material.icon}/></td>
+                        <td>{material.point}</td>
+                        {typeList.map((type, tIdx) => {
+                          return (
+                            <td key={tIdx} className={'material-variants'}>
+                              {material.types[type.id].map(vKey => (<img key={vKey} src={material.variants[vKey].img}/>))}
+                            </td>
+                          )})}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-          </Container>
 
-          <Container className={'guild__cubegon-intro'}>
+          </div>
+
+          <Container size={containerSize} className={'guide__cubegon-intro'}>
             <div className="main__header cubegon-intro__header right">
               <div className="header">
                 {_t('cubegon')}
@@ -147,18 +196,21 @@ class GameIntro extends React.Component {
             </div>
             <div className="content right sub-background blue right">
               <div className="content-desc">
-                <p>{_t('desc.cubegon_desc_1')}</p>
-                <p>{_t('desc.cubegon_desc_2')}</p>
+                <div className={'header--detail'}>{_t('cubegon.desc')}</div>
               </div>
               <div className="content-image">
                 <img src={require('../../../shared/img/game_intro/cubegon_illustration.png')}/>
-              </div>  
+              </div>
             </div>
 
             <div className="cubegon-logic__container">
               <div className="header">
-                <Text className={'cubegon-logic__label'} type={Text.types.H2} children={_t('creation_copyright_logic')} />
-                <p>{_t('desc.creation_copyright_logic')}</p>
+                <div className={'cubegon-logic__label header--orange-small'}>
+                  {_t('creation_copyright_logic')}
+                </div>
+                <div className={'header--detail'}>
+                  {_t('desc.creation_copyright_logic')}
+                  </div>
               </div>
 
               <div className="cubegon-logic__sub-section">
@@ -169,10 +221,12 @@ class GameIntro extends React.Component {
                       {_t('creation_header')}
                     </div>
                     <p>{_t('desc.creation_header')}</p>
+                    <p>{_t('desc.creation_header_2')}</p>
+                    <p>{_t('desc.creation_header_3')}</p>
                   </div>
                   <div className="content-image">
                     <img src={require('../../../shared/img/game_intro/variant.png')}/>
-                  </div>  
+                  </div>
                 </div>
               </div>
 
@@ -187,45 +241,56 @@ class GameIntro extends React.Component {
                   </div>
                   <div className="content-image">
                     <img src={require('../../../shared/img/game_intro/unique.png')}/>
-                  </div>  
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="cubegon-properties__container">
-              <Text className={'cubegon-properties__label'} type={Text.types.H2} children={_t('cubegon_properties')} />
-              <p>{_t('desc.cubegon_properties')}</p>
+              <div className={'cubegon-properties__label header--orange-small'}>
+                {_t('cubegon_properties')}
+              </div>
+              <div className={'header--detail'}>
+                {_t('desc.cubegon_properties')}
+              </div>
               <div className="cubegon-types sub-background yellow left">
-                <Text className={''} type={Text.types.H3} children={_t('cubegon_types')} />
-                <p>{_t('desc.cubegon_types_1')}</p>
-                <p>{_t('desc.cubegon_types_2')}</p>
+                <div className={'header--blue-small'}>
+                  {_t('cubegon_types')}
+                </div>
+                <div className={'text--highlight'}>{_t('desc.cubegon_types_1')}</div>
+                <div className={'text--highlight'}>{_t('desc.cubegon_types_2')}</div>
                 <img src={require('../../../shared/img/game_intro/type.png')} />
               </div>
 
               <div className="cubegon-stats sub-background yellow right">
-                <Text className={''} type={Text.types.H3} children={_t('cubegon_stats')} />
-                <p>{_t('desc.cubegon_stats')}</p>
+                <div className={'header--blue-small'}>
+                  {_t('cubegon_stats')}
+                </div>
+                <div className={'text--highlight'}>{_t('desc.cubegon_stats')}</div>
                 <div className="content">
                   <img src={require('../../../shared/img/game_intro/stats.png')} />
                 </div>
               </div>
 
               <div className="cubegon-tiers sub-background blue left">
-                <Text className={''} type={Text.types.H3} children={_t('cubegon_tiers')} />
-                <p>{_t('desc.cubegon_tiers_1')}</p>
-                <p>{_t('desc.cubegon_tiers_2')}</p>
+                <div className={'header--blue-small'}>
+                  {_t('cubegon_tiers')}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t('desc.cubegon_tiers_1')}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t('desc.cubegon_tiers_2')}
+                </div>
                 <div className="cubegon-tiers__listview">
                   {
-                    cubegonTiers.map((ele, idx) => 
+                    cubegonTiers.map((ele, idx) =>
                       <div className="item" key={idx}>
-                        <img src={require(`../../../shared/img/game_intro/${ele.tier}.png`)}/>
-                        <div className="cubegon-tier__label">
-                          {
-                            _t(`${ele.tier}`)
-                          }
-                        </div>
-                        <p>{_t(`desc.${ele.tier}`)}</p>
+                        <div className={'img'}><img src={require(`../../../shared/img/game_intro/${ele.tier}.png`)}/></div>
+                        <div className="cubegon-tier__label">{_t(`${ele.tier}`)}</div>
+                        <div className={'desc'}>{_t(`desc.${ele.tier}`)}</div>
                         <div className="value">{ele.value}</div>
+                        <div className={'sub'}>{_t('strength required')}</div>
                       </div>
                     )
                   }
@@ -233,74 +298,93 @@ class GameIntro extends React.Component {
               </div>
 
               <div className="cubegon-skills sub-background blue right">
-                <Text className={''} type={Text.types.H3} children={_t('cubegon_skills')} />
-                <p>{_t('desc.cubegon_skills')}</p>
-                <img src={require('../../../shared/img/banner/banner-copyright.png')}/>
+                <div className={'header--blue-small'}>
+                  {_t('cubegon_skills')}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t('desc.cubegon_skills')}
+                </div>
+                <img src={require('../../../shared/img/banner/battle_banner.png')}/>
               </div>
 
               <div className="cubegon-energy">
-                <Text className={''} type={Text.types.H3} children={_t('cubegon_energy')} />
-                <p>{_t(`desc.cubegon_energy_1`)}</p>
-                <p>{_t(`desc.cubegon_energy_2`)}</p>
+                <div className={'header--blue-small'}>
+                  {_t('cubegon_energy')}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t(`desc.cubegon_energy_1`)}
+                </div>
+                <div className={'text--highlight'}>
+                  {_t(`desc.cubegon_energy_2`)}
+                </div>
               </div>
-
             </div>
+
             <div className="cubegon-dismantle-reassemble__container">
-              <Text className={'cubegon-dismantle-reassemble__label'} type={Text.types.H2} children={_t('dismantle_reassemble')} />
-              <p>{_t('desc.dismantle_reassemble_1')}</p>
-              <p>{_t('desc.dismantle_reassemble_2')}</p>
+              <div className={'header--orange-small'}>
+                {_t('dismantle_reassemble')}
+              </div>
+              <div className={'header--detail'}>
+                {_t('desc.dismantle_reassemble_1')}
+              </div>
+              <div className={'header--detail'}>
+                {_t('desc.dismantle_reassemble_2')}
+              </div>
             </div>
           </Container>
 
-          <Container className={'guild__combat-intro'}>
+          <Container size={containerSize} className={'guide__combat-intro sub-background blue left'}>
             <div className="main__header combat-intro__header left">
               <div className="header">
                 {_t('combat')}
               </div>
             </div>
-            <div className="content left sub-background blue left">
+            <div className="content left">
               <div className="content-desc">
-                <p>{_t('desc.combat_intro_1')}</p>
-                <p>{_t('desc.combat_intro_2')}</p>
-                <p>{_t('desc.combat_intro_3')}</p>
+                <div className={'header--detail'}>{_t('desc.combat_intro_1')}</div>
+                <div className={'header--detail'}>{_t('desc.combat_intro_2')}</div>
+                <div className={'header--detail'}>{_t('desc.combat_intro_3')}</div>
               </div>
               <div className="content-image">
-                <img src={require('../../../shared/img/banner/banner-copyright.png')}/>
-              </div> 
+                <img src={require('../../../shared/img/game_intro/combat.png')}/>
+              </div>
             </div>
-            <img src={require('../../../shared/img/banner/banner-copyright.png')}/>
           </Container>
 
-          <Container className={'guild__what-next'}>
+          <Container size={containerSize} className={'guide__what-next sub-background blue right'}>
             <div className="main__header what-next__header right">
               <div className="header">
                 {_t('what_next')}
               </div>
             </div>
-            <div className="content left sub-background blue right">
+            <div className="content right">
               <div className="content-desc">
-                <p>{_t('desc.what_next_1')}</p>
-                <p>{_t('desc.what_next_2')}</p>
-                <p>{_t('desc.what_next_3')}</p>
-                <p>{_t('desc.what_next_4')}</p>
+                <div className={'header--detail'}>{_t('desc.what_next_1')}</div>
+                <div className={'header--detail'}>{_t('desc.what_next_2')}</div>
+                <div className={'header--detail'}>{_t('desc.what_next_3')}</div>
+                <div className={'header--detail'}>{_t('desc.what_next_4')}</div>
+                <div className={'header--detail'}>{_t('desc.what_next_5')}</div>
               </div>
               <div className="content-image">
-                <img src={require('../../../shared/img/banner/banner-copyright.png')}/>
-              </div> 
+                <img src={require('../../../shared/img/game_intro/next.png')}/>
+              </div>
             </div>
-            <p>{_t('desc.what_next_1')}</p>
-            <p>{_t('desc.what_next_2')}</p>
-            <p>{_t('desc.what_next_3')}</p>
-            <p>{_t('desc.what_next_4')}</p>
-            
-            <div>
-              <Text className={'build-your-cubegon__header'} type={Text.types.H2} children={_t('build_your_cubegon')} />
+          </Container>
+
+          <Container size={containerSize} className={'guide__last'}>
+            <div className={'text'}>
+              <div className={'header--detail'}>{_t('last.1')}</div>
+              <div className={'header--detail'}>{_t('last.2')}</div>
+              <div className={'header--detail'}>{_t('last.3')}</div>
+              <div className={'header--detail'}>{_t('last.4')}</div>
             </div>
-            
-            <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'create__button'} label={_t('create_now')} onClick={() => {
+            <div className={'build-your-cubegon__header'}>
+              {_t('build_your_cubegon')}
+            </div>
+
+            <ButtonNew size={ButtonNew.sizes.BIG} showDeco={ButtonNew.deco.BOTH} className={'create__button'} label={_t('create_now')} onClick={() => {
               this.props.history.push(`/${URLS.BUILD_GON}`)
             }}/>
-
           </Container>
           
         </div>

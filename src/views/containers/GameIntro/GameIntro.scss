@@ -4,9 +4,81 @@
 @import '../../styles/fonts';
 
 .game-intro-page__container {
-  margin-top: 60px;
+  margin-top: 140px;
   margin-bottom: 32px;
   font-family: $f__overpass;
+  color: $gray-dark;
+  font-size: $font-size-small;
+  @include mobile {
+    margin-top: 30px;
+  }
+
+  .header--orange {
+    border-bottom: 2px solid #FF6C00;
+    display: inline-block;
+    font-size: 40px;
+    color: $c__text__orange;
+    font-family: $f__baloobha;
+    margin: 24px 0;
+  }
+  .header--orange-small {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: $font-weight-extra-bold;
+    color: $c__text__orange;
+    margin: 16px 0;
+  }
+  .header--blue {
+    color: $c__text__blue;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-header-1;
+    margin: 8px 0;
+  }
+  .header--blue-small {
+    color: $c__text__blue_2;
+    font-size: 28px;
+    font-family: $f__baloobha;
+    font-weight: $font-weight-light;
+    margin: 8px 0;
+  }
+  .header--sub {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-bigger;
+    position: relative;
+    color: $c__text__blue-2;
+    margin: 8px 0 32px 0;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -16px;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 5px;
+      background: #48E8FF;
+    }
+  }
+  .header--detail {
+    font-weight: $font-weight-semi-bold;
+    color: $c__text__blue-2;
+    font-size: $font-size-normal;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 8px 0;
+  }
+  .text--highlight {
+    font-weight: $font-weight-semi-bold;
+    font-size: $font-size-small;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 8px 0;
+  }
+  .text--normal {
+    margin: 4px 0;
+    font-size: $font-size-small;
+    //font-weight: $font-weight-medium;
+  }
 
   .background {
     &:before, &:after {
@@ -79,86 +151,74 @@
   }
 
   .sub-background {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      background-repeat: no-repeat;
+      height: 600px;
+      width: 100%;
+      background-size: auto 100%;
+      top: -100px;
+      z-index: 0;
+    }
+
+    &.left:after {
+      left: -80px;
+      background-position: left;
+    }
+    &.right:after {
+      right: -80px;
+      background-position: right;
+    }
     &.yellow {
-      &.left {
+      &.left:after {
         background-image: url('../../../shared/img/game_intro/sub_background_yellow_left.png');
       }
-  
-      &.right {
+      &.right:after {
         background-image: url('../../../shared/img/game_intro/sub_background_yellow_right.png');
       }
     }
-
     &.blue {
-      &.left {
+      &.left:after {
         background-image: url('../../../shared/img/game_intro/sub_background_blue_left.png');
       }
-  
-      &.right {
+      &.right:after {
         background-image: url('../../../shared/img/game_intro/sub_background_blue_right.png');
       }
     }
-    
-  }
 
-  .widget__text {
-    position: relative;
-    display: inline-block;
-
-    font-family: $f__baloobha;
-      &.h1 {
-        font-size: 44px;
-        text-transform: lowercase;
-        display: inline-block;
-        z-index: 2;
-        position: relative;
-        padding: 0 24px;
-      }
-
-      &.h2 {
-        font-size: $font-size-header-3;
-        color: #FF6C00;
-        text-transform: capitalize;
-        font-family: $f__overpass;
-      }
-
-      &.h3 {
-        font-size: $font-size-header-1;
-        color: #08477B;
-        text-transform: capitalize;
-      }
-
-      &.h4 {
-        font-size: $font-size-large;
-        text-transform: capitalize;
-        color: #45146D;
-      }
   }
 
   .main__header {
     font-family: $f__baloobha;
     position: relative;
     display: inline-block;
+    width: 45%;
+    @include mobile {
+      width: 100%;
+    }
+
     .header {
-      font-size: 44px;
+      font-size: 50px;
       text-transform: capitalize;
       color: $white;
       position: relative;
       z-index: 2;
-      padding: 8px 16px;
+      padding-top: 16px;
+      padding-bottom: 8px;
     }
-    
+
     &:after {
       content: '';
       position: absolute;
       height: 100%;
-      width: 1000px;
+      width: 2000px;
       top: 0;
       background: #0C4A7E;
       z-index: 1;
+      @include border-radius-without-overflow(3px);
     }
 
     &.left  {
@@ -166,25 +226,19 @@
       &:after {
         right: 0;
       }
-      // &:before {
-      //   content: "."; 
-      //   visibility: hidden; 
-      //   display: block; 
-      //   height: 0; 
-      //   clear: both;
-      // }
     }
 
     &.right  {
       float: right;
+      padding-left: 20px;
       &:after {
         left: 0;
       }
       &:before {
-        content: "."; 
-        visibility: hidden; 
-        display: block; 
-        height: 0; 
+        content: ".";
+        visibility: hidden;
+        display: block;
+        height: 0;
         clear: both;
       }
     }
@@ -206,86 +260,70 @@
         width: 100%;
         text-align: center;
       }
-      p {
-        font-weight: $font-weight-bold;
-      }
     }
 
     .content-image {
-      width: 45%;
+      flex-grow: 1;
+      position: relative;
+      min-height: 300px;
+
       img {
-        display: inline-block;
-        width: 100%;
+        position: absolute;
+        max-width: 110%;
+        max-height: 150%;
         height: auto;
+        left: 50%;
+        bottom: 0;
+        @include transform(translateX(-50%));
       }
       @include mobile {
-        display: none;
+        width: 100%;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
       }
     }
 
     &.left {
       .content-desc {
-        padding-left: 36px;
       }
     }
 
     &.right {
       .content-desc {
-        padding-right: 36px;
+        //padding-right: 36px;
         order: 2;
       }
     }
-  }
-
-  .guild__game-intro {
-    margin-bottom: 88px;
-    .content-desc {
-      .game-intro__header {
-        border-bottom: 3px solid #FF6C00;
-        display: inline-block;
-        font-size: $font-size-header-3;
-        color: #FF6C00;
-        text-transform: capitalize;
-        font-family: $f__baloobha;
+    &.left, &.right {
+      .content-desc {
+        @include mobile {
+          padding: 0;
+        }
       }
     }
-    
+
+  }
+
+  .guide__game-intro {
     .principles {
-      margin-top: 44px;
+      margin-top: 80px;
       text-align: center;
-      .header__label {
-        margin-bottom: 24px;
-        color: #48E8FF;
-        font-weight: $font-weight-bold;
-        font-size: $font-size-large;
-      }
 
       .principles__list-item {
         display: flex;
+        @include mobile {
+          flex-wrap: wrap;
+        }
 
         .item {
-          margin: 8px;
+          padding: 12px;
 
           .principles-types {
-            font-weight: $font-weight-bold;
-            font-size: $font-size-bigger;
-            margin-bottom: 32px;
-            position: relative;
-
-            &:after {
-              content: '';
-              position: absolute;
-              left: 50%;
-              bottom: -16px;
-              transform: translateX(-50%);
-              width: 32px;
-              height: 5px;
-              background: #48E8FF;
-            }
           }
 
           p {
-            font-weight: $font-weight-medium;
             font-size: $font-size-small;
           }
         }
@@ -293,44 +331,59 @@
     }
   }
 
-  .guild__cubego-intro {
-    
-    
+  .guide__cubego-intro {
+    margin-top: 100px;
     .content-desc {
-    
+
     }
     .tier-type-cubego {
-      margin-top: 56px;
-      margin-bottom: 56px;
+      margin-top: 50px;
+
       .intro-tier-type__container {
         text-align: center;
-        margin-bottom: 44px;
         .intro-tier-type__label {
 
         }
         p {
-          font-weight: $font-weight-bold;
+          font-weight: $font-weight-semi-bold;
+          color: $c__text__blue-2;
         }
       }
 
       .tier-detail__container {
+        margin: 60px 0;
         text-align: center;
-        p {
-          font-weight: $font-weight-medium;
-          font-size: $font-size-small;
+        .tiers__header {
+
+        }
+        .text--highlight {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .tiers__desc {
+          //font-weight: $font-weight-medium;
+          //font-size: $font-size-small;
+          margin: 8px 0;
         }
 
         .tiers__list-view {
-          padding: 8px 72px;
+          max-width: 700px;
+          margin: 0 auto;
+          padding-top: 20px;
           @include mobile {
             padding: 0;
           }
           .item {
+            padding: 8px 0;
             display: flex;
             align-items: center;
             img {
-              height: 150px;
+              width: 120px;
               margin-right: 16px;
+              @include mobile {
+                width: 100px;
+                margin-right: 8px;
+              }
             }
 
             .tier__content {
@@ -338,20 +391,25 @@
 
               .tier__label {
                 position: relative;
+                color: #45146D;
+                font-size: $font-size-bigger;
+                font-family: $f__baloobha;
+                padding-bottom: 8px;
 
                 &:after {
                   position: absolute;
                   content: '';
-                  width: 36px;
+                  width: 40px;
                   height: 2px;
                   background: #EBCA00;
                   left: 0;
+                  bottom: 0;
                 }
               }
 
-              p {
-                font-size: $font-size-tiny;
-                font-weight: $font-weight-extra-light;
+              .tier__desc {
+                padding-top: 8px;
+                font-size: $font-size-small;
               }
             }
           }
@@ -362,21 +420,28 @@
 
   .cubego-stats__container {
     text-align: center;
+    background-image: url('../../../shared/img/background/background-new.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 40px 0;
 
     .header__container {
       .attributes__header {
-        font-family: $f__baloobha;
-        font-size: $font-size-large;
         color: #00E5FD;
       }
     }
 
     .sub-header__container {
       display: flex;
+      padding-top: 24px;
+      justify-content: space-evenly;
 
       .sub-header {
+        padding: 4px 8px;
         font-family: $f__baloobha;
-        font-size: $font-size-big;
+        font-size: $font-size-bigger;
         color: #00E5FD;
 
         .type__label, .strength__label {
@@ -395,32 +460,61 @@
       }
 
       p {
-        color: $white;
+        color: $white95;
         font-family: $f__overpass;
         font-weight: $font-weight-medium;
+        font-size: $font-size-small;
+        max-width: 300px;
       }
     }
   }
 
-  .guild__cubegon-intro {
-    margin-top: 88px;
+  .guide__cubegon-intro {
+    margin-top: 120px;
+
     .cubegon-logic__container {
+      margin-top: 40px;
       text-align: center;
       position: relative;
-      margin-top: 24px;
 
       .cubegon-logic__sub-section {
         position: relative;
-        margin-top: 88px;
-        margin-bottom: 88px;
+        margin: 120px 0;
+        color: $white95;
+        text-align: left;
 
-        .content-desc {
-          .cubegon__header {
-            font-size: $font-size-bigger;
-            font-family: $f__baloobha;
-            color: $white;
+        .content-image {
+          img {
+            top: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
           }
         }
+
+        .left {
+          .content-desc {
+            padding: 32px;
+          }
+        }
+        .right {
+          .content-desc {
+            padding: 32px 0;
+          }
+        }
+
+        .right, .left {
+          .content-desc {
+            @include mobile {
+              padding: 16px;
+            }
+          }
+        }
+
+        .cubegon__header {
+          font-size: $font-size-large;
+          font-family: $f__baloobha;
+          color: $white;
+        }
+
       }
 
       .header {
@@ -435,8 +529,10 @@
 
       img {
         display: inline-block;
-        max-height: 350px;
+        height: 300px;
+        max-height: 100%;
         width: auto;
+        padding: 20px 0;
       }
 
       p {
@@ -459,7 +555,9 @@
           display: flex;
           justify-content: center;
           img {
-            height: 300px;
+            width: 500px;
+            max-width: 100%;
+            height: auto;
           }
         }
       }
@@ -468,7 +566,7 @@
         margin-top: 44px;
         .cubegon-tiers__listview {
           display: flex;
-          justify-content: space-around;
+          justify-content: center;
           align-items: center;
           flex-wrap: wrap;
           .item {
@@ -496,22 +594,42 @@
               }
             }
 
-            width: 25%;
+            width: 20%;
+            padding: 8px;
 
             @include mobile {
               width: 45%;
             }
 
-            img {
-              display: block;
-              width: 100%;
-              height: auto;
+            .img {
+              position: relative;
+              height: 120px;
+
+              img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                @include transform(translateX(-50%) translateY(-50%));
+                width: 240px;
+                height: auto;
+                max-height: none;
+                padding: 0;
+              }
             }
 
+            .desc {
+              padding-top: 8px;
+              font-size: $font-size-tiny;
+            }
+            .sub {
+              font-weight: $font-weight-bold;
+              font-size: $font-size-tiny;
+            }
             .value {
               color: #F95523;
               font-family: $f__baloobha;
-              font-size: $font-size-big;
+              font-size: $font-size-bigger;
+              padding-top: 16px;
             }
 
             p {
@@ -527,8 +645,21 @@
         }
       }
 
+      .cubegon-stats {
+        img {
+          margin-bottom: -40px;
+        }
+      }
       .cubegon-skills {
-        margin-top: 44px;
+        margin-top: 60px;
+        img {
+          width: 500px;
+          max-width: 100%;
+          height: auto;
+          padding: 0;
+          margin-top: -50px;
+          margin-bottom: -30px;
+        }
       }
 
       .cubegon-energy {
@@ -538,7 +669,7 @@
     }
 
     .cubegon-dismantle-reassemble__container {
-      margin-top: 44px;
+      margin-top: 60px;
       text-align: center;
 
       p {
@@ -547,20 +678,98 @@
     }
   }
 
-  .guild__combat-intro {
+  .guide__combat-intro {
     margin-top: 88px;
-    text-align: center;
+    img {
+      max-height: 512px !important;
+    }
   }
 
-  .guild__what-next {
+  .guide__what-next {
     margin-top: 88px;
-    text-align: center;
 
+    .header--detail {
+      span span {
+        color: $red;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  .guide__last {
+    text-align: center;
+    padding: 80px 0 20px 0;
+
+    .text {
+
+    }
     .build-your-cubegon__header {
       margin-top: 44px;
       margin-bottom: 24px;
       font-family: $f__baloobha;
+      font-size: $font-size-header-3;
       color: #FFBE02;
+    }
+  }
+
+  .cubego-stats-details__container {
+    overflow: auto;
+    padding-top: 30px;
+  }
+
+  .attribute-table {
+    color: $white95;
+    margin: 0 auto;
+    text-align: center;
+    overflow: auto;
+
+    .header {
+      font-size: $font-size-big;
+      th {
+        border-bottom: 1px solid $c__blue-1;
+      }
+    }
+    .sub-header {
+      font-size: $font-size-smaller;
+      th {
+        border-bottom: 2px solid $c__blue-1;
+      }
+    }
+
+    th, td {
+      height: 30px;
+      padding: 2px 8px;
+    }
+    img {
+      height: 100%;
+      max-height: 24px;
+    }
+
+    tbody {
+      font-size: $font-size-normal;
+      font-weight: $font-weight-extra-bold;
+    }
+
+    .material-variants {
+      img {
+        margin: 0 4px;
+        display: inline-block;
+        box-shadow: 0 0 6px 0 $c__text__neon;
+      }
+    }
+
+    .material-name {
+      color: transparent;
+    }
+    .tier-1, .tier-2, .tier-5, .tier-8, .tier-12 {
+      .material-name {
+        color: $white95;
+      }
+    }
+    .tier-1, .tier-4, .tier-7, .tier-11 {
+      td {
+        border-bottom: 2px solid rgb(0, 45, 71);
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ import * as Utils from "../utils/utils";
 export const CUBE_TIER = {
   1: {
     id: 1,
-    name: 'legend',
+    name: 'legendary',
   },
   2: {
     id: 1,
@@ -34,22 +34,27 @@ export const CUBE_TIER_MAP = {
 
 export const CUBE_TYPES = {
   1: {
+    id: 1,
     name: 'air',
     img: require('../shared/img/types/air.png'),
   },
   2: {
+    id: 2,
     name: 'grass',
     img: require('../shared/img/types/grass.png'),
   },
   3: {
+    id: 3,
     name: 'water',
     img: require('../shared/img/types/water.png'),
   },
   4: {
+    id: 4,
     name: 'fire',
     img: require('../shared/img/types/fire.png'),
   },
   5: {
+    id: 5,
     name: 'earth',
     img: require('../shared/img/types/earth.png'),
   },
@@ -353,6 +358,11 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
       type_points: SUB_MATERIAL_TYPE_POINTS[parseInt(cKey)*100+parseInt(vKey)],
       // img: cKey === '12' ? null : require(`../shared/img/cubego-variants/001_01.png`),
     })),
+    types: ObjUtils.CloneWithModify(CUBE_TYPES, (tKey) => {
+      return Object.keys(cube.variants).filter(vKey => {
+        return SUB_MATERIAL_TYPE_POINTS[parseInt(cKey)*100+parseInt(vKey)][tKey-1];
+      })
+    })
   }
 });
 
