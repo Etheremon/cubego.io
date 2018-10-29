@@ -72,17 +72,17 @@ export const QuantityBar = ({nextOnClick, prevOnClick}) => {
     <svg width="100%" height="100%" viewBox="0 0 742 233" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
       <defs>
           <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-              <stop stopColor="#57EDFF" offset="0%"></stop>
-              <stop stopColor="#074FD0" offset="100%"></stop>
+              <stop stopColor="#57EDFF" offset="0%"/>
+              <stop stopColor="#074FD0" offset="100%"/>
           </linearGradient>
       </defs>
       <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-          <rect id="Rectangle-3" fill="#283440" x="163" y="0" width="415" height="233"></rect>
-          <polygon onClick={() => {prevOnClick && prevOnClick()}} id="quantity-bar__prev-button" fill="url(#linearGradient-1)" transform="translate(81.734304, 116.500000) scale(-1, 1) translate(-81.734304, -116.500000) " points="0 0 102.434225 0 163.468608 116.5 102.434225 233 0 233"></polygon>
-          <polygon onClick={() => {nextOnClick && nextOnClick()}} id="quantity-bar__next-button" fill="url(#linearGradient-1)" points="578 0 680.434225 0 741.468608 116.5 680.434225 233 578 233"></polygon>
-          <path d="M55.5,117.25 L124.5,117.25" id="subtract" stroke="#283440" strokeWidth="8" strokeLinecap="square"></path>
-          <path d="M611.5,117.25 L680.5,117.25" id="plus" stroke="#283440" strokeWidth="8" strokeLinecap="square"></path>
-          <path d="M646,83 L646,152" id="plus" stroke="#283440" strokeWidth="8" strokeLinecap="square"></path>
+          <rect id="Rectangle-3" fill="#283440" x="163" y="0" width="415" height="233"/>
+          <polygon onClick={() => {prevOnClick && prevOnClick()}} id="quantity-bar__prev-button" fill="url(#linearGradient-1)" transform="translate(81.734304, 116.500000) scale(-1, 1) translate(-81.734304, -116.500000) " points="0 0 102.434225 0 163.468608 116.5 102.434225 233 0 233"/>
+          <polygon onClick={() => {nextOnClick && nextOnClick()}} id="quantity-bar__next-button" fill="url(#linearGradient-1)" points="578 0 680.434225 0 741.468608 116.5 680.434225 233 578 233"/>
+          <path d="M55.5,117.25 L124.5,117.25" id="subtract" stroke="#283440" strokeWidth="8" strokeLinecap="square"/>
+          <path d="M611.5,117.25 L680.5,117.25" id="plus" stroke="#283440" strokeWidth="8" strokeLinecap="square"/>
+          <path d="M646,83 L646,152" id="plus" stroke="#283440" strokeWidth="8" strokeLinecap="square"/>
       </g>
   </svg>
   )
@@ -91,10 +91,10 @@ export const QuantityBar = ({nextOnClick, prevOnClick}) => {
 export const ArrowDown = ({}) => {
     return (
         <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 752 363" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
-            <defs></defs>
-            <g class="arrow-down" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" stroke-linecap="square">
-                <polyline class="line-1" stroke="#FFFFFF" stroke-width="10" points="5.5 119.5 376 357.275603 746.5 119.5"></polyline>
-                <polyline class="line-2" stroke="#FFFFFF" stroke-width="10" points="102 5 376 181 650 5"></polyline>
+            <defs/>
+            <g className="arrow-down" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="square">
+                <polyline class="line-1" stroke="#FFFFFF" strokeWidth="10" points="5.5 119.5 376 357.275603 746.5 119.5"/>
+                <polyline class="line-2" stroke="#FFFFFF" strokeWidth="10" points="102 5 376 181 650 5"/>
             </g>
         </svg>
     )

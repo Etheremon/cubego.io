@@ -339,8 +339,10 @@ class GameIntro extends React.Component {
                 </div>
               </div>
             </div>
+          </Container>
 
-            <div className="cubegon-dismantle-reassemble__container">
+          <div className="cubegon-dismantle-reassemble__container">
+            <Container size={containerSize}>
               <div className={'header--orange-small'}>
                 {_t('dismantle_reassemble')}
               </div>
@@ -351,8 +353,8 @@ class GameIntro extends React.Component {
                 {_t('desc.dismantle_reassemble_2')}
               </div>
               <img className={'dismantle-reassemble__image'} src={require('../../../shared/img/game_intro/rebuild.png')}/>
-            </div>
-          </Container>
+            </Container>
+          </div>
 
           <Container size={containerSize} className={'guide__combat-intro sub-background blue left'}>
             <div className="main__header combat-intro__header left">
