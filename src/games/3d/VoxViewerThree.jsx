@@ -80,7 +80,7 @@ class VoxViewerThree extends Component {
                width={size.y * SIZE} height={size.x * SIZE}
         />,
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
-               position={{x: 0, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + x + ARROW_DISTANCE}}
+               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + z + ARROW_DISTANCE}}
                rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
         />,
         <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
