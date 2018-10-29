@@ -11,6 +11,7 @@ import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import {CUBE_MATERIALS, CUBE_TIER, CUBE_TYPES} from "../../../constants/cubego";
 import * as ObjUtils from "../../../utils/objUtils";
 import { ArrowDown } from '../../widgets/SVGManager/SVGManager.jsx';
+import { ScrollSelector } from '../../widgets/ScrollSelector/ScrollSelector.jsx';
 
 require("style-loader!./GameIntro.scss");
 
@@ -20,6 +21,11 @@ const cubegonTiers = [
   {tier: 'champion', value: 26000},
   {tier: 'god', value: 68000},
 ];
+
+const scrollSelectors = [{key: 'cubego', id: 'cubego-intro'},
+{key: 'cubegon', id: 'cubegon-intro'},
+{key: 'combat', id: 'combat-intro'},
+{key: 'what_next', id: 'what-next'}];
 
 class GameIntro extends React.Component {
 
@@ -35,7 +41,6 @@ class GameIntro extends React.Component {
 
   render() {
     const {_t} = this.props;
-    
     let containerSize = Container.sizes.NORMAL;
     let typeList = ObjUtils.GetValues(CUBE_TYPES);
 
@@ -44,6 +49,8 @@ class GameIntro extends React.Component {
         <Navbar minifying size={containerSize}/>
 
         <div className="game-intro-page__container">
+
+          <ScrollSelector listData={scrollSelectors} _t={_t} />
 
           <Container size={containerSize} className={'guide__game-intro sub-background yellow right'}>
             <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/red_cube.png')}/>
@@ -82,7 +89,7 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__cubego-intro sub-background blue left'}>
+          <Container size={containerSize} className={'guide__cubego-intro sub-background blue left'} id={'cubego-intro'}>
             <div className="main__header cubego-intro__header left">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/diamond.png')}/>
               <div className="header">
@@ -158,17 +165,7 @@ class GameIntro extends React.Component {
               </div>
             </Container>
             <div className="cubego-stats-details__container">
-            {
-              !this.state.showCubegoStats ? (
-                <div className="cubego-stats-detail__action" onClick={() => {
-                  this.setState((state) => {
-                    return {showCubegoStats: !state.showCubegoStats};
-                  });
-                }}>
-                <ArrowDown />
-                </div>
-              ) : (
-                <table className={'attribute-table'}>
+              <table className={`attribute-table ${this.state.showCubegoStats ? 'enable' : 'hidden'}`}>
                 <thead>
                   <tr className={'header'}>
                     <th>{_t('tier')}</th>
@@ -188,7 +185,10 @@ class GameIntro extends React.Component {
                     return (
                       <tr key={mIdx} className={`tier-${material.class_id}`}>
                         <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>
-                        <td className={'material-icon'}><img src={material.icon}/></td>
+                        <td className={'material-icon'} 
+                        tooltip={_t(material.name)}
+                        tooltip-position={'right'}
+                        ><img src={material.icon}/></td>
                         <td>{material.point}</td>
                         {typeList.map((type, tIdx) => {
                           return (
@@ -201,13 +201,19 @@ class GameIntro extends React.Component {
                   })}
                 </tbody>
               </table>
-              )
-            }
+
+              <div className="cubego-stats-detail__action" style={{transform: `rotate(${this.state.showCubegoStats ? '180' : '0'}deg)`}} onClick={() => {
+                this.setState((state) => {
+                  return {showCubegoStats: !state.showCubegoStats};
+                });
+              }}>
+                <ArrowDown />
+              </div>
             </div>
 
           </div>
 
-          <Container size={containerSize} className={'guide__cubegon-intro'}>
+          <Container size={containerSize} className={'guide__cubegon-intro'} id={'cubegon-intro'}>
             <div className="main__header cubegon-intro__header right">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/pallete.png')}/>
               <div className="header">
@@ -356,7 +362,7 @@ class GameIntro extends React.Component {
             </Container>
           </div>
 
-          <Container size={containerSize} className={'guide__combat-intro sub-background blue left'}>
+          <Container size={containerSize} className={'guide__combat-intro sub-background blue left'} id={'combat-intro'}>
             <div className="main__header combat-intro__header left">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/battle.png')}/>
               <div className="header">
@@ -375,7 +381,7 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__what-next sub-background blue right'}>
+          <Container size={containerSize} className={'guide__what-next sub-background blue right'} id={'what-next'}>
             <div className="main__header what-next__header right">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
               <div className="header">

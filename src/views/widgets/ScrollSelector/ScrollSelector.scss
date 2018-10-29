@@ -1,0 +1,65 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.scroll-selector {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 9999;
+
+  .indicator__container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      font-size: $font-size-small;
+      text-transform: lowercase;
+      font-family: $f__overpass;
+      transition: all 0.5s;
+    }
+
+    
+
+    &.active {
+      
+      .indicator:after {
+        background: $c__orange-4;
+        width: 16px;
+        height: 16px;
+      }
+
+      span {
+        font-size: $font-size-bigger;
+        font-weight: $font-weight-bold;
+      }
+      
+    }
+  }
+  
+  .indicator {
+    border-right: 1px solid $c__orange-4;
+    height: 32px;
+    padding: 0px 0;
+    margin-right: 16px;
+    position: relative;
+    transition: all 0.5s;
+
+    &:after {
+      content: '';
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid $c__orange-4;
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      background: white;
+    }
+  }
+}
