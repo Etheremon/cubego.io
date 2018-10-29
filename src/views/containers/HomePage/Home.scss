@@ -40,11 +40,31 @@
     padding-top: 20px;
     text-align: center;
 
+    display: flex;
+    align-items: center;
+
     .home__intro-board {
-      padding: 0 32px;
+      //padding: 0 32px;
       color: $gray-dark;
       font-weight: $font-weight-semi-bold;
       font-size: $font-size-normal;
+      text-align: left;
+      width: 500px;
+      flex-shrink: 0;
+    }
+
+    .home__intro-build {
+      position: relative;
+      height: 300px;
+      flex-grow: 1;
+
+      img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 360px;
+        @include transform(translateX(-50%) translateY(-50%));
+      }
     }
 
     .home__intro-cubego {

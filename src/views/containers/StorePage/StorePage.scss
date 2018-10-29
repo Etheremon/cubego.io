@@ -9,8 +9,16 @@
   text-align: center;
   color: $white95;
 
+  .presale-text {
+    margin-top: 50px;
+    font-family: $f__baloobha;
+    font-size: $font-size-large;
+  }
+  .presale-time {
+    font-size: $font-size-small;
+  }
+
   .countdown__container {
-    margin-top: 60px;
   }
 
   .store-page__banner {

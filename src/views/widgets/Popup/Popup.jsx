@@ -66,10 +66,7 @@ class Popup extends React.Component {
     let open = this.props.open !== undefined ? this.props.open : this.state.open;
 
     return (
-      <div className={`widget__popup ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`} onClick={() => {
-        if (onUnmount !== undefined) onUnmount();
-        this.close()
-      }}>
+      <div className={`widget__popup ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`}>
         <div className={'widget__popup-wrap'}>
           <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
             {children}

@@ -45,7 +45,7 @@ class SignInPage extends React.Component {
   }
 
   componentDidMount() {
-
+    Utils.ScrollTop();
   }
 
   componentWillReceiveProps(nextProps) {

@@ -15,6 +15,8 @@ import Countdown from '../../widgets/Countdown/Countdown.jsx';
 import {GetStoreBanners} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
+import * as Config from "../../../config";
+import {URLS} from "../../../constants/general";
 
 require("style-loader!./StorePage.scss");
 
@@ -104,7 +106,13 @@ class StorePage extends React.Component {
                 Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
             }}/>
 
-          <Countdown className={'countdown__container'} presaleDate={'Nov 1 2018'}/>
+          <p className={'presale-text'}>{_t('presale start in')}</p>
+          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
+          <p className={'presale-time'}>({Config.PRESALE_DATE})</p>
+
+          <ButtonNew className={'presale-btn'} label={_t('register for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+            this.props.history.push(`/${URLS.SIGN_IN}`)
+          }}/>
 
           <Container className={'store-page__main'}>
             {

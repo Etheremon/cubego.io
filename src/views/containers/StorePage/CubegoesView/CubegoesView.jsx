@@ -58,8 +58,9 @@ class CubegoesView extends React.Component {
             _t('presale_info_on_store_page')
           }
         </span>
-        <ButtonNew className={'register__button'} label={_t('register')} onClick={() => {
-            this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+
+        <ButtonNew className={'register__button-btn'} label={_t('register for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+          this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
         }}/>
       </div>
     )
@@ -228,11 +229,11 @@ class CubegoesView extends React.Component {
           {this.renderPurchaseView()}
         </Popup>
 
-        {/* <Popup className={'popup-purchase'}
+        <Popup className={'popup-purchase'}
                onUnmount={() => {this.setState({viewPresaleInfo: false})}}
                open={this.state.viewPresaleInfo} >
           {this.renderPresaleView()}
-        </Popup> */}
+        </Popup>
       </div>
     )
   }

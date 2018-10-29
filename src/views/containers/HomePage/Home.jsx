@@ -125,19 +125,30 @@ class HomePage extends React.Component {
           <InviewMonitor
             classNameNotInView='vis-hidden'
             classNameInView='animated fadeInUp'>
-            <Container size={Container.sizes.SMALL} className="home__intro" id={'intro'}>
+            <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
+
               <div className="home__intro-board">
                 <p>{_t('home.opening')}</p>
               </div>
-              <div className="home__intro-cubego">
-                {introCubegon.map((cubegon, idx) => (
-                  <div className={'cubegon-card'} key={idx}>
-                    <img key={idx} src={cubegon.img}/>
-                    <div className={'cubegon-name'}>{cubegon.name}</div>
-                    <div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>
-                  </div>
-                ))}             
+
+              <div className={'home__intro-build'}>
+                <div className={'home__intro-countdown'}>
+                </div>
+                <div className={'home__intro-gif'}>
+                  <img src={require('../../../shared/img/gif/build.gif')}/>
+                </div>
               </div>
+
+              {/*<div className="home__intro-cubego">*/}
+                {/*{introCubegon.map((cubegon, idx) => (*/}
+                  {/*<div className={'cubegon-card'} key={idx}>*/}
+                    {/*<img key={idx} src={cubegon.img}/>*/}
+                    {/*<div className={'cubegon-name'}>{cubegon.name}</div>*/}
+                    {/*<div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>*/}
+                  {/*</div>*/}
+                {/*))}             */}
+              {/*</div>*/}
+
             </Container>
           </InviewMonitor>
           {/* end home__intro */}
