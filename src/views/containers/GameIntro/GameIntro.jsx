@@ -7,7 +7,6 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {URLS} from "../../../constants/general";
-import { Text } from '../../widgets/Text/Text.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import {CUBE_MATERIALS, CUBE_TIER, CUBE_TYPES} from "../../../constants/cubego";
 import * as ObjUtils from "../../../utils/objUtils";
@@ -25,6 +24,9 @@ class GameIntro extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
   }
 
   render() {

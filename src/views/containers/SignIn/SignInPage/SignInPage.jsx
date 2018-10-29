@@ -11,7 +11,6 @@ import {
 import * as Utils from "../../../../utils/utils";
 import {getTranslate} from "react-localize-redux/lib/index";
 import {Input} from "../../../widgets/Input/Input.jsx";
-import * as Tracker from "../../../../services/tracker";
 import {PageWrapper} from "../../../widgets/PageWrapper/PageWrapper.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
 import Loading from "../../../components/Loading/Loading.jsx";
@@ -46,7 +45,7 @@ class SignInPage extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.signin);
+
   }
 
   componentWillReceiveProps(nextProps) {

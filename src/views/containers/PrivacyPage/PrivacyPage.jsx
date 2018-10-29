@@ -3,22 +3,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import * as Tracker from '../../../services/tracker'
-
 import withRouter from "react-router-dom/es/withRouter";
 
 import Navbar from '../../components/bars/Navbar/Navbar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
-import Slider from '../../widgets/Slider/Slider.jsx';
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
-import { Text } from '../../widgets/Text/Text.jsx';
-import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
-import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
-import * as Utils from "../../../utils/utils";
-import {SpriteSheet} from "../../widgets/SpriteSheet/SpriteSheet.jsx";
-import {SpriteSource} from "../../../constants/sprite";
 
 require("style-loader!./PrivacyPage.scss");
 
@@ -34,29 +24,10 @@ class PrivacyPage extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.home);
-  }
-
-  renderBanner() {
-    const { _t } = this.props;
-
-    return ([
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={require('../../../shared/img/banner/banner_1.png')}/>
-        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_GON}`)
-        }}/>
-      </div>,
-    ])
-  }
-
-  validateEmail() {
 
   }
 
   render() {
-    const { _t } = this.props;
-
     return (
       <PageWrapper>
         <Navbar size={Container.sizes.SMALL}/>

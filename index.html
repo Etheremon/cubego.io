@@ -51,10 +51,21 @@
   <!-- Internal CSS-->
   <link rel="stylesheet" href="/styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
   <!-- End Internal CSS-->
-
 </head>
 
 <body id="body">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111363129-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var GA_TRACKING_ID = 'UA-128296287-1';
+    // gtag('config', GA_TRACKING_ID);
+  </script>
+  <!-- End Global site tag (gtag.js) - Google Analytics -->
+  
   <div id="root"></div>
 
   <!-- Bundles -->

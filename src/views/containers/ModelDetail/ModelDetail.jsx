@@ -12,7 +12,6 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import Footer from '../../components/bars/Footer/Footer.jsx';
 import PieChart from '../../components/PieChart/PieChart.jsx';
-import * as Tracker from "../../../services/tracker";
 import {CubegonActions} from "../../../actions/cubegon";
 import {GetCubegonInfo, GetLoggedInUserId, GetUserInfo} from "../../../reducers/selectors";
 

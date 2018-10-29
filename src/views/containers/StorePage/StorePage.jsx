@@ -8,9 +8,7 @@ import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
 import Footer from "../../components/bars/Footer/Footer.jsx";
-import {URLS} from "../../../constants/general";
 import Slider from '../../widgets/Slider/Slider.jsx';
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
 import CubegoesView from './CubegoesView/CubegoesView.jsx';
 import Countdown from '../../widgets/Countdown/Countdown.jsx';
@@ -28,6 +26,10 @@ class StorePage extends React.Component {
     };
 
     this.renderBanner = this.renderBanner.bind(this);
+  }
+
+  componentDidMount() {
+
   }
 
   renderBanner() {

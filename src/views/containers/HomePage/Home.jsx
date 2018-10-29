@@ -3,8 +3,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import * as Tracker from '../../../services/tracker'
-
 import withRouter from "react-router-dom/es/withRouter";
 
 import Navbar from '../../components/bars/Navbar/Navbar.jsx'
@@ -17,17 +15,9 @@ import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
-import {SpriteSheet} from "../../widgets/SpriteSheet/SpriteSheet.jsx";
-import {SpriteSource} from "../../../constants/sprite";
 
 require("style-loader!./Home.scss");
 
-const _features = [
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'trading', desc: 'desc.trading'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'auction', desc: 'desc.auction'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
-];
 const introCubegon = [
   {img: require('../../../shared/img/assets/model_example_moose.png'), name: 'MOOSE', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
@@ -49,7 +39,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.home);
+
   }
 
   renderBanner() {

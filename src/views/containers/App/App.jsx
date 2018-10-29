@@ -49,8 +49,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.VisitPage();
-    if (window.rpcConnected) Tracker.EnableMetamask();
+    let f = (l) => {
+      Tracker.AutoTrack(l.pathname);
+      this.lastPathname = l.pathname;
+    };
+    f(location);
+
+    this.props.history.listen((location) => {
+      if (location.pathname !== this.lastPathname) f(location);
+    });
 
     // Check for Ether Account from window.core
     let acc = undefined;
