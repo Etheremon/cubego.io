@@ -32,6 +32,7 @@
 }
 
 .arrow-down {
+  transition: all 0.5;
   .line-1 {
     animation: xaxis-change 1s linear 0s infinite alternate;
   }
