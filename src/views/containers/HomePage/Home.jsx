@@ -11,10 +11,11 @@ import Slider from '../../widgets/Slider/Slider.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
-import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
+import {GetHomeBanners} from "../../../reducers/selectors";
+import {getActiveLanguage} from "react-localize-redux/lib/index";
 
 require("style-loader!./Home.scss");
 
@@ -43,16 +44,51 @@ class HomePage extends React.Component {
   }
 
   renderBanner() {
-    const { _t } = this.props;
+    const { language, banners } = this.props;
 
-    return ([
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={require('../../../shared/img/banner/banner_1.png')}/>
-        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_GON}`)
-        }}/>
-      </div>,
-    ])
+    const bannerList = (banners || []).map((banner, idx) => {
+      let btn = null;
+      let customBtn = banner[`${language.code}custombtn`] || banner[`encustombtn`];
+      if (customBtn)
+        btn = (
+          <img className={'home__banner-btn img'} src={customBtn}
+               onClick={() => {
+                 if (banner['newtab'] === 'TRUE')
+                   Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                 else
+                   this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+               }}
+          />
+        );
+      else
+        btn = banner[`${language.code}text`] || banner[`entext`] ?
+          <ButtonNew className={'home__banner-btn'} label={banner[`${language.code}text`] || banner[`entext`]}
+                     onClick={() => {
+                       if (banner['newtab'] === 'TRUE')
+                         Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                       else
+                         this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+                     }}
+          /> : null;
+
+      let bannerImg = banner[`${language.code}img`] || banner[`enimg`];
+      let bannerImgMobile = banner[`${language.code}imgmobile`] || banner[`enimgmobile`];
+      return (
+        <div key={idx} className={'home__banner-item'}>
+          <img className={'home__banner-img'} src={Utils.IsMobile ? bannerImgMobile || bannerImg : bannerImg || bannerImgMobile} />
+          {btn}
+        </div>
+      )
+    });
+
+    return (bannerList && bannerList.length
+        ? bannerList
+        : [
+          <div className={'home__banner-item'} key={'banner-1'}>
+            <img src={require('../../../shared/img/banner/banner-default.png')}/>
+          </div>,
+        ]
+    )
   }
 
   validateEmail() {
@@ -108,7 +144,7 @@ class HomePage extends React.Component {
 
           <Container className="home__modes" id={'modes'}>
             <div className="home__modes-title__container">
-              <Text className={'home__modes-title'} type={Text.types.H1} children={_t('how_to_play')} />
+              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
             {/*<div className="home__mode-container">*/}
@@ -129,7 +165,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInLeft'
                   >
                     <div className={'desc'} >
-                      <Text className={'header'} type={Text.types.H1} children={_t('creation').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H3} children={_t('creation').toUpperCase()} />
                       <p className={'text'}>{_t('home.creation')}</p>
                     </div>
                   </InviewMonitor>
@@ -155,7 +191,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInRight'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('copyright').toUpperCase()} />
                       <p className={'text'}>{_t('home.copyright')}</p>
                     </div>
                   </InviewMonitor>
@@ -180,7 +216,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H1} children={_t('combat').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('combat').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
                     </div>
                   </InviewMonitor>
@@ -201,7 +237,7 @@ class HomePage extends React.Component {
           {/* end home__game-detail */}
 
           <div className={'home__partnership'} id={'partners'}>
-            <Text className={'partnership__header'} type={Text.types.H1} children={_t('in_partnership_with')} />
+            <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
             <Container className={'home__partnership__imgs'}>
               <a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>
               <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
@@ -219,7 +255,7 @@ class HomePage extends React.Component {
             classNameNotInView='vis-collapse'
             classNameInView='animated custom'>
             <div className="home__channels">
-              <Text className={'channels__header'} type={Text.types.H1} children={_t('channels')} />
+              <Text className={'channels__header'} type={Text.types.H2} children={_t('channels')} />
               <div className="channel-listview">
                 {
                   channels.map((item, idx) => 
@@ -289,6 +325,8 @@ const mapStateToProps = (store, props) => {
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
+    banners: GetHomeBanners(store),
+    language: getActiveLanguage(store.localeReducer),
   }
 };
 

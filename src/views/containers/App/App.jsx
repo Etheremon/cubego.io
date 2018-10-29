@@ -30,6 +30,7 @@ import TosPage from "../TosPage/TosPage.jsx";
 import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
 import GameIntro from "../GameIntro/GameIntro.jsx";
+import {NotificationActions} from "../../../actions/notification";
 
 require("style-loader!./App.scss");
 
@@ -49,6 +50,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(NotificationActions.LOAD_NOTIFICATION.init.func({forceUpdate: false}));
+
     let f = (l) => {
       Tracker.AutoTrack(l.pathname);
       this.lastPathname = l.pathname;

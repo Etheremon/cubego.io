@@ -16,11 +16,12 @@
       width: 100%;
       height: 460px;
       @include mobile {
-        height: 320px;
+        height: 360px;
       }
       img {
         position: absolute;
         height: 100%;
+        min-width: 100%;
         display: block;
         left: 50%;
         object-fit: cover;
@@ -42,6 +43,8 @@
     .home__intro-board {
       padding: 0 32px;
       color: $gray-dark;
+      font-weight: $font-weight-semi-bold;
+      font-size: $font-size-normal;
     }
 
     .home__intro-cubego {
@@ -66,7 +69,7 @@
         .cubegon-name {
           color: $white;
           font-family: $f__baloobha;
-          font-size: $font-size-header-1;
+          font-size: $font-size-large;
         }
 
         .cubegon-creator {
@@ -86,6 +89,7 @@
           position: relative;
           @include mobile {
             max-width: 100%;
+            height: 120px;
           }
         }
 
@@ -153,14 +157,28 @@
   .home__game-detail {
     .section {
       position: relative;
-      color: $white95;
-      margin-top: 120px;
+      margin-top: 100px;
       height: 320px;
       @include mobile {
         height: auto;
         &:nth-child(1) {
           margin-top: 40px;
         }
+      }
+
+      &:nth-child(1) {
+        color: #d34e13;
+      }
+      &:nth-child(2) {
+        color: #153e65;
+      }
+      &:nth-child(3) {
+        color: $white95;
+      }
+
+      .header {
+        color: $white95;
+        font-size: 28px;
       }
     }
 
@@ -188,7 +206,7 @@
       }
       &.blue {
         &:before {
-          background-image: url('../../../shared/img/background/background_blue.jpg');
+          background-image: url('../../../shared/img/background/background_blue.png');
         }
         &:after {
           background-image: url('../../../shared/img/background/padding_blue.png');
@@ -248,7 +266,13 @@
         padding: 32px 64px;
         @include mobile {
           text-align: center;
-          padding: 16px;
+          padding: 32px 8px;
+          .header .content {
+            justify-content: center;
+          }
+        }
+        .text {
+          font-weight: $font-weight-semi-bold;
         }
       }
       .image {
@@ -260,6 +284,7 @@
 
         @include mobile {
           margin-top: -30px;
+          margin: 0 auto;
         }
 
         .img {
@@ -286,10 +311,13 @@
               width: 420px;
             }
             @include mobile {
-              margin-top: 100px;
-              width: 160px;
+              margin-top: 80px;
+              width: 200px;
+              &.copyright {
+                width: 160px;
+              }
               &.combat {
-                width: 220px;
+                width: 240px;
               }
             }
           }
@@ -321,7 +349,7 @@
     height: 520px;
     text-align: center;
     position: relative;
-    background-image: url('../../../shared/img/banner/banner_1.png');
+    background-image: url('../../../shared/img/banner/banner-default.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -330,8 +358,7 @@
 
   .home__modes {
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 50px;
 
     .home__modes-title__container {
       background-color: rgba(25, 50, 78, 1);
@@ -343,31 +370,12 @@
       .home__modes-title {
         display: inline;
         color: $white;
-        // font-family: $f__vt323;
-        // font-size: $font-size-header-3;
+        font-family: $f__baloobha;
+        padding-top: 8px;
+        font-size: 30px;
+        font-weight: $font-weight-normal;
       }
     }
-
-    
-
-    //.home__mode-container {
-    //  position: relative;
-    //  width: 100%;
-    //  height: 400px;
-    //  @include mobile {
-    //    height: auto;
-    //  }
-    //
-    //  .guild-game {
-    //    position: absolute;
-    //    height: 80%;
-    //    display: block;
-    //    left: 50%;
-    //    top: 50%;
-    //    transform: translate(-50%, -50%);
-    //  }
-    //
-    //}
   }
 
   .home__channels {
@@ -375,7 +383,7 @@
     text-align: center;
 
     .channels__header {
-      padding: 16px 0;
+      padding: 32px 0 16px 0;
       color: rgba(238,116,47,1) !important;
     }
 
@@ -399,15 +407,18 @@
         cursor: pointer;
 
         .name {
-          font-family: $f__vt323;
-          font-size: $font-size-header-1;
+          font-size: $font-size-big;
+          font-weight: $font-weight-bold;
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          bottom: 0;
+          bottom: 8px;
           opacity: 1;
           transition: bottom 0.5s, opacity 0.5s;
           transition-timing-function: ease-out;
+          @include mobile {
+            font-size: $font-size-small;
+          }
         }
         img {
           width: 70%;
@@ -430,9 +441,6 @@
           width: 60px;
           height: 60px;
           margin: 8px;
-          .name {
-            font-size: $font-size-large;
-          }
         }
 
 
@@ -484,7 +492,7 @@
     box-sizing: border-box;
 
     .partnership__header {
-      padding: 16px 0;
+      padding: 32px 0 16px 0;
       color: rgba(25,67,121,1) !important;
     }
 

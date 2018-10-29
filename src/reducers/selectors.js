@@ -28,3 +28,11 @@ export const GetCubegonInfo = (state, gonId) => CloneDeep(state.cubegon.info[gon
  * Localization
  */
 export const GetLocalizationData = (state) => CloneDeep(state.localization.localizationData['fetchedData']);
+
+/**
+ * Feeds
+ */
+export const GetNotification = (state) => (CloneDeep(state.notifications.notification));
+export const GetHomeBanners = (state) => CloneDeep(state.notifications.notification['banners_home']);
+export const GetStoreBanners = (state) => CloneDeep(state.notifications.notification['banners_store']);
+export const GetFeed = (state) => CloneDeep((state.notifications.notification['feeds'] || [])[0]);

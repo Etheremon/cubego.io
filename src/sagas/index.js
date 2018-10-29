@@ -8,6 +8,7 @@ import {watchAll as AuthWatcher} from './auth';
 import {watchAll as UserWatcher} from './user';
 import {watchAll as ModelWatcher} from './model';
 import {watchAll as CubegonWatcher} from './cubegon';
+import {watchAll as NotificationWatcher} from './notification';
 
 export default function* rootSaga() {
   const watchers = [
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     fork(AuthWatcher),
     fork(ModelWatcher),
     fork(CubegonWatcher),
+    fork(NotificationWatcher),
   ];
 
   yield* watchers;

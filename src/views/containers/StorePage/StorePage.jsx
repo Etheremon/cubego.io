@@ -12,6 +12,9 @@ import Slider from '../../widgets/Slider/Slider.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
 import CubegoesView from './CubegoesView/CubegoesView.jsx';
 import Countdown from '../../widgets/Countdown/Countdown.jsx';
+import {GetStoreBanners} from "../../../reducers/selectors";
+import {getActiveLanguage} from "react-localize-redux/lib/index";
+import {ButtonNew} from "../../widgets/Button/Button.jsx";
 
 require("style-loader!./StorePage.scss");
 
@@ -33,18 +36,54 @@ class StorePage extends React.Component {
   }
 
   renderBanner() {
-    const { _t } = this.props;
+    const { language, banners } = this.props;
 
-    return ([
-      <div className={'store__banner-item'} key={'banner-1'}>
-        <img src={require('../../../shared/img/banner/banner_store.png')}/>
-        {/*<ButtonNew showDeco={ButtonNew.deco.BOTH} className={'store__banner-btn'} label={_t('build_model')} onClick={() => {*/}
-          {/*this.props.history.push(`/${URLS.BUILD_GON}`)*/}
-        {/*}}/>*/}
-      </div>,
-    ])
+    const bannerList = (banners || []).map((banner, idx) => {
+      let btn = null;
+      let customBtn = banner[`${language.code}custombtn`] || banner[`encustombtn`];
+      if (customBtn)
+        btn = (
+          <img className={'store-page__banner-btn img'} src={customBtn}
+               onClick={() => {
+                 if (banner['newtab'] === 'TRUE')
+                   Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                 else
+                   this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+               }}
+          />
+        );
+      else
+        btn = banner[`${language.code}text`] || banner[`entext`] ?
+          <ButtonNew className={'store-page__banner-btn'} label={banner[`${language.code}text`] || banner[`entext`]}
+                     onClick={() => {
+                       if (banner['newtab'] === 'TRUE')
+                         Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                       else
+                         this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+                     }}
+          /> : null;
+
+      let bannerImg = banner[`${language.code}img`] || banner[`enimg`];
+      let bannerImgMobile = banner[`${language.code}imgmobile`] || banner[`enimgmobile`];
+      return (
+        <div key={idx} className={'store-page__banner-item'}>
+          <img className={'store-page__banner-img'} src={Utils.IsMobile ? bannerImgMobile || bannerImg : bannerImg || bannerImgMobile} />
+          {btn}
+        </div>
+      )
+    });
+
+    return (bannerList && bannerList.length
+        ? bannerList
+        : [
+          <div className={'store-page__banner-item'} key={'banner-1'}>
+            <img src={require('../../../shared/img/banner/banner_store.png')}/>
+          </div>,
+        ]
+    )
   }
 
+  
   render() {
     const {_t, query} = this.props;
 
@@ -55,7 +94,7 @@ class StorePage extends React.Component {
         <div className="store-page__container">
           <HeaderBar label={_t('official_store')} onBackClicked={() => {this.props.history.goBack()}}/>
 
-          <div className={'store__banner'} id={'store'}>
+          <div className={'store-page__banner'} id={'store'}>
             <Slider list={this.renderBanner()}/>
           </div>
 
@@ -91,6 +130,8 @@ const mapStateToProps = (store, props) => {
   return {
     _t: getTranslate(store.localeReducer),
     query,
+    banners: GetStoreBanners(store),
+    language: getActiveLanguage(store.localeReducer),
   }
 };
 
