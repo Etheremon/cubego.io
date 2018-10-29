@@ -18,7 +18,7 @@ import {ButtonNew} from "../../widgets/Button/Button.jsx";
 
 require("style-loader!./StorePage.scss");
 
-const storeTabs = [ {key: 'cubegons', content: 'cubegons'}];//, {key: 'cubegoes', content: 'cubegoes'}];
+const storeTabs = [ {key: 'cubegoes', content: 'cubegoes'}];//, {key: 'cubegoes', content: 'cubegoes'}];
 
 class StorePage extends React.Component {
 

@@ -150,10 +150,10 @@ class CubegoesView extends React.Component {
                   <div className={'left'}>{_t('total cubes')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*packQuantities[selectedPack.idx], 4)}</div>
                 </div>
-                <div className={'review-item'}>
+                {/* <div className={'review-item'}>
                   <div className={'left'}>{_t('total price')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.price*packQuantities[selectedPack.idx], 4)} {_t(selectedPack.currency)}</div>
-                </div>
+                </div> */}
                 <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
                   this.setState({viewPresaleInfo: true})
                 }}/>
@@ -228,11 +228,11 @@ class CubegoesView extends React.Component {
           {this.renderPurchaseView()}
         </Popup>
 
-        <Popup className={'popup-purchase'}
+        {/* <Popup className={'popup-purchase'}
                onUnmount={() => {this.setState({viewPresaleInfo: false})}}
                open={this.state.viewPresaleInfo} >
           {this.renderPresaleView()}
-        </Popup>
+        </Popup> */}
       </div>
     )
   }

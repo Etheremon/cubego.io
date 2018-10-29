@@ -54,7 +54,7 @@ export const CustomRectangle = ({tier, fill, strokeWidth}) => {
                 <stop stopColor="#9DF2F1" offset="100%"></stop>
             </linearGradient>
         </defs>
-        <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="CustomRectangle" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <path d="M5,23.6432469 L5,200.162356 L687,200.162356 L687,23.6432469 C573.176134,11.222086 459.509728,5.01159184 346,5.01159184 C232.490272,5.01159184 118.823866,11.222086 5,23.6432469 Z" id="Rectangle-2" stroke={`url(#customrectangle-gradient-${tier})`} fill={fill} strokeWidth={strokeWidth}></path>
         </g>
     </svg>
@@ -86,4 +86,16 @@ export const QuantityBar = ({nextOnClick, prevOnClick}) => {
       </g>
   </svg>
   )
+}
+
+export const ArrowDown = ({}) => {
+    return (
+        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 752 363" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+            <defs></defs>
+            <g class="arrow-down" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" stroke-linecap="square">
+                <polyline class="line-1" stroke="#FFFFFF" stroke-width="10" points="5.5 119.5 376 357.275603 746.5 119.5"></polyline>
+                <polyline class="line-2" stroke="#FFFFFF" stroke-width="10" points="102 5 376 181 650 5"></polyline>
+            </g>
+        </svg>
+    )
 }

@@ -307,6 +307,15 @@
   }
 
   .guide__game-intro {
+    position: relative;
+    .decorated-cube {
+      display: block;
+      position: absolute;
+      top: 8px;
+      left: calc(50% + 8px);
+      height: 72px;
+    }
+
     .principles {
       margin-top: 80px;
       text-align: center;
@@ -333,6 +342,16 @@
 
   .guide__cubego-intro {
     margin-top: 100px;
+    position: relative;
+    .decorated-cube {
+      position: absolute;
+      top: 0;
+      transform: translateY(-50%);
+      left: -96px;
+      display: block;
+      height: 80px;
+      z-index: 2;
+    }
     .content-desc {
 
     }
@@ -471,6 +490,19 @@
 
   .guide__cubegon-intro {
     margin-top: 120px;
+    .main__header {
+      position: relative;
+
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        right: -44px;
+        display: block;
+        height: 128px;
+        z-index: 2;
+      }
+    }
 
     .cubegon-logic__container {
       margin-top: 40px;
@@ -682,6 +714,19 @@
     .cubegon-dismantle-reassemble__container {
       margin-top: 60px;
       text-align: center;
+      background-image: url('../../../shared/img/background/background-new.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+
+      .header--detail {
+        color: $white !important;
+      }
+
+      img {
+        // display: block;
+      }
 
       p {
         font-weight: $font-weight-bold;
@@ -691,6 +736,18 @@
 
   .guide__combat-intro {
     margin-top: 88px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        left: -96px;
+        display: block;
+        height: 80px;
+        z-index: 2;
+      }
+    }
     img {
       max-height: 512px !important;
     }
@@ -698,6 +755,17 @@
 
   .guide__what-next {
     margin-top: 88px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        right: -44px;
+        height: 128px;
+        z-index: 2;
+      }
+    }
 
     .header--detail {
       span span {
@@ -726,6 +794,21 @@
   .cubego-stats-details__container {
     overflow: auto;
     padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    .cubego-stats-detail__action {
+      display: inline-block;
+      text-align: center;
+      color: $white;
+      font-family: $f__baloobha;
+      font-size: $font-size-bigger;
+      cursor: pointer;
+      height: 24px;
+      width: 72px;
+      svg {
+        display: inline-block;
+      }
+    }
   }
 
   .attribute-table {
