@@ -99,8 +99,9 @@ class TosPage extends React.Component {
           <li>discriminating against individuals or groups based on race or ethnic origin, religion, disability, gender, age, nationality, veteran status, or sexual orientation/gender identity</li>
           <li>containing sexual content</li>
           <li>revealing other people's personal information</li>
-          <li>Cubego reserves the right to decide whether your characters’ name and design falls under one or several of the categories above and to remove and/or replace characters’ name and design on Cubego Platform without prior notice.</li>
           </ul>
+          <p>Cubego reserves the right to decide whether your characters’ name and design falls under one or several of the categories above and to remove and/or replace characters’ name and design on Cubego Platform without prior notice.</p>
+
           <p>5.6. Cubego does not endorse any design of character created in the Cubego Platform by any user, and Cubego expressly disclaims any and all liability in connection with character’s design created by Cubego Players. Cubego does not permit copyright infringing activities and infringement of intellectual property rights on the Cubego Platform, and Cubego will remove all characters’ designs if properly notified or reported that such designs infringe on another's intellectual property rights. Cubego reserves the right to remove and/or replace characters’ design on Cubego Platform without prior notice.</p>
 
           <h3>6. SOURCE OF FUNDS</h3>

@@ -1,0 +1,46 @@
+@import '../../../styles/mixins';
+@import '../../../styles/colors';
+@import '../../../styles/variables';
+@import '../../../styles/fonts';
+
+
+.home-sub-bgr {
+  position: relative;
+  width: 100%;
+
+  &:after {
+    content: "";
+    position: absolute;
+    background-repeat: no-repeat;
+    height: 600px;
+    width: 100%;
+    background-size: auto 100%;
+    top: -100px;
+    z-index: 0;
+  }
+
+  &.left:after {
+    left: 0;
+    background-position: left;
+  }
+  &.right:after {
+    right: 0;
+    background-position: right;
+  }
+  &.yellow {
+    &.left:after {
+      background-image: url('../../../../shared/img/game_intro/sub_background_yellow_left.png');
+    }
+    &.right:after {
+      background-image: url('../../../../shared/img/game_intro/sub_background_yellow_right.png');
+    }
+  }
+  &.blue {
+    &.left:after {
+      background-image: url('../../../../shared/img/game_intro/sub_background_blue_left.png');
+    }
+    &.right:after {
+      background-image: url('../../../../shared/img/game_intro/sub_background_blue_right.png');
+    }
+  }
+}

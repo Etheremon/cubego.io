@@ -12,6 +12,7 @@ import {CUBE_MATERIALS, CUBE_TIER, CUBE_TYPES} from "../../../constants/cubego";
 import * as ObjUtils from "../../../utils/objUtils";
 import { ArrowDown } from '../../widgets/SVGManager/SVGManager.jsx';
 import { ScrollSelector } from '../../widgets/ScrollSelector/ScrollSelector.jsx';
+import {SubBgr} from "../HomePage/SubBgr/SubBgr.jsx";
 
 require("style-loader!./GameIntro.scss");
 
@@ -54,7 +55,9 @@ class GameIntro extends React.Component {
 
           <ScrollSelector history={this.props.history} offsetTop={20} listData={scrollSelectors} _t={_t} />
 
-          <Container size={containerSize} className={'guide__game-intro sub-background yellow right'} id={'what-is-cubego'}>
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.YELLOW}/>
+
+          <Container size={containerSize} className={'guide__game-intro'} id={'what-is-cubego'}>
             <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/red_cube.png')}/>
             <div className="content right">
               <div className="content-desc">
@@ -91,7 +94,8 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__cubego-intro sub-background blue left'} id={'cubego-intro'}>
+          <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__cubego-intro'} id={'cubego-intro'}>
             <div className="main__header cubego-intro__header left">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/diamond.png')}/>
               <div className="header">
@@ -118,7 +122,9 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="tier-detail__container sub-background blue right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+
+              <div className="tier-detail__container">
                 <div className={'header--blue-small'}>
                   {_t('tiers')}
                 </div>
@@ -215,6 +221,8 @@ class GameIntro extends React.Component {
 
           </div>
 
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+
           <Container size={containerSize} className={'guide__cubegon-intro'} id={'cubegon-intro'}>
             <div className="main__header cubegon-intro__header right">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/pallete.png')}/>
@@ -222,7 +230,8 @@ class GameIntro extends React.Component {
                 {_t('cubegon')}
               </div>
             </div>
-            <div className="content right sub-background blue right">
+
+            <div className="content right">
               <div className="content-desc">
                 <div className={'header--detail'}>{_t('cubegon.desc')}</div>
               </div>
@@ -281,7 +290,9 @@ class GameIntro extends React.Component {
               <div className={'header--detail'}>
                 {_t('desc.cubegon_properties')}
               </div>
-              <div className="cubegon-types sub-background yellow left">
+
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.YELLOW}/>
+              <div className="cubegon-types">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_types')}
                 </div>
@@ -290,7 +301,8 @@ class GameIntro extends React.Component {
                 <img src={require('../../../shared/img/game_intro/type.png')} />
               </div>
 
-              <div className="cubegon-stats sub-background yellow right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.YELLOW}/>
+              <div className="cubegon-stats">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_stats')}
                 </div>
@@ -300,7 +312,8 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="cubegon-tiers sub-background blue left">
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+              <div className="cubegon-tiers">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_tiers')}
                 </div>
@@ -325,7 +338,8 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="cubegon-skills sub-background blue right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+              <div className="cubegon-skills">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_skills')}
                 </div>
@@ -364,7 +378,8 @@ class GameIntro extends React.Component {
             </Container>
           </div>
 
-          <Container size={containerSize} className={'guide__combat-intro sub-background blue left'} id={'combat-intro'}>
+          <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__combat-intro'} id={'combat-intro'}>
             <div className="main__header combat-intro__header left">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/battle.png')}/>
               <div className="header">
@@ -383,7 +398,8 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__what-next sub-background blue right'} id={'what-next'}>
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__what-next'} id={'what-next'}>
             <div className="main__header what-next__header right">
               <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
               <div className="header">
