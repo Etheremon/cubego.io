@@ -4,9 +4,12 @@ export class LoadingScreen {
     this._loadingTextDiv = null;
     this._renderingCanvas = renderingCanvas;
     this._loadingText = "";
+    this.isInLoading = false;
+    this._resizeLoadingUI = this._resizeLoadingUI.bind(this);
   }
 
   displayLoadingUI() {
+    this.isInLoading = true;
     if (this._loadingDiv) {
       return;
     }
@@ -71,6 +74,8 @@ export class LoadingScreen {
   }
 
   hideLoadingUI() {
+    this.isInLoading = false;
+
     if (!this._loadingDiv) {
       return;
     }
@@ -80,6 +85,16 @@ export class LoadingScreen {
       window.removeEventListener("resize", this._resizeLoadingUI);
     }, 2000);
   };
+
+  forceHideLoadingUI() {
+    this.isInLoading = false;
+    if (!this._loadingDiv) {
+      return;
+    }
+
+    document.body.removeChild(this._loadingDiv);
+    window.removeEventListener("resize", this._resizeLoadingUI);
+  }
 
   _resizeLoadingUI() {
     let canvasRect = this._renderingCanvas.getBoundingClientRect();

@@ -50,6 +50,7 @@ const stopRender = () => {
   engine = null;
   loopStarted = false;
   root = null;
+  loadingScreen.forceHideLoadingUI();
   loadingScreen = null;
 };
 
