@@ -424,6 +424,7 @@
   }
 
   .home__channels {
+    overflow: hidden;
     margin-top: 20px;
     text-align: center;
 
@@ -523,6 +524,8 @@
   }
 
   .home__partnership {
+    position: relative;
+    z-index: 1;
     margin-top: 100px;
     margin-bottom: -32px;
     padding-top: 20px;
@@ -567,6 +570,18 @@
           font-size: $font-size-big;
         }
       }
+    }
+  }
+
+  .home__roadmap {
+    padding-top: 160px;
+    .home__roadmap-header {
+      text-align: center;
+      font-family: $f__baloobha;
+      color: $c__text__orange;
+      font-size: 30px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
     }
   }
 

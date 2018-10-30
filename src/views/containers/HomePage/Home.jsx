@@ -19,6 +19,8 @@ import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {URLS} from "../../../constants/general";
 import * as Config from "../../../config";
 import Countdown from "../../widgets/Countdown/Countdown.jsx";
+import Roadmap from "./Roadmap/Roadmap.jsx";
+import {SubBgr} from "./SubBgr/SubBgr.jsx";
 
 require("style-loader!./Home.scss");
 
@@ -257,10 +259,19 @@ class HomePage extends React.Component {
                   </div>
                 </div>
               </Container>
-    
-
           </div>
           {/* end home__game-detail */}
+
+          <div className={'home__roadmap'}>
+            <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+            <Container size={Container.sizes.NORMAL}>
+              <div className={'home__roadmap-header'}>
+                {_t('roadmap')}
+              </div>
+
+              <Roadmap/>
+            </Container>
+          </div>
 
           <div className={'home__partnership'} id={'partners'}>
             <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
@@ -276,11 +287,12 @@ class HomePage extends React.Component {
             </Container>
           </div>
           {/* end home__partnership */}
-          
+
           <InviewMonitor
             classNameNotInView='vis-collapse'
             classNameInView='animated custom'>
             <div className="home__channels">
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.YELLOW}/>
               <Text className={'channels__header'} type={Text.types.H2} children={_t('channels')} />
               <div className="channel-listview">
                 {
