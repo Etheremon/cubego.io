@@ -82,6 +82,7 @@
           bottom: 0;
           left: -2000px;
           background-color: #0C4A7E;
+          @include border-radius(4px);
         }
       }
 
@@ -448,6 +449,7 @@
   .home__modes {
     text-align: center;
     padding-top: 80px;
+    position: relative;
 
     .home__modes-title__container {
       //background-color: rgba(25, 50, 78, 1);
@@ -457,6 +459,7 @@
       flex-direction: column;
       justify-content: center;
       height: 56px;
+      @include border-radius(4px);
       
       .home__modes-title {
         display: inline;

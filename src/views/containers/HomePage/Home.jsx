@@ -139,8 +139,8 @@ class HomePage extends React.Component {
             </div>
           </div>
 
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
           <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
-
             <div className={'home__intro-main'}>
               <div className="home__intro-board">
                 <div className={'home__intro-header'}>
