@@ -16,6 +16,9 @@ import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
 import {GetHomeBanners} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
+import {URLS} from "../../../constants/general";
+import * as Config from "../../../config";
+import Countdown from "../../widgets/Countdown/Countdown.jsx";
 
 require("style-loader!./Home.scss");
 
@@ -126,14 +129,22 @@ class HomePage extends React.Component {
             classNameNotInView='vis-hidden'
             classNameInView='animated fadeInUp'>
             <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
+              <div className={'home__intro-countdown'}>
+                <p className={'presale-text'}>{_t('presale start in')}</p>
+                <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
 
-              <div className="home__intro-board">
-                <p>{_t('home.opening')}</p>
+                <div className={'btns'}>
+                  <ButtonNew className={'create__button'} label={_t('register for presale')}
+                             color={ButtonNew.colors.BLUE}
+                             onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+                             }}/>
+                  <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                             onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
+                             }}/>
+                </div>
               </div>
 
               <div className={'home__intro-build'}>
-                <div className={'home__intro-countdown'}>
-                </div>
                 <div className={'home__intro-gif'}>
                   <img src={require('../../../shared/img/gif/build.gif')}/>
                 </div>
@@ -151,6 +162,10 @@ class HomePage extends React.Component {
 
             </Container>
           </InviewMonitor>
+
+          <div className="home__intro-board">
+            <p>{_t('home.opening')}</p>
+          </div>
           {/* end home__intro */}
 
           <Container className="home__modes" id={'modes'}>

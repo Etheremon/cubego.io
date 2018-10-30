@@ -22,13 +22,15 @@ const cubegonTiers = [
   {tier: 'god', value: 68000},
 ];
 
-const scrollSelectors = [{key: 'cubego', id: 'cubego-intro'},
-{key: 'cubegon', id: 'cubegon-intro'},
-{key: 'combat', id: 'combat-intro'},
-{key: 'what_next', id: 'what-next'}];
+const scrollSelectors = [
+  {key: 'intro_single', id: 'what-is-cubego'},
+  {key: 'cubego', id: 'cubego-intro'},
+  {key: 'cubegon', id: 'cubegon-intro'},
+  {key: 'combat', id: 'combat-intro'},
+  {key: 'coming', id: 'what-next'}
+];
 
 class GameIntro extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -50,9 +52,9 @@ class GameIntro extends React.Component {
 
         <div className="game-intro-page__container">
 
-          <ScrollSelector listData={scrollSelectors} _t={_t} />
+          <ScrollSelector history={this.props.history} offsetTop={20} listData={scrollSelectors} _t={_t} />
 
-          <Container size={containerSize} className={'guide__game-intro sub-background yellow right'}>
+          <Container size={containerSize} className={'guide__game-intro sub-background yellow right'} id={'what-is-cubego'}>
             <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/red_cube.png')}/>
             <div className="content right">
               <div className="content-desc">
@@ -413,9 +415,15 @@ class GameIntro extends React.Component {
               {_t('build_your_cubegon')}
             </div>
 
-            <ButtonNew size={ButtonNew.sizes.BIG} showDeco={ButtonNew.deco.BOTH} className={'create__button'} label={_t('create_now')} onClick={() => {
-              this.props.history.push(`/${URLS.BUILD_GON}`)
+            <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                       onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
             }}/>
+
+            <ButtonNew className={'create__button'} label={_t('register for presale')}
+                       color={ButtonNew.colors.BLUE}
+                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+            }}/>
+
           </Container>
           
         </div>

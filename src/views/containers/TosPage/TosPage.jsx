@@ -15,18 +15,7 @@ require("style-loader!./TosPage.scss");
 class TosPage extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: '',
-    };
-
-    this.validateEmail = this.validateEmail.bind(this);
   }
-
-  componentDidMount() {
-
-  }
-
 
   render() {
     return (

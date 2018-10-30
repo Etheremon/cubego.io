@@ -40,11 +40,13 @@
     }
 
     &:hover {
-      .layer2D__cell-real {
-        display: none;
-      }
-      .layer2D__cell-hover {
-        display: block;
+      @include not-mobile {
+        .layer2D__cell-real {
+          display: none;
+        }
+        .layer2D__cell-hover {
+          display: block;
+        }
       }
     }
   }

@@ -345,7 +345,7 @@
   }
 
   .guide__cubego-intro {
-    margin-top: 100px;
+    padding-top: 100px;
     position: relative;
     .decorated-cube {
       position: absolute;
@@ -493,7 +493,7 @@
   }
 
   .guide__cubegon-intro {
-    margin-top: 120px;
+    padding-top: 120px;
     .main__header {
       position: relative;
 
@@ -527,12 +527,12 @@
 
         .left {
           .content-desc {
-            padding: 32px;
+            padding: 48px 32px 32px 32px;
           }
         }
         .right {
           .content-desc {
-            padding: 32px 0;
+            padding: 48px 32px 32px 16px;
           }
         }
 
@@ -744,7 +744,7 @@
   }
 
   .guide__combat-intro {
-    margin-top: 88px;
+    padding-top: 100px;
     .main__header {
       position: relative;
       .decorated-cube {
@@ -768,7 +768,7 @@
   }
 
   .guide__what-next {
-    margin-top: 88px;
+    padding-top: 80px;
     .main__header {
       position: relative;
       .decorated-cube {
@@ -806,7 +806,6 @@
   }
 
   .cubego-stats-details__container {
-    overflow: auto;
     padding-top: 30px;
     display: flex;
     justify-content: center;
@@ -833,7 +832,6 @@
     color: $white95;
     margin: 0 auto;
     text-align: center;
-    overflow: auto;
 
     .header {
       font-size: $font-size-big;

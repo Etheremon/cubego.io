@@ -9,15 +9,19 @@ export class ScrollSelector extends React.Component {
     super(props);
     this.state = {
       activeItem: -1
-    }
+    };
     this.handleScrollElement = this.handleScrollElement.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   handleScrollElement (idx) {
     const {listData} = this.props;
-    let element = document.getElementById(listData[idx].id);
-    element.scrollIntoView();
+    if (this.props.history) {
+      this.props.history.push(`#${listData[idx].id}`);
+    } else {
+      let element = document.getElementById(listData[idx].id);
+      element.scrollIntoView();
+    }
     this.setState({
       activeItem: idx
     })
@@ -25,7 +29,6 @@ export class ScrollSelector extends React.Component {
 
   onChange(changes, observer) {
     const {listData} = this.props;
-    console.log(changes)
     changes.forEach(change => {
       if (change.intersectionRatio > 0) {
         if (change.target.id !== undefined && change.target.id !== '') {
@@ -60,8 +63,9 @@ export class ScrollSelector extends React.Component {
       <div className="scroll-selector">
         {
           listData.map((item,idx) => 
-            <div className={`indicator__container ${this.state.activeItem === idx ? 'active' : ''}`} key={idx} onClick={() => {this.handleScrollElement(idx)}}>
-              <div className={`indicator`}></div>
+            <div className={`indicator__container ${this.state.activeItem === idx ? 'active' : ''}`} key={idx}
+                 onClick={() => {this.handleScrollElement(idx)}}>
+              <div className={`indicator`}/>
               <span>{_t(item.key)}</span>
             </div>
           )

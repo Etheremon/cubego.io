@@ -39,31 +39,40 @@
   .home__intro {
     padding-top: 20px;
     text-align: center;
-
     display: flex;
     align-items: center;
-
-    .home__intro-board {
-      //padding: 0 32px;
-      color: $gray-dark;
-      font-weight: $font-weight-semi-bold;
-      font-size: $font-size-normal;
-      text-align: left;
-      width: 500px;
-      flex-shrink: 0;
-    }
+    justify-content: space-around;
 
     .home__intro-build {
       position: relative;
-      height: 300px;
-      flex-grow: 1;
+      height: 260px;
+      width: 300px;
 
       img {
         position: absolute;
         left: 50%;
         top: 50%;
-        height: 360px;
+        height: 320px;
         @include transform(translateX(-50%) translateY(-50%));
+      }
+    }
+
+    .home__intro-countdown {
+      text-align: left;
+
+      .presale-text {
+        font-family: $f__baloobha;
+        font-size: $font-size-header-3;
+        color: $c__text__orange;
+        margin: 0;
+      }
+
+      .countdown__container {
+        margin: 16px 0;
+
+        .days, .hours, .min, .sec {
+          font-size: 48px;
+        }
       }
     }
 
@@ -172,6 +181,17 @@
         }
       }
     }
+  }
+
+  .home__intro-board {
+    padding: 16px 16px 0 16px;
+    color: $gray-dark;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-normal;
+    text-align: center;
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   .home__game-detail {

@@ -15,16 +15,6 @@ require("style-loader!./PrivacyPage.scss");
 class PrivacyPage extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: '',
-    };
-
-    this.validateEmail = this.validateEmail.bind(this);
-  }
-
-  componentDidMount() {
-
   }
 
   render() {

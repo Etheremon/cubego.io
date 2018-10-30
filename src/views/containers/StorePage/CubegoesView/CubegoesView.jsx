@@ -59,7 +59,7 @@ class CubegoesView extends React.Component {
           }
         </span>
 
-        <ButtonNew className={'register__button-btn'} label={_t('register for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+        <ButtonNew className={'register__button-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
           this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
         }}/>
       </div>

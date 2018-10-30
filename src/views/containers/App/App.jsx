@@ -60,6 +60,15 @@ class App extends React.Component {
 
     this.props.history.listen((location) => {
       if (location.pathname !== this.lastPathname) f(location);
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        let element =  document.getElementById(id);
+        if (element) element.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+          else window.setTimeout(() => {
+            let e =  document.getElementById(id);
+            if (e) e.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+          }, 200)
+      }
     });
 
     // Check for Ether Account from window.core

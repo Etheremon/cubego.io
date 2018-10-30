@@ -110,7 +110,7 @@ class StorePage extends React.Component {
           <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
           <p className={'presale-time'}>({Config.PRESALE_DATE})</p>
 
-          <ButtonNew className={'presale-btn'} label={_t('register for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+          <ButtonNew className={'presale-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
             this.props.history.push(`/${URLS.SIGN_IN}`)
           }}/>
 

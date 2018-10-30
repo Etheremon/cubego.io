@@ -9,43 +9,46 @@
   right: 0;
   transform: translateY(-50%);
   z-index: 9999;
+  @include mobile {
+    display: none;
+  }
 
   .indicator__container {
     cursor: pointer;
     display: flex;
-    flex-direction: row;
     align-items: center;
+    flex-direction: row-reverse;
 
     span {
-      font-size: $font-size-small;
-      text-transform: lowercase;
+      font-size: $font-size-smaller;
+      //text-transform: lowercase;
       font-family: $f__overpass;
       transition: all 0.5s;
     }
 
-    
-
     &.active {
-      
       .indicator:after {
-        background: $c__orange-4;
+        background: $cerulean_blue;
         width: 16px;
         height: 16px;
       }
 
       span {
-        font-size: $font-size-bigger;
+        font-size: $font-size-small;
         font-weight: $font-weight-bold;
       }
-      
+    }
+
+    &:hover {
+      font-weight: $font-weight-bold;
     }
   }
   
   .indicator {
-    border-right: 1px solid $c__orange-4;
+    border-right: 1px solid $regal_blue;
     height: 32px;
-    padding: 0px 0;
-    margin-right: 16px;
+    padding: 0;
+    margin: 0 8px 0 12px;
     position: relative;
     transition: all 0.5s;
 
@@ -54,12 +57,11 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 1px solid $c__orange-4;
       width: 12px;
       height: 12px;
       position: absolute;
-      background: white;
+      background: rgb(209, 225, 248);
+      @include border-radius(4px);
     }
   }
 }
