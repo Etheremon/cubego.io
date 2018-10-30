@@ -38,10 +38,59 @@
 
   .home__intro {
     padding-top: 20px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    text-align: left;
+
+    .home__intro-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      text-align: left;
+      @include mobile {
+        flex-wrap: wrap;
+        text-align: center;
+      }
+    }
+
+    .home__intro-board {
+      color: $gray-dark;
+      width: 500px;
+      max-width: 100%;
+      margin: 0 auto;
+
+      .widget__button-new {
+        margin: 8px 0 0 0;
+      }
+
+      .home__intro-header {
+        position: relative;
+        padding: 16px 0 8px 0;
+
+        span {
+          position: relative;
+          font-family: $f__baloobha;
+          font-size: 42px;
+          color: $white;
+          text-transform: uppercase;
+          font-weight: $font-weight-normal;
+        }
+
+        &:before {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          left: -2000px;
+          background-color: #0C4A7E;
+        }
+      }
+
+      p {
+        padding-top: 20px;
+        font-weight: $font-weight-semi-bold;
+        font-size: $font-size-medium;
+      }
+    }
 
     .home__intro-build {
       position: relative;
@@ -54,24 +103,9 @@
         top: 50%;
         height: 320px;
         @include transform(translateX(-50%) translateY(-50%));
-      }
-    }
-
-    .home__intro-countdown {
-      text-align: left;
-
-      .presale-text {
-        font-family: $f__baloobha;
-        font-size: $font-size-header-3;
-        color: $c__text__orange;
-        margin: 0;
-      }
-
-      .countdown__container {
-        margin: 16px 0;
-
-        .days, .hours, .min, .sec {
-          font-size: 48px;
+        @include mobile {
+          left: calc(50% - 18px);
+          top: calc(50% + 20px);
         }
       }
     }
@@ -183,15 +217,25 @@
     }
   }
 
-  .home__intro-board {
-    padding: 16px 16px 0 16px;
-    color: $gray-dark;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-normal;
+  .home__intro-countdown {
     text-align: center;
-    width: 500px;
-    max-width: 100%;
-    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .presale-text {
+      font-family: $f__baloobha;
+      font-size: $font-size-header-3;
+      color: $c__text__orange;
+      margin: 0;
+    }
+
+    .countdown__container {
+      margin: 16px 0;
+
+      .days, .hours, .min, .sec {
+        font-size: 48px;
+      }
+    }
   }
 
   .home__game-detail {
@@ -403,10 +447,12 @@
 
   .home__modes {
     text-align: center;
-    padding-top: 50px;
+    padding-top: 80px;
 
     .home__modes-title__container {
-      background-color: rgba(25, 50, 78, 1);
+      //background-color: rgba(25, 50, 78, 1);
+      background-color: #0C4A7E;
+      padding: 8px 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
