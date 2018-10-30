@@ -143,7 +143,7 @@ class HomePage extends React.Component {
             <div className={'home__intro-main'}>
               <div className="home__intro-board">
                 <div className={'home__intro-header'}>
-                  <span>{_t('cubego')}</span>
+                  <span>{_t('what_is_cubego')}</span>
                 </div>
                 <p>{_t('home.opening')}</p>
                 <ButtonNew className={'create__button'} label={_t('build_cubegon')}
