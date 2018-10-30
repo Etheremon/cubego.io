@@ -47,13 +47,16 @@ export class ScrollSelector extends React.Component {
       rootMargin: '0px', // margin around root. Values are similar to css property. Unitless values not allowed
       threshold: 0.0 // visible amount of item shown in relation to root
     };
-    let observer = new IntersectionObserver(this.onChange, options);
-    const {listData} = this.props;
 
-    listData.forEach(ele => {
-      let dom = document.getElementById(ele.id);
-      observer.observe(dom)
-    })
+    if (window.IntersectionObserver) {
+      let observer = new IntersectionObserver(this.onChange, options);
+      const {listData} = this.props;
+
+      listData.forEach(ele => {
+        let dom = document.getElementById(ele.id);
+        observer.observe(dom)
+      })
+    }
   }
 
   render() {

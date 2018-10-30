@@ -127,23 +127,31 @@ class HomePage extends React.Component {
           </div>
           {/* end home__banner */}
 
-          <InviewMonitor
-            classNameNotInView='vis-hidden'
-            classNameInView='animated fadeInUp'>
-            <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
-              <div className={'home__intro-countdown'}>
-                <p className={'presale-text'}>{_t('presale start in')}</p>
-                <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
+          <div className={'home__intro-countdown'}>
+            <p className={'presale-text'}>{_t('presale start in')}</p>
+            <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
 
-                <div className={'btns'}>
-                  <ButtonNew className={'create__button'} label={_t('register for presale')}
-                             color={ButtonNew.colors.BLUE}
-                             onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
-                             }}/>
-                  <ButtonNew className={'create__button'} label={_t('build_cubegon')}
-                             onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
-                             }}/>
+            <div className={'btns'}>
+              <ButtonNew className={'create__button'} label={_t('register for presale')}
+                         onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+                         }}/>
+            </div>
+          </div>
+
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+          <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
+            <div className={'home__intro-main'}>
+              <div className="home__intro-board">
+                <div className={'home__intro-header'}>
+                  <span>{_t('what_is_cubego')}</span>
                 </div>
+                <p>{_t('home.opening')}</p>
+                <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                           color={ButtonNew.colors.BLUE}
+                           onClick={
+                             () => {this.props.history.push(`/${URLS.BUILD_GON}`)}
+                           }
+                />
               </div>
 
               <div className={'home__intro-build'}>
@@ -151,34 +159,17 @@ class HomePage extends React.Component {
                   <img src={require('../../../shared/img/gif/build.gif')}/>
                 </div>
               </div>
+            </div>
 
-              {/*<div className="home__intro-cubego">*/}
-                {/*{introCubegon.map((cubegon, idx) => (*/}
-                  {/*<div className={'cubegon-card'} key={idx}>*/}
-                    {/*<img key={idx} src={cubegon.img}/>*/}
-                    {/*<div className={'cubegon-name'}>{cubegon.name}</div>*/}
-                    {/*<div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>*/}
-                  {/*</div>*/}
-                {/*))}             */}
-              {/*</div>*/}
+          </Container>
 
-            </Container>
-          </InviewMonitor>
-
-          <div className="home__intro-board">
-            <p>{_t('home.opening')}</p>
-          </div>
           {/* end home__intro */}
 
-          <Container className="home__modes" id={'modes'}>
+          <div className="home__modes" id={'modes'}>
             <div className="home__modes-title__container">
               <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
-
-            {/*<div className="home__mode-container">*/}
-              {/*<Carousel list={guildGame} showNav={true} />*/}
-            {/*</div>*/}
-          </Container>
+          </div>
           {/* end home__modes */}
 
           <div className="home__game-detail" id={'game-detail'}>
