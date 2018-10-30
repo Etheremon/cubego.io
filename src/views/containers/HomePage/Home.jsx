@@ -133,7 +133,6 @@ class HomePage extends React.Component {
 
             <div className={'btns'}>
               <ButtonNew className={'create__button'} label={_t('register for presale')}
-                         showDeco={ButtonNew.deco.BOTH}
                          onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
                          }}/>
             </div>
