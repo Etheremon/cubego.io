@@ -28,9 +28,10 @@ class Popup extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.open !== nextProps.defaultOpen) {
+    if (this.state.open !== nextProps.open && nextProps.open !== undefined) {
+      const nextPropsValue = nextProps.open;
       this.setState({
-        open: nextProps.defaultOpen,
+        open: nextPropsValue,
       });
     }
   }
@@ -41,9 +42,9 @@ class Popup extends React.Component {
   }
 
   toggleOpen() {
-    this.setState({
-      open: !this.state.open,
-    });
+    // this.setState({
+    //   open: !this.state.open,
+    // });
   }
 
   open() {
@@ -51,6 +52,7 @@ class Popup extends React.Component {
   }
 
   close() {
+    
     this.setState({open: false});
   }
 
@@ -97,7 +99,7 @@ Popup.defaultProps = {
   size: Popup.sizes.NORMAL,
   defaultOpen: false,
   scroll: false,
-  open: undefined,
+  // open: undefined,
 };
 
 Popup.propTypes = {

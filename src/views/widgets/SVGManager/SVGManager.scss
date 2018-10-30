@@ -4,6 +4,11 @@
 @import '../../styles/variables';
 @import '../../styles/fonts';
 
+@keyframes xaxis-change {
+  0% { transform: translateY(-44px); }
+  100% { transform: translateY(0);}
+}
+
 #quantity-bar__next-button {
   &:hover ~ #plus {
     stroke: $white;
@@ -19,5 +24,19 @@
 #quantity-bar__prev-button {
   &:hover ~ #subtract {
     stroke: $white;
+  }
+}
+
+#CustomRectangle {
+  // display: none;
+}
+
+.arrow-down {
+  transition: all 0.5;
+  .line-1 {
+    animation: xaxis-change 1s linear 0s infinite alternate;
+  }
+  .line-2 {
+    animation: xaxis-change 1s linear 0s infinite alternate;
   }
 }

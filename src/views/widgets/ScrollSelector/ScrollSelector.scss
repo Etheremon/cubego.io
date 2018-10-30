@@ -1,0 +1,67 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.scroll-selector {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 9999;
+  @include mobile {
+    display: none;
+  }
+
+  .indicator__container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+
+    span {
+      font-size: $font-size-smaller;
+      //text-transform: lowercase;
+      font-family: $f__overpass;
+      transition: all 0.5s;
+    }
+
+    &.active {
+      .indicator:after {
+        background: $cerulean_blue;
+        width: 16px;
+        height: 16px;
+      }
+
+      span {
+        font-size: $font-size-small;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    &:hover {
+      font-weight: $font-weight-bold;
+    }
+  }
+  
+  .indicator {
+    border-right: 1px solid $regal_blue;
+    height: 32px;
+    padding: 0;
+    margin: 0 8px 0 12px;
+    position: relative;
+    transition: all 0.5s;
+
+    &:after {
+      content: '';
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      background: rgb(209, 225, 248);
+      @include border-radius(4px);
+    }
+  }
+}

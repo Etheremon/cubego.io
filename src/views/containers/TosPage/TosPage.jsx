@@ -3,60 +3,21 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import * as Tracker from '../../../services/tracker'
-
 import withRouter from "react-router-dom/es/withRouter";
 
 import Navbar from '../../components/bars/Navbar/Navbar.jsx'
 import Footer from '../../components/bars/Footer/Footer.jsx'
-import Slider from '../../widgets/Slider/Slider.jsx';
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
-import { Text } from '../../widgets/Text/Text.jsx';
-import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
-import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
-import * as Utils from "../../../utils/utils";
-import {SpriteSheet} from "../../widgets/SpriteSheet/SpriteSheet.jsx";
-import {SpriteSource} from "../../../constants/sprite";
 
 require("style-loader!./TosPage.scss");
 
 class TosPage extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: '',
-    };
-
-    this.validateEmail = this.validateEmail.bind(this);
-  }
-
-  componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.home);
-  }
-
-  renderBanner() {
-    const { _t } = this.props;
-
-    return ([
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={require('../../../shared/img/banner/banner_1.png')}/>
-        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_GON}`)
-        }}/>
-      </div>,
-    ])
-  }
-
-  validateEmail() {
-
   }
 
   render() {
-    const { _t } = this.props;
-
     return (
       <PageWrapper>
         <Navbar size={Container.sizes.SMALL}/>
@@ -138,8 +99,9 @@ class TosPage extends React.Component {
           <li>discriminating against individuals or groups based on race or ethnic origin, religion, disability, gender, age, nationality, veteran status, or sexual orientation/gender identity</li>
           <li>containing sexual content</li>
           <li>revealing other people's personal information</li>
-          <li>Cubego reserves the right to decide whether your characters’ name and design falls under one or several of the categories above and to remove and/or replace characters’ name and design on Cubego Platform without prior notice.</li>
           </ul>
+          <p>Cubego reserves the right to decide whether your characters’ name and design falls under one or several of the categories above and to remove and/or replace characters’ name and design on Cubego Platform without prior notice.</p>
+
           <p>5.6. Cubego does not endorse any design of character created in the Cubego Platform by any user, and Cubego expressly disclaims any and all liability in connection with character’s design created by Cubego Players. Cubego does not permit copyright infringing activities and infringement of intellectual property rights on the Cubego Platform, and Cubego will remove all characters’ designs if properly notified or reported that such designs infringe on another's intellectual property rights. Cubego reserves the right to remove and/or replace characters’ design on Cubego Platform without prior notice.</p>
 
           <h3>6. SOURCE OF FUNDS</h3>

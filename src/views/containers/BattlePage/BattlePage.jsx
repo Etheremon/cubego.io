@@ -24,6 +24,7 @@ class _BattlePage extends React.Component {
   }
 
   componentDidMount() {
+
   }
 
   componentWillUnmount() {

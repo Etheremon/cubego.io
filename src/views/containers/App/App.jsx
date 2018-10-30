@@ -30,6 +30,7 @@ import TosPage from "../TosPage/TosPage.jsx";
 import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
 import GameIntro from "../GameIntro/GameIntro.jsx";
+import {NotificationActions} from "../../../actions/notification";
 
 require("style-loader!./App.scss");
 
@@ -49,8 +50,26 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.VisitPage();
-    if (window.rpcConnected) Tracker.EnableMetamask();
+    this.props.dispatch(NotificationActions.LOAD_NOTIFICATION.init.func({forceUpdate: false}));
+
+    let f = (l) => {
+      Tracker.AutoTrack(l.pathname);
+      this.lastPathname = l.pathname;
+    };
+    f(location);
+
+    this.props.history.listen((location) => {
+      if (location.pathname !== this.lastPathname) f(location);
+      if (location.hash) {
+        const id = location.hash.replace('#', '');
+        let element =  document.getElementById(id);
+        if (element) element.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+          else window.setTimeout(() => {
+            let e =  document.getElementById(id);
+            if (e) e.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+          }, 200)
+      }
+    });
 
     // Check for Ether Account from window.core
     let acc = undefined;

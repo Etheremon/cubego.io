@@ -7,10 +7,12 @@ import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {URLS} from "../../../constants/general";
-import { Text } from '../../widgets/Text/Text.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import {CUBE_MATERIALS, CUBE_TIER, CUBE_TYPES} from "../../../constants/cubego";
 import * as ObjUtils from "../../../utils/objUtils";
+import { ArrowDown } from '../../widgets/SVGManager/SVGManager.jsx';
+import { ScrollSelector } from '../../widgets/ScrollSelector/ScrollSelector.jsx';
+import {SubBgr} from "../HomePage/SubBgr/SubBgr.jsx";
 
 require("style-loader!./GameIntro.scss");
 
@@ -21,15 +23,27 @@ const cubegonTiers = [
   {tier: 'god', value: 68000},
 ];
 
-class GameIntro extends React.Component {
+const scrollSelectors = [
+  {key: 'intro_single', id: 'what-is-cubego'},
+  {key: 'cubego', id: 'cubego-intro'},
+  {key: 'cubegon', id: 'cubegon-intro'},
+  {key: 'combat', id: 'combat-intro'},
+  {key: 'coming', id: 'what-next'}
+];
 
+class GameIntro extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showCubegoStats: false,
+    }
+  }
+
+  componentDidMount() {
   }
 
   render() {
     const {_t} = this.props;
-    
     let containerSize = Container.sizes.NORMAL;
     let typeList = ObjUtils.GetValues(CUBE_TYPES);
 
@@ -39,7 +53,12 @@ class GameIntro extends React.Component {
 
         <div className="game-intro-page__container">
 
-          <Container size={containerSize} className={'guide__game-intro sub-background yellow right'}>
+          <ScrollSelector history={this.props.history} offsetTop={20} listData={scrollSelectors} _t={_t} />
+
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.YELLOW}/>
+
+          <Container size={containerSize} className={'guide__game-intro'} id={'what-is-cubego'}>
+            <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/red_cube.png')}/>
             <div className="content right">
               <div className="content-desc">
                 <div className="header--orange">
@@ -75,8 +94,10 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__cubego-intro sub-background blue left'}>
+          <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__cubego-intro'} id={'cubego-intro'}>
             <div className="main__header cubego-intro__header left">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/diamond.png')}/>
               <div className="header">
                 {_t('cubego')}
               </div>
@@ -101,7 +122,9 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="tier-detail__container sub-background blue right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+
+              <div className="tier-detail__container">
                 <div className={'header--blue-small'}>
                   {_t('tiers')}
                 </div>
@@ -149,9 +172,8 @@ class GameIntro extends React.Component {
                 </div>
               </div>
             </Container>
-
             <div className="cubego-stats-details__container">
-              <table className={'attribute-table'}>
+              <table className={`attribute-table ${this.state.showCubegoStats ? 'enable' : 'hidden'}`}>
                 <thead>
                   <tr className={'header'}>
                     <th>{_t('tier')}</th>
@@ -171,7 +193,10 @@ class GameIntro extends React.Component {
                     return (
                       <tr key={mIdx} className={`tier-${material.class_id}`}>
                         <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>
-                        <td className={'material-icon'}><img src={material.icon}/></td>
+                        <td className={'material-icon'} 
+                        tooltip={_t(material.name)}
+                        tooltip-position={'right'}
+                        ><img src={material.icon}/></td>
                         <td>{material.point}</td>
                         {typeList.map((type, tIdx) => {
                           return (
@@ -184,17 +209,29 @@ class GameIntro extends React.Component {
                   })}
                 </tbody>
               </table>
+
+              <div className="cubego-stats-detail__action" style={{transform: `rotate(${this.state.showCubegoStats ? '180' : '0'}deg)`}} onClick={() => {
+                this.setState((state) => {
+                  return {showCubegoStats: !state.showCubegoStats};
+                });
+              }}>
+                <ArrowDown />
+              </div>
             </div>
 
           </div>
 
-          <Container size={containerSize} className={'guide__cubegon-intro'}>
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+
+          <Container size={containerSize} className={'guide__cubegon-intro'} id={'cubegon-intro'}>
             <div className="main__header cubegon-intro__header right">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/pallete.png')}/>
               <div className="header">
                 {_t('cubegon')}
               </div>
             </div>
-            <div className="content right sub-background blue right">
+
+            <div className="content right">
               <div className="content-desc">
                 <div className={'header--detail'}>{_t('cubegon.desc')}</div>
               </div>
@@ -253,7 +290,9 @@ class GameIntro extends React.Component {
               <div className={'header--detail'}>
                 {_t('desc.cubegon_properties')}
               </div>
-              <div className="cubegon-types sub-background yellow left">
+
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.YELLOW}/>
+              <div className="cubegon-types">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_types')}
                 </div>
@@ -262,7 +301,8 @@ class GameIntro extends React.Component {
                 <img src={require('../../../shared/img/game_intro/type.png')} />
               </div>
 
-              <div className="cubegon-stats sub-background yellow right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.YELLOW}/>
+              <div className="cubegon-stats">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_stats')}
                 </div>
@@ -272,7 +312,8 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="cubegon-tiers sub-background blue left">
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+              <div className="cubegon-tiers">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_tiers')}
                 </div>
@@ -297,7 +338,8 @@ class GameIntro extends React.Component {
                 </div>
               </div>
 
-              <div className="cubegon-skills sub-background blue right">
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+              <div className="cubegon-skills">
                 <div className={'header--blue-small'}>
                   {_t('cubegon_skills')}
                 </div>
@@ -319,8 +361,10 @@ class GameIntro extends React.Component {
                 </div>
               </div>
             </div>
+          </Container>
 
-            <div className="cubegon-dismantle-reassemble__container">
+          <div className="cubegon-dismantle-reassemble__container">
+            <Container size={containerSize}>
               <div className={'header--orange-small'}>
                 {_t('dismantle_reassemble')}
               </div>
@@ -330,11 +374,14 @@ class GameIntro extends React.Component {
               <div className={'header--detail'}>
                 {_t('desc.dismantle_reassemble_2')}
               </div>
-            </div>
-          </Container>
+              <img className={'dismantle-reassemble__image'} src={require('../../../shared/img/game_intro/rebuild.png')}/>
+            </Container>
+          </div>
 
-          <Container size={containerSize} className={'guide__combat-intro sub-background blue left'}>
+          <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__combat-intro'} id={'combat-intro'}>
             <div className="main__header combat-intro__header left">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/battle.png')}/>
               <div className="header">
                 {_t('combat')}
               </div>
@@ -351,8 +398,10 @@ class GameIntro extends React.Component {
             </div>
           </Container>
 
-          <Container size={containerSize} className={'guide__what-next sub-background blue right'}>
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+          <Container size={containerSize} className={'guide__what-next'} id={'what-next'}>
             <div className="main__header what-next__header right">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
               <div className="header">
                 {_t('what_next')}
               </div>
@@ -382,9 +431,15 @@ class GameIntro extends React.Component {
               {_t('build_your_cubegon')}
             </div>
 
-            <ButtonNew size={ButtonNew.sizes.BIG} showDeco={ButtonNew.deco.BOTH} className={'create__button'} label={_t('create_now')} onClick={() => {
-              this.props.history.push(`/${URLS.BUILD_GON}`)
+            <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                       onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
             }}/>
+
+            <ButtonNew className={'create__button'} label={_t('register for presale')}
+                       color={ButtonNew.colors.BLUE}
+                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+            }}/>
+
           </Container>
           
         </div>

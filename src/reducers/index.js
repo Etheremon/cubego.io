@@ -4,6 +4,7 @@ import { auth } from './auth'
 import { model } from  './model'
 import { cubegon } from  './cubegon'
 import { localization } from './localization';
+import { notifications } from './notification';
 
 export const voxelStoreReducers = {
   auth,
@@ -11,7 +12,8 @@ export const voxelStoreReducers = {
   model,
   cubegon,
   // txnStore,
-  localization
+  localization,
+  notifications,
 };
 
 export const getTxnStore = (store) => (store['txnStore']);

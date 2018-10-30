@@ -9,32 +9,41 @@
   text-align: center;
   color: $white95;
 
-  .countdown__container {
-    margin-top: 60px;
+  .presale-text {
+    margin-top: 50px;
+    font-family: $f__baloobha;
+    font-size: $font-size-large;
+  }
+  .presale-time {
+    font-size: $font-size-small;
   }
 
-  .store__banner {
+  .countdown__container {
+  }
+
+  .store-page__banner {
     position: relative;
     width: 100%;
     overflow: hidden;
 
-    .store__banner-item {
+    .store-page__banner-item {
       position: relative;
       width: 100%;
       height: 300px;
       background-color: rgb(240, 240, 240);
       @include mobile {
-        height: 300px;
+        height: 320px;
       }
       img {
         position: absolute;
         height: 100%;
+        min-width: 100%;
         display: block;
         left: 50%;
         object-fit: cover;
         @include transform(translateX(-50%));
       }
-      .store__banner-btn {
+      .store-page__banner-btn {
         position: absolute;
         left: 50%;
         @include transform(translateX(-50%));

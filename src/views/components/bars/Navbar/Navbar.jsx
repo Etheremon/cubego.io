@@ -1,5 +1,4 @@
 import React from "react"
-import {HashLink as Link} from 'react-router-hash-link';
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 
@@ -17,6 +16,7 @@ import { Icon } from "../../Icon/Icon.jsx";
 import withRouter from "react-router-dom/es/withRouter";
 import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import * as Utils from "../../../../utils/utils";
+import Link from "react-router-dom/es/Link";
 
 require("style-loader!./Navbar.scss");
 
@@ -102,7 +102,7 @@ class Navbar extends React.Component {
         <Container size={size} className={'navbar__content'}>
 
           <div className={'logo m--computer-only'}>
-            <Link smooth to="/#home">
+            <Link to="/#home">
               <Image img={'logo_cubego'}/>
             </Link>
           </div>

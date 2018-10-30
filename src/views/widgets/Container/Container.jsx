@@ -4,11 +4,11 @@ import {GetValues} from "../../../utils/objUtils";
 
 require("style-loader!./Container.scss");
 
-export const Container = ({className, children, size, text}) => {
+export const Container = ({className, children, size, text, id}) => {
   if (text) size = Container.sizes.SMALL;
 
   return (
-    <div className={`widget__container ${className} ${size}`}>
+    <div className={`widget__container ${className} ${size}`} id={`${id ? id : null}`}>
       {children}
     </div>
   );

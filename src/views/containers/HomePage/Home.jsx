@@ -3,8 +3,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import * as Tracker from '../../../services/tracker'
-
 import withRouter from "react-router-dom/es/withRouter";
 
 import Navbar from '../../components/bars/Navbar/Navbar.jsx'
@@ -13,21 +11,19 @@ import Slider from '../../widgets/Slider/Slider.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { Text } from '../../widgets/Text/Text.jsx';
-import {URLS} from "../../../constants/general";
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
-import {SpriteSheet} from "../../widgets/SpriteSheet/SpriteSheet.jsx";
-import {SpriteSource} from "../../../constants/sprite";
+import {GetHomeBanners} from "../../../reducers/selectors";
+import {getActiveLanguage} from "react-localize-redux/lib/index";
+import {URLS} from "../../../constants/general";
+import * as Config from "../../../config";
+import Countdown from "../../widgets/Countdown/Countdown.jsx";
+import Roadmap from "./Roadmap/Roadmap.jsx";
+import {SubBgr} from "./SubBgr/SubBgr.jsx";
 
 require("style-loader!./Home.scss");
 
-const _features = [
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'trading', desc: 'desc.trading'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'auction', desc: 'desc.auction'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'market', desc: 'desc.market'},
-  {img: require('../../../shared/img/assets/model_example_1.png'), title: 'battle', desc: 'desc.battle'},
-];
 const introCubegon = [
   {img: require('../../../shared/img/assets/model_example_moose.png'), name: 'MOOSE', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
@@ -49,20 +45,55 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    Tracker.ViewContent(Tracker.TrackPages.home);
+
   }
 
   renderBanner() {
-    const { _t } = this.props;
+    const { language, banners } = this.props;
 
-    return ([
-      <div className={'home__banner-item'} key={'banner-1'}>
-        <img src={require('../../../shared/img/banner/banner_1.png')}/>
-        <ButtonNew showDeco={ButtonNew.deco.BOTH} className={'home__banner-btn'} label={_t('build_model')} onClick={() => {
-          this.props.history.push(`/${URLS.BUILD_GON}`)
-        }}/>
-      </div>,
-    ])
+    const bannerList = (banners || []).map((banner, idx) => {
+      let btn = null;
+      let customBtn = banner[`${language.code}custombtn`] || banner[`encustombtn`];
+      if (customBtn)
+        btn = (
+          <img className={'home__banner-btn img'} src={customBtn}
+               onClick={() => {
+                 if (banner['newtab'] === 'TRUE')
+                   Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                 else
+                   this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+               }}
+          />
+        );
+      else
+        btn = banner[`${language.code}text`] || banner[`entext`] ?
+          <ButtonNew className={'home__banner-btn'} label={banner[`${language.code}text`] || banner[`entext`]}
+                     onClick={() => {
+                       if (banner['newtab'] === 'TRUE')
+                         Utils.OpenInNewTab(banner[`${language.code}link`] || banner[`enlink`]);
+                       else
+                         this.props.history.push(banner[`${language.code}link`] || banner[`enlink`]);
+                     }}
+          /> : null;
+
+      let bannerImg = banner[`${language.code}img`] || banner[`enimg`];
+      let bannerImgMobile = banner[`${language.code}imgmobile`] || banner[`enimgmobile`];
+      return (
+        <div key={idx} className={'home__banner-item'}>
+          <img className={'home__banner-img'} src={Utils.IsMobile ? bannerImgMobile || bannerImg : bannerImg || bannerImgMobile} />
+          {btn}
+        </div>
+      )
+    });
+
+    return (bannerList && bannerList.length
+        ? bannerList
+        : [
+          <div className={'home__banner-item'} key={'banner-1'}>
+            <img src={require('../../../shared/img/banner/banner-default.png')}/>
+          </div>,
+        ]
+    )
   }
 
   validateEmail() {
@@ -99,26 +130,49 @@ class HomePage extends React.Component {
           <InviewMonitor
             classNameNotInView='vis-hidden'
             classNameInView='animated fadeInUp'>
-            <Container size={Container.sizes.SMALL} className="home__intro" id={'intro'}>
-              <div className="home__intro-board">
-                <p>{_t('home.opening')}</p>
+            <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
+              <div className={'home__intro-countdown'}>
+                <p className={'presale-text'}>{_t('presale start in')}</p>
+                <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
+
+                <div className={'btns'}>
+                  <ButtonNew className={'create__button'} label={_t('register for presale')}
+                             color={ButtonNew.colors.BLUE}
+                             onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+                             }}/>
+                  <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                             onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
+                             }}/>
+                </div>
               </div>
-              <div className="home__intro-cubego">
-                {introCubegon.map((cubegon, idx) => (
-                  <div className={'cubegon-card'} key={idx}>
-                    <img key={idx} src={cubegon.img}/>
-                    <div className={'cubegon-name'}>{cubegon.name}</div>
-                    <div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>
-                  </div>
-                ))}             
+
+              <div className={'home__intro-build'}>
+                <div className={'home__intro-gif'}>
+                  <img src={require('../../../shared/img/gif/build.gif')}/>
+                </div>
               </div>
+
+              {/*<div className="home__intro-cubego">*/}
+                {/*{introCubegon.map((cubegon, idx) => (*/}
+                  {/*<div className={'cubegon-card'} key={idx}>*/}
+                    {/*<img key={idx} src={cubegon.img}/>*/}
+                    {/*<div className={'cubegon-name'}>{cubegon.name}</div>*/}
+                    {/*<div className={'cubegon-creator'}>{`${_t('created_by')} ${cubegon.creator}`}</div>*/}
+                  {/*</div>*/}
+                {/*))}             */}
+              {/*</div>*/}
+
             </Container>
           </InviewMonitor>
+
+          <div className="home__intro-board">
+            <p>{_t('home.opening')}</p>
+          </div>
           {/* end home__intro */}
 
           <Container className="home__modes" id={'modes'}>
             <div className="home__modes-title__container">
-              <Text className={'home__modes-title'} type={Text.types.H1} children={_t('how_to_play')} />
+              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
 
             {/*<div className="home__mode-container">*/}
@@ -139,7 +193,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInLeft'
                   >
                     <div className={'desc'} >
-                      <Text className={'header'} type={Text.types.H1} children={_t('creation').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H3} children={_t('creation').toUpperCase()} />
                       <p className={'text'}>{_t('home.creation')}</p>
                     </div>
                   </InviewMonitor>
@@ -165,7 +219,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInRight'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H1} children={_t('copyright').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('copyright').toUpperCase()} />
                       <p className={'text'}>{_t('home.copyright')}</p>
                     </div>
                   </InviewMonitor>
@@ -190,7 +244,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H1} children={_t('combat').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('combat').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
                     </div>
                   </InviewMonitor>
@@ -205,13 +259,22 @@ class HomePage extends React.Component {
                   </div>
                 </div>
               </Container>
-    
-
           </div>
           {/* end home__game-detail */}
 
+          <div className={'home__roadmap'}>
+            <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+            <Container size={Container.sizes.NORMAL}>
+              <div className={'home__roadmap-header'}>
+                {_t('roadmap')}
+              </div>
+
+              <Roadmap/>
+            </Container>
+          </div>
+
           <div className={'home__partnership'} id={'partners'}>
-            <Text className={'partnership__header'} type={Text.types.H1} children={_t('in_partnership_with')} />
+            <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
             <Container className={'home__partnership__imgs'}>
               <a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>
               <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
@@ -224,12 +287,13 @@ class HomePage extends React.Component {
             </Container>
           </div>
           {/* end home__partnership */}
-          
+
           <InviewMonitor
             classNameNotInView='vis-collapse'
             classNameInView='animated custom'>
             <div className="home__channels">
-              <Text className={'channels__header'} type={Text.types.H1} children={_t('channels')} />
+              <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.YELLOW}/>
+              <Text className={'channels__header'} type={Text.types.H2} children={_t('channels')} />
               <div className="channel-listview">
                 {
                   channels.map((item, idx) => 
@@ -299,6 +363,8 @@ const mapStateToProps = (store, props) => {
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
+    banners: GetHomeBanners(store),
+    language: getActiveLanguage(store.localeReducer),
   }
 };
 

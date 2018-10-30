@@ -58,8 +58,9 @@ class CubegoesView extends React.Component {
             _t('presale_info_on_store_page')
           }
         </span>
-        <ButtonNew className={'register__button'} label={_t('register')} onClick={() => {
-            this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+
+        <ButtonNew className={'register__button-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+          this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
         }}/>
       </div>
     )
@@ -150,10 +151,10 @@ class CubegoesView extends React.Component {
                   <div className={'left'}>{_t('total cubes')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*packQuantities[selectedPack.idx], 4)}</div>
                 </div>
-                <div className={'review-item'}>
+                {/* <div className={'review-item'}>
                   <div className={'left'}>{_t('total price')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.price*packQuantities[selectedPack.idx], 4)} {_t(selectedPack.currency)}</div>
-                </div>
+                </div> */}
                 <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
                   this.setState({viewPresaleInfo: true})
                 }}/>
@@ -221,6 +222,7 @@ class CubegoesView extends React.Component {
             }
           </div>
         </div>
+        
         
         <Popup className={'popup-purchase'}
                onUnmount={() => {this.setState({selectedItem: null, selectedPack: null})}}
