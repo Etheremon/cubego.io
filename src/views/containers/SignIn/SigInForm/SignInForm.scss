@@ -83,13 +83,17 @@
     }
 
     .error__label {
-      margin-top: 8px;
+      padding: 12px 0;
       color: $c__text__red;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-small;
     }
 
     .success__label {
-      margin-top: 8px;
+      padding: 12px 0;
       color: $c__text__green;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-small;
     }
 
     label {

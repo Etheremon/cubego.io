@@ -8,6 +8,8 @@ import withRouter from 'react-router/es/withRouter';
 import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import { Input } from '../../../widgets/Input/Input.jsx';
 import { UserActions } from '../../../../actions/user';
+import {URLS} from "../../../../constants/general";
+import {AutoTrack, CustomTrackList} from "../../../../services/tracker";
 
 require("style-loader!./SignInForm.scss");
 
@@ -52,13 +54,13 @@ class SignInForm extends React.Component {
                    value={userInfo.username}
                    onChange={e => this.input_username = e} />
 
-            {type === SignInForm.types.SIGN_UP ?
-              <React.Fragment>
-                <Input label={_t('invite code')} placeholder={_t('optional')} value={userInfo.refer_code}
-                       onChange={e => this.input_invite_code = e}/>
-                <div className={'field-note'}>{_t('desc.invite_code')}</div>
-              </React.Fragment> : null
-            }
+            {/*{type === SignInForm.types.SIGN_UP ?*/}
+              {/*<React.Fragment>*/}
+                {/*<Input label={_t('invite code')} placeholder={_t('optional')} value={userInfo.refer_code}*/}
+                       {/*onChange={e => this.input_invite_code = e}/>*/}
+                {/*<div className={'field-note'}>{_t('desc.invite_code')}</div>*/}
+              {/*</React.Fragment> : null*/}
+            {/*}*/}
 
             {!metamask ?
               <React.Fragment>
@@ -90,24 +92,32 @@ class SignInForm extends React.Component {
                        color={ButtonNew.colors.BLUE}
                        label={_t(`${type === SignInForm.types.SETTING_INFO ? 'update': 'register'}`)}
                        onClick={() => {
-                        this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({userId: userId,
+                        this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({
+                          userId: userId,
                           email: this.input_email,
                           username: this.input_username === undefined ? userInfo.username : this.input_username,
-                          inviteCode: this.input_invite_code,
+                          inviteCode: this.input_invite_code || '',
                           signature: metamask ? undefined : this.input_signature,
                           termsAgreed: this.input_checkbox,
                           callbackFunc: (code, data) => {
                             if (code !== window.RESULT_CODE.SUCCESS) {
                               this.setState({submitError: data, submitSuccess: null});
                             } else {
+                              if (!userInfo.username) {
+                                AutoTrack(CustomTrackList.firstRegister);
+                              }
                               this.setState({submitError: {}, submitSuccess: _t('Your information is updated!'), showNext: true})
                             }
                         }}))
                        }}/>
 
-            {this.state.showNext && this.props.onRegistered ?
-              <ButtonNew className={'back__button'} label={_t('Continue')} showDeco={ButtonNew.deco.RIGHT}
-                         onClick={() => {this.props.onRegistered && this.props.onRegistered();}}/> : null
+            {this.state.showNext ? (
+              this.props.onRegistered
+                ? <ButtonNew className={'back__button'} label={_t('Continue')} showDeco={ButtonNew.deco.RIGHT}
+                           onClick={() => {this.props.onRegistered && this.props.onRegistered();}}/>
+                : <ButtonNew className={'back__button'} label={_t('build_cubegon')} showDeco={ButtonNew.deco.RIGHT}
+                             onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)}}/>
+              ) : null
             }
           </form>
         </div>
