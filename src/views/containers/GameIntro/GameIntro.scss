@@ -275,8 +275,9 @@
       display: block;
       position: absolute;
       top: 8px;
-      left: calc(50% + 8px);
+      left: calc(50% - 20px);
       height: 72px;
+      @include flip-up-down-10px(2s);
     }
 
     .principles {
@@ -750,7 +751,7 @@
 
   .guide__last {
     text-align: center;
-    padding: 80px 0 20px 0;
+    padding: 80px auto 20px auto;
 
     .text {
 
