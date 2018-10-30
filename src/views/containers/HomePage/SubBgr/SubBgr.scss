@@ -7,6 +7,7 @@
 .home-sub-bgr {
   position: relative;
   width: 100%;
+  pointer-events: none;
 
   &:after {
     content: "";

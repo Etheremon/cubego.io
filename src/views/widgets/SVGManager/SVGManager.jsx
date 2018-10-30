@@ -93,8 +93,8 @@ export const ArrowDown = ({}) => {
         <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 752 363" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
             <defs/>
             <g className="arrow-down" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="square">
-                <polyline class="line-1" stroke="#FFFFFF" strokeWidth="20" points="5.5 119.5 376 357.275603 746.5 119.5"/>
-                <polyline class="line-2" stroke="#FFFFFF" strokeWidth="20" points="102 5 376 181 650 5"/>
+                <polyline className="line-1" stroke="#FFFFFF" strokeWidth="20" points="5.5 119.5 376 357.275603 746.5 119.5"/>
+                <polyline className="line-2" stroke="#FFFFFF" strokeWidth="20" points="102 5 376 181 650 5"/>
             </g>
         </svg>
     )

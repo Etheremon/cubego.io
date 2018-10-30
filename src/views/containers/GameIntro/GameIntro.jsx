@@ -210,11 +210,14 @@ class GameIntro extends React.Component {
                 </tbody>
               </table>
 
-              <div className="cubego-stats-detail__action" style={{transform: `rotate(${this.state.showCubegoStats ? '180' : '0'}deg)`}} onClick={() => {
-                this.setState((state) => {
-                  return {showCubegoStats: !state.showCubegoStats};
-                });
-              }}>
+              <div className="cubego-stats-detail__action"
+                   style={{transform: `rotate(${this.state.showCubegoStats ? '180' : '0'}deg)`}}
+                   onClick={() => {
+                     this.setState((state) => {
+                       return {showCubegoStats: !this.state.showCubegoStats};
+                     });
+                   }}
+              >
                 <ArrowDown />
               </div>
             </div>
