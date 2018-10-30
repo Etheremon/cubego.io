@@ -81,19 +81,20 @@ export class LoadingScreen {
     }
 
     setTimeout(() => {
-      document.body.removeChild(this._loadingDiv);
-      window.removeEventListener("resize", this._resizeLoadingUI);
+      this._removeLoadingDiv();
     }, 2000);
   };
 
   forceHideLoadingUI() {
     this.isInLoading = false;
-    if (!this._loadingDiv) {
-      return;
-    }
+    this._removeLoadingDiv();
+  }
 
+  _removeLoadingDiv() {
+    if (!this._loadingDiv) return;
     document.body.removeChild(this._loadingDiv);
     window.removeEventListener("resize", this._resizeLoadingUI);
+    this._loadingDiv = null;
   }
 
   _resizeLoadingUI() {
