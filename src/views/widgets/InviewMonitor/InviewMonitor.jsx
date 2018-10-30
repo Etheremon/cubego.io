@@ -81,9 +81,6 @@ Perhaps use a polyfill like: https://cdn.polyfill.io/v2/polyfill.js?features=Int
       ((onInView || onNotInView) && repeatOnInView);
 
     if (nowInView && !toggleBehavior) {
-
-      
-
       this.setState({
         newClassName: classNameInView,
         childProps: childPropsInView
