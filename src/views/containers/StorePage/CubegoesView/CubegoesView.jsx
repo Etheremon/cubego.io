@@ -223,6 +223,7 @@ class CubegoesView extends React.Component {
           </div>
         </div>
         
+        
         <Popup className={'popup-purchase'}
                onUnmount={() => {this.setState({selectedItem: null, selectedPack: null})}}
                open={!!this.state.selectedItem} >
