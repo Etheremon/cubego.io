@@ -64,7 +64,7 @@ class SignInForm extends React.Component {
 
             {!metamask ?
               <React.Fragment>
-                <Input label={_t('signature')} onChange={e => this.input_signature = e}/>
+                <Input label={_t('signature')} placeholder={_t('signature_placeholder')} onChange={e => this.input_signature = e}/>
                 <div className={'field-note'}>{_t('desc.sign_in_signature')}</div>
               </React.Fragment> : null
             }
@@ -90,8 +90,10 @@ class SignInForm extends React.Component {
 
             <ButtonNew className={'register__button'}
                        color={ButtonNew.colors.BLUE}
+                       loading={this.state.submitting}
                        label={_t(`${type === SignInForm.types.SETTING_INFO ? 'update': 'register'}`)}
                        onClick={() => {
+                        this.setState({submitting: true});
                         this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({
                           userId: userId,
                           email: this.input_email,
@@ -101,12 +103,12 @@ class SignInForm extends React.Component {
                           termsAgreed: this.input_checkbox,
                           callbackFunc: (code, data) => {
                             if (code !== window.RESULT_CODE.SUCCESS) {
-                              this.setState({submitError: data, submitSuccess: null});
+                              this.setState({submitting: false, submitError: data, submitSuccess: null});
                             } else {
                               if (!userInfo.username) {
                                 AutoTrack(CustomTrackList.firstRegister);
                               }
-                              this.setState({submitError: {}, submitSuccess: _t('Your information is updated!'), showNext: true})
+                              this.setState({submitting: false, submitError: data, submitSuccess: _t('Your information is updated!'), showNext: true})
                             }
                         }}))
                        }}/>

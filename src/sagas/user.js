@@ -63,7 +63,7 @@ function* updateUserInfo({userId, email, username, inviteCode, signature, termsA
       callbackFunc(window.RESULT_CODE.SUCCESS, response);
       yield put(UserActions.LOAD_USER_INFO.init.func({userId, forceUpdate: true}));
     } else {
-      callbackFunc(window.RESULT_CODE.ERROR_PARAMS, error);
+      callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.invalid_signature', error_values: {}});
     }
   }
 
