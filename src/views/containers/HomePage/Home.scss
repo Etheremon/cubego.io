@@ -306,7 +306,7 @@
         padding: 32px 64px;
         @include mobile {
           text-align: center;
-          padding: 32px 8px;
+          padding: 32px 8px 0 8px;
           .header .content {
             justify-content: center;
           }
@@ -319,11 +319,9 @@
         flex-shrink: 0;
         width: 50%;
         text-align: center;
-        height: 100%;
         position: relative;
 
         @include mobile {
-          margin-top: -30px;
           margin: 0 auto;
         }
 
@@ -335,6 +333,12 @@
           justify-content: center;
           align-items: center;
           @include transform(translateY(-50%) translateX(-50%));
+          @include mobile {
+            position: relative;
+            @include transform(none);
+            left: auto;
+            top: auto;
+          }
 
           &.creation {
             img {
@@ -345,19 +349,20 @@
           .img-real {
             width: 500px;
             &.combat {
-              width: 600px;
+              width: 480px;
             }
             &.copyright {
               width: 420px;
             }
             @include mobile {
-              margin-top: 80px;
-              width: 200px;
+              width: 260px;
               &.copyright {
-                width: 160px;
+                width: 260px;
+                margin-top: -20px;
               }
               &.combat {
-                width: 240px;
+                width: 280px;
+                margin-top: -50px;
               }
             }
           }
