@@ -79,7 +79,13 @@ class StorePage extends React.Component {
         ? bannerList
         : [
           <div className={'store-page__banner-item'} key={'banner-1'}>
-            <img src={require('../../../shared/img/banner/banner_store.png')}/>
+            {
+              setTimeout(() => {
+                if (!bannerList) {
+                  return <img src={require('../../../shared/img/banner/banner_store.png')}/>
+                }
+              }, 5000)
+            }
           </div>,
         ]
     )
