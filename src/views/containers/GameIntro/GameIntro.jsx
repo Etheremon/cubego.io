@@ -193,10 +193,9 @@ class GameIntro extends React.Component {
                     return (
                       <tr key={mIdx} className={`tier-${material.class_id}`}>
                         <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>
-                        <td className={'material-icon'} 
-                        tooltip={_t(material.name)}
-                        tooltip-position={'right'}
-                        ><img src={material.icon}/></td>
+                        <td className={'material-icon'} tooltip={_t(material.name)} tooltip-position={'right'}>
+                          <img src={material.icon}/>
+                        </td>
                         <td>{material.point}</td>
                         {typeList.map((type, tIdx) => {
                           return (
