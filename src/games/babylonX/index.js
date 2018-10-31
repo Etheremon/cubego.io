@@ -22,9 +22,15 @@ const createRenderer = (canvas) => {
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
+  window.addEventListener('resize', resize);
+  resize();
   _createAssetsManager(scene, startLoop);
   rootContainer = BabylonRenderer.createContainer(root);
   return rootContainer;
+};
+
+const resize = () => {
+  engine.resize();
 };
 
 const startLoop = () => {
@@ -43,6 +49,7 @@ const render = (element, canvas) => {
 };
 
 const stopRender = () => {
+  window.removeEventListener('resize', resize);
   scene.dispose();
   engine.stopRenderLoop();
   rootContainer = null;
