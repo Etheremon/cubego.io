@@ -28,7 +28,7 @@ export class Battle extends Component {
     let parser = new window.vox.Parser();
 
     let model2Parser = parser.parse(require('../../../shared/sample_models/dog.vox'));
-    let model1Parser = parser.parse(require('../../../shared/sample_models/3.vox'));
+    let model1Parser = parser.parse(require('../../../shared/sample_models/bull.vox'));
     Promise.all([model1Parser, model2Parser]).then((data) => {
       this.voxel.setPlayer(data);
     });
