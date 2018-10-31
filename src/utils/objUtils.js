@@ -34,13 +34,24 @@ export const CloneDeep = (a) => {
 };
 
 
-export const CloneWithModify = (obj, func) => {
+export const CloneWithValueModify = (obj, func) => {
   let result = {};
   Object.keys(obj).forEach((key, idx) => {
     result[key] = func(key, obj[key], idx);
   });
   return result;
 };
+
+export const CloneWithKeyModify = (obj, func) => {
+  let result = {};
+  Object.keys(obj).forEach((key, idx) => {
+    let r = func(key, obj[key], idx);
+    result[r.key] = r.value;
+  });
+  return result;
+};
+
+
 
 export const GetValues = (obj) => {
   return typeof(obj) === 'object' && obj !== null ? Object.keys(obj).map(key => obj[key]) : obj;

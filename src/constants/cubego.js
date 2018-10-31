@@ -343,13 +343,13 @@ const _CUBE_MATERIALS = {
   },
 };
 
-export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, cube) => {
+export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cKey, cube) => {
   return {
     ...cube,
     class_id: parseInt(cKey),
     img: require(`../shared/img/cubegoes/${Utils.AddHeadingZero(cKey, 3)}.png`),
     icon: require(`../shared/img/cubego-icons/${Utils.AddHeadingZero(cKey, 3)}.png`),
-    variants: ObjUtils.CloneWithModify(cube.variants, (vKey, variant) => ({
+    variants: ObjUtils.CloneWithValueModify(cube.variants, (vKey, variant) => ({
       ...variant,
       material_id: parseInt(cKey),
       variant_id: parseInt(vKey),
@@ -358,7 +358,7 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithModify(_CUBE_MATERIALS, (cKey, c
       type_points: SUB_MATERIAL_TYPE_POINTS[parseInt(cKey)*100+parseInt(vKey)],
       // img: cKey === '12' ? null : require(`../shared/img/cubego-variants/001_01.png`),
     })),
-    types: ObjUtils.CloneWithModify(CUBE_TYPES, (tKey) => {
+    types: ObjUtils.CloneWithValueModify(CUBE_TYPES, (tKey) => {
       return Object.keys(cube.variants).filter(vKey => {
         return SUB_MATERIAL_TYPE_POINTS[parseInt(cKey)*100+parseInt(vKey)][tKey-1];
       })

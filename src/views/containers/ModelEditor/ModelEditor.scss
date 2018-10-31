@@ -14,27 +14,32 @@
 
   .model-editor__tool-bar {
     position: relative;
-    display: flex;
-    margin: 32px -8px 0 -8px;
-    justify-content: space-between;
-    @include mobile {
-      flex-wrap: wrap;
-    }
 
-    .group {
-      margin: 0 8px;
+    .bar {
       display: flex;
-      border-radius: 4px;
-    }
+      margin: 32px -8px 0 -8px;
+      justify-content: space-between;
+      @include mobile {
+        overflow-x: auto;
+        width: 100%;
+        margin: 32px 0 0 0;
+      }
 
-    .item {
+      .group {
+        margin: 0 8px;
+        display: flex;
+        border-radius: 4px;
+      }
+
+      .item {
+      }
     }
 
     .model-editor__templates {
       position: absolute;
       top: 100%;
-      left: 8px;
-      right: 8px;
+      left: 0;
+      right: 0;
       display: flex;
       flex-wrap: wrap;
       z-index: 10;
@@ -52,6 +57,9 @@
       }
       .img {
         height: 120px;
+        @include mobile {
+          height: 100px;
+        }
       }
       .name {
         padding-top: 4px;
@@ -62,7 +70,7 @@
   }
 
   .model-editor__stats {
-    margin-top: 20px;
+    margin-top: 12px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -116,7 +124,7 @@
   }
 
   .model-editor__tier-bar {
-    margin-top: 20px;
+    margin-top: 16px;
     margin-bottom: 16px;
     background-color: rgba(255, 255, 255, 0.3);
     height: 6px;

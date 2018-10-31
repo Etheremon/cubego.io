@@ -41,7 +41,7 @@
 
     .home__intro-main {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-around;
       text-align: left;
       @include mobile {
@@ -86,7 +86,7 @@
       }
 
       p {
-        padding-top: 24px;
+        padding-top: 60px;
         font-weight: $font-weight-semi-bold;
         font-size: $font-size-medium;
       }
@@ -100,8 +100,8 @@
       img {
         position: absolute;
         left: 50%;
-        top: 50%;
-        height: 300px;
+        top: calc(50% + 65px);
+        height: 320px;
         @include transform(translateX(-50%) translateY(-50%));
         @include mobile {
           left: calc(50% - 18px);

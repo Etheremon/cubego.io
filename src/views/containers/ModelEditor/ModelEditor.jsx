@@ -133,7 +133,7 @@ class _ModelEditor extends React.Component {
       this.toolManager.addModel({model: this.props.savedModel});
       this.forceUpdate();
     } else {
-      this.onTemplateSelect(MODEL_TEMPLATES[0]);
+      this.onTemplateSelect(MODEL_TEMPLATES[1]);
     }
 
     if (this.props.userCubes)
@@ -194,7 +194,7 @@ class _ModelEditor extends React.Component {
 
   onTemplateSelect(template) {
     if (template.model_str) {
-      this.toolManager.addModel({model: LogicUtils.GetFullModel(JSON.parse(template.model_str))});
+      this.toolManager.addModel({model: LogicUtils.GetFullModel(template.model_str)});
       this.forceUpdate();
     }
     this.setState({showTemplates: false});
@@ -377,102 +377,104 @@ class _ModelEditor extends React.Component {
           <Container size={Container.sizes.BIG} className={'main-tool'}>
 
             <div className={'model-editor__tool-bar'}>
-              <div className={'group'}>
+              <div className={'bar'}>
+                <div className={'group'}>
                 <div className={'item'}>
                   <ToggleTool label={_t('template')} img={require('../../../shared/img/icons/icon-template.png')}
                               active={this.state.showTemplates}
                               onClick={() => {this.setState({showTemplates: !this.state.showTemplates})}}
                   />
                 </div>
-              </div>
+                </div>
 
-              <div className={'group'}>
-                <div className={'item'}>
-                  <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
-                              active={this.toolManager.getToolValue(this.tools.move.key)}
-                              onClick={this.tools.move.onClick}
-                              hotKey={this.tools.move.hotKey}
-                  />
+                <div className={'group'}>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
+                                active={this.toolManager.getToolValue(this.tools.move.key)}
+                                onClick={this.tools.move.onClick}
+                                hotKey={this.tools.move.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
+                                active={this.toolManager.getToolValue(this.tools.draw.key)}
+                                onClick={this.tools.draw.onClick}
+                                hotKey={this.tools.draw.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-paint.png')}
+                                active={this.toolManager.getToolValue(this.tools.paint.key)}
+                                onClick={this.tools.paint.onClick}
+                                hotKey={this.tools.paint.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
+                                active={this.toolManager.getToolValue(this.tools.erase.key)}
+                                onClick={this.tools.erase.onClick}
+                                hotKey={this.tools.erase.hotKey}
+                    />
+                  </div>
                 </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
-                              active={this.toolManager.getToolValue(this.tools.draw.key)}
-                              onClick={this.tools.draw.onClick}
-                              hotKey={this.tools.draw.hotKey}
-                  />
-                </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-paint.png')}
-                              active={this.toolManager.getToolValue(this.tools.paint.key)}
-                              onClick={this.tools.paint.onClick}
-                              hotKey={this.tools.paint.hotKey}
-                  />
-                </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
-                              active={this.toolManager.getToolValue(this.tools.erase.key)}
-                              onClick={this.tools.erase.onClick}
-                              hotKey={this.tools.erase.hotKey}
-                  />
-                </div>
-              </div>
 
-              <div className={'group'}>
-                <div className={'item'}>
-                  <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
-                              onClick={this.tools.undo.onClick}
-                              hotKey={this.tools.undo.hotKey}
-                  />
+                <div className={'group'}>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.undo.key)}
+                                onClick={this.tools.undo.onClick}
+                                hotKey={this.tools.undo.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('redo')} img={require('../../../shared/img/icons/icon-redo.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
+                                onClick={this.tools.redo.onClick}
+                                hotKey={this.tools.redo.hotKey}
+                    />
+                  </div>
                 </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('redo')} img={require('../../../shared/img/icons/icon-redo.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.redo.key)}
-                              onClick={this.tools.redo.onClick}
-                              hotKey={this.tools.redo.hotKey}
-                  />
-                </div>
-              </div>
 
-              <div className={'group'}>
-                <div className={'item'}>
-                  <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/icons/icon-copy.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
-                              onClick={this.tools.copyLayer.onClick}
-                              hotKey={this.tools.copyLayer.hotKey}
-                  />
+                <div className={'group'}>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('copy_layer')} img={require('../../../shared/img/icons/icon-copy.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.copyLayer.key)}
+                                onClick={this.tools.copyLayer.onClick}
+                                hotKey={this.tools.copyLayer.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/icons/icon-paste.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
+                                onClick={this.tools.pasteLayer.onClick}
+                                hotKey={this.tools.pasteLayer.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/icons/icon-clear-all.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
+                                onClick={this.tools.clear.onClick}
+                                hotKey={this.tools.clear.hotKey}
+                    />
+                  </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/icons/icon-clear.png')}
+                                disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
+                                onClick={this.tools.clearLayer.onClick}
+                                hotKey={this.tools.clearLayer.hotKey}
+                    />
+                  </div>
                 </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('paste_layer')} img={require('../../../shared/img/icons/icon-paste.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.pasteLayer.key)}
-                              onClick={this.tools.pasteLayer.onClick}
-                              hotKey={this.tools.pasteLayer.hotKey}
-                  />
-                </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('clear_all')} img={require('../../../shared/img/icons/icon-clear-all.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.clear.key)}
-                              onClick={this.tools.clear.onClick}
-                              hotKey={this.tools.clear.hotKey}
-                  />
-                </div>
-                <div className={'item'}>
-                  <ToggleTool label={_t('clear_layer')} img={require('../../../shared/img/icons/icon-clear.png')}
-                              disabled={!this.toolManager.isToolAvailable(this.tools.clearLayer.key)}
-                              onClick={this.tools.clearLayer.onClick}
-                              hotKey={this.tools.clearLayer.hotKey}
-                  />
-                </div>
-              </div>
 
-              <div className={'group'}>
-                <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
-                            img={
-                              require(`../../../shared/img/icons/icon-view-${this.toolManager.getToolValue(this.tools.view2D.key).viewKey}.png`)
-                            }
-                            onClick={() => {this.tools.view2D.onClick()}}
-                            hotKey={this.tools.view2D.hotKey}
-                />
+                <div className={'group'}>
+                  <ToggleTool label={_t(this.toolManager.getToolValue(this.tools.view2D.key).label)}
+                              img={
+                                require(`../../../shared/img/icons/icon-view-${this.toolManager.getToolValue(this.tools.view2D.key).viewKey}.png`)
+                              }
+                              onClick={() => {this.tools.view2D.onClick()}}
+                              hotKey={this.tools.view2D.hotKey}
+                  />
+                </div>
               </div>
 
               {this.state.showTemplates ?

@@ -34,7 +34,7 @@ export const GetFullModel = (simplifiedModel) => {
   if (!simplifiedModel) return simplifiedModel;
   try {
     return {
-      voxels: ObjUtils.CloneWithModify(simplifiedModel, (key, cell) => {
+      voxels: ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
         return {
           x: cell.x, y: cell.y, z: cell.z,
           color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
