@@ -24,15 +24,15 @@ const notification = (state = {}, action) => {
 
         json['feed'].entry.map(entryObj => {
           if (entryObj['key']['$t'] === 'banner_home') {
-            obj.banners_home.push(ObjUtils.CloneWithModify({
+            obj.banners_home.push(ObjUtils.CloneWithValueModify({
               ...entryObj
             }, (key, val) => val['$t']));
           } else if (entryObj['key']['$t'] === 'banner_store') {
-            obj.banners_store.push(ObjUtils.CloneWithModify({
+            obj.banners_store.push(ObjUtils.CloneWithValueModify({
               ...entryObj
             }, (key, val) => val['$t']));
           } else if (entryObj['key']['$t'] === 'feed') {
-            obj.feeds.push(ObjUtils.CloneWithModify({
+            obj.feeds.push(ObjUtils.CloneWithValueModify({
               ...entryObj,
               starttime: Date.parse(entryObj.starttime['$t']),
               endtime: Date.parse(entryObj.endtime['$t']),

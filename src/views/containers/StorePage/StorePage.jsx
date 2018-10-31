@@ -75,14 +75,7 @@ class StorePage extends React.Component {
       )
     });
 
-    return (bannerList && bannerList.length
-        ? bannerList
-        : [
-          <div className={'store-page__banner-item'} key={'banner-1'}>
-            <img src={require('../../../shared/img/banner/banner_store.png')}/>
-          </div>,
-        ]
-    )
+    return bannerList;
   }
 
   

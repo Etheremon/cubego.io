@@ -55,7 +55,7 @@ class Countdown extends React.Component {
           {minutes}
           </div>
           <div className="label">
-            {_t('min')}
+            {_t('mins')}
           </div>
         </div>
         <div className="group">:</div>

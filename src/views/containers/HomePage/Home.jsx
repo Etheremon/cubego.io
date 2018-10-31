@@ -86,14 +86,7 @@ class HomePage extends React.Component {
       )
     });
 
-    return (bannerList && bannerList.length
-        ? bannerList
-        : [
-          <div className={'home__banner-item'} key={'banner-1'}>
-            <img src={require('../../../shared/img/banner/banner-default.png')}/>
-          </div>,
-        ]
-    )
+    return bannerList;
   }
 
   validateEmail() {
@@ -290,7 +283,7 @@ class HomePage extends React.Component {
                   channels.map((item, idx) => 
                     <div className="channel-item" key={idx} onClick={() => { Utils.OpenInNewTab(item.link)} }>
                       <img src={item.img}/>
-                      <div className={'name'}>{item.name}</div>
+                      <div className={'name'}>{_t(item.name)}</div>
                     </div>
                   )
                 }
