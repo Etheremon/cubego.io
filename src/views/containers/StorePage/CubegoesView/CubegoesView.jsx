@@ -187,7 +187,7 @@ class CubegoesView extends React.Component {
                     <div className="cubego__item" key={idx}>
                       <div className="image__container">
                         <div className="cubego-name">
-                          {cubego.type}
+                          {_t(cubego.type)}
                         </div>
                         <img src={require(`../../../../shared/img/store_cubegoes/${cubego.type}.png`)}/>
                         <div className="quantity">
