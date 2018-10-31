@@ -108,12 +108,12 @@
   }
 
   &.bright {
-    border-image: url('../../../../shared/img/assets/wall_pattern_2.svg') 100 0 round;
+    border-image: url('../../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
     background-color: rgba(189, 223, 244, 1);
     color: $c__gray-1;
   }
   &.dark {
-    border-image: url('../../../../shared/img/assets/wall_pattern_3.svg') 100 0 round;
+    border-image: url('../../../../shared/img/assets/wall_pattern_3.svg') 100 0 repeat;
     background-color: rgba(18, 34, 48, 1);
     color: $white95;
   }
