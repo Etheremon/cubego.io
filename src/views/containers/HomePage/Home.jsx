@@ -86,20 +86,7 @@ class HomePage extends React.Component {
       )
     });
 
-    return (bannerList && bannerList.length
-        ? bannerList
-        : [
-          <div className={'home__banner-item'} key={'banner-1'}>
-            {
-              setTimeout(() => {
-                if (!bannerList) {
-                  return <img src={require('../../../shared/img/banner/banner-default.png')}/>
-                }
-              }, 5000)
-            }
-          </div>,
-        ]
-    )
+    return bannerList;
   }
 
   validateEmail() {
