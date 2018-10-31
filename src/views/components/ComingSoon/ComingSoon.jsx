@@ -28,7 +28,7 @@ class ComingSoon extends React.Component {
         <Navbar/>
 
         <Container className={'coming-soon'}>
-          {_t('Coming Soon')}
+          {_t('coming_soon')}
         </Container>
 
         <Footer type={Footer.types.DARK}/>

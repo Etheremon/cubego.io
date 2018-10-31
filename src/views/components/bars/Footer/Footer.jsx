@@ -25,7 +25,9 @@ class Footer extends React.Component {
             <div className="footer__left">
               <img className={'footer__logo'} src={require('../../../../shared/img/logo/cubego.png')}/>
               <div className={'footer__copyright'}>
-                © CubeGo. All Rights Reserved.
+                {
+                  `© CubeGo. ${_t('all_rights_reserved')}.`
+                }
               </div>
             </div>
 
