@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {
-  Animation,
   ArcRotateCamera,
-  GUI, GUIImage, GUIImageButton, GUISimpleButton,
+  GUI, GUIImage, GUIImageButton,
   HemisphericLight,
   MeshContainer,
   PointLight, Skybox,
