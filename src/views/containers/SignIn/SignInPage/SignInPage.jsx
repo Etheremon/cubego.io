@@ -139,6 +139,13 @@ class SignInPage extends React.Component {
           <div className={'header'}>{_t('metamask_is_locked')}</div>
           <div className={'desc'}>{_t('please_unlock_metamask')}</div>
 
+          {window.ethereum && window.ethereum.enable ?
+            <React.Fragment>
+              <br/><br/>
+              <ButtonNew label={_t('unlock_metamask')} handleOnClick={() => {window.ethereum.enable()}}/>
+            </React.Fragment> : null
+          }
+
           {this.renderManualSignIn()}
         </div>
     )
