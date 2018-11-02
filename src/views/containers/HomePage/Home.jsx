@@ -230,6 +230,7 @@ class HomePage extends React.Component {
                     <div className={'desc'}>
                       <Text className={'header'} type={Text.types.H2} children={_t('combat').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
+                      <ButtonNew color={ButtonNew.colors.BLUE} label={_t('watch battle')} onClick={() => {this.props.history.push(`/${URLS.BATTLE}`)}}/>
                     </div>
                   </InviewMonitor>
     
