@@ -115,7 +115,7 @@ class StorePage extends React.Component {
                 Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
             }}/>
 
-          <Container size={Container.sizes.TINY}>
+          <Container size={Container.sizes.SMALL}>
             <ReferralView className={'referral-box'} />
           </Container>
 

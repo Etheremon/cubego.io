@@ -480,11 +480,13 @@
 
   .home__channels {
     overflow: hidden;
-    margin-top: 20px;
+    margin-top: 60px;
+    margin-bottom: 40px;
     text-align: center;
+    padding: 0;
 
     .channels__header {
-      padding: 32px 0 16px 0;
+      padding: 0 0 16px 0;
       color: rgba(238,116,47,1) !important;
     }
 
@@ -579,10 +581,8 @@
   }
 
   .home__partnership {
-    position: relative;
-    z-index: 1;
-    margin-top: 100px;
-    margin-bottom: -44px;
+    margin-top: 40px;
+    margin-bottom: 20px;
     text-align: center;
 
     .partnership__header {
@@ -599,7 +599,7 @@
       padding-top: 20px !important;
 
       a {
-        width: 200px;
+        width: 120px;
         @include mobile {
           width: 120px;
         }
@@ -612,16 +612,19 @@
         }
         p {
           color: $black95;
-          font-weight: $font-weight-semi-bold;
-          font-size: $font-size-big;
+          font-weight: $font-weight-bold;
+          font-size: $font-size-normal;
         }
       }
     }
   }
 
   .home__roadmap {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     margin-top: 100px;
-    padding-top: 40px;
+    padding-top: 60px;
     padding-bottom: 40px;
     background-color: rgba(189,223,244,1);
     text-align: center;
@@ -645,23 +648,48 @@
   .team__listview {
     display: flex;
     justify-content: space-around;
-  }
+    flex-wrap: wrap;
 
-  .home__advisors {
-    padding-top: 100px;
-    padding-bottom: 60px;
-    text-align: center;
+    .item {
+      padding: 8px 16px;
+    }
 
-    
-
-    .advisors__listview {
-      
+    &.team-2 {
+      .item {
+        width: 25%;
+        box-sizing: border-box;
+      }
+      @include mobile {
+        .item {
+          width: 50%;
+        }
+      }
     }
   }
 
-  .home__team-members {
-    padding-top: 60px;
+  .advisors__list {
+    justify-content: space-evenly;
+    padding-top: 24px;
+  }
+
+  .team__list {
+    padding-top: 24px;
+  }
+
+  .home__advisors {
+    padding-top: 0;
     padding-bottom: 60px;
+    text-align: center;
+    display: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .home__team-members {
+    position: relative;
+    z-index: 1;
+    padding-top: 60px;
+    padding-bottom: 40px;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
     border-image: url('../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
@@ -678,16 +706,13 @@
     // }
 
     .team-members__header {
-      
+      padding-top: 32px;
     }
 
     .team-members__subtitle {
-      margin-bottom: 32px;
+      display: none;
     }
 
-    .team__listview {
-      margin-bottom: 16px;
-    }
   }
 
   //.home__subscription {

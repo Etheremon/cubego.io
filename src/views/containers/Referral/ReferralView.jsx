@@ -6,6 +6,7 @@ import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
 import { SERVER_URL } from '../../../config';
 import { CopyToClipboard } from '../../../utils/utils';
 import { ShareToFacebook, ShareToTwitter } from '../../../services/social';
+import * as Config from "../../../config";
 
 require("style-loader!./ReferralView.scss");
 
@@ -20,6 +21,10 @@ class ReferralView extends React.Component {
   render() {
     let {_t, className, userInfo} = this.props;
 
+    if (!userInfo || !userInfo.refer_code) {
+      return null;
+    }
+
     return(
       <div className={`referral-view__container ${className ? className : ''}`}>
         <div className="referral-box__container">
@@ -32,7 +37,18 @@ class ReferralView extends React.Component {
             {_t('referral__title')}
           </div>
           <div className="referral-main__container">
-            <div className="input__container" >
+            <div className="input__container"
+                 onMouseOver={() => {
+                   this.setState({tooltip: 'click_to_copy'})
+                 }}
+                 onMouseOut={() => {
+                   this.setState({tooltip: ''})
+                 }}
+                 onClick={() => {
+                   this.setState({tooltip: 'copied'});
+                   CopyToClipboard(`${window.location.hostname}?code=${userInfo.refer_code}`)
+                }}
+            >
               <div className="explain__label">
                 {
                   _t(this.state.tooltip)
@@ -40,51 +56,55 @@ class ReferralView extends React.Component {
               </div>
               <img src={require('../../../shared/img/icons/icon-link.png')} />
               {
-                userInfo && <div className={'input-referral'} onMouseOver={() => {
-                  this.setState({
-                    tooltip: 'click_to_copy'
-                  })
-                }} onMouseOut={() => {
-                  this.setState({
-                    tooltip: ''
-                  })
-                }} onClick={() => {
-                  this.setState({
-                    tooltip: 'copied'
-                  })
-                  CopyToClipboard(`${window.location.hostname}?code=${userInfo.refer_code}`)
-                }}><input type="text" defaultValue={`${window.location.hostname}?code=${userInfo.refer_code}`} disabled ref={e => this.referralInput}/></div>
+                userInfo ?
+                  <div className={'input-referral'}>
+                    <input type="text" defaultValue={`${window.location.hostname}?code=${userInfo.refer_code}`} disabled ref={e => this.referralInput}/>
+                  </div> : null
               }
-              <img 
-              className={'clickable m--mobile-only'} 
-              src={require('../../../shared/img/icons/icon-copy-to-clipboard.png')} onClick={() => {
-                CopyToClipboard(`${window.location.hostname}?code=${userInfo.refer_code}`)
-              }}/>
-              <div className="clickable" onMouseOver={() => {
-                  this.setState({
-                    tooltip: 'share_on_facebook'
-                  })
-                }} onMouseOut={() => {
-                  this.setState({
-                    tooltip: ''
-                  })
-                }}>
-                <i class="fab fa-facebook-square" onClick={() => {
-                  ShareToFacebook(`${window.location.hostname}?code=${userInfo.refer_code}`)
-                }}></i>
+              <img className={'clickable m--mobile-only'}
+                   src={require('../../../shared/img/icons/icon-copy-to-clipboard.png')} onClick={() => {
+                     this.setState({
+                       tooltip: 'copied'
+                     });
+                     CopyToClipboard(`${window.location.hostname}?code=${userInfo.refer_code}`)
+                   }}
+              />
+              <div className="clickable"
+                   onMouseOver={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     this.setState({tooltip: 'share_on_facebook'})
+                   }}
+                   onMouseOut={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     this.setState({tooltip: ''})
+                   }}
+                   onClick={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     ShareToFacebook(`${Config.SERVER_URL}?code=${userInfo.refer_code}`)
+                   }}
+              >
+                <i className="fab fa-facebook-square"/>
               </div>
-              <div className="clickable" onMouseOver={() => {
-                  this.setState({
-                    tooltip: 'share_on_twitter'
-                  })
-                }} onMouseOut={() => {
-                  this.setState({
-                    tooltip: ''
-                  })
-                }}>
-                <i class="fab fa-twitter-square" onClick={() => {
-                  ShareToTwitter(`${window.location.hostname}?code=${userInfo.refer_code}`)
-                }}></i>
+
+              <div className="clickable"
+                   onMouseOver={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     this.setState({tooltip: 'share_on_twitter'})}}
+                   onMouseOut={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     this.setState({tooltip: ''})}}
+                   onClick={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     ShareToTwitter(`${Config.SERVER_URL}?code=${userInfo.refer_code}`)
+                   }}
+              >
+                <i className="fab fa-twitter-square" />
               </div>
             </div>
             {/* <div className="action__container">

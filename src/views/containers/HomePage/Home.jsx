@@ -31,24 +31,33 @@ const introCubegon = [
   {img: require('../../../shared/img/assets/model_example_2.png'), name: 'VEXIGON', creator: 'Nhu'},
   {img: require('../../../shared/img/assets/model_example_bull.png'), name: 'BULLO', creator: 'Nhu'}
 ];
-const channels = [{img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/invite/pYD5tss'},
-                  {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/cubego_io'},
-                  {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://t.me/cubego'}];
-const advisors = [{img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Loi Luu', desc: 'advisors.loiluu'},
-                  {img: require('../../../shared/img/advisors/air.jpeg'), name: 'Ari Meilich', desc: 'advisors.arimeilich'}];
-const team_1 = [{img: require('../../../shared/img/team_members/jarvisnguyen.jpg'), name: 'Jarvis Nguyen', desc: 'team.jarvisnguyen'},
-              {img: require('../../../shared/img/team_members/ngonam.jpg'), name: 'Nam Ngo', desc: 'team.namngo'},
-              {img: require('../../../shared/img/team_members/jaketran.png'), name: 'Jake Tran', desc: 'team.jaketran'}];
+const channels = [
+  {img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/invite/pYD5tss'},
+  {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/cubego_io'},
+  {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://t.me/cubego'},
+];
 
-const team_2 = [{img: require('../../../shared/img/team_members/thupham.jpg'), name: 'Thu Pham', desc: 'team.thupham'},
-                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Duc Nguyen', desc: 'team.ducnguyen'},
-                {img: require('../../../shared/img/team_members/nhupham.jpg'), name: 'Nhu Pham', desc: 'team.nhupham'},
-                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Lan Lai', desc: 'team.lanlai'}];
+const advisors = [
+  {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Loi Luu', desc: 'advisors.loiluu', twitter: 'https://twitter.com/loi_luu', linkedin: 'https://www.linkedin.com/in/loiluu/'},
+  {img: require('../../../shared/img/advisors/air.jpeg'), name: 'Ari Meilich', desc: 'advisors.arimeilich', twitter: 'https://twitter.com/arimeilich', linkedin: 'https://www.linkedin.com/in/arimeilich/'},
+];
 
-const team_3 = [{img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Nguyen Nguyen', desc: 'team.nguyennguyen'},
-                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Minh Do', desc: 'team.minhdo'},
-                {img: require('../../../shared/img/team_members/taikitamura.jpeg'), name: 'Tai Kitamura', desc: 'team.taikitamura'},
-                {img: require('../../../shared/img/team_members/liemnguyen.jpg'), name: 'Liem Nguyen', desc: 'team.liemnguyen'}];
+const team_1 = [
+  {img: require('../../../shared/img/team_members/jarvisnguyen.jpg'), name: 'Jarvis Nguyen', desc: 'team.jarvisnguyen', twitter: 'https://twitter.com/jarvis_ngn', linkedin: 'https://www.linkedin.com/in/jarvisnguyen/'},
+  {img: require('../../../shared/img/team_members/ngonam.jpg'), name: 'Nam Ngo', desc: 'team.namngo', linkedin: 'https://www.linkedin.com/in/ngo-nam-nedrick-89569024'},
+  {img: require('../../../shared/img/team_members/jaketran.png'), name: 'Jake Tran', desc: 'team.jaketran', linkedin: 'https://www.linkedin.com/in/tri-jake-tran-67132ab6'},
+];
+
+const team_2 = [
+  {img: require('../../../shared/img/team_members/thupham.jpg'), name: 'Thomas Pham', desc: 'team.thupham'},
+  {img: require('../../../shared/img/team_members/duc.jpg'), name: 'Duc Nguyen', desc: 'team.ducnguyen'},
+  {img: require('../../../shared/img/team_members/taikitamura.jpeg'), name: 'Tai Kitamura', desc: 'team.taikitamura'},
+  {img: require('../../../shared/img/team_members/minh.jpg'), name: 'Minh Do', desc: 'team.minhdo'},
+  {img: require('../../../shared/img/team_members/lan.jpg'), name: 'Lan Lai', desc: 'team.lanlai'},
+  {img: require('../../../shared/img/team_members/nhupham.jpg'), name: 'Nhu Pham', desc: 'team.nhupham', linkedin: 'https://www.linkedin.com/in/nhu-pham-344331165'},
+  {img: require('../../../shared/img/team_members/nguyen.jpg'), name: 'Nguyen Nguyen', desc: 'team.nguyennguyen'},
+  {img: require('../../../shared/img/team_members/liemnguyen.jpg'), name: 'Liem Nguyen', desc: 'team.liemnguyen'},
+];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -268,7 +277,6 @@ class HomePage extends React.Component {
           {/* end home__game-detail */}
 
           <div className={'home__roadmap'}>
-            <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
             <Container size={Container.sizes.NORMAL}>
               <div className={'home__roadmap-header'}>
                 {_t('roadmap')}
@@ -277,19 +285,24 @@ class HomePage extends React.Component {
             </Container>
           </div>
 
-          <div className={'home__partnership'} id={'partners'}>
-            <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
-            <Container className={'home__partnership__imgs'}>
-              {/*<a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>*/}
-              <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
-              <a href={'https://zilliqa.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/zilliqa-logo.png')} /><p>ZILLIQA</p></a>
-              <a href={'http://emontalliance.com?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/emont-alliance.png')} /><p>EMONT ALLIANCE</p></a>
-              <a href={'https://opskins.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSKINS</p></a>
-              <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>COINBASE WALLET</p></a>
-              <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OPEN SEA</p></a>
-              <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>GINCO</p></a>
-            </Container>
-          </div>
+          <InviewMonitor
+            classNameNotInView='vis-collapse'
+            classNameInView='animated custom'>
+            <div className={'home__partnership'} id={'partners'}>
+              <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.YELLOW}/>
+              <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
+              <div className={'home__partnership__imgs'}>
+                {/*<a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>*/}
+                <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
+                <a href={'https://zilliqa.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/zilliqa-logo.png')} /><p>ZILLIQA</p></a>
+                <a href={'http://emontalliance.com?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/emont-alliance.png')} /><p>EMONT ALLIANCE</p></a>
+                <a href={'https://opskins.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSKINS</p></a>
+                <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>COINBASE WALLET</p></a>
+                <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OPEN SEA</p></a>
+                <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>GINCO</p></a>
+              </div>
+            </div>
+          </InviewMonitor>
           {/* end home__partnership */}
 
           <div className={'home__advisors'} id={'advisors'}>
@@ -300,7 +313,7 @@ class HomePage extends React.Component {
           {/* end home__advisors */}
 
           <div className={'home__team-members'} id={'team-members'}>
-            <Text className={'advisors__header'} type={Text.types.H2} children={_t('advisors')} />
+            <Text className={'advisors__header'} type={Text.types.H2} children={_t('proj_advisors')} />
             <Container>
               <div className="advisors__list team__listview">
                 {
@@ -316,8 +329,8 @@ class HomePage extends React.Component {
             <div className="team-members__subtitle">
                 {_t('team_members_sub_title')}
             </div>
-            <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
-            <Container>
+
+            <Container className={'team__list'}>
               <div className="team-1 team__listview">
                 {
                   team_1.map((item,idx) =>
@@ -330,15 +343,6 @@ class HomePage extends React.Component {
               <div className="team-2 team__listview">
                 {
                   team_2.map((item,idx) =>
-                    <div className={'item'} key={idx}>
-                      <TeamCard {...item} />
-                    </div>
-                  )
-                }
-              </div>
-              <div className="team-3 team__listview">
-                {
-                  team_3.map((item,idx) =>
                     <div className={'item'} key={idx}>
                       <TeamCard {...item} />
                     </div>
@@ -423,6 +427,7 @@ const mapStateToProps = (store, props) => {
   let query = Utils.ParseQueryString(props.location.search);
 
   if (query.code) LS.SetItem(LS.Fields.referralCode, {expire: Date.now() + REFERRAL_EXPIRED, code: query.code});
+
   return {
     pathName,
     _t: getTranslate(store.localeReducer),

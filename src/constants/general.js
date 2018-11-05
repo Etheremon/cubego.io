@@ -58,4 +58,4 @@ export const EDITOR_COLORS = [
 export const NETWORK_ERROR = '404 ERROR';
 
 /** Referral Code **/
-export const REFERRAL_EXPIRED = 3600000;
+export const REFERRAL_EXPIRED = 12 * 60 * 60 * 1000; //ms

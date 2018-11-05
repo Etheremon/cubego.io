@@ -14,7 +14,7 @@
 .referral-box__container {
   display: flex;
   position: relative;
-  height: 104px;
+  //height: 90px;
   border: 3px solid #194379;
   border-radius: 10px;
   justify-content: space-between;
@@ -29,17 +29,18 @@
   }
 
   .fa-facebook-square, .fa-twitter-square {
-    margin: 0 3px;
+    margin: 0 2px;
     color: $white;
     font-size: $font-size-header-2;
     &:hover {
       filter: contrast(50%);
     }
+    cursor: pointer;
   }
 
   .unicorm__image {
     position: relative;
-    height: 100%;
+    max-height: 100px;
     @include mobile {
       display: none;
     }
@@ -48,7 +49,7 @@
   .referral-main__container {
     text-align: right;
     flex-grow: 1;
-    max-width: 45%;
+    max-width: 50%;
 
     @include mobile {
       max-width: 100%;
@@ -70,6 +71,7 @@
     }
 
     .input__container {
+      cursor: pointer;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -81,52 +83,49 @@
       .explain__label {
         position: absolute;
         left: 0;
-        bottom: -8px;
+        right: 0;
+        bottom: -4px;
         transform: translateY(100%);
         font-family: $f__baloobha;
         font-size: $font-size-small;
+        text-align: center;
       }
 
       .input-referral {
         flex-grow: 1;
+        padding-left: 8px;
       }
 
       input[type=text] {
         width: 100%;
-        margin: 0 16px;
         background: transparent;
         border: 0;
         outline: none;
         color: $white;
         cursor: pointer;
+        font-size: $font-size-small;
+        font-weight: $font-weight-semi-bold;
+        @include ellipsis;
       }
 
       img {
         display: block;
         height: 24px;
-
-        &.clickable {
-          cursor: pointer;
-
-          &:hover {
-            filter: invert(50%);
-          }
-        }
       }
     }
   }
 
   .header__container {
-    position: relative;
-    width: 180px;
-    height: 44px;
+    width: 160px;
+    height: 36px;
     position: absolute;
-    top: 0;
+    top: -4px;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    //z-index: 0;
 
     span {
+      padding-top: 4px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -139,11 +138,11 @@
   }
 
   .referral-title {
-    padding: 3px;
+    padding: 0 16px;
     max-width: 40%;
     font-family: $f__baloobha;
     font-size: $font-size-small;
-    margin-top: 16px;
+    text-align: left;
 
     @include mobile {
       padding-top: 16px;
