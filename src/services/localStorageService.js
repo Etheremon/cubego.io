@@ -6,6 +6,7 @@ export const Fields = {
   metamaskPopup: 'metamask-popup',
   savedModel: 'saved-model',
   showLayer: 'show-layer',
+  referralCode: 'referral-code',
 };
 
 export const SetItem = (key, value)  => {
