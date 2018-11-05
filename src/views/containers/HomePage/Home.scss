@@ -44,6 +44,13 @@
       align-items: center;
       justify-content: space-around;
       text-align: left;
+
+      .home__intro-board {
+        .create__button {
+          margin-right: 8px;
+        }
+      }
+
       @include mobile {
         flex-wrap: wrap;
         text-align: center;
@@ -575,17 +582,8 @@
     position: relative;
     z-index: 1;
     margin-top: 100px;
-    margin-bottom: -32px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: rgba(189,223,244,1);
+    margin-bottom: -44px;
     text-align: center;
-
-    border-top: 40px solid transparent;
-    border-bottom: 40px solid transparent;
-    border-image: url('../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
-    background-clip: padding-box;
-    box-sizing: border-box;
 
     .partnership__header {
       padding: 32px 0 16px 0;
@@ -622,7 +620,18 @@
   }
 
   .home__roadmap {
-    padding-top: 160px;
+    margin-top: 100px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(189,223,244,1);
+    text-align: center;
+
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-image: url('../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
+    background-clip: padding-box;
+    box-sizing: border-box;
+
     .home__roadmap-header {
       text-align: center;
       font-family: $f__baloobha;
@@ -630,6 +639,54 @@
       font-size: 30px;
       text-transform: uppercase;
       margin-bottom: 40px;
+    }
+  }
+
+  .team__listview {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .home__advisors {
+    padding-top: 100px;
+    padding-bottom: 60px;
+    text-align: center;
+
+    
+
+    .advisors__listview {
+      
+    }
+  }
+
+  .home__team-members {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-image: url('../../../shared/img/assets/wall_pattern_2.svg') 100 0 repeat;
+    background-clip: padding-box;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: rgba(189,223,244,1);
+    color: #123250;
+    font-family: $f__baloobha;
+
+    // .advisors__header {
+    //   padding: 32px 0 32px 0;
+    //   color: rgba(238,116,47,1) !important;
+    // }
+
+    .team-members__header {
+      
+    }
+
+    .team-members__subtitle {
+      margin-bottom: 32px;
+    }
+
+    .team__listview {
+      margin-bottom: 16px;
     }
   }
 

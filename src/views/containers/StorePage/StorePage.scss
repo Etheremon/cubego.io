@@ -9,10 +9,15 @@
   text-align: center;
   color: $white95;
 
+  .referral-box {
+    margin-top: 100px;
+  }
+
   .presale-text {
     margin-top: 50px;
     font-family: $f__baloobha;
     font-size: $font-size-large;
+    color: #F57730;
   }
   .presale-time {
     font-size: $font-size-small;
@@ -31,6 +36,7 @@
       width: 100%;
       height: 300px;
       background-color: rgb(240, 240, 240);
+      text-align: right;
       @include mobile {
         height: 320px;
       }
@@ -48,6 +54,16 @@
         left: 50%;
         @include transform(translateX(-50%));
         bottom: 50px;
+      }
+      .main-content__container {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        left: 50%;
+        height: 100%;
+        text-align: center;
+        color: $dark;
+        transform: translateX(-50%);
       }
     }
   }

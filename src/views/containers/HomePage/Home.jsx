@@ -16,11 +16,13 @@ import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
 import {GetHomeBanners} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
-import {URLS} from "../../../constants/general";
+import {URLS, REFERRAL_EXPIRED} from "../../../constants/general";
 import * as Config from "../../../config";
 import Countdown from "../../widgets/Countdown/Countdown.jsx";
 import Roadmap from "./Roadmap/Roadmap.jsx";
 import {SubBgr} from "./SubBgr/SubBgr.jsx";
+import * as LS from "../../../services/localStorageService";
+import TeamCard from './TeamCard/TeamCard.jsx';
 
 require("style-loader!./Home.scss");
 
@@ -32,6 +34,21 @@ const introCubegon = [
 const channels = [{img: require('../../../shared/img/socialMedia/icon-white-discord.png'), name: 'DISCORD', link: 'https://discordapp.com/invite/pYD5tss'},
                   {img: require('../../../shared/img/socialMedia/icon-white-twitter.png'), name: 'TWITTER', link: 'https://twitter.com/cubego_io'},
                   {img: require('../../../shared/img/socialMedia/icon-white-telegram.png'), name: 'TELEGRAM', link: 'https://t.me/cubego'}];
+const advisors = [{img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Loi Luu', desc: 'advisors.loiluu'},
+                  {img: require('../../../shared/img/advisors/air.jpeg'), name: 'Ari Meilich', desc: 'advisors.arimeilich'}];
+const team_1 = [{img: require('../../../shared/img/team_members/jarvisnguyen.jpg'), name: 'Jarvis Nguyen', desc: 'team.jarvisnguyen'},
+              {img: require('../../../shared/img/team_members/ngonam.jpg'), name: 'Nam Ngo', desc: 'team.namngo'},
+              {img: require('../../../shared/img/team_members/jaketran.png'), name: 'Jake Tran', desc: 'team.jaketran'}];
+
+const team_2 = [{img: require('../../../shared/img/team_members/thupham.jpg'), name: 'Thu Pham', desc: 'team.thupham'},
+                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Duc Nguyen', desc: 'team.ducnguyen'},
+                {img: require('../../../shared/img/team_members/nhupham.jpg'), name: 'Nhu Pham', desc: 'team.nhupham'},
+                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Lan Lai', desc: 'team.lanlai'}];
+
+const team_3 = [{img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Nguyen Nguyen', desc: 'team.nguyennguyen'},
+                {img: require('../../../shared/img/advisors/loi_luu.jpg'), name: 'Minh Do', desc: 'team.minhdo'},
+                {img: require('../../../shared/img/team_members/taikitamura.jpeg'), name: 'Tai Kitamura', desc: 'team.taikitamura'},
+                {img: require('../../../shared/img/team_members/liemnguyen.jpg'), name: 'Liem Nguyen', desc: 'team.liemnguyen'}];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -145,8 +162,12 @@ class HomePage extends React.Component {
                              () => {this.props.history.push(`/${URLS.BUILD_GON}`)}
                            }
                 />
+                <ButtonNew className={'watchbattle__button'} label={_t('watch battle')}
+                           onClick={
+                             () => {this.props.history.push(`/${URLS.BATTLE}`)}
+                           }
+                />
               </div>
-
               <div className={'home__intro-build'}>
                 <div className={'home__intro-gif'}>
                   <img src={require('../../../shared/img/gif/build.gif')}/>
@@ -155,7 +176,6 @@ class HomePage extends React.Component {
             </div>
 
           </Container>
-
           {/* end home__intro */}
 
           <div className="home__modes" id={'modes'}>
@@ -253,7 +273,6 @@ class HomePage extends React.Component {
               <div className={'home__roadmap-header'}>
                 {_t('roadmap')}
               </div>
-
               <Roadmap/>
             </Container>
           </div>
@@ -272,6 +291,63 @@ class HomePage extends React.Component {
             </Container>
           </div>
           {/* end home__partnership */}
+
+          <div className={'home__advisors'} id={'advisors'}>
+            <Container size={Container.sizes.NORMAL}>
+              
+            </Container>
+          </div>
+          {/* end home__advisors */}
+
+          <div className={'home__team-members'} id={'team-members'}>
+            <Text className={'advisors__header'} type={Text.types.H2} children={_t('advisors')} />
+            <Container>
+              <div className="advisors__list team__listview">
+                {
+                  advisors.map((item,idx) =>
+                    <div className={'item'} key={idx}>
+                      <TeamCard {...item} />
+                    </div>
+                  )
+                }
+              </div>
+            </Container>
+            <Text className={'team-members__header'} type={Text.types.H2} children={_t('meet_the_team')} />
+            <div className="team-members__subtitle">
+                {_t('team_members_sub_title')}
+            </div>
+            <SubBgr position={SubBgr.positions.LEFT} color={SubBgr.colors.BLUE}/>
+            <Container>
+              <div className="team-1 team__listview">
+                {
+                  team_1.map((item,idx) =>
+                    <div className={'item'} key={idx}>
+                      <TeamCard {...item} />
+                    </div>
+                  )
+                }
+              </div>
+              <div className="team-2 team__listview">
+                {
+                  team_2.map((item,idx) =>
+                    <div className={'item'} key={idx}>
+                      <TeamCard {...item} />
+                    </div>
+                  )
+                }
+              </div>
+              <div className="team-3 team__listview">
+                {
+                  team_3.map((item,idx) =>
+                    <div className={'item'} key={idx}>
+                      <TeamCard {...item} />
+                    </div>
+                  )
+                }
+              </div>
+            </Container>
+          </div>
+          {/* end home__team-members */}
 
           <InviewMonitor
             classNameNotInView='vis-collapse'
@@ -344,7 +420,9 @@ class HomePage extends React.Component {
 
 const mapStateToProps = (store, props) => {
   let pathName = props.location.pathname;
+  let query = Utils.ParseQueryString(props.location.search);
 
+  if (query.code) LS.SetItem(LS.Fields.referralCode, {expire: Date.now() + REFERRAL_EXPIRED, code: query.code});
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
