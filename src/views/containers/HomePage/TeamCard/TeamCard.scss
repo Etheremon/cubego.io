@@ -66,6 +66,15 @@
 
   .portfolio {
     padding-top: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      display: inline-block;
+      height: 14px;
+    }
+
     .fab {
       font-size: 16px;
       margin: 0 2px;

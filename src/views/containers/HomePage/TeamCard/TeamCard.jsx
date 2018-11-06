@@ -11,7 +11,7 @@ class TeamCard extends React.Component {
   }
 
   render() {
-    const { _t, img, name, desc, twitter, linkedin } = this.props;
+    const { _t, img, name, desc, twitter, linkedin, artstation, github } = this.props;
 
     return (
       <div className="team-card__container">
@@ -31,6 +31,8 @@ class TeamCard extends React.Component {
         <div className="portfolio">
           {linkedin ? <i className="fab fa-linkedin" onClick={() => Utils.OpenInNewTab(linkedin)}/> : null}
           {twitter ? <i className="fab fa-twitter-square" onClick={() => Utils.OpenInNewTab(twitter)}/> : null}
+          {artstation ? <img className="fab" src={require('../../../../shared/img/icons/icon-artstation.png')} onClick={() => Utils.OpenInNewTab(artstation)}/> : null}
+          {github ? <i class="fab fa-github-square" onClick={() => Utils.OpenInNewTab(github)}></i> : null}
         </div>
       </div>
     )

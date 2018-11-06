@@ -17,6 +17,8 @@ import Loading from "../../../components/Loading/Loading.jsx";
 import SignInForm from "../SigInForm/SignInForm.jsx";
 import {AuthActions} from "../../../../actions/auth";
 import {URLS} from "../../../../constants/general";
+import { Image } from '../../../components/Image/Image.jsx';
+import { SubscriberActions } from '../../../../actions/subscriber';
 
 require("style-loader!./SignInPage.scss");
 
@@ -30,7 +32,10 @@ class SignInPage extends React.Component {
       verified: false,
       registering: false,
       manualLoginErr: '',
+      subscribedResponse: undefined,
     };
+
+    this.input_email = React.createRef();
     this.handleManualLogin = this.handleManualLogin.bind(this);
 
     this.renderManualSignIn = this.renderManualSignIn.bind(this);
@@ -92,6 +97,7 @@ class SignInPage extends React.Component {
 
   renderNotInstalledWallet() {
     let {_t} = this.props;
+    let {subscribedResponse}= this.state;
 
     return (
       Utils.IsMobile
@@ -109,15 +115,50 @@ class SignInPage extends React.Component {
             {this.renderManualSignIn()}
           </div>
         : <div className={'sign-in-page__app'}>
-            <img src={require('../../../../shared/img/assets/metamask.png')}/>
-            <div className={'header'}>{_t('metamask_not_installed')}</div>
-            <div className={'desc'}>{_t('please_install_metamask')}</div>
-            <div className={'btns'}>
-              <ButtonNew label={_t('Install Metamask')}
-                         showDeco={ButtonNew.deco.BOTH}
-                         onClick={() => {Utils.OpenMetamaskInstallation()}} />
-            </div>
+              <img src={require('../../../../shared/img/assets/metamask.png')}/>
+              <div className={'header'}>{_t('metamask_not_installed')}</div>
+              <div className={'desc'}>{_t('please_install_metamask')}</div>
+              <Container size={Container.sizes.SUPER_TINY}>
+                <div className="subscription__container">
+                <div>
+                  <input placeholder={_t('your_email_address')} type="text" defaultValue="" ref={this.input_email} />
+                  <div className="response__label">
+                    {
+                      _t(`${subscribedResponse === true ? 'success_response' : 
+                      subscribedResponse !== undefined ? subscribedResponse : ''}`)
+                    }
+                  </div>
+                </div>
+                <div className="channels__container">
+                  <span className="channels__label">
+                    {_t('follow_us')}
+                  </span>
+                  <div className="channels">
+                      <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
+                      <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
+                      <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
+                  </div>
+                </div>
+                <div className="subscription-action">
+                  <ButtonNew label={_t('Install Metamask')}
+                          onClick={() => {Utils.OpenMetamaskInstallation()}} />
+                  <ButtonNew label={_t('subscribe')}
+                          onClick={() => {
+                            this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
+                              email: this.input_email.current.value || '',
+                              callbackFunc: (code, data) => {
+                                if (code === window.RESULT_CODE.SUCCESS) {
+                                  this.setState({
+                                    subscribedResponse: true,
+                                  });
+                                }
+                              }
+                            }));
 
+                          }} />
+                </div>
+              </div>
+              </Container>
             {this.renderManualSignIn()}
           </div>
     )

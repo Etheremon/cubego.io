@@ -10,6 +10,7 @@
   color: $white95;
 
   .sign-in-page__app {
+    text-align: center;
     img {
       width: 160px;
     }
@@ -24,6 +25,63 @@
     }
     .btns {
       padding-top: 20px;
+    }
+
+    .subscription__container {
+      text-align: center;
+      margin-top: 24px;
+
+      .subscription-action {
+        margin-top: 16px;
+      }
+
+      input[type=text] {
+        width: 100%;
+        background-color: #1C3B50;
+        border-radius: 8px;
+        box-shadow: 0 5px 12px 1px #36618D;
+        border: 0;
+        height: 36px;
+        outline: none;
+        color: $white;
+        padding: 0 8px;
+      }
+    }
+
+    .response__label {
+      margin-top: 8px;
+      font-size: $font-size-tiny;
+      color: $white;
+    }
+
+    .channels__container {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+
+      span {
+        color: #24A9F1;
+        font-size: $font-size-large;
+        font-family: $f__baloobha;
+      }
+
+      .channels {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        img {
+          overflow: hidden;
+          width: 32px;
+          height: 32px;
+          margin: 5px;
+          @include transition-duration;
+          &:hover {
+            filter: invert(100%);
+          }
+        }
+      }
     }
   }
 
