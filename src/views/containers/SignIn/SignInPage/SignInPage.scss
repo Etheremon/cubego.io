@@ -22,6 +22,7 @@
     .desc {
       padding-top: 4px;
       font-size: $font-size-big;
+      line-height: 2;
     }
     .btns {
       padding-top: 20px;
@@ -39,7 +40,7 @@
         width: 100%;
         background-color: #1C3B50;
         border-radius: 8px;
-        box-shadow: 0 5px 12px 1px #36618D;
+        box-shadow: 0 0 12px 3px #36618D;
         border: 0;
         height: 36px;
         outline: none;
@@ -65,12 +66,24 @@
         color: #24A9F1;
         font-size: $font-size-large;
         font-family: $f__baloobha;
+        margin-right: 8px;
       }
 
       .channels {
         display: inline-flex;
         flex-wrap: wrap;
         justify-content: center;
+
+        .fab {
+          font-size: $font-size-header-3;
+          color: $white;
+          margin: 5px;
+          @include transition-duration;
+          &:hover {
+            filter: invert(100%);
+          }
+        }
+
         img {
           overflow: hidden;
           width: 32px;

@@ -50,10 +50,10 @@ const team_1 = [
 
 const team_2 = [
   {img: require('../../../shared/img/team_members/thupham.jpg'), name: 'Thomas Pham', desc: 'team.thupham', twitter: 'https://twitter.com/_thupv'},
-  {img: require('../../../shared/img/team_members/duc.jpg'), name: 'Duc Nguyen', desc: 'team.ducnguyen', github: 'https://github.com/Nhduc0611'},
+  {img: require('../../../shared/img/team_members/duc.png'), name: 'Duc Nguyen', desc: 'team.ducnguyen', github: 'https://github.com/Nhduc0611'},
   {img: require('../../../shared/img/team_members/taikitamura.jpeg'), name: 'Tai Kitamura', desc: 'team.taikitamura', twitter: 'https://twitter.com/questionstation'},
   {img: require('../../../shared/img/team_members/minh.jpg'), name: 'Minh Do', desc: 'team.minhdo'},
-  {img: require('../../../shared/img/team_members/lan.jpg'), name: 'Lan Lai', desc: 'team.lanlai'},
+  {img: require('../../../shared/img/team_members/lan.jpeg'), name: 'Lan Lai', desc: 'team.lanlai'},
   {img: require('../../../shared/img/team_members/nhupham.jpg'), name: 'Nhu Pham', desc: 'team.nhupham', linkedin: 'https://www.linkedin.com/in/nhu-pham-344331165', artstation: 'https://www.artstation.com/pbqnhu'},
   {img: require('../../../shared/img/team_members/nguyen.jpg'), name: 'Nguyen Nguyen', desc: 'team.nguyennguyen', artstation: 'https://www.artstation.com/nguyenguyen'},
   {img: require('../../../shared/img/team_members/liemnguyen.jpg'), name: 'Liem Nguyen', desc: 'team.liemnguyen', artstation: 'https://www.artstation.com/liemnguyen'},
