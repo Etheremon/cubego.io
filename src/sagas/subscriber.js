@@ -12,7 +12,7 @@ function* subscribeEmail({email, callbackFunc}) {
     if (!error) {
       callbackFunc(window.RESULT_CODE.SUCCESS, response);
     } else {
-      callbackFunc(window.RESULT_CODE.ERROR_PARAMS, {error: 'err.server_error', error_values: {msg: error}});
+      callbackFunc(window.RESULT_CODE.SUCCESS, {error: 'err.server_error', error_values: {msg: error}});
     }
   }
 

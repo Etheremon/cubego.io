@@ -293,14 +293,14 @@ class HomePage extends React.Component {
               <Text className={'partnership__header'} type={Text.types.H2} children={_t('in_partnership_with')} />
               <div className={'home__partnership__imgs'}>
                 {/*<a href={'https://decentraland.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/decentraland.png')}/><p>DECENTRALAND</p></a>*/}
-                <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>KYBER NETWORK</p></a>
-                <a href={'https://zilliqa.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/zilliqa-logo.png')} /><p>ZILLIQA</p></a>
-                <a href={'http://emontalliance.com?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/emont-alliance.png')} /><p>EMONT ALLIANCE</p></a>
-                <a href={'https://opskins.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSKINS</p></a>
-                <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>COINBASE WALLET</p></a>
-                <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OPEN SEA</p></a>
-                <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>GINCO</p></a>
-                <a href={'https://dapp.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/dapp.jpg')} /><p>DAPP</p></a>
+                <a href={'https://kyber.network/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/kybernetwork.png')} /><p>Kyber Network</p></a>
+                <a href={'https://zilliqa.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/zilliqa-logo.png')} /><p>Zilliqa</p></a>
+                <a href={'http://emontalliance.com?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/emont-alliance.png')} /><p>EMONT Alliance</p></a>
+                <a href={'https://opskins.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opskins.png')}/><p>OPSkins</p></a>
+                <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>Coinbase Wallet</p></a>
+                <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OpenSea</p></a>
+                <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>Ginco</p></a>
+                <a href={'https://dapp.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/dapp.jpg')} /><p>Dapp.com</p></a>
               </div>
             </div>
           </InviewMonitor>

@@ -99,6 +99,8 @@ class SignInPage extends React.Component {
     let {_t} = this.props;
     let {subscribedResponse}= this.state;
 
+    let email = this.state.email || '';
+
     return (
       Utils.IsMobile
         ? <div className={'sign-in-page__app'}>
@@ -118,46 +120,58 @@ class SignInPage extends React.Component {
               <img src={require('../../../../shared/img/assets/metamask.png')}/>
               <div className={'header'}>{_t('metamask_not_installed')}</div>
               <div className={'desc'}>{_t('please_install_metamask')}</div>
-              <Container size={Container.sizes.SUPER_TINY}>
+              <Container size={Container.sizes.SMALL}>
                 <div className="subscription__container">
-                <div>
-                  <input placeholder={_t('your_email_address')} type="text" defaultValue="" ref={this.input_email} />
-                  <div className="response__label">
+
+                  <div className={'subscription__boxes'}>
+
+                    <div className={'subscription__input-box'}>
+                      <div className="channels__label">
+                        {_t('subscribe_us')}
+                      </div>
+                      <input placeholder={_t('your_email_address')} type="text"
+                             value={email} onChange={(e) => {this.setState({email: e.target.value, subscribedResponse: undefined})}}/>
+                      <div className={`subscribe-btn ${email === '' ? 'hidden' : ''}`}
+                           onClick={() => {
+                             this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
+                               email: email,
+                               callbackFunc: (code, data) => {
+                                 this.setState({
+                                   subscribedResponse: code === window.RESULT_CODE.SUCCESS,
+                                 });
+                               }
+                             }));
+                           }}
+                      >
+                        {_t('subscribe')}
+                      </div>
+                    </div>
+
+                    <div className={'subscription__channels'}>
+                      <div className="channels__label">
+                        {_t('channels')}
+                      </div>
+                      <div className="channels">
+                        <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
+                        <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
+                        <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`response__label ${subscribedResponse === true ? 'm--color--green' : ''} ${subscribedResponse === false ? 'm--color--red' : ''}`}>
                     {
-                      _t(`${subscribedResponse === true ? 'success_response' : 
-                      subscribedResponse !== undefined ? subscribedResponse : ''}`)
+                      _t(`${subscribedResponse === true ? 'success_response' :
+                        subscribedResponse !== undefined ? 'err.invalid_email' : ''}`)
                     }
                   </div>
-                </div>
-                <div className="channels__container">
-                  <span className="channels__label">
-                    {_t('follow_us')}
-                  </span>
-                  <div className="channels">
-                      <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
-                      <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
-                      <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
-                  </div>
-                </div>
-                <div className="subscription-action">
-                  <ButtonNew label={_t('Install Metamask')}
-                          onClick={() => {Utils.OpenMetamaskInstallation()}} />
-                  <ButtonNew label={_t('subscribe')}
-                          onClick={() => {
-                            this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
-                              email: this.input_email.current.value || '',
-                              callbackFunc: (code, data) => {
-                                if (code === window.RESULT_CODE.SUCCESS) {
-                                  this.setState({
-                                    subscribedResponse: true,
-                                  });
-                                }
-                              }
-                            }));
 
-                          }} />
+                  <div className="subscription-action">
+                    <ButtonNew label={_t('Install Metamask')}
+                            onClick={() => {Utils.OpenMetamaskInstallation()}} />
+                  </div>
+
                 </div>
-              </div>
               </Container>
             {this.renderManualSignIn()}
           </div>
