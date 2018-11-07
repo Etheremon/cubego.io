@@ -10,6 +10,7 @@ import { Input } from '../../../widgets/Input/Input.jsx';
 import { UserActions } from '../../../../actions/user';
 import {URLS} from "../../../../constants/general";
 import {AutoTrack, CustomTrackList} from "../../../../services/tracker";
+import * as LS from "../../../../services/localStorageService";
 
 require("style-loader!./SignInForm.scss");
 
@@ -31,6 +32,8 @@ class SignInForm extends React.Component {
   render() {
     const {_t, onBack, userId, type, metamask, userInfo} = this.props;
     const { submitError, submitSuccess } = this.state;
+    const referralObj = LS.GetItem(LS.Fields.referralCode);
+    const referralCode = referralObj && referralObj.expire > Date.now() ? referralObj.code : '';
 
     return (  
       <div className={'signup__container'}>
@@ -98,7 +101,7 @@ class SignInForm extends React.Component {
                           userId: userId,
                           email: this.input_email,
                           username: this.input_username === undefined ? userInfo.username : this.input_username,
-                          inviteCode: this.input_invite_code || '',
+                          inviteCode: referralCode,
                           signature: metamask ? undefined : this.input_signature,
                           termsAgreed: this.input_checkbox,
                           callbackFunc: (code, data) => {

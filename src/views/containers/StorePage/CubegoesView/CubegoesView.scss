@@ -48,6 +48,9 @@
   }
 
   .pack-view__container {
+    width: 724px;
+    max-width: 100%;
+
     cursor: pointer;
     &:hover {
       .chest__image {
@@ -163,6 +166,7 @@
       justify-content: center;
   
       .item {
+        display: flex;
         width: 260px;
         max-width: 100%;
         padding: 36px 24px;

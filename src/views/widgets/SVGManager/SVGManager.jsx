@@ -53,6 +53,11 @@ export const CustomRectangle = ({tier, fill, strokeWidth}) => {
                 <stop stopColor="#9DF2F1" offset="50%"></stop>
                 <stop stopColor="#9DF2F1" offset="100%"></stop>
             </linearGradient>
+            <linearGradient x1="99.0617944%" y1="99.3010462%" x2="0%" y2="10.3323555%" id="customrectangle-gradient-referral">
+                <stop stopColor="#75C3F5" offset="0%"></stop>
+                <stop stopColor="#75C3F5" offset="50%"></stop>
+                <stop stopColor="#75C3F5" offset="100%"></stop>
+            </linearGradient>
         </defs>
         <g id="CustomRectangle" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <path d="M5,23.6432469 L5,200.162356 L687,200.162356 L687,23.6432469 C573.176134,11.222086 459.509728,5.01159184 346,5.01159184 C232.490272,5.01159184 118.823866,11.222086 5,23.6432469 Z" id="Rectangle-2" stroke={`url(#customrectangle-gradient-${tier})`} fill={fill} strokeWidth={strokeWidth}></path>

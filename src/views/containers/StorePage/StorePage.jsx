@@ -17,6 +17,7 @@ import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import * as Config from "../../../config";
 import {URLS} from "../../../constants/general";
+import ReferralView from '../Referral/ReferralView.jsx';
 
 require("style-loader!./StorePage.scss");
 
@@ -38,7 +39,7 @@ class StorePage extends React.Component {
   }
 
   renderBanner() {
-    const { language, banners } = this.props;
+    const { language, banners, _t } = this.props;
 
     const bannerList = (banners || []).map((banner, idx) => {
       let btn = null;
@@ -75,7 +76,22 @@ class StorePage extends React.Component {
       )
     });
 
-    return bannerList;
+    // return bannerList;
+
+    return [
+      <div className={'store-page__banner-item'}>
+        <img className={'store-page__banner-img'} src={require(`../../../shared/img/banner/banner_store.png`)} />
+        <div className="main-content__container">
+          <p className={'presale-text'}>{_t('presale start in')}</p>
+          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
+          <p className={'presale-time'}>({Config.PRESALE_DATE})</p>
+
+          <ButtonNew className={'presale-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
+            this.props.history.push(`/${URLS.SIGN_IN}`)
+          }}/>
+        </div>
+      </div>
+    ]
   }
 
   
@@ -99,13 +115,9 @@ class StorePage extends React.Component {
                 Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
             }}/>
 
-          <p className={'presale-text'}>{_t('presale start in')}</p>
-          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
-          <p className={'presale-time'}>({Config.PRESALE_DATE})</p>
-
-          <ButtonNew className={'presale-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
-            this.props.history.push(`/${URLS.SIGN_IN}`)
-          }}/>
+          <Container size={Container.sizes.SMALL}>
+            <ReferralView className={'referral-box'} />
+          </Container>
 
           <Container className={'store-page__main'}>
             {

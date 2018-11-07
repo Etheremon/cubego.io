@@ -14,7 +14,7 @@
   <meta property="og:type"               content="website" />
   <meta property="og:title"              content="Cubego - Shape your Squad" />
   <meta property="og:description"        content="Cubego or Cubegoes, are 3D building block(s) which enable you to build your very own bespoke and personalised 3D models called Cubegon. Let's immerse into a world of limitless creativity!" />
-  <meta property="og:image"              content="https://www.Cubego.io/assets/images/fb-banner.png" />
+  <meta property="og:image"              content="https://www.cubego.io/assets/images/fb-banner-2.png" />
   <!-- END Facebook OG Tag -->
 
   <!-- Favicon -->
@@ -54,6 +54,26 @@
 </head>
 
 <body id="body">
+
+  <!-- Facebook SDK -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1866800366770376',
+        xfbml      : true,
+        version    : 'v3.0'
+      });
+      FB.AppEvents.logPageView();
+    };
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- End Facebook SDK -->
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111363129-1"></script>

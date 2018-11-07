@@ -10,6 +10,7 @@
   color: $white95;
 
   .sign-in-page__app {
+    text-align: center;
     img {
       width: 160px;
     }
@@ -20,10 +21,129 @@
     }
     .desc {
       padding-top: 4px;
-      font-size: $font-size-big;
+      font-size: $font-size-medium;
+      line-height: 2;
     }
     .btns {
       padding-top: 20px;
+    }
+
+    .subscription__container {
+      text-align: center;
+      margin: 24px auto 0 auto;
+
+      width: 500px;
+      max-width: 100%;
+
+      .subscription__boxes {
+        display: flex;
+
+        .channels__label {
+          text-align: left;
+          font-weight: $font-weight-semi-bold;
+          font-size: $font-size-small;
+          padding-bottom: 4px;
+        }
+
+        .subscription__input-box {
+          flex-grow: 1;
+          padding-right: 8px;
+          position: relative;
+
+          input[type=text] {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 80px 0 16px;
+            background-color: #1C3B50;
+            border-radius: 8px;
+            box-shadow: 0 0 12px 3px #36618D;
+            border: 0;
+            height: 36px;
+            outline: none;
+            color: $white;
+            text-align: left;
+            font-size: $font-size-small;
+            font-weight: $font-weight-semi-bold;
+          }
+
+          .subscribe-btn {
+            position: absolute;
+            z-index: 1;
+            right: 16px;
+            bottom: 10px;
+            font-size: $font-size-small;
+            font-family: $f__baloobha;
+            cursor: pointer;
+            text-shadow: 0 0 1px $blue-neon;
+            padding-top: 4px;
+            padding-left: 8px;
+            border-left: 1px solid $blue-neon-darker;
+
+            &.hidden {
+              display: none;
+            }
+          }
+        }
+
+        .subscription__channels {
+
+          img {
+            overflow: hidden;
+            width: 34px;
+            height: 34px;
+            padding: 1px;
+            margin: 0 1px;
+            @include transition-duration;
+            &:hover {
+              filter: invert(100%);
+            }
+          }
+
+        }
+      }
+
+      .subscription-action {
+        margin-top: 16px;
+      }
+    }
+
+    .response__label {
+      margin-top: 8px;
+      font-size: $font-size-smaller;
+      //color: $white;
+    }
+
+    .channels__container {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      //display: none;
+
+      span {
+        color: #24A9F1;
+        font-size: $font-size-big;
+        font-family: $f__baloobha;
+        margin-right: 8px;
+      }
+
+      .channels {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .fab {
+          font-size: $font-size-header-3;
+          color: $white;
+          margin: 5px;
+          @include transition-duration;
+          &:hover {
+            filter: invert(100%);
+          }
+        }
+      }
     }
   }
 

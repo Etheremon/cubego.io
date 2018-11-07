@@ -11,6 +11,7 @@ import Navbar from "../../components/bars/Navbar/Navbar.jsx";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {GetLoggedInUserId} from "../../../reducers/selectors";
 import {Battle} from "../../../games/react_views/Battle/Battle.jsx";
+import * as Utils from "../../../utils/utils";
 
 require("style-loader!./BattlePage.scss");
 
@@ -24,7 +25,7 @@ class _BattlePage extends React.Component {
   }
 
   componentDidMount() {
-
+    Utils.ScrollTop();
   }
 
   componentWillUnmount() {

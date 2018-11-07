@@ -38,6 +38,7 @@ class ModelDetail extends React.Component {
 
   render() {
     const {_t, gonInfo, userInfo} = this.props;
+    console.log(userInfo)
 
     const {allowChangeName} = this.state;
 

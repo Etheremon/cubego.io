@@ -17,6 +17,8 @@ import Loading from "../../../components/Loading/Loading.jsx";
 import SignInForm from "../SigInForm/SignInForm.jsx";
 import {AuthActions} from "../../../../actions/auth";
 import {URLS} from "../../../../constants/general";
+import { Image } from '../../../components/Image/Image.jsx';
+import { SubscriberActions } from '../../../../actions/subscriber';
 
 require("style-loader!./SignInPage.scss");
 
@@ -30,7 +32,10 @@ class SignInPage extends React.Component {
       verified: false,
       registering: false,
       manualLoginErr: '',
+      subscribedResponse: undefined,
     };
+
+    this.input_email = React.createRef();
     this.handleManualLogin = this.handleManualLogin.bind(this);
 
     this.renderManualSignIn = this.renderManualSignIn.bind(this);
@@ -92,6 +97,9 @@ class SignInPage extends React.Component {
 
   renderNotInstalledWallet() {
     let {_t} = this.props;
+    let {subscribedResponse}= this.state;
+
+    let email = this.state.email || '';
 
     return (
       Utils.IsMobile
@@ -109,15 +117,62 @@ class SignInPage extends React.Component {
             {this.renderManualSignIn()}
           </div>
         : <div className={'sign-in-page__app'}>
-            <img src={require('../../../../shared/img/assets/metamask.png')}/>
-            <div className={'header'}>{_t('metamask_not_installed')}</div>
-            <div className={'desc'}>{_t('please_install_metamask')}</div>
-            <div className={'btns'}>
-              <ButtonNew label={_t('Install Metamask')}
-                         showDeco={ButtonNew.deco.BOTH}
-                         onClick={() => {Utils.OpenMetamaskInstallation()}} />
-            </div>
+              <img src={require('../../../../shared/img/assets/metamask.png')}/>
+              <div className={'header'}>{_t('metamask_not_installed')}</div>
+              <div className={'desc'}>{_t('please_install_metamask')}</div>
+              <Container size={Container.sizes.SMALL}>
+                <div className="subscription__container">
 
+                  <div className={'subscription__boxes'}>
+
+                    <div className={'subscription__input-box'}>
+                      <div className="channels__label">
+                        {_t('subscribe_us')}
+                      </div>
+                      <input placeholder={_t('your_email_address')} type="text"
+                             value={email} onChange={(e) => {this.setState({email: e.target.value, subscribedResponse: undefined})}}/>
+                      <div className={`subscribe-btn ${email === '' ? 'hidden' : ''}`}
+                           onClick={() => {
+                             this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
+                               email: email,
+                               callbackFunc: (code, data) => {
+                                 this.setState({
+                                   subscribedResponse: code === window.RESULT_CODE.SUCCESS,
+                                 });
+                               }
+                             }));
+                           }}
+                      >
+                        {_t('subscribe')}
+                      </div>
+                    </div>
+
+                    <div className={'subscription__channels'}>
+                      <div className="channels__label">
+                        {_t('channels')}
+                      </div>
+                      <div className="channels">
+                        <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
+                        <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
+                        <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`response__label ${subscribedResponse === true ? 'm--color--green' : ''} ${subscribedResponse === false ? 'm--color--red' : ''}`}>
+                    {
+                      _t(`${subscribedResponse === true ? 'success_response' :
+                        subscribedResponse !== undefined ? 'err.invalid_email' : ''}`)
+                    }
+                  </div>
+
+                  <div className="subscription-action">
+                    <ButtonNew label={_t('Install Metamask')}
+                            onClick={() => {Utils.OpenMetamaskInstallation()}} />
+                  </div>
+
+                </div>
+              </Container>
             {this.renderManualSignIn()}
           </div>
     )
@@ -138,6 +193,13 @@ class SignInPage extends React.Component {
           <img src={require('../../../../shared/img/assets/metamask.png')}/>
           <div className={'header'}>{_t('metamask_is_locked')}</div>
           <div className={'desc'}>{_t('please_unlock_metamask')}</div>
+
+          {window.ethereum && window.ethereum.enable ?
+            <React.Fragment>
+              <br/><br/>
+              <ButtonNew label={_t('unlock_metamask')} handleOnClick={() => {window.ethereum.enable()}}/>
+            </React.Fragment> : null
+          }
 
           {this.renderManualSignIn()}
         </div>

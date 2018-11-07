@@ -16,6 +16,8 @@ export const Container = ({className, children, size, text, id}) => {
 
 Container.sizes = {
   TEXT: 'text',
+  SUPER_TINY: 'super_tiny',
+  TINY: 'tiny',
   SMALL: 'small',
   NORMAL: 'normal',
   BIG: 'big',
