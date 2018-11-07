@@ -15,7 +15,6 @@ export const GetStructure = (model) => {
 };
 
 export const GetSimplifiedModel = (model) => {
-  console.log("get simplified model", model);
   let res = {};
   ObjUtils.GetValues(model.voxels).forEach(cell => {
     let xx = cell.x-model.modelSize.x[0];

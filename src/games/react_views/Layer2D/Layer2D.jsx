@@ -45,6 +45,7 @@ export class Layer2D extends Component {
   }
 
   onCellClicked(layer, rowIdx, colIdx) {
+    
     if (this.state.hoverColor !== undefined) {
       this.state.cells[rowIdx][colIdx].color = this.state.hoverColor;
       this.setState({cells: this.state.cells});
@@ -90,6 +91,8 @@ export class Layer2D extends Component {
         newState.hoverColor = tools.color.value;
       else if (tools && tools.erase.value)
         newState.hoverColor = null;
+      else if (tools && tools.pickColor.value)
+        newState.hoverColor = -1;
 
       this.setState(newState);
     }
@@ -122,7 +125,9 @@ export class Layer2D extends Component {
                   hoverStyle = {backgroundColor: `${hoverColor.color}`, opacity: hoverColor.opacity || 1};
                 else if (hoverColor === null)
                   hoverStyle = {};
-                else
+                else if (hoverColor === -1)
+                  hoverStyle = {...cellStyle, opacity: 0.9};
+                else 
                   hoverStyle = cellStyle;
 
                 return (

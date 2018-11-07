@@ -314,6 +314,21 @@ Tools.move = ({key='move', value=true, ...extra}) => ({
   },
 });
 
+Tools.pickColor = ({key='pickColor', value=true, ...extra}) => ({
+  ...extra,
+  key,
+  value,
+  type: ToolTypes.mode,
+  onCellClicked: ({toolManager, cells}) => {
+    let cellIndex = `${cells[0].x}_${cells[0].y}_${cells[0].z}`;
+    let variant = toolManager.model.voxels[cellIndex] ? toolManager.model.voxels[cellIndex].color : undefined;
+    console.log(toolManager,cells, variant)
+    if (variant !== undefined) {
+      toolManager.onToolClicked({key: toolManager['_tools'].color.key, value: variant});
+    }
+  },
+});
+
 Tools.draw = ({key='draw', value=true, ...extra}) => ({
   ...extra,
   key,
@@ -354,7 +369,6 @@ Tools.paint = ({key='paint', value=true, ...extra}) => ({
         updateIdx = newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)].updateIdx;
         updateIdx = updateIdx ? updateIdx + 1 : 0;
       }
-
       newModel['voxels'][GetCellKey(cell.x, cell.y, cell.z)] = {
         ...cell,
         color: CloneDeep(tools.color.value),

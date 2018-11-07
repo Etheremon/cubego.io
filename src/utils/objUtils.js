@@ -71,3 +71,7 @@ export const Map = (obj, func) => {
   });
   return result;
 };
+
+export const ConvertToArray = (obj) => {
+  return Array.isArray(obj) ? obj : obj !== undefined && obj !== null ? [obj] : [];
+}

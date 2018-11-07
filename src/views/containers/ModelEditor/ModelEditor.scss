@@ -51,8 +51,21 @@
         padding: 4px;
         text-align: center;
         cursor: pointer;
+        position: relative;
         &:hover {
           background-color: $c__blue-3;
+        }
+
+        .fa-times-circle {
+          position: absolute;
+          right: 8px;
+          top: 8px;
+          font-size: $font-size-header-1;
+          color: $white;
+          opacity: 0.2;
+          &:hover {
+            opacity: 1;
+          }
         }
       }
       .img {

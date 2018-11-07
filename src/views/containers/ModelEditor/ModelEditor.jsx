@@ -27,11 +27,11 @@ import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import {URLS} from "../../../constants/general";
 import {SERVER_URL} from "../../../config";
-import {IsEqual} from "../../../utils/objUtils";
 import {GON_TIER} from "../../../constants/cubegon";
 import {CloneDeep} from "../../../utils/objUtils";
 import * as LogicUtils from "../../../utils/logicUtils";
-
+import {IsEqual} from "../../../utils/objUtils";
+ 
 require("style-loader!./ModelEditor.scss");
 
 class _ModelEditor extends React.Component {
@@ -41,7 +41,6 @@ class _ModelEditor extends React.Component {
     this.state = {
       showTemplates: false,
       scale2D: 1,
-      selectedMaterial: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic],
       saved: false,
       validating: false,
     };
@@ -62,6 +61,10 @@ class _ModelEditor extends React.Component {
       erase: Tools.erase({value: false, hotKey: 'D', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
           this.onToolChange(this.tools.erase.key, !currentVal);
+      }}),
+      pickColor: Tools.pickColor({value: false, hotKey: 'P', onClick: () => {
+        let currentVal = this.toolManager.getToolValue(this.tools.pickColor.key);
+        this.onToolChange(this.tools.pickColor.key, !currentVal);
       }}),
       copyLayer: Tools.copyLayer({
         hotKey: 'V',
@@ -96,7 +99,6 @@ class _ModelEditor extends React.Component {
         hotKey: 'Z',
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
-
       color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic].variants[1]}),
       view2D: Tools.view2D({
         hotKey: 'X',
@@ -126,11 +128,15 @@ class _ModelEditor extends React.Component {
     this.renderError = this.renderError.bind(this);
 
     this.isHoldingKey = {};
+    this.selectedVariants = {};
+    this.selectedModelIndex = -1;
   }
 
   componentDidMount() {
     if (this.props.savedModel) {
-      this.toolManager.addModel({model: this.props.savedModel});
+      this.props.savedModel.map((item) => {
+        this.toolManager.addModel({model: item});
+      }) 
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
@@ -151,6 +157,12 @@ class _ModelEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
+    }
+
+    if (nextProps.savedModel.length > 0) {
+      this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
+    } else if (nextProps.savedModel.length < this.props.savedModel.length) {
+      this.onTemplateSelect(MODEL_TEMPLATES[MODEL_TEMPLATES.length - 1]);
     }
   }
 
@@ -189,6 +201,8 @@ class _ModelEditor extends React.Component {
       this.toolManager.onCellClicked(cell);
     else
       this.toolManager.onCellClicked([cell]);
+    
+    
     this.forceUpdate();
   }
 
@@ -197,14 +211,16 @@ class _ModelEditor extends React.Component {
       this.toolManager.addModel({model: LogicUtils.GetFullModel(template.model_str)});
       this.forceUpdate();
     }
+    this.selectedModelIndex = -1;
     this.setState({showTemplates: false});
   }
 
-  onSavedModelSelect() {
-    let {savedModel} = this.props;
-    if (savedModel) {
-      this.toolManager.addModel({model: savedModel});
+  onSavedModelSelect(model, idx) {
+    if (model) {
+      this.toolManager.addModel({model: model});
     }
+    console.log(idx)
+    this.selectedModelIndex = idx;
     this.setState({showTemplates: false});
   }
 
@@ -222,7 +238,7 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     this.setState({saved: true});
-    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
+    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
   }
 
   reviewModel(verified=false, text) {
@@ -240,7 +256,7 @@ class _ModelEditor extends React.Component {
       }
 
       this.setState({validating: true, showRegisterPopup: false});
-      this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model}));
+      this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
       this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
         model: CloneDeep(this.toolManager.model),
         stats: CloneDeep(this.toolManager.stats),
@@ -310,8 +326,11 @@ class _ModelEditor extends React.Component {
 
   render() {
     let {_t, savedModel, userInfo, userCubes} = this.props;
-    let {selectedMaterial, saved} = this.state;
-
+    let {saved} = this.state;
+    let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
+    let selectedMaterial = CUBE_MATERIALS[selectedColor.material_id];
+    console.log(savedModel)
+    
     let btns = [
       <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
                  onMouseOut={() => {this.setState({saved: false})}}/>,
@@ -416,8 +435,14 @@ class _ModelEditor extends React.Component {
                                 hotKey={this.tools.erase.hotKey}
                     />
                   </div>
+                  <div className={'item'}>
+                    <ToggleTool label={_t('pick_color')} img={require('../../../shared/img/icons/icon-picker.png')}
+                                active={this.toolManager.getToolValue(this.tools.pickColor.key)}
+                                onClick={this.tools.pickColor.onClick}
+                                hotKey={this.tools.pickColor.hotKey}
+                    />
+                  </div>
                 </div>
-
                 <div className={'group'}>
                   <div className={'item'}>
                     <ToggleTool label={_t('undo')} img={require('../../../shared/img/icons/icon-undo.png')}
@@ -487,13 +512,17 @@ class _ModelEditor extends React.Component {
                       </div>
                     </div>
                   ))}
-                  {savedModel ?
-                    <div className={'template'} onClick={this.onSavedModelSelect}>
+                  {savedModel.map((item, idx) => {
+                    return <div className={'template'} key={idx} onClick={() => {this.onSavedModelSelect(item, idx)}}>
                       <img className={'img'} src={require('../../../shared/sample_models/0.png')} />
                       <div className={'name'}>
-                        {_t('saved model')}
+                        {_t(`saved model ${idx}`)}
                       </div>
-                    </div> : null
+                      <i class="far fa-times-circle" onClick={() => {
+                        this.props.dispatch(ModelActions.DELETE_MODEL.init.func({modelIndex: idx}));
+                      }}></i>
+                    </div>
+                  })
                   }
                 </div> : null
               }
@@ -599,8 +628,7 @@ class _ModelEditor extends React.Component {
                        className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
                        tooltip={_t(material.name)} tooltip-position="bottom"
                        onClick={() => {
-                         this.setState({selectedMaterial: material});
-                         this.onToolChange(this.tools.color.key, material.variants[1]);
+                         this.onToolChange(this.tools.color.key, material.variants[this.selectedVariants[material.class_id] || 1]);
                        }}>
                     <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}
@@ -614,9 +642,12 @@ class _ModelEditor extends React.Component {
             <div className="model-editor__tool">
               <div className={'model-editor__colors'}>
                 <ColorTool toolKey={this.tools.color.key}
-                           value={this.toolManager.getToolValue(this.tools.color.key)}
+                           value={selectedColor}
                            options={selectedMaterial.variants}
-                           onChange={(val) => {this.onToolChange(this.tools.color.key, val)}}
+                           onChange={(val) => {
+                             this.onToolChange(this.tools.color.key, val);
+                             this.selectedVariants[val.material_id] = val.variant_id;
+                           }}
                 />
                 {colorNote}
               </div>
