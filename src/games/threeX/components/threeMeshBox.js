@@ -6,6 +6,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     super();
     this.props = {};
     this.originalOpacity = 1;
+    this.boxHelper = null;
   }
 
   static create({scene}, props) {
@@ -41,6 +42,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
 
     if (!props.noBox) {
       let boxHelper = new window.THREE.BoxHelper(cubeMesh, wireFrameColor);
+      meshContainer.boxHelper = boxHelper;
       cubeMesh.add(boxHelper);
     }
 
@@ -69,6 +71,8 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     this.props.variantColor = color;
     let variantColor = parseInt(this.props.variantColor.replace('#', ''), 16);
     this.renderer.material.color.setHex(variantColor);
+    this.boxHelper.material.color.setHex(variantColor);
+
   }
 
   set variantEmissive(color) {

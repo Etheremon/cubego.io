@@ -6219,47 +6219,47 @@
     {
       "name": "idle_ground",
       "from": 0,
-      "to": 15
+      "to": 16
     },
     {
       "name": "attack_normal",
       "from": 16,
-      "to": 31
+      "to": 32
     },
     {
       "name": "roar",
       "from": 32,
-      "to": 63
+      "to": 64
     },
     {
       "name": "die",
       "from": 64,
-      "to": 154
+      "to": 155
     },
     {
       "name": "winning",
       "from": 155,
-      "to": 195
+      "to": 196
     },
     {
       "name": "hit",
       "from": 196,
-      "to": 216
+      "to": 217
     },
     {
       "name": "tackle",
       "from": 217,
-      "to": 244
+      "to": 245
     },
     {
       "name": "smashup",
       "from": 244,
-      "to": 266
+      "to": 267
     },
     {
       "name": "tackle_move",
       "from": 267,
-      "to": 294
+      "to": 295
     }
   ],
   "needInitialSkinMatrix": false
