@@ -5,17 +5,34 @@ import {ThreeScene} from "../components/threeScene";
 let rootContainer = null;
 let scene;
 
+function isWebGLAvailable(canvas) {
+  try {
+    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+  } catch (e) {
+    return false;
+  }
+}
+
 function createRenderer(canvas, options) {
   scene = ThreeScene.create();
-  scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
-  // scene.renderer = new window.THREE.CanvasRenderer({canvas, antialias: true, alpha: true});
-
+  if (!isWebGLAvailable(canvas)) {
+    scene.renderer = new window.THREE.CanvasRenderer({canvas, alpha: true});
+    scene.renderer.setPixelRatio( window.devicePixelRatio );
+    scene.renderer.setSize( canvas.width, canvas.height );
+    scene.isWebGL = false;
+  } else {
+    scene.isWebGL = true;
+    scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
+  }
   scene.canvas = canvas;
   return ThreeXFiberRenderer.createContainer(scene);
 }
 
 function render(element, container, options = {}) {
   rootContainer = createRenderer(container, options);
+  if (!rootContainer) {
+
+  }
   ThreeXFiberRenderer.updateContainer(element, rootContainer, null);
   return ThreeXFiberRenderer.getPublicRootInstance(rootContainer);
 }

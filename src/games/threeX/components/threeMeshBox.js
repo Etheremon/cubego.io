@@ -9,8 +9,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     this.boxHelper = null;
   }
 
-  static create({scene}, props) {
-    this.props = props;
+  static create({scene, isWebGL}, props) {
     let meshContainer = new ThreeMeshBox();
     let size = props.size || 10;
     let color = parseInt(props.color, 16);
@@ -19,16 +18,8 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
       : new window.THREE.BoxBufferGeometry(size.x, size.y, size.z);
     let material = null;
 
-    if (props.materialId) {
-      material = ThreeX.getMaterial(props.materialId).clone();
-      if (props.variantColor) {
-        let variantColor = parseInt(props.variantColor.replace('#', ''), 16);
-        material.color.setHex(variantColor);
-      }
-      if (props.variantEmissive) {
-        let variantEmissive = parseInt(props.variantEmissive.replace('#', ''), 16);
-        material.emissive.setHex(variantEmissive);
-      }
+    if (props.materialId && props.variantId) {
+      material = ThreeX.getMaterial(props.materialId, props.variantId, isWebGL);
     } else {
       material = new window.THREE.MeshBasicMaterial({color: color, transparent: true, depthWrite: false});
     }
@@ -55,46 +46,37 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     if (props.renderOrder) {
       cubeMesh.renderOrder = props.renderOrder;
     }
+    meshContainer.setProps(props);
     meshContainer.renderer = cubeMesh;
     return meshContainer;
   }
 
   set color(color) {
-    this.renderer.material.color.setHex(parseInt(color, 16));
+    // this.renderer.material.color.setHex(parseInt(color, 16));
   }
 
   set position(position) {
     this.renderer.position.set(position.x, position.y, position.z);
   }
 
-  set variantColor(color) {
-    this.props.variantColor = color;
-    let variantColor = parseInt(this.props.variantColor.replace('#', ''), 16);
-    this.renderer.material.color.setHex(variantColor);
-    this.boxHelper.material.color.setHex(variantColor);
-
-  }
-
-  set variantEmissive(color) {
-    this.props.variantEmissive = color;
-    let variantEmissive = parseInt(this.props.variantEmissive.replace('#', ''), 16);
-    this.renderer.material.emissive.setHex(variantEmissive);
+  set variantId(id) {
+    if (!id) {
+      return;
+    }
+    this.props.variantId = id;
+    let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
+    if(material)
+      this.renderer.material = material;
   }
 
   set materialId(id) {
     if (!id) {
       return;
     }
-    let material = ThreeX.getMaterial(id).clone();
-    if (this.props.variantColor) {
-      let variantColor = parseInt(this.props.variantColor.replace('#', ''), 16);
-      material.color.setHex(variantColor);
-    }
-    if (this.props.variantEmissive) {
-      let variantEmissive = parseInt(this.props.variantEmissive.replace('#', ''), 16);
-      material.emissive.setHex(variantEmissive);
-    }
-    this.renderer.material = material;
+    this.props.materialId = id;
+    let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
+    if(material)
+      this.renderer.material = material;
   }
 
   set highlight(isHighLight) {

@@ -28,7 +28,8 @@ const SELECT_TOOL = 'move';
 const DRAW_TOOL = 'draw';
 const PAINT_TOOL = 'paint';
 const ERASE_TOOL = 'erase';
-const TOOL_KEYS = [SELECT_TOOL, DRAW_TOOL, PAINT_TOOL, ERASE_TOOL];
+const PICK_COLOR_TOOL = 'pickColor';
+const TOOL_KEYS = [SELECT_TOOL, DRAW_TOOL, PAINT_TOOL, ERASE_TOOL, PICK_COLOR_TOOL];
 const ARROW_DISTANCE = 100;
 
 class VoxViewerThree extends Component {
@@ -49,7 +50,7 @@ class VoxViewerThree extends Component {
     this.selectedIdx = null;
     if (!props.tools) {
       this.tools = props.tools;
-      this.hoverColor = '0x' + fullColorHex(props.tools.color.value);
+      this.hoverColor = '0x' + props.tools.color.value.color.replace('#', '');
     }
     this.plane = null;
     this.rendererObjects = [];
@@ -80,7 +81,11 @@ class VoxViewerThree extends Component {
                width={size.y * SIZE} height={size.x * SIZE}
         />,
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
-               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: size.y * SIZE / 2 + z + ARROW_DISTANCE}}
+               position={{
+                 x: x,
+                 y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y,
+                 z: size.y * SIZE / 2 + z + ARROW_DISTANCE
+               }}
                rotation={{x: Math.PI / 2, y: Math.PI, z: 0}}
         />,
         <Grid width={size.y * SIZE / 2} height={size.x * SIZE / 2} linesHeight={size.x} linesWidth={size.y}
@@ -94,9 +99,8 @@ class VoxViewerThree extends Component {
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
-      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey}
-                             ref={(ref) => this.objects.push(ref)} variantColor={voxel.color.color}
-                             position={position} variantEmissive={voxel.color.emissive}
+      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey} variantId={voxel.color.variant_id}
+                             ref={(ref) => this.objects.push(ref)} position={position}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });
 
@@ -132,7 +136,7 @@ class VoxViewerThree extends Component {
 
   setNewTools(tools) {
     this.tools = tools;
-    this.hoverColor = '0x' + fullColorHex(this.tools.color.value);
+    this.hoverColor = '0x' + tools.color.value.color.replace('#', '');
     TOOL_KEYS.forEach((toolKey) => {
       if (tools[toolKey].value) {
         this.featureSelected = toolKey;
@@ -290,6 +294,9 @@ class VoxViewerThree extends Component {
       case PAINT_TOOL:
         this.showPaintingCube(intersect);
         break;
+      case PICK_COLOR_TOOL:
+        this.showColorPickerCube(intersect);
+        break;
       default:
         this.showSelectingCube(intersect);
         break;
@@ -316,8 +323,12 @@ class VoxViewerThree extends Component {
   }
 
   showDeleteCube(intersect) {
-    intersect.object.material.opacity = 0.3;
-    this.objectHovered = intersect.object;
+    this.rollOverMesh.renderer.visible = true;
+    let position = intersect.object.position.clone();
+    this.rollOverMesh.renderer.position.copy(position);
+    this.objectHovered = this.rollOverMesh.renderer;
+    this.updateHoverBoxColor(intersect.object.material.color);
+    this.objectHovered.material.opacity = 0.6;
   }
 
   showPaintingCube(intersect) {
@@ -325,6 +336,15 @@ class VoxViewerThree extends Component {
     let position = intersect.object.position.clone();
     this.updateHoverBoxColor(this.hoverColor);
     this.rollOverMesh.renderer.position.copy(position);
+  }
+
+  showColorPickerCube(intersect) {
+    this.rollOverMesh.renderer.visible = true;
+    let position = intersect.object.position.clone();
+    this.rollOverMesh.renderer.position.copy(position);
+    this.objectHovered = this.rollOverMesh.renderer;
+    this.updateHoverBoxColor(intersect.object.material.color);
+    this.objectHovered.material.opacity = 0.8;
   }
 
   render() {
@@ -357,9 +377,9 @@ class VoxViewerThree extends Component {
         }
 
         {/*{!this.props.viewOnly ?*/}
-          {/*<BoxHelper ref={(ref) => {*/}
-            {/*this.boxHelper = ref*/}
-          {/*}}/> : null*/}
+        {/*<BoxHelper ref={(ref) => {*/}
+        {/*this.boxHelper = ref*/}
+        {/*}}/> : null*/}
         {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
