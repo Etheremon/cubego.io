@@ -199,7 +199,7 @@ class SignInPage extends React.Component {
           {window.ethereum && window.ethereum.enable ?
             <React.Fragment>
               <br/><br/>
-              <ButtonNew label={_t('unlock_metamask')} handleOnClick={() => {window.ethereum.enable()}}/>
+              <ButtonNew label={_t('unlock_metamask')} onClick={() => {window.ethereum.enable()}}/>
             </React.Fragment> : null
           }
 
