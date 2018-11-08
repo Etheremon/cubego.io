@@ -111,7 +111,11 @@ class SignInForm extends React.Component {
                               if (!userInfo.username) {
                                 AutoTrack(CustomTrackList.firstRegister);
                               }
-                              this.setState({submitting: false, submitError: data, submitSuccess: _t('Your information is updated!'), showNext: true})
+                              this.setState({
+                                submitting: false,
+                                submitError: data,
+                                submitSuccess: _t('Your information is updated!'), showNext: true
+                              })
                             }
                         }}))
                        }}/>

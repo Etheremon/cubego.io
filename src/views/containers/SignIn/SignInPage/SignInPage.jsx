@@ -19,6 +19,7 @@ import {AuthActions} from "../../../../actions/auth";
 import {URLS} from "../../../../constants/general";
 import { Image } from '../../../components/Image/Image.jsx';
 import { SubscriberActions } from '../../../../actions/subscriber';
+import ReferralView from "../../Referral/ReferralView.jsx";
 
 require("style-loader!./SignInPage.scss");
 
@@ -42,8 +43,9 @@ class SignInPage extends React.Component {
     this.renderLoading = this.renderLoading.bind(this);
     this.renderNotInstalledWallet = this.renderNotInstalledWallet.bind(this);
     this.renderLockedWallet = this.renderLockedWallet.bind(this);
-    this.renderRegistration = this.renderRegistration.bind(this);
-    this.renderSetting = this.renderSetting.bind(this);
+    this.renderForm = this.renderForm.bind(this);
+    // this.renderRegistration = this.renderRegistration.bind(this);
+    // this.renderSetting = this.renderSetting.bind(this);
   };
 
   componentWillMount() {
@@ -206,23 +208,26 @@ class SignInPage extends React.Component {
     )
   }
 
-  renderRegistration() {
-    let hasWalletUnlocked = Utils.hasWalletUnlocked();
-    return (
-      <SignInForm metamask={hasWalletUnlocked}
-                  onBack={!hasWalletUnlocked ? () => {
-                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-                  } : null} />
-    )
-  }
+  // renderRegistration() {
+  //   let hasWalletUnlocked = Utils.hasWalletUnlocked();
+  //   return (
+  //     <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SIGN_UP}
+  //                 onBack={!hasWalletUnlocked ? () => {
+  //                   this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+  //                 } : null} />
+  //   )
+  // }
 
-  renderSetting() {
+  renderForm(typ) {
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
     return (
-      <SignInForm metamask={hasWalletUnlocked} type={SignInForm.types.SETTING_INFO}
-                  onBack={!hasWalletUnlocked ? () => {
-                    this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
-                  } : null} />
+      <React.Fragment>
+        <ReferralView className={'referral-box'} />
+        <SignInForm metamask={hasWalletUnlocked} type={typ}
+                    onBack={!hasWalletUnlocked ? () => {
+                      this.props.history.push(`/${URLS.SIGN_IN}?type=sign-in`)
+                    } : null} />
+      </React.Fragment>
     )
   }
 
@@ -244,9 +249,9 @@ class SignInPage extends React.Component {
       }
     } else {
       if (userId && (!userInfo.username || userInfo.username === '')) {
-        content = this.renderRegistration();
+        content = this.renderForm(SignInForm.types.SIGN_UP);
       } else if (userId && userInfo.username) {
-        content = this.renderSetting();
+        content = this.renderForm(SignInForm.types.SETTING_INFO);
       }
     }
 

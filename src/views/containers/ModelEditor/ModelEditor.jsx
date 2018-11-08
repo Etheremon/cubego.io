@@ -62,7 +62,7 @@ class _ModelEditor extends React.Component {
           let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
           this.onToolChange(this.tools.erase.key, !currentVal);
       }}),
-      pickColor: Tools.pickColor({value: false, hotKey: 'P', onClick: () => {
+      pickColor: Tools.pickColor({value: false, hotKey: 'F', onClick: () => {
         let currentVal = this.toolManager.getToolValue(this.tools.pickColor.key);
         this.onToolChange(this.tools.pickColor.key, !currentVal);
       }}),
@@ -136,7 +136,7 @@ class _ModelEditor extends React.Component {
     if (this.props.savedModel) {
       this.props.savedModel.map((item) => {
         this.toolManager.addModel({model: item});
-      }) 
+      });
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);

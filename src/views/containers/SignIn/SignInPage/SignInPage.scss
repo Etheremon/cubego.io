@@ -165,4 +165,16 @@
       }
     }
   }
+
+  .referral-box {
+    position: relative;
+    z-index: 1;
+    .referral-box__container {
+      height: 70px;
+      @include mobile {
+        height: auto;
+      }
+    }
+  }
+
 }
