@@ -322,7 +322,6 @@ Tools.pickColor = ({key='pickColor', value=true, ...extra}) => ({
   onCellClicked: ({toolManager, cells}) => {
     let cellIndex = `${cells[0].x}_${cells[0].y}_${cells[0].z}`;
     let variant = toolManager.model.voxels[cellIndex] ? toolManager.model.voxels[cellIndex].color : undefined;
-    console.log(toolManager,cells, variant)
     if (variant !== undefined) {
       toolManager.onToolClicked({key: toolManager['_tools'].color.key, value: variant});
     }

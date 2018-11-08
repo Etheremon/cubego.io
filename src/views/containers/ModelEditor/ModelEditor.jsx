@@ -219,7 +219,6 @@ class _ModelEditor extends React.Component {
     if (model) {
       this.toolManager.addModel({model: model});
     }
-    console.log(idx)
     this.selectedModelIndex = idx;
     this.setState({showTemplates: false});
   }
@@ -329,8 +328,7 @@ class _ModelEditor extends React.Component {
     let {saved} = this.state;
     let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
     let selectedMaterial = CUBE_MATERIALS[selectedColor.material_id];
-    console.log(savedModel)
-    
+
     let btns = [
       <ButtonNew label={saved ? _t('saved') : _t('save')} color={ButtonNew.colors.TURQUOISE} key={0} onClick={this.saveModel}
                  onMouseOut={() => {this.setState({saved: false})}}/>,
@@ -407,35 +405,45 @@ class _ModelEditor extends React.Component {
                 </div>
 
                 <div className={'group'}>
-                  <div className={'item'}>
+                  <div className={'item'}
+                       tooltip={_t('quick_use_guide', {key: this.tools.move.hotKey})}
+                       tooltip-position={'bottom'}>
                     <ToggleTool label={_t('move')} img={require('../../../shared/img/icons/icon-move.png')}
                                 active={this.toolManager.getToolValue(this.tools.move.key)}
                                 onClick={this.tools.move.onClick}
                                 hotKey={this.tools.move.hotKey}
                     />
                   </div>
-                  <div className={'item'}>
+                  <div className={'item'}
+                       tooltip={_t('quick_use_guide', {key: this.tools.draw.hotKey})}
+                       tooltip-position={'bottom'}>
                     <ToggleTool label={_t('add')} img={require('../../../shared/img/icons/icon-draw.png')}
                                 active={this.toolManager.getToolValue(this.tools.draw.key)}
                                 onClick={this.tools.draw.onClick}
                                 hotKey={this.tools.draw.hotKey}
                     />
                   </div>
-                  <div className={'item'}>
+                  <div className={'item'}
+                       tooltip={_t('quick_use_guide', {key: this.tools.paint.hotKey})}
+                       tooltip-position={'bottom'}>
                     <ToggleTool label={_t('paint')} img={require('../../../shared/img/icons/icon-paint.png')}
                                 active={this.toolManager.getToolValue(this.tools.paint.key)}
                                 onClick={this.tools.paint.onClick}
                                 hotKey={this.tools.paint.hotKey}
                     />
                   </div>
-                  <div className={'item'}>
+                  <div className={'item'}
+                       tooltip={_t('quick_use_guide', {key: this.tools.erase.hotKey})}
+                       tooltip-position={'bottom'}>
                     <ToggleTool label={_t('erase')} img={require('../../../shared/img/icons/icon-erase.png')}
                                 active={this.toolManager.getToolValue(this.tools.erase.key)}
                                 onClick={this.tools.erase.onClick}
                                 hotKey={this.tools.erase.hotKey}
                     />
                   </div>
-                  <div className={'item'}>
+                  <div className={'item'}
+                       tooltip={_t('quick_use_guide', {key: this.tools.pickColor.hotKey})}
+                       tooltip-position={'bottom'}>
                     <ToggleTool label={_t('pick_color')} img={require('../../../shared/img/icons/icon-picker.png')}
                                 active={this.toolManager.getToolValue(this.tools.pickColor.key)}
                                 onClick={this.tools.pickColor.onClick}
