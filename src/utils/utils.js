@@ -2,6 +2,11 @@
 export const IsLiveServer = window.location.hostname === "cubego.io"
   || window.location.hostname === "www.cubego.io";
 
+export const IsLocalhost = window.location.hostname === "localhost"
+  || window.location.hostname === "www.localhost"
+  || window.location.hostname === "127.0.0.1"
+  || window.location.hostname === "222.127.0.0.1";
+
 export const CutoffString = (s, p) => (!s || s.length <= p ? s : `${s.substr(0, p)}...`);
 
 export const BoundVal = (val, mmin, mmax) => Math.max(mmin, Math.min(val, mmax));

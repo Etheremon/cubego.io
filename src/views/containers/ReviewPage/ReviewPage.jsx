@@ -18,6 +18,7 @@ import {URLS} from "../../../constants/general";
 import {ModelActions} from "../../../actions/model";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import * as GonUtils from "../../../utils/logicUtils";
+import * as Config from "../../../config";
 
 require("style-loader!./ReviewPage.scss");
 
@@ -58,9 +59,9 @@ class ReviewPage extends React.Component {
   }
 
   checkOut() {
-    this.setState({showError: true});
-
-    if (!Utils.IsLiveServer) {
+    if (!Config.ENABLE_MODEL_SUBMIT) {
+      this.setState({showError: true});
+    } else {
       this.setState({submitting: true});
       this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
         model: this.props.validatedModel.model,

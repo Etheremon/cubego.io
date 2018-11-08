@@ -31,6 +31,7 @@ import {GON_TIER} from "../../../constants/cubegon";
 import {CloneDeep} from "../../../utils/objUtils";
 import * as LogicUtils from "../../../utils/logicUtils";
 import {IsEqual} from "../../../utils/objUtils";
+import * as Config from "../../../config";
  
 require("style-loader!./ModelEditor.scss");
 
@@ -253,7 +254,15 @@ class _ModelEditor extends React.Component {
         stats: CloneDeep(this.toolManager.stats),
         callbackFunc: (code, data) => {
           if (code === window.RESULT_CODE.SUCCESS) {
-            this.props.history.push(`/${URLS.REVIEW_GON}`);
+            if (Config.SHOW_CLOSEST_MODEL) {
+              this.setState({
+                validating: false,
+                showModelReview: true,
+                reviewError: {code, data, nextFunc: () => {this.props.history.push(`/${URLS.REVIEW_GON}`);}},
+              });
+            } else {
+              this.props.history.push(`/${URLS.REVIEW_GON}`);
+            }
           } else {
             this.setState({
               validating: false,
@@ -267,7 +276,7 @@ class _ModelEditor extends React.Component {
   }
 
   renderError() {
-    let {code, data} = this.state.reviewError;
+    let {code, data, nextFunc} = this.state.reviewError;
     let {_t} = this.props;
 
     let content = null;
@@ -278,7 +287,8 @@ class _ModelEditor extends React.Component {
           {data || _t('err.not_enough_cube')}
         </div>
       )
-    } else if (code === window.RESULT_CODE.ERROR_CUBEGO_SHAPE_MATCH) {
+    }
+    else if (code === window.RESULT_CODE.ERROR_CUBEGO_SHAPE_MATCH) {
       content = (
         <React.Fragment>
           <div className={'header'}>
@@ -288,19 +298,40 @@ class _ModelEditor extends React.Component {
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
                 <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
-                <p>{_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+                <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
               </div>
             ))}
           </div>
         </React.Fragment>
       )
-    } else if (code === window.RESULT_CODE.ERROR_CUBEGO_MODEL_MATCH) {
+    }
+    else if (code === window.RESULT_CODE.ERROR_CUBEGO_MODEL_MATCH) {
       content = (
         <div className={'header'}>
           {_t('err.model_already_registered')}
         </div>
       )
-    } else {
+    }
+    else if (code === window.RESULT_CODE.SUCCESS) {
+      let gon = data['closest_shape'];
+      content = (
+        <React.Fragment>
+          <div className={'header'}>
+            {_t('closest shape')}
+          </div>
+          <div className={'matched-gons'}>
+            <div className={'matched-gon'}>
+              <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
+              <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+            </div>
+          </div>
+          {nextFunc ?
+            <ButtonNew label={_t('next')} onClick={() => {nextFunc()}}/> : null
+          }
+        </React.Fragment>
+      )
+    }
+    else {
       content = (
         <div className={'header'}>
           {_t('err.model_not_valid')}
@@ -518,7 +549,8 @@ class _ModelEditor extends React.Component {
                       <div className={'name'}>
                         {_t(`saved model ${idx}`)}
                       </div>
-                      <i className="far fa-times-circle" onClick={() => {
+                      <i className="far fa-times-circle" onClick={(e) => {
+                        e.stopPropagation();
                         this.props.dispatch(ModelActions.DELETE_MODEL.init.func({modelIndex: idx}));
                       }}/>
                     </div>
