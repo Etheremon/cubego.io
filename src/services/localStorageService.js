@@ -7,6 +7,7 @@ export const Fields = {
   savedModel: 'saved-model',
   showLayer: 'show-layer',
   referralCode: 'referral-code',
+  localization: 'localization',
 };
 
 export const SetItem = (key, value)  => {

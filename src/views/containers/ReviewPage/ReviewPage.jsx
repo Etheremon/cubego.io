@@ -60,22 +60,24 @@ class ReviewPage extends React.Component {
   checkOut() {
     this.setState({showError: true});
 
-    // this.setState({submitting: true});
-    // this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
-    //   model: this.props.validatedModel.model,
-    //   structure: this.props.validatedModel.model.structure,
-    //   energy: parseInt(this.state.sliderValue),
-    //   name: this.nameInput ? this.nameInput.value : '',
-    //   image: this.modelCanvas.getBase64Image(),
-    //   callbackFunc: (code, data) => {
-    //     this.setState({
-    //       submitting: false,
-    //       showPopup: true,
-    //       submitResponse: data,
-    //       isSuccess: code === window.RESULT_CODE.SUCCESS,
-    //     });
-    //   }
-    // }));
+    if (!Utils.IsLiveServer) {
+      this.setState({submitting: true});
+      this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
+        model: this.props.validatedModel.model,
+        structure: this.props.validatedModel.model.structure,
+        energy: parseInt(this.state.sliderValue),
+        name: this.nameInput ? this.nameInput.value : '',
+        image: this.modelCanvas.getBase64Image(),
+        callbackFunc: (code, data) => {
+          this.setState({
+            submitting: false,
+            showPopup: true,
+            submitResponse: data,
+            isSuccess: code === window.RESULT_CODE.SUCCESS,
+          });
+        }
+      }));
+    }
   }
 
   renderSubmitResult() {
@@ -245,7 +247,7 @@ class ReviewPage extends React.Component {
                       <div className="slider-bar__container">
                         {
                           energyRange.map((item, idx) => 
-                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}% - ${idx}px)`}}
+                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}%)`}}
                                  className="indicator">
                               <div className={`line ${this.state.hiddenSliderIndicators.indexOf(item) === -1 ? '' : 'hidden'}`}>
                                 <div>{item}</div>

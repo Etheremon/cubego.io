@@ -87,6 +87,7 @@
         }
 
         .subscription__channels {
+          flex-shrink: 0;
 
           img {
             overflow: hidden;
