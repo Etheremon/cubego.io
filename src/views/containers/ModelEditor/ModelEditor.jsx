@@ -133,10 +133,8 @@ class _ModelEditor extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.savedModel) {
-      this.props.savedModel.map((item) => {
-        this.toolManager.addModel({model: item});
-      });
+    if (this.props.savedModel && this.props.savedModel.length) {
+      this.toolManager.addModel({model: this.props.savedModel[0]});
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
@@ -157,12 +155,6 @@ class _ModelEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
-    }
-
-    if (nextProps.savedModel.length > 0) {
-      this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
-    } else if (nextProps.savedModel.length < this.props.savedModel.length) {
-      this.onTemplateSelect(MODEL_TEMPLATES[MODEL_TEMPLATES.length - 1]);
     }
   }
 
@@ -526,9 +518,9 @@ class _ModelEditor extends React.Component {
                       <div className={'name'}>
                         {_t(`saved model ${idx}`)}
                       </div>
-                      <i class="far fa-times-circle" onClick={() => {
+                      <i className="far fa-times-circle" onClick={() => {
                         this.props.dispatch(ModelActions.DELETE_MODEL.init.func({modelIndex: idx}));
-                      }}></i>
+                      }}/>
                     </div>
                   })
                   }
