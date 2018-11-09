@@ -18,6 +18,7 @@ Container.sizes = {
   TEXT: 'text',
   SUPER_TINY: 'super_tiny',
   TINY: 'tiny',
+  MINI: 'mini',
   SMALL: 'small',
   NORMAL: 'normal',
   BIG: 'big',

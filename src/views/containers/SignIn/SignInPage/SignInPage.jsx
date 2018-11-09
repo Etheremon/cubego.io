@@ -34,6 +34,7 @@ class SignInPage extends React.Component {
       registering: false,
       manualLoginErr: '',
       subscribedResponse: undefined,
+      tab: 'auto',
     };
 
     this.input_email = React.createRef();
@@ -109,7 +110,7 @@ class SignInPage extends React.Component {
             <img src={require('../../../../shared/img/assets/lock.png')}/>
             <div className={'header'}>{_t('mobile_app_not_installed')}</div>
             <div className={'desc'}>{_t('please_install_mobile_app')}</div>
-            <Container size={Container.sizes.SMALL}>
+            <div>
               <div className="subscription__container">
 
                 <div className={'subscription__boxes'}>
@@ -163,16 +164,13 @@ class SignInPage extends React.Component {
                 </div>
 
               </div>
-            </Container>
-
-
-            {this.renderManualSignIn()}
+            </div>
           </div>
         : <div className={'sign-in-page__app'}>
               <img src={require('../../../../shared/img/assets/metamask.png')}/>
               <div className={'header'}>{_t('metamask_not_installed')}</div>
               <div className={'desc'}>{_t('please_install_metamask')}</div>
-              <Container size={Container.sizes.SMALL}>
+              <div size={Container.sizes.SMALL}>
                 <div className="subscription__container">
 
                   <div className={'subscription__boxes'}>
@@ -224,8 +222,7 @@ class SignInPage extends React.Component {
                   </div>
 
                 </div>
-              </Container>
-            {this.renderManualSignIn()}
+              </div>
           </div>
     )
   }
@@ -238,8 +235,6 @@ class SignInPage extends React.Component {
           <img src={require('../../../../shared/img/assets/lock.png')}/>
           <div className={'header'}>{_t('mobile_app_is_locked')}</div>
           <div className={'desc'}>{_t('please_unlock_mobile_app')}</div>
-
-          {this.renderManualSignIn()}
         </div>
       : <div className={'sign-in-page__app'}>
           <img src={require('../../../../shared/img/assets/metamask.png')}/>
@@ -252,8 +247,6 @@ class SignInPage extends React.Component {
               <ButtonNew label={_t('unlock_metamask')} onClick={() => {window.ethereum.enable()}}/>
             </React.Fragment> : null
           }
-
-          {this.renderManualSignIn()}
         </div>
     )
   }
@@ -282,7 +275,8 @@ class SignInPage extends React.Component {
   }
 
   render() {
-    let {userId, userInfo, type} = this.props;
+    let {userId, userInfo, type, _t} = this.props;
+    let {tab} = this.state;
 
     let hasWalletSupported = Utils.HasWalletSupported();
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
@@ -292,11 +286,29 @@ class SignInPage extends React.Component {
     if (userId === undefined || userInfo === undefined) {
       content = this.renderLoading();
     } else if (!hasWalletUnlocked && (!userId || type === 'sign-in')) {
-      if (!hasWalletSupported) {
-        content = this.renderNotInstalledWallet();
-      } else if (!hasWalletUnlocked) {
-        content = this.renderLockedWallet();
-      }
+      content = (
+        <div className={'wallet-tab'}>
+          <div className={'sing-in-page__tabs'}>
+            <div className={`tab ${tab === 'auto' ? 'active' : ''}`} onClick={() => {this.setState({tab: 'auto'})}}>
+              {_t('auto sign in')}
+            </div>
+            <div className={`tab ${tab === 'manual' ? 'active' : ''}`} onClick={() => {this.setState({tab: 'manual'})}}>
+              {_t('manual sign in')}
+            </div>
+          </div>
+
+          {tab === 'auto'
+            ? (!hasWalletSupported ? this.renderNotInstalledWallet() : this.renderLockedWallet())
+            : (this.renderManualSignIn())
+          }
+        </div>
+      );
+
+      // if (!hasWalletSupported) {
+      //   content = this.renderNotInstalledWallet();
+      // } else if (!hasWalletUnlocked) {
+      //   content = this.renderLockedWallet();
+      // }
     } else {
       if (userId && (!userInfo.username || userInfo.username === '')) {
         content = this.renderForm(SignInForm.types.SIGN_UP);
