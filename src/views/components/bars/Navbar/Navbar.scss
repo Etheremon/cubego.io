@@ -18,6 +18,20 @@
     @include transition-duration;
   }
 
+  &.have-feed {
+    .navbar__content {
+      height: 44px !important;
+      img {
+        height: 40px !important;
+      }
+      .logo {
+        .logo_cubego {
+          height: 44px !important;
+        }
+      }
+    }
+  }
+
   &.minifying {
     .navbar__content {
       height: 40px;

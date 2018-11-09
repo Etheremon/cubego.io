@@ -14,7 +14,7 @@ import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import { Icon } from "../../Icon/Icon.jsx";
 import withRouter from "react-router-dom/es/withRouter";
-import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
+import {GetFeed, GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import * as Utils from "../../../../utils/utils";
 import Link from "react-router-dom/es/Link";
 import Notification from "./Notification/Notification.jsx";
@@ -96,10 +96,10 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {currentLanguage, _t, fixed, size, userId, userInfo} = this.props;
+    let {currentLanguage, _t, fixed, size, userId, userInfo, feed} = this.props;
 
     return (
-      <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
+      <div className={`navbar__wrapper ${fixed ? 'fixed' : ''} ${feed ? 'have-feed' : ''}`}>
         <Notification/>
         <Container size={size} className={'navbar__content'}>
 
@@ -197,6 +197,7 @@ const mapStateToProps = (store) => {
     currentLanguage: getActiveLanguage(store.localeReducer),
     userId,
     userInfo: GetUserInfo(store, userId) || {},
+    feed: GetFeed(store),
   };
 };
 
