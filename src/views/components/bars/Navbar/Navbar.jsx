@@ -17,6 +17,7 @@ import withRouter from "react-router-dom/es/withRouter";
 import {GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import * as Utils from "../../../../utils/utils";
 import Link from "react-router-dom/es/Link";
+import Notification from "./Notification/Notification.jsx";
 
 require("style-loader!./Navbar.scss");
 
@@ -99,6 +100,7 @@ class Navbar extends React.Component {
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''}`}>
+        <Notification/>
         <Container size={size} className={'navbar__content'}>
 
           <div className={'logo m--computer-only'}>
