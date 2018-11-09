@@ -9,7 +9,7 @@ export class ThreeAmbientLight extends ThreeComponent {
 
   static create({}, props) {
     let threeAmbientLight = new ThreeAmbientLight();
-    let ambientLight = new window.THREE.AmbientLight(0x000000);
+    let ambientLight = new window.THREE.AmbientLight(0x000000, 1);
 
     let hemiLightHelper = new window.THREE.AmbientLight(ambientLight, 10);
     ambientLight.renderer = ambientLight;

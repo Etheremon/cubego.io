@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  AmbientLight,
+  AmbientLight, DirectionalLight,
   Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera, Plane,
   PointLight,
 } from "../threeX";
@@ -358,17 +358,17 @@ class VoxViewerThree extends Component {
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
-        <AmbientLight/>
-        <HemisphereLight/>
+        {/*<AmbientLight/>*/}
+        {/*<HemisphereLight position={{x: 0, y: 0, z: 0}}/>*/}
 
-        <PointLight position={{x: 0, y: 400, z: 0}}/>
-        <PointLight position={{x: 0, y: -400, z: 0}}/>
+        <DirectionalLight position={{x: -100, y: 100, z: 100}}/>
+        {/*<PointLight position={{x: -1000, y: -1000, z: -1000}}/>*/}
 
-        <PointLight position={{x: 400, y: 0, z: 0}}/>
-        <PointLight position={{x: -400, y: 0, z: 0}}/>
+        {/*<PointLight position={{x: 1000, y: 0, z: 0}}/>*/}
+        {/*<PointLight position={{x: -1000, y: 0, z: 0}}/>*/}
 
-        <PointLight position={{x: 0, y: 0, z: -400}}/>
-        <PointLight position={{x: 0, y: 0, z: 400}}/>
+        {/*<PointLight position={{x: 0, y: 0, z: -1000}}/>*/}
+        {/*<PointLight position={{x: 0, y: 0, z: 1000}}/>*/}
 
         {!this.props.viewOnly ?
           <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
