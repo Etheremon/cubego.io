@@ -1,0 +1,30 @@
+@import '../../../../styles/colors';
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+
+.notification__wrapper {
+  background-color: rgba(62, 190, 33, 0.9);
+  color: $white95;
+  text-align: center;
+  font-size: $font-size-small;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  .widget__container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .notification__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 0 0 5px white;
+    }
+  }
+}
