@@ -48,11 +48,22 @@
     @include animation-keyframes(popup-close, 0.2s, 1);
   }
 
+  &.right {
+    background-color: transparent;
+    text-align: right;
+  }
+
   .widget__popup-wrap {
     position: relative;
     display: inline-flex;
     width: 700px;
     max-width: 100%
+  }
+
+  &.small {
+    .widget__popup-wrap {
+      // width: 600px;
+    }
   }
 
   &.big {

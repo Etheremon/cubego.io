@@ -403,7 +403,8 @@ class _ModelEditor extends React.Component {
           }
 
           {this.state.showModelReview ?
-            <Popup onUnmount={() => {this.setState({showModelReview: false})}}
+            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER} 
+             onUnmount={() => {this.setState({showModelReview: false})}}
                    open={this.state.showModelReview}>
               <div>
                 {this.renderError()}

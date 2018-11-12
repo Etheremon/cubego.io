@@ -7,7 +7,7 @@ export const Languages = [
   { name: 'English', code: 'en', country: 'gb'},
   // { name: 'Korean', code: 'ko', country: 'kr'},
   { name: 'Japanese', code: 'ja', country: 'jp'},
-  // { name: 'Chinese', code: 'zh', country: 'cn'},
+  { name: 'Chinese', code: 'zh', country: 'cn'},
   // { name: 'Vietnamese', code: 'vi', country: 'vn'},
   // { name: 'Thai', code: 'th', country: 'th'},
   // { name: 'French', code: 'fr', country: 'fr'},

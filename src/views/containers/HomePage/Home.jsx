@@ -44,7 +44,7 @@ const advisors = [
 
 const team_1 = [
   {img: require('../../../shared/img/team_members/jarvisnguyen.jpg'), name: 'Jarvis Nguyen', desc: 'team.jarvisnguyen', twitter: 'https://twitter.com/jarvis_ngn', linkedin: 'https://www.linkedin.com/in/jarvisnguyen/'},
-  {img: require('../../../shared/img/team_members/ngonam.jpg'), name: 'Nam Ngo', desc: 'team.namngo', linkedin: 'https://www.linkedin.com/in/ngo-nam-nedrick-89569024'},
+  {img: require('../../../shared/img/team_members/ngonam.jpg'), name: 'Nedrick Ngo', desc: 'team.namngo', linkedin: 'https://www.linkedin.com/in/ngo-nam-nedrick-89569024'},
   {img: require('../../../shared/img/team_members/jaketran.png'), name: 'Jake Tran', desc: 'team.jaketran', linkedin: 'https://www.linkedin.com/in/tri-jake-tran-67132ab6'},
 ];
 
@@ -300,7 +300,7 @@ class HomePage extends React.Component {
                 <a href={'https://www.toshi.org/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/toshi.jpg')} /><p>Coinbase Wallet</p></a>
                 <a href={'https://opensea.io/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/opensea.png')} /><p>OpenSea</p></a>
                 <a href={'https://ginco.io/en/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/ginco.png')} /><p>Ginco</p></a>
-                <a href={'https://dapp.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/dapp.jpg')} /><p>Dapp.com</p></a>
+                <a href={'https://dapp.com/?utm_source=etheremon&utm_medium=etheremon&utm_campaign=etheremon'} target={'_blank'}><img src={require('../../../shared/img/partners/dapp.png')} /><p>Dapp.com</p></a>
               </div>
             </div>
           </InviewMonitor>

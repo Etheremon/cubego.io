@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
+import { PostProcessesOptimization } from "babylonjs";
 
 require("style-loader!./Popup.scss");
 
@@ -62,11 +63,11 @@ class Popup extends React.Component {
   }
 
   render() {
-    let {size, scroll, children, className, onUnmount} = this.props;
+    let {size, scroll, children, className, onUnmount, align} = this.props;
     let open = this.props.open !== undefined ? this.props.open : this.state.open;
 
     return (
-      <div className={`widget__popup ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`}>
+      <div className={`widget__popup ${align} ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`}>
         <div className={'widget__popup-wrap'}>
           <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
             {children}
@@ -86,6 +87,11 @@ class Popup extends React.Component {
 
 }
 
+Popup.align = {
+  RIGHT: 'right',
+  CENTER: 'center',
+}
+
 Popup.sizes = {
   SMALL: 'small',
   NORMAL: 'normal',
@@ -99,6 +105,7 @@ Popup.defaultProps = {
   size: Popup.sizes.NORMAL,
   defaultOpen: false,
   scroll: false,
+  align: Popup.align.CENTER,
   // open: undefined,
 };
 
