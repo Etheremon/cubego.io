@@ -23,6 +23,8 @@ function createRenderer(canvas, options) {
   } else {
     scene.isWebGL = true;
     scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
+    scene.renderer.shadowMap.enabled = true;
+    scene.renderer.shadowMap.type = window.THREE.PCFSoftShadowMap;
   }
   scene.canvas = canvas;
   return ThreeXFiberRenderer.createContainer(scene);

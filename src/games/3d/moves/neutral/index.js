@@ -5,7 +5,7 @@ import MilkDrink from "./MilkDrink";
 const NeutralMove = {
   Tackle,
   GuardianShield,
-  MilkDrink
+  MilkDrink,
 };
 
 export default NeutralMove;

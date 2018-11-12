@@ -28,6 +28,11 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
       material.opacity = props.opacity;
     }
     let cubeMesh = new window.THREE.Mesh(boxGeo, material);
+    if (props.shadow !== false) {
+      cubeMesh.castShadow = true;
+      cubeMesh.receiveShadow = true;
+    }
+
     let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'cccccc';
     let wireFrameColor = parseInt(frameColor, 16);
 
@@ -52,7 +57,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
   }
 
   set color(color) {
-    // this.renderer.material.color.setHex(parseInt(color, 16));
+    this.renderer.material.color.setHex(parseInt(color, 16));
   }
 
   set position(position) {
@@ -65,7 +70,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     }
     this.props.variantId = id;
     let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
-    if(material)
+    if (material)
       this.renderer.material = material;
   }
 
@@ -75,7 +80,7 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     }
     this.props.materialId = id;
     let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
-    if(material)
+    if (material)
       this.renderer.material = material;
   }
 

@@ -189,6 +189,7 @@ class VoxBattle extends Component {
     BabylonX.loaders.addTexture('particle_projectile_141', require('../../shared/particles/textures/projectile_141.png'));
     BabylonX.loaders.addTexture('particle_scratch_01', require('../../shared/particles/textures/scratch_01.png'));
     BabylonX.loaders.addTexture('particle_window_04', require('../../shared/particles/textures/window_04.png'));
+    BabylonX.loaders.addTexture('particle_star', require('../../shared/particles/textures/star.jpg'));
 
     BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
       data.loadedMeshes.forEach((mesh) => {

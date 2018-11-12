@@ -114,7 +114,7 @@ class VoxViewerThree extends Component {
           ? SIZE / 2 + SIZE * this.selectedIdx - this.offsetVector[correctLabel[k]]
           : SIZE * (voxelData.spaceSize[k][1] + voxelData.spaceSize[k][0]) / 2 - this.offsetVector[correctLabel[k]] + SIZE / 2;
       });
-      elements.push(<MeshBox size={hSize} position={hPos} color={'ffffff'} opacity={0.15}
+      elements.push(<MeshBox size={hSize} position={hPos} color={'ffffff'} opacity={0.15} shadow={false}
                              key={`highlight-layer-${this.updateGridIdx}`}/>);
     }
     return elements;
@@ -361,7 +361,7 @@ class VoxViewerThree extends Component {
         {/*<AmbientLight/>*/}
         {/*<HemisphereLight position={{x: 0, y: 0, z: 0}}/>*/}
 
-        <DirectionalLight position={{x: -100, y: 100, z: 100}}/>
+        <DirectionalLight position={{x: -1000, y: 1000, z: 1000}}/>
         {/*<PointLight position={{x: -1000, y: -1000, z: -1000}}/>*/}
 
         {/*<PointLight position={{x: 1000, y: 0, z: 0}}/>*/}
