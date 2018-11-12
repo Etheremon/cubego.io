@@ -51,3 +51,21 @@ function findFunctionByHash(hashes, functionHash) {
       return hashes[i].name;
   }
 }
+
+function callBlockchainFunction(contractInstance, contractAddress, args, callbackFunc, value, gas) {
+  if (isEtherAccountActive()) {
+    contractInstance.apply(null, args.concat({value: value, gas: gas}).concat(function(err, txn_hash) {
+      if (err) {
+        console.log("ERROR_LOG|make_txn_failed|error=", err);
+        callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain transaction fail!!"});
+      } else {
+        callbackFunc(RESULT_CODE.SUCCESS, {"txn_hash": txn_hash})
+      }
+    }));
+  } else {
+    callbackFunc(RESULT_CODE.NO_ACCOUNT_DETECTED, {
+      "txn_data": contractInstance.getData.apply(null, args),
+      "address": contractAddress,
+      "amount": value, "gas": gas});
+  }
+}

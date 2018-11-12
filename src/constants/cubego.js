@@ -153,9 +153,24 @@ export const SUB_MATERIAL_TYPE_POINTS = {
   [1206]: [0, 0, 0, 0, 1],
 };
 
+export const CUBE_MATERIALS_NAME_TO_ID = {
+  diamond: 1,
+  gold: 2,
+  ice: 3,
+  silver: 4,
+  iron: 5,
+  stone: 6,
+  wood: 7,
+  brick: 8,
+  leaf: 9,
+  fur: 10,
+  paper: 11,
+  plastic: 12,
+};
+
 const _CUBE_MATERIALS = {
-  1: {
-    class_id: 1,
+  [CUBE_MATERIALS_NAME_TO_ID.diamond]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.diamond,
     name: 'diamond',
     variants: {
       1: {color: '#93A2B3', emissive: '#1B0F55',},
@@ -167,8 +182,8 @@ const _CUBE_MATERIALS = {
     point: 3000,
     tier: CUBE_TIER_MAP.legend,
   },
-  2: {
-    class_id: 2,
+  [CUBE_MATERIALS_NAME_TO_ID.gold]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.gold,
     name: 'gold',
     variants: {
       1: {color: '#ffffff', emissive: '#573107'}
@@ -176,8 +191,8 @@ const _CUBE_MATERIALS = {
     point: 350,
     tier: CUBE_TIER_MAP.epic,
   },
-  3: {
-    class_id: 3,
+  [CUBE_MATERIALS_NAME_TO_ID.ice]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.ice,
     name: 'ice',
     variants: {
       1: {color: '#5d6569', emissive: '#222222'},
@@ -189,8 +204,8 @@ const _CUBE_MATERIALS = {
     point: 300,
     tier: CUBE_TIER_MAP.epic,
   },
-  4: {
-    class_id: 4,
+  [CUBE_MATERIALS_NAME_TO_ID.silver]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.silver,
     name: 'silver',
     variants: {
       1: {color: '#afafaf', emissive: '#181818'},
@@ -202,8 +217,8 @@ const _CUBE_MATERIALS = {
     point: 300,
     tier: CUBE_TIER_MAP.epic,
   },
-  5: {
-    class_id: 5,
+  [CUBE_MATERIALS_NAME_TO_ID.iron]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.iron,
     name: 'iron',
     variants: {
       1: {color: '#7a8287', emissive: '#1f1431'},
@@ -218,8 +233,8 @@ const _CUBE_MATERIALS = {
     point: 55,
     tier: CUBE_TIER_MAP.rare,
   },
-  6: {
-    class_id: 6,
+  [CUBE_MATERIALS_NAME_TO_ID.stone]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.stone,
     name: 'stone',
     variants: {
       1: {color: '#4a4a48', emissive: '#1e130c'},
@@ -234,8 +249,8 @@ const _CUBE_MATERIALS = {
     point: 50,
     tier: CUBE_TIER_MAP.rare,
   },
-  7: {
-    class_id: 7,
+  [CUBE_MATERIALS_NAME_TO_ID.wood]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.wood,
     name: 'wood',
     variants: {
       1: {color: '#89561b', emissive: '#3e0000'},
@@ -250,8 +265,8 @@ const _CUBE_MATERIALS = {
     point: 50,
     tier: CUBE_TIER_MAP.rare,
   },
-  8: {
-    class_id: 8,
+  [CUBE_MATERIALS_NAME_TO_ID.brick]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.brick,
     name: 'brick',
     variants: {
       1: {color: '#6b4d2b', emissive: '#2d0000'},
@@ -269,8 +284,8 @@ const _CUBE_MATERIALS = {
     point: 5,
     tier: CUBE_TIER_MAP.common,
   },
-  9: {
-    class_id: 9,
+  [CUBE_MATERIALS_NAME_TO_ID.leaf]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.leaf,
     name: 'leaf',
     variants: {
       1: {color: '#646464', emissive: '#011603'},
@@ -285,8 +300,8 @@ const _CUBE_MATERIALS = {
     point: 5,
     tier: CUBE_TIER_MAP.common,
   },
-  10: {
-    class_id: 10,
+  [CUBE_MATERIALS_NAME_TO_ID.fur]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.fur,
     name: 'fur',
     variants: {
       1: {color: '#78593b', emissive: '#221822'},
@@ -306,8 +321,8 @@ const _CUBE_MATERIALS = {
     point: 5,
     tier: CUBE_TIER_MAP.common,
   },
-  11: {
-    class_id: 11,
+  [CUBE_MATERIALS_NAME_TO_ID.paper]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.paper,
     name: 'paper',
     variants: {
       1: {color: '#7f0000', emissive: '#7d2424'},
@@ -327,8 +342,8 @@ const _CUBE_MATERIALS = {
     point: 5,
     tier: CUBE_TIER_MAP.common,
   },
-  12: {
-    class_id: 12,
+  [CUBE_MATERIALS_NAME_TO_ID.plastic]: {
+    class_id: CUBE_MATERIALS_NAME_TO_ID.plastic,
     name: 'plastic',
     variants: {
       1: {color: '#d70000', emissive: '#000000'},
@@ -365,18 +380,3 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cK
     })
   }
 });
-
-export const CUBE_MATERIALS_NAME_TO_ID = {
-  diamond: 1,
-  gold: 2,
-  ice: 3,
-  silver: 4,
-  iron: 5,
-  stone: 6,
-  wood: 7,
-  brick: 8,
-  leaf: 9,
-  fur: 10,
-  paper: 11,
-  plastic: 12,
-};

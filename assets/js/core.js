@@ -7,6 +7,7 @@
 // Global variables
 var currentNetwork = '';
 var contractInstances = {};
+var contractAddress = {};
 var rpcConnected = null;
 var hasWeb3Injected = null;
 var account = undefined;
@@ -14,9 +15,11 @@ var account = undefined;
 
 function initContractInstance(network) {
   if (!network) network = NETWORKS.mainnet;
-  var contracts = CONTRACTS[network];
+  contractAddress = CONTRACTS[network];
   var instances = {};
-  instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contracts.ETHEREMON_DATA_ADDRESS);
+  instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contractAddress.ETHEREMON_DATA_ADDRESS);
+  instances.cubegoPresaleInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
+  instances.cubegoEmontPaymentInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
   return instances;
 }
 
