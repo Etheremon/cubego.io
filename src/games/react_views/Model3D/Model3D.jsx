@@ -43,7 +43,7 @@ export class Model3D extends Component {
   }
 
   getBase64Image() {
-    return this.refs['canvas'].toDataURL()
+    return ThreeX.takeScreenshot();
   }
 
   toggleShowLayer() {
@@ -64,7 +64,7 @@ export class Model3D extends Component {
             />
           </div> : null
         }
-        <canvas id='canvas3D' ref={'canvas'} width="600" height="600"/>
+        <canvas id='canvas3D' width="600" height="600" ref={(canvas) => {window.modelCanvas = canvas}}/>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import {render, stopRender} from "./fiber/render";
+import {render, stopRender, takeScreenshot} from "./fiber/render";
 import {TYPES} from "./components";
 import {getMaterial, loadMaterial} from "./loaders";
 
@@ -15,5 +15,5 @@ export const Plane = TYPES.PLANE;
 export const AmbientLight = TYPES.AMBIENT_LIGHT;
 export const DirectionalLight = TYPES.DIRECTION_LIGHT;
 
-const ThreeX = {render, loadMaterial, getMaterial, stopRender};
+const ThreeX = {render, loadMaterial, getMaterial, stopRender, takeScreenshot};
 export default ThreeX;
