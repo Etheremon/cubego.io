@@ -15,7 +15,7 @@ export const GetStructure = (model) => {
 };
 
 export const GetSimplifiedModel = (model) => {
-  let res = {};
+  let res = {ver: 2};
   ObjUtils.GetValues(model.voxels).forEach(cell => {
     let xx = cell.x-model.modelSize.x[0];
     let yy = cell.y-model.modelSize.y[0];
@@ -32,15 +32,26 @@ export const GetSimplifiedModel = (model) => {
 export const GetFullModel = (simplifiedModel) => {
   if (!simplifiedModel) return simplifiedModel;
   try {
-    return {
+    let res = {
       voxels: ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
-        return {
-          x: cell.x, y: cell.y, z: cell.z,
-          color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
+        if (key === 'ver') return null;
+        if (simplifiedModel['ver'] === undefined) {
+          return {
+            x: cell.x, y: cell.y, z: cell.z,
+            color: {...CUBE_MATERIALS[13-cell.material_id].variants[cell.variant_id]},
+          }
+        } else if (simplifiedModel['ver'] === 2) {
+          return {
+            x: cell.x, y: cell.y, z: cell.z,
+            color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
+          }
         }
       })
     };
+    delete res.voxels['ver'];
+    return res;
   } catch(e) {
+    console.log(e);
     return null;
   }
 };
