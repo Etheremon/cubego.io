@@ -1,7 +1,9 @@
 import AirSlash from "./AirSlash";
+import WindStrike from "./WindStrike";
 
 const AirMove = {
-  AirSlash
+  AirSlash,
+  WindStrike
 };
 
 export default AirMove;

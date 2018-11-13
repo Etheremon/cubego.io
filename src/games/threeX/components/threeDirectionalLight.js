@@ -11,9 +11,9 @@ export class ThreeDirectionalLight extends ThreeComponent {
     let threeDirectionalLight = new ThreeDirectionalLight();
     let directionalLight = new window.THREE.DirectionalLight(props.color || 0xffffff, 2);
     directionalLight.castShadow = true;
-    directionalLight.shadow.bias = -0.0038;
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.bias = -0.0001;
+    directionalLight.shadow.mapSize = new window.THREE.Vector2(512, 512);
+    directionalLight.shadow.radius = 2;
     directionalLight.shadow.camera.near = -1000;
     directionalLight.shadow.camera.far = 2000;
     directionalLight.shadow.camera.left = -canvas.width;

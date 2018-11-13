@@ -21,6 +21,7 @@ import RockThrow from "./moves/earth/RockThrow";
 import LeafThrow from "./moves/grass/LeafThrow";
 import PyroWisp from "./moves/fire/PyroWisp";
 import Tackle from "./moves/neutral/Tackle";
+import WindStrike from "./moves/air/WindStrike";
 
 const SIZE = 0.2;
 const DEMO_BATTLE_LOGS = [
@@ -190,6 +191,7 @@ class VoxBattle extends Component {
     BabylonX.loaders.addTexture('particle_scratch_01', require('../../shared/particles/textures/scratch_01.png'));
     BabylonX.loaders.addTexture('particle_window_04', require('../../shared/particles/textures/window_04.png'));
     BabylonX.loaders.addTexture('particle_star', require('../../shared/particles/textures/star.jpg'));
+    BabylonX.loaders.addTexture('particle_twirl_02', require('../../shared/particles/textures/twirl_02.png'));
 
     BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
       data.loadedMeshes.forEach((mesh) => {
