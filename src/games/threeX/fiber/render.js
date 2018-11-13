@@ -25,8 +25,7 @@ function createRenderer(canvas, options) {
     scene.renderer = new window.THREE.WebGLRenderer({
       canvas,
       antialias: true,
-      alpha: true,
-      preserveDrawingBuffer: true
+      alpha: true
     });
     window.renderer = scene.renderer;
     scene.renderer.shadowMap.enabled = true;
