@@ -15,5 +15,7 @@ export const Plane = TYPES.PLANE;
 export const AmbientLight = TYPES.AMBIENT_LIGHT;
 export const DirectionalLight = TYPES.DIRECTION_LIGHT;
 
-const ThreeX = {render, loadMaterial, getMaterial, stopRender, takeScreenshot};
+const Tools = {takeScreenshot};
+
+const ThreeX = {render, loadMaterial, getMaterial, stopRender, Tools};
 export default ThreeX;

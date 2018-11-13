@@ -43,7 +43,7 @@ export class Model3D extends Component {
   }
 
   getBase64Image() {
-    return ThreeX.takeScreenshot();
+    return ThreeX.Tools.takeScreenshot();
   }
 
   toggleShowLayer() {
@@ -64,7 +64,7 @@ export class Model3D extends Component {
             />
           </div> : null
         }
-        <canvas id='canvas3D' width="600" height="600" ref={(canvas) => {window.modelCanvas = canvas}}/>
+        <canvas id='canvas3D' width="600" height="600"/>
       </div>
     );
   }
