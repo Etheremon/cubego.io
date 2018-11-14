@@ -7,3 +7,5 @@ export const PRESALE_DATE = 'Nov 24 2018 00:00 UTC';
 
 export const ENABLE_MODEL_SUBMIT = !Utils.IsLiveServer;
 export const SHOW_CLOSEST_MODEL = !Utils.IsLiveServer;
+
+export const PACKAGE = [{id: 1, discount: 0}, {id: 3, discount: 0}, {id: 6, discount: 0.05}, {id: 10, discount: 0.1}]

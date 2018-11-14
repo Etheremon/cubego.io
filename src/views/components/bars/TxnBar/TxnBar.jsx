@@ -1,75 +1,88 @@
 import React from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-
 import {getTranslate} from "react-localize-redux"
-
-import { Actions } from "../../../../actions/index"
 import * as Stores from "../../../../reducers/index"
 import * as TxnStore from "../../../../reducers/txnStore"
-import { Link } from 'react-router-dom'
 import Popup from "../../../widgets/Popup/Popup.jsx";
 import * as Utils from "../../../../utils/utils";
 import {Text} from "../../../widgets/Text/Text.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
 import * as LS from "../../../../services/localStorageService";
-import isEqual from "lodash/isEqual";
 import Dropdown from "../../../widgets/Dropdown/Dropdown.jsx";
-import { Checkbox } from '../../../widgets/Checkbox/Checkbox.jsx';
+import { IsEqual } from '../../../../utils/objUtils';
+import { popTxn } from '../../../../actions/txnAction';
+import { GetTxn } from '../../../../reducers/selectors';
+import { CustomRectangle } from "../../../widgets/SVGManager/SVGManager.jsx";
+import Loading from '../../Loading/Loading.jsx';
+import { SubBgr } from '../../../containers/HomePage/SubBgr/SubBgr.jsx';
 
 require("style-loader!./TxnBar.scss");
 
+const TxnBarState = {
+  TOSUBMIT: 'to_submit',
+  SUBMITTING: 'submitting',
+  DONE: 'done',
+}
+
+const ToggleTxnBar = {
+  MINIMIZE: false,
+  MAXIMIZE: true,
+}
 
 class TxnBar extends React.Component {
   constructor(props) {
     super(props);
     this.handleGoToMEW = this.handleGoToMEW.bind(this);
-    this.handleToggleTopUp = this.handleToggleTopUp.bind(this);
     this.handleValidate = this.handleValidate.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
     this.handleGoToEtherScan = this.handleGoToEtherScan.bind(this);
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
-    this.handleOnDropdownChange = this.handleOnDropdownChange.bind(this);
-
+    this.renderContent = this.renderContent.bind(this);
     this.updateState = this.updateState.bind(this);
     this.getMetamaskPopup = this.getMetamaskPopup.bind(this);
 
     this.state = {
-      currentTxn: this.props.store.currentTxn,
+      currentTxn: {...this.props.store.currentTxn, state: TxnBarState.TOSUBMIT},
       toggleVar: null,
-      tosChecked: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(this.props.store.currentTxn, nextProps.store.currentTxn)) {
+    if (nextProps.store.currentTxn && nextProps.store.currentTxn.forceToSubmittingState && this.state.currentTxn.state !== TxnBarState.SUBMITTING && this.state.currentTxn.state !== TxnBarState.DONE) {
+      this.handleValidate(nextProps.store.currentTxn)
+      return
+    }
+    if (!IsEqual(this.props.store.currentTxn, nextProps.store.currentTxn)) {
       this.updateState({
-        currentTxn: {...nextProps.store.currentTxn, status: nextProps.store.currentTxn ? 'to_submit' : null},
-        tosChecked: false,
+        currentTxn: {...nextProps.store.currentTxn, status: nextProps.store.currentTxn ? TxnBarState.TOSUBMIT : null},
       });
     }
   }
 
+  componentDidMount() {
+  }
+
   componentWillUnmount() {
+    console.log('ok unmount')
   }
 
   updateState(newState) {
     newState = {...this.state, ...newState};
-    newState.toggleVar = newState.currentTxn ? 1 : null;
+    newState.toggleVar = newState.currentTxn ? ToggleTxnBar.MAXIMIZE : null;
     this.setState(newState);
   }
 
-  handleValidate() {
-    this.updateState({currentTxn: {...this.state.currentTxn,  validateErr: '', status: 'submitting'}});
-    this.state.currentTxn.submitFunc(this.state.currentTxn.fields, function(data) {
+  handleValidate(currentTxnObj) {
+    this.updateState({currentTxn: {...currentTxnObj,  validateErr: '', status: TxnBarState.SUBMITTING}});
+    currentTxnObj.submitFunc(currentTxnObj.fields, function(data) {
       if (data.err) {
-        this.updateState({currentTxn: {...this.state.currentTxn, validateErr: data.err, status: 'to_submit'}});
+        this.updateState({currentTxn: {...currentTxnObj, validateErr: data.err, status: TxnBarState.TOSUBMIT}});
       } else if (data.txn_data) {
-        this.updateState({currentTxn: {...this.state.currentTxn, validateErr: '', status: 'done', 'txn_hash': null, 'txn_data': data.txn_data}});
+        this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': null, 'txn_data': data.txn_data}});
       } else if (data.txn_hash) {
-        this.updateState({currentTxn: {...this.state.currentTxn, validateErr: '', status: 'done', 'txn_hash': data.txn_hash, 'txn_data': null}});
+        this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': data.txn_hash, 'txn_data': null}});
       }
     }.bind(this));
   }
@@ -82,26 +95,15 @@ class TxnBar extends React.Component {
     window.open(`https://etherscan.io/tx/${txnHash}`, "_blank");
   }
 
-  handleToggleTopUp() {
-    if (this.state.arrow === 'down') {
-      this.setState({arrow: 'up'});
-    } else if (this.state.arrow === 'up'){
-      this.setState({arrow: 'down'});
-    }
-  }
-
   handleClose() {
     this.state.currentTxn.onFinishCallback();
-    this.props.actions.txnAction.popTxn();
-  }
-
-  handleCancel() {
-    this.state.currentTxn.onFinishCallback();
-    this.props.actions.txnAction.popTxn();
+    this.props.dispatch(popTxn());
   }
 
   handleToggle() {
-    this.setState({toggleVar: 1 - this.state.toggleVar});
+    this.setState((state) => {
+      return {toggleVar: !state.toggleVar};
+    });
   }
 
   handleOnInputChange(e, field) {
@@ -109,10 +111,6 @@ class TxnBar extends React.Component {
     this.setState({
       currentTxn: this.state.currentTxn
     });
-  }
-
-  handleOnDropdownChange(e, data, field) {
-    // console.log(e, data, field);
   }
 
   getMetamaskPopup() {
@@ -166,7 +164,6 @@ class TxnBar extends React.Component {
           <div className={'txn-bar__popup-btns'}>
             {btns}
           </div>
-
           <Text type={Text.types.T2} className={'txn-bar__note1'}>
             {_t('intend_to_use_mew')}
           </Text>
@@ -182,39 +179,25 @@ class TxnBar extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <div className="ui container txn-bar__wrapper">
-
-        {/* Case Tab Closed */}
-        {this.state.toggleVar === 0 && this.state.currentTxn.status &&
-        <div className="txn-bar__container-btn">
-          <div className="ui compact menu">
-            <a className="item" onClick={this.handleToggle}>
-              <i className="icon diamond"/> {this.props._t('txn.transaction')}
-              <div className="floating ui red label">1</div>
-            </a>
-          </div>
-        </div>}
-
-        {this.state.toggleVar === 1 && this.state.currentTxn.status &&
-        <div className="txn-bar__container">
-          <div className="ui top attached tabular menu">
-            <div className="right menu">
-              <a className="item active" onClick={this.handleToggle}>
-                <i className="minus icon"/>
-              </a>
-            </div>
-          </div>
-
-          {/* Submitting */}
-          {(this.state.currentTxn.status === 'to_submit' || this.state.currentTxn.status === 'submitting') ?
-            <div className="ui bottom attached segment">
-              <form className="ui form">
-                <h3>{this.state.currentTxn.title && this.props._t(this.state.currentTxn.title)}</h3>
+  renderContent() {
+    if (this.state.currentTxn.status === TxnBarState.TOSUBMIT || this.state.currentTxn.status === TxnBarState.SUBMITTING) {
+      return (
+        <div className="main-form__container">
+              <form className="form">
+                <div className="header">
+                  <CustomRectangle tier={'referral'}/>
+                  <span>{this.state.currentTxn.title && this.props._t(this.state.currentTxn.title)}</span>
+                </div>
                 <p>{this.state.currentTxn.note && this.props._t(this.state.currentTxn.note)}</p>
+                <div className="title">
+                  {this.state.currentTxn.content && this.props._t(this.state.currentTxn.content)}
+                </div>
 
-                {this.state.currentTxn.fields_order.map((fieldName, idx) => {
+                {
+                  this.state.currentTxn.status === TxnBarState.SUBMITTING && <Loading />
+                }
+
+                {this.state.currentTxn.status === TxnBarState.TOSUBMIT && this.state.currentTxn.fields_order.map((fieldName, idx) => {
                   return(
                     <div className="field" key={idx}>
                       <label>{this.props._t(this.state.currentTxn.fields[fieldName].text)}</label>
@@ -228,10 +211,10 @@ class TxnBar extends React.Component {
                               />
                             : this.state.currentTxn.fields[fieldName].options.map((option, idx) => (
                                 this.state.currentTxn.fields[fieldName].value === option.value
-                                  ? <span key={idx}><Button as={"div"} color={'blue'} size={'mini'}>{option.text}</Button></span>
-                                  : <span key={idx}><Button as={"div"} basic size={'mini'} onClick={() => {
+                                  ? <span key={idx}><ButtonNew>{option.text}</ButtonNew></span>
+                                  : <span key={idx}><ButtonNew onClick={() => {
                                       this.handleOnInputChange({target: {value: option.value}}, fieldName)
-                                    }}>{option.text}</Button></span>
+                                    }}>{option.text}</ButtonNew></span>
                               ))
                           )
                         : <input type={this.state.currentTxn.fields[fieldName].type}
@@ -249,81 +232,94 @@ class TxnBar extends React.Component {
                   );
                 })}
 
-                <Checkbox label={<label><Link to={'/tos'} target={'_blank'}>{this.props._t('txn_agree')}</Link></label>}
-                          onChange={(e, data) => {
-                            this.setState({'tosChecked': data.checked});
-                          }}
-                />
-
                 <p>{this.state.currentTxn.validateErr && this.props._t(this.state.currentTxn.validateErr)}</p>
 
-                {this.state.currentTxn.status === 'to_submit'
-                  ? <span>
-                      <div className="ui small button" onClick={this.handleCancel}>{this.props._t('btn.cancel')}</div>
-                      <div className={`ui teal small${this.state.tosChecked ? '' : ' disabled'} button`} onClick={this.handleValidate}>{this.props._t(this.state.currentTxn.button)}</div>
-                    </span>
-                  : <div className="ui teal small loading button">{this.state.currentTxn.button}</div>
+                {this.state.currentTxn.status === TxnBarState.TOSUBMIT 
+                  ? 
+                    <ButtonNew color={ButtonNew.colors.BLUE} label={this.props._t(this.state.currentTxn.button)} onClick={() => this.handleValidate(this.state.currentTxn)}/>
+                  : null
                 }
 
               </form>
-            </div> : null
+            </div>
+      )
+    } else if (this.state.currentTxn.status === TxnBarState.DONE && this.state.currentTxn.txn_data) {
+      return [
+        this.getMetamaskPopup(),
+        <div className="main-form__container" key={2}>
+          <form className="form">
+            <div className="header">
+              <CustomRectangle tier={'referral'}/>
+              <span>{this.props._t(this.state.currentTxn.title_done)}</span>
+            </div>
+
+            <p>{this.props._t('no_metamask')}</p>
+
+            <div className="field">
+              <label>{this.props._t('contract_address')}</label>
+              <input type="text" value={this.state.currentTxn.txn_data.address} readOnly />
+            </div>
+            <div className="field">
+              <label>{this.props._t('amount_to_send')}</label>
+              <input type="text" value={this.state.currentTxn.txn_data.amount} readOnly />
+            </div>
+            <div className="field">
+              <label>{this.props._t('recommended_gas')}</label>
+              <input type="text" value={this.state.currentTxn.txn_data.gas} readOnly />
+            </div>
+            <div className="field">
+              <label>{this.props._t('txn_data')}</label>
+              <textarea rows="4" readOnly value={this.state.currentTxn.txn_data.txn_data}/>
+            </div>
+            <ButtonNew color={ButtonNew.colors.BLUE} label={this.props._t('go_to_mew')} onClick={() => this.handleGoToMEW(this.state.currentTxn.txn_data)}/>
+
+          </form>
+        </div>
+      ]
+    } else if (this.state.currentTxn.status === TxnBarState.DONE && this.state.currentTxn.txn_hash) {
+      return <div className="main-form__container">
+        <form className="form">
+          <div className="header">
+            <CustomRectangle tier={'referral'}/>
+            <span>{this.props._t(this.state.currentTxn.title_done)}</span>
+          </div>
+
+          <p>{this.props._t('txn_done')}</p>
+
+          <div className="field">
+            <label>{this.props._t('txn_hash')}</label>
+            <input type="text" value={this.state.currentTxn.txn_hash} readOnly={true} />
+          </div>
+          <ButtonNew color={ButtonNew.colors.BLUE} label={this.props._t('etherscan')} onClick={() => {this.handleGoToEtherScan(this.state.currentTxn.txn_hash)}}/>
+
+        </form>
+      </div>
+    }
+  }
+
+  render() {
+    return (
+      <div className="txn-bar__wrapper">
+        {/* Case Tab Closed */}
+        {this.state.toggleVar === ToggleTxnBar.MINIMIZE && this.state.currentTxn.status &&
+        <div className="txn-bar-minimize__container">
+          <a className="item" onClick={this.handleToggle}>
+            <i className="icon diamond"/> {this.props._t('transaction')}
+          </a>
+        </div>}
+
+        {this.state.toggleVar === ToggleTxnBar.MAXIMIZE && this.state.currentTxn.status &&
+        <div className="txn-bar-maximize__container">
+          <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
+          <i className="fas fa-times" onClick={this.handleClose}></i>
+          {/* <div className="top-menu__container">
+            <a className="item active" onClick={this.handleToggle}>
+              <i className="minus icon"/>
+            </a>
+          </div> */}
+          {
+            this.renderContent()
           }
-
-          {/* Case Success with Txn Hash */}
-          {this.state.currentTxn.status === 'done' && this.state.currentTxn.txn_hash ?
-            <div className="ui bottom attached segment">
-              <form className="ui form">
-                <h3>{this.props._t(this.state.currentTxn.title_done)}</h3>
-
-                <p>{this.props._t('txn.txn_done')}</p>
-
-                <div className="field">
-                  <label>{this.props._t('txn.txn_hash')}</label>
-                  <input type="text" value={this.state.currentTxn.txn_hash} readOnly={true} />
-                </div>
-
-                <div className="ui small button" onClick={this.handleClose}>{this.props._t('btn.close')}</div>
-                <div className="ui teal small button" onClick={() => {this.handleGoToEtherScan(this.state.currentTxn.txn_hash)}}>{this.props._t('txn.etherscan')}</div>
-
-              </form>
-            </div> : null
-          }
-
-          {/* Case Success with Txn Data */}
-          {this.state.currentTxn.status === 'done' && this.state.currentTxn.txn_data ?
-            [
-              this.getMetamaskPopup(),
-              <div className="ui bottom attached segment" key={2}>
-                <form className="ui form">
-                  <h3>{this.props._t(this.state.currentTxn.title_done)}</h3>
-
-                  <p>{this.props._t('txn.no_metamask')}</p>
-
-                  <div className="field">
-                    <label>{this.props._t('txn.contract_address')}</label>
-                    <input type="text" name="first-name" value={this.state.currentTxn.txn_data.address} readOnly />
-                  </div>
-                  <div className="field">
-                    <label>{this.props._t('txn.amount_to_send')}</label>
-                    <input type="text" name="last-name"  value={this.state.currentTxn.txn_data.amount} readOnly />
-                  </div>
-                  <div className="field">
-                    <label>{this.props._t('txn.recommended_gas')}</label>
-                    <input type="text" name="last-name"  value={this.state.currentTxn.txn_data.gas} readOnly />
-                  </div>
-                  <div className="field">
-                    <label>{this.props._t('txn.txn_data')}</label>
-                    <textarea rows="4" readOnly value={this.state.currentTxn.txn_data.txn_data}/>
-                  </div>
-
-                  <div className="ui small button" onClick={this.handleClose}>{this.props._t('btn.close')}</div>
-                  <div className="ui tiny teal button" onClick={() => this.handleGoToMEW(this.state.currentTxn.txn_data)}>{this.props._t('btn.go_to_mew')}</div>
-
-                </form>
-              </div>
-            ]: null
-          }
-
         </div>}
 
 
@@ -337,15 +333,13 @@ const mapStateToProps = (store) => {
   return {
     _t: getTranslate(store.localeReducer),
     store: {
-      currentTxn: TxnStore.GetTxn(txnStore),
+      currentTxn: GetTxn(txnStore),
     }
   }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: {
-    txnAction: bindActionCreators(Actions.txnAction, dispatch)
-  }
+  dispatch: dispatch,
 });
 
 export default connect(

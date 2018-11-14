@@ -36,3 +36,9 @@ export const GetNotification = (state) => (CloneDeep(state.notifications.notific
 export const GetHomeBanners = (state) => CloneDeep(state.notifications.notification['banners_home']);
 export const GetStoreBanners = (state) => CloneDeep(state.notifications.notification['banners_store']);
 export const GetFeed = (state) => CloneDeep((state.notifications.notification['feeds'] || [])[0]);
+
+
+/**
+ * Feeds
+ */
+export const GetTxn = (state) => CloneDeep(state.txn);

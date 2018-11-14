@@ -59,3 +59,10 @@ export const NETWORK_ERROR = '404 ERROR';
 
 /** Referral Code **/
 export const REFERRAL_EXPIRED = 24 * 60 * 60 * 1000; //ms = 24 hours
+
+/** currency **/
+
+export const CURRENCY = {
+  ETH: 'eth',
+  EMONT: 'emont',
+}

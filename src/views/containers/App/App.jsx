@@ -31,6 +31,7 @@ import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
 import GameIntro from "../GameIntro/GameIntro.jsx";
 import {NotificationActions} from "../../../actions/notification";
+import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx';
 
 require("style-loader!./App.scss");
 
@@ -148,7 +149,7 @@ class App extends React.Component {
           <Route component={Home}/>
         </Switch>
 
-        {/*<TxnBar/>*/}
+        <TxnBar/>
       </div>
     )
   }

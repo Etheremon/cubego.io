@@ -59,3 +59,7 @@ export const GetFullModel = (simplifiedModel) => {
 export const GetImageFromGonID = (id) => {
   return `https://www.cubego.io/cubego_image/${Utils.AddHeadingZero(id, 8)}.png`
 };
+
+export const CalculateDiscountPrice = (price, discount, roundNumber) => {
+  return Utils.RoundToDecimalFloat(price * (1 - discount) , roundNumber);
+}
