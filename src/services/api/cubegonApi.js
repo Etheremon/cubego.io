@@ -13,6 +13,10 @@ const GetCubegonInfo = (id, tokenId) => {
   });
 };
 
+const GetUserCubegons = (userId) => {
+  return {response: '', error: ''}
+}
+
 
 export const CubegonApi = {
   GetCubegonInfo,

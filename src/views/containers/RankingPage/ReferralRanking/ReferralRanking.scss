@@ -1,0 +1,159 @@
+@import '../../../styles/colors';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+@import '../../../styles/fonts';
+
+.referral-ranking__container {
+  text-align: center;
+  .list-item__container {
+    display: inline-block;
+
+    table {
+      border-spacing: 0 8px;
+      border-collapse: separate;
+      
+      thead {
+        
+        .header {
+          color: $white;
+          font-size: $font-size-large;
+          font-family: $f__baloobha;
+          text-transform: capitalize;
+
+          th {
+            background-color: #124C62;
+            padding: 16px;
+
+            &:nth-child(1) {
+              border-radius: 8px 0 0 0;
+            }
+
+            &:nth-last-child(1) {
+              border-radius: 0 8px 0 0;
+            }
+          }
+        }
+      }
+
+      tbody {
+        color: $white;
+        font-size: $font-size-normal;
+        font-family: $f__baloobha;
+
+        .row {
+          border-radius: 8px;
+          padding: 8px;
+          border: 1px solid $white;
+          &.first {
+            td {
+              background-color: #FFDE00;
+              color: #203F4E;
+              border-top: 3px solid $white;
+              border-bottom: 3px solid $white;
+              &:nth-child(1) {
+                border-radius: 5px 0 0 5px;
+                border-left: 3px solid $white;
+              }
+  
+              &:nth-last-child(1) {
+                border-radius: 0 5px 5px 0;
+                border-right: 3px solid $white;
+              }
+            }
+          }
+
+          &.second {
+
+            td {
+              background-color: #F7F7F7;
+              color: #203F4E;
+              border-top: 3px solid $white;
+              border-bottom: 3px solid $white;
+              &:nth-child(1) {
+                border-radius: 5px 0 0 5px;
+                border-left: 3px solid $white;
+              }
+  
+              &:nth-last-child(1) {
+                border-radius: 0 5px 5px 0;
+                border-right: 3px solid $white;
+              }
+            }
+          }
+
+          &.third {
+
+            td {
+              background-color: #ED7E07;
+              color: #203F4E;
+              border-top: 3px solid $white;
+              border-bottom: 3px solid $white;
+              &:nth-child(1) {
+                border-radius: 5px 0 0 5px;
+                border-left: 3px solid $white;
+              }
+  
+              &:nth-last-child(1) {
+                border-radius: 0 5px 5px 0;
+                border-right: 3px solid $white;
+              }
+            }
+          }
+        }
+
+        tr {
+          box-shadow: 0px 0px 23px 5px #69DBC5;
+          td {
+            padding: 8px;
+          }
+
+          &:nth-child(even) {
+            td {
+              background-color: #086BAA;
+              border-top: 3px solid $white;
+              border-bottom: 3px solid $white;
+              &:nth-child(1) {
+                border-radius: 5px 0 0 5px;
+                border-left: 3px solid $white;
+              }
+  
+              &:nth-last-child(1) {
+                border-radius: 0 5px 5px 0;
+                border-right: 3px solid $white;
+              }
+            }
+          }
+
+          &:nth-child(odd) {
+            td {
+              background-color: #3CC6E5;
+              border-top: 3px solid $white;
+              border-bottom: 3px solid $white;
+              &:nth-child(1) {
+                border-radius: 5px 0 0 5px;
+                border-left: 3px solid $white;
+              }
+  
+              &:nth-last-child(1) {
+                border-radius: 0 5px 5px 0;
+                border-right: 3px solid $white;
+              }
+            }
+          }
+        }
+
+
+        .rank {
+          color: $white;
+          font-size: $font-size-header-1;
+          font-family: $f__baloobha;
+          text-shadow: 0 0 4px $white;
+        }
+
+        .player {
+          
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { user } from './user'
 import { auth } from './auth'
 import { model } from  './model'
 import { cubegon } from  './cubegon'
+import { cubego } from  './cubego'
 import { localization } from './localization';
 import { notifications } from './notification';
 import { subscriber } from './subscriber';
@@ -12,6 +13,7 @@ export const voxelStoreReducers = {
   user,
   model,
   cubegon,
+  cubego,
   localization,
   notifications,
   subscriber,

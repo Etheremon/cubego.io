@@ -22,7 +22,12 @@ export const GetValidatedModel = (state) => CloneDeep(state.model['validatedMode
  * Cubegons
  */
 export const GetCubegonInfo = (state, gonId) => CloneDeep(state.cubegon.info[gonId]);
+export const GetUserCubegons = (state, userId) => CloneDeep(state.cubegon[userId]);
 
+/**
+ * Cubegoes
+ */
+export const GetUserCubegoes = (state, userId) => CloneDeep(state.cubego[userId]);
 
 /**
  * Localization

@@ -32,6 +32,7 @@ import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 import GameIntro from "../GameIntro/GameIntro.jsx";
 import {NotificationActions} from "../../../actions/notification";
 import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx';
+import RankingPage from '../RankingPage/RankingPage.jsx';
 
 require("style-loader!./App.scss");
 
@@ -137,6 +138,7 @@ class App extends React.Component {
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
+          <Route path={`/${URLS.RANKING}`} component={RankingPage}/>
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
