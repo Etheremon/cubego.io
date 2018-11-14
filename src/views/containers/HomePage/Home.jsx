@@ -427,7 +427,10 @@ const mapStateToProps = (store, props) => {
   let pathName = props.location.pathname;
   let query = Utils.ParseQueryString(props.location.search);
 
-  if (query.code) LS.SetItem(LS.Fields.referralCode, {expire: Date.now() + REFERRAL_EXPIRED, code: query.code});
+  if (query.code) {
+    LS.SetItem(LS.Fields.referralCode, {expire: Date.now() + REFERRAL_EXPIRED, code: query.code});
+    window.referralCode = query.code;
+  }
 
   return {
     pathName,
