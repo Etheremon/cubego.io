@@ -4,31 +4,30 @@ import * as LS from "../services/localStorageService";
 import {ModelActions} from "../actions/model";
 import * as LogicUtils from "../utils/logicUtils";
 
-const savedModelState = (ConvertToArray(LS.GetItem(LS.Fields.savedModel))).map((item) => {
-  return LogicUtils.GetFullModel(item)
-})
-
-const savedModel = (state=savedModelState, action) => {
+const savedModel = (state=[], action) => {
+  const savedModelState = (ConvertToArray(LS.GetItem(LS.Fields.savedModel))).map((item) => {
+    return item.model ? {model: LogicUtils.GetFullModel(item.model), image: item.image} : {model: LogicUtils.GetFullModel(item), image: null}
+  })
   switch (action.type) {
     case ModelActions.SAVE_MODEL.init.key:
       let savedModel = CloneDeep(action.model);
-      let arraySimplifiedModel = ConvertToArray(LS.GetItem(LS.Fields.savedModel));
+      let arraySimplifiedModel = savedModelState;
       let newArraySavedModel
       if (action.modelIndex >= 0) {
         newArraySavedModel = [...arraySimplifiedModel.slice(0, action.modelIndex), 
-                                LogicUtils.GetSimplifiedModel(savedModel),
+                                { model: LogicUtils.GetSimplifiedModel(savedModel), image: action.image },
                               ...arraySimplifiedModel.slice(action.modelIndex + 1)];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
-        return [...state.slice(0, action.modelIndex), savedModel,
+        return [...state.slice(0, action.modelIndex), { model: savedModel, image: action.image },
                 ...state.slice(action.modelIndex + 1)];
       } else {
-        newArraySavedModel = [...arraySimplifiedModel, LogicUtils.GetSimplifiedModel(savedModel)];
+        newArraySavedModel = [...arraySimplifiedModel, {model: LogicUtils.GetSimplifiedModel(savedModel), image: action.image}];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
-        return [...state, savedModel];
+        return [...state, { model: savedModel, image: action.image} ];
       }
       
     case ModelActions.DELETE_MODEL.init.key:
-      let arrSimplifiedModel = ConvertToArray(LS.GetItem(LS.Fields.savedModel));
+      let arrSimplifiedModel = savedModelState;
       let newArrSavedModel = [...arrSimplifiedModel.slice(0, action.modelIndex), 
                                 ...arrSimplifiedModel.slice(action.modelIndex + 1)];
       LS.SetItem(LS.Fields.savedModel, newArrSavedModel);
@@ -36,7 +35,7 @@ const savedModel = (state=savedModelState, action) => {
               ...state.slice(action.modelIndex + 1)];
 
     default:
-      return state;
+      return savedModelState;
   }
 };
 
