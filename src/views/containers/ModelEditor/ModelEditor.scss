@@ -223,6 +223,20 @@
 
     .model-editor__3d {
       background-color: #354662;
+      position: relative;
+
+      .model-editor__3d-capture {
+        position: absolute;
+        z-index: 2;
+        right: 18px;
+        top: 60px;
+        cursor: pointer;
+
+        img {
+          display: block;
+          width: 36px;
+        }
+      }
     }
 
     .model-editor__2d {
@@ -231,9 +245,9 @@
       bottom: 8px;
       right: 8px;
       left: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      //display: flex;
+      //align-items: center;
+      //justify-content: center;
       overflow: auto;
       background-color: #edfbee;
       @include smooth-scroll;
@@ -388,6 +402,28 @@
         width: 200px;
         background-color: rgba(0, 0, 0, 0.6);
         @include border-radius(6px);
+      }
+    }
+  }
+
+  .model-editor__model-capture {
+    padding: 32px 16px;
+    .image {
+      img {
+        width: 400px;
+        max-width: 100%;
+      }
+    }
+    .actions {
+      .action {
+        padding: 2px;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.9;
+        }
+        img {
+          height: 40px;
+        }
       }
     }
   }

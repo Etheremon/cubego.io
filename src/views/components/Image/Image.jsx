@@ -14,6 +14,11 @@ export const ImgSource = {
   'icon_market': require('../../../shared/img/icons/icon-market.png'),
   'icon_store': require('../../../shared/img/icons/icon-store.png'),
   'icon_my_heroes': require('../../../shared/img/icons/icon-cubegon.png'),
+  icon_camera: require('../../../shared/img/icons/icon-camera.png'),
+
+  btn_download: require('../../../shared/img/buttons/download.png'),
+  btn_share_fb: require('../../../shared/img/buttons/facebook.png'),
+  btn_share_tw: require('../../../shared/img/buttons/twitter.png'),
 
   'icon_left_arrow': require('../../../shared/img/icons/icon_left_arrow.png'),
   'icon_right_arrow': require('../../../shared/img/icons/icon_right_arrow.png'),

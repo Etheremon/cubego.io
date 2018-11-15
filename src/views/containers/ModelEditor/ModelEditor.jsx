@@ -32,6 +32,8 @@ import {CloneDeep} from "../../../utils/objUtils";
 import * as LogicUtils from "../../../utils/logicUtils";
 import {IsEqual} from "../../../utils/objUtils";
 import * as Config from "../../../config";
+import {Image} from "../../components/Image/Image.jsx";
+import {ShareImageToFacebook} from "../../../services/social";
  
 require("style-loader!./ModelEditor.scss");
 
@@ -127,6 +129,9 @@ class _ModelEditor extends React.Component {
     this.reviewModel = this.reviewModel.bind(this);
     this.onSavedModelSelect = this.onSavedModelSelect.bind(this);
     this.renderError = this.renderError.bind(this);
+
+    this.capturePhoto = this.capturePhoto.bind(this);
+    this.downloadPhoto = this.downloadPhoto.bind(this);
 
     this.isHoldingKey = {};
     this.selectedVariants = {};
@@ -231,6 +236,15 @@ class _ModelEditor extends React.Component {
   saveModel() {
     this.setState({saved: true});
     this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
+  }
+
+  capturePhoto() {
+    this.imageBase64 = this.modelCanvas ? this.modelCanvas.getBase64Image() : '';
+    this.setState({showModelCapturing: true});
+  }
+
+  downloadPhoto() {
+    Utils.OpenInNewTab(this.imageBase64);
   }
 
   reviewModel(verified=false, text) {
@@ -408,6 +422,28 @@ class _ModelEditor extends React.Component {
                    open={this.state.showModelReview}>
               <div>
                 {this.renderError()}
+              </div>
+            </Popup> : null
+          }
+
+          {this.state.showModelCapturing ?
+            <Popup onUnmount={() => {this.setState({showModelCapturing: false})}}
+                   open={this.state.showModelCapturing}>
+              <div className={'model-editor__model-capture'}>
+                <div className={'image'}>
+                  <img src={this.imageBase64}/>
+                </div>
+                <div className={'actions'}>
+                  <a href={this.imageBase64.replace('data:image/png;', 'data:application/octet-stream;')} className={'action'}>
+                    <Image img={'btn_download'}/>
+                  </a>
+                  {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
+                    {/*<Image img={'btn_share_fb'}/>*/}
+                  {/*</a>*/}
+                  {/*<a className={'action'}>*/}
+                    {/*<Image img={'btn_share_tw'}/>*/}
+                  {/*</a>*/}
+                </div>
               </div>
             </Popup> : null
           }
@@ -624,8 +660,13 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
                 <div className={'model-editor__3d'}>
+                  <div className={'model-editor__3d-capture'}
+                       tooltip={_t('capture a photo')} tooltip-position={'bottom'}
+                       onClick={this.capturePhoto}>
+                    <Image img={'icon_camera'}/>
+                  </div>
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
-                           ref={(canvas) => {window.modelCanvas = canvas}}
+                           ref={(canvas) => {window.modelCanvas = canvas; this.modelCanvas = canvas;}}
                            _t={_t}
                   />
                 </div>
