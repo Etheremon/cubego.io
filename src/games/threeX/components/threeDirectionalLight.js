@@ -15,13 +15,13 @@ export class ThreeDirectionalLight extends ThreeComponent {
     directionalLight.shadow.mapSize = new window.THREE.Vector2(512, 512);
     directionalLight.shadow.radius = 2;
     directionalLight.shadow.camera.near = -1000;
-    directionalLight.shadow.camera.far = 2000;
-    directionalLight.shadow.camera.left = -canvas.width;
-    directionalLight.shadow.camera.right = canvas.width;
-    directionalLight.shadow.camera.top = -canvas.height;
-    directionalLight.shadow.camera.bottom = canvas.height;
+    directionalLight.shadow.camera.far = 4000;
+    directionalLight.shadow.camera.left = -2 * canvas.width;
+    directionalLight.shadow.camera.right = 2 * canvas.width;
+    directionalLight.shadow.camera.top = -2 * canvas.height;
+    directionalLight.shadow.camera.bottom = 2 * canvas.height;
 
-    // scene.add(new window.THREE.CameraHelper(directionalLight.shadow.camera));
+    scene.add(new window.THREE.CameraHelper(directionalLight.shadow.camera));
 
     if (props.position) {
       directionalLight.position.set(props.position.x, props.position.y, props.position.z);
