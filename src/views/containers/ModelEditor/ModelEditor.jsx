@@ -162,6 +162,9 @@ class _ModelEditor extends React.Component {
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
     }
+    if (nextProps.savedModel.length > this.props.savedModel.length && nextProps.savedModel.length > 0) {
+      this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
+    }
   }
 
   onKeyDown(key) {
