@@ -15,7 +15,7 @@ import ReferralRanking from './ReferralRanking/ReferralRanking.jsx';
 
 require("style-loader!./RankingPage.scss");
 
-const rankingTabs = [ {key: 'referralRanking', content: 'referral'}];
+const rankingTabs = [ /* {key: 'my_league', content: 'my_league'},  */{key: 'referral', content: 'referral'}/* , {key: 'top_player', content: 'top_player'} */];
 
 class RankingPage extends React.Component {
 
@@ -32,7 +32,7 @@ class RankingPage extends React.Component {
     const {_t, query} = this.props;
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar minifying/>
         <div className="ranking-page__container">
 
