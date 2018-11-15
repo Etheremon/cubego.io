@@ -21,7 +21,7 @@ export class ThreeDirectionalLight extends ThreeComponent {
     directionalLight.shadow.camera.top = -2 * canvas.height;
     directionalLight.shadow.camera.bottom = 2 * canvas.height;
 
-    scene.add(new window.THREE.CameraHelper(directionalLight.shadow.camera));
+    // scene.add(new window.THREE.CameraHelper(directionalLight.shadow.camera));
 
     if (props.position) {
       directionalLight.position.set(props.position.x, props.position.y, props.position.z);
