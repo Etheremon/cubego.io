@@ -9,19 +9,26 @@ export class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      battle: {}
+      battle: {},
+      webglError: false
     }
   }
 
   componentDidMount() {
-    this.loadModel();
     this.voxel = BabylonX.render(<VoxBattle battle={this.state.battle}/>, document.getElementById('battle'));
+    if(this.voxel) {
+      this.loadModel();
+    } else {
+      this.setState({webglError: true});
+    }
   }
 
   componentWillUnmount() {
-    BabylonX.stopRender();
-    this.voxel.destroy();
-    this.voxel = null;
+    if(this.voxel) {
+      BabylonX.stopRender();
+      this.voxel.destroy();
+      this.voxel = null;
+    }
   }
 
   loadModel() {
@@ -40,6 +47,10 @@ export class Battle extends Component {
            onWheel={(e) => {
              e.preventDefault();
            }}>
+        {this.state.webglError ? <div className={'webgl-error'}>
+          WebGL not supported by your browser <a href="https://get.webgl.org">More information</a>
+        </div> : null}
+
         <canvas id='battle' width="960" height="540"/>
       </div>
     );

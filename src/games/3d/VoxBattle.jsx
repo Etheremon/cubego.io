@@ -21,7 +21,6 @@ import RockThrow from "./moves/earth/RockThrow";
 import LeafThrow from "./moves/grass/LeafThrow";
 import PyroWisp from "./moves/fire/PyroWisp";
 import Tackle from "./moves/neutral/Tackle";
-import WindStrike from "./moves/air/WindStrike";
 
 const SIZE = 0.2;
 const DEMO_BATTLE_LOGS = [

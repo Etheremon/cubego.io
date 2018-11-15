@@ -6,6 +6,7 @@ import {BabylonMeshContainer} from "./components/babylonMeshContainer";
 import {LoadingScreen} from "./loader/LoadingScreen";
 import {_createAssetsManager} from './loader';
 import loaders from "./loader";
+import {isWebGLAvailable} from "./utils";
 
 let rootContainer = null;
 let scene, engine;
@@ -43,6 +44,9 @@ const startLoop = () => {
 };
 
 const render = (element, canvas) => {
+  if (!isWebGLAvailable(canvas)) {
+    return;
+  }
   rootContainer = createRenderer(canvas);
   BabylonRenderer.updateContainer(element, rootContainer, null);
   return BabylonRenderer.getPublicRootInstance(rootContainer);

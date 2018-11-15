@@ -1,7 +1,7 @@
-import {ThreeObject3DComponent} from "./threeObject3DComponent";
+import {ThreeComponent} from "./threeComponent";
 
 
-export class ThreeBackground extends ThreeObject3DComponent {
+export class ThreeBackground extends ThreeComponent {
   constructor() {
     super();
   }

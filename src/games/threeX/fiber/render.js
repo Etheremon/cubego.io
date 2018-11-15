@@ -24,7 +24,7 @@ function createRenderer(canvas, options) {
     scene.isWebGL = true;
     scene.renderer = new window.THREE.WebGLRenderer({
       canvas,
-      antialias: true,
+      antialias: false,
       alpha: true
     });
     window.renderer = scene.renderer;

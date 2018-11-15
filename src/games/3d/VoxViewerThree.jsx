@@ -84,7 +84,11 @@ class VoxViewerThree extends Component {
               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
               key={`grid-${this.updateGridIdx}`}/>]
       : [];
-    elements.push(<Background imageUrl={require('../../shared/img/background/background_capture.jpg')} key={'background'}/>)
+    if (!this.props.viewOnly) {
+      elements.push(<Background imageUrl={require('../../shared/img/background/background_capture.jpg')}
+                                key={'background'}/>);
+    }
+
     GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
@@ -96,7 +100,7 @@ class VoxViewerThree extends Component {
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });
 
-    if (!this.props.viewOnly && this.state.showLayer) {
+    if (!this.props.viewOnly && this.state.showLayer && !this.state.takingScreenshot) {
       let hPos = {};
       let hSize = {};
       let correctLabel = {x: 'x', y: 'z', z: 'y'};
