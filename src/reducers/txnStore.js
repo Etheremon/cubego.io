@@ -9,9 +9,10 @@ export const txnStore = (state={txn: null}, action) => {
     case types.POP_TXN:
       return {...state, txn: null};
 
+    case types.UPDATE_TXN:
+      return {...state, txn: {...state.txn, ...action.txn}};
+
     default:
       return state;
   }
 };
-//
-// export const GetTxn = (state) => (state.txn);

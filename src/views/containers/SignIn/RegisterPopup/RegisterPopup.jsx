@@ -100,9 +100,13 @@ class RegisterPopup extends React.Component {
           <div className={'desc'}>{_t('please_unlock_metamask')}</div>
 
           <div className={'btns'}>
-            <ButtonNew label={_t('Sign In Manually')}
-                       color={ButtonNew.colors.GREY}
-                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
+            {window.ethereum && window.ethereum.enable
+              ? <ButtonNew label={_t('unlock metamask')}
+                           onClick={() => {window.ethereum.enable()}}/>
+              : <ButtonNew label={_t('Sign In Manually')}
+                           color={ButtonNew.colors.GREY}
+                           onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}/>
+            }
           </div>
         </div>
     )
@@ -114,12 +118,13 @@ class RegisterPopup extends React.Component {
       <SignInForm metamask={hasWalletUnlocked}
                   type={SignInForm.types.REGISTER_POPUP}
                   onRegistered={this.props.onRegistered}
+                  simplified={this.props.simplified}
       />
     )
   }
 
   render() {
-    let {userId, userInfo} = this.props;
+    let {userId, userInfo, simplified} = this.props;
 
     let hasWalletSupported = Utils.HasWalletSupported();
     let hasWalletUnlocked = Utils.hasWalletUnlocked();
@@ -128,7 +133,7 @@ class RegisterPopup extends React.Component {
 
     if (userId === undefined || userInfo === undefined) {
       content = this.renderLoading();
-    } else if (!hasWalletUnlocked) {
+    } else if (!hasWalletUnlocked && !userInfo.username) {
       if (!hasWalletSupported) {
         content = this.renderNotInstalledWallet();
       } else if (!hasWalletUnlocked) {
@@ -139,7 +144,7 @@ class RegisterPopup extends React.Component {
     }
 
     return (
-      <div className={'register-popup'}>
+      <div className={`register-popup ${simplified ? 'simplified' : ''}`}>
         {content}
       </div>
     );

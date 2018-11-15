@@ -50,8 +50,18 @@
   .pack-view__container {
     width: 724px;
     max-width: 100%;
-
     cursor: pointer;
+
+    .pack-parallelogram {
+      .price__container {
+        .widget__text-image {
+          span {
+            padding-top: 3px;
+          }
+        }
+      }
+    }
+
     &:hover {
       .chest__image {
         @include flip-up-down(2s);
@@ -184,23 +194,6 @@
 
     border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
     background: #15314E;
-
-    //&.epic {
-    //  border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
-    //  background: #05192C;
-    //}
-    //
-    //&.rare {
-    //  border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
-    //  background: #15314E;
-    //}
-    //
-    //&.pack {
-    //  background: rgba(25, 49, 77, 1);
-    //  border-width: 5px;
-    //  border-style: solid;
-    //  border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
-    //}
 
     .header__container {
       position: absolute;
@@ -356,7 +349,11 @@
             width: 105%;
             position: relative;
             left: -3px;
+            font-size: $font-size-big;
             .widget__text-image {
+              img {
+                margin-left: 3px !important;
+              }
               &.active {
                 background: linear-gradient(to bottom, #ee814e, #fb575a);
               }

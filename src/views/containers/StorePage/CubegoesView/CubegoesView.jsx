@@ -10,7 +10,7 @@ import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx'
 import { URLS, CURRENCY } from '../../../../constants/general';
 import {CUBE_TIER, CUBE_TIER_MAP} from "../../../../constants/cubego";
 import * as Utils from "../../../../utils/utils";
-import { PACKAGE } from '../../../../config.js';
+import { PRESALE_PACK_DISCOUNT } from '../../../../config.js';
 import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
 import { PurchasePackage } from '../../../../services/transaction';
 import { addTxn } from '../../../../actions/txnAction.js';
@@ -21,25 +21,25 @@ require("style-loader!./CubegoesView.scss");
 const ultimatePack = {
   name: 'ultimate pack',
   quantity: 199,
-  price_eth: 1.02,
-  price_emont: 1000,
+  price_eth: 1.0,
+  price_emont: 2000,
   cubes: [
     {type: 'gold', quantity: 15, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'silver', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'ice', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+    {type: 'silver', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'iron', quantity: 48, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
     {type: 'stone', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-    {type: 'brick', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+    {type: 'wood', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
   ],
 };
 
 const presaleCubegoes = [
-  {name: 'gold pack', type: 'gold', quantity: 36, price_eth: 0.5, price_emont: 500, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {name: 'silver pack', type: 'silver', quantity: 40, price_eth: 0.5, price_emont: 500, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {name: 'ice pack', type: 'ice', quantity: 40, price_eth: 0.5, price_emont: 500, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {name: 'iron pack', type: 'iron', quantity: 110, price_eth: 0.3, price_emont: 300, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {name: 'stone pack', type: 'stone', quantity: 120, price_eth: 0.3, price_emont: 300, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {name: 'brick pack', type: 'brick', quantity: 120, price_eth: 0.3, price_emont: 300, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 36, price_eth: 0.5, price_emont: 1000, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 40, price_eth: 0.5, price_emont: 1000, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 40, price_eth: 0.5, price_emont: 1000, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 110, price_eth: 0.3, price_emont: 600, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 120, price_eth: 0.3, price_emont: 600, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 120, price_eth: 0.3, price_emont: 600, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
 ];
 
 class CubegoesView extends React.Component {
@@ -77,7 +77,7 @@ class CubegoesView extends React.Component {
     const {_t, userId} = this.props;
     const item = this.state.selectedItem;
     const selectedPack = this.state.selectedPack || {idx: 3, currency: CURRENCY.ETH};
-    const totalAmount = CalculateDiscountPrice(item[`price_${selectedPack.currency}`] *PACKAGE[selectedPack.idx].id, PACKAGE[selectedPack.idx].discount, 4);
+    const totalAmount = CalculateDiscountPrice(item[`price_${selectedPack.currency}`] * PRESALE_PACK_DISCOUNT[selectedPack.idx].id, PRESALE_PACK_DISCOUNT[selectedPack.idx].discount, 4);
 
     return (
       <div className={`purchase__container ${item && item.tier || 'pack'}`}>
@@ -88,7 +88,7 @@ class CubegoesView extends React.Component {
         <div className="main__container">
           <div className="pack__listview">
             {
-              PACKAGE.map((ele, idx) => {
+              PRESALE_PACK_DISCOUNT.map((ele, idx) => {
                 return (
                   <div className="pack__item" key={idx}
                        onClick={() => {this.setState({selectedPack: {idx: idx, currency: CURRENCY.ETH}})}}>
@@ -146,7 +146,7 @@ class CubegoesView extends React.Component {
               <React.Fragment>
                 <div className={'review-item'}>
                   <div className={'left'}>{_t('pack(s)')}:</div>
-                  <div className={'right'}>{PACKAGE[selectedPack.idx].id}</div>
+                  <div className={'right'}>{PRESALE_PACK_DISCOUNT[selectedPack.idx].id}</div>
                 </div>
                 <div className={'review-item'}>
                   <div className={'left'}>{_t('cubes/pack')}:</div>
@@ -154,19 +154,25 @@ class CubegoesView extends React.Component {
                 </div>
                 <div className={'review-item'}>
                   <div className={'left'}>{_t('total cubes')}:</div>
-                  <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PACKAGE[selectedPack.idx].id, 4)}</div>
+                  <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>
                 </div>
                 <div className={'review-item'}>
                   <div className={'left'}>{_t('total price')}:</div>
                   <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
                 </div>
                 <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
-                  // this.setState({viewPresaleInfo: true})
-                  if (item && item.tier) {
-                    PurchasePackage(this.props.dispatch, addTxn, _t, userId, PACKAGE[selectedPack.idx].id, 11, totalAmount, PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`], selectedPack.currency)
-                  } else {
-                    PurchasePackage(this.props.dispatch, addTxn, _t, userId, PACKAGE[selectedPack.idx].id, 11, totalAmount, PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`], selectedPack.currency)
-                  }
+                  PurchasePackage(this.props.dispatch, addTxn, _t, {
+                    address: userId,
+                    numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
+                    packId: item.pack_id,
+                    amount: totalAmount,
+                    purchaseType: (item && item.tier)
+                      ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
+                      : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
+                    currency: selectedPack.currency,
+                    name: _t(item.name),
+                    history: this.props.history,
+                  })
                 }}/>
               </React.Fragment> : null
             }

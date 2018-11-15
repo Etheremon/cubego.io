@@ -45,6 +45,14 @@ function getFunctionHashes(abi) {
   return hashes;
 }
 
+function calculateWeiFromEth(val) {
+  return web3 && web3.toWei ? web3.toWei(val, "ether") : val * Math.pow(10, 8);
+}
+
+function calculateWeiFromEmont(val) {
+  return val * Math.pow(10, 18);
+}
+
 function findFunctionByHash(hashes, functionHash) {
   for (var i=0; i<hashes.length; i++) {
     if (hashes[i].hash.substring(0, 10) === functionHash.substring(0, 10))
@@ -52,9 +60,10 @@ function findFunctionByHash(hashes, functionHash) {
   }
 }
 
+// value in wei
 function callBlockchainFunction(contractInstance, contractAddress, args, callbackFunc, value, gas) {
   if (isEtherAccountActive()) {
-    contractInstance.apply(null, args.concat({value: value, gas: gas}).concat(function(err, txn_hash) {
+    contractInstance.apply(null, args.concat({value: calculateWeiFromEth(value), gas: gas}).concat(function(err, txn_hash) {
       if (err) {
         console.log("ERROR_LOG|make_txn_failed|error=", err);
         callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain transaction fail!!"});

@@ -20,7 +20,7 @@ class StoreCubegoCard extends React.Component {
   }
 
   render() {
-    let {_t, quantity, price, price_emont, type, name, className, power, onClick, tier} = this.props;
+    let {_t, quantity, price_eth, price_emont, type, name, className, power, onClick, tier} = this.props;
 
     return(
       <div className={`store-cubego-card__container ${className && className} ${tier}`}  onClick={() => { onClick && onClick() }}>
@@ -40,7 +40,7 @@ class StoreCubegoCard extends React.Component {
           </div>
           <Parallelogram className={'parallelogram'} children={
             <div className="price__container">
-              <TextImage text={price} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+              <TextImage text={price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
               <TextImage text={price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
             </div>
           }/>

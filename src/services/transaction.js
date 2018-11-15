@@ -1,8 +1,7 @@
-
+import {URLS} from "../constants/general";
 
 
 function defaultCallbackFunction(code, data) {
-  console.log('create transaction')
   switch (code) {
     case window.RESULT_CODE.SUCCESS:
       this.callback({...data, 'txn_hash': (data || {})['txn_hash']});
@@ -15,26 +14,42 @@ function defaultCallbackFunction(code, data) {
   }
 }
 
-export const PurchasePackage = (dispatch, action, _t, address, numPacks, packId, amount, purchaseType, currency, finishCallback) => {
+export const PurchasePackage = (dispatch, action, _t, {name, address, numPacks, packId, amount, purchaseType, currency, history}, finishCallback) => {
   dispatch(action({
-    title: _t('confirm_purchase'),
-    content: _t(`${numPacks} pack(s)`),
-    note: _t('note_purchase_pack'),
-    title_done: _t('already_purchase'),
-    fields_order: ['amount'],
+    title: _t('purchase_cube'),
+    note: '',
+    title_done: _t('purchasing_cube'),
+    txn_done: _t('purchase_cube_done'),
+    follow_up_txt: _t('check inventory'),
+    follow_up_action: () => {history.push(`/${URLS.INVENTORY}`)},
+    fields_order: ['name', 'quantity', 'amount'],
     button: _t('purchase'),
     forceToSubmittingState: true,
+
     fields: {
+      name: {
+        text: _t(`item`),
+        value: _t(name),
+        readonly: true,
+        type: 'text',
+      },
+      quantity: {
+        text: _t(`quantity`),
+        value: numPacks,
+        readonly: true,
+        type: 'text',
+      },
       amount: {
-        text: _t(`amount (${currency})`),
+        text: _t(`price (${currency})`),
         value: amount,
-        readonly: false,
+        readonly: true,
         type: 'text',
       },
       extra: {
-        address, numPacks, packId, amount, purchaseType, purchaseType
+        address, numPacks, packId, amount, purchaseType,
       }
     },
+
     submitFunc: function(obj, callback) {
       // Validating Data
 
@@ -57,7 +72,7 @@ export const PurchasePackage = (dispatch, action, _t, address, numPacks, packId,
     },
 
   }));
-}
+};
 
 PurchasePackage.types = {
   PURCHASE_SINGLE_PACK_USING_ETH: 'purchase_single_pack',

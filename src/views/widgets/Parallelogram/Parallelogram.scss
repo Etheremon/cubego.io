@@ -13,7 +13,7 @@
     left: 50%;
     transform: translate(-50%, -50%) skewX(-20deg);
     color: $white;
-    font-family: $f__baloobha;
+    //font-family: $f__baloobha;
     font-size: $font-size-large;
     width: 100%;
   }
@@ -52,5 +52,11 @@
     clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
     z-index: 1;
   }
-  
+
+  .widget__text-image {
+    span {
+      font-family: $f__baloobha;
+      padding-top: 3px;
+    }
+  }
 }

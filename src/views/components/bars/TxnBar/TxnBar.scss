@@ -3,42 +3,69 @@
 @import '../../../styles/variables';
 @import '../../../styles/fonts';
 
-.txn-bar-maximize__container {
+.txn-bar__wrapper {
   background-color: #91DEF8;
   position: fixed;
   padding: 1px;
   right: 8px;
-  bottom: 16px;
-  z-index: 1001;
+  @include mobile {
+    right: 0;
+    bottom: 4px;
+  }
+  bottom: 8px;
+  z-index: 10001;
   border-radius: 8px;
-  .fas {
+  width: 360px;
+  max-width: 100%;
+
+  .close-btn {
     position: absolute;
     right: 8px;
     top: 8px;
     font-size: $font-size-large;
+    cursor: pointer;
     color: #153E75;
+    &.registration {
+      color: #97eff4;
+    }
     &:hover {
       filter: invert(0.5);
     }
   }
+
   .top-menu__container {
 
   }
 
   .main-form__container {
-    background: url('../../../../shared/img/background/background_white.png') no-repeat center center;
+    //background: url('../../../../shared/img/background/background_white.png') no-repeat center center;
+    &.registration {
+      background: url('../../../../shared/img/background/background_blue_dark.jpg') no-repeat center center;
+    }
+
     display: inline-block;
     text-align: center;
     border: 3px solid #153E75;
     border-radius: 8px;
     padding: 24px;
-    width: 200px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    .register-popup {
+      .signup__container, .register-popup__app {
+        padding: 0;
+        background: none;
+      }
+    }
+
 
     .button {
       display: inline-block;
     }
 
-    .field {
+    .txn-field {
       text-align: left;
       padding: 8px;
 
@@ -46,33 +73,37 @@
         display: block;
         margin-bottom: 3px;
         color: #003F72;
-        font-size: $font-size-tiny;
+        font-size: $font-size-small;
         text-transform: capitalize;
         font-family: $f__baloobha;
       }
 
-      textarea {
-        font-size: $font-size-smaller;
-      }
-
-      input[type=text] {
-        box-shadow: inset 0 5px 5px #2C6477;
+      input[type=text], textarea {
+        width: 100%;
+        box-shadow: inset 0 1px 2px #2C6477;
         outline: none;
         border: 0;
         background-color: #49A6C5;
-        padding: 3px 8px;
+        padding: 8px 8px 4px 8px;
         border-radius: 5px;
         font-family: $f__baloobha;
         color: $white;
+        box-sizing: border-box;
+        resize: none;
+        line-height: 20px;
 
         &:read-only {
           box-shadow: none;
           background-color: #66C0DE;
         }
+
+        &::selection {
+          background: #0b58a6 !important; /* WebKit/Blink Browsers */
+        }
       }
     }
 
-    .title {
+    .txn-title {
       margin: 24px 0;
       color: #003F72;
       text-transform: capitalize;
@@ -80,10 +111,10 @@
       font-size: $font-size-large;
     }
 
-    .header {
+    .txn-header {
       position: absolute;
-      width: 180px;
-      height: 56px;
+      width: auto;
+      height: 42px;
       top: 0;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -94,18 +125,22 @@
         left: 50%;
         transform: translate(-50%, -50%);
         color: $white;
-        font-size: $font-size-small;
+        font-size: $font-size-normal;
         font-family: $f__baloobha;
         text-transform: capitalize;
         white-space: nowrap;
+        padding-top: 4px;
       }
     }
 
+    .txn-note {
+      font-size: $font-size-normal;
+    }
 
     form {
       p {
         font-family: $f__overpass;
-        font-size: $font-size-tiny;
+        font-size: $font-size-small;
       }
     }
   }

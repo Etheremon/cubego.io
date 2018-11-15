@@ -133,7 +133,7 @@ class App extends React.Component {
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
-          <Route path={`/${URLS.CUBEGONS}`} component={Utils.IsLiveServer ? ComingSoon : MyCubegoes}/>
+          <Route path={`/${URLS.INVENTORY}`} component={Utils.IsLiveServer ? ComingSoon : MyCubegoes}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>

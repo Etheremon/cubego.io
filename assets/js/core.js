@@ -80,7 +80,8 @@ window.addEventListener('load', function() {
     rpcConnected = true;
     hasWeb3Injected = false;
     account = null;
-    currentNetwork = NETWORKS.mainnet;
+    // currentNetwork = NETWORKS.mainnet;
+    currentNetwork = NETWORKS.rinkeby;
     contractInstances = initContractInstance(currentNetwork);
   }
 });

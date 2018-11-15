@@ -19,7 +19,7 @@ export const Parallelogram = ({ className, children }) => {
         
         </div>
       </div>
-      <div className="shadow-layer"></div>
+      <div className="shadow-layer"/>
     </div>
   )
 }

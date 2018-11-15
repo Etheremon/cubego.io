@@ -30,13 +30,13 @@ class SignInForm extends React.Component {
   }
 
   render() {
-    const {_t, onBack, userId, type, metamask, userInfo} = this.props;
+    const {_t, onBack, userId, type, metamask, userInfo, simplified} = this.props;
     const { submitError, submitSuccess } = this.state;
     const referralObj = LS.GetItem(LS.Fields.referralCode);
     const referralCode = referralObj && referralObj.expire > Date.now() ? referralObj.code : '';
 
     return (  
-      <div className={'signup__container'}>
+      <div className={`signup__container ${simplified ? 'simplified' : ''}`}>
         <div className="welcome-to">
           {_t('welcome_to_cubego')}
           <img className={'cube_red'} src={require('../../../../shared/img/assets/cube_red.png')}/>

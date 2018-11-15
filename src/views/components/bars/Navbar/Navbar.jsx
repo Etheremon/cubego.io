@@ -29,7 +29,7 @@ const NavbarTextList = [
 const NavbarList = [
   {link: `/${URLS.GUIDE}`, text: 'game_intro', img: 'icon_intro'},
   {link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build'},
-  {link: `/${URLS.CUBEGONS}`, text: 'my_cubegons', img: 'icon_my_heroes'},
+  {link: `/${URLS.INVENTORY}`, text: 'inventory', img: 'icon_my_heroes'},
   {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
   {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
   {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},

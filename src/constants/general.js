@@ -3,6 +3,7 @@ export const URLS = {
   INTRO: 'intro',
   BUILD_GON: 'build',
   REVIEW_GON: 'review',
+  INVENTORY: 'inventory',
   CUBEGONS: 'cubegons',
   STORE: 'store',
   BATTLE: 'battle',
