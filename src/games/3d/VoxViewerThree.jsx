@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ThreeX, {
-  AmbientLight, DirectionalLight,
+  AmbientLight, Background, DirectionalLight,
   Grid, HemisphereLight, MeshBox, MeshContainer, OrthographicCamera, Plane,
   PointLight,
 } from "../threeX";
@@ -35,7 +35,7 @@ const ARROW_DISTANCE = 100;
 class VoxViewerThree extends Component {
   constructor(props) {
     super(props);
-    this.state = {data: {}, unMounted: false};
+    this.state = {data: {}, unMounted: false, takingScreenshot: false};
     this.mouse = new window.THREE.Vector2();
     this.raycaster = new window.THREE.Raycaster();
     this.objects = [];
@@ -52,7 +52,6 @@ class VoxViewerThree extends Component {
       this.tools = props.tools;
       this.hoverColor = '0x' + props.tools.color.value.color.replace('#', '');
     }
-    this.plane = null;
     this.rendererObjects = [];
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -70,16 +69,8 @@ class VoxViewerThree extends Component {
     this.updateGridIdx++;
     let x = SIZE * (voxelData.spaceSize.x[1] + voxelData.spaceSize.x[0]) / 2 - this.offsetVector.x + SIZE / 2;
     let z = SIZE * (voxelData.spaceSize.y[1] + voxelData.spaceSize.y[0]) / 2 - this.offsetVector.z + SIZE / 2;
-
-    let elements = !this.props.viewOnly
+    let elements = !this.props.viewOnly && !this.state.takingScreenshot
       ? [
-        <Plane key={`plane-${this.updateGridIdx}`}
-               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
-               rotation={{x: Math.PI / 2, y: Math.PI, z: 0}} ref={(plane) => {
-          this.plane = plane
-        }}
-               width={size.y * SIZE} height={size.x * SIZE}
-        />,
         <Plane imageUrl={require('../../shared/img/assets/triangle.png')} key={`arrow`}
                position={{
                  x: x,
@@ -93,6 +84,7 @@ class VoxViewerThree extends Component {
               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
               key={`grid-${this.updateGridIdx}`}/>]
       : [];
+    elements.push(<Background imageUrl={require('../../shared/img/background/background_capture.jpg')} key={'background'}/>)
     GetValues(voxelData.voxels).forEach((voxel) => {
       let position = {
         x: SIZE / 2 + SIZE * voxel.x - this.offsetVector.x,
@@ -132,6 +124,20 @@ class VoxViewerThree extends Component {
 
   componentDidUpdate() {
     this.rendererObjects = this.getRendererObjects();
+  }
+
+  takeScreenshot() {
+    return new Promise((resolve, reject) => {
+      this.setState({
+        takingScreenshot: true
+      }, () => {
+        let data = ThreeX.Tools.takeScreenshot();
+        this.setState({
+          takingScreenshot: false
+        });
+        resolve(data);
+      });
+    });
   }
 
   setNewTools(tools) {

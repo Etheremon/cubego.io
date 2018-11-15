@@ -34,7 +34,7 @@ import {IsEqual} from "../../../utils/objUtils";
 import * as Config from "../../../config";
 import {Image} from "../../components/Image/Image.jsx";
 import {ShareImageToFacebook} from "../../../services/social";
- 
+
 require("style-loader!./ModelEditor.scss");
 
 class _ModelEditor extends React.Component {
@@ -202,8 +202,8 @@ class _ModelEditor extends React.Component {
       this.toolManager.onCellClicked(cell);
     else
       this.toolManager.onCellClicked([cell]);
-    
-    
+
+
     this.forceUpdate();
   }
 
@@ -242,8 +242,12 @@ class _ModelEditor extends React.Component {
   }
 
   capturePhoto() {
-    this.imageBase64 = this.modelCanvas ? this.modelCanvas.getBase64Image() : '';
-    this.setState({showModelCapturing: true});
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image().then((data) => {
+        this.imageBase64 = data;
+        this.setState({showModelCapturing: true});
+      })
+    }
   }
 
   downloadPhoto() {
@@ -420,7 +424,7 @@ class _ModelEditor extends React.Component {
           }
 
           {this.state.showModelReview ?
-            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER} 
+            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER}
              onUnmount={() => {this.setState({showModelReview: false})}}
                    open={this.state.showModelReview}>
               <div>

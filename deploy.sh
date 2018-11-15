@@ -18,9 +18,7 @@ if [ "$username" == "" ]; then
     exit 1
 fi
 
-npm install
-rm -rf public/*
-npm run buildProd
+
 python pack_archive.py
 
 scp ${project}.zip ${username}@139.59.244.132:/data/source/${target}.zip

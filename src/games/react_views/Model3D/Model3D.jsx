@@ -43,7 +43,7 @@ export class Model3D extends Component {
   }
 
   getBase64Image() {
-    return ThreeX.Tools.takeScreenshot();
+    return this.voxel.takeScreenshot();
   }
 
   toggleShowLayer() {
