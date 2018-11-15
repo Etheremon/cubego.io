@@ -8,150 +8,90 @@
   .list-item__container {
     display: inline-block;
 
-    table {
-      border-spacing: 0 8px;
-      border-collapse: separate;
-      
-      thead {
-        
-        .header {
-          color: $white;
-          font-size: $font-size-large;
-          font-family: $f__baloobha;
-          text-transform: capitalize;
-
-          th {
-            background-color: #124C62;
-            padding: 16px;
-
-            &:nth-child(1) {
-              border-radius: 8px 0 0 0;
-            }
-
-            &:nth-last-child(1) {
-              border-radius: 0 8px 0 0;
-            }
-          }
-        }
+    .ranking-table {
+      .cell-rank, .cell-player, .cell-referral, .cell-point, .cell-ether, .cell-emont {
+        width: 64px;
+        height: 36px;
+        padding: 16px 16px 0 16px;
+        color: $white;
+        font-size: $font-size-large;
+        font-family: $f__baloobha;
+        text-transform: capitalize;
       }
 
-      tbody {
-        color: $white;
-        font-size: $font-size-normal;
-        font-family: $f__baloobha;
+      .cell-player {
+        width: 88px;
+      }
 
+      custom-table-header {
+        display: flex;
+        flex-direction: row;
+        background-color: #135067;
+        border-top: 3px solid #073956;
+        border-right: 3px solid #073956;
+        border-left: 3px solid #073956;
+        border-radius: 8px 8px 0 0;
+        box-shadow: inset 0 0 16px #073956;
+      }
+
+      custom-table-body {
         .row {
-          border-radius: 8px;
-          padding: 8px;
-          border: 1px solid $white;
+          box-shadow: 0px 0px 16px 5px #69DBC5;
+          margin: 5px 0;
+          display: flex;
+          flex-direction: row;
+          border-radius: 5px;
+          border: 3px solid $white;
+
+          &.user-row {
+            margin-bottom: 16px;
+          }
+
+          &:nth-child(even) {
+            background-color: #086BAA;
+          }
+
+          &:nth-child(odd) {
+            background-color: #3CC6E5;
+          }
+
           &.first {
-            td {
-              background-color: #FFDE00;
-              color: #203F4E;
-              border-top: 3px solid $white;
-              border-bottom: 3px solid $white;
-              &:nth-child(1) {
-                border-radius: 5px 0 0 5px;
-                border-left: 3px solid $white;
-              }
-  
-              &:nth-last-child(1) {
-                border-radius: 0 5px 5px 0;
-                border-right: 3px solid $white;
-              }
+            background-color: #FFDE00;
+            div {
+              color: #203F4E !important;
             }
           }
 
           &.second {
-
-            td {
-              background-color: #F7F7F7;
-              color: #203F4E;
-              border-top: 3px solid $white;
-              border-bottom: 3px solid $white;
-              &:nth-child(1) {
-                border-radius: 5px 0 0 5px;
-                border-left: 3px solid $white;
-              }
-  
-              &:nth-last-child(1) {
-                border-radius: 0 5px 5px 0;
-                border-right: 3px solid $white;
-              }
+            background-color: #F7F7F7;
+            div {
+              color: #203F4E !important;
             }
           }
 
           &.third {
-
-            td {
-              background-color: #ED7E07;
-              color: #203F4E;
-              border-top: 3px solid $white;
-              border-bottom: 3px solid $white;
-              &:nth-child(1) {
-                border-radius: 5px 0 0 5px;
-                border-left: 3px solid $white;
-              }
-  
-              &:nth-last-child(1) {
-                border-radius: 0 5px 5px 0;
-                border-right: 3px solid $white;
-              }
-            }
-          }
-        }
-
-        tr {
-          box-shadow: 0px 0px 23px 5px #69DBC5;
-          td {
-            padding: 8px;
-          }
-
-          &:nth-child(even) {
-            td {
-              background-color: #086BAA;
-              border-top: 3px solid $white;
-              border-bottom: 3px solid $white;
-              &:nth-child(1) {
-                border-radius: 5px 0 0 5px;
-                border-left: 3px solid $white;
-              }
-  
-              &:nth-last-child(1) {
-                border-radius: 0 5px 5px 0;
-                border-right: 3px solid $white;
-              }
+            background-color: #ED7E07;
+            div {
+              color: #203F4E !important;
             }
           }
 
-          &:nth-child(odd) {
-            td {
-              background-color: #3CC6E5;
-              border-top: 3px solid $white;
-              border-bottom: 3px solid $white;
-              &:nth-child(1) {
-                border-radius: 5px 0 0 5px;
-                border-left: 3px solid $white;
-              }
-  
-              &:nth-last-child(1) {
-                border-radius: 0 5px 5px 0;
-                border-right: 3px solid $white;
-              }
+          .rank {
+            color: $white;
+            font-size: $font-size-header-1;
+            font-family: $f__baloobha;
+            text-shadow: 0 0 4px $white;
+            text-align: center;
+            position: relative;
+            img {
+              top: calc(50% - 8px);
+              left: 50%;
+              transform: translate(-50%, -50%);
+              position: absolute;
+              display: inline-block;
+              height: 44px;
             }
           }
-        }
-
-
-        .rank {
-          color: $white;
-          font-size: $font-size-header-1;
-          font-family: $f__baloobha;
-          text-shadow: 0 0 4px $white;
-        }
-
-        .player {
-          
         }
       }
     }
