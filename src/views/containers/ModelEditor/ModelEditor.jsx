@@ -140,7 +140,7 @@ class _ModelEditor extends React.Component {
 
   componentDidMount() {
     if (this.props.savedModel && this.props.savedModel.length) {
-      this.toolManager.addModel({model: this.props.savedModel[0]});
+      this.toolManager.addModel({model: this.props.savedModel[0].model});
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
@@ -163,7 +163,7 @@ class _ModelEditor extends React.Component {
       this.toolManager.updateUserCubes(nextProps.userCubes);
     }
     if (nextProps.savedModel.length > this.props.savedModel.length && nextProps.savedModel.length > 0) {
-      this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
+      this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1].model, nextProps.savedModel.length - 1)
     }
   }
 
@@ -238,7 +238,7 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     this.setState({saved: true});
-    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
+    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex, image: this.modelCanvas ? this.modelCanvas.getBase64Image(): null}));
   }
 
   capturePhoto() {
@@ -588,8 +588,9 @@ class _ModelEditor extends React.Component {
                     </div>
                   ))}
                   {savedModel.map((item, idx) => {
-                    return <div className={'template'} key={idx} onClick={() => {this.onSavedModelSelect(item, idx)}}>
-                      <img className={'img'} src={require('../../../shared/sample_models/0.png')} />
+                    const modelImage = item && item.image ? item.image : require('../../../shared/sample_models/0.png')
+                    return <div className={'template'} key={idx} onClick={() => {this.onSavedModelSelect(item.model, idx)}}>
+                      <img className={'img'} src={modelImage} />
                       <div className={'name'}>
                         {_t(`saved model ${idx}`)}
                       </div>
