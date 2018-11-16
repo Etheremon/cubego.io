@@ -16,7 +16,10 @@ function purchaseSinglePack(packId, numPacks, valueToSend, callbackFunc) {
 
 function purchaseSinglePackUsingEmont(packId, numPacks, receiverAddress, valueToSendInEmont, callbackFunc) {
   console.log("DEBUG_LOG|purchase_single_pack_using_EMONT|pack_id,num_pack,value_to_send=", packId, numPacks, valueToSendInEmont);
-  payService(receiverAddress, valueToSendInEmont, PAY_SERVICE_TYPE.PRESALE_SINGLE_PACK, packId, numPacks, 0, callbackFunc);
+  payService(
+    valueToSendInEmont, EMONT_PAY_SERVICE_TYPE.CUBEGO, "",
+    CUBEGO_PAY_SERVICE_TYPE.PRESALE_SINGLE_PACK, packId, numPacks, 0, 0, 0, callbackFunc
+  );
 }
 
 function purchaseUltimatePack(numPacks, valueToSend, callbackFunc) {
@@ -31,5 +34,8 @@ function purchaseUltimatePack(numPacks, valueToSend, callbackFunc) {
 
 function purchaseUltimatePackUsingEmont(numPacks, receiverAddress, valueToSendInEmont, callbackFunc) {
   console.log("DEBUG_LOG|purchase_ultimate_pack_using_EMONT|num_pack,value_to_send=", numPacks, valueToSendInEmont);
-  payService(receiverAddress, valueToSendInEmont, PAY_SERVICE_TYPE.PRESALE_ULTIMATE_PACK, numPacks, 0, 0, callbackFunc);
+  payService(
+    valueToSendInEmont, EMONT_PAY_SERVICE_TYPE.CUBEGO, "",
+    CUBEGO_PAY_SERVICE_TYPE.PRESALE_ULTIMATE_PACK, numPacks, 0, 0, 0, 0, callbackFunc
+  );
 }

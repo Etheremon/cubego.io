@@ -17,6 +17,7 @@ function initContractInstance(network) {
   if (!network) network = NETWORKS.mainnet;
   contractAddress = CONTRACTS[network];
   var instances = {};
+  instances.emontInstance = getContractInstance(CONTRACTS_DATA.EMONT_ABI_ARRAY, contractAddress.EMONT_ADDRESS);
   instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contractAddress.ETHEREMON_DATA_ADDRESS);
   instances.cubegoPresaleInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
   instances.cubegoEmontPaymentInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);

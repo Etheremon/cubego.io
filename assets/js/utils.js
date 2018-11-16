@@ -46,11 +46,11 @@ function getFunctionHashes(abi) {
 }
 
 function calculateWeiFromEth(val) {
-  return web3 && web3.toWei ? web3.toWei(val, "ether") : val * Math.pow(10, 8);
+  return web3 && web3.toWei ? web3.toWei(val, "ether") : val * Math.pow(10, 18);
 }
 
 function calculateWeiFromEmont(val) {
-  return val * Math.pow(10, 18);
+  return val * Math.pow(10, 8);
 }
 
 function findFunctionByHash(hashes, functionHash) {
