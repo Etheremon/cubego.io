@@ -442,7 +442,7 @@ class _ModelEditor extends React.Component {
                   <img src={this.imageBase64}/>
                 </div>
                 <div className={'actions'}>
-                  <a href={this.imageBase64.replace('data:image/png;', 'data:application/octet-stream;')} className={'action'}>
+                  <a href={this.imageBase64} className={'action'} download={"cubego.png"}>
                     <Image img={'btn_download'}/>
                   </a>
                   {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
