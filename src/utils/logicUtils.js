@@ -38,7 +38,7 @@ export const GetFullModel = (simplifiedModel) => {
           x: cell.x, y: cell.y, z: cell.z,
           color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
         }
-      })
+      }),
     };
   } catch(e) {
     return null;
