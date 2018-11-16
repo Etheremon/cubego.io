@@ -18,8 +18,12 @@ import ListView from '../../widgets/ListView/ListView.jsx';
 import CubegonCard from '../../components/CubegonCard/CubegonCard.jsx';
 import { FilterSearch, FilterSort, FilterType } from '../../widgets/Filters/Filters.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
+import { UserActions } from '../../../actions/user';
+import { GetLoggedInUserId, GetUserCubegons, GetUserInfo } from '../../../reducers/selectors.js';
+import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
+import { CUBE_MATERIALS } from '../../../constants/cubego';
 
-require("style-loader!./MyCubegoes.scss");
+require("style-loader!./Inventory.scss");
 
 
 const sampleCubegon = {1: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
@@ -48,7 +52,7 @@ const sampleCubegon = {1: { id: 1, type: '', name: 'afd', owner: '', total: 120,
 
 const myCubegoesTabs = [ {key: 'cubegons', content: 'cubegons'}, {key: 'cubegoes', content: 'cubegoes'}];
 
-class MyCubegoes extends React.Component {
+class Inventory extends React.Component {
 
   constructor(props) {
     super(props);
@@ -57,6 +61,10 @@ class MyCubegoes extends React.Component {
 
     this.handleGenerateCubegonView = this.handleGenerateCubegonView.bind(this);
     this.handleGenerateCubegoView = this.handleGenerateCubegoView.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
   }
 
   handleGenerateCubegonView(cubegons) {
@@ -75,15 +83,6 @@ class MyCubegoes extends React.Component {
     const {_t} = this.props;
     return (
       <div className="cubego-view__container">
-        <div className="cubego__button-list">
-          <ButtonNew label={_t('buy')} color={ButtonNew.colors.TURQUOISE} className={'buy__button'}
-                             onClick={() => {}}/>
-          <ButtonNew label={_t('transfer')} color={ButtonNew.colors.TURQUOISE} className={'transfer__button'}
-          onClick={() => {}}/>
-          <ButtonNew label={_t('top_up')} className={'top-up__button'}
-          onClick={() => {}}/>
-        </div>
-
         <div className="list-item__container">
           {cubegoes.map((item, idx) => 
             <div className="card-item" key={idx}>
@@ -97,7 +96,15 @@ class MyCubegoes extends React.Component {
   }
 
   render() {
-    const {_t, query} = this.props;
+    const {_t, query, userCubegons, userInfo} = this.props;
+    let dataUserCubegoes;
+    if (userCubegons !== undefined && userCubegons !== null) {
+      dataUserCubegoes = userCubegons.materials.filter(item => item.amount > 0)
+      dataUserCubegoes = dataUserCubegoes.map(item => {
+        return {...item, ...CUBE_MATERIALS[item.material_id] } 
+      }
+      );
+    }
 
     const cubegoData = [{quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
                         {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
@@ -112,64 +119,45 @@ class MyCubegoes extends React.Component {
                         {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90/1100', label: 'rank'}];
 
     return (
-      <PageWrapper type={PageWrapper.types.BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
 
         <Navbar minifying/>
 
-        <div className="mycubegoes-page__container">
+        <div className="inventory-page__container">
       
           <HeaderBar size={Container.sizes.NORMAL} label={_t(`my_${query.tab}`)} onBackClicked={() => {}}/>
-          <Container className={'mycubegoes-page__main'} size={Container.sizes.NORMAL}>
-            <div className="my-cubegon-info__container">
-              <div className="avatar__container">
+          <Container className={'inventory-page__main'} size={Container.sizes.NORMAL}>
+            <div className="inventory-header__container">
+              <div className="user-info">
                 <div className="avatar">
-                  <img src={require('../../../shared/img/background/background_avatar.png')}/>
-                </div>
-              </div>
-
-              <div className="group">
-                <div className="item">
-                  <div className="owner-info">
-                    <div className="owner-name">
-                      Maerongia
-                    </div>
-                    <div className="id">
-                      123456789
+                  <div className="border-1">
+                    <div className="border-2">
+                      <img src=""/>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="group">
-                <div className="item info">
-                  <div className="label">{`${_t('cubegoes')}:`}</div>
-                  <div className="icon-value">
-                    {`250/12`}
-                    <img src={require('../../../shared/img/cubegoes/001.png')}/>
+
+                <div className="details">
+                  <div className="name">
+                    {userInfo ? userInfo.username : ''}
+                  </div>
+                  <div className="id">
+                    {userInfo ? userInfo.address : ''}
+                  </div>
+                  <div className="user-properties">
+                    <div className="user-cubegoes ">
+                      <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
+                      <span>{dataUserCubegoes ? dataUserCubegoes.length : 0}</span>
+                    </div>
+
+                    <div className="user-cubegons">
+                      <img src={require('../../../shared/img/inventory/surprise.png')}/>
+                      <span>25</span>
+                    </div>
                   </div>
                 </div>
-                <div className="item info">
-                  <div className="label">{`${_t('cubegons')}:`}</div>
-                  <div className="icon-value">
-                    {`45/10`}
-                    <img src={require('../../../shared/img/cubegoes/001.png')}/>
-                  </div>
-                </div>
-              </div>
-              <div className="group">
               </div>
             </div>
-            <Text className={'combat-title'} type={Text.types.H2} children={_t('combat')}/>
-            <div className="combat-stats__container">
-              {combatStats.map((item, idx) => (
-                <div className={'item'} key={idx}>
-                  <img src={item.icon} />
-                  <div className={'content'}>{_t(item.content)}</div>
-                  <div className={'label'}>{_t(item.label)}</div>
-                </div>
-              ))}
-
-            </div>
-
             <TabsView tabs={myCubegoesTabs} centered 
               selectedTab={query.tab}
               handleOnTabSelect={(tab) => {
@@ -197,7 +185,7 @@ class MyCubegoes extends React.Component {
                   ]}
                   page={query.page}
                   handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
-                /> : this.handleGenerateCubegoView(cubegoData)
+                /> : this.handleGenerateCubegoView(dataUserCubegoes ? dataUserCubegoes : [])
             }
 
             
@@ -217,9 +205,14 @@ const mapStateToProps = (store, props) => {
     tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[0].key,
     page: query.page ? query.page : 1,
   }
+
+  let userId = GetLoggedInUserId(store);
   return {
     query,
     _t: getTranslate(store.localeReducer),
+    userId,
+    userCubegons: GetUserCubegons(store, userId),
+    userInfo: GetUserInfo(store, userId),
   }
 };
 
@@ -230,4 +223,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(MyCubegoes));
+)(Inventory));

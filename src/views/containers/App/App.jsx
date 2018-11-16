@@ -19,7 +19,7 @@ import Loading from '../../components/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {GetValues} from "../../../utils/objUtils";
-import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
+import Inventory from '../Inventory/Inventory.jsx';
 import {AuthActions} from "../../../actions/auth";
 import SignUp from '../SignIn/SigInForm/SignInForm.jsx';
 import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
@@ -133,7 +133,7 @@ class App extends React.Component {
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
-          <Route path={`/${URLS.INVENTORY}`} component={Utils.IsLiveServer ? ComingSoon : MyCubegoes}/>
+          <Route path={`/${URLS.INVENTORY}`} component={Utils.IsLiveServer ? ComingSoon : Inventory}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>

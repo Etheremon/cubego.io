@@ -114,7 +114,7 @@ class ListView extends React.Component {
   }
   
   render() {
-    let {filters, advanceFilters, dark} = this.props;
+    let {filters, advanceFilters, dark, scrollable} = this.props;
     let {filteredItems, toShowItems, page, numPages} = this.state;
 
     return (
@@ -136,7 +136,7 @@ class ListView extends React.Component {
           }
         </div>
 
-        <div className="list-view__items-container">
+        <div className={`list-view__items-container ${scrollable ? 'scrollable' : ''}`}>
           {toShowItems === undefined
             ? <div className="list-view__items-container--extra">
                 <Loading dark={!!dark}/>
@@ -177,6 +177,7 @@ ListView.defaultProps = {
   divWrapperId: undefined,
   handleFilter: undefined,
   isDoingFilterInChild: true,
+  scrollable: false,
 };
 
 ListView.propTypes = {

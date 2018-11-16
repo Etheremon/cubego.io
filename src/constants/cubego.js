@@ -4,7 +4,7 @@ import * as Utils from "../utils/utils";
 export const CUBE_TIER = {
   1: {
     id: 1,
-    name: 'legendary',
+    name: 'legend',
   },
   2: {
     id: 1,
@@ -361,7 +361,7 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cK
   return {
     ...cube,
     class_id: parseInt(cKey),
-    img: require(`../shared/img/cubegoes/${Utils.AddHeadingZero(cKey, 3)}.png`),
+    img: require(`../shared/img/store_cubegoes/${cube.name}.png`),
     icon: require(`../shared/img/cubego-icons/${Utils.AddHeadingZero(cKey, 3)}.png`),
     variants: ObjUtils.CloneWithValueModify(cube.variants, (vKey, variant) => ({
       ...variant,

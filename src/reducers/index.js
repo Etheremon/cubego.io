@@ -13,7 +13,7 @@ export const voxelStoreReducers = {
   user,
   model,
   cubegon,
-  cubego,
+  // cubego,
   localization,
   notifications,
   subscriber,

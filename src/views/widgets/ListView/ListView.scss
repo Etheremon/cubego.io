@@ -86,5 +86,7 @@
 }
 
 .list-view__items-container {
-  overflow-x: auto;
+  &.scrollable {
+    overflow-x: auto;
+  }
 }

@@ -11,7 +11,8 @@ export const GetLoggedInUserId = (state) => (state.auth['userId']);
  * User
  */
 export const GetUserInfo = (state, userId) => (CloneDeep(state.user.info[userId]));
-
+export const GetUserCubegons = (state, userId) => CloneDeep(state.user.userCubegons[userId]);
+export const GetUserCubegoes = (state, userId) => CloneDeep(state.user.userCubegoes[userId]);
 /**
  * Model
  */
@@ -22,12 +23,11 @@ export const GetValidatedModel = (state) => CloneDeep(state.model['validatedMode
  * Cubegons
  */
 export const GetCubegonInfo = (state, gonId) => CloneDeep(state.cubegon.info[gonId]);
-export const GetUserCubegons = (state, userId) => CloneDeep(state.cubegon[userId]);
 
 /**
  * Cubegoes
  */
-export const GetUserCubegoes = (state, userId) => CloneDeep(state.cubego[userId]);
+
 
 /**
  * Localization
