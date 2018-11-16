@@ -22,17 +22,6 @@ function convertObjToEther(value) {
     ? Number(web3.fromWei(value, 'ether')) : value;
 }
 
-function callFuncWithRpcCheck(func) {
-  var intervalId = null;
-  var checkRPCLoaded = function() {
-    if (rpcConnected != null) {
-      func();
-      clearInterval(intervalId);
-    }
-  };
-  intervalId = setInterval(checkRPCLoaded, 1000);
-}
-
 function getFunctionHashes(abi) {
   var hashes = [];
   for (var i=0; i<abi.length; i++) {
@@ -60,8 +49,28 @@ function findFunctionByHash(hashes, functionHash) {
   }
 }
 
+function callFuncWithRpcCheck(func) {
+  var intervalId = null;
+  var checkRPCLoaded = function() {
+    if (rpcConnected != null) {
+      func();
+      clearInterval(intervalId);
+    }
+  };
+  intervalId = setInterval(checkRPCLoaded, 1000);
+}
+
 // value in wei
 function callBlockchainFunction(contractInstance, contractAddress, args, callbackFunc, value, gas) {
+  callFuncWithRpcCheck(function() {
+    _callBlockchainFunction(contractInstance, contractAddress, args, callbackFunc, value, gas);
+  });
+}
+function _callBlockchainFunction(contractInstance, contractAddress, args, callbackFunc, value, gas) {
+  if (!contractInstance || !contractInstance.getData) {
+    console.warn("ERROR_LOG|invalid_contract_instance|contract=", contractAddress);
+    return;
+  }
   if (isEtherAccountActive()) {
     contractInstance.apply(null, args.concat({value: calculateWeiFromEth(value), gas: gas}).concat(function(err, txn_hash) {
       if (err) {
@@ -78,3 +87,23 @@ function callBlockchainFunction(contractInstance, contractAddress, args, callbac
       "amount": value, "gas": gas});
   }
 }
+
+// value in wei
+function getBlockchainData(contractInstance, args, callbackFunc) {
+  callFuncWithRpcCheck(function() {
+    _getBlockchainData(contractInstance, args, callbackFunc);
+  });
+}
+function _getBlockchainData(contractInstance, args, callbackFunc) {
+  contractInstance.apply(null, args.concat(function(err, data) {
+    if (err) {
+      console.log("ERROR_LOG|get_data_failed|error=", err);
+      callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain call fail!!"});
+    } else {
+      callbackFunc(RESULT_CODE.SUCCESS, data)
+    }
+  }));
+}
+
+
+

@@ -6,6 +6,7 @@
 
 // Global variables
 var currentNetwork = '';
+var isUsingTestNetwork = false;
 var contractInstances = {};
 var contractAddress = {};
 var rpcConnected = null;
@@ -21,6 +22,7 @@ function initContractInstance(network) {
   instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contractAddress.ETHEREMON_DATA_ADDRESS);
   instances.cubegoPresaleInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
   instances.cubegoEmontPaymentInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
+  instances.cubegoCoreInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
   return instances;
 }
 
@@ -47,6 +49,7 @@ window.addEventListener('load', function() {
       switch (netId) {
         case "1":
           currentNetwork = NETWORKS.mainnet;
+          isUsingTestNetwork = false;
           contractInstances = initContractInstance(currentNetwork);
           console.log('INFO_LOG|running_on_main_net.');
           break;
@@ -60,6 +63,7 @@ window.addEventListener('load', function() {
           break;
         case "4":
           currentNetwork = NETWORKS.rinkeby;
+          isUsingTestNetwork = true;
           contractInstances = initContractInstance(currentNetwork);
           console.log('INFO_LOG|running_on_rinkeby_net.');
           break;
@@ -83,6 +87,7 @@ window.addEventListener('load', function() {
     account = null;
     // currentNetwork = NETWORKS.mainnet;
     currentNetwork = NETWORKS.rinkeby;
+    isUsingTestNetwork = true;
     contractInstances = initContractInstance(currentNetwork);
   }
 });
