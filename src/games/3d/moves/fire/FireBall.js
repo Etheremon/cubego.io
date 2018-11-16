@@ -22,13 +22,12 @@ export default class FireBall extends BaseMove {
 
   _createFireBallParticle() {
     let isCollision = false;
-    let direction = 1;
     let fireBall = BABYLON.Mesh.CreateBox("fist", 0.4, this.scene);
     let startMatrix = this.player.playerMesh.getWorldMatrix();
     let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
     let targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
     let targetPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), targetMatrix);
-
+    let direction = 1;
     if (targetPosition.z > startPosition.z) {
       direction = -1;
     }

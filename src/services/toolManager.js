@@ -484,12 +484,12 @@ let view2dOptions = {
   side: {
     viewKey: 'side',
     label: 'side_view',
-    x: '-y', y: '-z', z: '-x',
+    x: '-y', y: '-z', z: '+x',
   },
   top: {
     viewKey: 'top',
     label: 'bottom_view',
-    x: '+x', y: '-y', z: '+z',
+    x: '+x', y: '+y', z: '+z',
   }
 };
 let view2dList = ['front', 'side', 'top'];

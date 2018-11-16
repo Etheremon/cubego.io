@@ -10,6 +10,7 @@ import {ThreePointLight} from "./threePointLight";
 import {ThreePlane} from "./threePlane";
 import {ThreeAmbientLight} from "./threeAmbientLight";
 import {ThreeDirectionalLight} from "./threeDirectionalLight";
+import {ThreeBackground} from "./threeBackground";
 
 const TYPES = {
   MESH_CONTAINER: 'MESH_CONTAINER',
@@ -23,7 +24,8 @@ const TYPES = {
   POINT_LIGHT: 'POINT_LIGHT',
   PLANE: 'PLANE',
   AMBIENT_LIGHT: 'AMBIENT_LIGHT',
-  DIRECTION_LIGHT: 'DIRECTION_LIGHT'
+  DIRECTION_LIGHT: 'DIRECTION_LIGHT',
+  BACKGROUND: 'BACKGROUND'
 };
 
 let mappingComponents = {};
@@ -39,6 +41,7 @@ mappingComponents[TYPES.ORTHOGRAPHIC_CAMERA] = ThreeOrthographicCamera;
 mappingComponents[TYPES.PLANE] = ThreePlane;
 mappingComponents[TYPES.AMBIENT_LIGHT] = ThreeAmbientLight;
 mappingComponents[TYPES.DIRECTION_LIGHT] = ThreeDirectionalLight;
+mappingComponents[TYPES.BACKGROUND] = ThreeBackground;
 
 const createComponent = (type, props, rootContainerInstance) => {
   return mappingComponents[type].create(rootContainerInstance, props);

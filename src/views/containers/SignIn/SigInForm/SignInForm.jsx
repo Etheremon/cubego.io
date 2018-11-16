@@ -33,7 +33,7 @@ class SignInForm extends React.Component {
     const {_t, onBack, userId, type, metamask, userInfo, simplified} = this.props;
     const { submitError, submitSuccess } = this.state;
     const referralObj = LS.GetItem(LS.Fields.referralCode);
-    const referralCode = referralObj && referralObj.expire > Date.now() ? referralObj.code : '';
+    const referralCode = window.referralCode || (referralObj && referralObj.expire > Date.now() ? referralObj.code : '');
 
     return (  
       <div className={`signup__container ${simplified ? 'simplified' : ''}`}>

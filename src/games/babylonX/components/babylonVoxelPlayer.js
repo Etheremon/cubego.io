@@ -20,7 +20,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
   init() {
     this.healthPercent = 100;
-    this.isDying = false;
+    // this.isDying = false;
     this.playSkeletonAnimation('idle_ground', true, 1);
     this.updateHealthBar();
   }
@@ -161,7 +161,19 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       } else {
         p.color = p.originalColor;
       }
+      // if (this.isDying) {
+      //   this.explore(p);
+      //   if (p.position.y <= 0) {
+      //     p.color.a -= 0.1;
+      //   } else {
+      //     p.velocity.y -= 0.01;
+      //     p.position = new BABYLON.Vector3(p.position.x, p.position.y, p.position.z);
+      //     (p.position).addInPlace(p.velocity);
+      //     p.position.y += 0.5 / 2;
+      //   }
+      // }
     };
+
     spsVoxel.initParticles();
     spsVoxel.setParticles();
     this.sps = spsVoxel;
@@ -170,6 +182,16 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
     playerMesh.parent = this.renderer;
     this.playerMesh = playerMesh;
+  }
+
+  explore(particle) {
+    let speed = 0.1;
+    if (!particle.isExplore) {
+      particle.isExplore = true;
+      particle.velocity.x = (Math.random() - 0.5) * speed;
+      particle.velocity.y = Math.random() * speed;
+      particle.velocity.z = (Math.random() - 0.5) * speed;
+    }
   }
 
   createFakeShadow() {
@@ -286,7 +308,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   }
 
   die() {
-    this.isDying = true;
+    // this.isDying = true;
     this.playSkeletonAnimation('die', false, 1);
     this.opponent.playSkeletonAnimation('winning', true, 1);
 

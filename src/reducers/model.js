@@ -15,25 +15,25 @@ const savedModel = (state=savedModelState, action) => {
       let arraySimplifiedModel = ConvertToArray(LS.GetItem(LS.Fields.savedModel));
       let newArraySavedModel
       if (action.modelIndex >= 0) {
-        newArraySavedModel = [...arraySimplifiedModel.slice(0, action.modelIndex), 
-                                LogicUtils.GetSimplifiedModel(savedModel),
-                              ...arraySimplifiedModel.slice(action.modelIndex + 1)];
+        newArraySavedModel = [...arraySimplifiedModel.slice(0, action.modelIndex),
+          LogicUtils.GetSimplifiedModel(savedModel),
+          ...arraySimplifiedModel.slice(action.modelIndex + 1)];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
         return [...state.slice(0, action.modelIndex), savedModel,
-                ...state.slice(action.modelIndex + 1)];
+          ...state.slice(action.modelIndex + 1)];
       } else {
         newArraySavedModel = [...arraySimplifiedModel, LogicUtils.GetSimplifiedModel(savedModel)];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
         return [...state, savedModel];
       }
-      
+
     case ModelActions.DELETE_MODEL.init.key:
       let arrSimplifiedModel = ConvertToArray(LS.GetItem(LS.Fields.savedModel));
-      let newArrSavedModel = [...arrSimplifiedModel.slice(0, action.modelIndex), 
-                                ...arrSimplifiedModel.slice(action.modelIndex + 1)];
+      let newArrSavedModel = [...arrSimplifiedModel.slice(0, action.modelIndex),
+        ...arrSimplifiedModel.slice(action.modelIndex + 1)];
       LS.SetItem(LS.Fields.savedModel, newArrSavedModel);
       return [...state.slice(0, action.modelIndex),
-              ...state.slice(action.modelIndex + 1)];
+        ...state.slice(action.modelIndex + 1)];
 
     default:
       return state;

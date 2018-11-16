@@ -17,12 +17,19 @@ function createRenderer(canvas, options) {
   scene = ThreeScene.create();
   if (!isWebGLAvailable(canvas)) {
     scene.renderer = new window.THREE.CanvasRenderer({canvas, alpha: true});
-    scene.renderer.setPixelRatio( window.devicePixelRatio );
-    scene.renderer.setSize( canvas.width, canvas.height );
+    scene.renderer.setPixelRatio(window.devicePixelRatio);
+    scene.renderer.setSize(canvas.width, canvas.height);
     scene.isWebGL = false;
   } else {
     scene.isWebGL = true;
-    scene.renderer = new window.THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
+    scene.renderer = new window.THREE.WebGLRenderer({
+      canvas,
+      antialias: false,
+      alpha: true
+    });
+    window.renderer = scene.renderer;
+    scene.renderer.shadowMap.enabled = true;
+    scene.renderer.shadowMap.type = window.THREE.PCFSoftShadowMap;
   }
   scene.canvas = canvas;
   return ThreeXFiberRenderer.createContainer(scene);
@@ -50,13 +57,22 @@ function unmountComponentAtNode(container) {
   }
 }
 
+function takeScreenshot() {
+  if (!scene) {
+    console.warn('ThreeX: Please init threeX before take a screenshot');
+    return;
+  }
+  scene.renderer.render(scene.scene, scene.renderer.camera.renderer);
+  return scene.renderer.domElement.toDataURL();
+}
+
 function stopRender() {
   unmountComponentAtNode(scene.canvas);
   cancelAnimationFrame(scene.renderer.camera.requestAnimationFrameId);
-
 }
 
 export {
   render,
-  stopRender
+  stopRender,
+  takeScreenshot
 };

@@ -1,7 +1,9 @@
-
-
 .battle-3d-view {
   canvas {
     width: 100%;
+  }
+  .webgl-error {
+    color: #ffffff;
+    text-align: center;
   }
 }

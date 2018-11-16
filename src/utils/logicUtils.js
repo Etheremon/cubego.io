@@ -46,7 +46,7 @@ export const GetFullModel = (simplifiedModel) => {
             color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
           }
         }
-      })
+      }),
     };
     delete res.voxels['ver'];
     return res;

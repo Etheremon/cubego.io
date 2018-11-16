@@ -32,7 +32,9 @@ import {CloneDeep} from "../../../utils/objUtils";
 import * as LogicUtils from "../../../utils/logicUtils";
 import {IsEqual} from "../../../utils/objUtils";
 import * as Config from "../../../config";
- 
+import {Image} from "../../components/Image/Image.jsx";
+import {ShareImageToFacebook} from "../../../services/social";
+
 require("style-loader!./ModelEditor.scss");
 
 class _ModelEditor extends React.Component {
@@ -128,6 +130,9 @@ class _ModelEditor extends React.Component {
     this.onSavedModelSelect = this.onSavedModelSelect.bind(this);
     this.renderError = this.renderError.bind(this);
 
+    this.capturePhoto = this.capturePhoto.bind(this);
+    this.downloadPhoto = this.downloadPhoto.bind(this);
+
     this.isHoldingKey = {};
     this.selectedVariants = {};
     this.selectedModelIndex = -1;
@@ -156,6 +161,10 @@ class _ModelEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
+    }
+    if (nextProps.savedModel.length > this.props.savedModel.length && nextProps.savedModel.length > 0) {
+      // this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
+      this.selectedModelIndex = nextProps.savedModel.length - 1;
     }
   }
 
@@ -194,8 +203,8 @@ class _ModelEditor extends React.Component {
       this.toolManager.onCellClicked(cell);
     else
       this.toolManager.onCellClicked([cell]);
-    
-    
+
+
     this.forceUpdate();
   }
 
@@ -231,6 +240,19 @@ class _ModelEditor extends React.Component {
   saveModel() {
     this.setState({saved: true});
     this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
+  }
+
+  capturePhoto() {
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image().then((data) => {
+        this.imageBase64 = data;
+        this.setState({showModelCapturing: true});
+      })
+    }
+  }
+
+  downloadPhoto() {
+    Utils.OpenInNewTab(this.imageBase64);
   }
 
   reviewModel(verified=false, text) {
@@ -403,11 +425,33 @@ class _ModelEditor extends React.Component {
           }
 
           {this.state.showModelReview ?
-            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER} 
+            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER}
              onUnmount={() => {this.setState({showModelReview: false})}}
                    open={this.state.showModelReview}>
               <div>
                 {this.renderError()}
+              </div>
+            </Popup> : null
+          }
+
+          {this.state.showModelCapturing ?
+            <Popup onUnmount={() => {this.setState({showModelCapturing: false})}}
+                   open={this.state.showModelCapturing}>
+              <div className={'model-editor__model-capture'}>
+                <div className={'image'}>
+                  <img src={this.imageBase64}/>
+                </div>
+                <div className={'actions'}>
+                  <a href={this.imageBase64.replace('data:image/png;', 'data:application/octet-stream;')} className={'action'}>
+                    <Image img={'btn_download'}/>
+                  </a>
+                  {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
+                    {/*<Image img={'btn_share_fb'}/>*/}
+                  {/*</a>*/}
+                  {/*<a className={'action'}>*/}
+                    {/*<Image img={'btn_share_tw'}/>*/}
+                  {/*</a>*/}
+                </div>
               </div>
             </Popup> : null
           }
@@ -624,8 +668,13 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
                 <div className={'model-editor__3d'}>
+                  <div className={'model-editor__3d-capture'}
+                       tooltip={_t('capture a photo')} tooltip-position={'bottom'}
+                       onClick={this.capturePhoto}>
+                    <Image img={'icon_camera'}/>
+                  </div>
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
-                           ref={(canvas) => {window.modelCanvas = canvas}}
+                           ref={(canvas) => {window.modelCanvas = canvas; this.modelCanvas = canvas;}}
                            _t={_t}
                   />
                 </div>
