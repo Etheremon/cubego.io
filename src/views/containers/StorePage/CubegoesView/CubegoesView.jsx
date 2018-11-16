@@ -18,11 +18,12 @@ import { GetLoggedInUserId } from '../../../../reducers/selectors';
 
 require("style-loader!./CubegoesView.scss");
 
+const ethToEmont = 2000;
 const ultimatePack = {
   name: 'ultimate pack',
   quantity: 199,
-  price_eth: 1.0,
-  price_emont: 2000,
+  price_eth: 1.02,
+  price_emont: 1.02*ethToEmont,
   cubes: [
     {type: 'gold', quantity: 15, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'ice', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
@@ -34,12 +35,12 @@ const ultimatePack = {
 };
 
 const presaleCubegoes = [
-  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 36, price_eth: 0.5, price_emont: 1000, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 40, price_eth: 0.5, price_emont: 1000, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 40, price_eth: 0.5, price_emont: 1000, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 110, price_eth: 0.3, price_emont: 600, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 120, price_eth: 0.3, price_emont: 600, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 120, price_eth: 0.3, price_emont: 600, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 36, price_eth: 0.5, price_emont: 0.5*ethToEmont, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 40, price_eth: 0.5, price_emont: 0.5*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 40, price_eth: 0.5, price_emont: 0.5*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 110, price_eth: 0.3, price_emont: 0.3*ethToEmont, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 120, price_eth: 0.3, price_emont: 0.3*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 120, price_eth: 0.3, price_emont: 0.3*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
 ];
 
 class CubegoesView extends React.Component {

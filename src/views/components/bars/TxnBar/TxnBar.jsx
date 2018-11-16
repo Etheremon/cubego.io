@@ -215,7 +215,9 @@ class TxnBar extends React.Component {
               <span>{this.props._t(this.state.currentTxn.title_done)}</span>
             </div>
 
-            <p>{this.props._t('txn_done')}</p>
+            {currentTxn && currentTxn.txn_done ?
+              <p>{this.props._t(currentTxn.txn_done)}</p> : null
+            }
 
             <div className="txn-field">
               <label>{this.props._t('txn_hash')}</label>
