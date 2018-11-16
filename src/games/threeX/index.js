@@ -1,6 +1,6 @@
 import {render, stopRender, takeScreenshot} from "./fiber/render";
 import {TYPES} from "./components";
-import {getMaterial, loadMaterial} from "./loaders";
+import {getMaterial, getTexture, loadMaterial, loadTexture} from "./loaders";
 
 export const MeshContainer = TYPES.MESH_CONTAINER;
 export const PerspectiveCamera = TYPES.PERSPECTIVE_CAMERA;
@@ -18,5 +18,5 @@ export const Background = TYPES.BACKGROUND;
 
 const Tools = {takeScreenshot};
 
-const ThreeX = {render, loadMaterial, getMaterial, stopRender, Tools};
+const ThreeX = {render, loadMaterial, getMaterial, stopRender, Tools, loadTexture, getTexture};
 export default ThreeX;

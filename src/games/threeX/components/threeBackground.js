@@ -1,4 +1,5 @@
 import {ThreeComponent} from "./threeComponent";
+import {getTexture} from "../loaders";
 
 
 export class ThreeBackground extends ThreeComponent {
@@ -8,12 +9,24 @@ export class ThreeBackground extends ThreeComponent {
 
   static create({scene}, props) {
     let threeBackground = new ThreeBackground();
-    let texture = new window.THREE.TextureLoader().load(props.imageUrl);
+    let texture;
+    if (props.imageUrl) {
+      texture = new window.THREE.TextureLoader().load(props.imageUrl);
+    }
+    if (props.textureId) {
+      texture = getTexture(props.textureId);
+    }
+    console.log(scene.background);
     scene.background = texture;
+    threeBackground.scene = scene;
     return threeBackground;
   }
 
   set position(pos) {
     this.renderer.position.set(pos.x, pos.y, pos.z);
+  }
+
+  destroy() {
+    this.scene.background = null;
   }
 }
