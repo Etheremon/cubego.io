@@ -18,7 +18,9 @@ if [ "$username" == "" ]; then
     exit 1
 fi
 
-
+npm install
+rm -rf public/*
+npm run buildProd
 python pack_archive.py
 
 scp ${project}.zip ${username}@139.59.244.132:/data/source/${target}.zip
@@ -27,10 +29,8 @@ ssh ${username}@139.59.244.132 "
     echo 'setting permission of /source'
     chgrp dev /data/source/${target}.zip || true
     chmod 775 /data/source/${target}.zip || true
-
     echo 'deploying files'
     bash /data/source/deploy_${target}.sh
-
     echo 'setting permission of /release'
     chgrp -R dev /data/release/${target} || true
     chmod -R 775 /data/release/${target} || true

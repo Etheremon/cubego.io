@@ -85,8 +85,8 @@ class VoxViewerThree extends Component {
               key={`grid-${this.updateGridIdx}`}/>]
       : [];
     if (!this.props.viewOnly) {
-      elements.push(<Background imageUrl={require('../../shared/img/background/background_capture.jpg')}
-                                key={'background'}/>);
+      // elements.push(<Background imageUrl={require('../../shared/img/background/background_capture.jpg')}
+      //                           key={'background'}/>);
     }
 
     GetValues(voxelData.voxels).forEach((voxel) => {
