@@ -84,7 +84,7 @@ class VoxViewerThree extends Component {
               position={{x: x, y: SIZE * this.state.data.spaceSize.z[0] - this.offsetVector.y, z: z}}
               key={`grid-${this.updateGridIdx}`}/>]
       : [];
-    if (this.state.takingScreenshot) {
+    if (!this.props.viewOnly && this.state.takingScreenshot) {
       elements.push(<Background textureId={'bg-capture'} key={'background'}/>);
     }
 
