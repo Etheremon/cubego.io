@@ -364,33 +364,15 @@ class VoxViewerThree extends Component {
 
     return (
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
-        {/*<Axis/>*/}
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
-        {/*<AmbientLight/>*/}
-        {/*<HemisphereLight position={{x: 0, y: 0, z: 0}}/>*/}
-
-        <DirectionalLight position={{x: -1000, y: 1000, z: 1000}}/>
-        {/*<PointLight position={{x: -1000, y: -1000, z: -1000}}/>*/}
-
-        {/*<PointLight position={{x: 1000, y: 0, z: 0}}/>*/}
-        {/*<PointLight position={{x: -1000, y: 0, z: 0}}/>*/}
-
-        {/*<PointLight position={{x: 0, y: 0, z: -1000}}/>*/}
-        {/*<PointLight position={{x: 0, y: 0, z: 1000}}/>*/}
-
+        <DirectionalLight position={{x: -1000, y: 1000, z: 1000}} followCamera={true}/>
         {!this.props.viewOnly ?
           <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
             this.rollOverMesh = ref;
           }} wireFrameColor='000000' visible={false}/> : null
         }
-
-        {/*{!this.props.viewOnly ?*/}
-        {/*<BoxHelper ref={(ref) => {*/}
-        {/*this.boxHelper = ref*/}
-        {/*}}/> : null*/}
-        {/*}*/}
         {this.renderVoxel(this.state.data)}
       </MeshContainer>
     );
