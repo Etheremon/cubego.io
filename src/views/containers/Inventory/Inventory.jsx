@@ -3,25 +3,23 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import { Text } from '../../widgets/Text/Text.jsx';
-import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
 import { Container } from '../../widgets/Container/Container.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import Navbar from '../../components/bars/Navbar/Navbar.jsx';
 import { HeaderBar } from '../../components/bars/HeaderBar/HeaderBar.jsx';
 import * as Utils from "../../../utils/utils";
-import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
-import CubegoCard from '../../components/CubegoCard/CubegoCard.jsx';
+import {CubegoCard} from '../../components/CubegoCard/CubegoCard.jsx';
 import ListView from '../../widgets/ListView/ListView.jsx';
 import CubegonCard from '../../components/CubegonCard/CubegonCard.jsx';
 import { FilterSearch, FilterSort, FilterType } from '../../widgets/Filters/Filters.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import { UserActions } from '../../../actions/user';
 import { GetLoggedInUserId, GetUserCubegons, GetUserInfo } from '../../../reducers/selectors.js';
-import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
 import { CUBE_MATERIALS } from '../../../constants/cubego';
+import Loading from "../../components/Loading/Loading.jsx";
+import {EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 
 require("style-loader!./Inventory.scss");
 
@@ -80,13 +78,30 @@ class Inventory extends React.Component {
   }
 
   handleGenerateCubegoView(cubegoes) {
-    const {_t} = this.props;
+    const {_t, history} = this.props;
+
+    if (!cubegoes) {
+      return (
+        <div className="cubego-view__container">
+          <div className="list-item__container">
+            <Loading/>
+          </div>
+        </div>
+      )
+    }
+
+    if (!cubegoes.length) {
+      return (
+        <EmptyCubegonList _t={_t} history={history}/>
+      )
+    }
+
     return (
       <div className="cubego-view__container">
         <div className="list-item__container">
-          {cubegoes.map((item, idx) => 
+          {cubegoes.sort((a, b) => (b.material_id - a.material_id)).map((item, idx) =>
             <div className="card-item" key={idx}>
-              <CubegoCard key={idx} {...item} />
+              <CubegoCard key={idx} {...item} _t={_t}/>
             </div>
           )}
         </div>
@@ -102,8 +117,7 @@ class Inventory extends React.Component {
       dataUserCubegoes = userCubegons.materials.filter(item => item.amount > 0)
       dataUserCubegoes = dataUserCubegoes.map(item => {
         return {...item, ...CUBE_MATERIALS[item.material_id] } 
-      }
-      );
+      });
     }
 
     const cubegoData = [{quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
@@ -125,48 +139,58 @@ class Inventory extends React.Component {
 
         <div className="inventory-page__container">
       
-          <HeaderBar size={Container.sizes.NORMAL} label={_t(`my_${query.tab}`)} onBackClicked={() => {}}/>
+          <HeaderBar size={Container.sizes.NORMAL} label={_t(`inventory`)} onBackClicked={() => {this.props.history.goBack()}}/>
+
+          <div className={'inventory-page__header'}>
+
+            {userInfo && userInfo.username ?
+              <div className="inventory-header__container">
+                <div className="user-info">
+                  <div className="avatar">
+                    <div className="border-1">
+                      <div className="border-2">
+                        {userInfo && userInfo.address ?
+                          <img
+                            src={require(`../../../shared/img/emoticons/${userInfo.address[40].charCodeAt(0) % 11}.png`)}/> : null
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="details">
+                    <div className="name">
+                      {userInfo ? userInfo.username : ''}
+                    </div>
+                    {/*<div className="id">*/}
+                    {/*{userInfo ? userInfo.address : ''}*/}
+                    {/*</div>*/}
+                    <div className="user-properties">
+                      <div className="user-cubegoes ">
+                        <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
+                        <span>{dataUserCubegoes ? dataUserCubegoes.length : 0}</span>
+                      </div>
+
+                      <div className="user-cubegons">
+                        <img src={require('../../../shared/img/inventory/surprise.png')}/>
+                        <span>25</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> : <div style={{height: "40px"}}/>
+            }
+
+            <TabsView tabs={[myCubegoesTabs[1]]} centered
+                      selectedTab={query.tab}
+                      handleOnTabSelect={(tab) => {
+                        Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
+                      }}/>
+          </div>
+
           <Container className={'inventory-page__main'} size={Container.sizes.NORMAL}>
-            <div className="inventory-header__container">
-              <div className="user-info">
-                <div className="avatar">
-                  <div className="border-1">
-                    <div className="border-2">
-                      <img src=""/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="details">
-                  <div className="name">
-                    {userInfo ? userInfo.username : ''}
-                  </div>
-                  <div className="id">
-                    {userInfo ? userInfo.address : ''}
-                  </div>
-                  <div className="user-properties">
-                    <div className="user-cubegoes ">
-                      <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
-                      <span>{dataUserCubegoes ? dataUserCubegoes.length : 0}</span>
-                    </div>
-
-                    <div className="user-cubegons">
-                      <img src={require('../../../shared/img/inventory/surprise.png')}/>
-                      <span>25</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <TabsView tabs={myCubegoesTabs} centered 
-              selectedTab={query.tab}
-              handleOnTabSelect={(tab) => {
-                Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
-            }}/>
-
             {
-              query.tab === myCubegoesTabs[0].key ? 
-                <ListView
+              query.tab === myCubegoesTabs[0].key
+                ? <ListView
                   itemList={Object.values(sampleCubegon)}
                   listItemName={_t('cubegons')}
                   handleGenerateCardView={this.handleGenerateCubegonView}
@@ -185,11 +209,9 @@ class Inventory extends React.Component {
                   ]}
                   page={query.page}
                   handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
-                /> : this.handleGenerateCubegoView(dataUserCubegoes ? dataUserCubegoes : [])
+                />
+                : this.handleGenerateCubegoView(dataUserCubegoes ? dataUserCubegoes : null)
             }
-
-            
-            
           </Container>
         </div>
         <Footer size={Container.sizes.NORMAL} type={Footer.types.DARK}/>
@@ -202,7 +224,7 @@ const mapStateToProps = (store, props) => {
   let query = Utils.ParseQueryString(props.location.search);
   query = {
     ...query,
-    tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[0].key,
+    tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[1].key,
     page: query.page ? query.page : 1,
   }
 

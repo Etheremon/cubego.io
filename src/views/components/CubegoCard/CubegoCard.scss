@@ -33,30 +33,26 @@
     display: flex;
     flex-direction: row;
 
-    .value {
-      color: $white;
-      font-size: $font-size-header-1;
-      font-family: $f__baloobha;
-    }
-
-    .tier {
-      width: 50%;
-      border-right: 2px solid $white;
-      margin: 12px 0;
-      font-size: $font-size-small;
-      font-weight: $font-weight-bold;
-      font-family: $f__overpass;
-      color: #9DF2F1;
-    }
-
-    .power {
+    .item {
       color: #9DF2F1;
       margin: 8px 0;
       font-size: $font-size-small;
       font-weight: $font-weight-bold;
       font-family: $f__overpass;
       width: 50%;
+      &:first-child {
+        border-right: 2px solid white;
+      }
+
+      .value {
+        padding-top: 4px;
+        color: $white;
+        font-size: $font-size-large;
+        font-family: $f__baloobha;
+        font-weight: $font-weight-normal;
+      }
     }
+
   }
 
   .footer {
@@ -93,11 +89,15 @@
     position: absolute;
     right: 16px;
     top: 16px;
-    font-size: $font-size-large;
+    font-size: $font-size-header-1;
+    @include mobile {
+      font-size: $font-size-large;
+    }
 
     .fas {
       font-size: $font-size-tiny;
       color: $white;
+      padding-right: 2px;
     }
   }
 }

@@ -16,13 +16,14 @@
     padding: 36px 0;
     .user-info {
       display: flex;
-      flex-wrap: wrap;
+      //flex-wrap: wrap;
 
       .avatar {
         border: 1px solid #75C3F5;
         border-radius: 8px;
-        box-shadow: 0px 5px 8px 0px #16639F;
-        
+        box-shadow: 0 5px 8px 0 #16639F;
+        background-color: rgba(0, 0, 0, 0.15);
+
         .border-1 {
           border: 3px solid #194379;
           border-radius: 8px;
@@ -37,6 +38,10 @@
           height: 80px;
           width: 80px;
           display: block;
+          @include mobile {
+            height: 60px;
+            width: 60px;
+          }
         }
 
 
@@ -45,6 +50,9 @@
       .details {
         margin-left: 24px;
         color: $white;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
         .name {
           font-family: $f__baloobha;
