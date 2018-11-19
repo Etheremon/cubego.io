@@ -32,40 +32,40 @@ export const CUBE_TIER_MAP = {
   basic: 5,
 };
 
+export const CUBE_TYPES_MAP = {
+  air: 0,
+  grass: 1,
+  water: 2,
+  fire: 3,
+  earth: 4,
+};
+
 export const CUBE_TYPES = {
-  1: {
-    id: 1,
+  [CUBE_TYPES_MAP.air]: {
+    id: CUBE_TYPES_MAP.air,
     name: 'air',
     img: require('../shared/img/types/air.png'),
   },
-  2: {
-    id: 2,
+  [CUBE_TYPES_MAP.grass]: {
+    id: CUBE_TYPES_MAP.grass,
     name: 'grass',
     img: require('../shared/img/types/grass.png'),
   },
-  3: {
-    id: 3,
+  [CUBE_TYPES_MAP.water]: {
+    id: CUBE_TYPES_MAP.water,
     name: 'water',
     img: require('../shared/img/types/water.png'),
   },
-  4: {
-    id: 4,
+  [CUBE_TYPES_MAP.fire]: {
+    id: CUBE_TYPES_MAP.fire,
     name: 'fire',
     img: require('../shared/img/types/fire.png'),
   },
-  5: {
-    id: 5,
+  [CUBE_TYPES_MAP.earth]: {
+    id: CUBE_TYPES_MAP.earth,
     name: 'earth',
     img: require('../shared/img/types/earth.png'),
   },
-};
-
-export const CUBE_TYPES_MAP = {
-  air: 1,
-  grass: 2,
-  water: 3,
-  fire: 4,
-  earth: 5,
 };
 
 export const CUBE_MATERIALS_MAP = {
@@ -379,3 +379,4 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cK
     })
   }
 });
+
