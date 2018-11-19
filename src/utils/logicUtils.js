@@ -9,7 +9,7 @@ export const GetStructure = (model) => {
     res.push(cell.x-model.modelSize.x[0]);
     res.push(cell.y-model.modelSize.y[0]);
     res.push(cell.z-model.modelSize.z[0]);
-    res.push(cell.color.material_id);
+    res.push(cell.color.material_id * 100 + cell.color.variant_id);
   });
   return res;
 };
@@ -36,9 +36,10 @@ export const GetFullModel = (simplifiedModel) => {
       voxels: ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
         if (key === 'ver') return null;
         if (simplifiedModel['ver'] === undefined) {
+          let materialOffset = cell.material_id === 1 ? 1 : 0;
           return {
             x: cell.x, y: cell.y, z: cell.z,
-            color: {...CUBE_MATERIALS[13-cell.material_id].variants[cell.variant_id]},
+            color: {...CUBE_MATERIALS[13-cell.material_id-materialOffset].variants[cell.variant_id]},
           }
         } else if (simplifiedModel['ver'] === 2) {
           return {
@@ -51,7 +52,6 @@ export const GetFullModel = (simplifiedModel) => {
     delete res.voxels['ver'];
     return res;
   } catch(e) {
-    console.log(e);
     return null;
   }
 };
