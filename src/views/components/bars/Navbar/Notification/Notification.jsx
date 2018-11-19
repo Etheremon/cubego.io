@@ -50,8 +50,7 @@ class Notification extends React.Component {
     if (feed['textcolor']) style.color = feed['textcolor'];
 
     let link = feed[`${language.code}link`] || feed[`enlink`];
-
-    let available =  typeof feed[`${language.code}link`] !== 'object' && typeof feed[`${language.code}text`] !== 'object';
+    let available = !!feed[`${language.code}text`];
 
     return (
       <div className={`notification__wrapper ${available ? 'visibile' : 'hidden'} ${link ? 'clickable' : ''}`} style={style} onClick={() => {
@@ -61,7 +60,7 @@ class Notification extends React.Component {
           <span dangerouslySetInnerHTML={{__html: feed[`${language.code}text`] || feed[`entext`]}} />
           {feed['closable'] === 'TRUE' ?
             <div className={'notification__close'} onClick={(e) => {this.closeNoti(e)}}>
-              <Icon name={'close'}/>
+              <i className="fas fa-times"/>
             </div> : null
           }
         </Container>
