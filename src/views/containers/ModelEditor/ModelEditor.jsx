@@ -718,7 +718,7 @@ class _ModelEditor extends React.Component {
                        className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
                        tooltip={_t(material.name)} tooltip-position="bottom"
                        onClick={() => {
-                         this.onToolChange(this.tools.color.key, material.sub_materials[this.selectedVariants[material.material_id] || 1]);
+                         this.onToolChange(this.tools.color.key, material.sub_materials[this.selectedVariants[material.material_id] || material.material_id*100+1]);
                        }}>
                     <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}

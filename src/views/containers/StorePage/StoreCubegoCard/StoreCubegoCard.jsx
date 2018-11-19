@@ -36,7 +36,7 @@ class StoreCubegoCard extends React.Component {
             }
           </div>
           <div className="power-score">
-            {_t('power_score')}: <span>{power}</span>/{_t('cubego')}
+            {_t('type')}: <span>{_t(tier)}</span>
           </div>
           <Parallelogram className={'parallelogram'} children={
             <div className="price__container">

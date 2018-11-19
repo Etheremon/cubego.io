@@ -16,11 +16,11 @@
     position: relative;
 
     .bar {
-      overflow-x: auto;
+      //overflow-x: auto;
       display: flex;
       margin: 32px -8px 0 -8px;
       justify-content: space-between;
-      @include mobile {
+      @include not-computer {
         overflow-x: auto;
         width: 100%;
         margin: 32px 0 0 0;

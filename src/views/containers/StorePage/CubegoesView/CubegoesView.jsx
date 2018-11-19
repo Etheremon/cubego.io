@@ -21,13 +21,13 @@ require("style-loader!./CubegoesView.scss");
 const ethToEmont = 2000;
 const ultimatePack = {
   name: 'ultimate pack',
-  quantity: 199,
-  price_eth: 1.02,
-  price_emont: 1.02*ethToEmont,
+  quantity: 201,
+  price_eth: 1,
+  price_emont: 1*ethToEmont,
   cubes: [
     {type: 'gold', quantity: 15, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'ice', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'silver', quantity: 17, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+    {type: 'ice', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+    {type: 'silver', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'iron', quantity: 48, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
     {type: 'stone', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
     {type: 'wood', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
@@ -157,14 +157,26 @@ class CubegoesView extends React.Component {
                   <div className={'left'}>{_t('total cubes')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>
                 </div>
-                <div className={`review-item ${ALL_STORE_DISCOUNT !== 0 ? 'visible': 'hidden'}`}>
-                  <div className={'left'}>{_t('discount')}:</div>
-                  <div className={'right'}>{`-${ALL_STORE_DISCOUNT * 100}%`}</div>
-                </div>
                 <div className={'review-item'}>
-                  <div className={'left'}>{_t('total price')}:</div>
-                  <div className={'right'}>{CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4)} {_t(selectedPack.currency)}</div>
+                  <div className={'left'}>{_t('price')}:</div>
+                  <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
                 </div>
+
+                {ALL_STORE_DISCOUNT !== 0 ?
+                  <React.Fragment>
+                    <div className={'divider-line'}/>
+                    <div className={`review-item`}>
+                      <div className={'left'}>{ALL_STORE_DISCOUNT === 0.1 ? _t('early bird discount') : _t('early discount')}:
+                      </div>
+                      <div className={'right'}>{`-${ALL_STORE_DISCOUNT * 100}%`}</div>
+                    </div>
+                    <div className={'review-item'}>
+                      <div className={'left'}>{_t('total price')}:</div>
+                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4)} {_t(selectedPack.currency)}</div>
+                    </div>
+                  </React.Fragment> : null
+                }
+
                 <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
                   PurchasePackage(this.props.dispatch, addTxn, _t, {
                     address: userId,
@@ -193,7 +205,7 @@ class CubegoesView extends React.Component {
     return(
       <div className="cubegoes-view__container">
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
-            <div className="border"><DiscountFrame text={_t('save 10%')} /></div>
+            <div className="border"><DiscountFrame text={_t('Save 10%')} /></div>
             <div className="header__label">
               <CustomRectangle  />
               <span>{_t(ultimatePack.name)}</span>

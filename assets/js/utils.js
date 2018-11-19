@@ -75,7 +75,7 @@ function _callBlockchainFunction(contractInstance, contractAddress, args, callba
     contractInstance.apply(null, args.concat({value: calculateWeiFromEth(value), gas: gas}).concat(function(err, txn_hash) {
       if (err) {
         console.log("ERROR_LOG|make_txn_failed|error=", err);
-        callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain transaction fail!!"});
+        callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain transaction fail"});
       } else {
         callbackFunc(RESULT_CODE.SUCCESS, {"txn_hash": txn_hash})
       }
