@@ -18,6 +18,7 @@ import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import * as Config from "../../../config";
 import {URLS} from "../../../constants/general";
 import ReferralView from '../Referral/ReferralView.jsx';
+import { DiscountFrame } from '../../widgets/SVGManager/SVGManager.jsx';
 
 require("style-loader!./StorePage.scss");
 

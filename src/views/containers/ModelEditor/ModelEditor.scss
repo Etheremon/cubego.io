@@ -16,6 +16,7 @@
     position: relative;
 
     .bar {
+      overflow-x: auto;
       display: flex;
       margin: 32px -8px 0 -8px;
       justify-content: space-between;

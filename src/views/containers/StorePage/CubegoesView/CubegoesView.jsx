@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
-import { CustomRectangle } from '../../../widgets/SVGManager/SVGManager.jsx';
+import { CustomRectangle, DiscountFrame } from '../../../widgets/SVGManager/SVGManager.jsx';
 import StoreCubegoCard from '../StoreCubegoCard/StoreCubegoCard.jsx';
 import { TextImage } from '../../../widgets/Text/Text.jsx';
 import Popup from '../../../widgets/Popup/Popup.jsx';
@@ -10,7 +10,7 @@ import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx'
 import { URLS, CURRENCY } from '../../../../constants/general';
 import {CUBE_TIER, CUBE_TIER_MAP} from "../../../../constants/cubego";
 import * as Utils from "../../../../utils/utils";
-import { PRESALE_PACK_DISCOUNT } from '../../../../config.js';
+import { PRESALE_PACK_DISCOUNT, ALL_STORE_DISCOUNT } from '../../../../config.js';
 import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
 import { PurchasePackage } from '../../../../services/transaction';
 import { addTxn } from '../../../../actions/txnAction.js';
@@ -157,16 +157,20 @@ class CubegoesView extends React.Component {
                   <div className={'left'}>{_t('total cubes')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>
                 </div>
+                <div className={`review-item ${ALL_STORE_DISCOUNT !== 0 ? 'visible': 'hidden'}`}>
+                  <div className={'left'}>{_t('discount')}:</div>
+                  <div className={'right'}>{`-${ALL_STORE_DISCOUNT * 100}%`}</div>
+                </div>
                 <div className={'review-item'}>
                   <div className={'left'}>{_t('total price')}:</div>
-                  <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
+                  <div className={'right'}>{CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4)} {_t(selectedPack.currency)}</div>
                 </div>
                 <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
                   PurchasePackage(this.props.dispatch, addTxn, _t, {
                     address: userId,
                     numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
                     packId: item.pack_id,
-                    amount: totalAmount,
+                    amount: CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4),
                     purchaseType: (item && item.tier)
                       ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
                       : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
@@ -189,6 +193,7 @@ class CubegoesView extends React.Component {
     return(
       <div className="cubegoes-view__container">
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
+            <div className="border"><DiscountFrame text={_t('save 10%')} /></div>
             <div className="header__label">
               <CustomRectangle  />
               <span>{_t(ultimatePack.name)}</span>

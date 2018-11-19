@@ -123,3 +123,31 @@ export const ArrowDown = ({}) => {
         </svg>
     )
 }
+
+export const DiscountFrame = ({text}) => {
+    return (
+        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 3716 2243" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+            <defs>
+                <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="discount-1">
+                    <stop stopColor="#50457D" offset="0%"></stop>
+                    <stop stopColor="#B1C250" offset="41.9594473%"></stop>
+                    <stop stopColor="#891D48" offset="100%"></stop>
+                </linearGradient>
+                <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="discount-2">
+                    <stop stopColor="#542F44" offset="0%"></stop>
+                    <stop stopColor="#CE000C" offset="52.4092305%"></stop>
+                    <stop stopColor="#6C0A18" offset="100%"></stop>
+                </linearGradient>
+            </defs>
+            <g id="discount-frame" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <polygon id="Path-3" fill="#50030E" points="2722.51663 0 2675 142.226793 2815 92.523309"></polygon>
+                <polygon id="Path-3" fill="#50030E" transform="translate(3638.931388, 980.442734) rotate(118.000000) translate(-3638.931388, -980.442734) " points="3615.27297 900.765461 3565.27297 1060.12001 3712.5898 1004.43095"></polygon>
+                <rect id="Rectangle-8" stroke="url(#discount-1)" strokeWidth="30" x="25" y="113" width="3552" height="2105"></rect>
+                <polygon id="Rectangle-9" fill="url(#discount-2)" transform="translate(3340.002800, 382.002800) rotate(-45.000000) translate(-3340.002800, -382.002800) " points="3173.39029 1090.79245 3173.39029 -326.786846 3506.61531 18.0825465 3506.61531 749.258096"></polygon>
+                <text id="Save-5%" transform="translate(3320.553391, 381.553391) rotate(45.000000) translate(-3320.553391, -381.553391) " fill="#E9C303">
+                    <tspan x="2934.55339" y="421.553391">{text}</tspan>
+                </text>
+            </g>
+        </svg>
+    )
+}

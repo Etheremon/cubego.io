@@ -16,6 +16,10 @@
 }
 
 .cubegoes-view__container {
+  .hidden {
+    display: none;
+  }
+
   .presale-info__container {
     padding: 16px 16px 32px 16px;
     display: flex;
@@ -50,7 +54,21 @@
   .pack-view__container {
     width: 724px;
     max-width: 100%;
+    position: relative;
     cursor: pointer;
+
+    .border {
+      position: absolute;
+      top: -18px;
+      left: -2px;
+      bottom: -2px;
+      right: -25px;
+
+      tspan {
+        font-size: 180px;
+        text-transform: capitalize;
+      }
+    }
 
     .pack-parallelogram {
       .price__container {
@@ -79,9 +97,9 @@
     background: rgba(25, 49, 77, 1);
     border-radius: 5px;
     position: relative;
-    border-width: 5px;
-    border-style: solid;
-    border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
+    // border-width: 5px;
+    // border-style: solid;
+    // border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
 
     .pack-parallelogram {
       position: absolute;
@@ -252,6 +270,25 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
+          position: relative;
+
+          .left {
+            text-transform: capitalize;
+          }
+
+          &:nth-last-child(3) {
+            margin-top: 16px;
+
+            &:after {
+              content: '';
+              width: 80%;
+              top: -8px;
+              left: 50%;
+              transform: translateX(-50%);
+              position: absolute;
+              border: 0.5px solid $white;
+            }
+          }
 
           .left {
 

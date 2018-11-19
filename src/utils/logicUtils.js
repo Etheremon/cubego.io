@@ -68,5 +68,5 @@ export const GetImageFromGonID = (id) => {
 };
 
 export const CalculateDiscountPrice = (price, discount, roundNumber) => {
-  return Utils.RoundToDecimalFloat(price * (1 - discount) , roundNumber);
+  return Utils.RoundUpToDecimal(price * (1 - discount) , roundNumber);
 }

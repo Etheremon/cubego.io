@@ -26,6 +26,7 @@ export const RoundToDecimalStr = (num, numRound) => (num ? parseFloat(parseFloat
 export const RoundToDecimalFloat = (num, numRound) => (num ? parseFloat(parseFloat(num).toFixed(numRound)) : num);
 
 export const RoundDownToDecimal = (num, numRound) => (Math.floor(num * Math.pow(10, numRound)) / Math.pow(10, numRound));
+export const RoundUpToDecimal = (num, numRound) => (Math.round(num * Math.pow(10, numRound)) / Math.pow(10, numRound));
 
 export const AddHeadingZero = (num, len) => {
   let str = '' + num;
