@@ -208,10 +208,12 @@ export class ToolManager {
     let typePoints = [0, 0, 0, 0, 0];
 
     ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
-      this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
-      this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
-      for (let i = 0; i <= 4; i += 1)
-        typePoints[i] += cell.color.type_points[i];
+      if (cell && !Utils.ObjIsEmpty(cell.color)) {
+        this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
+        this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
+        for (let i = 0; i <= 4; i += 1)
+          typePoints[i] += cell.color.type_points[i];
+      }
     });
 
     this._stats.type = typePoints.reduce((res, val, idx, arr) => (val > 0 && (res === -1 || arr[res] < val)) ? idx : res, -1);

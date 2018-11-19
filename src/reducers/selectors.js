@@ -6,13 +6,20 @@ import {CloneDeep} from "../utils/objUtils";
  */
 export const GetLoggedInUserId = (state) => (state.auth['userId']);
 
-
 /**
  * User
  */
 export const GetUserInfo = (state, userId) => (CloneDeep(state.user.info[userId]));
 export const GetUserCubegons = (state, userId) => CloneDeep(state.user.userCubegons[userId]);
 export const GetUserMaterials = (state, userId) => CloneDeep(state.user.userMaterials[userId]);
+export const GetUserNumberOfMaterials = (state, userId) => {
+  let userCubes = {};
+  (state.user.userMaterials[userId] || []).forEach(m => {
+    userCubes[m.material_id] = Math.max(0, m.amount - m.pending_amount);
+  });
+  return userCubes;
+};
+
 /**
  * Model
  */

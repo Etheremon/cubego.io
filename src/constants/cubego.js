@@ -366,7 +366,7 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cK
     sub_materials: ObjUtils.CloneWithValueModify(cube.sub_materials, (vKey, variant) => ({
       ...variant,
       material_id: parseInt(cKey),
-      variant_id: parseInt(vKey),
+      sub_material_id: parseInt(vKey),
       materialKey: cube.name,
       img: require(`../shared/img/cubego-variants/${Utils.AddHeadingZero(cKey, 3)}_${Utils.AddHeadingZero(vKey % 100, 2)}.png`),
       type_points: SUB_MATERIAL_TYPE_POINTS[vKey],

@@ -21,7 +21,10 @@ import * as ObjUtils from "../../../utils/objUtils";
 import {CUBE_MATERIALS, CUBE_MATERIALS_MAP, CUBE_TYPES} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
-import {GetLoggedInUserId, GetSavedModel, GetUserInfo} from "../../../reducers/selectors";
+import {
+  GetLoggedInUserId, GetSavedModel, GetUserInfo, GetUserMaterials,
+  GetUserNumberOfMaterials
+} from "../../../reducers/selectors";
 import {ModelActions} from "../../../actions/model";
 import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
@@ -34,6 +37,7 @@ import {IsEqual} from "../../../utils/objUtils";
 import * as Config from "../../../config";
 import {Image} from "../../components/Image/Image.jsx";
 import {ShareImageToFacebook} from "../../../services/social";
+import {UserActions} from "../../../actions/user";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -101,7 +105,7 @@ class _ModelEditor extends React.Component {
         hotKey: 'Z',
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
-      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_MAP.plastic].sub_materials[1]}),
+      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_MAP.plastic].sub_materials[CUBE_MATERIALS_MAP.plastic*100+1]}),
       view2D: Tools.view2D({
         hotKey: 'X',
         onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
@@ -150,11 +154,14 @@ class _ModelEditor extends React.Component {
 
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
+
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
   }
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("keyup", this.onKeyUp);
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.stop.func({userId: this.props.userId}));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -372,6 +379,7 @@ class _ModelEditor extends React.Component {
     let {_t, savedModel, userInfo, userCubes} = this.props;
     let {saved} = this.state;
     let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
+
     let selectedMaterial = CUBE_MATERIALS[selectedColor.material_id];
 
     let btns = [
@@ -710,7 +718,7 @@ class _ModelEditor extends React.Component {
                        className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
                        tooltip={_t(material.name)} tooltip-position="bottom"
                        onClick={() => {
-                         this.onToolChange(this.tools.color.key, material.sub_materials[this.selected[material.material_id] || 1]);
+                         this.onToolChange(this.tools.color.key, material.sub_materials[this.selectedVariants[material.material_id] || 1]);
                        }}>
                     <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}
@@ -728,7 +736,7 @@ class _ModelEditor extends React.Component {
                            options={selectedMaterial.sub_materials}
                            onChange={(val) => {
                              this.onToolChange(this.tools.color.key, val);
-                             this.selectedVariants[val.material_id] = val.variant_id;
+                             this.selectedVariants[val.material_id] = val.sub_material_id;
                            }}
                 />
                 {colorNote}
@@ -776,20 +784,7 @@ const mapStateToProps = (store, props) => {
     savedModel: GetSavedModel(store),
     userId,
     userInfo: GetUserInfo(store, userId),
-    userCubes: {
-      0: 300,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-      6: 0,
-      7: 0,
-      8: 0,
-      9: 0,
-      10: 0,
-      11: 0,
-      12: 0,
-    },
+    userCubes: GetUserNumberOfMaterials(store, userId),
   }
 };
 

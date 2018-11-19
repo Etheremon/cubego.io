@@ -9,7 +9,7 @@ export const GetStructure = (model) => {
     res.push(cell.x-model.modelSize.x[0]);
     res.push(cell.y-model.modelSize.y[0]);
     res.push(cell.z-model.modelSize.z[0]);
-    res.push(cell.color.material_id * 100 + cell.color.variant_id);
+    res.push(cell.color.sub_material_id);
   });
   return res;
 };
@@ -23,7 +23,7 @@ export const GetSimplifiedModel = (model) => {
     res.model[GetCellKey(xx, yy, zz)] = {
       x: xx, y: yy, z: zz,
       material_id: cell.color.material_id,
-      variant_id: cell.color.variant_id,
+      sub_material_id: cell.color.sub_material_id,
     }
   });
   return res;
@@ -32,26 +32,28 @@ export const GetSimplifiedModel = (model) => {
 export const GetFullModel = (simplifiedModel) => {
   if (!simplifiedModel) return simplifiedModel;
   try {
-    let res = {model: {}, image: null}
+    let res = {model: {}, image: null};
 
+    // v1: {'1_1_1':{x,y,z,material_id,variant_id}}
     if (simplifiedModel['ver'] === undefined) {
-      
       res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
         if (key === 'ver') return null;
-        let mid = cell.material_id === 12 ? 0 : 13 - cell.material_id;
+        let mid = cell['material_id'] === 12 ? 0 : 13 - cell['material_id'];
+
         return {
           x: cell.x, y: cell.y, z: cell.z,
-          color: {...CUBE_MATERIALS[mid].sub_materials[parseInt(mid * 100) + parseInt(cell.variant_id)]},
+          color: {...CUBE_MATERIALS[mid].sub_materials[parseInt(mid * 100) + parseInt(cell['variant_id'])]},
         }
       })
       
-    } else if (simplifiedModel['ver'] === 2) {
-
+    }
+    // v1: {ver: 2, image, model: {'1_1_1':{x,y,z,sub_mat_id}}
+    else if (simplifiedModel['ver'] === 2) {
       res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
         if (key === 'ver') return null;
         return {
           x: cell.x, y: cell.y, z: cell.z,
-          color: {...CUBE_MATERIALS[cell.material_id].sub_materials[cell.variant_id]},
+          color: {...CUBE_MATERIALS[cell.material_id].sub_materials[cell.sub_material_id]},
         }
       })
     }
