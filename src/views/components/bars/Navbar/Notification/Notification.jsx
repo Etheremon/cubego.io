@@ -51,8 +51,10 @@ class Notification extends React.Component {
 
     let link = feed[`${language.code}link`] || feed[`enlink`];
 
+    let available =  typeof feed[`${language.code}link`] !== 'object' && typeof feed[`${language.code}text`] !== 'object';
+
     return (
-      <div className={`notification__wrapper ${link ? 'clickable' : ''}`} style={style} onClick={() => {
+      <div className={`notification__wrapper ${available ? 'visibile' : 'hidden'} ${link ? 'clickable' : ''}`} style={style} onClick={() => {
         Utils.OpenInNewTab(link);
       }}>
         <Container size={Container.sizes.NORMAL} >
