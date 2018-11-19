@@ -18,7 +18,7 @@ import {PickerBar} from '../../widgets/PickerBar/PickerBar.jsx';
 import {HeaderBar} from "../../components/bars/HeaderBar/HeaderBar.jsx";
 import {MODEL_TEMPLATES} from "../../../constants/model";
 import * as ObjUtils from "../../../utils/objUtils";
-import {CUBE_MATERIALS, CUBE_MATERIALS_NAME_TO_ID, CUBE_TYPES} from "../../../constants/cubego";
+import {CUBE_MATERIALS, CUBE_MATERIALS_MAP, CUBE_TYPES} from "../../../constants/cubego";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {GetLoggedInUserId, GetSavedModel, GetUserInfo} from "../../../reducers/selectors";
@@ -102,7 +102,7 @@ class _ModelEditor extends React.Component {
         hotKey: 'Z',
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
-      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_NAME_TO_ID.plastic].variants[1]}),
+      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_MAP.plastic].variants[1]}),
       view2D: Tools.view2D({
         hotKey: 'X',
         onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
