@@ -383,8 +383,8 @@ class _ModelEditor extends React.Component {
     ];
 
     let colorNote = null;
-    let numSelectedCubes = userCubes[selectedMaterial.class_id] || 0;
-    let numSelectedCubesUsed = (this.toolManager.stats.materials || {})[selectedMaterial.class_id] || 0;
+    let numSelectedCubes = userCubes[selectedMaterial.material_id] || 0;
+    let numSelectedCubesUsed = (this.toolManager.stats.materials || {})[selectedMaterial.material_id] || 0;
     if (numSelectedCubes-numSelectedCubesUsed < 0 && selectedMaterial.is_for_sale) {
       colorNote = (
         <div className={'model-editor__color-note warning'}>
@@ -702,15 +702,15 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__material'}>
               {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => {
-                let numCubes = userCubes[material.class_id] || 0;
-                let numCubesUsed = (this.toolManager.stats.materials || {})[material.class_id] || 0;
+                let numCubes = userCubes[material.material_id] || 0;
+                let numCubesUsed = (this.toolManager.stats.materials || {})[material.material_id] || 0;
 
                 return (
                   <div key={idx}
                        className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
                        tooltip={_t(material.name)} tooltip-position="bottom"
                        onClick={() => {
-                         this.onToolChange(this.tools.color.key, material.variants[this.selectedVariants[material.class_id] || 1]);
+                         this.onToolChange(this.tools.color.key, material.variants[this.selectedVariants[material.material_id] || 1]);
                        }}>
                     <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}

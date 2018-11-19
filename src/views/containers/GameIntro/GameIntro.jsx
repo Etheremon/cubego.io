@@ -191,7 +191,7 @@ class GameIntro extends React.Component {
                 <tbody>
                   {ObjUtils.GetValues(CUBE_MATERIALS).map((material, mIdx) => {
                     return (
-                      <tr key={mIdx} className={`tier-${material.class_id}`}>
+                      <tr key={mIdx} className={`tier-${material.material_id}`}>
                         <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>
                         <td className={'material-icon'} tooltip={_t(material.name)} tooltip-position={'right'}>
                           <img src={material.icon}/>

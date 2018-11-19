@@ -80,7 +80,7 @@ export const CUBE_MATERIALS_MAP = {
   leaf: 4,
   fur: 3,
   paper: 2,
-  plastic: 1,
+  plastic: 0,
 };
 
 export const SUB_MATERIAL_TYPE_POINTS = {
@@ -169,7 +169,7 @@ export const SUB_MATERIAL_TYPE_POINTS = {
 
 const _CUBE_MATERIALS = {
   [CUBE_MATERIALS_MAP.diamond]: {
-    class_id: CUBE_MATERIALS_MAP.diamond,
+    material_id: CUBE_MATERIALS_MAP.diamond,
     name: 'diamond',
     variants: {
       1: {color: '#93A2B3', emissive: '#1B0F55',},
@@ -182,7 +182,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.legend,
   },
   [CUBE_MATERIALS_MAP.gold]: {
-    class_id: CUBE_MATERIALS_MAP.gold,
+    material_id: CUBE_MATERIALS_MAP.gold,
     name: 'gold',
     variants: {
       1: {color: '#ffffff', emissive: '#573107'}
@@ -191,7 +191,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.epic,
   },
   [CUBE_MATERIALS_MAP.ice]: {
-    class_id: CUBE_MATERIALS_MAP.ice,
+    material_id: CUBE_MATERIALS_MAP.ice,
     name: 'ice',
     variants: {
       1: {color: '#5d6569', emissive: '#222222'},
@@ -204,7 +204,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.epic,
   },
   [CUBE_MATERIALS_MAP.silver]: {
-    class_id: CUBE_MATERIALS_MAP.silver,
+    material_id: CUBE_MATERIALS_MAP.silver,
     name: 'silver',
     variants: {
       1: {color: '#afafaf', emissive: '#181818'},
@@ -217,7 +217,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.epic,
   },
   [CUBE_MATERIALS_MAP.iron]: {
-    class_id: CUBE_MATERIALS_MAP.iron,
+    material_id: CUBE_MATERIALS_MAP.iron,
     name: 'iron',
     variants: {
       1: {color: '#7a8287', emissive: '#1f1431'},
@@ -233,7 +233,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.rare,
   },
   [CUBE_MATERIALS_MAP.stone]: {
-    class_id: CUBE_MATERIALS_MAP.stone,
+    material_id: CUBE_MATERIALS_MAP.stone,
     name: 'stone',
     variants: {
       1: {color: '#4a4a48', emissive: '#1e130c'},
@@ -249,7 +249,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.rare,
   },
   [CUBE_MATERIALS_MAP.wood]: {
-    class_id: CUBE_MATERIALS_MAP.wood,
+    material_id: CUBE_MATERIALS_MAP.wood,
     name: 'wood',
     variants: {
       1: {color: '#89561b', emissive: '#3e0000'},
@@ -265,7 +265,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.rare,
   },
   [CUBE_MATERIALS_MAP.brick]: {
-    class_id: CUBE_MATERIALS_MAP.brick,
+    material_id: CUBE_MATERIALS_MAP.brick,
     name: 'brick',
     variants: {
       1: {color: '#6b4d2b', emissive: '#2d0000'},
@@ -284,7 +284,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.common,
   },
   [CUBE_MATERIALS_MAP.leaf]: {
-    class_id: CUBE_MATERIALS_MAP.leaf,
+    material_id: CUBE_MATERIALS_MAP.leaf,
     name: 'leaf',
     variants: {
       1: {color: '#646464', emissive: '#011603'},
@@ -300,7 +300,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.common,
   },
   [CUBE_MATERIALS_MAP.fur]: {
-    class_id: CUBE_MATERIALS_MAP.fur,
+    material_id: CUBE_MATERIALS_MAP.fur,
     name: 'fur',
     variants: {
       1: {color: '#78593b', emissive: '#221822'},
@@ -321,7 +321,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.common,
   },
   [CUBE_MATERIALS_MAP.paper]: {
-    class_id: CUBE_MATERIALS_MAP.paper,
+    material_id: CUBE_MATERIALS_MAP.paper,
     name: 'paper',
     variants: {
       1: {color: '#7f0000', emissive: '#7d2424'},
@@ -342,7 +342,7 @@ const _CUBE_MATERIALS = {
     tier: CUBE_TIER_MAP.common,
   },
   [CUBE_MATERIALS_MAP.plastic]: {
-    class_id: CUBE_MATERIALS_MAP.plastic,
+    material_id: CUBE_MATERIALS_MAP.plastic,
     name: 'plastic',
     variants: {
       1: {color: '#d70000', emissive: '#000000'},
@@ -360,7 +360,7 @@ const _CUBE_MATERIALS = {
 export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cKey, cube) => {
   return {
     ...cube,
-    class_id: parseInt(cKey),
+    material_id: parseInt(cKey),
     img: require(`../shared/img/store_cubegoes/${cube.name}.png`),
     icon: require(`../shared/img/cubego-icons/${Utils.AddHeadingZero(cKey, 3)}.png`),
     variants: ObjUtils.CloneWithValueModify(cube.variants, (vKey, variant) => ({

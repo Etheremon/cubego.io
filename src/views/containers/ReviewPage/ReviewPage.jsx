@@ -118,7 +118,7 @@ class ReviewPage extends React.Component {
     // const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + Math.max(0, stats.total_cost), 6);
     const cost = 0;
 
-    const statsOverview = [{icon: require('../../../shared/img/cubegoes/001.png'), content: stats.total, label: 'cubego'},
+    const statsOverview = [{icon: require('../../../shared/img/cubegoes/000.png'), content: stats.total, label: 'cubego'},
                           {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'),
                             content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`,
@@ -216,8 +216,8 @@ class ReviewPage extends React.Component {
                               {_t(material.name)}
                             </div>
                           </td>
-                          <td><span>{item.count}/{stats.storage[material.class_id]}</span></td>
-                          <td><span>{Math.max(0, item.count-stats.storage[material.class_id])}</span></td>
+                          <td><span>{item.count}/{stats.storage[material.material_id]}</span></td>
+                          <td><span>{Math.max(0, item.count-stats.storage[material.material_id])}</span></td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
@@ -228,7 +228,7 @@ class ReviewPage extends React.Component {
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {/*{Utils.RoundToDecimalFloat(Math.max(0, item.count-stats.storage[material.class_id])*(material.price||0), 4)}*/}
+                              {/*{Utils.RoundToDecimalFloat(Math.max(0, item.count-stats.storage[material.material_id])*(material.price||0), 4)}*/}
                               0
                             </div>
                           </td>

@@ -27,9 +27,9 @@ class CubegonCard extends React.Component {
           <div className="border-2">
             <div className="border-3">
               <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/${'background_air'}.png`)} />
-              <img className={'cubegon__image'} src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
+              <img className={'cubegon__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
               <img className={'type__image'} src={require(`../../../shared/img/types/${'water'}.png`)}/>
-              <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'001'}.png`)}/>
+              <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
                 <div className="stats__container">
                   <div className="cubegoes">
                     <div className="number">
