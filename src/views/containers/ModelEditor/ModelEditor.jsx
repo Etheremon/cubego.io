@@ -60,7 +60,7 @@ class _ModelEditor extends React.Component {
       paint: Tools.paint({value: false, hotKey: 'S', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.paint.key);
           this.onToolChange(this.tools.paint.key, !currentVal);
-        }}),
+      }}),
       erase: Tools.erase({value: false, hotKey: 'D', onClick: () => {
           let currentVal = this.toolManager.getToolValue(this.tools.erase.key);
           this.onToolChange(this.tools.erase.key, !currentVal);
@@ -93,7 +93,6 @@ class _ModelEditor extends React.Component {
         hotKey: 'E',
         onClick: () => {this.onToolChange(this.tools.redo.key, true);}
       }),
-
       nextLayer: {
         hotKey: 'C',
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.nextLayer()}
@@ -102,7 +101,7 @@ class _ModelEditor extends React.Component {
         hotKey: 'Z',
         onClick: () => {this.pickerBar && this.pickerBar.wrappedInstance.prevLayer()}
       },
-      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_MAP.plastic].variants[1]}),
+      color: Tools.color({value: CUBE_MATERIALS[CUBE_MATERIALS_MAP.plastic].sub_materials[1]}),
       view2D: Tools.view2D({
         hotKey: 'X',
         onClick: (val) => {this.onToolChange(this.tools.view2D.key, val)},
@@ -209,8 +208,9 @@ class _ModelEditor extends React.Component {
   }
 
   onTemplateSelect(template) {
+    console.log(LogicUtils.GetFullModel(template.model_str))
     if (template.model_str) {
-      this.toolManager.addModel({model: LogicUtils.GetFullModel(template.model_str)});
+      this.toolManager.addModel({model: LogicUtils.GetFullModel(template.model_str).model});
       this.forceUpdate();
     }
     this.selectedModelIndex = -1;
@@ -710,7 +710,7 @@ class _ModelEditor extends React.Component {
                        className={`cube ${selectedMaterial.name === material.name ? 'active' : ''} ${numCubesUsed > numCubes ? 'overused' : ''} ${material.is_for_sale ? 'for-sale' : ''}`}
                        tooltip={_t(material.name)} tooltip-position="bottom"
                        onClick={() => {
-                         this.onToolChange(this.tools.color.key, material.variants[this.selectedVariants[material.material_id] || 1]);
+                         this.onToolChange(this.tools.color.key, material.sub_materials[this.selected[material.material_id] || 1]);
                        }}>
                     <img src={material.icon}/>
                     {numCubesUsed === 0 ? `${numCubes}` : `${numCubesUsed}/${numCubes}`}
@@ -725,7 +725,7 @@ class _ModelEditor extends React.Component {
               <div className={'model-editor__colors'}>
                 <ColorTool toolKey={this.tools.color.key}
                            value={selectedColor}
-                           options={selectedMaterial.variants}
+                           options={selectedMaterial.sub_materials}
                            onChange={(val) => {
                              this.onToolChange(this.tools.color.key, val);
                              this.selectedVariants[val.material_id] = val.variant_id;
@@ -743,7 +743,7 @@ class _ModelEditor extends React.Component {
                            label={_t('select_layer')}
                 />
 
-                {selectedMaterial && Object.keys(selectedMaterial.variants).length >= 16 ?
+                {selectedMaterial && Object.keys(selectedMaterial.sub_materials).length >= 16 ?
                   <div className={'model-editor__layer-btns'}>
                     {btns}
                   </div> : null
@@ -751,7 +751,7 @@ class _ModelEditor extends React.Component {
               </div>
             </div>
 
-            {selectedMaterial && Object.keys(selectedMaterial.variants).length < 16 ?
+            {selectedMaterial && Object.keys(selectedMaterial.sub_materials).length < 16 ?
               <div className={'model-editor__btns'}>
                 {btns}
               </div> : null

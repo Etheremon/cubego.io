@@ -200,7 +200,7 @@ class GameIntro extends React.Component {
                         {typeList.map((type, tIdx) => {
                           return (
                             <td key={tIdx} className={'material-variants'}>
-                              {material.types[type.id].map(vKey => (<img key={vKey} src={material.variants[vKey].img}/>))}
+                              {material.types[type.id].map(vKey => (<img key={vKey} src={material.sub_materials[vKey].img}/>))}
                             </td>
                           )})}
                       </tr>

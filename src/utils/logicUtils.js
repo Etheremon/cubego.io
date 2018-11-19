@@ -15,12 +15,12 @@ export const GetStructure = (model) => {
 };
 
 export const GetSimplifiedModel = (model) => {
-  let res = {ver: 2};
+  let res = {ver: 2, model: {}, image: null};
   ObjUtils.GetValues(model.voxels).forEach(cell => {
     let xx = cell.x-model.modelSize.x[0];
     let yy = cell.y-model.modelSize.y[0];
     let zz = cell.z-model.modelSize.z[0];
-    res[GetCellKey(xx, yy, zz)] = {
+    res.model[GetCellKey(xx, yy, zz)] = {
       x: xx, y: yy, z: zz,
       material_id: cell.color.material_id,
       variant_id: cell.color.variant_id,
@@ -32,24 +32,31 @@ export const GetSimplifiedModel = (model) => {
 export const GetFullModel = (simplifiedModel) => {
   if (!simplifiedModel) return simplifiedModel;
   try {
-    let res = {
-      voxels: ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
+    let res = {model: {}, image: null}
+
+    if (simplifiedModel['ver'] === undefined) {
+      
+      res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
         if (key === 'ver') return null;
-        if (simplifiedModel['ver'] === undefined) {
-          let materialOffset = cell.material_id === 1 ? 1 : 0;
-          return {
-            x: cell.x, y: cell.y, z: cell.z,
-            color: {...CUBE_MATERIALS[13-cell.material_id-materialOffset].variants[cell.variant_id]},
-          }
-        } else if (simplifiedModel['ver'] === 2) {
-          return {
-            x: cell.x, y: cell.y, z: cell.z,
-            color: {...CUBE_MATERIALS[cell.material_id].variants[cell.variant_id]},
-          }
+        let mid = cell.material_id === 12 ? 0 : 13 - cell.material_id;
+        return {
+          x: cell.x, y: cell.y, z: cell.z,
+          color: {...CUBE_MATERIALS[mid].sub_materials[parseInt(mid * 100) + parseInt(cell.variant_id)]},
         }
-      }),
-    };
-    delete res.voxels['ver'];
+      })
+      
+    } else if (simplifiedModel['ver'] === 2) {
+
+      res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
+        if (key === 'ver') return null;
+        return {
+          x: cell.x, y: cell.y, z: cell.z,
+          color: {...CUBE_MATERIALS[cell.material_id].sub_materials[cell.variant_id]},
+        }
+      })
+    }
+
+    delete res.model.voxels['ver'];
     return res;
   } catch(e) {
     return null;

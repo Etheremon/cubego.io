@@ -44,7 +44,7 @@ function getMaterial(id, variantId, isWebGL) {
     return cachedMaterial[id][variantId];
   }
   if (!isWebGL) {
-    let variantProperties = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].variants[variantId];
+    let variantProperties = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId];
     if (!variantProperties) {
       return;
     }
@@ -55,8 +55,8 @@ function getMaterial(id, variantId, isWebGL) {
     return material;
   } else {
     let material = materialStorage[id].clone();
-    let color = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].variants[variantId].color.replace('#', '');
-    let emissiveColor = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].variants[variantId].emissive.replace('#', '');
+    let color = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].color.replace('#', '');
+    let emissiveColor = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].emissive.replace('#', '');
     material.color.setHex(parseInt(color, 16));
     material.emissive.setHex(parseInt(emissiveColor, 16));
     cacheMaterial(id, variantId, material);

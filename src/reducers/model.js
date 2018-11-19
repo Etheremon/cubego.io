@@ -5,7 +5,7 @@ import {ModelActions} from "../actions/model";
 import * as LogicUtils from "../utils/logicUtils";
 
 const savedModelState = (ConvertToArray(LS.GetItem(LS.Fields.savedModel))).map((item) => {
-  return LogicUtils.GetFullModel(item)
+  return LogicUtils.GetFullModel(item).model
 })
 
 const savedModel = (state=savedModelState, action) => {
@@ -16,13 +16,13 @@ const savedModel = (state=savedModelState, action) => {
       let newArraySavedModel
       if (action.modelIndex >= 0) {
         newArraySavedModel = [...arraySimplifiedModel.slice(0, action.modelIndex),
-          LogicUtils.GetSimplifiedModel(savedModel),
+          LogicUtils.GetSimplifiedModel(savedModel).model,
           ...arraySimplifiedModel.slice(action.modelIndex + 1)];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
         return [...state.slice(0, action.modelIndex), savedModel,
           ...state.slice(action.modelIndex + 1)];
       } else {
-        newArraySavedModel = [...arraySimplifiedModel, LogicUtils.GetSimplifiedModel(savedModel)];
+        newArraySavedModel = [...arraySimplifiedModel, LogicUtils.GetSimplifiedModel(savedModel).model];
         LS.SetItem(LS.Fields.savedModel, newArraySavedModel);
         return [...state, savedModel];
       }
