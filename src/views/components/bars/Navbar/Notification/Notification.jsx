@@ -7,6 +7,7 @@ import { Container } from '../../../../widgets/Container/Container.jsx';
 import { NotificationActions } from "../../../../../actions/notification";
 import { GetFeed } from "../../../../../reducers/selectors";
 import * as Utils from "../../../../../utils/utils";
+import {Icon} from "../../../Icon/Icon.jsx";
 
 require("style-loader!./Notification.scss");
 

@@ -41,7 +41,7 @@ export default class HealingWater extends BaseMove {
 
     pSystem.emitter = emitter;
     let emitterType = new BABYLON.SphereParticleEmitter();
-    emitterType.radius = 2;
+    emitterType.radius = 3;
     emitterType.radiusRange = 0;
     pSystem.particleEmitterType = emitterType;
 

@@ -26,13 +26,12 @@ export default class GuardianShield extends BaseMove {
     position.y += 1;
     let emitter = position;
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
-    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
 
 
     pSystem.emitter = emitter;
     let emitterType = new BABYLON.SphereParticleEmitter();
-    emitterType.radius = 2;
+    emitterType.radius = 3;
     emitterType.radiusRange = 0;
     pSystem.particleEmitterType = emitterType;
 

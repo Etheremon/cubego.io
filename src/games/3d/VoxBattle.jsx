@@ -21,12 +21,14 @@ import RockThrow from "./moves/earth/RockThrow";
 import LeafThrow from "./moves/grass/LeafThrow";
 import PyroWisp from "./moves/fire/PyroWisp";
 import Tackle from "./moves/neutral/Tackle";
+import WindStrike from "./moves/air/WindStrike";
+import HealingWater from "./moves/water/HealingWater";
+import HydroBash from "./moves/water/HydroBash";
 
 const SIZE = 0.2;
 const DEMO_BATTLE_LOGS = [
-  {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
-  {moveId: FireBall.getId(), effects: {damage: 20}, player: 0},
-  {moveId: AirSlash.getId(), effects: {damage: 20}, player: 1},
+  {moveId: WindStrike.getId(), effects: {damage: 20}, player: 0},
+  {moveId: HydroBash.getId(), effects: {damage: 20}, player: 1},
   {moveId: FireBreath.getId(), effects: {damage: 20}, player: 0},
   {moveId: MilkDrink.getId(), effects: {damage: 20}, player: 1},
   {moveId: GuardianShield.getId(), effects: {damage: 0}, player: 0},
@@ -39,7 +41,9 @@ const DEMO_BATTLE_LOGS = [
   {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
   {moveId: PyroWisp.getId(), effects: {damage: 20}, player: 0},
   {moveId: AirSlash.getId(), effects: {damage: 20}, player: 1},
-  {moveId: FireBreath.getId(), effects: {damage: 20}, player: 0}
+  {moveId: FireBreath.getId(), effects: {damage: 10}, player: 0},
+  {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
+  {moveId: HealingWater.getId(), effects: {damage: 20}, player: 0}
 ];
 //Load map texture
 const loadMapTexture = () => {
