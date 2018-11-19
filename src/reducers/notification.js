@@ -34,9 +34,9 @@ const notification = (state = {}, action) => {
           } else if (entryObj['key']['$t'] === 'feed') {
             obj.feeds.push(ObjUtils.CloneWithValueModify({
               ...entryObj,
-              starttime: Date.parse(entryObj.starttime['$t']),
-              endtime: Date.parse(entryObj.endtime['$t']),
-            }, (key, val) => val['$t'] || val));
+              starttime: {'$t': Date.parse(entryObj.starttime['$t'])},
+              endtime: {'$t': Date.parse(entryObj.endtime['$t'])},
+            }, (key, val) => val['$t']));
           }
         });
       }
