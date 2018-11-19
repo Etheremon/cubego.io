@@ -20,6 +20,7 @@ import { GetLoggedInUserId, GetUserCubegons, GetUserInfo } from '../../../reduce
 import { CUBE_MATERIALS } from '../../../constants/cubego';
 import Loading from "../../components/Loading/Loading.jsx";
 import {EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
+import {GetUserMaterials} from "../../../reducers/selectors";
 
 require("style-loader!./Inventory.scss");
 
@@ -63,6 +64,10 @@ class Inventory extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.stop.func({userId: this.props.userId}));
   }
 
   handleGenerateCubegonView(cubegons) {
@@ -111,11 +116,12 @@ class Inventory extends React.Component {
   }
 
   render() {
-    const {_t, query, userCubegons, userInfo} = this.props;
-    let dataUserCubegoes;
-    if (userCubegons !== undefined && userCubegons !== null) {
-      dataUserCubegoes = userCubegons.materials.filter(item => item.amount > 0)
-      dataUserCubegoes = dataUserCubegoes.map(item => {
+    const {_t, query, userCubegons, userMaterials, userInfo} = this.props;
+    let dataUserMaterials;
+
+    if (userMaterials) {
+      dataUserMaterials = userMaterials.filter(item => item.amount > 0)
+      dataUserMaterials = dataUserMaterials.map(item => {
         return {...item, ...CUBE_MATERIALS[item.material_id] } 
       });
     }
@@ -167,7 +173,7 @@ class Inventory extends React.Component {
                     <div className="user-properties">
                       <div className="user-cubegoes ">
                         <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
-                        <span>{dataUserCubegoes ? dataUserCubegoes.length : 0}</span>
+                        <span>{dataUserMaterials ? dataUserMaterials.length : 0}</span>
                       </div>
 
                       <div className="user-cubegons">
@@ -210,7 +216,7 @@ class Inventory extends React.Component {
                   page={query.page}
                   handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
                 />
-                : this.handleGenerateCubegoView(dataUserCubegoes ? dataUserCubegoes : null)
+                : this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
             }
           </Container>
         </div>
@@ -234,6 +240,7 @@ const mapStateToProps = (store, props) => {
     _t: getTranslate(store.localeReducer),
     userId,
     userCubegons: GetUserCubegons(store, userId),
+    userMaterials: GetUserMaterials(store, userId),
     userInfo: GetUserInfo(store, userId),
   }
 };

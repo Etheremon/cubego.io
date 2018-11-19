@@ -777,7 +777,7 @@ const mapStateToProps = (store, props) => {
     userId,
     userInfo: GetUserInfo(store, userId),
     userCubes: {
-      1: 0,
+      0: 300,
       2: 0,
       3: 0,
       4: 0,
@@ -788,7 +788,7 @@ const mapStateToProps = (store, props) => {
       9: 0,
       10: 0,
       11: 0,
-      12: 300,
+      12: 0,
     },
   }
 };

@@ -16,32 +16,32 @@ const info = (state = {null: {}}, action) => {
   }
 };
 
-export const userCubegoes = (state={}, action) => {
+export const userMaterials = (state={}, action) => {
   switch (action.type) {
-    case UserActions.LOAD_USER_CUBEGO.success.key:
+    case UserActions.LOAD_USER_CUBEGON.success.key:
       return {
         ...state,
-        [action.userId]: {...action.response},
-      }
+        [action.userId]: [...action.response.materials].map(c => ({...c, material_id: c['material_class']})),
+      };
     default:
       return state;
   }
-}
+};
 
 export const userCubegons = (state={}, action) => {
   switch (action.type) {
     case UserActions.LOAD_USER_CUBEGON.success.key:
       return {
         ...state,
-        [action.userId]: {...action.response},
-      }
+        [action.userId]: [...action.response.cubegons],
+      };
     default:
       return state;
   }
-}
+};
 
 export const user = combineReducers({
   info: info,
-  userCubegoes,
+  userMaterials,
   userCubegons,
 });

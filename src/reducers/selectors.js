@@ -12,7 +12,7 @@ export const GetLoggedInUserId = (state) => (state.auth['userId']);
  */
 export const GetUserInfo = (state, userId) => (CloneDeep(state.user.info[userId]));
 export const GetUserCubegons = (state, userId) => CloneDeep(state.user.userCubegons[userId]);
-export const GetUserCubegoes = (state, userId) => CloneDeep(state.user.userCubegoes[userId]);
+export const GetUserMaterials = (state, userId) => CloneDeep(state.user.userMaterials[userId]);
 /**
  * Model
  */

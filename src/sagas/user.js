@@ -8,7 +8,7 @@ import * as Utils from "../utils/utils";
 import {ToPromiseFunction} from "../services/api/utils";
 import {CubegoApi} from "../services/api/cubegoApi";
 import {CubegonApi} from "../services/api/cubegonApi";
-import { GetUserCubegoes, GetUserCubegons } from '../reducers/selectors';
+import { GetUserMaterials, GetUserCubegons } from '../reducers/selectors';
 
 
 function* loadUserInfo({userId, forceUpdate}) {
@@ -73,27 +73,13 @@ function* updateUserInfo({userId, email, username, inviteCode, signature, termsA
 
 }
 
-export function* loadUserCubego({forceUpdate, userId}) {
-  let userCubegoes = yield select(GetUserCubegoes, userId);
-  if (!userCubegoes || forceUpdate) {
-    yield put(UserActions.LOAD_USER_CUBEGO.request.func({userId}));
-    const {response, error} = yield call(CubegoApi.GetUserCubegoes, userId, null);
-
-    if (!error) {
-      yield put(UserActions.LOAD_USER_CUBEGO.success.func({userId, response}));
-    } else {
-      yield put(UserActions.LOAD_USER_CUBEGO.fail.func({userId, error}));
-    }
-  }
-}
-
 export function* loadUserCubegon({forceUpdate, userId}) {
   function* process(userId) {
     if (!userId) userId = yield select(GetLoggedInUserId);
     let userCubegons = yield select(GetUserCubegons, userId);
     if (userId !== undefined && (!userCubegons || forceUpdate)) {
       yield put(UserActions.LOAD_USER_CUBEGON.request.func({userId}));
-      const {response, error} = yield call(CubegonApi.GetUserCubegons, userId, null);
+      const {response, error} = yield call(UserApi.GetUserCubegons, userId, null);
       if (!error) {
         yield put(UserActions.LOAD_USER_CUBEGON.success.func({userId, response}));
       } else {
@@ -115,7 +101,6 @@ export function* watchAll() {
   yield all([
     takeLatest(UserActions.LOAD_USER_INFO.init.key, loadUserInfo),
     takeLatest(UserActions.UPDATE_USER_INFO.init.key, updateUserInfo),
-    takeLatest(UserActions.LOAD_USER_CUBEGO.init.key, loadUserCubego),
     takeLatest(UserActions.LOAD_USER_CUBEGON.init.key, loadUserCubegon),
   ]);
 }

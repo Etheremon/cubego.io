@@ -33,18 +33,12 @@ const UpdateUserInfo = (userId, email, username, signature, refer_code) => {
 
 const GetUserCubegons = (userId) => {
   return new Promise(function(resolve, reject) {
-    if (!isUsingTestNetwork) {
-      sendGetRequest({
-        url: URL_GET_USER_CUBEGON + '?trainer_address=' + userId,
-        resolve, reject
-      });
-    } else {
-      window.getPlayerCubegoData(userId, getCallbackFunc(resolve, reject));
-    }
+    sendGetRequest({
+      url: URL_GET_USER_CUBEGON + '?trainer_address=' + userId,
+      resolve, reject
+    });
   });
 };
-
-window.test = GetUserCubegons;
 
 export const UserApi = {
   GetUserInfo,
