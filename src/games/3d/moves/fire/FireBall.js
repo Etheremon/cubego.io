@@ -22,7 +22,7 @@ export default class FireBall extends BaseMove {
 
   _createFireBallParticle() {
     let isCollision = false;
-    let fireBall = BABYLON.Mesh.CreateBox("fist", 0.4, this.scene);
+    let fireBall = BABYLON.Mesh.CreateSphere("fist", 16, 0.5, this.scene);
     let startMatrix = this.player.playerMesh.getWorldMatrix();
     let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
     let targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
@@ -39,7 +39,6 @@ export default class FireBall extends BaseMove {
     pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     pSystem.light.range = 15;
 
-    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
 
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);

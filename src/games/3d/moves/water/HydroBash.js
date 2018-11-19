@@ -10,9 +10,7 @@ export default class HydroBash extends BaseMove {
   constructor(player, {damage}) {
     super(player);
     this.speed = 0.01;
-    this.numberOfIce = 2;
     this.damage = damage;
-    this.chargingTime = 2000;
   }
 
   playMove() {
@@ -60,6 +58,9 @@ export default class HydroBash extends BaseMove {
     pSystem.color2 = new BABYLON.Color4(0, 1, 0, 1);
     pSystem.colorDead = new BABYLON.Color4(1, 0, 0, 1);
 
+    pSystem.addSizeGradient(0, 1, 1);
+    pSystem.addSizeGradient(0.8, 1, 1);
+    pSystem.addSizeGradient(1.0, 5, 5);
 
     pSystem.minEmitBox = new BABYLON.Vector3(0, 1.5, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 1.5, 0);
@@ -69,6 +70,7 @@ export default class HydroBash extends BaseMove {
     setTimeout(() => {
       pSystem.stop();
       pSystem.dispose();
+      this.player.opponent.hurt(this.damage);
     }, 2000);
   }
 

@@ -450,7 +450,7 @@ class _ModelEditor extends React.Component {
                   <img src={this.imageBase64}/>
                 </div>
                 <div className={'actions'}>
-                  <a href={this.imageBase64.replace('data:image/png;', 'data:application/octet-stream;')} className={'action'}>
+                  <a href={this.imageBase64} className={'action'} download={"cubego.png"}>
                     <Image img={'btn_download'}/>
                   </a>
                   {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
@@ -691,7 +691,7 @@ class _ModelEditor extends React.Component {
               <div className={'model-editor__right'}>
                 <div className={'model-editor__2d'} onWheel={(e) => {e.stopPropagation();}}>
                   <Layer2D layer={this.toolManager.layer}
-                           style={{transform: `scale(${this.state.scale2D})`}}
+                           style={{transform: `scale(${this.state.scale2D})`, transformOrigin: 'top left'}}
                            tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}/>
                 </div>
                 <div className={'model-editor__2d-zoom'}>

@@ -2,7 +2,10 @@ import {CUBE_MATERIALS, CUBE_MATERIALS_MAP} from "../../constants/cubego";
 
 let requireParticleTextures = require.context('../../shared/materials/textures', true);
 let materialStorage = {};
+let textureStorage = {};
 let cachedMaterial = {};
+let threeTextureLoader = new window.THREE.TextureLoader();
+let threeCubeTextureLoader = new window.THREE.CubeTextureLoader();
 
 function loadMaterial(id, materialData) {
   let textures = {};
@@ -18,17 +21,31 @@ function loadMaterial(id, materialData) {
         require('../../shared/skybox/1/skybox_nz.jpg')
       ];
 
-      let reflectionCube = new window.THREE.CubeTextureLoader().load(urls);
+      let reflectionCube = threeCubeTextureLoader.load(urls);
       reflectionCube.format = THREE.RGBFormat;
       textures[texture.uuid] = reflectionCube;
     } else {
-      textures[texture.uuid] = new window.THREE.TextureLoader().load(requireParticleTextures('./' + texture.image, true));
+      textures[texture.uuid] = threeTextureLoader.load(requireParticleTextures('./' + texture.image, true));
     }
   });
   let loader = new window.THREE.MaterialLoader();
   loader.setTextures(textures);
   material = loader.parse(materialData);
   materialStorage[id] = material;
+}
+
+function loadTexture(id, textureUrl) {
+  if (textureStorage[id]) {
+    return Promise.resolve(textureStorage[id]);
+  }
+  return new Promise((resolve, reject) => {
+    threeTextureLoader.load(textureUrl, (data) => {
+      textureStorage[id] = data;
+      resolve(data);
+    }, undefined, (error) => {
+      reject(error)
+    });
+  });
 }
 
 function cacheMaterial(id, variantId, material) {
@@ -64,7 +81,13 @@ function getMaterial(id, variantId, isWebGL) {
   }
 }
 
+function getTexture(id) {
+  return textureStorage[id];
+}
+
 export {
   loadMaterial,
-  getMaterial
+  getMaterial,
+  loadTexture,
+  getTexture
 }

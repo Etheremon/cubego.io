@@ -7,6 +7,7 @@ import {hexToColor3} from "../utils";
 import {BabylonMeshContainer} from "./babylonMeshContainer";
 
 const HURT_COLOR = BABYLON.Color3.White();
+const PLAYER_SIZE = 25;
 
 export class BabylonVoxelPlayer extends BabylonComponent {
   constructor() {
@@ -130,6 +131,10 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
   createPlayerMesh(size, data, rotate) {
     let elements = [];
+    let scaling = PLAYER_SIZE / data.size.y;
+
+    size = size * scaling;
+
     let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
     data.voxels.forEach((voxel) => {
       let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
@@ -177,7 +182,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     spsVoxel.initParticles();
     spsVoxel.setParticles();
     this.sps = spsVoxel;
-    let pivotAt = new BABYLON.Vector3(0, -1.8, 0);
+    let pivotAt = new BABYLON.Vector3(0, 0, 0);
     let translation = playerMesh.position.subtract(pivotAt);
     playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
     playerMesh.parent = this.renderer;

@@ -33,12 +33,13 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
       cubeMesh.receiveShadow = true;
     }
 
-    let frameColor = props.variantColor ? props.variantColor.replace('#', '') : 'cccccc';
-    let wireFrameColor = parseInt(frameColor, 16);
+    let wireFrameColor = material.color.clone();
 
     if (!props.noBox) {
       let boxHelper = new window.THREE.BoxHelper(cubeMesh, wireFrameColor);
       meshContainer.boxHelper = boxHelper;
+      boxHelper.material.opacity = 0.2;
+      boxHelper.material.transparent = true;
       cubeMesh.add(boxHelper);
     }
 
@@ -70,8 +71,11 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     }
     this.props.variantId = id;
     let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
-    if (material)
+    if (material) {
       this.renderer.material = material;
+      let wireFrameColor = material.color.clone();
+      this.boxHelper.material.color = wireFrameColor;
+    }
   }
 
   set materialId(id) {
@@ -80,8 +84,12 @@ export class ThreeMeshBox extends ThreeObject3DComponent {
     }
     this.props.materialId = id;
     let material = ThreeX.getMaterial(this.props.materialId, this.props.variantId);
-    if (material)
+    if (material) {
       this.renderer.material = material;
+      let wireFrameColor = material.color.clone();
+      this.boxHelper.material.color = wireFrameColor;
+    }
+
   }
 
   set highlight(isHighLight) {
