@@ -244,8 +244,13 @@ class _ModelEditor extends React.Component {
   }
 
   saveModel() {
-    this.setState({saved: true});
-    this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image().then((data) => {
+        this.setState({saved: true});
+        this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
+      })
+    }
+    
   }
 
   capturePhoto() {
@@ -598,7 +603,7 @@ class _ModelEditor extends React.Component {
                   ))}
                   {savedModel.map((item, idx) => {
                     return <div className={'template'} key={idx} onClick={() => {this.onSavedModelSelect(item, idx)}}>
-                      <img className={'img'} src={require('../../../shared/sample_models/0.png')} />
+                      <img className={'img'} src={item.image ? item.image : require('../../../shared/sample_models/0.png')} />
                       <div className={'name'}>
                         {_t(`saved model ${idx}`)}
                       </div>

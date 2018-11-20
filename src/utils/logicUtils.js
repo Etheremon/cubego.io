@@ -33,7 +33,7 @@ export const GetSimplifiedModel = (model) => {
 export const GetFullModel = (simplifiedModel) => {
   if (!simplifiedModel) return simplifiedModel;
   try {
-    let res = {model: {}, image: null};
+    let res = {model: {}, image: simplifiedModel.image || null};
 
     // v1: {'1_1_1':{x,y,z,material_id,variant_id}}
     if (simplifiedModel['ver'] === undefined) {

@@ -68,6 +68,11 @@
         font-size: 180px;
         text-transform: capitalize;
       }
+
+      @include mobile {
+        top: -30px;
+        right: -15px;
+      }
     }
 
     .pack-parallelogram {
@@ -97,6 +102,7 @@
     background: rgba(25, 49, 77, 1);
     border-radius: 5px;
     position: relative;
+    border-width: 0px !important;
     // border-width: 5px;
     // border-style: solid;
     // border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
