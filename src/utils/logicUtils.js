@@ -15,7 +15,7 @@ export const GetStructure = (model) => {
 };
 
 export const GetSimplifiedModel = (model) => {
-  let res = {ver: 2, model: {}, image: null};
+  let res = {ver: 2, model: {}, image: model.image || null};
   ObjUtils.GetValues(model.voxels).forEach(cell => {
     let xx = cell.x-model.modelSize.x[0];
     let yy = cell.y-model.modelSize.y[0];
@@ -26,6 +26,7 @@ export const GetSimplifiedModel = (model) => {
       sub_material_id: cell.color.sub_material_id,
     }
   });
+
   return res;
 };
 
@@ -37,7 +38,6 @@ export const GetFullModel = (simplifiedModel) => {
     // v1: {'1_1_1':{x,y,z,material_id,variant_id}}
     if (simplifiedModel['ver'] === undefined) {
       res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
-        if (key === 'ver') return null;
         let mid = cell['material_id'] === 12 ? 0 : 13 - cell['material_id'];
 
         return {
@@ -49,8 +49,7 @@ export const GetFullModel = (simplifiedModel) => {
     }
     // v1: {ver: 2, image, model: {'1_1_1':{x,y,z,sub_mat_id}}
     else if (simplifiedModel['ver'] === 2) {
-      res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel, (key, cell) => {
-        if (key === 'ver') return null;
+      res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel.model, (key, cell) => {
         return {
           x: cell.x, y: cell.y, z: cell.z,
           color: {...CUBE_MATERIALS[cell.material_id].sub_materials[cell.sub_material_id]},
@@ -61,6 +60,7 @@ export const GetFullModel = (simplifiedModel) => {
     delete res.model.voxels['ver'];
     return res;
   } catch(e) {
+    console.warn(e);
     return null;
   }
 };

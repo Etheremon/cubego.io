@@ -1,4 +1,5 @@
 import {CloneDeep} from "../utils/objUtils";
+import * as LogicUtils from "../utils/logicUtils";
 
 
 /**
@@ -23,7 +24,7 @@ export const GetUserNumberOfMaterials = (state, userId) => {
 /**
  * Model
  */
-export const GetSavedModel = (state) => CloneDeep(state.model['savedModel']);
+export const GetSavedModel = (state) => CloneDeep(state.model['savedModel'].map(i => LogicUtils.GetFullModel(i)));
 export const GetValidatedModel = (state) => CloneDeep(state.model['validatedModel']);
 
 /**

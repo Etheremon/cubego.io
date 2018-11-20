@@ -143,7 +143,7 @@ class _ModelEditor extends React.Component {
 
   componentDidMount() {
     if (this.props.savedModel && this.props.savedModel.length) {
-      this.toolManager.addModel({model: this.props.savedModel[0]});
+      this.toolManager.addModel({model: this.props.savedModel[0].model});
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
@@ -215,7 +215,6 @@ class _ModelEditor extends React.Component {
   }
 
   onTemplateSelect(template) {
-    console.log(LogicUtils.GetFullModel(template.model_str))
     if (template.model_str) {
       this.toolManager.addModel({model: LogicUtils.GetFullModel(template.model_str).model});
       this.forceUpdate();
@@ -226,7 +225,7 @@ class _ModelEditor extends React.Component {
 
   onSavedModelSelect(model, idx) {
     if (model) {
-      this.toolManager.addModel({model: model});
+      this.toolManager.addModel({model: model.model});
     }
     this.selectedModelIndex = idx;
     this.setState({showTemplates: false});
@@ -377,6 +376,7 @@ class _ModelEditor extends React.Component {
 
   render() {
     let {_t, savedModel, userInfo, userCubes} = this.props;
+
     let {saved} = this.state;
     let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
 
