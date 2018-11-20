@@ -74,19 +74,22 @@ export default class DoubleCannon extends BaseMove {
     pSystem.updateSpeed = 0.1;
     pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
     let alpha = water.position.z;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (!isCollision) {
         if (water.intersectsMesh(this.player.opponent.playerMesh, false)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage / this.numberOfIce);
           pSystem.stop();
           water.dispose();
+          this.scene.onBeforeRenderObservable.remove(update);
         } else {
           pSystem.emitter.position = new BABYLON.Vector3(x, y, alpha);
           alpha -= direction * 0.3;
         }
       }
-    });
+    };
+    this.scene.onBeforeRenderObservable.add(update);
+
     pSystem.start();
   }
 

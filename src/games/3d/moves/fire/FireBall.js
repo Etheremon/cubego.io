@@ -60,13 +60,14 @@ export default class FireBall extends BaseMove {
     pSystem.maxEmitPower = 0.75;
     pSystem.updateSpeed = 0.008;
     let alpha = fireBall.position.z;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (!isCollision) {
         if (fireBall.intersectsMesh(this.player.opponent.playerMesh, false)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage);
           pSystem.stop();
           fireBall.dispose();
+          this.scene.onBeforeRenderObservable.remove(update);
         } else {
           pSystem.emitter.position = new BABYLON.Vector3(0, 1, alpha);
           for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
@@ -78,7 +79,9 @@ export default class FireBall extends BaseMove {
           alpha -= direction * 0.2;
         }
       }
-    });
+    };
+    this.scene.onBeforeRenderObservable.add(update);
+
     pSystem.start();
   }
 
