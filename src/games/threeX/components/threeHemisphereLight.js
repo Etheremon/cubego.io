@@ -9,7 +9,7 @@ export class ThreeHemisphereLight extends ThreeComponent {
 
   static create({}, props) {
     let threeHemiLight = new ThreeHemisphereLight();
-    let hemiLight = new window.THREE.HemisphereLight(0xffffff, 0xffffff, 1.5);
+    let hemiLight = new window.THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     // hemiLight.color.setHSL(0.6, 1, 0.6);
     // hemiLight.groundColor.setHSL(0.095, 1, 0.75);
     if (props.position) {

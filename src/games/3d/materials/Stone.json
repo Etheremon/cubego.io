@@ -11,7 +11,7 @@
   "metalness": 0,
   "emissive": 1970956,
   "map": "B8BCB590-75E9-4F20-BC64-8172E467C144",
-  "lightMap": "86E309E8-42B2-4505-9232-4EF3E1394622",
+  "lightMap": "B8BCB590-75E9-4F20-BC64-8172E467C144",
   "normalMap": "C3408171-6364-421F-9075-2ACBB2BEC93F",
   "normalMapType": 0,
   "normalScale": [1, 1],
@@ -37,23 +37,7 @@
     "flipY": true,
     "image": "rock.jpg"
   }, {
-    "uuid": "86E309E8-42B2-4505-9232-4EF3E1394622",
-    "name": "",
-    "mapping": 300,
-    "repeat": [1, 1],
-    "offset": [0, 0],
-    "center": [0, 0],
-    "rotation": 0,
-    "wrap": [1001, 1001],
-    "format": 1022,
-    "minFilter": 1008,
-    "magFilter": 1006,
-    "anisotropy": 1,
-    "flipY": true,
-    "image": "rock-nm.png"
-  }, {
     "uuid": "C3408171-6364-421F-9075-2ACBB2BEC93F",
-    "type": "cube",
     "name": "",
     "mapping": 300,
     "repeat": [1, 1],
@@ -66,7 +50,7 @@
     "magFilter": 1006,
     "anisotropy": 1,
     "flipY": true,
-    "image": "iron.jpg"
+    "image": "rock-nm.png"
   }, {
     "uuid": "77B4B752-7938-4A31-B66D-470482830E08",
     "type": "cube",
