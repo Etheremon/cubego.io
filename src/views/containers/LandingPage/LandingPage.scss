@@ -31,7 +31,7 @@
     line-height: 56px;
     z-index: 2;
     position: relative;
-    font-family: $f__overpass;
+    font-family: 'KOSUGIMARU';
     font-size: $font-size-large;
     color: $white;
 
@@ -102,9 +102,14 @@
 
     .landing-page__catch-mon-button-fourth {
       position: absolute;
-      top: calc(92% + 64px);
+      top: calc(93% + 64px);
       left: 50%;
       transform: translateX(-50%);
+      font-family: 'KOSUGIMARU' !important;
+
+      @include mobile {
+        top: calc(92% + 64px);
+      }
     }
 
     .landing-page__background-img {

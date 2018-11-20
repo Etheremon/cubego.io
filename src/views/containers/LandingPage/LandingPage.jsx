@@ -45,8 +45,6 @@ class LandingPage extends React.Component {
     const {_t} = this.props;
     const backgroundImage = require('../../../shared/img/landing_page/landingpagecubego.png');
 
-    console.log(this.state.isOpenPopup)
-
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
         <div className={`landing__wrapper`}>
