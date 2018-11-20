@@ -31,6 +31,7 @@ import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
 import GameIntro from "../GameIntro/GameIntro.jsx";
 import {NotificationActions} from "../../../actions/notification";
+import LandingPage from '../LandingPage/LandingPage.jsx';
 
 require("style-loader!./App.scss");
 
@@ -139,6 +140,7 @@ class App extends React.Component {
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
+          <Route path={`/${URLS.LANDING_PAGE}`} component={LandingPage}/>
 
           <Route path={`/${URLS.SIGN_IN}`} component={SignInPage}/>
 
