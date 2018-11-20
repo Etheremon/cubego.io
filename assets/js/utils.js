@@ -104,3 +104,16 @@ function _getBlockchainData(contractInstance, args, callbackFunc) {
     }
   }));
 }
+
+function getBlockchainProperty(contractInstance, callbackFunc) {
+  contractInstance.call((function(err, data) {
+    if (err) {
+      console.log("ERROR_LOG|get_data_failed|error=", err);
+      callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain call fail!!"});
+    } else {
+      callbackFunc(RESULT_CODE.SUCCESS, data)
+    }
+  }));
+}
+
+

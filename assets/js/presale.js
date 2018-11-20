@@ -39,3 +39,9 @@ function purchaseUltimatePackUsingEmont(numPacks, receiverAddress, valueToSendIn
     CUBEGO_PAY_SERVICE_TYPE.PRESALE_ULTIMATE_PACK, numPacks, 0, 0, 0, 0, callbackFunc
   );
 }
+
+function getDiscountFactor(callbackFunc) {
+  getBlockchainProperty(
+    contractInstances.cubegoPresaleInstance.discountFactor, callbackFunc
+  );
+}

@@ -7,6 +7,7 @@ import { cubego } from  './cubego'
 import { localization } from './localization';
 import { notifications } from './notification';
 import { subscriber } from './subscriber';
+import { presale } from './presale';
 
 export const voxelStoreReducers = {
   auth,
@@ -15,6 +16,7 @@ export const voxelStoreReducers = {
   cubegon,
   // cubego,
   localization,
+  presale,
   notifications,
   subscriber,
   txnStore,

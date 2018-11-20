@@ -14,7 +14,8 @@ import { PRESALE_PACK_DISCOUNT, ALL_STORE_DISCOUNT } from '../../../../config.js
 import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
 import { PurchasePackage } from '../../../../services/transaction';
 import { addTxn } from '../../../../actions/txnAction.js';
-import { GetLoggedInUserId } from '../../../../reducers/selectors';
+import { GetLoggedInUserId, GetDiscountFactor } from '../../../../reducers/selectors';
+import { PresaleActions } from '../../../../actions/presale';
 
 require("style-loader!./CubegoesView.scss");
 
@@ -79,6 +80,7 @@ class CubegoesView extends React.Component {
     const item = this.state.selectedItem;
     const selectedPack = this.state.selectedPack || {idx: 3, currency: CURRENCY.ETH};
     const totalAmount = CalculateDiscountPrice(item[`price_${selectedPack.currency}`] * PRESALE_PACK_DISCOUNT[selectedPack.idx].id, PRESALE_PACK_DISCOUNT[selectedPack.idx].discount, 4);
+    const all_store_discount = this.props.discountFactor || 0;
 
     return (
       <div className={`purchase__container ${item && item.tier || 'pack'}`}>
@@ -162,17 +164,17 @@ class CubegoesView extends React.Component {
                   <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
                 </div>
 
-                {ALL_STORE_DISCOUNT !== 0 ?
+                {all_store_discount !== 0 ?
                   <React.Fragment>
                     <div className={'divider-line'}/>
                     <div className={`review-item`}>
-                      <div className={'left'}>{ALL_STORE_DISCOUNT === 0.1 ? _t('early bird discount') : _t('early discount')}:
+                      <div className={'left'}>{all_store_discount === 10 ? _t('early bird discount') : _t('early discount')}:
                       </div>
-                      <div className={'right'}>{`-${ALL_STORE_DISCOUNT * 100}%`}</div>
+                      <div className={'right'}>{`-${all_store_discount}%`}</div>
                     </div>
                     <div className={'review-item'}>
                       <div className={'left'}>{_t('total price')}:</div>
-                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4)} {_t(selectedPack.currency)}</div>
+                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, all_store_discount, 4)} {_t(selectedPack.currency)}</div>
                     </div>
                   </React.Fragment> : null
                 }
@@ -182,7 +184,7 @@ class CubegoesView extends React.Component {
                     address: userId,
                     numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
                     packId: item.pack_id,
-                    amount: CalculateDiscountPrice(totalAmount, ALL_STORE_DISCOUNT, 4),
+                    amount: CalculateDiscountPrice(totalAmount, all_store_discount, 4),
                     purchaseType: (item && item.tier)
                       ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
                       : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
@@ -197,6 +199,10 @@ class CubegoesView extends React.Component {
         </div>
       </div>
     )
+  }
+
+  componentDidMount() {
+    this.props.dispatch(PresaleActions.LOAD_DISCOUNT_FACTOR.init.func({forceUpdate: false}));
   }
 
   render() {
@@ -278,6 +284,7 @@ const mapStateToProps = (store) => {
   let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
+    discountFactor: GetDiscountFactor(store),
     userId,
   }
 };
