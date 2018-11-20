@@ -104,6 +104,3 @@ function _getBlockchainData(contractInstance, args, callbackFunc) {
     }
   }));
 }
-
-
-
