@@ -28,7 +28,7 @@ module.exports = env => {
           include: [APP_DIR, ASSET_DIR],
           use: 'babel-loader',
         }, {
-          test: /\.(gif|png|jpg|jpeg|svg|ico|fnt|mp3)$/,
+          test: /\.(gif|png|jpg|jpeg|svg|ico|fnt|mp3|TTF)$/,
           include: APP_DIR,
           use: [
             'file-loader',
