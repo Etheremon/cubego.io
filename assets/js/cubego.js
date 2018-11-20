@@ -44,3 +44,12 @@ function _getPlayerMaterials(address, callbackFunc) {
     }
   );
 }
+
+function createCubegon(ch, cmt, tmt, energyLimit, expiryTime, v, r, s, valueToSend, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonBuilderInstance.createCubegon,
+    contractAddress.CUBEGON_BUILDER_ADDRESS,
+    [ch, cmt, tmt, energyLimit, expiryTime, v, r, s], callbackFunc,
+    valueToSend, 600000
+  );
+}

@@ -15,28 +15,30 @@ import {CUBE_MATERIALS, CUBE_TYPES} from "../../../constants/cubego";
 import {GetLoggedInUserId, GetUserInfo, GetValidatedModel} from "../../../reducers/selectors";
 import {Model3D} from "../../../games/react_views/Model3D/Model3D.jsx";
 import {URLS} from "../../../constants/general";
-import {ModelActions} from "../../../actions/model";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import * as GonUtils from "../../../utils/logicUtils";
 import * as Config from "../../../config";
+import * as ObjUtils from "../../../utils/objUtils";
+import {CreateModel, RegisterModel} from "../../../services/transaction";
+import {addTxn} from "../../../actions/txnAction";
+import {ENERGY_LIMIT_PRICE} from "../../../constants/cubegon";
 
 require("style-loader!./ReviewPage.scss");
-
-const energyRange = [0,10,20,30,40];
 
 class ReviewPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      sliderValue: energyRange[Math.round(energyRange.length / 2)],
-      hiddenSliderIndicators: [0, energyRange[energyRange.length - 1]],
       allowChangeName: false,
       cubegonName: '',
+
+      energy: Object.keys(ENERGY_LIMIT_PRICE)[0],
+      energyBarOffset: 0,
     };
 
-    this.handleSliderChange = this.handleSliderChange.bind(this);
-    this.checkOut = this.checkOut.bind(this);
+    this.registerCubegon = this.registerCubegon.bind(this);
+    this.createCubegon = this.createCubegon.bind(this);
     this.renderSubmitResult = this.renderSubmitResult.bind(this);
   }
 
@@ -47,38 +49,57 @@ class ReviewPage extends React.Component {
     Utils.ScrollTop();
   }
 
-  handleSliderChange(event) {
-    const shouldHiddenIndicator = Utils.nearestPosition(event.target.value, energyRange, 2);
+  registerCubegon() {
+    let {validatedModel, userId, _t} = this.props;
+    let {stats} = validatedModel;
 
-    let newHidden = [0, energyRange[energyRange.length - 1]];
-    if (shouldHiddenIndicator && newHidden.indexOf(shouldHiddenIndicator) === -1) {
-      newHidden.push(shouldHiddenIndicator);
-    }
-
-    this.setState({sliderValue: event.target.value, hiddenSliderIndicators: newHidden});
-  }
-
-  checkOut() {
     if (!Config.ENABLE_MODEL_SUBMIT) {
       this.setState({showError: true});
     } else {
       this.setState({submitting: true});
-      this.props.dispatch(ModelActions.SUBMIT_MODEL.init.func({
-        model: this.props.validatedModel.model,
-        structure: this.props.validatedModel.model.structure,
-        energy: parseInt(this.state.sliderValue),
-        name: this.nameInput ? this.nameInput.value : '',
-        image: this.modelCanvas.getBase64Image(),
-        callbackFunc: (code, data) => {
-          this.setState({
-            submitting: false,
-            showPopup: true,
-            submitResponse: data,
-            isSuccess: code === window.RESULT_CODE.SUCCESS,
-          });
-        }
-      }));
+      this.modelCanvas.getBase64Image().then((data) => {
+        RegisterModel(this.props.dispatch, addTxn, _t, {
+          cubegon_name: this.nameInput ? this.nameInput.value : '',
+          cubegon_structure: validatedModel.structure,
+          cubegon_image: Utils.ExtractImageBase64String(data),
+          num_cubes: stats.total,
+          energy_limit: parseInt(this.state.energy),
+          total_cost: this.cost,
+          address: userId,
+          successCallback: (data) => {
+            this.createCubegonTxnData = data;
+            this.createCubegon();
+          },
+          failedCallback: null,
+          finishCallback: () => {
+            this.setState({submitting: false});
+          },
+        });
+      });
     }
+  }
+
+  createCubegon() {
+    let {validatedModel, userId, _t} = this.props;
+    let {stats} = validatedModel;
+
+    if (!Config.ENABLE_MODEL_SUBMIT) {
+      this.setState({showError: true});
+    }
+    else {
+      this.setState({submitting: true});
+      CreateModel(this.props.dispatch, addTxn, _t, {
+        cubegon_name: this.nameInput ? this.nameInput.value : '',
+        num_cubes: stats.total,
+        txn_data: this.createCubegonTxnData,
+        successCallback: null,
+        failedCallback: null,
+        finishCallback: () => {
+          this.setState({submitting: false});
+        },
+      });
+    };
+
   }
 
   renderSubmitResult() {
@@ -108,21 +129,20 @@ class ReviewPage extends React.Component {
 
   render() {
     const {_t, validatedModel, userInfo} = this.props;
-    if (!validatedModel) return null;
-
-    let {stats, info} = validatedModel;
-
     const { allowChangeName } = this.state;
-    const sliderValue = parseInt(this.state.sliderValue);
-    const sliderFilled = sliderValue / energyRange[energyRange.length - 1] * 100;
-    // const cost = Utils.RoundToDecimalFloat(sliderValue * 0.001 + Math.max(0, stats.total_cost), 6);
-    const cost = 0;
 
-    const statsOverview = [{icon: require('../../../shared/img/cubegoes/000.png'), content: stats.total, label: 'cubego'},
-                          {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
-                          {icon: require('../../../shared/img/icons/icon-stats.png'),
-                            content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`,
-                            label: 'stats range'}];
+    if (!validatedModel) return null;
+    let {stats} = validatedModel;
+
+    this.cost = Config.ENABLE_MODEL_SUBMIT
+      ? Utils.RoundToDecimalFloat(ENERGY_LIMIT_PRICE[this.state.energy] + Math.max(0, stats.total_cost), 6)
+      : 0;
+
+    const statsOverview = [
+      {icon: require('../../../shared/img/cubegoes/000.png'), content: stats.total, label: 'cubego'},
+      {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
+      {icon: require('../../../shared/img/icons/icon-stats.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
+    ];
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -194,7 +214,8 @@ class ReviewPage extends React.Component {
                     ))}
                 </div>
 
-                <table>
+                <div className={'material-list'}>
+                  <table>
                   <thead>
                     <tr>
                       <th>{_t('material')}</th>
@@ -206,30 +227,31 @@ class ReviewPage extends React.Component {
                   </thead>
 
                   <tbody>
-                    {info['topup_materials'].map((item, idx) => {
-                      let material = CUBE_MATERIALS[item['material_class']];
+                    {ObjUtils.Map(stats['materials'], (mId, mVal) => {
+                      let material = CUBE_MATERIALS[mId];
+                      let ownedMaterials = stats.storage[mId] || 0;
+                      let toPurchaseMaterials = Math.max(0, mVal-ownedMaterials);
+                      let mPrice = toPurchaseMaterials * (material.price || 0);
                       return (
-                        <tr key={idx}>
+                        <tr key={mId}>
                           <td>
                             <div className="cube">
                               <img src={material.icon}/>
                               {_t(material.name)}
                             </div>
                           </td>
-                          <td><span>{item.count}/{stats.storage[material.material_id]}</span></td>
-                          <td><span>{Math.max(0, item.count-stats.storage[material.material_id])}</span></td>
+                          <td><span>{mVal}/{ownedMaterials}</span></td>
+                          <td><span>{toPurchaseMaterials}</span></td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {/*{material.price || 'N.A'}*/}
-                              N.A
+                              {Config.ENABLE_MODEL_SUBMIT ? material.price || _t('N.A') : _t('N.A')}
                             </div>
                           </td>
                           <td>
                             <div className="currency">
                               <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                              {/*{Utils.RoundToDecimalFloat(Math.max(0, item.count-stats.storage[material.material_id])*(material.price||0), 4)}*/}
-                              0
+                              {Config.ENABLE_MODEL_SUBMIT ? mPrice : 0}
                             </div>
                           </td>
                         </tr>
@@ -237,50 +259,47 @@ class ReviewPage extends React.Component {
                     })}
                   </tbody>
                 </table>
+                </div>
 
                 <div className="energy__label">
                   {_t('energy')}:
-                  <div className={'value'}>{this.state.sliderValue}</div>
+                  <div className={'value'}>{this.state.energy}</div>
                   <div className={'note'} tooltip={_t('energy_note')} tooltip-position={'bottom'}><i className="fas fa-question-circle"/></div>
                 </div>
+
                 <div className="total__container">
                   <div className="energy__container">
-                      <div className="slider-bar__container">
-                        {
-                          energyRange.map((item, idx) => 
-                            <div key={idx} style={{left: `calc(${idx / (energyRange.length - 1) * 100}%)`}}
-                                 className="indicator">
-                              <div className={`line ${this.state.hiddenSliderIndicators.indexOf(item) === -1 ? '' : 'hidden'}`}>
-                                <div>{item}</div>
-                              </div>
-                            </div>
-                          )
-                        }
-                        <div className={"slider"}>
-                          <input style={{background: `linear-gradient(to right, #f37321 0%, #f37321 ${sliderFilled}%, #dcdbdb ${sliderFilled}%, #dcdbdb 100%)`}} 
-                          type="range" min={energyRange[0]} 
-                          max={energyRange[energyRange.length - 1]} 
-                          value={this.state.sliderValue} 
-                          onChange={this.handleSliderChange} />
+                    {Object.keys(ENERGY_LIMIT_PRICE).map((energyLimit, idx) => {
+                      let numPoints = ObjUtils.GetLength(ENERGY_LIMIT_PRICE);
+                      return (
+                        <div className={`energy__point ${this.state.energy === energyLimit ? 'active' : ''}`} key={idx}
+                             onClick={() => {
+                               this.setState({energy: energyLimit, energyBarOffset: idx/(numPoints-1)});
+                             }}>
+                          <p>{energyLimit}</p>
                         </div>
-                      </div>
+                      );
+                    })}
+                    <div className={'energy__placeholder'}/>
+                    <div className={'energy__bar'} style={{width: `${this.state.energyBarOffset*100}%`}}/>
                   </div>
 
                   <div className="total">
                     {`${_t('total')}: `}
                     <div className="currency">
                       <img src={require('../../../shared/img/icons/icon-ether.png')}/>
-                      <span>{cost}</span>
+                      <span>{this.cost}</span>
                     </div>
                   </div>
                 </div>
+
                 <div className={'energy__note'}/>
 
                 <div className="checkout__container">
                   <ButtonNew label={_t('Back')} color={ButtonNew.colors.TURQUOISE} className={'back__button'}
                              onClick={() => {this.props.history.goBack()}}/>
-                  <ButtonNew label={_t('Check Out')} className={'check-out__button'} loading={this.state.submitting}
-                             onClick={this.checkOut}/>
+                  <ButtonNew label={this.createCubegonTxnData ? _t('create cubegon') : _t('register cubegon')} className={'check-out__button'} loading={this.state.submitting}
+                             onClick={this.createCubegonTxnData ? this.createCubegon : this.registerCubegon}/>
                 </div>
 
               </div>

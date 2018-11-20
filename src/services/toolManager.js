@@ -217,7 +217,6 @@ export class ToolManager {
     });
 
     this._stats.type = typePoints.reduce((res, val, idx, arr) => (val > 0 && (res === -1 || arr[res] < val)) ? idx : res, -1);
-    if (this._stats.type >= 0) this._stats.type += 1;
 
     // Calculate power from points
     this._stats.power = [this._stats.total - 10, this._stats.total + 10];
@@ -229,14 +228,17 @@ export class ToolManager {
 
     ObjUtils.ForEach(this._stats.materials, (key, value) => {
       this._stats.cubeTiers[CUBE_MATERIALS[key].tier] = (this._stats.cubeTiers[CUBE_MATERIALS[key].tier] || 0) + value;
-      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0)
-        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - this._userCubes[key]);
-      else if (!CUBE_MATERIALS[key].is_for_sale && this._userCubes[key] < value) {
+
+      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0) {
+        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - (this._userCubes[key] || 0));
+      }
+      else if (!CUBE_MATERIALS[key].is_for_sale || this._userCubes[key] < value) {
         this._stats.invalid_materials.push(CUBE_MATERIALS[key].name);
         this._stats.total_cost = -1;
       }
     });
-    this._stats.total_cost = Utils.RoundDownToDecimal(this._stats.total_cost, 4);
+
+    this._stats.total_cost = Utils.RoundUpToDecimal(this._stats.total_cost, 4);
     this._stats.storage = this._userCubes;
 
     // Calculate gon tier
@@ -251,7 +253,7 @@ export class ToolManager {
       this._stats.gonTier = {...GON_TIER.challenger, showPoints: Math.min(this._stats.points, GON_TIER.challenger.points[1])};
     }
 
-    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
+    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_epic');
     } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_legend');

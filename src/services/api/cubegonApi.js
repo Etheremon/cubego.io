@@ -2,6 +2,7 @@ import {getCallbackFunc, sendGetRequest, sendPostRequest} from "./utils";
 import {SERVER_URL} from "../../config";
 
 const URL_GET_CUBEGON_INFO = SERVER_URL + '/api/cubego/get_data';
+const URL_REGISTER_CUBEGON = SERVER_URL + '/api/cubego/register';
 
 const GetCubegonInfo = (id, tokenId) => {
   return new Promise(function(resolve, reject) {
@@ -12,6 +13,25 @@ const GetCubegonInfo = (id, tokenId) => {
   });
 };
 
+const RegisterCubegon = ({address, structure, name, energy_limit, image, timestamp, signature}) => {
+  return new Promise(function(resolve, reject) {
+    sendPostRequest({
+      url: URL_REGISTER_CUBEGON,
+      data: {
+        trainer_address: address,
+        structure,
+        name,
+        energy_limit,
+        image,
+        timestamp,
+        signature,
+      },
+      resolve, reject
+    });
+  });
+};
+
 export const CubegonApi = {
   GetCubegonInfo,
+  RegisterCubegon,
 };

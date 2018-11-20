@@ -144,6 +144,7 @@ class _ModelEditor extends React.Component {
   componentDidMount() {
     if (this.props.savedModel && this.props.savedModel.length) {
       this.toolManager.addModel({model: this.props.savedModel[0].model});
+      this.selectedModelIndex = 0;
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
@@ -281,7 +282,8 @@ class _ModelEditor extends React.Component {
       }
 
       this.setState({validating: true, showRegisterPopup: false});
-      this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: this.toolManager.model, modelIndex: this.selectedModelIndex}));
+      this.saveModel();
+
       this.props.dispatch(ModelActions.VALIDATE_MODEL.init.func({
         model: CloneDeep(this.toolManager.model),
         stats: CloneDeep(this.toolManager.stats),

@@ -42,6 +42,9 @@ function purchaseUltimatePackUsingEmont(numPacks, receiverAddress, valueToSendIn
 
 function getDiscountFactor(callbackFunc) {
   getBlockchainProperty(
-    contractInstances.cubegoPresaleInstance.discountFactor, callbackFunc
+    contractInstances.cubegoPresaleInstance.discountFactor, function(code, data) {
+      if (code !== RESULT_CODE.SUCCESS) callbackFunc(code, data);
+      else callbackFunc(code, data.toNumber());
+    }
   );
 }

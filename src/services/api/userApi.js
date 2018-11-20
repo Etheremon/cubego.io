@@ -1,4 +1,4 @@
-import {getCallbackFunc, sendGetRequest, sendPostRequest} from "./utils";
+import {sendGetRequest, sendPostRequest} from "./utils";
 import {SERVER_URL} from "../../config";
 
 const URL_GET_USER_INFO = SERVER_URL + '/api/user/get_info';

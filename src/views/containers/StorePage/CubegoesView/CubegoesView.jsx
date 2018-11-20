@@ -10,7 +10,7 @@ import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx'
 import { URLS, CURRENCY } from '../../../../constants/general';
 import {CUBE_TIER, CUBE_TIER_MAP} from "../../../../constants/cubego";
 import * as Utils from "../../../../utils/utils";
-import { PRESALE_PACK_DISCOUNT, ALL_STORE_DISCOUNT } from '../../../../config.js';
+import { PRESALE_PACK_DISCOUNT } from '../../../../config.js';
 import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
 import { PurchasePackage } from '../../../../services/transaction';
 import { addTxn } from '../../../../actions/txnAction.js';
@@ -80,7 +80,7 @@ class CubegoesView extends React.Component {
     const item = this.state.selectedItem;
     const selectedPack = this.state.selectedPack || {idx: 3, currency: CURRENCY.ETH};
     const totalAmount = CalculateDiscountPrice(item[`price_${selectedPack.currency}`] * PRESALE_PACK_DISCOUNT[selectedPack.idx].id, PRESALE_PACK_DISCOUNT[selectedPack.idx].discount, 4);
-    const all_store_discount = this.props.discountFactor || 0;
+    const allStoreDiscount = (100-(this.props.discountFactor || 100)) / 100;
 
     return (
       <div className={`purchase__container ${item && item.tier || 'pack'}`}>
@@ -164,17 +164,17 @@ class CubegoesView extends React.Component {
                   <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
                 </div>
 
-                {all_store_discount !== 0 ?
+                {allStoreDiscount !== 0 ?
                   <React.Fragment>
                     <div className={'divider-line'}/>
                     <div className={`review-item`}>
-                      <div className={'left'}>{all_store_discount === 10 ? _t('early bird discount') : _t('early discount')}:
+                      <div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:
                       </div>
-                      <div className={'right'}>{`-${all_store_discount}%`}</div>
+                      <div className={'right'}>{`-${allStoreDiscount}%`}</div>
                     </div>
                     <div className={'review-item'}>
                       <div className={'left'}>{_t('total price')}:</div>
-                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, all_store_discount, 4)} {_t(selectedPack.currency)}</div>
+                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, allStoreDiscount, 4)} {_t(selectedPack.currency)}</div>
                     </div>
                   </React.Fragment> : null
                 }
@@ -184,7 +184,7 @@ class CubegoesView extends React.Component {
                     address: userId,
                     numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
                     packId: item.pack_id,
-                    amount: CalculateDiscountPrice(totalAmount, all_store_discount, 4),
+                    amount: CalculateDiscountPrice(totalAmount, allStoreDiscount, 4),
                     purchaseType: (item && item.tier)
                       ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
                       : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],

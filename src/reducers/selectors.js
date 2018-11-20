@@ -52,12 +52,12 @@ export const GetFeed = (state) => CloneDeep((state.notifications.notification['f
 
 
 /**
- * Feeds
+ * Txn
  */
 export const GetTxn = (state) => CloneDeep(state.txn);
 
 
 /**
- * Feeds
+ * Presale
  */
 export const GetDiscountFactor = (state) => (CloneDeep(state.presale.discountFactor))

@@ -293,3 +293,5 @@ export const ConvertTimeUnix = (fromDay, toDay) => {
   seconds = parseInt(seconds)
   return {days: days, hours: hrs, minutes: mnts, seconds: seconds};
 }
+
+export const ExtractImageBase64String = (str) => (str.split(',').length > 1 ? str.split(',')[1] : str);
