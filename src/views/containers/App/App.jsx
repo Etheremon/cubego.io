@@ -109,7 +109,7 @@ class App extends React.Component {
 
     //force sync data every TIME_TO_REFRESH miliseconds
     let refreshTime = LS.GetItem(LS.Fields.timeToRefresh);
-    if (!refreshTime || Date.now() - refreshTime < TIME_TO_REFRESH) {
+    if (!refreshTime || Date.now() - refreshTime > TIME_TO_REFRESH) {
       handleSyncData()
     }
     this.timeToRefresh = setInterval(() => {

@@ -10,4 +10,4 @@ export const SHOW_CLOSEST_MODEL = !Utils.IsLiveServer;
 
 export const PRESALE_PACK_DISCOUNT = [{id: 1, discount: 0}, {id: 3, discount: 0}, {id: 6, discount: 0.05}, {id: 10, discount: 0.1}];
 
-export const TIME_TO_REFRESH = 10 * 60 * 1000;
+export const TIME_TO_REFRESH = 15 * 60 * 1000;
