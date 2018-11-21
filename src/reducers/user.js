@@ -21,7 +21,11 @@ export const userMaterials = (state={}, action) => {
     case UserActions.LOAD_USER_CUBEGON.success.key:
       return {
         ...state,
-        [action.userId]: [...action.response.materials].map(c => ({...c, material_id: c['material_class']})),
+        [action.userId]: [...action.response.materials].map(c => ({
+          ...c,
+          material_id: c['material_class'],
+          available_amount: Math.max(0, c.amount - c.pending_amount),
+        })),
       };
     default:
       return state;

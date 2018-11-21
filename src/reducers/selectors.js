@@ -1,5 +1,7 @@
 import {CloneDeep} from "../utils/objUtils";
 import * as LogicUtils from "../utils/logicUtils";
+import {GON_STATUS} from "../constants/cubegon";
+import * as ArrayUtils from "../utils/arrayUtils";
 
 
 /**
@@ -11,12 +13,13 @@ export const GetLoggedInUserId = (state) => (state.auth['userId']);
  * User
  */
 export const GetUserInfo = (state, userId) => (CloneDeep(state.user.info[userId]));
-export const GetUserCubegons = (state, userId) => CloneDeep(state.user.userCubegons[userId]);
+export const GetUserCubegons = (state, userId) => CloneDeep(ArrayUtils.Filter(state.user.userCubegons[userId], c => c.status === GON_STATUS.VALID));
+export const GetUserPendingCubegons = (state, userId) => CloneDeep(ArrayUtils.Filter(state.user.userCubegons[userId], c => c.status === GON_STATUS.PENDING));
 export const GetUserMaterials = (state, userId) => CloneDeep(state.user.userMaterials[userId]);
 export const GetUserNumberOfMaterials = (state, userId) => {
   let userCubes = {};
   (state.user.userMaterials[userId] || []).forEach(m => {
-    userCubes[m.material_id] = Math.max(0, m.amount - m.pending_amount);
+    userCubes[m.material_id] = m.available_amount;
   });
   return userCubes;
 };

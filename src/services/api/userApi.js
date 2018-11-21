@@ -40,6 +40,8 @@ const GetUserCubegons = (userId) => {
   });
 };
 
+window.test = GetUserCubegons;
+
 export const UserApi = {
   GetUserInfo,
   UpdateUserInfo,

@@ -80,8 +80,11 @@ class App extends React.Component {
       if (window.account === undefined) return;
 
       if (window.account !== acc) {
-        if (acc === undefined) this.props.dispatch(AuthActions.LOGIN.init.func({userId: LS.GetItem(LS.Fields.account) || window.account}));
-          else this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account}));
+        console.log("asdfalsdfkjaksjdfaSDF", acc, window.account);
+        if (acc === undefined)
+          this.props.dispatch(AuthActions.LOGIN.init.func({userId: LS.GetItem(LS.Fields.account) || window.account}));
+        else
+          this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account}));
 
         acc = window.account;
       }
