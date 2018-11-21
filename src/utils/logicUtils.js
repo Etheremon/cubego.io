@@ -2,6 +2,7 @@ import * as ObjUtils from './objUtils';
 import * as Utils from "./utils";
 import {GetCellKey} from "./modelUtils";
 import {CUBE_MATERIALS} from "../constants/cubego";
+import {IMAGE_URL} from "../config";
 
 export const GetStructure = (model) => {
   let res = [];
@@ -11,6 +12,17 @@ export const GetStructure = (model) => {
     res.push(cell.z-model.modelSize.z[0]);
     res.push(cell.color.sub_material_id);
   });
+  return res;
+};
+
+export const GetModelFromStructure = (structure) => {
+  let res = {};
+  for (let i = 0; i < structure.length; i += 4) {
+    res[GetCellKey(structure[i], structure[i+1], structure[i+2])] = {
+      x: structure[i], y: structure[i+1], z: structure[i+2],
+      color: {...CUBE_MATERIALS[Math.floor(structure[i+3]/100)].sub_materials[structure[i+3]]},
+    }
+  }
   return res;
 };
 
@@ -66,7 +78,7 @@ export const GetFullModel = (simplifiedModel) => {
 };
 
 export const GetImageFromGonID = (id) => {
-  return `https://www.cubego.io/cubego_image/${Utils.AddHeadingZero(id, 8)}.png`
+  return `${IMAGE_URL}/${Utils.AddHeadingZero(id, 8)}.png`
 };
 
 export const CalculateDiscountPrice = (price, discount, roundNumber) => {

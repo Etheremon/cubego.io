@@ -1,6 +1,7 @@
 import * as Utils from "./utils/utils";
 
 export const SERVER_URL = Utils.IsLiveServer ? 'https://www.cubego.io' : 'http://test.cubego.io';
+export const IMAGE_URL = Utils.IsLiveServer ? 'https://www.cubego.io/cubego_image' : 'http://test.cubego.io/cubego_image_té';
 
 export const PRESALE_DATE = 'Nov 24 2018 1:00 UTC';
 
