@@ -72,16 +72,15 @@ class SignInForm extends React.Component {
               </React.Fragment> : null
             }
 
-            <div className={'form-note'}>{_t('desc.form_note')}</div>
-
-            <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
-            <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
-
+            <div className={'term-policy__wrap'}>
+              <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
+              <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
+            </div>
 
             {submitError && submitError.error ?
               <div className={`error__label`}>
                 {_t(submitError.error, submitError.error_values || {})}
-              </div> : null
+              </div> : <div className={'form-note'}>{_t('desc.form_note')}</div>
             }
             {submitSuccess?
               <div className={`success__label`}>
