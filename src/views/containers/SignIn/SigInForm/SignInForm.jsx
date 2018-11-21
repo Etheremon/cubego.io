@@ -80,12 +80,12 @@ class SignInForm extends React.Component {
             {submitError && submitError.error ?
               <div className={`error__label`}>
                 {_t(submitError.error, submitError.error_values || {})}
-              </div> : <div className={'form-note'}>{_t('desc.form_note')}</div>
-            }
-            {submitSuccess?
-              <div className={`success__label`}>
-                {_t(submitSuccess)}
-              </div> : null
+              </div> : (
+                submitSuccess ?
+                  <div className={`success__label`}>
+                    {_t(submitSuccess)}
+                  </div> : <div className={'form-note'}>{_t('desc.form_note')}</div>
+              )
             }
 
             {onBack ?
