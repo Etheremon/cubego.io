@@ -209,7 +209,7 @@ class Inventory extends React.Component {
 
                       <div className="user-cubegons">
                         <img src={require('../../../shared/img/inventory/surprise.png')}/>
-                        <span>25</span>
+                        <span>{userCubegons ? userCubegons.length : 0}</span>
                       </div>
                     </div>
                   </div>

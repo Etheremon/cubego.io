@@ -28,7 +28,7 @@ export const EmptyCubegoList = ({_t, history}) => {
 export const EmptyCubegonList = ({_t, history}) => {
   return <GeneralEmptyView
     content={_t('you_dont_have_cubegon')}
-    action={{label: _t('purchase now'), onClick: () => {history.push(`/${URLS.STORE}`)}}}
+    action={{label: _t('build now'), onClick: () => {history.push(`/${URLS.BUILD_GON}`)}}}
   />
 };
 

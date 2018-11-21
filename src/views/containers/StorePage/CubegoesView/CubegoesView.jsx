@@ -98,12 +98,12 @@ class CubegoesView extends React.Component {
                     <div className={`item__container ${selectedPack.idx === idx ? 'active' : ''}`}>
                       <div className="border-gradient__layer">
                         <img src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
+                        {
+                          ele.id === 6 || ele.id === 10 ? <img className={'sale-tag'} src={require(`../../../../shared/img/store_cubegoes/presale/sale${ele.id}.png`)}/> : null
+                        }
                         <div className="detail__label">
                           <div className="header__label">
                             {ele <= 1 ? _t('num_pack', {num: ele.id}) : _t('num_packs', {num: ele.id})}
-                          </div>
-                          <div className="cubegoes-quantity__label">
-                            {_t('cubegoes')}: {ele.id * item.quantity}
                           </div>
                         </div>
                         <div className="purchase-action__container">
@@ -211,7 +211,7 @@ class CubegoesView extends React.Component {
     return(
       <div className="cubegoes-view__container">
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
-            <div className="border"><DiscountFrame text={_t('Save 10%')} /></div>
+            {!Utils.IsMobile ? <div className="border"><DiscountFrame text={_t('Save 10%')} /></div> : <img className={'mobile-sale-tag'} src={require('../../../../shared/img/store_cubegoes/presale/saletag.png') } /> }
             <div className="header__label">
               <CustomRectangle  />
               <span>{_t(ultimatePack.name)}</span>
