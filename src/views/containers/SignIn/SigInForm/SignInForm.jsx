@@ -67,24 +67,25 @@ class SignInForm extends React.Component {
 
             {!metamask ?
               <React.Fragment>
-                <Input label={_t('signature')} placeholder={_t('signature_placeholder')} onChange={e => this.input_signature = e}/>
+                <Input label={_t('sign_in_signature')} placeholder={_t('signature_placeholder')} onChange={e => this.input_signature = e}/>
                 <div className={'field-note'}>{_t('desc.sign_in_signature')}</div>
               </React.Fragment> : null
             }
 
-            <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
-            <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
-
+            <div className={'term-policy__wrap'}>
+              <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
+              <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
+            </div>
 
             {submitError && submitError.error ?
               <div className={`error__label`}>
                 {_t(submitError.error, submitError.error_values || {})}
-              </div> : null
-            }
-            {submitSuccess?
-              <div className={`success__label`}>
-                {_t(submitSuccess)}
-              </div> : null
+              </div> : (
+                submitSuccess ?
+                  <div className={`success__label`}>
+                    {_t(submitSuccess)}
+                  </div> : <div className={'form-note'}>{_t('desc.form_note')}</div>
+              )
             }
 
             {onBack ?

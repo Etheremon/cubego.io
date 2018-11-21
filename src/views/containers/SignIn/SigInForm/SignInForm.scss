@@ -114,12 +114,24 @@
 
     .field-note {
       color: $c__text__orange;
-      font-size: $font-size-tiny;
+      font-size: $font-size-smaller;
       text-align: left;
     }
 
+    .form-note {
+      color: $white;
+      font-size: $font-size-normal;
+      font-weight: $font-weight-bold;
+      padding-top: 12px;
+      text-align: center;
+    }
+
+    .term-policy__wrap {
+      padding: 4px 0;
+    }
+
     .term-policy__label {
-      font-size: $font-size-smaller;
+      font-size: $font-size-small;
       color: $white-dark;
     }
 

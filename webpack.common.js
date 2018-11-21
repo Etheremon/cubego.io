@@ -28,7 +28,7 @@ module.exports = env => {
           include: [APP_DIR, ASSET_DIR],
           use: 'babel-loader',
         }, {
-          test: /\.(gif|png|jpg|jpeg|svg|ico|fnt|mp3|TTF)$/,
+          test: /\.(gif|png|jpg|jpeg|svg|ico|fnt|mp3)$/,
           include: APP_DIR,
           use: [
             'file-loader',
@@ -43,7 +43,7 @@ module.exports = env => {
             },
           ],
         }, {
-          test: /\.(gltf|tmx|tsx|vox|obj|babylon)$/,
+          test: /\.(gltf|tmx|tsx|vox|obj|babylon|TTF|ttf)$/,
           include: APP_DIR,
           use: 'file-loader',
         }, {
