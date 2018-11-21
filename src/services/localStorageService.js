@@ -8,6 +8,7 @@ export const Fields = {
   showLayer: 'show-layer',
   referralCode: 'referral-code',
   localization: 'localization',
+  timeToRefresh: 'time-to-refresh',
 };
 
 export const SetItem = (key, value)  => {

@@ -16,14 +16,13 @@ import CubegonCard from '../../components/CubegonCard/CubegonCard.jsx';
 import { FilterSearch, FilterSort, FilterType } from '../../widgets/Filters/Filters.jsx';
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import { UserActions } from '../../../actions/user';
-import { GetLoggedInUserId, GetUserCubegons, GetUserInfo } from '../../../reducers/selectors.js';
+import { GetLoggedInUserId, GetUserCubegons, GetUserInfo, GetUserPendingCubegons } from '../../../reducers/selectors.js';
 import { CUBE_MATERIALS } from '../../../constants/cubego';
 import Loading from "../../components/Loading/Loading.jsx";
-import {EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
+import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
 
 require("style-loader!./Inventory.scss");
-
 
 const sampleCubegon = {1: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
                       2: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
@@ -49,7 +48,7 @@ const sampleCubegon = {1: { id: 1, type: '', name: 'afd', owner: '', total: 120,
                       22: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
                      }
 
-const myCubegoesTabs = [ {key: 'cubegons', content: 'cubegons'}, {key: 'cubegoes', content: 'cubegoes'}];
+const myCubegoesTabs = [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 
 class Inventory extends React.Component {
 
@@ -60,6 +59,8 @@ class Inventory extends React.Component {
 
     this.handleGenerateCubegonView = this.handleGenerateCubegonView.bind(this);
     this.handleGenerateCubegoView = this.handleGenerateCubegoView.bind(this);
+    this.handleGeneratePendingCubegonView = this.handleGeneratePendingCubegonView.bind(this);
+    this.renderTabcontent = this.renderTabcontent.bind(this);
   }
 
   componentDidMount() {
@@ -68,6 +69,18 @@ class Inventory extends React.Component {
 
   componentWillUnmount() {
     this.props.dispatch(UserActions.LOAD_USER_CUBEGON.stop.func({userId: this.props.userId}));
+  }
+
+  handleGeneratePendingCubegonView(cubegons) {
+    return (
+      <div className="list-item__container">
+        {cubegons.map((item, idx) => 
+          <div className="card-item" key={idx}>
+            <CubegonCard key={idx} {...item} />
+          </div>
+        )}
+      </div>
+    )
   }
 
   handleGenerateCubegonView(cubegons) {
@@ -97,7 +110,7 @@ class Inventory extends React.Component {
 
     if (!cubegoes.length) {
       return (
-        <EmptyCubegonList _t={_t} history={history}/>
+        <EmptyCubegoList _t={_t} history={history}/>
       )
     }
 
@@ -115,6 +128,36 @@ class Inventory extends React.Component {
     )
   }
 
+  renderTabcontent(dataUserMaterials) {
+    const {_t, query, userCubegons, userPendingCubegons,history} = this.props;
+    if (query.tab !== myCubegoesTabs[0].key) {
+      if (!userCubegons && !userPendingCubegons) {
+        return <div className="list-item__container">
+                <Loading/>
+              </div>
+      }
+
+      return <ListView
+        emptyView={<EmptyCubegonList _t={_t} history={history}/>}
+        itemList={query.tab === myCubegoesTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
+        listItemName={_t('cubegons')}
+        handleGenerateCardView={(cubegons) => {return query.tab === myCubegoesTabs[1].key ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons)}}
+        filters={[
+          FilterSearch({_t, searchFields: ['id'], value: query.search}),
+          FilterType({_t, value: query.type, right: true}),
+          FilterSort({_t, sortTypes: [
+            ['+total_cubego', _t('sort.lowest_cubegoes')],
+            ['+total_stats', _t('sort.lowest_stats')],
+          ], defaultSort: '+total_cubego', value: query.sort, right: true})
+        ]}
+        page={query.page}
+        handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
+      />
+    } else{
+      return this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
+    }
+  }
+
   render() {
     const {_t, query, userCubegons, userMaterials, userInfo} = this.props;
     let dataUserMaterials;
@@ -125,18 +168,6 @@ class Inventory extends React.Component {
         return {...item, ...CUBE_MATERIALS[item.material_id] } 
       });
     }
-
-    const cubegoData = [{quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
-                        {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
-                        {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
-                        {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
-                        {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'},
-                        {quantity: 25, type: 'diamond', label: 'diamond'}, {quantity: 25, type: 'diamond', label: 'diamond'}];
-
-    const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: '250', label: 'match'},
-                        {icon: require('../../../shared/img/icons/icon-stats.png'), content: '95', label: 'win'},
-                        {icon: require('../../../shared/img/icons/icon-stats.png'), content: '38%', label: 'win_rate'},
-                        {icon: require('../../../shared/img/icons/icon-stats.png'), content: '90/1100', label: 'rank'}];
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -173,7 +204,7 @@ class Inventory extends React.Component {
                     <div className="user-properties">
                       <div className="user-cubegoes ">
                         <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
-                        <span>{dataUserMaterials ? dataUserMaterials.length : 0}</span>
+                        <span>{dataUserMaterials ? dataUserMaterials.reduce((acc, item) => acc + item.available_amount , 0) : 0}</span>
                       </div>
 
                       <div className="user-cubegons">
@@ -186,7 +217,7 @@ class Inventory extends React.Component {
               </div> : <div style={{height: "40px"}}/>
             }
 
-            <TabsView tabs={[myCubegoesTabs[1]]} centered
+            <TabsView tabs={myCubegoesTabs} centered
                       selectedTab={query.tab}
                       handleOnTabSelect={(tab) => {
                         Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
@@ -195,28 +226,7 @@ class Inventory extends React.Component {
 
           <Container className={'inventory-page__main'} size={Container.sizes.NORMAL}>
             {
-              query.tab === myCubegoesTabs[0].key
-                ? <ListView
-                  itemList={Object.values(sampleCubegon)}
-                  listItemName={_t('cubegons')}
-                  handleGenerateCardView={this.handleGenerateCubegonView}
-                  filters={[
-                    FilterSearch({_t, searchFields: ['name'], value: query.search}),
-                    FilterType({_t, value: query.type, right: true}),
-                    FilterSort({_t, sortTypes: [
-                      ['-create_time', _t('sort.recent_cubegons')],
-                      ['-total_level -create_time', _t('sort.highest_level')],
-                      ['+total_level -create_time', _t('sort.lowest_level')],
-                      ['-total_bp -create_time', _t('sort.highest_bp')],
-                      ['+total_bp -create_time', _t('sort.lowest_bp')],
-                      ['+name -create_time', _t('sort.name_az')],
-                      ['-name -create_time', _t('sort.name_za')],
-                    ], defaultSort: '-level -create_time', value: query.sort, right: true})
-                  ]}
-                  page={query.page}
-                  handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
-                />
-                : this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
+              this.renderTabcontent(dataUserMaterials)
             }
           </Container>
         </div>
@@ -230,7 +240,7 @@ const mapStateToProps = (store, props) => {
   let query = Utils.ParseQueryString(props.location.search);
   query = {
     ...query,
-    tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[1].key,
+    tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[0].key,
     page: query.page ? query.page : 1,
   }
 
@@ -239,6 +249,7 @@ const mapStateToProps = (store, props) => {
     query,
     _t: getTranslate(store.localeReducer),
     userId,
+    userPendingCubegons: GetUserPendingCubegons(store, userId),
     userCubegons: GetUserCubegons(store, userId),
     userMaterials: GetUserMaterials(store, userId),
     userInfo: GetUserInfo(store, userId),

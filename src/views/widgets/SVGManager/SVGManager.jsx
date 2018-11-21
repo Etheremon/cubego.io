@@ -9,7 +9,7 @@ export const Pentagon = ({active}) => {
         <defs>
             <path d="M46,21 L336,21 C349.807119,21 361,32.1928813 361,46 L361,178.613613 C361,189.660948 353.749107,199.398531 343.165234,202.564801 L198.165234,245.942982 C193.490758,247.341397 188.509242,247.341397 183.834766,245.942982 L38.8347657,202.564801 C28.2508935,199.398531 21,189.660948 21,178.613613 L21,46 C21,32.1928813 32.1928813,21 46,21 Z" id="path-1"></path>
             <filter x="-8.5%" y="-12.8%" width="117.1%" height="125.5%" filterUnits="objectBoundingBox" id="filter-2">
-                <feMorphology radius="8" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+                <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                 <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
                 <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
                 <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>

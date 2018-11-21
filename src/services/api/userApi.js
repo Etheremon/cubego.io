@@ -4,6 +4,7 @@ import {SERVER_URL} from "../../config";
 const URL_GET_USER_INFO = SERVER_URL + '/api/user/get_info';
 const URL_UPDATE_USER_INFO = SERVER_URL + '/api/user/update_info';
 const URL_GET_USER_CUBEGON = SERVER_URL + '/api/user/get_my_cubegon';
+const URL_SYNC_DATA = SERVER_URL + '/api/user/sync_data';
 
 const GetUserInfo = (userId) => {
   return new Promise(function(resolve, reject) {
@@ -40,10 +41,22 @@ const GetUserCubegons = (userId) => {
   });
 };
 
+const SyncUserData = () => {
+  return new Promise(function(resolve, reject) {
+    sendPostRequest({
+      url: URL_SYNC_DATA,
+      data: {
+      },
+      resolve, reject
+    });
+  });
+}
+
 window.test = GetUserCubegons;
 
 export const UserApi = {
   GetUserInfo,
   UpdateUserInfo,
-  GetUserCubegons
+  GetUserCubegons,
+  SyncUserData
 };

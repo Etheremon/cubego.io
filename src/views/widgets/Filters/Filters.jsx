@@ -77,7 +77,7 @@ export const FilterType = ({_t, key, value, right}) => {
     value: Utils.ConvertNonNullToString(value),
     filterFunc: (cubegons, typ) => {
       if (typ === 'all') return cubegons;
-      return cubegons.filter(cubegon => cubegon.type === typ)
+      return cubegons.filter(cubegon => CUBE_TYPES[cubegon.type_id].name === typ)
     }
   }
 };

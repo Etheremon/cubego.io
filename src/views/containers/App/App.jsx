@@ -33,8 +33,15 @@ import GameIntro from "../GameIntro/GameIntro.jsx";
 import {NotificationActions} from "../../../actions/notification";
 import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx';
 import RankingPage from '../RankingPage/RankingPage.jsx';
+import { UserApi } from '../../../services/api/userApi.js';
+import { TIME_TO_REFRESH } from '../../../config';
 
 require("style-loader!./App.scss");
+
+const handleSyncData = () => {
+    UserApi.SyncUserData().then((res, rej) => {})
+    LS.SetItem(LS.Fields.timeToRefresh, Date.now())
+}
 
 class App extends React.Component {
 
@@ -80,7 +87,6 @@ class App extends React.Component {
       if (window.account === undefined) return;
 
       if (window.account !== acc) {
-        console.log("asdfalsdfkjaksjdfaSDF", acc, window.account);
         if (acc === undefined)
           this.props.dispatch(AuthActions.LOGIN.init.func({userId: LS.GetItem(LS.Fields.account) || window.account}));
         else
@@ -99,10 +105,21 @@ class App extends React.Component {
         if (element) element.scrollIntoView();
       }
     };
+
+
+    //force sync data every TIME_TO_REFRESH miliseconds
+    let refreshTime = LS.GetItem(LS.Fields.timeToRefresh);
+    if (!refreshTime || Date.now() - refreshTime < TIME_TO_REFRESH) {
+      handleSyncData()
+    }
+    this.timeToRefresh = setInterval(() => {
+      handleSyncData()
+    }, TIME_TO_REFRESH);
   }
 
   componentWillUnmount() {
     window.onLoadFunctions['general-hash'] = undefined;
+    clearInterval(this.timeToRefresh)
   }
 
   render () {

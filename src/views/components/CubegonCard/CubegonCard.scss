@@ -11,22 +11,22 @@
   text-align: center;
   margin: 16px;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0px 0px 8px 3px #59ADE3;
 
   .border-1 {
     border: 2px solid #194379;
-    border-radius: 5px;
+    border-radius: 8px;
   }
 
   .border-2 {
     border: 3px solid #B0EDFB;
-    border-radius: 5px;
+    border-radius: 8px;
   }
 
   .border-3 {
     border: 1px solid #1C3B50;
-    border-radius: 5px;
+    border-radius: 8px;
     position: relative;
   }
 
@@ -64,6 +64,7 @@
     top: -5px;
     right: 5px;
     z-index: 3;
+    display: none;
   }
 
   .cubegon-info {
@@ -76,6 +77,8 @@
     font-size: $font-size-nano;
 
     .id {
+      padding-left: 8px;
+      text-align: left;
       width: 50%;
     }
 
@@ -89,7 +92,7 @@
     flex-direction: row;
     background: $regal_blue;
     color: $white;
-    padding: 8px 0;
+    padding: 8px 0 0 0;
     position: relative;
     z-index: 2;
 
@@ -106,7 +109,7 @@
     .cubegoes {
       width: 50%;
       box-sizing: border-box;
-      border-right: 1px solid $white;
+      border-right: 2px solid $white;
     }
 
     .stats {
@@ -118,12 +121,12 @@
 
   .footer {
     position: relative;
-    height: 30px;
+    height: 20px;
   }
 
   .cubegon-name {
     position: absolute;
-    bottom: -10px;
+    bottom: -22px;
     left: 50%;
     transform: translateX(-50%);
     height: 44px;
@@ -137,6 +140,7 @@
       font-size: $font-size-header-1;
       color: $white;
       font-family: $f__baloobha;
+      text-shadow: 0 0 3px white;
     }
   }
 }

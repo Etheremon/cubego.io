@@ -2,7 +2,9 @@ import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
-import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
+import { CustomRectangle, CubegoFooter } from '../../widgets/SVGManager/SVGManager.jsx';
+import { CUBE_TYPES } from '../../../constants/cubego.js';
+import { GetImageFromGonID } from '../../../utils/logicUtils';
 
 require("style-loader!./CubegonCard.scss");
 
@@ -19,29 +21,29 @@ class CubegonCard extends React.Component {
   }
 
   render() {
-    const {_t, className} = this.props;
+    const {_t, className, energy_limit, energy_used, id, total_cubego, total_stats, type_id} = this.props;
 
     return(
       <div className={`cubegon-card__container ${className && className}`}>
         <div className="border-1">
           <div className="border-2">
             <div className="border-3">
-              <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/${'background_air'}.png`)} />
-              <img className={'cubegon__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
-              <img className={'type__image'} src={require(`../../../shared/img/types/${'water'}.png`)}/>
+              <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/background_${CUBE_TYPES[type_id].name}.png`)} />
+              <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
+              <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
               <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
                 <div className="stats__container">
                   <div className="cubegoes">
                     <div className="number">
-                      90
+                      {total_cubego}
                     </div>
                     <div className="label">
-                      {_t('total_cubego')}
+                      {_t('total_cubegoes')}
                     </div>
                   </div>
                   <div className="stats">
                     <div className="number">
-                      110
+                      {total_stats}
                     </div>
                     <div className="label">
                       {_t('total_stats')}
@@ -51,14 +53,14 @@ class CubegonCard extends React.Component {
 
                 <div className="cubegon-info">
                   <div className="id">
-                  {`ID ${12345}`}
+                  {`ID ${id}`}
                   </div>
-                  <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={'10/40+'} onClick={() => {}}/>
+                  <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={`${energy_used}/${energy_limit}+`} onClick={() => {}}/>
                 </div>
 
                 <div className="footer">
                   <div className="cubegon-name">
-                    <CustomRectangle tier={'referral'} />
+                    <CubegoFooter stroke={'#75C3F5'} fill={'#12314F'} />
                     <span>Vexigon</span>
                   </div>
                 </div>

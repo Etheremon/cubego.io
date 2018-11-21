@@ -18,11 +18,17 @@ export const GeneralEmptyView = ({content, action}) => {
 };
 
 
+export const EmptyCubegoList = ({_t, history}) => {
+  return <GeneralEmptyView
+    content={_t('you_dont_have_cubego')}
+    action={{label: _t('purchase now'), onClick: () => {history.push(`/${URLS.STORE}`)}}}
+  />
+};
+
 export const EmptyCubegonList = ({_t, history}) => {
   return <GeneralEmptyView
     content={_t('you_dont_have_cubegon')}
     action={{label: _t('purchase now'), onClick: () => {history.push(`/${URLS.STORE}`)}}}
   />
 };
-
 
