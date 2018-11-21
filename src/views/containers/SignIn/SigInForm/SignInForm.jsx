@@ -67,10 +67,12 @@ class SignInForm extends React.Component {
 
             {!metamask ?
               <React.Fragment>
-                <Input label={_t('signature')} placeholder={_t('signature_placeholder')} onChange={e => this.input_signature = e}/>
+                <Input label={_t('sign_in_signature')} placeholder={_t('signature_placeholder')} onChange={e => this.input_signature = e}/>
                 <div className={'field-note'}>{_t('desc.sign_in_signature')}</div>
               </React.Fragment> : null
             }
+
+            <div className={'form-note'}>{_t('desc.form_note')}</div>
 
             <input type="checkbox" onChange={e => this.input_checkbox = e.target.checked}/>
             <span className={'term-policy__label'}>{_t('term_service_policy')}</span><br />
