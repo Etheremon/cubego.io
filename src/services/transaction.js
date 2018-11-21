@@ -166,7 +166,7 @@ export const RegisterModel = (dispatch, action, _t, {cubegon_name, cubegon_struc
   }));
 };
 
-export const CreateModel = (dispatch, action, _t, {cubegon_name, num_cubes, total_cost, txn_data, successCallback, failedCallback, finishCallback}) => {
+export const CreateModel = (dispatch, action, _t, {cubegon_name, num_cubes, total_cost, txn_data, history, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
     title: _t('create_cubegon'),
     note: _t('create_cubegon_note'),

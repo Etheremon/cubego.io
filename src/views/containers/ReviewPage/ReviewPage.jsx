@@ -80,7 +80,7 @@ class ReviewPage extends React.Component {
   }
 
   createCubegon() {
-    let {validatedModel, userId, _t} = this.props;
+    let {validatedModel, _t} = this.props;
     let {stats} = validatedModel;
 
     if (!Config.ENABLE_MODEL_SUBMIT) {
@@ -93,6 +93,7 @@ class ReviewPage extends React.Component {
         num_cubes: stats.total,
         total_cost: this.cost,
         txn_data: this.createCubegonTxnData,
+        history: this.props.history,
         successCallback: null,
         failedCallback: null,
         finishCallback: () => {

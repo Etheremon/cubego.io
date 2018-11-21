@@ -118,7 +118,7 @@ class TxnBar extends React.Component {
               <span>{this.state.currentTxn.title && this.props._t(this.state.currentTxn.title)}</span>
             </div>
             {currentTxn && currentTxn.note ?
-              <p className={'txn-note'}>{_t(currentTxn.note)}</p> : null
+              <p className={'txn-note'}>{typeof(currentTxn.note) === 'string' ? _t(currentTxn.note) : currentTxn.note}</p> : null
             }
             {/*<div className="txn-title">*/}
               {/*{this.state.currentTxn.content && this.props._t(this.state.currentTxn.content)}*/}
