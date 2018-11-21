@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 require("style-loader!./LandingPage.scss");
 
-const youtubeURL = "https://www.youtube.com/embed/Gx1ITZji27Q?enablejsapi=1";
+const youtubeURL = "https://www.youtube.com/embed/JzuqvnA4Jq8?enablejsapi=1";
 
 export const ButtonImage = ({className, img, label, onClick}) => {
   return <div className={`button-image__container ${className ? className : ''}`} onClick={() => {onClick && onClick()}}>
@@ -43,7 +43,7 @@ class LandingPage extends React.Component {
 
   render() {
     const {_t} = this.props;
-    const backgroundImage = require('../../../shared/img/landing_page/landingpagecubego.png');
+    const backgroundImage = require('../../../shared/img/landing_page/landingpagecubego.jpg');
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE}>
