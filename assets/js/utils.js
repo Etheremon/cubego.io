@@ -106,13 +106,13 @@ function _getBlockchainData(contractInstance, args, callbackFunc) {
 }
 
 
-function getBlockchainProperty(contractInstance, callbackFunc) {
+function getBlockchainProperty(instance, funcName, callbackFunc) {
   callFuncWithRpcCheck(function() {
-    _getBlockchainProperty(contractInstance, callbackFunc);
+    _getBlockchainProperty(instance, funcName, callbackFunc);
   });
 }
-function _getBlockchainProperty(contractInstance, callbackFunc) {
-  contractInstance.call((function(err, data) {
+function _getBlockchainProperty(instance, funcName, callbackFunc) {
+  contractInstances[instance][funcName].call((function(err, data) {
     if (err) {
       console.log("ERROR_LOG|get_data_failed|error=", err);
       callbackFunc(RESULT_CODE.ERROR_SERVER, {"error": "Blockchain call fail!!"});

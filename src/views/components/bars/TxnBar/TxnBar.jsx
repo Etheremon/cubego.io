@@ -216,7 +216,7 @@ class TxnBar extends React.Component {
             </div>
 
             {currentTxn && currentTxn.txn_done ?
-              <p>{this.props._t(currentTxn.txn_done)}</p> : null
+              <p>{typeof(currentTxn.txn_done) === 'string' ? _t(currentTxn.txn_done) : currentTxn.txn_done}</p> : null
             }
 
             <div className="txn-field">
