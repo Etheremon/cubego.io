@@ -232,7 +232,7 @@ export class ToolManager {
       if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0) {
         this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - (this._userCubes[key] || 0));
       }
-      else if (!CUBE_MATERIALS[key].is_for_sale && this._userCubes[key] < value) {
+      else if (!CUBE_MATERIALS[key].is_for_sale && (this._userCubes[key]||0) < value) {
         this._stats.invalid_materials.push(CUBE_MATERIALS[key].name);
         this._stats.total_cost = -1;
       }

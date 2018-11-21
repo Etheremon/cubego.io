@@ -332,7 +332,7 @@ class _ModelEditor extends React.Component {
           <div className={'matched-gons'}>
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
-                <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
+                <img src={LogicUtils.GetImageFromGonID(gon.id)}/>
                 <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
               </div>
             ))}
@@ -440,7 +440,7 @@ class _ModelEditor extends React.Component {
           }
 
           {this.state.showModelReview ?
-            <Popup align={Config.ENABLE_MODEL_SUBMIT ? Popup.align.RIGHT : Popup.align.CENTER}
+            <Popup align={Popup.align.CENTER}
              onUnmount={() => {this.setState({showModelReview: false})}}
                    open={this.state.showModelReview}>
               <div>
