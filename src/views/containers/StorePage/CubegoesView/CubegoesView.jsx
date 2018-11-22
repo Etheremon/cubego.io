@@ -22,26 +22,26 @@ require("style-loader!./CubegoesView.scss");
 const ethToEmont = 1500;
 const ultimatePack = {
   name: 'ultimate pack',
-  quantity: 201,
+  quantity: 200,
   price_eth: 1.25,
   price_emont: 1*ethToEmont,
   cubes: [
-    {type: 'gold', quantity: 15, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+    {type: 'gold', quantity: 16, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'ice', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'silver', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'iron', quantity: 48, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-    {type: 'stone', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-    {type: 'wood', quantity: 51, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+    {type: 'stone', quantity: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+    {type: 'wood', quantity: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
   ],
 };
 
 const presaleCubegoes = [
-  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 36, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 40, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 40, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 110, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 120, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 120, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 40, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 45, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 45, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
+  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 120, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 125, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
+  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 125, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
 ];
 
 class CubegoesView extends React.Component {
@@ -220,7 +220,7 @@ class CubegoesView extends React.Component {
     return(
       <div className="cubegoes-view__container">
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
-            {!Utils.IsMobile ? <div className="border"><DiscountFrame text={_t('Save 10%')} /></div> : <img className={'mobile-sale-tag'} src={require('../../../../shared/img/store_cubegoes/presale/saletag.png') } /> }
+            {!Utils.IsMobile ? <div className="border"><DiscountFrame text={_t('Save 5%')} /></div> : <img className={'mobile-sale-tag'} src={require('../../../../shared/img/store_cubegoes/presale/saletag.png') } /> }
             <div className="header__label">
               <CustomRectangle  />
               <span>{_t(ultimatePack.name)}</span>

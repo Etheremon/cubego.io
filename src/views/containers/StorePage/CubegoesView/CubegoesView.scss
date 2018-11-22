@@ -125,6 +125,7 @@
       transform: translateX(-50%);
       bottom: -8px;
       width: 250px;
+      pointer-events: none;
     }
 
     .header__label {

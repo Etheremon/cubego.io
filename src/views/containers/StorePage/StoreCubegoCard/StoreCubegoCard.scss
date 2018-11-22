@@ -109,6 +109,7 @@
   }
 
   .parallelogram {
+    pointer-events: none;
     bottom: -5px;
     .price__container {
       display: flex;
