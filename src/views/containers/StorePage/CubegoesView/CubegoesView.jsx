@@ -24,7 +24,7 @@ const ultimatePack = {
   name: 'ultimate pack',
   quantity: 200,
   price_eth: 1.25,
-  price_emont: 1*ethToEmont,
+  price_emont: 1.25*ethToEmont,
   cubes: [
     {type: 'gold', quantity: 16, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
     {type: 'ice', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
