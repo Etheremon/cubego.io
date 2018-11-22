@@ -73,7 +73,7 @@ class Popup extends React.Component {
           this.close();
         }
       }}>
-        <div className={'widget__popup-wrap'}>
+        <div className={'widget__popup-wrap'} onClick={(e) => {e.stopPropagation()}}>
           <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
             {children}
           </div>

@@ -4,7 +4,7 @@ export const SERVER_URL = Utils.IsLiveServer ? 'https://www.cubego.io' : 'http:/
 export const IMAGE_URL = Utils.IsLiveServer ? 'https://www.cubego.io/cubego_image' : 'http://test.cubego.io/cubego_image_test';
 
 let _currentTime = new Date();
-_currentTime.setMinutes(Math.round(_currentTime.getMinutes()/10)*10);
+// _currentTime.setMinutes(Math.round(_currentTime.getMinutes()/10)*10);
 
 export const PRESALE_DATE = Utils.IsLiveServer ? 'Nov 24 2018 1:00 UTC' : _currentTime.toUTCString();
 export const START_PRESALE = Date.now() > (new Date(PRESALE_DATE)).getTime();

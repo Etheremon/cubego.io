@@ -94,7 +94,8 @@ class CubegoesView extends React.Component {
               PRESALE_PACK_DISCOUNT.map((ele, idx) => {
                 return (
                   <div className="pack__item" key={idx}
-                       onClick={() => {this.setState({selectedPack: {idx: idx, currency: CURRENCY.ETH}})}}>
+                       onClick={(e) => {
+                       this.setState({selectedPack: {idx: idx, currency: CURRENCY.ETH}})}}>
                     <div className={`item__container ${selectedPack.idx === idx ? 'active' : ''}`}>
                       <div className="border-gradient__layer">
                         <img src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
