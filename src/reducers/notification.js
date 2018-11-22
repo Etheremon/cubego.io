@@ -23,25 +23,24 @@ const notification = (state = {}, action) => {
       if (json['feed'] && json['feed'].entry.length) {
         obj['banners'] = [];
 
-        json['feed'].entry.map(entryObj => {
-          const isLive = entryObj['env']['$t'] === 'live'
+        json['feed'].entry.forEach(entryObj => {
+          const justForTest = entryObj['env']['$t'] === 'test';
+          if (justForTest && IsLiveServer) return;
 
-          if (isLive === IsLiveServer) {
-            if (entryObj['key']['$t'] === 'banner_home') {
-              obj.banners_home.push(ObjUtils.CloneWithValueModify({
-                ...entryObj
-              }, (key, val) => val['$t']));
-            } else if (entryObj['key']['$t'] === 'banner_store') {
-              obj.banners_store.push(ObjUtils.CloneWithValueModify({
-                ...entryObj
-              }, (key, val) => val['$t']));
-            } else if (entryObj['key']['$t'] === 'feed') {
-              obj.feeds.push(ObjUtils.CloneWithValueModify({
-                ...entryObj,
-                starttime: {'$t': Date.parse(entryObj.starttime['$t'])},
-                endtime: {'$t': Date.parse(entryObj.endtime['$t'])},
-              }, (key, val) => val['$t']));
-            }
+          if (entryObj['key']['$t'] === 'banner_home') {
+            obj.banners_home.push(ObjUtils.CloneWithValueModify({
+              ...entryObj
+            }, (key, val) => val['$t']));
+          } else if (entryObj['key']['$t'] === 'banner_store') {
+            obj.banners_store.push(ObjUtils.CloneWithValueModify({
+              ...entryObj
+            }, (key, val) => val['$t']));
+          } else if (entryObj['key']['$t'] === 'feed') {
+            obj.feeds.push(ObjUtils.CloneWithValueModify({
+              ...entryObj,
+              starttime: {'$t': Date.parse(entryObj.starttime['$t'])},
+              endtime: {'$t': Date.parse(entryObj.endtime['$t'])},
+            }, (key, val) => val['$t']));
           }
         });
       }

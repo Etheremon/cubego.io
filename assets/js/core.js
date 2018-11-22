@@ -83,13 +83,13 @@ window.addEventListener('load', function() {
   } else {
     window.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/vZmCD1X42dFUlLRd2BtV"));
     console.log("INFO_LOG|using_web_api");
-    rpcConnected = true;
     hasWeb3Injected = false;
     account = null;
     // currentNetwork = NETWORKS.mainnet;
     currentNetwork = NETWORKS.rinkeby;
     isUsingTestNetwork = true;
     contractInstances = initContractInstance(currentNetwork);
+    rpcConnected = true;
   }
 });
 
