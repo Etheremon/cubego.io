@@ -181,7 +181,7 @@ const _CUBE_MATERIALS = {
     name: 'ice',
     variants: {
       1: {color: '#a7c7d7', emissive: '#282289'},
-      2: {color: '#e81a4a', emissive: '#590404'},
+      2: {color: '#a2004c', emissive: '#842121'},
       3: {color: '#4b7046', emissive: '#13191e'},
       4: {color: '#ff7800', emissive: '#480000'},
       5: {color: '#ffc200', emissive: '#7a2b00'}
@@ -311,15 +311,15 @@ const _CUBE_MATERIALS = {
     name: 'paper',
     variants: {
       1: {color: '#7f0000', emissive: '#7d2424'},
-      2: {color: '#7f0043', emissive: '#91253f'},
+      2: {color: '#f773c8', emissive: '#af3692'},
       3: {color: '#0b3787', emissive: '#183f9d'},
       4: {color: '#450b87', emissive: '#4d1f82'},
       5: {color: '#0b8778', emissive: '#0a5178'},
 
       6: {color: '#0b8719', emissive: '#194d31'},
-      7: {color: '#756808', emissive: '#8e6212'},
+      7: {color: '#edc291', emissive: '#522e1f'},
       8: {color: '#ac681c', emissive: '#8e3012'},
-      9: {color: '#d7d7d7', emissive: '#a09895'},
+      9: {color: '#d2d2d2', emissive: '#373636'},
       10: {color: '#2a2a29', emissive: '#0c0b0b'}
     },
     price: 0.0005,
@@ -336,7 +336,7 @@ const _CUBE_MATERIALS = {
       3: {color: '#0032d7', emissive: '#000000'},
       4: {color: '#0071d7', emissive: '#000000'},
       5: {color: '#006919', emissive: '#000000'},
-      6: {color: '#96740b', emissive: '#312a2a'},
+      6: {color: '#c5a200', emissive: '#501700'},
     },
     point: 1,
     tier: CUBE_TIER_MAP.basic,
