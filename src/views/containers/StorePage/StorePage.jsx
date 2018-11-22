@@ -70,23 +70,26 @@ class StorePage extends React.Component {
       let bannerImg = banner[`${language.code}img`] || banner[`enimg`];
       let bannerImgMobile = banner[`${language.code}imgmobile`] || banner[`enimgmobile`];
       return (
-        <div key={idx} className={'store-page__banner-item'}>
+        <div key={idx} className={'store-page__banner-item'} style={{height: banner['bannerheight'] ? `${banner['bannerheight']}px` : '300px'}}>
           <img className={'store-page__banner-img'} src={Utils.IsMobile ? bannerImgMobile || bannerImg : bannerImg || bannerImgMobile} />
           {btn}
         </div>
       )
     });
 
-    // return bannerList;
+    if (Config.START_PRESALE) {
+      return bannerList;
+    }
 
     return [
-      <div className={'store-page__banner-item'}>
+      <div className={'store-page__banner-item'} style={{height: '300px'}}>
         <img className={'store-page__banner-img'} src={require(`../../../shared/img/banner/banner_store.png`)} />
         <div className="main-content__container">
           <p className={'presale-text'}>{_t('presale start in')}</p>
-          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
+          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE} onFinishCountdown={() => {
+                  window.location.reload()
+              }}/>
           <p className={'presale-time'}>({Config.PRESALE_DATE})</p>
-
           <ButtonNew className={'presale-btn'} label={_t('register now for presale')} showDeco={ButtonNew.deco.BOTH} onClick={() => {
             this.props.history.push(`/${URLS.SIGN_IN}`)
           }}/>

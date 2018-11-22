@@ -363,6 +363,10 @@
                 height: 64px;
                 display: block;
                 width: auto;
+
+                &.tag-6 {
+                  left: -20px;
+                }
               }
             }
           }

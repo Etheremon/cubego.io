@@ -12,12 +12,18 @@ class Countdown extends React.Component {
   }
 
   componentDidMount() {
-    const { presaleDate } = this.props;
+    const { presaleDate, onFinishCountdown} = this.props;
     this.interval = setInterval( () => {
       let now = Date.now();
       this.setState(
-        ConvertTimeUnix(now, presaleDate)
+        ConvertTimeUnix(now, presaleDate, false)
       )
+
+      if (this.state.days === 0 && this.state.hours === 0 && this.state.minutes === 0 && this.state.seconds === 0) {
+        onFinishCountdown && onFinishCountdown()
+        window.clearInterval(this.interval);
+      }
+
     }, 1000 );
   }
 

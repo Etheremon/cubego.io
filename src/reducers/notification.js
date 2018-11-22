@@ -1,6 +1,7 @@
 import {combineReducers} from "redux";
 import * as ObjUtils from "../utils/objUtils";
 import {NotificationActions} from "../actions/notification";
+import { IsLiveServer } from "../utils/utils";
 
 const notification = (state = {}, action) => {
   switch (action.type) {
@@ -23,20 +24,24 @@ const notification = (state = {}, action) => {
         obj['banners'] = [];
 
         json['feed'].entry.map(entryObj => {
-          if (entryObj['key']['$t'] === 'banner_home') {
-            obj.banners_home.push(ObjUtils.CloneWithValueModify({
-              ...entryObj
-            }, (key, val) => val['$t']));
-          } else if (entryObj['key']['$t'] === 'banner_store') {
-            obj.banners_store.push(ObjUtils.CloneWithValueModify({
-              ...entryObj
-            }, (key, val) => val['$t']));
-          } else if (entryObj['key']['$t'] === 'feed') {
-            obj.feeds.push(ObjUtils.CloneWithValueModify({
-              ...entryObj,
-              starttime: {'$t': Date.parse(entryObj.starttime['$t'])},
-              endtime: {'$t': Date.parse(entryObj.endtime['$t'])},
-            }, (key, val) => val['$t']));
+          const isLive = entryObj['env']['$t'] === 'live'
+
+          if (isLive === IsLiveServer) {
+            if (entryObj['key']['$t'] === 'banner_home') {
+              obj.banners_home.push(ObjUtils.CloneWithValueModify({
+                ...entryObj
+              }, (key, val) => val['$t']));
+            } else if (entryObj['key']['$t'] === 'banner_store') {
+              obj.banners_store.push(ObjUtils.CloneWithValueModify({
+                ...entryObj
+              }, (key, val) => val['$t']));
+            } else if (entryObj['key']['$t'] === 'feed') {
+              obj.feeds.push(ObjUtils.CloneWithValueModify({
+                ...entryObj,
+                starttime: {'$t': Date.parse(entryObj.starttime['$t'])},
+                endtime: {'$t': Date.parse(entryObj.endtime['$t'])},
+              }, (key, val) => val['$t']));
+            }
           }
         });
       }

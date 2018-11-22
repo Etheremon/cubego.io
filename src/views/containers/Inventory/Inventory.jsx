@@ -21,34 +21,12 @@ import { CUBE_MATERIALS } from '../../../constants/cubego';
 import Loading from "../../components/Loading/Loading.jsx";
 import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
+import { START_PRESALE } from '../../../config.js';
 
 require("style-loader!./Inventory.scss");
 
-const sampleCubegon = {1: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      2: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      3: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      4: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      5: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      6: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      7: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      8: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      9: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      10: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      11: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      12: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      13: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      14: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      15: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      16: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      17: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      18: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      19: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      20: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      21: { id: 1, type: '', name: 'afd', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                      22: { id: 2, type: '', name: 'fasdfa', owner: '', total: 120, cubegoes: {}, stats: {hp: 5, ak: 5, dp: 5, sp: 5}, energy: 50, moves: {} },
-                     }
-
-const myCubegoesTabs = [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
+const inventoryTabs = START_PRESALE ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}] :
+                                    [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}]
 
 class Inventory extends React.Component {
 
@@ -130,7 +108,7 @@ class Inventory extends React.Component {
 
   renderTabcontent(dataUserMaterials) {
     const {_t, query, userCubegons, userPendingCubegons,history} = this.props;
-    if (query.tab !== myCubegoesTabs[0].key) {
+    if (query.tab !== inventoryTabs[0].key) {
       if (!userCubegons && !userPendingCubegons) {
         return <div className="list-item__container">
                 <Loading/>
@@ -139,9 +117,9 @@ class Inventory extends React.Component {
 
       return <ListView
         emptyView={<EmptyCubegonList _t={_t} history={history}/>}
-        itemList={query.tab === myCubegoesTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
+        itemList={query.tab === inventoryTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
         listItemName={_t('cubegons')}
-        handleGenerateCardView={(cubegons) => {return query.tab === myCubegoesTabs[1].key ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons)}}
+        handleGenerateCardView={(cubegons) => {return query.tab === inventoryTabs[1].key ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons)}}
         filters={[
           FilterSearch({_t, searchFields: ['id'], value: query.search}),
           FilterType({_t, value: query.type, right: true}),
@@ -203,12 +181,12 @@ class Inventory extends React.Component {
                     {/*</div>*/}
                     <div className="user-properties">
                       <div className="user-cubegoes ">
-                        <img src={require('../../../shared/img/store_cubegoes/gold.png')}/>
+                        <img src={require('../../../shared/img/inventory/cubego.png')}/>
                         <span>{dataUserMaterials ? dataUserMaterials.reduce((acc, item) => acc + item.available_amount , 0) : 0}</span>
                       </div>
 
                       <div className="user-cubegons">
-                        <img src={require('../../../shared/img/inventory/surprise.png')}/>
+                        <img src={require('../../../shared/img/inventory/cubegon.png')}/>
                         <span>{userCubegons ? userCubegons.length : 0}</span>
                       </div>
                     </div>
@@ -217,7 +195,7 @@ class Inventory extends React.Component {
               </div> : <div style={{height: "40px"}}/>
             }
 
-            <TabsView tabs={myCubegoesTabs} centered
+            <TabsView tabs={inventoryTabs} centered
                       selectedTab={query.tab}
                       handleOnTabSelect={(tab) => {
                         Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
@@ -240,7 +218,7 @@ const mapStateToProps = (store, props) => {
   let query = Utils.ParseQueryString(props.location.search);
   query = {
     ...query,
-    tab: myCubegoesTabs.map(tab => tab.key).includes(query.tab) ? query.tab : myCubegoesTabs[0].key,
+    tab: inventoryTabs.map(tab => tab.key).includes(query.tab) ? query.tab : inventoryTabs[0].key,
     page: query.page ? query.page : 1,
   }
 

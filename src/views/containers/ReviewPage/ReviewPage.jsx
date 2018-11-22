@@ -141,9 +141,9 @@ class ReviewPage extends React.Component {
       : 0;
 
     const statsOverview = [
-      {icon: require('../../../shared/img/cubegoes/000.png'), content: stats.total, label: 'cubego'},
+      {icon: require('../../../shared/img/inventory/cubego.png'), content: stats.total, label: 'cubego'},
       {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
-      {icon: require('../../../shared/img/icons/icon-stats.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
+      {icon: require('../../../shared/img/inventory/stat.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
     ];
 
     return (

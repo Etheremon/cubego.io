@@ -10,7 +10,7 @@ import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx'
 import { URLS, CURRENCY } from '../../../../constants/general';
 import {CUBE_TIER, CUBE_TIER_MAP} from "../../../../constants/cubego";
 import * as Utils from "../../../../utils/utils";
-import { PRESALE_PACK_DISCOUNT } from '../../../../config.js';
+import { PRESALE_PACK_DISCOUNT, START_PRESALE } from '../../../../config.js';
 import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
 import { PurchasePackage } from '../../../../services/transaction';
 import { addTxn } from '../../../../actions/txnAction.js';
@@ -19,7 +19,7 @@ import { PresaleActions } from '../../../../actions/presale';
 
 require("style-loader!./CubegoesView.scss");
 
-const ethToEmont = 2000;
+const ethToEmont = 1500;
 const ultimatePack = {
   name: 'ultimate pack',
   quantity: 201,
@@ -99,7 +99,7 @@ class CubegoesView extends React.Component {
                       <div className="border-gradient__layer">
                         <img src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
                         {
-                          ele.id === 6 || ele.id === 10 ? <img className={'sale-tag'} src={require(`../../../../shared/img/store_cubegoes/presale/sale${ele.id}.png`)}/> : null
+                          ele.id === 6 || ele.id === 10 ? <img className={`sale-tag tag-${ele.id}`} src={require(`../../../../shared/img/store_cubegoes/presale/sale${ele.id}.png`)}/> : null
                         }
                         <div className="detail__label">
                           <div className="header__label">
@@ -112,7 +112,8 @@ class CubegoesView extends React.Component {
                             <TextImage text={500} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
                           </div>
                           <div className="purchase__group-button">
-                            <Parallelogram className={'popup-parallelogram'} children={
+                          {
+                            START_PRESALE ? <Parallelogram className={'popup-parallelogram'} children={
                               <div className="price__container">
                                   <TextImage
                                     className={`${selectedPack.idx === idx && selectedPack.currency === CURRENCY.ETH ? 'active' : ''}`}
@@ -131,7 +132,8 @@ class CubegoesView extends React.Component {
                                     }}
                                   />
                               </div>
-                            }/>
+                            }/> : null
+                          }
                           </div>
                         </div>
                       </div>
@@ -159,40 +161,47 @@ class CubegoesView extends React.Component {
                   <div className={'left'}>{_t('total cubes')}:</div>
                   <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>
                 </div>
-                <div className={'review-item'}>
-                  <div className={'left'}>{_t('price')}:</div>
-                  <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
-                </div>
 
-                {allStoreDiscount !== 0 ?
-                  <React.Fragment>
-                    <div className={'divider-line'}/>
-                    <div className={`review-item`}>
-                      <div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:
+                {
+                  START_PRESALE ? (
+                    <React.Fragment>
+                      <div className={'review-item'}>
+                        <div className={'left'}>{_t('price')}:</div>
+                        <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
                       </div>
-                      <div className={'right'}>{`-${allStoreDiscount}%`}</div>
-                    </div>
-                    <div className={'review-item'}>
-                      <div className={'left'}>{_t('total price')}:</div>
-                      <div className={'right'}>{CalculateDiscountPrice(totalAmount, allStoreDiscount, 4)} {_t(selectedPack.currency)}</div>
-                    </div>
-                  </React.Fragment> : null
-                }
 
-                <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
-                  PurchasePackage(this.props.dispatch, addTxn, _t, {
-                    address: userId,
-                    numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
-                    packId: item.pack_id,
-                    amount: CalculateDiscountPrice(totalAmount, allStoreDiscount, 4),
-                    purchaseType: (item && item.tier)
-                      ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
-                      : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
-                    currency: selectedPack.currency,
-                    name: _t(item.name),
-                    history: this.props.history,
-                  })
-                }}/>
+                      {allStoreDiscount !== 0 ?
+                        <React.Fragment>
+                          <div className={'divider-line'}/>
+                          <div className={`review-item`}>
+                            <div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:
+                            </div>
+                            <div className={'right'}>{`-${allStoreDiscount}%`}</div>
+                          </div>
+                          <div className={'review-item'}>
+                            <div className={'left'}>{_t('total price')}:</div>
+                            <div className={'right'}>{CalculateDiscountPrice(totalAmount, allStoreDiscount, 4)} {_t(selectedPack.currency)}</div>
+                          </div>
+                        </React.Fragment> : null
+                      }
+
+                      <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
+                        PurchasePackage(this.props.dispatch, addTxn, _t, {
+                          address: userId,
+                          numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
+                          packId: item.pack_id,
+                          amount: CalculateDiscountPrice(totalAmount, allStoreDiscount, 4),
+                          purchaseType: (item && item.tier)
+                            ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
+                            : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
+                          currency: selectedPack.currency,
+                          name: _t(item.name),
+                          history: this.props.history,
+                        })
+                      }}/>
+                    </React.Fragment>
+                  ) : null
+                }
               </React.Fragment> : null
             }
           </div>
@@ -239,13 +248,14 @@ class CubegoesView extends React.Component {
                 }
               </div>
             </div>
-
-          <Parallelogram className={'pack-parallelogram'} children={
-            <div className="price__container">
-              <TextImage text={ultimatePack.price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
-              <TextImage text={ultimatePack.price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
-            </div>
-          }/>
+          {
+            START_PRESALE ? <Parallelogram className={'pack-parallelogram'} children={
+              <div className="price__container">
+                <TextImage text={ultimatePack.price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+                <TextImage text={ultimatePack.price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
+              </div>
+            }/> : null
+          }
 
         </div>
 

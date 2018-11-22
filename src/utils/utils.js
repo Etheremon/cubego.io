@@ -279,10 +279,11 @@ export const clamp = (value, min, max) => {
  /**
  * convert time
  */
-export const ConvertTimeUnix = (fromDay, toDay) => {
+export const ConvertTimeUnix = (fromDay, toDay, allowNegative=true) => {
   let from = new Date(fromDay);
   let to = new Date(toDay);
-  let seconds = to.getTime() - from.getTime();
+  let time = to.getTime() - from.getTime();
+  let seconds = time < 0 && allowNegative === false ? 0 : time;
   seconds = seconds / 1000;
   let days = Math.floor(seconds / (3600*24));
   seconds  -= days*3600*24;

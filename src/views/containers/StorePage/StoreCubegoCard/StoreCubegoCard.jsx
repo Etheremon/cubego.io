@@ -4,6 +4,7 @@ import {getTranslate} from 'react-localize-redux'
 import { Pentagon, CustomRectangle } from '../../../widgets/SVGManager/SVGManager.jsx';
 import { TextImage } from '../../../widgets/Text/Text.jsx';
 import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx';
+import { START_PRESALE } from '../../../../config.js';
 
 require("style-loader!./StoreCubegoCard.scss");
 
@@ -38,12 +39,14 @@ class StoreCubegoCard extends React.Component {
           <div className="power-score">
             {_t('type')}: <span>{_t(tier)}</span>
           </div>
-          <Parallelogram className={'parallelogram'} children={
-            <div className="price__container">
-              <TextImage text={price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
-              <TextImage text={price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
-            </div>
-          }/>
+          {
+            START_PRESALE ? <Parallelogram className={'parallelogram'} children={
+              <div className="price__container">
+                <TextImage text={price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+                <TextImage text={price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
+              </div>
+            }/> : null
+          }
       </div>
     )
   }
