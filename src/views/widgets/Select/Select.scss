@@ -14,9 +14,12 @@
     outline: 0;
     box-sizing: border-box;
     color: $white;
-
     i {
       margin-right: 8px;
+    }
+    &:hover {
+      padding: 16px 30px 15px 20px;
+      border-bottom: 2px solid $white;
     }
   }
 
@@ -37,10 +40,6 @@
   //   @include transform(translateY(-50%) rotate(45deg));
   // }
 
-  .widget__dropdown__content:hover {
-    border-bottom: 2px solid $white;
-  }
-
   option {
     color: $gray-dark;
     padding: 16px !important;
@@ -51,6 +50,10 @@
 .widget__select.small {
   .widget__dropdown__content {
     padding: 8px 20px 8px 12px;
+    &:hover {
+      padding: 8px 20px 7px 12px;
+      border-bottom: 2px solid $white;
+    }
   }
   .widget__dropdown__list {
     .widget__dropdown__item {

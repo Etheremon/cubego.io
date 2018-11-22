@@ -65,7 +65,7 @@ export const FilterType = ({_t, key, value, right}) => {
         value: 'all',
         label: (
           <div className={'filter-cubegon-type'}>
-            <img src={require(`../../../shared/img/types/${'air'}.png`)} />
+            <img src={require(`../../../shared/img/icons/${'icon-emont'}.png`)} />
             {_t('all_types')}
           </div>
         ),
