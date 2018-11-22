@@ -63,11 +63,16 @@ class Popup extends React.Component {
   }
 
   render() {
-    let {size, scroll, children, className, onUnmount, align} = this.props;
+    let {size, scroll, children, className, onUnmount, align, canCloseOutside} = this.props;
     let open = this.props.open !== undefined ? this.props.open : this.state.open;
 
     return (
-      <div className={`widget__popup ${align} ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`}>
+      <div className={`widget__popup ${align} ${className} ${size} ${open ? 'open' : 'close'} ${scroll ? 'scroll' : ''}`} onClick={() => {
+        if (canCloseOutside) {
+          if (onUnmount !== undefined) onUnmount();
+          this.close();
+        }
+      }}>
         <div className={'widget__popup-wrap'}>
           <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
             {children}
