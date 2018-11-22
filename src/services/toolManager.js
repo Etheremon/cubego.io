@@ -5,6 +5,7 @@ import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
 import {CUBE_MATERIALS, CUBE_TIER_MAP} from "../constants/cubego";
 import {GON_TIER} from "../constants/cubegon";
+import * as Config from "../config";
 
 export class ToolManager {
   constructor(props) {
@@ -136,8 +137,10 @@ export class ToolManager {
     if (!oldSpaceSize) oldSpaceSize = [0, 11];
 
     let x = modelSize[0], y = modelSize[1];
-    if (y-x+1 < 40) x -= 1;
-    if (y-x+1 < 40) y += 1;
+    // if (y-x+1 < 40) x -= 1;
+    // if (y-x+1 < 40) y += 1;
+    x -= 1;
+    y += 1;
 
     return [Math.min(x, oldSpaceSize[0]), Math.max(oldSpaceSize[1], y)];
   }
@@ -259,7 +262,14 @@ export class ToolManager {
       this._stats.gonTier.note = ('tier.need_legend');
     }
 
-    // this.stats.type = ;
+    this._stats.err = '';
+    if (this._userCubes && this._stats.invalid_materials.length) {
+      this._stats.err = 'err.some_invalid_materials';
+    } else if (ObjUtils.GetLength(this._stats.materials) > Config.CUBEGON_MAX_MATERIALS) {
+      this._stats.err = 'err.max_materials';
+    } else if (this._stats.total > Config.CUBEGON_MAX_CUBE) {
+      this._stats.err = 'err.max_cubes';
+    }
   }
 
   get stats() {

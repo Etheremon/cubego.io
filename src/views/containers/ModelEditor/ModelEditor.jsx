@@ -271,11 +271,13 @@ class _ModelEditor extends React.Component {
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
-      if (this.toolManager.stats.total_cost < 0) {
+
+      console.log("reviewing");
+      if (this.toolManager.stats.err) {
         this.setState({
           validating: false,
           showModelReview: true,
-          reviewError: {code: "not_enough_cube", data: text},
+          reviewError: {code: "general_error", data: this.props._t(this.toolManager.stats.err)},
           showRegisterPopup: false,
         });
         return;
@@ -316,10 +318,10 @@ class _ModelEditor extends React.Component {
 
     let content = null;
 
-    if (code === 'not_enough_cube') {
+    if (code === 'general_error') {
       content = (
         <div className={'header'}>
-          {data || _t('err.not_enough_cube')}
+          {_t(data)}
         </div>
       )
     }
@@ -406,21 +408,28 @@ class _ModelEditor extends React.Component {
           {_t('color.overused_warning', {type: _t(selectedMaterial.name)})}
         </div>
       );
-    } else if (numSelectedCubes-numSelectedCubesUsed <= 0 && !selectedMaterial.is_for_sale) {
+    }
+    else if (numSelectedCubes-numSelectedCubesUsed <= 0 && !selectedMaterial.is_for_sale) {
       colorNote = (
         <div className={'model-editor__color-note error'}>
-          {_t('color.overused_error', {type: _t(selectedMaterial.name)})}
+          {selectedMaterial.material_id === 0
+            ? _t('color.overused_error_plastic', {type: _t(selectedMaterial.name)})
+            :_t('color.overused_error', {type: _t(selectedMaterial.name)})
+          }
         </div>
       );
     }
 
     let totalCost = null;
     if (this.toolManager.stats.total_cost !== undefined) {
-      if (this.toolManager.stats.total_cost >= 0) totalCost = this.toolManager.stats.total_cost;
+      if (this.toolManager.stats.total_cost >= 0) {
+        totalCost = this.toolManager.stats.total_cost;
+      }
       else {
-        let text = this.toolManager.stats.invalid_materials.map(t => _t(t)).join(', ');
-        totalCost = this.toolManager.stats.invalid_materials.length > 1
-          ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
+        totalCost = 'N.A';
+        // let text = this.toolManager.stats.invalid_materials.map(t => _t(t)).join(', ');
+        // totalCost = this.toolManager.stats.invalid_materials.length > 1
+        //   ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
       }
     }
 
@@ -623,7 +632,7 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__stats'}>
               <div className={'material'}>
                 <div className={'total'}>
-                  {_t('total')}: <span>{this.toolManager.stats.total}</span>
+                  {_t('total')}: <span>{this.toolManager.stats.total}<span>/{Config.CUBEGON_MAX_CUBE}</span></span>
                 </div>
 
                 {ObjUtils.Map(this.toolManager.stats.materials, (materialId, count) => {
@@ -688,6 +697,11 @@ class _ModelEditor extends React.Component {
                        onClick={this.capturePhoto}>
                     <Image img={'icon_camera'}/>
                   </div>
+                  {this.toolManager.stats.err ?
+                    <div className={'model-editor__model-error'}>
+                      <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err)}</p>
+                    </div> : null
+                  }
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
                            ref={(canvas) => {window.modelCanvas = canvas; this.modelCanvas = canvas;}}
                            _t={_t}

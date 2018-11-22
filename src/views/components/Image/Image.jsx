@@ -20,6 +20,8 @@ export const ImgSource = {
   btn_share_fb: require('../../../shared/img/buttons/facebook.png'),
   btn_share_tw: require('../../../shared/img/buttons/twitter.png'),
 
+  icon_warning: require('../../../shared/img/icons/icon-warning.png'),
+
   'icon_left_arrow': require('../../../shared/img/icons/icon_left_arrow.png'),
   'icon_right_arrow': require('../../../shared/img/icons/icon_right_arrow.png'),
 
