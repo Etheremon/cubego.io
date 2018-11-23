@@ -189,7 +189,7 @@ class GameIntro extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {ObjUtils.Map(CUBE_MATERIALS, (mIdx, material) => {
+                  {ObjUtils.GetValues(CUBE_MATERIALS).sort((a, b) => (b.material_id - a.material_id)).map((material, mIdx) => {
                     return (
                       <tr key={mIdx} className={`tier-${material.material_id}`}>
                         <td className={'material-name'}>{_t(CUBE_TIER[material.tier].name)}</td>

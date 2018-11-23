@@ -265,37 +265,19 @@
         }
       }
 
-      .energy__label {
-        margin-top: 16px;
-        font-size: $font-size-small;
-        color: $white;
-        display: flex;
-        align-items: center;
-
-        .value {
-          font-family: $f__baloobha;
-          font-size: $font-size-header-1;
-          padding-top: 6px;
-          padding-left: 8px;
-        }
-
-        .note {
-          padding-left: 2px;
-          font-size: $font-size-tiny;
-        }
-      }
-
       .energy__note {
         padding-top: 20px;
         font-size: $font-size-small;
+        display: none;
       }
 
       .total__container {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: stretch;
         position: relative;
+        margin-top: 16px;
 
         .total {
           display: inline-flex;
@@ -315,72 +297,106 @@
           span {
             color: $dark;
             font-weight: $font-weight-black;
-            font-size: $font-size-bigger;
+            font-size: $font-size-large;
+          }
+        }
+
+        .energy__container {
+          flex-grow: 1;
+          display: block;
+          position: relative;
+
+          .energy__info {
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+
+            .energy-price {
+              span {
+                padding-top: 8px;
+                font-family: $f__baloobha;
+                font-size: $font-size-header-1;
+              }
+            }
+
+            .energy__label {
+              font-size: $font-size-small;
+              color: $white;
+              display: flex;
+              align-items: center;
+
+              .value {
+                font-family: $f__baloobha;
+                font-size: $font-size-header-1;
+                padding-top: 6px;
+                padding-left: 8px;
+              }
+
+              .note {
+                padding-left: 2px;
+                font-size: $font-size-tiny;
+              }
+            }
+          }
+
+          .energy__bar-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+
+            .energy__point {
+              width: 24px;
+              height: 20px;
+              background-color: $c__gray;
+              position: relative;
+              @include border-radius-without-overflow(4px);
+              z-index: 1;
+              cursor: pointer;
+
+              &.active {
+                background-color: $orange;
+                @include transform(scale(1.2));
+                @include transition-duration;
+
+                p {
+                  color: $white;
+                }
+              }
+
+              p {
+                margin: 2px 0 0 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                @include transform(translateX(-50%) translateY(-50%));
+                font-family: $f__baloobha;
+                font-size: $font-size-normal;
+                color: $gray-dark;
+              }
+            }
+
+            .energy__bar, .energy__placeholder {
+              position: absolute;
+              top: 6px;
+              left: 0;
+              height: 8px;
+              @include border-radius-without-overflow(4px);
+              background-color: $orange;
+              @include transition-duration;
+            }
+
+            .energy__placeholder {
+              width: 100%;
+              background-color: $c__gray;
+            }
           }
         }
       }
 
       .checkout__container {
-        padding-top: 24px;
+        padding-top: 20px;
         text-align: right;
-      }
-
-      .energy__container {
-        flex-grow: 1;
-        display: inline-flex;
-        justify-content: space-between;
-        position: relative;
-
-        .energy-price {
-          position: absolute;
-          top: -36px;
-          right: 0;
-
-          @include mobile {
-            right: -24px;
-          }
-        }
-
-        .energy__point {
-          width: 24px;
-          height: 20px;
-          background-color: $c__gray;
-          position: relative;
-          @include border-radius-without-overflow(4px);
-          z-index: 1;
-          cursor: pointer;
-
-          &.active {
-            background-color: $orange;
-            @include transform(scale(1.2));
-            @include transition-duration;
-          }
-
-          p {
-            margin: 8px 0 0 0;
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            @include transform(translateX(-50%));
-            font-family: $f__baloobha;
-            font-size: $font-size-bigger;
-          }
-        }
-
-        .energy__bar, .energy__placeholder {
-          position: absolute;
-          top: 6px;
-          left: 0;
-          height: 8px;
-          @include border-radius-without-overflow(4px);
-          background-color: $orange;
-          @include transition-duration;
-        }
-
-        .energy__placeholder {
-          width: 100%;
-          background-color: $c__gray;
-        }
       }
 
       .material-list {
