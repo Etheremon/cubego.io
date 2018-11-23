@@ -16,7 +16,6 @@ export class ThreeBackground extends ThreeComponent {
     if (props.textureId) {
       texture = getTexture(props.textureId);
     }
-    console.log(scene.background);
     scene.background = texture;
     threeBackground.scene = scene;
     return threeBackground;
