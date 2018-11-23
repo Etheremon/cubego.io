@@ -18,12 +18,11 @@ function initContractInstance(network) {
   if (!network) network = NETWORKS.mainnet;
   contractAddress = CONTRACTS[network];
   var instances = {};
-  instances.emontInstance = getContractInstance(CONTRACTS_DATA.EMONT_ABI_ARRAY, contractAddress.EMONT_ADDRESS);
-  instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contractAddress.ETHEREMON_DATA_ADDRESS);
-  instances.cubegoPresaleInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
-  instances.cubegoEmontPaymentInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
-  instances.cubegoCoreInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
-  instances.cubegonBuilderInstance = getContractInstance(CONTRACTS_DATA.CUBEGON_BUILDER_ABI_ARRAY, contractAddress.CUBEGON_BUILDER_ADDRESS);
+  instances.emontInstance = getContractInstance(contractAddress.EMONT_ABI_ARRAY, contractAddress.EMONT_ADDRESS);
+  instances.cubegoPresaleInstance = getContractInstance(contractAddress.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
+  instances.cubegoEmontPaymentInstance = getContractInstance(contractAddress.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
+  instances.cubegoCoreInstance = getContractInstance(contractAddress.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
+  instances.cubegonBuilderInstance = getContractInstance(contractAddress.CUBEGON_BUILDER_ABI_ARRAY, contractAddress.CUBEGON_BUILDER_ADDRESS);
   return instances;
 }
 
@@ -55,6 +54,7 @@ window.addEventListener('load', function() {
           console.log('INFO_LOG|running_on_main_net.');
           break;
         case "2":
+          currentNetwork = NETWORKS.unknown;
           console.log('INFO_LOG|running_on_deprecated_test_network.');
           break;
         case "3":
@@ -74,6 +74,7 @@ window.addEventListener('load', function() {
           console.log('INFO_LOG|running_on_kovan_net.');
           break;
         default:
+          currentNetwork = NETWORKS.unknown;
           console.log('INFO_LOG|running_on_unknown_network.' + netId);
       }
     });
@@ -85,8 +86,8 @@ window.addEventListener('load', function() {
     console.log("INFO_LOG|using_web_api");
     hasWeb3Injected = false;
     account = null;
-    // currentNetwork = NETWORKS.mainnet;
-    currentNetwork = NETWORKS.rinkeby;
+    currentNetwork = NETWORKS.mainnet;
+    // currentNetwork = NETWORKS.rinkeby;
     isUsingTestNetwork = true;
     contractInstances = initContractInstance(currentNetwork);
     rpcConnected = true;

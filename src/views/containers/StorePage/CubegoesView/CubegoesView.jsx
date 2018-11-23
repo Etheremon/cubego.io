@@ -1,48 +1,24 @@
 import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
-import { CustomRectangle, DiscountFrame } from '../../../widgets/SVGManager/SVGManager.jsx';
+import {CustomRectangle, DiscountFrame} from '../../../widgets/SVGManager/SVGManager.jsx';
 import StoreCubegoCard from '../StoreCubegoCard/StoreCubegoCard.jsx';
-import { TextImage } from '../../../widgets/Text/Text.jsx';
+import {TextImage} from '../../../widgets/Text/Text.jsx';
 import Popup from '../../../widgets/Popup/Popup.jsx';
-import { ButtonNew } from '../../../widgets/Button/Button.jsx';
-import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx';
-import { URLS, CURRENCY } from '../../../../constants/general';
-import {CUBE_TIER, CUBE_TIER_MAP} from "../../../../constants/cubego";
+import {ButtonNew} from '../../../widgets/Button/Button.jsx';
+import {Parallelogram} from '../../../widgets/Parallelogram/Parallelogram.jsx';
+import {CURRENCY, URLS} from '../../../../constants/general';
 import * as Utils from "../../../../utils/utils";
-import { PRESALE_PACK_DISCOUNT, START_PRESALE } from '../../../../config.js';
-import { CalculateDiscountPrice } from '../../../../utils/logicUtils';
-import { PurchasePackage } from '../../../../services/transaction';
-import { addTxn } from '../../../../actions/txnAction.js';
-import { GetLoggedInUserId, GetDiscountFactor } from '../../../../reducers/selectors';
-import { PresaleActions } from '../../../../actions/presale';
+import {PRESALE_PACK_DISCOUNT, START_PRESALE} from '../../../../config.js';
+import {CalculateDiscountPrice} from '../../../../utils/logicUtils';
+import {PurchasePackage} from '../../../../services/transaction';
+import {addTxn} from '../../../../actions/txnAction.js';
+import {GetDiscountFactor, GetLoggedInUserId} from '../../../../reducers/selectors';
+import {PresaleActions} from '../../../../actions/presale';
+import {presaleCubegoes, ultimatePack} from "../../../../config";
 
 require("style-loader!./CubegoesView.scss");
 
-const ethToEmont = 1500;
-const ultimatePack = {
-  name: 'ultimate pack',
-  quantity: 200,
-  price_eth: 1.25,
-  price_emont: 1.25*ethToEmont,
-  cubes: [
-    {type: 'gold', quantity: 16, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'ice', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'silver', quantity: 18, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-    {type: 'iron', quantity: 48, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-    {type: 'stone', quantity: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-    {type: 'wood', quantity: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  ],
-};
-
-const presaleCubegoes = [
-  {pack_id: 4, name: 'gold pack', type: 'gold', quantity: 40, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 350, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 5, name: 'ice pack', type: 'ice', quantity: 45, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 6, name: 'silver pack', type: 'silver', quantity: 45, price_eth: 0.7, price_emont: 0.7*ethToEmont, power: 300, tier: CUBE_TIER[CUBE_TIER_MAP.epic].name},
-  {pack_id: 1, name: 'iron pack', type: 'iron', quantity: 120, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 55, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 2, name: 'stone pack', type: 'stone', quantity: 125, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-  {pack_id: 3, name: 'wood pack', type: 'wood', quantity: 125, price_eth: 0.4, price_emont: 0.4*ethToEmont, power: 50, tier: CUBE_TIER[CUBE_TIER_MAP.rare].name},
-];
 
 class CubegoesView extends React.Component {
   constructor(props) {
@@ -177,7 +153,7 @@ class CubegoesView extends React.Component {
                           <div className={`review-item`}>
                             <div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:
                             </div>
-                            <div className={'right'}>{`-${allStoreDiscount}%`}</div>
+                            <div className={'right'}>{`-${allStoreDiscount*100}%`}</div>
                           </div>
                           <div className={'review-item'}>
                             <div className={'left'}>{_t('total price')}:</div>

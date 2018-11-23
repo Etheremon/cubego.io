@@ -94,9 +94,30 @@
   <div id="root"></div>
 
   <!-- Bundles -->
-  <script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
-  <script src="/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
-  <script src="/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script>
+    var startFuncInterval;
+    var startFunc = function() {
+      if (!window.currentNetwork && window.location.hostname !== 'cubego.io' && window.location.hostname !== 'www.cubego.io') return;
+      window.clearInterval(startFuncInterval);
+
+      var script1 = document.createElement('script');
+      script1.src = "/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      document.body.appendChild(script1);
+
+      var script2 = document.createElement('script');
+      script2.src = "/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      document.body.appendChild(script2);
+
+      var script3 = document.createElement('script');
+      script3.src = "/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      document.body.appendChild(script3);
+    };
+    startFuncInterval = window.setInterval(startFunc, 100);
+    startFunc();
+  </script>
+  <!--<script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
+  <!--<script src="/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
+  <!--<script src="/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
   <!-- End Bundles -->
 </body>
 
