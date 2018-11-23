@@ -99,6 +99,7 @@
             margin-right: 24px;
             font-family: $f__baloobha;
             font-size: $font-size-bigger;
+
             img {
               display: block;
               height: 44px;
@@ -112,9 +113,30 @@
             span {
               z-index: 1;
               position: relative;
-              padding: 5px 36px;
+              padding-top: 8px;
+              padding-bottom: 2px;
+              width: 100px;
+              text-align: center;
               background-image: linear-gradient(to bottom, #1E84CA, #218ACC, #1963BC);
               clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            }
+
+            .user-properties__note {
+              position: absolute;
+              text-transform: lowercase;
+              right: 4px;
+              top: 100%;
+              z-index: 1;
+              font-size: $font-size-small;
+              font-weight: $font-weight-light;
+              opacity: 0;
+              @include transition-duration;
+            }
+
+            &:hover {
+              .user-properties__note {
+                opacity: 1;
+              }
             }
           }
         }

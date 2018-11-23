@@ -25,8 +25,9 @@ import { START_PRESALE } from '../../../config.js';
 
 require("style-loader!./Inventory.scss");
 
-const inventoryTabs = START_PRESALE ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}] :
-                                    [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}]
+const inventoryTabs = Utils.IsLiveServer
+  ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}]
+  : [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 
 class Inventory extends React.Component {
 
@@ -180,14 +181,16 @@ class Inventory extends React.Component {
                     {/*{userInfo ? userInfo.address : ''}*/}
                     {/*</div>*/}
                     <div className="user-properties">
-                      <div className="user-cubegoes ">
+                      <div className="user-cubegoes item">
                         <img src={require('../../../shared/img/inventory/cubego.png')}/>
                         <span>{dataUserMaterials ? dataUserMaterials.reduce((acc, item) => acc + item.available_amount , 0) : 0}</span>
+                        <div className={'user-properties__note'}>{_t('cubegoes')}</div>
                       </div>
 
-                      <div className="user-cubegons">
+                      <div className="user-cubegons item">
                         <img src={require('../../../shared/img/inventory/cubegon.png')}/>
                         <span>{userCubegons ? userCubegons.length : 0}</span>
+                        <div className={'user-properties__note'}>{_t('cubegons')}</div>
                       </div>
                     </div>
                   </div>
