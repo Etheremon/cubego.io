@@ -2,7 +2,8 @@ import * as Utils from "./utils/utils";
 import {CUBE_TIER, CUBE_TIER_MAP} from "./constants/cubego";
 
 let _currentTime = new Date();
-_currentTime.setMinutes(Math.round(_currentTime.getMinutes()/10)*10);
+
+_currentTime.setMinutes(Math.floor(_currentTime.getMinutes()/10)*10);
 
 export const PRESALE_DATE = Utils.IsLiveServer ? 'Nov 24 2018 1:00 UTC' : _currentTime.toUTCString();
 export const START_PRESALE = Date.now() > (new Date(PRESALE_DATE)).getTime();

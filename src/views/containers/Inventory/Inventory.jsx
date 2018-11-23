@@ -25,7 +25,7 @@ import { START_PRESALE } from '../../../config.js';
 
 require("style-loader!./Inventory.scss");
 
-const inventoryTabs = Utils.IsLiveServer
+const inventoryTabs = !Utils.IsLocalhost
   ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}]
   : [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 

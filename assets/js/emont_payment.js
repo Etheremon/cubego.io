@@ -25,7 +25,7 @@ function payService(tokens, type, text, p1, p2, p3, p4, p5, p6, callbackFunc, cu
   console.log("DEBUG_LOG|use_emont_pay_service|tokens,params=", tokens, p1, p2, p3, p4, p5, p6);
   callBlockchainFunction(
     contractInstances.emontInstance.payService,
-    contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS,
+    contractAddress.EMONT_ADDRESS,
     [calculateWeiFromEmont(tokens), type, text, p1, p2, p3, p4, p5, p6], callbackFunc,
     customValue || 0, customGas || 600000
   );
