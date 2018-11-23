@@ -221,11 +221,16 @@
         .item {
           flex-grow: 1;
           text-align: center;
+          width: 25%;
 
           .content {
             font-family: $f__baloobha;
             font-size: $font-size-bigger;
             text-transform: capitalize;
+            margin-bottom: 5px;
+            @include mobile {
+              font-size: $font-size-small;
+            }
           }
 
           .label {
@@ -234,12 +239,27 @@
             text-transform: capitalize;
           }
 
-          img {
-            width: 44px;
-            height: auto;
+          .image__wrapper {
+            width: 100%;
+            height: 44px;
+            position: relative;
+            margin-bottom: 5px;
+            img {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              height: 44px;
+              width: 44px;
+              transform: translate(-50%, -50%);
+
+              &.img-2 {
+                height: 120px;
+                width: 120px;
+              }
+            }
           }
 
-          &:nth-child(-n+2) {
+          &:nth-child(-n+3) {
             border-right: 1px solid $white;
           }
         }
@@ -275,6 +295,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        position: relative;
 
         .total {
           display: inline-flex;
@@ -309,6 +330,16 @@
         display: inline-flex;
         justify-content: space-between;
         position: relative;
+
+        .energy-price {
+          position: absolute;
+          top: -36px;
+          right: 0;
+
+          @include mobile {
+            right: -24px;
+          }
+        }
 
         .energy__point {
           width: 24px;

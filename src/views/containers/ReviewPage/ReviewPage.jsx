@@ -21,7 +21,9 @@ import * as Config from "../../../config";
 import * as ObjUtils from "../../../utils/objUtils";
 import {CreateModel, RegisterModel} from "../../../services/transaction";
 import {addTxn} from "../../../actions/txnAction";
-import {ENERGY_LIMIT_PRICE} from "../../../constants/cubegon";
+import {ENERGY_LIMIT_PRICE, GON_TIER} from "../../../constants/cubegon";
+import { TextImage } from '../../widgets/Text/Text.jsx';
+
 
 require("style-loader!./ReviewPage.scss");
 
@@ -143,6 +145,7 @@ class ReviewPage extends React.Component {
     const statsOverview = [
       {icon: require('../../../shared/img/inventory/cubego.png'), content: stats.total, label: 'cubego'},
       {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
+      {icon: validatedModel.stats.gonTier.img, content: validatedModel.stats.gonTier.name, label: 'tier'},
       {icon: require('../../../shared/img/inventory/stat.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
     ];
 
@@ -209,7 +212,9 @@ class ReviewPage extends React.Component {
                 <div className="stats-overview">
                   {statsOverview.map((item, idx) => (
                       <div className={'item'} key={idx}>
-                        <img src={item.icon} />
+                        <div className="image__wrapper">
+                          <img className={`img-${idx}`} src={item.icon} />
+                        </div>
                         <div className={'content'}>{item.content}</div>
                         <div className={'label'}>{_t(item.label)}</div>
                       </div>
@@ -271,6 +276,7 @@ class ReviewPage extends React.Component {
 
                 <div className="total__container">
                   <div className="energy__container">
+                    <TextImage className={'energy-price'} order={TextImage.order.REVERSE} text={ENERGY_LIMIT_PRICE[this.state.energy]} imgSource={require(`../../../shared/img/icons/icon-ether.png`)}/>
                     {Object.keys(ENERGY_LIMIT_PRICE).map((energyLimit, idx) => {
                       let numPoints = ObjUtils.GetLength(ENERGY_LIMIT_PRICE);
                       return (
