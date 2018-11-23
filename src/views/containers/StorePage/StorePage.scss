@@ -40,7 +40,7 @@
       background-color: rgb(240, 240, 240);
       text-align: right;
       @include mobile {
-        height: 320px;
+        height: 320px !important;
       }
       img {
         position: absolute;

@@ -268,28 +268,35 @@ class ReviewPage extends React.Component {
                 </table>
                 </div>
 
-                <div className="energy__label">
-                  {_t('energy')}:
-                  <div className={'value'}>{this.state.energy}</div>
-                  <div className={'note'} tooltip={_t('energy_note')} tooltip-position={'bottom'}><i className="fas fa-question-circle"/></div>
-                </div>
-
                 <div className="total__container">
                   <div className="energy__container">
-                    <TextImage className={'energy-price'} order={TextImage.order.REVERSE} text={ENERGY_LIMIT_PRICE[this.state.energy]} imgSource={require(`../../../shared/img/icons/icon-ether.png`)}/>
-                    {Object.keys(ENERGY_LIMIT_PRICE).map((energyLimit, idx) => {
-                      let numPoints = ObjUtils.GetLength(ENERGY_LIMIT_PRICE);
-                      return (
-                        <div className={`energy__point ${this.state.energy === energyLimit ? 'active' : ''}`} key={idx}
-                             onClick={() => {
-                               this.setState({energy: energyLimit, energyBarOffset: idx/(numPoints-1)});
-                             }}>
-                          <p>{energyLimit}</p>
-                        </div>
-                      );
-                    })}
-                    <div className={'energy__placeholder'}/>
-                    <div className={'energy__bar'} style={{width: `${this.state.energyBarOffset*100}%`}}/>
+
+                    <div className={'energy__info'}>
+                      <div className="energy__label">
+                        {_t('energy')}:
+                        <div className={'value'}>{this.state.energy}</div>
+                        <div className={'note'} tooltip={_t('energy_note')} tooltip-position={'bottom'}><i className="fas fa-question-circle"/></div>
+                      </div>
+
+                      <TextImage className={'energy-price'} order={TextImage.order.REVERSE} text={ENERGY_LIMIT_PRICE[this.state.energy]} imgSource={require(`../../../shared/img/icons/icon-ether.png`)}/>
+                    </div>
+
+                    <div className={'energy__bar-wrapper'}>
+                      {Object.keys(ENERGY_LIMIT_PRICE).map((energyLimit, idx) => {
+                        let numPoints = ObjUtils.GetLength(ENERGY_LIMIT_PRICE);
+                        return (
+                          <div className={`energy__point ${this.state.energy === energyLimit ? 'active' : ''}`} key={idx}
+                               onClick={() => {
+                                 this.setState({energy: energyLimit, energyBarOffset: idx/(numPoints-1)});
+                               }}>
+                            <p>{energyLimit}</p>
+                          </div>
+                        );
+                      })}
+                      <div className={'energy__placeholder'}/>
+                      <div className={'energy__bar'} style={{width: `${this.state.energyBarOffset*100}%`}}/>
+                    </div>
+
                   </div>
 
                   <div className="total">
