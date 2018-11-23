@@ -20,6 +20,8 @@ import {URLS} from "../../../../constants/general";
 import { Image } from '../../../components/Image/Image.jsx';
 import { SubscriberActions } from '../../../../actions/subscriber';
 import ReferralView from "../../Referral/ReferralView.jsx";
+import {getActiveLanguage} from "react-localize-redux"
+
 
 require("style-loader!./SignInPage.scss");
 
@@ -99,7 +101,7 @@ class SignInPage extends React.Component {
   }
 
   renderNotInstalledWallet() {
-    let {_t} = this.props;
+    let {_t, language} = this.props;
     let {subscribedResponse}= this.state;
 
     let email = this.state.email || '';
@@ -161,6 +163,10 @@ class SignInPage extends React.Component {
                         onClick={() => {Utils.OpenToshiInstallation()}} />
                   <ButtonNew label={_t('install Cipher')}
                         onClick={() => {Utils.OpenCipherInstallation()}} />
+                  {
+                    language.code === 'ja' ?  <ButtonNew label={_t('install GO!Wallet')}
+                    onClick={() => {Utils.OpenInNewTab('https://go-wallet.io/?pid=app0001&af_sub1=https://www.etheremon.com/')}} /> : null
+                  }
                 </div>
 
               </div>
@@ -339,6 +345,7 @@ const mapStateToProps = (store, props) => {
     userInfo: GetUserInfo(store, userId),
     inviteCode: Utils.ParseQueryString(props.location.search)['code'] || '',
     type: Utils.ParseQueryString(props.location.search)['type'] || '',
+    language: getActiveLanguage(store.localeReducer),
   }
 };
 

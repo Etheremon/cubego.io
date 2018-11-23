@@ -28,7 +28,6 @@ export default class AirSlash extends BaseMove {
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/scratch_01.png"), this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_scratch_01').clone();
 
     pSystem.minInitialRotation = 0;

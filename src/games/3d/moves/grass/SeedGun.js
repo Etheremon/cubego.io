@@ -75,13 +75,14 @@ export default class SeedGun extends BaseMove {
     pSystem.maxEmitPower = 0.75;
     pSystem.updateSpeed = 0.008;
     let alpha = seed.position.z;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (!isCollision) {
         if (seed.intersectsMesh(this.player.opponent.playerMesh, false)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage / this.numberOfSeeds);
           pSystem.stop();
           seed.dispose();
+          this.scene.onBeforeRenderObservable.remove(update);
         } else {
           pSystem.emitter.position = new BABYLON.Vector3(x, y, alpha);
           for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
@@ -93,7 +94,9 @@ export default class SeedGun extends BaseMove {
           alpha -= direction * 1;
         }
       }
-    });
+    };
+    this.scene.onBeforeRenderObservable.add(update);
+
   }
 
   static play(player, effects) {

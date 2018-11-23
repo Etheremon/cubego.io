@@ -35,6 +35,7 @@ import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx';
 import RankingPage from '../RankingPage/RankingPage.jsx';
 import { UserApi } from '../../../services/api/userApi.js';
 import { TIME_TO_REFRESH } from '../../../config';
+import LandingPage from '../LandingPage/LandingPage.jsx';
 
 require("style-loader!./App.scss");
 
@@ -162,6 +163,7 @@ class App extends React.Component {
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
+          <Route path={`/${URLS.LANDING_PAGE}`} component={LandingPage}/>
 
           <Route path={`/${URLS.SIGN_IN}`} component={SignInPage}/>
 

@@ -8,6 +8,13 @@
 //@import url('https://fonts.googleapis.com/css?family=Overpass:300,400,600,700,800,900');
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
 //@import url('https://fonts.googleapis.com/css?family=VT323');
+@font-face {
+  font-family: 'KOSUGIMARU';
+  font-style: normal;
+  src: local('KOSUGIMARU'),
+    url('../../styles/Fonts/KOSUGIMARU-REGULAR.TTF') format('truetype');
+}
+
 
 body {
   font-family: $f__overpass;

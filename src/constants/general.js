@@ -14,6 +14,7 @@ export const URLS = {
   PRIVACY: 'privacy',
   SIGN_IN: 'account',
   FAQ: 'faq',
+  LANDING_PAGE: 'landing-page',
 
   ABOUT_US: 'about-us',
   GUIDE: 'guide',

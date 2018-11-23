@@ -26,7 +26,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     this.updateHealthBar();
   }
 
-  static create({scene}, props) {
+  static create({scene, engine}, props) {
     let voxelPlayer = new BabylonVoxelPlayer();
     let containerMesh = BabylonMeshContainer.create({scene}, {
       name: props.name || 'voxelPlayer',
@@ -37,6 +37,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
     voxelPlayer.renderer = containerMesh;
     voxelPlayer.scene = scene;
+    voxelPlayer.engine = engine;
     voxelPlayer.createPlayerMesh(props.size, props.data, props.rotate);
     voxelPlayer.createFakeShadow();
     voxelPlayer.createHealthBar();
@@ -126,7 +127,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       context2D.clearRect(0, 0, 512, 512);
       this.hpPlane.position.y -= 1;
     });
-
   }
 
   createPlayerMesh(size, data, rotate) {

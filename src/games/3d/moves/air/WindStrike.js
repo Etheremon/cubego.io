@@ -42,8 +42,8 @@ export default class WindStrike extends BaseMove {
     pSystem.color2 = new BABYLON.Color4(0, 0, 0, 0.0);
     pSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0.0);
 
-    pSystem.minLifeTime = 0.1;
-    pSystem.maxLifeTime = 0.1;
+    pSystem.minLifeTime = 0.05;
+    pSystem.maxLifeTime = 0.05;
 
     pSystem.addSizeGradient(1, 2);
 
@@ -53,8 +53,8 @@ export default class WindStrike extends BaseMove {
     pSystem.minInitialRotation = 0;
     pSystem.maxInitialRotation = Math.PI * 2;
 
-    pSystem.minEmitPower = 2;
-    pSystem.maxEmitPower = 5;
+    pSystem.minEmitPower = 4;
+    pSystem.maxEmitPower = 10;
     pSystem.updateSpeed = 0.004;
     pSystem.addSizeGradient(0, 0.7, 0.5);
     pSystem.addSizeGradient(0.5, 1.4, 1.6);
@@ -63,25 +63,28 @@ export default class WindStrike extends BaseMove {
     pSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0);
 
-    pSystem.emitRate = 500;
+    pSystem.emitRate = 1000;
 
     pSystem.createPointEmitter(new BABYLON.Vector3(0, 8, -0.1), new BABYLON.Vector3(0, 8, 0.1));
     let alpha = emitter.z - 0.5 * direction;
 
     let isCollision = false;
 
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (!isCollision) {
         if ((direction > 0 && pSystem.emitter.z < targetPosition.z) || (direction < 0 && pSystem.emitter.z > targetPosition.z)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage);
           pSystem.stop();
+          this.scene.onBeforeRenderObservable.remove(update);
         } else {
           pSystem.emitter = new BABYLON.Vector3(0, 0, alpha);
-          alpha -= direction * 0.07;
+          alpha -= direction * 0.2 * this.player.engine.getDeltaTime() / 60;
         }
       }
-    });
+    };
+
+    this.scene.onBeforeRenderObservable.add(update);
 
     pSystem.start();
   }

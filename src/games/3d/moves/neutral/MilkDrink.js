@@ -27,11 +27,7 @@ export default class MilkDrink extends BaseMove {
     let milk = new BABYLON.Sprite("player", spriteManagerPlayer);
     let startMatrix = this.player.playerMesh.getWorldMatrix();
     let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
-    milk.playAnimation(0, 40, false, 100, () => {
-    });
-    milk.position = startPosition;
-    let time = 0;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (milk.size < 4) {
         milk.size += time;
       }
@@ -39,7 +35,13 @@ export default class MilkDrink extends BaseMove {
         milk.position.y += time * 2;
       }
       time += 0.1;
+    };
+    milk.playAnimation(0, 40, false, 100, () => {
+      this.scene.onBeforeRenderObservable.remove(update);
     });
+    milk.position = startPosition;
+    let time = 0;
+    this.scene.onBeforeRenderObservable.add(update);
   }
 
   static play(player, effects) {

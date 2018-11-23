@@ -52,6 +52,7 @@ class VoxViewerThree extends Component {
       this.tools = props.tools;
       this.hoverColor = '0x' + props.tools.color.value.color.replace('#', '');
     }
+    this.light = null;
     this.rendererObjects = [];
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -130,7 +131,7 @@ class VoxViewerThree extends Component {
   }
 
   takeScreenshot() {
-    return ThreeX.loadTexture('bg-capture', require('../../shared/img/background/background_capture.jpg')).then(()=>{
+    return ThreeX.loadTexture('bg-capture', require('../../shared/img/background/background_capture.jpg')).then(() => {
       return new Promise((resolve, reject) => {
         this.setState({
           takingScreenshot: true
@@ -206,6 +207,7 @@ class VoxViewerThree extends Component {
     if (this.boxHelper) this.boxHelper.min = min;
     if (this.boxHelper) this.boxHelper.max = max;
     this.camera.orbitControlTarget = center;
+    this.light.target = center;
   }
 
   componentDidMount() {
@@ -369,7 +371,15 @@ class VoxViewerThree extends Component {
         <OrthographicCamera lookAt={{x: 0, y: 300, z: 0}} fov={45} near={1} far={5000} ref={(ref) => {
           this.camera = ref
         }} position={{x: 1000, y: 1600, z: 2600}}/>
-        <DirectionalLight position={{x: -1000, y: 1000, z: 1000}} followCamera={true}/>
+        {/*<AmbientLight/>*/}
+        {/*<HemisphereLight position={{x: 0, y: 0, z: 0}}/>*/}
+
+        {/*<PointLight position={{x: 1000, y: 0, z: 0}}/>*/}
+        {/*<PointLight position={{x: -1000, y: 0, z: 0}}/>*/}
+
+        {/*<PointLight position={{x: 0, y: 0, z: -1000}}/>*/}
+        {/*<PointLight position={{x: 0, y: 0, z: 1000}}/>*/}
+        <DirectionalLight position={{x: -1000, y: 1000, z: 1000}} followCamera={true} ref={(ref) => this.light = ref}/>
         {!this.props.viewOnly ?
           <MeshBox size={SIZE + 1} color='ff0000' ref={(ref) => {
             this.rollOverMesh = ref;

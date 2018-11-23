@@ -47,12 +47,13 @@ export default class PyroWisp extends BaseMove {
     let emitter = this._createParticle();
     let curve = path3d.getCurve();
     let i = 0;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       emitter.position.y = curve[i].y;
       emitter.position.z = curve[i].z;
       i++;
       i = (i + 1) % (curve.length - 1);
-    });
+    };
+    this.scene.onBeforeRenderObservable.add(update);
   }
 
   showPath(path3d, size) {
@@ -81,11 +82,7 @@ export default class PyroWisp extends BaseMove {
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
     pSystem.emitter = fireBall;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    // pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), this.scene);
-    // pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
-    // pSystem.light.range = 15;
 
-    // pSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/flare.png"), this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
 
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
@@ -107,15 +104,16 @@ export default class PyroWisp extends BaseMove {
     pSystem.maxEmitPower = 0.75;
     pSystem.updateSpeed = 0.008;
     let alpha = fireBall.position.z;
-    this.player.scene.registerBeforeRender(() => {
+    const update = () => {
       if (!isCollision) {
         if (fireBall.intersectsMesh(this.player.opponent.playerMesh, false)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage / this.numberOfFireball);
           pSystem.stop();
           fireBall.dispose();
+          this.scene.onBeforeRenderObservable.remove(update);
+
         } else {
-          // pSystem.emitter.position = new BABYLON.Vector3(0, 1, alpha);
           for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
             if (pSystem.particles[i2].age >= (pSystem.particles[i2].lifeTime * 0.05)) {
               pSystem.particles[i2].size -= 0.1;
@@ -124,7 +122,9 @@ export default class PyroWisp extends BaseMove {
           alpha -= 0.2;
         }
       }
-    });
+    };
+    this.scene.onBeforeRenderObservable.add(update);
+
     pSystem.start();
     return fireBall;
   }
