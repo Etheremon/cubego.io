@@ -1,6 +1,7 @@
 @import '../../../styles/colors';
 @import '../../../styles/mixins';
 @import '../../../styles/variables';
+@import '../../../styles/fonts';
 
 .footer__wrapper {
   position: relative;
@@ -116,5 +117,28 @@
     border-image: url('../../../../shared/img/assets/wall_pattern_3.svg') 100 0 repeat;
     background-color: rgba(18, 34, 48, 1);
     color: $white95;
+  }
+
+  .footer__contracts {
+    padding: 60px 80px;
+    text-align: left;
+    @include mobile {
+      padding: 24px 16px;
+    }
+
+    .header {
+      font-family: $f__baloobha;
+      font-size: $font-size-header-2;
+      border-bottom: 1px solid $white90;
+    }
+
+    .list {
+      padding-top: 16px;
+      a {
+        display: block;
+        padding: 4px 0;
+        text-decoration: none;
+      }
+    }
   }
 }

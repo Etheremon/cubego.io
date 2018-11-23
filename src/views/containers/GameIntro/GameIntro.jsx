@@ -430,16 +430,16 @@ class GameIntro extends React.Component {
               <div className={'header--detail'}>{_t('last.4')}</div>
             </div>
             <div className={'build-your-cubegon__header'}>
-              {_t('build_your_cubegon')}
+              {_t('join_presale_build_your_cubegon')}
             </div>
 
             <ButtonNew className={'create__button'} label={_t('build_cubegon')}
                        onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
             }}/>
 
-            <ButtonNew className={'create__button'} label={_t('register for presale')}
+            <ButtonNew className={'create__button'} label={_t('join presale')}
                        color={ButtonNew.colors.BLUE}
-                       onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+                       onClick={() => {this.props.history.push(`/${URLS.STORE}`)
             }}/>
 
           </Container>

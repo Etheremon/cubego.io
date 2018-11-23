@@ -6,12 +6,16 @@ import { Container } from '../../../widgets/Container/Container.jsx';
 import { Image } from "../../Image/Image.jsx";
 import PropTypes from "prop-types";
 import {GetValues} from "../../../../utils/objUtils";
+import Popup from "../../../widgets/Popup/Popup.jsx";
 
 require("style-loader!./Footer.scss");
 
 class Footer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      openContracts: false,
+    }
   }
 
   render() {
@@ -19,6 +23,27 @@ class Footer extends React.Component {
 
     return (
       <div className={`footer__wrapper ${type}`}>
+
+        <Popup className={'footer__popup'}
+               canCloseOutside={true}
+               onUnmount={() => {this.setState({openContracts: false})}}
+               open={this.state.openContracts} >
+          <div className={'footer__contracts'}>
+            <div className={'header'}>
+              {_t('cubego contracts')}
+            </div>
+            <div className={'list'}>
+              {[
+                ['EMONT Contract', CONTRACTS[NETWORKS.mainnet].EMONT_ADDRESS],
+                ['Presale Contract', CONTRACTS[NETWORKS.mainnet].CUBEGO_PRESALE_ADDRESS],
+                ['Cubego Core Contract', CONTRACTS[NETWORKS.mainnet].CUBEGO_CORE_ADDRESS],
+              ].map((item, idx) => (
+                <a key={idx} href={`https://etherscan.io/address/${item[1]}`} target={'_blank'}>{item[0]}: {item[1]}</a>
+              ))}
+            </div>
+          </div>
+        </Popup>
+
         <Container size={size} className={`footer__content`}>
 
           <div className={'footer__main'}>
@@ -43,6 +68,7 @@ class Footer extends React.Component {
                   <a href="mailto:contact@cubego.io?Subject=Hello"><p>{_t('email')}</p></a>
                 </div>
                 <div className="footer__service-customer">
+                  <a onClick={() => {this.setState({openContracts: true})}}><p>{_t('contracts')}</p></a>
                   {/*<a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a>*/}
                   {/*<a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('faq')}</p></a>*/}
                 </div>

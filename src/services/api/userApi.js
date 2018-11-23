@@ -41,11 +41,12 @@ const GetUserCubegons = (userId) => {
   });
 };
 
-const SyncUserData = () => {
+const SyncUserData = (userId) => {
   return new Promise(function(resolve, reject) {
     sendPostRequest({
       url: URL_SYNC_DATA,
       data: {
+        trainer_address: userId,
       },
       resolve, reject
     });

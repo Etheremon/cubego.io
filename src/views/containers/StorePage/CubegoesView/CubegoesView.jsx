@@ -16,6 +16,8 @@ import {addTxn} from '../../../../actions/txnAction.js';
 import {GetDiscountFactor, GetLoggedInUserId} from '../../../../reducers/selectors';
 import {PresaleActions} from '../../../../actions/presale';
 import {presaleCubegoes, ultimatePack} from "../../../../config";
+import {Container} from "../../../widgets/Container/Container.jsx";
+import ReferralView from "../../Referral/ReferralView.jsx";
 
 require("style-loader!./CubegoesView.scss");
 
@@ -196,6 +198,15 @@ class CubegoesView extends React.Component {
 
     return(
       <div className="cubegoes-view__container">
+
+        <Container size={Container.sizes.SMALL}>
+          <ReferralView className={'referral-box'} />
+        </Container>
+
+        <div className={"cubegoes-view__tip_note"} onClick={() => {Utils.OpenInNewTab(_t('store_tip_link'))}}>
+          {_t('store_tip_note')}
+        </div>
+
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
             {!Utils.IsMobile ? <div className="border"><DiscountFrame text={_t('Save 5%')} /></div> : <img className={'mobile-sale-tag'} src={require('../../../../shared/img/store_cubegoes/presale/saletag.png') } /> }
             <div className="header__label">

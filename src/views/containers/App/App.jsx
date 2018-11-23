@@ -14,7 +14,7 @@ import Footer from '../../components/bars/Footer/Footer.jsx'
 import {URLS} from "../../../constants/general";
 import {ModelEditor} from "../ModelEditor/ModelEditor.jsx";
 import ComingSoon from '../../components/ComingSoon/ComingSoon.jsx';
-import {GetLocalizationData} from '../../../reducers/selectors';
+import {GetLocalizationData, GetLoggedInUserId} from '../../../reducers/selectors';
 import Loading from '../../components/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
@@ -39,11 +39,6 @@ import LandingPage from '../LandingPage/LandingPage.jsx';
 
 require("style-loader!./App.scss");
 
-const handleSyncData = () => {
-    UserApi.SyncUserData().then((res, rej) => {})
-    LS.SetItem(LS.Fields.timeToRefresh, Date.now())
-}
-
 class App extends React.Component {
 
   constructor(props) {
@@ -57,6 +52,8 @@ class App extends React.Component {
         func && func()
       })
     }
+
+    this.handleSyncData = this.handleSyncData.bind(this);
   }
 
   componentDidMount() {
@@ -106,17 +103,31 @@ class App extends React.Component {
         if (element) element.scrollIntoView();
       }
     };
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.userId !== nextProps.userId && nextProps.userId) {
+      this.handleSyncData(nextProps.userId);
+    }
+  }
 
-    //force sync data every TIME_TO_REFRESH miliseconds
-    let refreshTime = LS.GetItem(LS.Fields.timeToRefresh);
-    if (!refreshTime || Date.now() - refreshTime > TIME_TO_REFRESH) {
-      handleSyncData()
+  handleSyncData(userId) {
+    clearInterval(this.timeToRefresh);
+
+    let syncFunc = () => {
+      UserApi.SyncUserData(userId).then((res, rej) => {});
+      LS.SetItem(`${LS.Fields.timeToRefresh}-${userId}`, Date.now())
+    };
+
+    //force sync data every TIME_TO_REFRESH milliseconds
+    let lastSyncTime = LS.GetItem(`${LS.Fields.timeToRefresh}-${userId}`);
+    if (!lastSyncTime || Date.now() - lastSyncTime > TIME_TO_REFRESH) {
+      syncFunc();
     }
     this.timeToRefresh = setInterval(() => {
-      handleSyncData()
+      syncFunc();
     }, TIME_TO_REFRESH);
-  }
+  };
 
   componentWillUnmount() {
     window.onLoadFunctions['general-hash'] = undefined;
@@ -181,6 +192,7 @@ class App extends React.Component {
 
 const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
+  userId: GetLoggedInUserId(store),
   alreadyFetchedLocalization: GetLocalizationData(store),
 });
 

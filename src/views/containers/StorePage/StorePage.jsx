@@ -120,10 +120,6 @@ class StorePage extends React.Component {
                 Utils.handleJoinQueryURL(this.props.history.push, query, {tab: tab})
             }}/>
 
-          <Container size={Container.sizes.SMALL}>
-            <ReferralView className={'referral-box'} />
-          </Container>
-
           <Container className={'store-page__main'}>
             {
               // query.tab === storeTabs[1].key ? <CubegoesView history={this.props.history} /> : null
