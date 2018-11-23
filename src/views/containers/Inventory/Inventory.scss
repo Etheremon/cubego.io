@@ -11,9 +11,17 @@
     box-shadow: inset 0 10px 16px #238ED0;
     background-image: linear-gradient(to bottom, #52ECF5 , #2491D3);
     border-bottom: 2px solid $white;
-    display: flex;
-    justify-content: center;
-    padding: 36px 0;
+
+    .container-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include mobile {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
     .user-info {
       display: flex;
       //flex-wrap: wrap;
@@ -23,6 +31,9 @@
         border-radius: 8px;
         box-shadow: 0 5px 8px 0 #16639F;
         background-color: rgba(0, 0, 0, 0.15);
+        @include mobile {
+          display: none;
+        }
 
         .border-1 {
           border: 3px solid #194379;
@@ -59,6 +70,22 @@
           font-size: $font-size-header-1;
           color: #12314F;
           text-shadow: 0 0 3px white;
+          display: flex;
+          align-items: center;
+
+          .name-wrap {
+            margin: 0;
+            &.m--pointer {
+              text-decoration: underline;
+            }
+          }
+
+          .edit-pencil {
+            @include transform(rotate(130deg));
+            width: 24px;
+            cursor: pointer;
+            margin-top: -8px;
+          }
           // svg {
           //   position: absolute;
           //   left: 50%;
@@ -125,6 +152,8 @@
               position: absolute;
               text-transform: lowercase;
               right: 4px;
+              left: 10px;
+              text-align: center;
               top: 100%;
               z-index: 1;
               font-size: $font-size-small;
@@ -139,6 +168,35 @@
               }
             }
           }
+        }
+      }
+    }
+
+    .user-stats {
+      display: flex;
+      @include mobile {
+        margin-top: 20px;
+      }
+
+      .item {
+        text-align: center;
+        padding: 0 32px;
+        border-right: 2px solid $white80;
+        @include mobile {
+          padding: 0 16px;
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+
+        .value {
+          font-family: $f__baloobha;
+          color: $white;
+          font-size: $font-size-header-1;
+        }
+        .title {
+          color: #c0f3ff;
         }
       }
     }

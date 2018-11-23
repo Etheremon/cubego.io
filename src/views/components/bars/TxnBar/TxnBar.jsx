@@ -69,11 +69,11 @@ class TxnBar extends React.Component {
   handleValidate(currentTxnObj) {
     this.updateState({currentTxn: {...currentTxnObj,  validateErr: '', status: TxnBarState.SUBMITTING}});
     currentTxnObj.submitFunc(currentTxnObj.fields, function(data) {
-      if (data.err) {
+      if (data && data.err) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: data.err, status: TxnBarState.TO_SUBMIT}});
-      } else if (data.txn_data) {
+      } else if (data && data.txn_data) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': null, 'txn_data': data.txn_data}});
-      } else if (data.txn_hash) {
+      } else if (data && data.txn_hash) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': data.txn_hash, 'txn_data': null}});
       }
     }.bind(this));

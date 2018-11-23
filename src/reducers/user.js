@@ -16,7 +16,7 @@ const info = (state = {null: {}}, action) => {
   }
 };
 
-export const userMaterials = (state={}, action) => {
+export const userMaterials = (state={null: []}, action) => {
   switch (action.type) {
     case UserActions.LOAD_USER_CUBEGON.success.key:
       return {
@@ -32,7 +32,7 @@ export const userMaterials = (state={}, action) => {
   }
 };
 
-export const userCubegons = (state={}, action) => {
+export const userCubegons = (state={null: []}, action) => {
   switch (action.type) {
     case UserActions.LOAD_USER_CUBEGON.success.key:
       return {

@@ -21,7 +21,7 @@ import { CUBE_MATERIALS } from '../../../constants/cubego';
 import Loading from "../../components/Loading/Loading.jsx";
 import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
-import { START_PRESALE } from '../../../config.js';
+import {URLS} from "../../../constants/general";
 
 require("style-loader!./Inventory.scss");
 
@@ -138,7 +138,7 @@ class Inventory extends React.Component {
   }
 
   render() {
-    const {_t, query, userCubegons, userMaterials, userInfo} = this.props;
+    const {_t, query, userCubegons, userMaterials, userInfo, userId} = this.props;
     let dataUserMaterials;
 
     if (userMaterials) {
@@ -160,44 +160,70 @@ class Inventory extends React.Component {
 
           <div className={'inventory-page__header'}>
 
-            {userInfo && userInfo.username ?
-              <div className="inventory-header__container">
+            <div className="inventory-header__container">
+
+              <Container size={Container.sizes.NORMAL} className={'container-wrap'}>
                 <div className="user-info">
-                  <div className="avatar">
-                    <div className="border-1">
-                      <div className="border-2">
-                        {userInfo && userInfo.address ?
-                          <img
-                            src={require(`../../../shared/img/emoticons/${userInfo.address[40].charCodeAt(0) % 11}.png`)}/> : null
-                        }
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="details">
-                    <div className="name">
-                      {userInfo ? userInfo.username : ''}
-                    </div>
-                    {/*<div className="id">*/}
-                    {/*{userInfo ? userInfo.address : ''}*/}
-                    {/*</div>*/}
-                    <div className="user-properties">
-                      <div className="user-cubegoes item">
-                        <img src={require('../../../shared/img/inventory/cubego.png')}/>
-                        <span>{dataUserMaterials ? dataUserMaterials.reduce((acc, item) => acc + item.available_amount , 0) : 0}</span>
-                        <div className={'user-properties__note'}>{_t('cubegoes')}</div>
-                      </div>
-
-                      <div className="user-cubegons item">
-                        <img src={require('../../../shared/img/inventory/cubegon.png')}/>
-                        <span>{userCubegons ? userCubegons.length : 0}</span>
-                        <div className={'user-properties__note'}>{_t('cubegons')}</div>
-                      </div>
+                <div className="avatar">
+                  <div className="border-1">
+                    <div className="border-2">
+                      {userId !== undefined ?
+                        <img src={require(`../../../shared/img/emoticons/${userId ? userId[40].charCodeAt(0) % 11 : 0}.png`)}/> : null
+                      }
                     </div>
                   </div>
                 </div>
-              </div> : <div style={{height: "40px"}}/>
-            }
+
+                <div className="details">
+                  <div className="name">
+                    {userId !== null && userInfo ?
+                      <React.Fragment>
+                        <p className={'name-wrap'}>{userInfo.username || Utils.CutoffString(userId, 6)}</p>
+                        <img className={'edit-pencil'} onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}} src={require('../../../shared/img/icons/icon_pencil.png')} />
+                      </React.Fragment> :
+                      <p className={'name-wrap m--pointer'} onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)}}>{_t('sign in')}</p>
+                    }
+                  </div>
+                  {/*<div className="id">*/}
+                  {/*{userInfo ? userInfo.address : ''}*/}
+                  {/*</div>*/}
+                  <div className="user-properties">
+                    <div className="user-cubegoes item">
+                      <img src={require('../../../shared/img/inventory/cubego.png')}/>
+                      <span>{dataUserMaterials ? dataUserMaterials.reduce((acc, item) => acc + item.available_amount , 0) : 0}</span>
+                      <div className={'user-properties__note'}>{_t('cubegoes')}</div>
+                    </div>
+
+                    <div className="user-cubegons item">
+                      <img src={require('../../../shared/img/inventory/cubegon.png')}/>
+                      <span>{userCubegons ? userCubegons.length : 0}</span>
+                      <div className={'user-properties__note'}>{_t('cubegons')}</div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div className={'user-stats'}>
+                  <div className={'item'}>
+                    <div className={'value'}>0</div>
+                    <div className={'title'}>{_t('matches')}</div>
+                  </div>
+                  <div className={'item'}>
+                    <div className={'value'}>0</div>
+                    <div className={'title'}>{_t('wins')}</div>
+                  </div>
+                  <div className={'item'}>
+                    <div className={'value'}>0%</div>
+                    <div className={'title'}>{_t('win rate')}</div>
+                  </div>
+                  <div className={'item'}>
+                    <div className={'value'}>0/0</div>
+                    <div className={'title'}>{_t('rank')}</div>
+                  </div>
+                </div>
+              </Container>
+
+            </div>
 
             <TabsView tabs={inventoryTabs} centered
                       selectedTab={query.tab}
