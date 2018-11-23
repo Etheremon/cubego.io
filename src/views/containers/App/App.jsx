@@ -19,7 +19,7 @@ import Loading from '../../components/Loading/Loading.jsx';
 import ReviewPage from '../ReviewPage/ReviewPage.jsx';
 import ModelDetail from '../ModelDetail/ModelDetail.jsx';
 import {GetValues} from "../../../utils/objUtils";
-import MyCubegoes from '../MyCubegoes/MyCubegoes.jsx';
+import Inventory from '../Inventory/Inventory.jsx';
 import {AuthActions} from "../../../actions/auth";
 import SignUp from '../SignIn/SigInForm/SignInForm.jsx';
 import SignInPage from "../SignIn/SignInPage/SignInPage.jsx";
@@ -31,9 +31,18 @@ import PrivacyPage from "../PrivacyPage/PrivacyPage.jsx";
 
 import GameIntro from "../GameIntro/GameIntro.jsx";
 import {NotificationActions} from "../../../actions/notification";
+import TxnBar from '../../components/bars/TxnBar/TxnBar.jsx';
+import RankingPage from '../RankingPage/RankingPage.jsx';
+import { UserApi } from '../../../services/api/userApi.js';
+import { TIME_TO_REFRESH } from '../../../config';
 import LandingPage from '../LandingPage/LandingPage.jsx';
 
 require("style-loader!./App.scss");
+
+const handleSyncData = () => {
+    UserApi.SyncUserData().then((res, rej) => {})
+    LS.SetItem(LS.Fields.timeToRefresh, Date.now())
+}
 
 class App extends React.Component {
 
@@ -79,8 +88,10 @@ class App extends React.Component {
       if (window.account === undefined) return;
 
       if (window.account !== acc) {
-        if (acc === undefined) this.props.dispatch(AuthActions.LOGIN.init.func({userId: LS.GetItem(LS.Fields.account) || window.account}));
-          else this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account}));
+        if (acc === undefined)
+          this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account || LS.GetItem(LS.Fields.account)}));
+        else
+          this.props.dispatch(AuthActions.LOGIN.init.func({userId: window.account}));
 
         acc = window.account;
       }
@@ -95,10 +106,21 @@ class App extends React.Component {
         if (element) element.scrollIntoView();
       }
     };
+
+
+    //force sync data every TIME_TO_REFRESH miliseconds
+    let refreshTime = LS.GetItem(LS.Fields.timeToRefresh);
+    if (!refreshTime || Date.now() - refreshTime > TIME_TO_REFRESH) {
+      handleSyncData()
+    }
+    this.timeToRefresh = setInterval(() => {
+      handleSyncData()
+    }, TIME_TO_REFRESH);
   }
 
   componentWillUnmount() {
     window.onLoadFunctions['general-hash'] = undefined;
+    clearInterval(this.timeToRefresh)
   }
 
   render () {
@@ -132,11 +154,12 @@ class App extends React.Component {
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
 
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
-          <Route path={`/${URLS.CUBEGONS}`} component={Utils.IsLiveServer ? ComingSoon : MyCubegoes}/>
+          <Route path={`/${URLS.INVENTORY}`} component={Utils.IsLiveServer ? ComingSoon : Inventory}/>
 
           <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
+          <Route path={`/${URLS.RANKING}`} component={RankingPage}/>
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
@@ -150,7 +173,7 @@ class App extends React.Component {
           <Route component={Home}/>
         </Switch>
 
-        {/*<TxnBar/>*/}
+        <TxnBar/>
       </div>
     )
   }

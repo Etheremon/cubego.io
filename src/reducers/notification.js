@@ -1,6 +1,7 @@
 import {combineReducers} from "redux";
 import * as ObjUtils from "../utils/objUtils";
 import {NotificationActions} from "../actions/notification";
+import { IsLiveServer } from "../utils/utils";
 
 const notification = (state = {}, action) => {
   switch (action.type) {
@@ -22,7 +23,10 @@ const notification = (state = {}, action) => {
       if (json['feed'] && json['feed'].entry.length) {
         obj['banners'] = [];
 
-        json['feed'].entry.map(entryObj => {
+        json['feed'].entry.forEach(entryObj => {
+          const justForTest = entryObj['env']['$t'] === 'test';
+          if (justForTest && IsLiveServer) return;
+
           if (entryObj['key']['$t'] === 'banner_home') {
             obj.banners_home.push(ObjUtils.CloneWithValueModify({
               ...entryObj

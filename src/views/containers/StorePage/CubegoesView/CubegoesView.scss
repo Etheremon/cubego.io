@@ -16,6 +16,10 @@
 }
 
 .cubegoes-view__container {
+  .hidden {
+    display: none;
+  }
+
   .presale-info__container {
     padding: 16px 16px 32px 16px;
     display: flex;
@@ -50,8 +54,37 @@
   .pack-view__container {
     width: 724px;
     max-width: 100%;
-
+    position: relative;
     cursor: pointer;
+
+    .border {
+      position: absolute;
+      top: -18px;
+      left: -2px;
+      bottom: -2px;
+      right: -25px;
+
+      tspan {
+        font-size: 180px;
+        text-transform: capitalize;
+      }
+
+      @include mobile {
+        top: -30px;
+        right: -15px;
+      }
+    }
+
+    .pack-parallelogram {
+      .price__container {
+        .widget__text-image {
+          span {
+            padding-top: 3px;
+          }
+        }
+      }
+    }
+
     &:hover {
       .chest__image {
         @include flip-up-down(2s);
@@ -69,9 +102,22 @@
     background: rgba(25, 49, 77, 1);
     border-radius: 5px;
     position: relative;
-    border-width: 5px;
-    border-style: solid;
-    border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
+    border-width: 0px !important;
+
+    @include mobile {
+      border-width: 5px !important;
+      border-style: solid;
+      border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
+    }
+
+    .mobile-sale-tag {
+      position: absolute;
+      top: -20px;
+      right: -16px;
+      display: block;
+      height: 100px;
+      width: auto;
+    }
 
     .pack-parallelogram {
       position: absolute;
@@ -79,6 +125,7 @@
       transform: translateX(-50%);
       bottom: -8px;
       width: 250px;
+      pointer-events: none;
     }
 
     .header__label {
@@ -87,6 +134,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       height: 50px;
+      z-index: 1;
 
       span {
         padding-top: 4px;
@@ -103,6 +151,8 @@
     .total-quantity {
       margin-top: 24px;
       font-size: $font-size-header-2;
+      position: relative;
+      z-index: 1;
     }
 
     .combo-detail__container {
@@ -185,23 +235,6 @@
     border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
     background: #15314E;
 
-    //&.epic {
-    //  border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
-    //  background: #05192C;
-    //}
-    //
-    //&.rare {
-    //  border-image: linear-gradient(to bottom right, #183345, #183345, #183345) 1;
-    //  background: #15314E;
-    //}
-    //
-    //&.pack {
-    //  background: rgba(25, 49, 77, 1);
-    //  border-width: 5px;
-    //  border-style: solid;
-    //  border-image: linear-gradient(to bottom right, #C30D46, #FFFF00, #C30D46) 1 ;
-    //}
-
     .header__container {
       position: absolute;
       top: 0;
@@ -253,12 +286,23 @@
           margin: 0 auto;
         }
 
+        .divider-line {
+          height: 1px;
+          background-color: $white70;
+          margin: 4px 26px 8px 26px;
+          box-sizing: content-box;
+        }
         .review-item {
           padding: 0 26px;
           font-family: $f__baloobha;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          position: relative;
+
+          .left {
+            text-transform: capitalize;
+          }
 
           .left {
 
@@ -312,6 +356,19 @@
               border-radius: 10px;
               padding-top: 20px;
               padding-bottom: 28px;
+
+              .sale-tag {
+                position: absolute;
+                top: -24px;
+                left: -20px;
+                height: 64px;
+                display: block;
+                width: auto;
+
+                &.tag-6 {
+                  left: -24px;
+                }
+              }
             }
           }
 
@@ -319,6 +376,7 @@
             text-align: left;
             padding-left: 4px;
             .header__label {
+              line-height: 36px;
               color: $regal_blue;
               font-size: $font-size-large;
               font-family: $f__baloobha;
@@ -356,7 +414,11 @@
             width: 105%;
             position: relative;
             left: -3px;
+            font-size: $font-size-big;
             .widget__text-image {
+              img {
+                margin-left: 3px !important;
+              }
               &.active {
                 background: linear-gradient(to bottom, #ee814e, #fb575a);
               }

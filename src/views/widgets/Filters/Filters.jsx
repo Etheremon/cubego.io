@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types";
 import * as Utils from "../../../utils/utils";
 import { Icon } from '../../components/Icon/Icon.jsx';
-import { orderBy } from '../../../utils/arrayUtils';
+import { OrderBy } from '../../../utils/arrayUtils';
 import { CUBE_TYPES } from '../../../constants/cubego';
 import { GetValues } from "../../../utils/objUtils";
 
@@ -39,13 +39,13 @@ export const FilterSort = ({_t, sortTypes, defaultSort, value, right, key}) => {
     filterFunc: (list, val) => {
       let keys = val.split(' ');
       list = list.map(e => ({...e}));
-      return orderBy(list, keys.map(key => key.slice(1)), keys.map(key => key[0] === '-' ? 'desc' : 'asc'))
+      return OrderBy(list, keys.map(key => key.slice(1)), keys.map(key => key[0] === '-' ? 'desc' : 'asc'))
     },
   }
 };
 
 export const FilterType = ({_t, key, value, right}) => {
-  let types = orderBy(GetValues(CUBE_TYPES), ['name'], ['asc']).map(k => {
+  let types = OrderBy(GetValues(CUBE_TYPES), ['name'], ['asc']).map(k => {
     return {
       value: `${k.name}`,
       label: (
@@ -65,7 +65,7 @@ export const FilterType = ({_t, key, value, right}) => {
         value: 'all',
         label: (
           <div className={'filter-cubegon-type'}>
-            <img src={require(`../../../shared/img/types/${'air'}.png`)} />
+            <img src={require(`../../../shared/img/icons/${'icon-emont'}.png`)} />
             {_t('all_types')}
           </div>
         ),
@@ -77,7 +77,7 @@ export const FilterType = ({_t, key, value, right}) => {
     value: Utils.ConvertNonNullToString(value),
     filterFunc: (cubegons, typ) => {
       if (typ === 'all') return cubegons;
-      return cubegons.filter(cubegon => cubegon.type === typ)
+      return cubegons.filter(cubegon => CUBE_TYPES[cubegon.type_id].name === typ)
     }
   }
 };

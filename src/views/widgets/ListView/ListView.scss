@@ -84,3 +84,9 @@
   margin-top: 24px;
   text-align: center;
 }
+
+.list-view__items-container {
+  &.scrollable {
+    overflow-x: auto;
+  }
+}

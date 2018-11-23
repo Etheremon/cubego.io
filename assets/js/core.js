@@ -6,7 +6,9 @@
 
 // Global variables
 var currentNetwork = '';
+var isUsingTestNetwork = false;
 var contractInstances = {};
+var contractAddress = {};
 var rpcConnected = null;
 var hasWeb3Injected = null;
 var account = undefined;
@@ -14,9 +16,14 @@ var account = undefined;
 
 function initContractInstance(network) {
   if (!network) network = NETWORKS.mainnet;
-  var contracts = CONTRACTS[network];
+  contractAddress = CONTRACTS[network];
   var instances = {};
-  instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contracts.ETHEREMON_DATA_ADDRESS);
+  instances.emontInstance = getContractInstance(CONTRACTS_DATA.EMONT_ABI_ARRAY, contractAddress.EMONT_ADDRESS);
+  instances.etheremonDataInstance = getContractInstance(CONTRACTS_DATA.ETHEREMON_DATA_ABI_ARRAY, contractAddress.ETHEREMON_DATA_ADDRESS);
+  instances.cubegoPresaleInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
+  instances.cubegoEmontPaymentInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
+  instances.cubegoCoreInstance = getContractInstance(CONTRACTS_DATA.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
+  instances.cubegonBuilderInstance = getContractInstance(CONTRACTS_DATA.CUBEGON_BUILDER_ABI_ARRAY, contractAddress.CUBEGON_BUILDER_ADDRESS);
   return instances;
 }
 
@@ -43,6 +50,7 @@ window.addEventListener('load', function() {
       switch (netId) {
         case "1":
           currentNetwork = NETWORKS.mainnet;
+          isUsingTestNetwork = false;
           contractInstances = initContractInstance(currentNetwork);
           console.log('INFO_LOG|running_on_main_net.');
           break;
@@ -56,6 +64,7 @@ window.addEventListener('load', function() {
           break;
         case "4":
           currentNetwork = NETWORKS.rinkeby;
+          isUsingTestNetwork = true;
           contractInstances = initContractInstance(currentNetwork);
           console.log('INFO_LOG|running_on_rinkeby_net.');
           break;
@@ -74,11 +83,13 @@ window.addEventListener('load', function() {
   } else {
     window.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/vZmCD1X42dFUlLRd2BtV"));
     console.log("INFO_LOG|using_web_api");
-    rpcConnected = true;
     hasWeb3Injected = false;
     account = null;
-    currentNetwork = NETWORKS.mainnet;
+    // currentNetwork = NETWORKS.mainnet;
+    currentNetwork = NETWORKS.rinkeby;
+    isUsingTestNetwork = true;
     contractInstances = initContractInstance(currentNetwork);
+    rpcConnected = true;
   }
 });
 

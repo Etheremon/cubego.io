@@ -7,10 +7,75 @@
 .cubego-card__container {
   width: 100%;
   display: inline-block;
-  border: 2px solid $regal_blue;
+  border: 2px solid #75C3F5;
   text-align: center;
   border-radius: 5px;
   position: relative;
+  font-family: $f__baloobha;
+  color: $white;
+  box-shadow: 0px 0px 8px 3px #59ADE3;
+
+  .border-1 {
+    border: 2px solid #19447C;
+    border-radius: 5px;
+  }
+
+  .border-2 {
+    border: 5px solid #C1F1FC;
+    border-radius: 5px;
+    background: #051527;
+  }
+
+  .stats {
+    background: #12314F;
+    height: 60px;
+
+    display: flex;
+    flex-direction: row;
+
+    .item {
+      color: #9DF2F1;
+      margin: 8px 0;
+      font-size: $font-size-small;
+      font-weight: $font-weight-bold;
+      font-family: $f__overpass;
+      width: 50%;
+      &:first-child {
+        border-right: 2px solid white;
+      }
+
+      .value {
+        padding-top: 4px;
+        color: $white;
+        font-size: $font-size-large;
+        font-family: $f__baloobha;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+  }
+
+  .footer {
+    position: relative;
+    height: 20px;
+  }
+
+  .type {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 44px;
+    width: calc(100% + 24px);
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: $font-size-header-1;
+    }
+  }
 
   img {
     display: block;
@@ -20,76 +85,19 @@
     z-index: 1;
   }
 
-  .background__image {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    z-index: 0;
-  }
-
   .quantity {
-    padding: 8px 0;
-    width: 100%;
-    background: $regal_blue;
-    color: $white;
-    font-size: $font-size-smaller;
-    position: relative;
-    z-index: 1;
-    span {
-      margin-left: 8px;
-      font-family: $f__baloobha;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: $font-size-header-1;
+    @include mobile {
       font-size: $font-size-large;
     }
-  }
 
-  .parallelogram__container {
-    position: relative;
-    background: $regal_blue;
-
-    .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) skewX(-20deg);
+    .fas {
+      font-size: $font-size-tiny;
       color: $white;
-      font-family: $f__baloobha;
-      font-size: $font-size-large;
+      padding-right: 2px;
     }
-
-    .main-content {
-      top: 2px;
-      position: relative;
-      transform: skewX(20deg);
-      height: 36px;
-      width: calc(100% + 16px);
-      left: -8px;
-      background: $regal_blue;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .border-layer {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      height: calc(100% - 8px);
-      width: calc(100% - 8px);
-      left: 50%;
-      top: 50%;
-      z-index: 3;
-      box-sizing: border-box;
-      border: 1px solid $white;
-    }
-
-    .shadow-layer {
-      position: absolute;
-      left: -8px;
-      width: calc(100% + 16px);
-      height: 60%;
-      background: rgba(69, 103, 120, 1);
-      clip-path: polygon(8px 0%, 100% 0, 100% 0, 0% 80%);
-      z-index: 1;
-    }
-    
   }
 }

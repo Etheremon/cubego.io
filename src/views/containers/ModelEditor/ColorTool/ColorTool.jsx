@@ -32,7 +32,7 @@ class _ColorTool extends React.Component {
       <div className={'color-tool'}>
         <div className={'color-tool__list'}>
           {ObjUtils.GetValues(options).map((c, idx) => (
-            <div className={`color-tool__cell ${value['material_id'] === c['material_id'] && value['variant_id'] === c['variant_id'] ? 'selected' : ''}`}
+            <div className={`color-tool__cell ${value['material_id'] === c['material_id'] && value['sub_material_id'] === c['sub_material_id'] ? 'selected' : ''}`}
                  key={idx} onClick={() => {this.onColorChange(c)}}>
               <img src={c.img ? c.img : require('../../../../shared/img/cubego-variants/placeholder.png')}
                    style={c.color ? {backgroundColor: `${c.color}`} : {}}/>

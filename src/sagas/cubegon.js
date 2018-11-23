@@ -3,7 +3,6 @@ import {CubegonActions} from "../actions/cubegon";
 import {GetCubegonInfo} from "../reducers/selectors";
 import {CubegonApi} from "../services/api/cubegonApi";
 
-
 export function* loadCubegonInfo({forceUpdate, gonId}) {
   let gonInfo = yield select(GetCubegonInfo, gonId);
   if (!gonInfo || forceUpdate) {

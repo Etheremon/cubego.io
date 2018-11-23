@@ -57,6 +57,10 @@ export const GetValues = (obj) => {
   return typeof(obj) === 'object' && obj !== null ? Object.keys(obj).map(key => obj[key]) : obj;
 };
 
+export const GetLength = (obj) => {
+  return Object.keys(obj).length;
+};
+
 export const ForEach = (obj, func) => {
   Object.keys(obj).forEach((key) => {
     func(key, obj[key]);
@@ -74,4 +78,4 @@ export const Map = (obj, func) => {
 
 export const ConvertToArray = (obj) => {
   return Array.isArray(obj) ? obj : obj !== undefined && obj !== null ? [obj] : [];
-}
+};

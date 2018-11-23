@@ -29,6 +29,8 @@ function* submitModel({userId, model, structure, energy, name, image, callbackFu
   if (!userId) userId = yield select(GetLoggedInUserId);
   userId = userId || '0xf65e814c5150738c9b0a10df5328322a2b7af95a';
 
+  console.log("Asdfasdf", image);
+
   if (!structure) structure = ModelUtils.GetStructure(model);
   if (image) image = image.split(',')[1];
 

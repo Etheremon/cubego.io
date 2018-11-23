@@ -1,4 +1,4 @@
-export const orderBy = (array, identity, order) => {
+export const OrderBy = (array, identity, order) => {
 
   const compare = (a, b, order) => {
     if (a > b) {
@@ -19,4 +19,9 @@ export const orderBy = (array, identity, order) => {
     }
     return 0
   })
+}
+
+export const Filter = (arr, func) => {
+  if (!Array.isArray(arr)) return arr;
+  return arr.filter(func)
 }

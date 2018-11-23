@@ -16,10 +16,11 @@
     position: relative;
 
     .bar {
+      //overflow-x: auto;
       display: flex;
       margin: 32px -8px 0 -8px;
       justify-content: space-between;
-      @include mobile {
+      @include not-computer {
         overflow-x: auto;
         width: 100%;
         margin: 32px 0 0 0;
@@ -100,6 +101,9 @@
         span {
           font-weight: $font-weight-black;
           font-size: $font-size-bigger;
+          span {
+            font-size: $font-size-normal;
+          }
         }
       }
 
@@ -224,6 +228,29 @@
     .model-editor__3d {
       background-color: #354662;
       position: relative;
+
+      .model-editor__model-error {
+        z-index: 2;
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 60px;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+
+        img {
+          height: 24px;
+          padding-right: 4px;
+        }
+        p {
+          margin: 0;
+          text-align: left;
+          font-size: $font-size-normal;
+        }
+      }
 
       .model-editor__3d-capture {
         position: absolute;

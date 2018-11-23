@@ -184,6 +184,7 @@
   }
 
   .model-stats {
+    max-width: 100%;
     flex-grow: 1;
     height: 100%;
     border: 1px dashed $white;
@@ -200,7 +201,7 @@
     background-origin: border-box;
 
     .overview__header {
-      color: $dark;
+      color: $white;
       text-transform: uppercase;
       font-weight: $font-weight-black;
       font-size: $font-size-small;
@@ -247,7 +248,7 @@
       .energy__label {
         margin-top: 16px;
         font-size: $font-size-small;
-        color: $c__text__blue-2;
+        color: $white;
         display: flex;
         align-items: center;
 
@@ -305,80 +306,59 @@
 
       .energy__container {
         flex-grow: 1;
-        display: inline-block;
+        display: inline-flex;
+        justify-content: space-between;
+        position: relative;
 
-        .slider-bar__container {
+        .energy__point {
+          width: 24px;
+          height: 20px;
+          background-color: $c__gray;
           position: relative;
+          @include border-radius-without-overflow(4px);
+          z-index: 1;
+          cursor: pointer;
 
-          input[type=range] {
-            height: 12px;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-            border: 0;
-            border-radius: 5px;
-            overflow: visible;
-            opacity: 1;
-
-            &:hover {
-              opacity: 1;
-            }
-
-            &::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              appearance: none;
-              width: 32px;
-              height: 24px;
-              border-radius: 5px;
-              background: #f8b717;
-              cursor: pointer;
-              z-index: 1;
-            }
-            
-            &::-ms-thumb {
-              height: 37px;
-              width: 16px;
-            }
-
-            &::-moz-range-thumb {
-              width: 24px;
-              height: 37px;
-              background: #f8b717;
-              cursor: pointer;
-            }
+          &.active {
+            background-color: $orange;
+            @include transform(scale(1.2));
+            @include transition-duration;
           }
 
-          .indicator {
-            height: 24px;
-            bottom: 0;
+          p {
+            margin: 8px 0 0 0;
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            
-            .line {
-              width: 8px;
-              height: 100%;
-              background: white;
-              position: relative;
-              margin-bottom: 32px;
-              border-radius: 5px;
-
-              &.hidden {
-                background: transparent;
-              }
-
-              div {
-                position: absolute;
-                bottom: -100%;
-                left: -50%;
-                font-family: $f__baloobha;
-              }
-            }
+            top: 100%;
+            left: 50%;
+            @include transform(translateX(-50%));
+            font-family: $f__baloobha;
+            font-size: $font-size-bigger;
           }
+        }
+
+        .energy__bar, .energy__placeholder {
+          position: absolute;
+          top: 6px;
+          left: 0;
+          height: 8px;
+          @include border-radius-without-overflow(4px);
+          background-color: $orange;
+          @include transition-duration;
+        }
+
+        .energy__placeholder {
+          width: 100%;
+          background-color: $c__gray;
         }
       }
 
+      .material-list {
+        width: 100%;
+        overflow-x: auto;
+      }
       table {
         width: 100%;
+        overflow-x: auto;
         text-align: center;
         thead {
           font-size: $font-size-smaller;

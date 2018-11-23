@@ -3,10 +3,12 @@ export const URLS = {
   INTRO: 'intro',
   BUILD_GON: 'build',
   REVIEW_GON: 'review',
+  INVENTORY: 'inventory',
   CUBEGONS: 'cubegons',
   STORE: 'store',
   BATTLE: 'battle',
   MARKET: 'market',
+  RANKING: 'ranking',
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',
@@ -60,3 +62,10 @@ export const NETWORK_ERROR = '404 ERROR';
 
 /** Referral Code **/
 export const REFERRAL_EXPIRED = 24 * 60 * 60 * 1000; //ms = 24 hours
+
+/** currency **/
+
+export const CURRENCY = {
+  ETH: 'eth',
+  EMONT: 'emont',
+}

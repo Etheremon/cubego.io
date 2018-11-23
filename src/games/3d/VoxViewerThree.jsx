@@ -95,7 +95,7 @@ class VoxViewerThree extends Component {
         y: SIZE / 2 + SIZE * voxel.z - this.offsetVector.y,
         z: SIZE / 2 + SIZE * voxel.y - this.offsetVector.z
       };
-      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey} variantId={voxel.color.variant_id}
+      elements.push(<MeshBox size={SIZE} materialId={voxel.color.materialKey} variantId={voxel.color.sub_material_id}
                              ref={(ref) => this.objects.push(ref)} position={position}
                              key={`${GetCellKey(voxel.x, voxel.y, voxel.z)}`}/>);
     });

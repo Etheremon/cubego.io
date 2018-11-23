@@ -26,6 +26,7 @@ export const RoundToDecimalStr = (num, numRound) => (num ? parseFloat(parseFloat
 export const RoundToDecimalFloat = (num, numRound) => (num ? parseFloat(parseFloat(num).toFixed(numRound)) : num);
 
 export const RoundDownToDecimal = (num, numRound) => (Math.floor(num * Math.pow(10, numRound)) / Math.pow(10, numRound));
+export const RoundUpToDecimal = (num, numRound) => (Math.ceil(num * Math.pow(10, numRound)) / Math.pow(10, numRound));
 
 export const AddHeadingZero = (num, len) => {
   let str = '' + num;
@@ -51,43 +52,6 @@ export const ExtractUnixTime = (unixTime) => {
   let minutes = Math.floor((unixTime - days * 24 * 60 * 60 - hours * 60 * 60) / 60);
   let seconds = Math.floor(unixTime - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60);
   return {days, hours, minutes, seconds};
-};
-
-export const CalculateExtraGen0Stats = (create_index, earned, class_id) => {
-  if (!window.GEN0_CONFIG[class_id]) return {num_eggs: 0};
-
-  let price_origin =  window.GEN0_CONFIG[class_id]['price'];
-  let price_return = window.GEN0_CONFIG[class_id]['return'];
-  let total_bought = window.GEN0_CONFIG[class_id]['total'];
-
-  let catchPrice = undefined;
-  let numEarlyBirds = Math.round(price_origin / price_return);
-
-  // Catch Price
-  if (create_index <= numEarlyBirds) catchPrice = price_origin;
-  else catchPrice = price_origin + price_return * (create_index - numEarlyBirds);
-  catchPrice = RoundToDecimalStr(catchPrice, 6);
-
-  // Average Bought Price
-  let averagePrice;
-  if (total_bought <= numEarlyBirds)
-    averagePrice = price_origin;
-  else {
-    let lateBirds = total_bought - numEarlyBirds;
-    averagePrice = (total_bought * price_origin + price_return * lateBirds * (lateBirds + 1) / 2) / total_bought;
-  }
-
-  // Num Eggs
-  let numEggs = Math.max(0, Math.ceil(1.5 * (catchPrice - earned) / averagePrice));
-
-  // Special Case
-  if ([20, 21].includes(class_id)) numEggs = 0;
-
-  return {
-    catch_price: catchPrice,
-    num_eggs: numEggs,
-    // num_eggs: 2,
-  };
 };
 
 export const ScrollTop = () => {window.scroll(0, 0)};
@@ -197,12 +161,6 @@ export const OpenCipherInstallation = () => {
     OpenInNewTab('https://itunes.apple.com/app/cipher-browser-for-ethereum/id1294572970?ls=1&mt=8');
   else
     OpenInNewTab('https://play.google.com/store/apps/details?id=com.cipherbrowser.cipher');
-};
-
-export const PurchaseWithKyber = (mon) => {
-  OpenInNewTab(`https://widget-etheremon.knstats.com/?mode=dom&etheremonAddr=${window.ETHEREMON_WORLD_ADDRESS}`
-    +`&monsterId=${mon.class_id}&monsterName=${mon.name}&monsterPrice=${mon.priceOffer}`
-    +`&monsterAvatar=https://www.etheremon.com/assets/images/mons_origin/${mon.img}.png`);
 };
 
 export const OpenInNewTab = (url) => {
@@ -321,10 +279,11 @@ export const clamp = (value, min, max) => {
  /**
  * convert time
  */
-export const ConvertTimeUnix = (fromDay, toDay) => {
+export const ConvertTimeUnix = (fromDay, toDay, allowNegative=true) => {
   let from = new Date(fromDay);
   let to = new Date(toDay);
-  let seconds = to.getTime() - from.getTime();
+  let time = to.getTime() - from.getTime();
+  let seconds = time < 0 && allowNegative === false ? 0 : time;
   seconds = seconds / 1000;
   let days = Math.floor(seconds / (3600*24));
   seconds  -= days*3600*24;
@@ -335,3 +294,5 @@ export const ConvertTimeUnix = (fromDay, toDay) => {
   seconds = parseInt(seconds)
   return {days: days, hours: hrs, minutes: mnts, seconds: seconds};
 }
+
+export const ExtractImageBase64String = (str) => (str.split(',').length > 1 ? str.split(',')[1] : str);

@@ -13,6 +13,7 @@
   margin-bottom: 24px;
   position: relative;
   box-shadow: 0 0 10px 0 rgb(124, 163, 243);
+  border-bottom: 3px solid #0D9ADF;
 
   .group {
     display: flex;
@@ -27,6 +28,13 @@
     margin: 0 16px;
     width: 150px;
     height: 100px;
+    text-align: center;
+
+    @include mobile {
+      margin: 0 8px;
+      width: 100px;
+      height: 85px;
+    }
 
     svg {
       margin: 0 !important;
@@ -45,6 +53,10 @@
       text-transform: uppercase;
       font-family: $f__baloobha;
       font-size: $font-size-large;
+
+      @include mobile {
+        font-size: $font-size-normal;
+      }
     }
   }
   

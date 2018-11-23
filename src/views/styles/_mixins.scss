@@ -65,6 +65,12 @@ $computer-width: 992px;
   }
 }
 
+@mixin not-computer {
+  @media (max-width: #{$computer-width - 1px}) {
+    @content;
+  }
+}
+
 @mixin transition($transition) {
   -webkit-transition: $transition;
   -moz-transition: $transition;

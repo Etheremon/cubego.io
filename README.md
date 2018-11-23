@@ -7,7 +7,8 @@ voxel-web
 +- webpack.*                    webpack configs
 +- assets                       files that are served directly outside webpack & react
     +- js                       js files handling smart contract's communication
-                                & works as a portal talking to the smart contracts only (without touching the game logic)
+                                    & works as a portal talking to the smart contracts only (without touching the game logic)
+                                    & NOTE: DO NOT INCLUDE ANY GAME LOGIC, LOGIC VARIABILES HERE. USE /src/constatns AS THE SINGLE SOURCE OF LOGIC CONFIG
 +- src                          main files          
     +- app.jsx                  entry
     +- config.js                general config
@@ -22,8 +23,9 @@ voxel-web
         +- styles               all common styles
         +- widgets              all common widgets, web's general components.
     +- games                    all game-scenes come here, together with game's components.
-                                games should also include react wrappers of the games; so that the views do not have to touch
-                                game's logic
+                                    games should also include react wrappers of the games; so that the views do not have to touch
+                                    game's logic
+    +- constants                game's constants, may include logic config
     +- services                 services such as API, Web Trackers, Local Storage, etc.
     +- utils                    utility functions & logic
     +- shared                   all resource files come here                       

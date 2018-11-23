@@ -5,6 +5,7 @@ import {CloneDeep, GetValues} from "../utils/objUtils";
 import {GetCellKey} from "../utils/modelUtils";
 import {CUBE_MATERIALS, CUBE_TIER_MAP} from "../constants/cubego";
 import {GON_TIER} from "../constants/cubegon";
+import * as Config from "../config";
 
 export class ToolManager {
   constructor(props) {
@@ -136,8 +137,10 @@ export class ToolManager {
     if (!oldSpaceSize) oldSpaceSize = [0, 11];
 
     let x = modelSize[0], y = modelSize[1];
-    if (y-x+1 < 40) x -= 1;
-    if (y-x+1 < 40) y += 1;
+    // if (y-x+1 < 40) x -= 1;
+    // if (y-x+1 < 40) y += 1;
+    x -= 1;
+    y += 1;
 
     return [Math.min(x, oldSpaceSize[0]), Math.max(oldSpaceSize[1], y)];
   }
@@ -208,14 +211,15 @@ export class ToolManager {
     let typePoints = [0, 0, 0, 0, 0];
 
     ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
-      this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
-      this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
-      for (let i = 0; i <= 4; i += 1)
-        typePoints[i] += cell.color.type_points[i];
+      if (cell && !Utils.ObjIsEmpty(cell.color)) {
+        this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
+        this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
+        for (let i = 0; i <= 4; i += 1)
+          typePoints[i] += cell.color.type_points[i];
+      }
     });
 
     this._stats.type = typePoints.reduce((res, val, idx, arr) => (val > 0 && (res === -1 || arr[res] < val)) ? idx : res, -1);
-    if (this._stats.type >= 0) this._stats.type += 1;
 
     // Calculate power from points
     this._stats.power = [this._stats.total - 10, this._stats.total + 10];
@@ -227,14 +231,17 @@ export class ToolManager {
 
     ObjUtils.ForEach(this._stats.materials, (key, value) => {
       this._stats.cubeTiers[CUBE_MATERIALS[key].tier] = (this._stats.cubeTiers[CUBE_MATERIALS[key].tier] || 0) + value;
-      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0)
-        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - this._userCubes[key]);
-      else if (!CUBE_MATERIALS[key].is_for_sale && this._userCubes[key] < value) {
+
+      if (CUBE_MATERIALS[key].is_for_sale && this._stats.total_cost >= 0) {
+        this._stats.total_cost += CUBE_MATERIALS[key].price * Math.max(0, value - (this._userCubes[key] || 0));
+      }
+      else if (!CUBE_MATERIALS[key].is_for_sale && (this._userCubes[key]||0) < value) {
         this._stats.invalid_materials.push(CUBE_MATERIALS[key].name);
         this._stats.total_cost = -1;
       }
     });
-    this._stats.total_cost = Utils.RoundDownToDecimal(this._stats.total_cost, 4);
+
+    this._stats.total_cost = Utils.RoundUpToDecimal(this._stats.total_cost, 4);
     this._stats.storage = this._userCubes;
 
     // Calculate gon tier
@@ -249,13 +256,20 @@ export class ToolManager {
       this._stats.gonTier = {...GON_TIER.challenger, showPoints: Math.min(this._stats.points, GON_TIER.challenger.points[1])};
     }
 
-    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
+    if (this._stats.points >= GON_TIER.champion.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.epic] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_epic');
     } else if (this._stats.points >= GON_TIER.god.points[0] && !this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier.note = ('tier.need_legend');
     }
 
-    // this.stats.type = ;
+    this._stats.err = '';
+    if (this._userCubes && this._stats.invalid_materials.length) {
+      this._stats.err = 'err.some_invalid_materials';
+    } else if (ObjUtils.GetLength(this._stats.materials) > Config.CUBEGON_MAX_MATERIALS) {
+      this._stats.err = 'err.max_materials';
+    } else if (this._stats.total > Config.CUBEGON_MAX_CUBE) {
+      this._stats.err = 'err.max_cubes';
+    }
   }
 
   get stats() {

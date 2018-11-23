@@ -141,4 +141,13 @@
     }
 
   }
+
+  &.simplified {
+    .welcome-to {
+      display: none;
+    }
+    .signup-form__container {
+      padding-left: 0;
+    }
+  }
 }

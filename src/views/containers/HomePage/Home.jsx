@@ -14,7 +14,7 @@ import { Text } from '../../widgets/Text/Text.jsx';
 import { PageWrapper } from '../../widgets/PageWrapper/PageWrapper.jsx';
 import InviewMonitor from '../../widgets/InviewMonitor/InviewMonitor.jsx';
 import * as Utils from "../../../utils/utils";
-import {GetHomeBanners} from "../../../reducers/selectors";
+import {GetHomeBanners, GetLoggedInUserId, GetUserInfo} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {URLS, REFERRAL_EXPIRED} from "../../../constants/general";
 import * as Config from "../../../config";
@@ -106,7 +106,7 @@ class HomePage extends React.Component {
       let bannerImg = banner[`${language.code}img`] || banner[`enimg`];
       let bannerImgMobile = banner[`${language.code}imgmobile`] || banner[`enimgmobile`];
       return (
-        <div key={idx} className={'home__banner-item'}>
+        <div key={idx} className={'home__banner-item'} style={{height: banner['bannerheight'] ? `${banner['bannerheight']}px` : '400px'}}>
           <img className={'home__banner-img'} src={Utils.IsMobile ? bannerImgMobile || bannerImg : bannerImg || bannerImgMobile} />
           {btn}
         </div>
@@ -122,7 +122,7 @@ class HomePage extends React.Component {
 
   render() {
     // let {activeCube} = this.state;
-    const { _t, pathName } = this.props;
+    const { _t, pathName, userInfo } = this.props;
     // const guildGame = [
     //   {component: <img className={'guild-game'} key={'guild-game-1'} src={require('../../../shared/img/assets/model_example_1.png')}/>, text: _t('buy')} ,
     //   {component: <img className={'guild-game'} key={'guild-game-2'} src={require('../../../shared/img/assets/model_example_2.png')}/>, text: _t('build')} ,
@@ -147,16 +147,24 @@ class HomePage extends React.Component {
           </div>
           {/* end home__banner */}
 
-          <div className={'home__intro-countdown'}>
-            <p className={'presale-text'}>{_t('presale start in')}</p>
-            <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE}/>
-
-            <div className={'btns'}>
-              <ButtonNew className={'create__button'} label={_t('register for presale')}
-                         onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
-                         }}/>
-            </div>
-          </div>
+          {
+            !Config.START_PRESALE ? <div className={'home__intro-countdown'}>
+              <p className={'presale-text'}>{_t('presale start in')}</p>
+              <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE} onFinishCountdown={() => {
+                  window.location.reload()
+              }}/>
+  
+              <div className={'btns'}>
+                {
+                  userInfo && userInfo.username ? <ButtonNew className={'create__button'} label={_t('purchase now')}
+                  onClick={() => {this.props.history.push(`/${URLS.STORE}`)
+                  }}/> : <ButtonNew className={'create__button'} label={_t('register for presale')}
+                  onClick={() => {this.props.history.push(`/${URLS.SIGN_IN}`)
+                  }}/>
+                }
+              </div>
+            </div> : null
+          }
 
           <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
           <Container size={Container.sizes.NORMAL} className="home__intro" id={'intro'}>
@@ -427,7 +435,7 @@ class HomePage extends React.Component {
 const mapStateToProps = (store, props) => {
   let pathName = props.location.pathname;
   let query = Utils.ParseQueryString(props.location.search);
-
+  let userId = GetLoggedInUserId(store);
   if (query.code) {
     LS.SetItem(LS.Fields.referralCode, {expire: Date.now() + REFERRAL_EXPIRED, code: query.code});
     window.referralCode = query.code;
@@ -438,6 +446,7 @@ const mapStateToProps = (store, props) => {
     _t: getTranslate(store.localeReducer),
     banners: GetHomeBanners(store),
     language: getActiveLanguage(store.localeReducer),
+    userInfo: GetUserInfo(store, userId),
   }
 };
 

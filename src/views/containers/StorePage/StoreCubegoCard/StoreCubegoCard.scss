@@ -109,6 +109,7 @@
   }
 
   .parallelogram {
+    pointer-events: none;
     bottom: -5px;
     .price__container {
       display: flex;
@@ -117,6 +118,9 @@
         padding-top: 3px;
         &:nth-child(1) {
           border-right: 1px solid $white;
+        }
+        span {
+          padding-top: 3px;
         }
       }
     }

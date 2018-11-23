@@ -16,6 +16,36 @@ const info = (state = {null: {}}, action) => {
   }
 };
 
+export const userMaterials = (state={}, action) => {
+  switch (action.type) {
+    case UserActions.LOAD_USER_CUBEGON.success.key:
+      return {
+        ...state,
+        [action.userId]: [...action.response.materials].map(c => ({
+          ...c,
+          material_id: c['material_class'],
+          available_amount: Math.max(0, c.amount - c.pending_amount),
+        })),
+      };
+    default:
+      return state;
+  }
+};
+
+export const userCubegons = (state={}, action) => {
+  switch (action.type) {
+    case UserActions.LOAD_USER_CUBEGON.success.key:
+      return {
+        ...state,
+        [action.userId]: [...action.response.cubegons],
+      };
+    default:
+      return state;
+  }
+};
+
 export const user = combineReducers({
   info: info,
+  userMaterials,
+  userCubegons,
 });

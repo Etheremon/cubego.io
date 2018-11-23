@@ -4,6 +4,7 @@ import {getTranslate} from 'react-localize-redux'
 import { Pentagon, CustomRectangle } from '../../../widgets/SVGManager/SVGManager.jsx';
 import { TextImage } from '../../../widgets/Text/Text.jsx';
 import { Parallelogram } from '../../../widgets/Parallelogram/Parallelogram.jsx';
+import { START_PRESALE } from '../../../../config.js';
 
 require("style-loader!./StoreCubegoCard.scss");
 
@@ -20,7 +21,7 @@ class StoreCubegoCard extends React.Component {
   }
 
   render() {
-    let {_t, quantity, price, price_emont, type, name, className, power, onClick, tier} = this.props;
+    let {_t, quantity, price_eth, price_emont, type, name, className, power, onClick, tier} = this.props;
 
     return(
       <div className={`store-cubego-card__container ${className && className} ${tier}`}  onClick={() => { onClick && onClick() }}>
@@ -36,14 +37,16 @@ class StoreCubegoCard extends React.Component {
             }
           </div>
           <div className="power-score">
-            {_t('power_score')}: <span>{power}</span>/{_t('cubego')}
+            {_t('type')}: <span>{_t(tier)}</span>
           </div>
-          <Parallelogram className={'parallelogram'} children={
-            <div className="price__container">
-              <TextImage text={price} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
-              <TextImage text={price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
-            </div>
-          }/>
+          {
+            START_PRESALE ? <Parallelogram className={'parallelogram'} children={
+              <div className="price__container">
+                <TextImage text={price_eth} imgSource={require(`../../../../shared/img/icons/icon-ether.png`)}/>
+                <TextImage text={price_emont} imgSource={require(`../../../../shared/img/icons/icon-emont.png`)}/>
+              </div>
+            }/> : null
+          }
       </div>
     )
   }

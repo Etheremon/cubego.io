@@ -6,9 +6,9 @@ import {UserActions} from "../actions/user";
 export function* login({userId}) {
   if (window.isValidEtherAddress(userId) || userId === null) {
     yield put(AuthActions.LOGIN.success.func({userId}));
-
-    yield put(UserActions.LOAD_USER_INFO.init.func({}));
+    yield put(UserActions.LOAD_USER_INFO.init.func({userId}));
   } else {
+    console.warn("ERROR_LOG|login_failed|address=", userId);
     yield put(AuthActions.LOGIN.fail.func({userId, err: 'err.invalid_ether_address'}));
   }
 }
