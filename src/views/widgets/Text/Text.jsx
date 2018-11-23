@@ -34,14 +34,23 @@ Text.propTypes = {
   type: PropTypes.oneOf([...GetValues(Text.types)]),
 };
 
-export const TextImage = ({className, text, imgSource, uppercase, capitalize, onClick}) => {
+export const TextImage = ({className, text, imgSource, uppercase, capitalize, onClick, order}) => {
   return (
     <div className={`widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`}
     onClick={(e) => { e.stopPropagation();
     onClick && onClick(e)
     }}>
-      <span>{text}</span>
+      <span style={{order: `${order === TextImage.order.REVERSE ? '1' : '0'}`}}>{text}</span>
       <img src={imgSource}/>
     </div>
   )
 }
+
+TextImage.order = {
+  NORMAL: 'normal',
+  REVERSE: 'reverse',
+}
+
+TextImage.defaultProps = {
+  order: TextImage.order.NORMAL,
+};
