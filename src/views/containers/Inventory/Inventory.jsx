@@ -155,7 +155,8 @@ class Inventory extends React.Component {
 
         <div className="inventory-page__container">
       
-          <HeaderBar size={Container.sizes.NORMAL} label={_t(`inventory`)} onBackClicked={() => {this.props.history.goBack()}}/>
+          <HeaderBar size={Container.sizes.NORMAL} label={_t(`inventory`)}
+                     userInfo={userInfo} onBackClicked={() => {this.props.history.goBack()}}/>
 
           <div className={'inventory-page__header'}>
 

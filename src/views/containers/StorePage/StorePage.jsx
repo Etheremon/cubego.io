@@ -12,7 +12,7 @@ import Slider from '../../widgets/Slider/Slider.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
 import CubegoesView from './CubegoesView/CubegoesView.jsx';
 import Countdown from '../../widgets/Countdown/Countdown.jsx';
-import {GetStoreBanners} from "../../../reducers/selectors";
+import {GetLoggedInUserId, GetStoreBanners, GetUserInfo} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import * as Config from "../../../config";
@@ -100,14 +100,15 @@ class StorePage extends React.Component {
 
   
   render() {
-    const {_t, query} = this.props;
+    const {_t, query, userInfo} = this.props;
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar minifying />
 
         <div className="store-page__container">
-          <HeaderBar label={_t('official_store')} onBackClicked={() => {this.props.history.goBack()}}/>
+          <HeaderBar label={_t('official_store')}
+                     userInfo={userInfo} onBackClicked={() => {this.props.history.goBack()}}/>
 
           <div className={'store-page__banner'} id={'store'}>
             <Slider list={this.renderBanner()}/>
@@ -143,12 +144,14 @@ const mapStateToProps = (store, props) => {
   query = {
     ...query,
     tab: storeTabs.map(tab => tab.key).includes(query.tab) ? query.tab : storeTabs[0].key,
-  }
+  };
+  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
     query,
     banners: GetStoreBanners(store),
     language: getActiveLanguage(store.localeReducer),
+    userInfo: GetUserInfo(store, userId),
   }
 };
 
