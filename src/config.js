@@ -36,6 +36,7 @@ else {
 }
 
 
+// export const SERVER_URL = 'http://localhost:8000';
 export const SERVER_URL = window.currentNetwork === window.NETWORKS.rinkeby ? 'http://test.cubego.io' : 'https://www.cubego.io';
 export const IMAGE_URL = window.currentNetwork === window.NETWORKS.rinkeby ? 'http://test.cubego.io/cubego_image_test': 'https://www.cubego.io/cubego_image';
 

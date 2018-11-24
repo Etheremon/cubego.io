@@ -41,8 +41,8 @@ export const GON_TIER = {
 };
 
 export const ENERGY_LIMIT_PRICE = {
-  10: 0.1,
-  20: 0.2,
-  50: 0.4,
-  100: 0.8
+  10: 0.05,
+  20: 0.09,
+  50: 0.12,
+  100: 0.15,
 };

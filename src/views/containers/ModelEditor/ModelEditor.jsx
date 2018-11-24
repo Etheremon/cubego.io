@@ -358,7 +358,7 @@ class _ModelEditor extends React.Component {
           </div>
           <div className={'matched-gons'}>
             <div className={'matched-gon'}>
-              <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
+              <img src={LogicUtils.GetImageFromGonID(gon.id)}/>
               <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
             </div>
           </div>

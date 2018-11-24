@@ -132,7 +132,8 @@ class Inventory extends React.Component {
         page={query.page}
         handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
       />
-    } else{
+    }
+    else {
       return this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
     }
   }
