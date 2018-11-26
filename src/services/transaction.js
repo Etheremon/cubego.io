@@ -1,6 +1,7 @@
 import {URLS} from "../constants/general";
 import * as Utils from "../utils/utils";
 import {CubegonApi} from "./api/cubegonApi";
+import { ENERGY_LIMIT_PRICE } from "../constants/cubegon";
 
 
 function defaultCallbackFunction(code, data, callback, successCallback, failedCallback) {
@@ -166,6 +167,76 @@ export const RegisterModel = (dispatch, action, _t, {cubegon_name, cubegon_struc
   }));
 };
 
+export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, id, successCallback, failedCallback, finishCallback}) => {
+  let forceToSubmittingState, fields_order;
+  let messageToSign = `${id}-${''}`;
+
+  if (window.isEtherAccountActive()) {
+    // can sign automatically
+    forceToSubmittingState = false;
+    fields_order = ['id', 'name'];
+  } else {
+    // sign manually
+    forceToSubmittingState = false;
+    fields_order = ['id', 'name', 'message', 'signature'];
+  }
+
+  dispatch(action({
+    title: _t('update_cubegon'),
+    note: _t('update_cubegon_note'),
+    title_done: _t('updating_name'),
+    txn_done: _t('update_cubegon_done'),
+    follow_up_txt: _t('create_cubegon'),
+    follow_up_action: () => {},
+    fields_order,
+    button: _t('update cubegon'),
+    forceToSubmittingState,
+
+    fields: {
+      id: {
+        text: _t(`cubegon id`), value: id, readonly: true, type: 'text',
+      },
+      name: {
+        text: _t(`cubegon name`), value: cubegon_name, readonly: false, type: 'text',
+      },
+      message: {
+        text: _t('txn.message_to_sign'), value: messageToSign, readonly: true, type: 'text',
+      },
+      signature: {
+        text: _t('txn.signature_desc'), placeholder: _t('txn.signature_placeholder'), value: '', readonly: false, type: 'text',
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+
+      // Sending Txn
+      window.signMessage(messageToSign, address, (code, data) => {
+        let signature;
+        if (code === RESULT_CODE.SUCCESS) {
+          signature = data.signature;
+        } else if (code === RESULT_CODE.NO_ACCOUNT_DETECTED) {
+          signature = obj.signature.value;
+        } else {
+          defaultCallbackFunction(code, data, callback, successCallback, failedCallback);
+          return;
+        }
+
+        CubegonApi.UpdateCubegonName({
+          id: id,
+          name: cubegon_name,
+          timestamp: currentTimestamp,
+          signature: signature,
+        }).then(({response, error}) => apiCallbackFunction(response, error, callback, successCallback, failedCallback));
+      });
+    },
+    onFinishCallback: (data) => {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};
+
 export const CreateModel = (dispatch, action, _t, {cubegon_name, num_cubes, total_cost, txn_data, history, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
     title: _t('create_cubegon'),
@@ -201,6 +272,77 @@ export const CreateModel = (dispatch, action, _t, {cubegon_name, num_cubes, tota
       window.createCubegon(
         txn_data.ch, txn_data.cmt, txn_data.tmt, txn_data.energy_limit, txn_data.expiry_time,
         txn_data.v, txn_data.r, txn_data.s, txn_data.total_price, cbFunc);
+    },
+    onFinishCallback: function(data) {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};
+
+export const DeleteModel = (dispatch, action, _t, {tokenId, successCallback, failedCallback, finishCallback}) => {
+  dispatch(action({
+    title: _t('delete_cubegon'),
+    note: _t('delete_cubegon_note'),
+    title_done: _t('deleting_cube'),
+    txn_done: _t('detele_cubegon_done'),
+    follow_up_txt: _t('check inventory'),
+    follow_up_action: () => {history.push(`/${URLS.INVENTORY}`)},
+    fields_order: ['tokenid'],
+    button: _t('delete cubegon'),
+    forceToSubmittingState: true,
+
+    fields: {
+      tokenid: {
+        text: _t('token_id'), value: tokenId, readonly: true, type: 'text',
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+
+      // Sending Txn
+      let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
+      window.destroyCubegon(
+        tokenId, cbFunc
+      );
+    },
+    onFinishCallback: function(data) {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};
+
+export const UpdateCubegonEnergy = (dispatch, action, _t, {tokenId, energyLimit, successCallback, failedCallback, finishCallback}) => {
+  dispatch(action({
+    title: _t('top_up_energy'),
+    note: _t('top_up_energy_note'),
+    title_done: _t('topping_up_energy'),
+    txn_done: _t('top_up_energy_done'),
+    follow_up_action: () => {},
+    fields_order: ['tokenid', 'energyList'],
+    button: _t('top up energy'),
+    forceToSubmittingState: false,
+    fields: {
+      tokenid: {
+        text: _t('token_id'), value: tokenId, readonly: true, type: 'text',
+      },
+      energyList: {
+        text: _t('energy'),
+        options: Object.keys(ENERGY_LIMIT_PRICE).filter((k) => k > energyLimit).map(item => {content: item}),
+        type: 'dropdown',
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+
+      // Sending Txn
+      let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
+      window.destroyCubegon(
+        tokenId, cbFunc
+      );
     },
     onFinishCallback: function(data) {
       finishCallback && finishCallback(data);

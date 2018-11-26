@@ -125,16 +125,15 @@ class TxnBar extends React.Component {
             {/*</div>*/}
 
             {this.state.currentTxn.fields_order.map((fieldName, idx) => {
+              console.log(typeof(this.state.currentTxn.fields[fieldName].text), this.state.currentTxn.fields[fieldName].text)
               return(
                 <div className="txn-field" key={idx}>
-                  <label>{this.props._t(this.state.currentTxn.fields[fieldName].text)}</label>
+                  <label>{typeof(this.state.currentTxn.fields[fieldName].text) === 'string' ? _t(this.state.currentTxn.fields[fieldName].text) : this.state.currentTxn.fields[fieldName].text}</label>
                   { (this.state.currentTxn.fields[fieldName].type === 'dropdown' || this.state.currentTxn.fields[fieldName].type === 'buttons')
                     ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
                         ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
-                                    pointing={'bottom'} selection
-                                    options={this.state.currentTxn.fields[fieldName].options}
-                                    onChange={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
-                                    value={this.state.currentTxn.fields[fieldName].value}
+                                    list={this.state.currentTxn.fields[fieldName].options}
+                                    onClick={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
                           />
                         : this.state.currentTxn.fields[fieldName].options.map((option, idx) => (
                             this.state.currentTxn.fields[fieldName].value === option.value

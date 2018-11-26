@@ -183,7 +183,8 @@ class ReviewPage extends React.Component {
                   <p>{_t('review.image_note')}</p>
                 </div>
                 {validatedModel ?
-                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
+                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} 
+                        model={validatedModel.model} viewOnly/> : null
                 }
               </div>
 

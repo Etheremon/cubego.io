@@ -16,13 +16,27 @@ export const GetStructure = (model) => {
 };
 
 export const GetModelFromStructure = (structure) => {
-  let res = {};
+  let res = {voxels: {}, modelSize: {}, spaceSize: {}};
+  let modelSize = {x: [1000, -1000], y: [1000, -1000], z: [1000, -1000]};
   for (let i = 0; i < structure.length; i += 4) {
-    res[GetCellKey(structure[i], structure[i+1], structure[i+2])] = {
+    res.voxels[GetCellKey(structure[i], structure[i+1], structure[i+2])] = {
       x: structure[i], y: structure[i+1], z: structure[i+2],
       color: {...CUBE_MATERIALS[Math.floor(structure[i+3]/100)].sub_materials[structure[i+3]]},
     }
+
+    let arr = ['x', 'y', 'z'];
+    arr.forEach((k, idx) => {
+      modelSize[k][0] = Math.min(modelSize[k][0], structure[i + idx]);
+      modelSize[k][1] = Math.max(modelSize[k][1], structure[i + idx]);
+    })
   }
+  res.modelSize = modelSize;
+  res.spaceSize = ObjUtils.CloneDeep(modelSize);
+  res.size = {
+    x: modelSize.x[1]-modelSize.x[0]+1,
+    y: modelSize.y[1]-modelSize.y[0]+1,
+    z: modelSize.z[1]-modelSize.z[0]+1,
+  };
   return res;
 };
 

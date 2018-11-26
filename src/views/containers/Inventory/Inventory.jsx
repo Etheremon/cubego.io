@@ -22,10 +22,11 @@ import Loading from "../../components/Loading/Loading.jsx";
 import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
 import {URLS} from "../../../constants/general";
+import { Link } from 'react-router-dom';
 
 require("style-loader!./Inventory.scss");
 
-const inventoryTabs = !Utils.IsLocalhost
+const inventoryTabs = Utils.IsLiveServer
   ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}]
   : [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 
@@ -67,7 +68,9 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <CubegonCard key={idx} {...item} />
+            <Link to={`/${URLS.CUBEGONS}/${item.id}`} target={'_blank'}>
+              <CubegonCard key={idx} {...item} />
+            </Link>
           </div>
         )}
       </div>

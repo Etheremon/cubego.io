@@ -53,3 +53,21 @@ function createCubegon(ch, cmt, tmt, energyLimit, expiryTime, v, r, s, valueToSe
     valueToSend, 600000
   );
 }
+
+function destroyCubegon(tokenId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonBuilderInstance.dismantleCubegon,
+    contractAddress.CUBEGON_BUILDER_ADDRESS,
+    [tokenId], callbackFunc,
+    0, 600000
+  );
+}
+
+function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonBuilderInstance.updateCubegonEnergyLimit,
+    contractAddress.CUBEGON_BUILDER_ADDRESS,
+    [tokenId, energyLimit], callbackFunc,
+    valueToSend, 600000
+  );
+}

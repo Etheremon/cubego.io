@@ -22,7 +22,7 @@ const SubmitModel = (userId, structure, name, energy, image) => {
         trainer_address: userId,
         structure: structure,
         name: name,
-        energy_limit: energy,
+        _limit: energy,
         image: image,
       },
       resolve, reject
