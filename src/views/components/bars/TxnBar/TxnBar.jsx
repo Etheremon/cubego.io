@@ -44,10 +44,11 @@ class TxnBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.currentTxn && nextProps.currentTxn.forceToSubmittingState && this.state.currentTxn.state !== TxnBarState.SUBMITTING && this.state.currentTxn.state !== TxnBarState.DONE) {
+    if (nextProps.currentTxn && nextProps.currentTxn.forceToSubmittingState && this.state.currentTxn.status === undefined) {
       this.handleValidate(nextProps.currentTxn);
       return
     }
+
     if (!IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
       if (this.state.currentTxn) {
         this.state.currentTxn.onFinishCallback && this.state.currentTxn.onFinishCallback();

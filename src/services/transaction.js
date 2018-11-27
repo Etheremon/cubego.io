@@ -87,7 +87,7 @@ PurchasePackage.types = {
   PURCHASE_ULTIMATE_PACK_USING_EMONT: 'purchase_ultimate_pack_using_emont',
 };
 
-export const RegisterModel = (dispatch, action, _t, {cubegon_name, cubegon_structure, cubegon_image, num_cubes, energy_limit, total_cost, address, successCallback, failedCallback, finishCallback}) => {
+export const SubmitModel = (dispatch, action, _t, {cubegon_name, cubegon_structure, cubegon_image, num_cubes, energy_limit, total_cost, address, successCallback, failedCallback, finishCallback}) => {
   let forceToSubmittingState, fields_order;
   let currentTimestamp = Utils.GetCurrentUnixTime();
   let messageToSign = `cubego-create-${currentTimestamp}`;
@@ -103,14 +103,14 @@ export const RegisterModel = (dispatch, action, _t, {cubegon_name, cubegon_struc
   }
 
   dispatch(action({
-    title: _t('register_cubegon'),
-    note: _t('register_cubegon_note'),
-    title_done: _t('registering_cube'),
-    txn_done: _t('register_cubegon_done'),
-    follow_up_txt: _t('create_cubegon'),
+    title: _t('submit_cubegon'),
+    note: _t('submit_cubegon_note'),
+    title_done: _t('submitting_cube'),
+    txn_done: _t('submit_cubegon_done'),
+    follow_up_txt: _t('register_cubegon'),
     follow_up_action: () => {},
     fields_order,
-    button: _t('register cubegon'),
+    button: _t('submit cubegon'),
     forceToSubmittingState,
 
     fields: {
@@ -237,16 +237,16 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
   }));
 };
 
-export const CreateModel = (dispatch, action, _t, {retrying, cubegon_name, num_cubes, txn_data, history, successCallback, failedCallback, finishCallback}) => {
+export const RegisterModelToBlockchain = (dispatch, action, _t, {retrying, cubegon_name, num_cubes, txn_data, history, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
-    title: retrying ? _t('resubmit_cubegon') : _t('create_cubegon'),
-    note: retrying ? _t('resubmit_cubegon_note') : _t('create_cubegon_note'),
-    title_done: _t('creating_cube'),
-    txn_done: _t('creating_cubegon_done'),
+    title: retrying ? _t('re-register_cubegon') : _t('register_cubegon'),
+    note: retrying ? _t('re-register_cubegon_note') : _t('register_cubegon_note'),
+    title_done: _t('registering_cube'),
+    txn_done: _t('register_cubegon_done'),
     follow_up_txt: _t('check inventory'),
     follow_up_action: () => {history.push(`/${URLS.INVENTORY}?tab=cubegons`)},
     fields_order: ['name', 'cubes', 'energy', 'total_cost'],
-    button: retrying ? _t('resubmit_cubegon') : _t('create cubegon'),
+    button: retrying ? _t('re-register_cubegon') : _t('register_cubegon'),
     forceToSubmittingState: false,
 
     fields: {

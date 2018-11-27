@@ -5,7 +5,7 @@ import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { CustomRectangle, CubegoFooter } from '../../widgets/SVGManager/SVGManager.jsx';
 import { CUBE_TYPES } from '../../../constants/cubego.js';
 import { GetImageFromGonID } from '../../../utils/logicUtils';
-import {CreateModel} from "../../../services/transaction";
+import {RegisterModelToBlockchain} from "../../../services/transaction";
 import {addTxn} from "../../../actions/txnAction";
 import {CubegonApi} from "../../../services/api/cubegonApi";
 import withRouter from "react-router-dom/es/withRouter";
@@ -33,7 +33,7 @@ class CubegonCard extends React.Component {
 
     CubegonApi.RetryRegisterCubegon({gonId: id}).then(({response, error}) => {
       if (!error) {
-        CreateModel(this.props.dispatch, addTxn, _t, {
+        RegisterModelToBlockchain(this.props.dispatch, addTxn, _t, {
           retrying: true,
           cubegon_name: name,
           num_cubes: total_cubego,
