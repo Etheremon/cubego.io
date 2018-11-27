@@ -21,6 +21,7 @@ import { UpdateCubegonName, DeleteModel, UpdateCubegonEnergy } from '../../../se
 import { addTxn } from '../../../actions/txnAction.js';
 import { ConvertUnixToDateTime } from '../../../utils/utils.js';
 import { GON_TIER } from '../../../constants/cubegon.js';
+import {URLS} from "../../../constants/general";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -44,7 +45,7 @@ class ModelDetail extends React.Component {
   }
 
   mainViewRender() {
-    const {_t, gonInfo, gonId, userId} = this.props;
+    const {_t, gonInfo, gonId, userId, history} = this.props;
 
     if (!gonInfo) {
       return (
