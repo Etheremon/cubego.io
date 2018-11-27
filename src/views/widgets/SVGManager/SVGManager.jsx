@@ -151,3 +151,83 @@ export const DiscountFrame = ({text}) => {
         </svg>
     )
 }
+
+export const MaterialStatistics = ({material_1, material_2, material_3, material_4}) => {
+    return (
+        <svg width="100%" height="100%" viewBox="0 0 1054 1291" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+            <defs></defs>
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <g id="left" transform="translate(0.000000, 365.000000)">
+                    <polygon id="Rectangle-10" fill={material_1.fillTop} points="202.080736 80 404.161472 241.080736 202.080736 402.16 0 241.080736"></polygon>
+                    <polygon id="Path-6" fill={material_1.fillLeft} points={`0.763327361 241.158054 0.763327361 ${368.997641 + material_1.height} 202.405472 ${529.857031 + material_1.height} 202.405472 400.880243`}></polygon>
+                    <polygon id="Path-6" fill={material_1.fillRight} points={`202 ${529.698977 + material_1.height} 202 401.85939 403.642145 241 403.642145 ${369.976788 + material_1.height}`}></polygon>
+                    <text id="text-left"   fill="#000000">
+                        <tspan x="114.096191" y="49">text left</tspan>
+                    </text>
+                </g>
+                <g id="right" transform="translate(649.000000, 365.000000)">
+                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 96 404.161472 257.080736 202.080736 418.16 0 257.080736"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 257.158054 0.763327361 384.997641 202.405472 545.857031 202.405472 416.880243"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="202 545.698977 202 417.85939 403.642145 257 403.642145 385.976788"></polygon>
+                    <text id="text-right"   fill="#000000">
+                        <tspan x="95.0541992" y="49">text right</tspan>
+                    </text>
+                </g>
+                <g id="bottom" transform="translate(315.000000, 748.000000)">
+                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 1.8189894e-12 404.161472 161.080736 202.080736 322.16 0 161.080736"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 161.158054 0.763327361 288.997641 202.405472 449.857031 202.405472 320.880243"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="202 449.698977 202 321.85939 403.642145 161 403.642145 289.976788"></polygon>
+                    <text id="text-bottom"   fill="#000000">
+                        <tspan x="65.9038086" y="532">text bottom</tspan>
+                    </text>
+                </g>
+                <g id="top" transform="translate(315.000000, 0.000000)">
+                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 90 404.161472 251.080736 202.080736 412.16 0 251.080736"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 251.158054 0.763327361 378.997641 202.405472 539.857031 202.405472 410.880243"></polygon>
+                    <polygon id="Path-6" fill="#D8D8D8" points="202 539.698977 202 411.85939 403.642145 251 403.642145 379.976788"></polygon>
+                    <text id="text-top"   fill="#000000">
+                        <tspan x="111.729004" y="49">text top</tspan>
+                    </text>
+                </g>
+                <text id="text-center"   fill="#000000">
+                    <tspan x="401.135742" y="635">text center</tspan>
+                </text>
+            </g>
+        </svg>
+    )
+}
+
+MaterialStatistics.height = {
+    LEVEL_0: -127.839587,
+    LEVEL_1: -50,
+    LEVEL_3: 0,
+    LEVEL_4: 50,
+}
+
+
+MaterialStatistics.defaultProps = {
+    material_1: {
+        fillTop: '#CE3838',
+        fillLeft: '#C19595',
+        fillRight: '#314CC8',
+        height: MaterialStatistics.height.LEVEL_0,
+    },
+    material_2: {
+        fillTop: '#D8D8D8',
+        fillLeft: '#D8D8D8',
+        fillRight: '#D8D8D8',
+        height: 0,
+    },
+    material_3: {
+        fillTop: '#D8D8D8',
+        fillLeft: '#D8D8D8',
+        fillRight: '#D8D8D8',
+        height: 0,
+    },
+    material_4: {
+        fillTop: '#D8D8D8',
+        fillLeft: '#D8D8D8',
+        fillRight: '#D8D8D8',
+        height: 0,
+    },
+  };

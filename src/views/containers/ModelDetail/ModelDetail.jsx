@@ -21,6 +21,9 @@ import { UpdateCubegonName, DeleteModel, UpdateCubegonEnergy } from '../../../se
 import { addTxn } from '../../../actions/txnAction.js';
 import { ConvertUnixToDateTime } from '../../../utils/utils.js';
 import { GON_TIER } from '../../../constants/cubegon.js';
+import {URLS} from "../../../constants/general";
+import { Image } from '../../components/Image/Image.jsx';
+import { MaterialStatistics } from '../../widgets/SVGManager/SVGManager.jsx';
 
 require("style-loader!./ModelDetail.scss");
 
@@ -29,8 +32,10 @@ class ModelDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showModelCapturing: false
     };
     this.mainViewRender = this.mainViewRender.bind(this);
+    this.capturePhoto = this.capturePhoto.bind(this);
   }
 
   componentDidMount() {
@@ -43,8 +48,17 @@ class ModelDetail extends React.Component {
     }
   }
 
+  capturePhoto() {
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image().then((data) => {
+        this.imageBase64 = data;
+        this.setState({showModelCapturing: true});
+      })
+    }
+  }
+
   mainViewRender() {
-    const {_t, gonInfo, gonId, userId} = this.props;
+    const {_t, gonInfo, gonId, userId, history} = this.props;
 
     if (!gonInfo) {
       return (
@@ -71,6 +85,7 @@ class ModelDetail extends React.Component {
       {label: 'Speed', value: gonInfo.stats.speed, color: '#003366'},
     ];
     const model = GetModelFromStructure(gonInfo.structure);
+    this.modelCanvas = model;
 
     const total_stats = pieData.reduce((acc, curr) => acc + curr.value, 0)
     const tier = ConvertStatsToTier(total_stats)
@@ -80,6 +95,11 @@ class ModelDetail extends React.Component {
 
           <div className="model-detail__container">
             <div className="model-review">
+                <div className={'model-editor__3d-capture'}
+                      tooltip={_t('capture a photo')} tooltip-position={'bottom'}
+                      onClick={this.capturePhoto}>
+                  <Image img={'icon_camera'}/>
+                </div>
                 {model ?
                   <Model3D ref={(canvas) => {this.modelCanvas = canvas}}
                   model={model} viewOnly/> : null
@@ -159,7 +179,7 @@ class ModelDetail extends React.Component {
             <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
             <div className="profile__container">
               <div className={'cube-statistic'}>
-
+                <MaterialStatistics />
               </div>
               <div className="pie-chart__container">
                 <div className="pie-chart">
