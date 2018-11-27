@@ -7,7 +7,7 @@ import {hexToColor3} from "../utils";
 import {BabylonMeshContainer} from "./babylonMeshContainer";
 
 const HURT_COLOR = BABYLON.Color3.White();
-const PLAYER_SIZE = 25;
+const PLAYER_SIZE = 10;
 
 export class BabylonVoxelPlayer extends BabylonComponent {
   constructor() {
@@ -200,16 +200,11 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       this.sps = spsVoxel;
       this.playerMesh = playerMesh;
     } else {
-      let min = {x: 0, y: 0, z: 0};
-      let max = {x: 0, y: 0, z: 0};
+      let min = {x: Infinity, y: Infinity, z: Infinity};
+      let max = {x: -Infinity, y: -Infinity, z: -Infinity};
       let elements = [];
       let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
-      Object.keys(data.voxels).forEach((key) => {
-        let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
-        meshBox.dataId = key;
-
-        spsVoxel.addShape(meshBox, 1);
-        elements.push(meshBox);
+      Object.keys(data.voxels).forEach((key)=>{
         if (min.x > data.voxels[key].x) {
           min.x = data.voxels[key].x;
         }
@@ -229,6 +224,18 @@ export class BabylonVoxelPlayer extends BabylonComponent {
           max.z = data.voxels[key].z;
         }
       });
+
+      let scaling = PLAYER_SIZE / (max.x - min.x);
+      size = size * scaling;
+
+      Object.keys(data.voxels).forEach((key) => {
+        let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
+        meshBox.dataId = key;
+
+        spsVoxel.addShape(meshBox, 1);
+        elements.push(meshBox);
+      });
+
       spsVoxel.initParticles = function () {
         elements.forEach((element, idx) => {
           let voxel = data.voxels[element.dataId];
