@@ -69,7 +69,7 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <Link to={`/${URLS.CUBEGONS}/${item.id}`} target={'_blank'}>
+            <Link to={`/${URLS.CUBEGONS}/${item.id}`} target={'_self'}>
               <CubegonCard key={idx} {...item} />
             </Link>
           </div>

@@ -68,6 +68,7 @@ class ModelDetail extends React.Component {
 
     const total_stats = pieData.reduce((acc, curr) => acc + curr.value, 0)
     const tier = ConvertStatsToTier(total_stats)
+    console.log(gonInfo)
     return (
       <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>
 
@@ -202,7 +203,7 @@ class ModelDetail extends React.Component {
                         UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
                           name: gonInfo.name,
                           tokenId: gonInfo.token_id,
-                          energyLimit: gonInfo.energy_limit,
+                          energyLimit: gonInfo.used_energy,
                           successCallback: (data) => {
                             
                           },

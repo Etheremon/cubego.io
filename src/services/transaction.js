@@ -318,13 +318,12 @@ export const DeleteModel = (dispatch, action, _t, {tokenId, successCallback, fai
 };
 
 export const UpdateCubegonEnergy = (dispatch, action, _t, {name, tokenId, energyLimit, successCallback, failedCallback, finishCallback}) => {
+  console.log(energyLimit)
   dispatch(action({
     title: _t('top_up_energy'),
     note: _t('top_up_energy_note'),
     title_done: _t('topping_up_energy'),
     txn_done: _t('top_up_energy_done'),
-    follow_up_txt: _t(''),
-    follow_up_action: () => {},
     fields_order: ['name', 'energyList'],
     button: _t('top up energy'),
     forceToSubmittingState: false,
