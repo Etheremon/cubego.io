@@ -9,7 +9,7 @@ import {RegisterModelToBlockchain} from "../../../services/transaction";
 import {addTxn} from "../../../actions/txnAction";
 import {CubegonApi} from "../../../services/api/cubegonApi";
 import withRouter from "react-router-dom/es/withRouter";
-import {GON_TIER} from "../../../constants/cubegon";
+import {GON_FLAG, GON_TIER} from "../../../constants/cubegon";
 import Countdown from "../../widgets/Countdown/Countdown.jsx";
 import * as Config from "../../../config";
 
@@ -53,9 +53,10 @@ class CubegonCard extends React.Component {
   }
 
   render() {
-    const {_t, className, energy_limit, expiry_time, id, name, total_cubego, total_stats, type_id} = this.props;
+    const {_t, className, energy_limit, expiry_time, id, name, total_cubego, total_stats, type_id, flag} = this.props;
     let tierId = ConvertStatsToTier(total_stats);
 
+    console.log("asdf", this.props);
     return(
       <div className={`pending-cubegon-card__container ${className && className}`}>
         <div className="border-1">
@@ -64,12 +65,27 @@ class CubegonCard extends React.Component {
 
               <div className={'cubegon__image-wrapper'}>
                 <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
-                <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
+
+                <div className={'type__image'}
+                     tooltip={_t(CUBE_TYPES[type_id].name)}
+                     tooltip-position={'bottom'}>
+                  <img src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
+                </div>
 
                 <div className={'cubegon__badges'}>
-                  <div className={'badge__tier-wrapper'}>
+                  {flag === GON_FLAG.ORIGINAL ?
+                    <div className={'badge__origin-wrapper'}
+                         tooltip={_t('original')}
+                         tooltip-position={'bottom'}>
+                      <img src={require('../../../shared/img/badges/original.png')}/>
+                    </div> : null
+                  }
+                  <div className={'badge__tier-wrapper'}
+                       tooltip={_t(GON_TIER[tierId].name)}
+                       tooltip-position={'bottom'}>
                     <img src={GON_TIER[tierId].img} />
                   </div>
+
                   {/* ... */}
                 </div>
 

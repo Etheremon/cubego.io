@@ -5,6 +5,11 @@ export const GON_STATUS = {
   DELETED: 3,
 };
 
+export const GON_FLAG = {
+  NONE: 0,
+  ORIGINAL: 1,
+};
+
 export const GON_TIER = {
   challenger: {
     id: 0,

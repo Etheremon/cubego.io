@@ -38,17 +38,21 @@
       width: 100%;
       height: auto;
       position: relative;
-      padding-top: 0;
-      padding-bottom: 30px;
+      padding: 24px 12px 60px 12px;
+      box-sizing: border-box;
     }
 
     .type__image {
       position: absolute;
-      height: 30px;
       width: auto;
       top: 10px;
       right: 4px;
       z-index: 1;
+
+      img {
+        display: block;
+        height: 30px;
+      }
     }
 
     .cubegon__badges {
@@ -57,24 +61,31 @@
       top: 8px;
       left: 6px;
 
-      .badge__tier-wrapper {
+      .badge__tier-wrapper, .badge__origin-wrapper {
         width: 40px;
         height: 40px;
         position: relative;
-        margin-right: 4px;
+        margin-right: 2px;
         img {
-          width: 110px;
           position: absolute;
           left: 50%;
           top: 50%;
           @include transform(translateX(-50%) translateY(-50%));
+          pointer-events: none;
         }
+      }
+
+      .badge__tier-wrapper {
+        img {width: 100px;}
+      }
+      .badge__origin-wrapper {
+        img {width: 94px;}
       }
     }
 
     .cubegon__countdown-content {
       position: absolute;
-      bottom: 4px;
+      bottom: 10px;
       left: 0;
       right: 0;
       text-align: center;
@@ -106,7 +117,7 @@
     flex-direction: row;
     background: $regal_blue;
     color: $white;
-    padding: 12px 0;
+    padding: 20px 0;
     position: relative;
     z-index: 2;
 
@@ -120,7 +131,7 @@
       }
 
       .number {
-        font-size: $font-size-header-1;
+        font-size: 22px;
         font-family: $f__baloobha;
         color: rgb(160, 242, 260);
       }
@@ -153,10 +164,9 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      font-size: $font-size-header-1;
+      font-size: 22px;
       color: $white;
       font-family: $f__baloobha;
-      text-shadow: 0 0 3px white;
       padding: 0 12px 4px 12px;
       @include ellipsis;
       text-align: center;

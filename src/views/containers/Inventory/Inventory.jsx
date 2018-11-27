@@ -41,7 +41,7 @@ class Inventory extends React.Component {
     this.handleGenerateCubegonView = this.handleGenerateCubegonView.bind(this);
     this.handleGenerateCubegoView = this.handleGenerateCubegoView.bind(this);
     this.handleGeneratePendingCubegonView = this.handleGeneratePendingCubegonView.bind(this);
-    this.renderTabcontent = this.renderTabcontent.bind(this);
+    this.renderTabContent = this.renderTabContent.bind(this);
   }
 
   componentDidMount() {
@@ -111,31 +111,44 @@ class Inventory extends React.Component {
     )
   }
 
-  renderTabcontent(dataUserMaterials) {
+  renderTabContent(dataUserMaterials) {
     const {_t, query, userCubegons, userPendingCubegons,history} = this.props;
     if (query.tab !== inventoryTabs[0].key) {
       if (!userCubegons && !userPendingCubegons) {
-        return <div className="list-item__container">
-                <Loading/>
-              </div>
+        return (
+          <div className="list-item__container">
+            <Loading/>
+          </div>
+        )
       }
 
-      return <ListView
-        emptyView={<EmptyCubegonList _t={_t} history={history}/>}
-        itemList={query.tab === inventoryTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
-        listItemName={_t('cubegons')}
-        handleGenerateCardView={(cubegons) => {return query.tab === inventoryTabs[1].key ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons)}}
-        filters={[
-          FilterSearch({_t, searchFields: ['id'], value: query.search}),
-          FilterType({_t, value: query.type, right: true}),
-          FilterSort({_t, sortTypes: [
-            ['+total_cubego', _t('sort.lowest_cubegoes')],
-            ['+total_stats', _t('sort.lowest_stats')],
-          ], defaultSort: '+total_cubego', value: query.sort, right: true})
-        ]}
-        page={query.page}
-        handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
-      />
+      let isCubegonTab = query.tab === inventoryTabs[1].key;
+
+      return (
+        <React.Fragment>
+          {!isCubegonTab ?
+            <div className={'pending-note'}>
+              {_t('pending_cubegon_desc')}
+            </div> : null
+          }
+          <ListView
+            emptyView={<EmptyCubegonList _t={_t} history={history}/>}
+            itemList={query.tab === inventoryTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
+            listItemName={_t('cubegons')}
+            handleGenerateCardView={(cubegons) => (isCubegonTab ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons))}
+            filters={[
+              FilterSearch({_t, searchFields: ['id'], value: query.search}),
+              FilterType({_t, value: query.type, right: true}),
+              FilterSort({_t, sortTypes: [
+                ['+total_cubego', _t('sort.lowest_cubegoes')],
+                ['+total_stats', _t('sort.lowest_stats')],
+              ], defaultSort: '+total_cubego', value: query.sort, right: true})
+            ]}
+            page={query.page}
+            handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
+          />
+        </React.Fragment>
+      )
     }
     else {
       return this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
@@ -239,7 +252,7 @@ class Inventory extends React.Component {
 
           <Container className={'inventory-page__main'} size={Container.sizes.NORMAL}>
             {
-              this.renderTabcontent(dataUserMaterials)
+              this.renderTabContent(dataUserMaterials)
             }
           </Container>
         </div>

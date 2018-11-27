@@ -207,6 +207,14 @@
     
   }
 
+  .pending-note {
+    font-size: $font-size-medium;
+    color: $white;
+    text-align: center;
+    font-weight: $font-weight-semi-bold;
+    padding: 20px 0;
+  }
+
   .list-item__container {
     margin-top: 44px;
     display: flex;
