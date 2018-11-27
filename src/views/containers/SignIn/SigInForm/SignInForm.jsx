@@ -97,7 +97,11 @@ class SignInForm extends React.Component {
                        loading={this.state.submitting}
                        label={_t(`${type === SignInForm.types.SETTING_INFO ? 'update': 'register'}`)}
                        onClick={() => {
-                        this.setState({submitting: true});
+                        this.setState({
+                          submitting: true,
+                          submitError: null,
+                          submitSuccess: !metamask ? null : _t('signing_instruction'),
+                        });
                         this.props.dispatch(UserActions.UPDATE_USER_INFO.init.func({
                           userId: userId,
                           email: this.input_email,
