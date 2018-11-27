@@ -82,7 +82,7 @@ class ModelDetail extends React.Component {
           <div className="model-detail__container">
             <div className="model-review">
                 {model ?
-                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} 
+                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}}
                   model={model} viewOnly/> : null
                 }
             </div>
@@ -160,7 +160,7 @@ class ModelDetail extends React.Component {
             <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
             <div className="profile__container">
               <div className={'cube-statistic'}>
-                
+
               </div>
               <div className="pie-chart__container">
                 <div className="pie-chart">
@@ -183,7 +183,7 @@ class ModelDetail extends React.Component {
 
             <Text className={'detail-moves header'} type={Text.types.H2} children={_t('moves')} />
             <div className="moves__container">
-              {moves.map((item, idx) => 
+              {moves.map((item, idx) =>
                 <img key={idx} src={require('../../../shared/img/icons/icon-stats.png')} />
                 )}
             </div>
@@ -201,6 +201,7 @@ class ModelDetail extends React.Component {
 
             <div className="profile-action__container">
               <ButtonNew label={_t('view_on_battle')}
+                         onClick={()=>history.push(`/${URLS.BATTLE}/${gonId}`)}
                          className={'go-to-battle__button'} size={ButtonNew.sizes.NORMAL}/>
 
               {isOwner ?
