@@ -3,7 +3,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import {getTranslate} from 'react-localize-redux';
 
-import { Text } from '../../widgets/Text/Text.jsx';
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import withRouter from 'react-router/es/withRouter';
 import { Container } from '../../widgets/Container/Container.jsx';
@@ -22,8 +21,7 @@ import { addTxn } from '../../../actions/txnAction.js';
 import { ConvertUnixToDateTime } from '../../../utils/utils.js';
 import { GON_TIER } from '../../../constants/cubegon.js';
 import {URLS} from "../../../constants/general";
-import { Image } from '../../components/Image/Image.jsx';
-import { MaterialStatistics } from '../../widgets/SVGManager/SVGManager.jsx';
+import {MaterialStatistics} from "../../widgets/SVGManager/SVGManager.jsx";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -39,7 +37,7 @@ class ModelDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: false}));
+    this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: true}));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,37 +71,42 @@ class ModelDetail extends React.Component {
     const combatStats = [
       {icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_win, label: 'win'},
       {icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_lose, label: 'lose'},
-      {icon: require('../../../shared/img/icons/icon-stats.png'), content: `${gonInfo.used_energy}/${gonInfo.energy_limit}`, label: 'energy'},
+      {icon: require('../../../shared/img/icons/icon-stats.png'), content: `${gonInfo.energy_left}/${gonInfo.energy_limit}`, label: 'energy'},
     ];
 
-    const moves = ['icon-stats', 'icon-stats', 'icon-stats', 'icon-stats'];
-
     const pieData = [
-      {label: 'Defense', value: gonInfo.stats.defense, color: '#81d8d0'},
-      {label: 'Attack', value: gonInfo.stats.attack, color: '#52b7bd'},
-      {label: 'Health', value: gonInfo.stats.health, color: '#332216'},
-      {label: 'Speed', value: gonInfo.stats.speed, color: '#003366'},
+      {label: 'Defense', value: gonInfo.stats.defense, color: '#4395f4'},
+      {label: 'Attack', value: gonInfo.stats.attack, color: '#d9842b'},
+      {label: 'Health', value: gonInfo.stats.health, color: '#f82f45'},
+      {label: 'Speed', value: gonInfo.stats.speed, color: '#35d463'},
     ];
     const model = GetModelFromStructure(gonInfo.structure);
     this.modelCanvas = model;
 
     const total_stats = pieData.reduce((acc, curr) => acc + curr.value, 0)
-    const tier = ConvertStatsToTier(total_stats)
+    const tier = ConvertStatsToTier(total_stats);
+
+    let materialStatsData = gonInfo && gonInfo.material_count ?
+      gonInfo.material_count.map((val, k) => ({id: k, value: val})).filter(v => v.value) : {};
 
     return (
       <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>
 
           <div className="model-detail__container">
             <div className="model-review">
-                <div className={'model-editor__3d-capture'}
-                      tooltip={_t('capture a photo')} tooltip-position={'bottom'}
-                      onClick={this.capturePhoto}>
-                  <Image img={'icon_camera'}/>
-                </div>
-                {model ?
-                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}}
-                  model={model} viewOnly/> : null
-                }
+
+              {/*<div className={'model-editor__3d-capture'}*/}
+                    {/*tooltip={_t('capture a photo')} tooltip-position={'bottom'}*/}
+                    {/*onClick={this.capturePhoto}>*/}
+                {/*<Image img={'icon_camera'}/>*/}
+              {/*</div>*/}
+
+              {model ?
+                <Model3D
+                  ref={(canvas) => {this.modelCanvas = canvas}}
+                  model={model} viewOnly
+                /> : null
+              }
             </div>
 
             <div className={`model-info`}>
@@ -114,7 +117,7 @@ class ModelDetail extends React.Component {
                 <img src={require('../../../shared/img/types/earth.png')} />
               </div>
               <span>
-                <input type="text" defaultValue={gonInfo.name} size={10} onChange={() => {}} readOnly={true} />
+                <div className={'input-name'}>{gonInfo.name}</div>
 
                 {isOwner ?
                   <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
@@ -123,7 +126,9 @@ class ModelDetail extends React.Component {
                       id: gonId,
                       tokenId: gonInfo.token_id,
                       address: userId,
-                      successCallback: null,
+                      successCallback: () => {
+                        this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: true}));
+                      },
                       failedCallback: null,
                       finishCallback: (data) => {
                       },
@@ -135,7 +140,8 @@ class ModelDetail extends React.Component {
 
             {isOwner ?
               <div className="model-action">
-                <ButtonNew label={_t('dismantle')} className={'destroy__button'} size={ButtonNew.sizes.NORMAL}
+                <ButtonNew label={_t('dismantle')} className={'destroy__button'} size={ButtonNew.sizes.SMALL}
+                           color={ButtonNew.colors.GREY}
                            onClick={() => {
                              DeleteModel(this.props.dispatch, addTxn, _t, {
                                tokenId: gonInfo.token_id,
@@ -156,18 +162,18 @@ class ModelDetail extends React.Component {
           <div className="model-stats">
             <div className="owner-info">
               <div className="owner-name">
-                {`${_t('owner')}:`}:<span>{gonInfo.owner_name}</span>
+                {`${_t('owner')}:`}<span>{gonInfo.owner_name}</span>
               </div>
 
-              <div className="timestamp">
+              <div className={"id-info"}>
                 {`${_t('create_time')}:`}
                 <span>{ConvertUnixToDateTime(gonInfo.create_time)}</span>
 
-                {`${_t('patent_id')}:`}
-                <span>{gonInfo.shape_id}</span>
-
                 {`${_t('token_id')}:`}
                 <span>{gonInfo.token_id}</span>
+
+                {`${_t('patent_id')}:`}
+                <span>{gonInfo.shape_id}</span>
               </div>
 
               <div className="tier__container">
@@ -176,17 +182,19 @@ class ModelDetail extends React.Component {
 
             </div>
 
-            <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
+            <div className={'header'} children={_t('profile')} />
             <div className="profile__container">
               <div className={'cube-statistic'}>
-                <MaterialStatistics />
+                <MaterialStatistics m1={materialStatsData[0]} m2={materialStatsData[1]}
+                                    m3={materialStatsData[2]} m4={materialStatsData[3]}
+                                    _t={_t} num_cubes={gonInfo.total_cubego} />
               </div>
               <div className="pie-chart__container">
                 <div className="pie-chart">
                 {<PieChart
                   data={ pieData }
                   radius={ 100 }
-                  hole={ 15 }
+                  hole={ 24 }
                   showLabels={ true }
                   strokeWidth={ 3 }
                   stroke={ 'transparent' }
@@ -200,22 +208,26 @@ class ModelDetail extends React.Component {
               </div>
             </div>
 
-            <Text className={'detail-moves header'} type={Text.types.H2} children={_t('moves')} />
+            <div className={'header'} children={_t('moves')} />
             <div className="moves__container">
-              {moves.map((item, idx) =>
-                <img key={idx} src={require('../../../shared/img/icons/icon-stats.png')} />
-                )}
+
+              <div className={'moves__text'}>
+                {_t('no_move_yet')}
+              </div>
+              {/*{moves.map((item, idx) =>*/}
+                {/*<img key={idx} src={require('../../../shared/img/icons/icon-stats.png')} />*/}
+              {/*)}*/}
             </div>
 
-            <Text className={'detail-combat header'} type={Text.types.H2} children={_t('combat')} />
+            <div className={'header'} children={_t('combat')} />
             <div className="combat__container">
               {combatStats.map((item, idx) => (
-                    <div className={'item'} key={idx}>
-                      <img src={item.icon} />
-                      <div className={'content'}>{item.content}</div>
-                      <div className={'label'}>{_t(item.label)}</div>
-                    </div>
-                  ))}
+                <div className={'item'} key={idx}>
+                  {/*<img src={item.icon} />*/}
+                  <div className={'content'}>{item.content}</div>
+                  <div className={'label'}>{_t(item.label)}</div>
+                </div>
+              ))}
             </div>
 
             <div className="profile-action__container">
@@ -233,12 +245,12 @@ class ModelDetail extends React.Component {
               }
 
               {isOwner ?
-                <ButtonNew label={_t('top_up_energy')}
+                <ButtonNew label={_t('boost_energy')}
                            className={'top-up-energy__button'} size={ButtonNew.sizes.NORMAL} onClick={() => {
                   UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
                     name: gonInfo.name,
                     tokenId: gonInfo.token_id,
-                    energyLimit: gonInfo.used_energy,
+                    energyLimit: gonInfo.energy_limit,
                     successCallback: (data) => {
                     },
                     failedCallback: null,
@@ -260,7 +272,7 @@ class ModelDetail extends React.Component {
   render() {
     const {_t, userInfo} = this.props;
     return (
-      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
+      <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar minifying/>
 
         <div className="detail-page__container">

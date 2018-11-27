@@ -11,6 +11,7 @@ import { CustomRectangle } from "../../../widgets/SVGManager/SVGManager.jsx";
 import Loading from '../../Loading/Loading.jsx';
 import { SubBgr } from '../../../containers/HomePage/SubBgr/SubBgr.jsx';
 import RegisterPopup from "../../../containers/SignIn/RegisterPopup/RegisterPopup.jsx";
+import {CloneDeep} from "../../../../utils/objUtils";
 
 require("style-loader!./TxnBar.scss");
 
@@ -34,7 +35,7 @@ class TxnBar extends React.Component {
     this.updateState = this.updateState.bind(this);
 
     this.state = {
-      currentTxn: {...this.props.currentTxn, state: TxnBarState.TO_SUBMIT},
+      currentTxn: {...this.props.currentTxn},
       toggleVar: null,
     };
     this.dropdownSelected = undefined;
@@ -47,11 +48,12 @@ class TxnBar extends React.Component {
     }
 
     if (!ObjUtils.IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
+
       if (this.state.currentTxn) {
         this.state.currentTxn.onFinishCallback && this.state.currentTxn.onFinishCallback();
       }
       this.updateState({
-        currentTxn: {...nextProps.currentTxn, status: nextProps.currentTxn ? TxnBarState.TO_SUBMIT : null},
+        currentTxn: {...CloneDeep(nextProps.currentTxn), status: nextProps.currentTxn ? TxnBarState.TO_SUBMIT : null},
       });
     }
   }
@@ -68,7 +70,7 @@ class TxnBar extends React.Component {
   }
 
   handleValidate(currentTxnObj) {
-    this.updateState({currentTxn: {...currentTxnObj,  validateErr: '', status: TxnBarState.SUBMITTING}});
+    this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.SUBMITTING}});
     currentTxnObj.submitFunc(currentTxnObj.fields, function(data) {
       if (data && data.err) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: data.err, status: TxnBarState.TO_SUBMIT}});
@@ -76,6 +78,8 @@ class TxnBar extends React.Component {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': null, 'txn_data': data.txn_data}});
       } else if (data && data.txn_hash) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': data.txn_hash, 'txn_data': null}});
+      } else if (data && data.api_success) {
+        this.updateState({currentTxn: {...currentTxnObj, validateErr: 'data_updated', status: TxnBarState.TO_SUBMIT}});
       }
     }.bind(this));
   }
@@ -100,7 +104,7 @@ class TxnBar extends React.Component {
   }
 
   handleOnInputChange(e, field) {
-    this.state.currentTxn.fields[field].value = e.target;
+    this.state.currentTxn.fields[field].value = e.target.value;
 
     let passiveUpdate = {};
     ObjUtils.ForEach(this.state.currentTxn.fields, (key, val) => {
@@ -146,12 +150,13 @@ class TxnBar extends React.Component {
                     ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
                         ? <Dropdown key={idx}
                                     iconDropdown={true}
+                                    emptyListText={this.state.currentTxn.fields[fieldName].emptyOption}
                                     list={this.state.currentTxn.fields[fieldName].options.map(k => {
                                       return {
                                         content: k.content,
                                         onClick: () => { 
                                           this.dropdownSelected = k.content;
-                                          this.handleOnInputChange({target: k.value}, fieldName)
+                                          this.handleOnInputChange({target: {value: k.value}}, fieldName)
                                         }
                                       }
                                     })}
@@ -183,7 +188,13 @@ class TxnBar extends React.Component {
 
             {this.state.currentTxn.status === TxnBarState.SUBMITTING
               ? <p className={'txn-msg txn-notice'}>{_t('txn_submitting_note')}</p>
-              : <p className={'txn-msg txn-error'}>{this.state.currentTxn.validateErr ? this.props._t(this.state.currentTxn.validateErr) : null}</p>
+              : <p className={'txn-msg txn-error'}>{
+                this.state.currentTxn.validateErr ? (
+                  typeof(this.state.currentTxn.validateErr) === 'string'
+                    ? this.props._t(this.state.currentTxn.validateErr)
+                    : this.state.currentTxn.validateErr
+                ): null
+              }</p>
             }
 
             <ButtonNew color={ButtonNew.colors.BLUE}

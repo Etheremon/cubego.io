@@ -105,3 +105,5 @@ export const ConvertStatsToTier = (stats) => {
     return v.stats[0] <= stats && stats <= v.stats[1];
   })[0] || undefined
 }
+
+export const VerifyLength = (text, fr, t) => (text && fr <= text.length && text.length <= t);

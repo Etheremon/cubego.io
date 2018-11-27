@@ -2,6 +2,7 @@ import {URLS} from "../constants/general";
 import * as Utils from "../utils/utils";
 import {CubegonApi} from "./api/cubegonApi";
 import { ENERGY_LIMIT_PRICE } from "../constants/cubegon";
+import {VerifyLength} from "../utils/logicUtils";
 
 
 function defaultCallbackFunction(code, data, callback, successCallback, failedCallback) {
@@ -22,10 +23,10 @@ function defaultCallbackFunction(code, data, callback, successCallback, failedCa
 
 function apiCallbackFunction(response, error, callback, successCallback, failedCallback) {
   if (error) {
-    callback(error);
+    callback({'err': error['error_message'] || 'unknown error'});
     failedCallback && failedCallback(error);
   } else {
-    callback(response);
+    callback({...response, api_success: true});
     successCallback && successCallback(response);
   }
 }
@@ -136,6 +137,10 @@ export const SubmitModel = (dispatch, action, _t, {cubegon_name, cubegon_structu
 
     submitFunc: (obj, callback) => {
       // Validating Data
+      if (!VerifyLength(obj.name.value, 4, 32)) {
+        callback({'err': _t('err.invalid_cubegon_name', {from: 4, to: 32})});
+        return;
+      }
 
       // Sending Txn
       window.signMessage(messageToSign, address, (code, data) => {
@@ -183,7 +188,6 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
 
   dispatch(action({
     title: _t('update_cubegon'),
-    note: _t('update_cubegon_note'),
     title_done: _t('updating_name'),
     txn_done: _t('update_cubegon_done'),
     follow_up_txt: _t('create_cubegon'),
@@ -194,7 +198,7 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
 
     fields: {
       id: {
-        text: _t(`cubegon id`), value: tokenId, readonly: true, type: 'text',
+        text: _t(`cubegon id`), value: id, readonly: true, type: 'text',
       },
       old_name: {
         text: _t(`cubegon old name`), value: cubegon_name, readonly: true, type: 'text',
@@ -213,6 +217,10 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
 
     submitFunc: (obj, callback) => {
       // Validating Data
+      if (!VerifyLength(obj.name.value, 4, 32)) {
+        callback({'err': _t('err.invalid_cubegon_name', {from: 4, to: 32})});
+        return;
+      }
 
       // Sending Txn
       window.signMessage(obj.message.value, address, (code, data) => {
@@ -227,8 +235,8 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
         }
 
         CubegonApi.UpdateCubegonName({
-          id: id,
-          name: cubegon_name,
+          id: parseInt(id),
+          name: obj.name.value,
           signature: signature,
         }).then(({response, error}) => apiCallbackFunction(response, error, callback, successCallback, failedCallback));
       });
@@ -321,23 +329,26 @@ export const DeleteModel = (dispatch, action, _t, {tokenId, name, successCallbac
 };
 
 export const UpdateCubegonEnergy = (dispatch, action, _t, {name, tokenId, energyLimit, successCallback, failedCallback, finishCallback}) => {
-  console.log(energyLimit)
   dispatch(action({
-    title: _t('top_up_energy'),
-    note: _t('top_up_energy_note'),
-    title_done: _t('topping_up_energy'),
-    txn_done: _t('top_up_energy_done'),
-    fields_order: ['name', 'energyList'],
+    title: _t('boost_energy'),
+    note: _t('boost_energy_note'),
+    title_done: _t('boosting_up_energy'),
+    txn_done: _t('boost_energy_done'),
+    fields_order: ['name', 'current', 'energyList'],
     button: _t('top up energy'),
     forceToSubmittingState: false,
     fields: {
       name: {
-        text: _t('name'), value: name, readonly: true, type: 'text',
+        text: _t('cubegon'), value: name, readonly: true, type: 'text',
+      },
+      current: {
+        text: _t('current energy limit'), value: energyLimit, readonly: true, type: 'text',
       },
       energyList: {
-        text: _t('energy'),
+        text: _t('new energy limit'),
         options: Object.keys(ENERGY_LIMIT_PRICE).filter((k) => k > energyLimit).map(item => { return {content: `${item} (${ENERGY_LIMIT_PRICE[item]} ETH)`, value: item} }),
         type: 'dropdown',
+        emptyOption: _t('energy_already_max'),
       },
     },
 

@@ -82,7 +82,7 @@ class Dropdown extends React.Component {
                 </div>
               ))
             : <div className={`widget__dropdown__item`}>
-                {_t('no_result')}
+                {_t(this.props.emptyListText || 'no_result')}
               </div>
           }
         </div>

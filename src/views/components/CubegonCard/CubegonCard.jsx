@@ -8,6 +8,8 @@ import { GetImageFromGonID, ConvertStatsToTier } from '../../../utils/logicUtils
 import { GON_TIER } from '../../../constants/cubegon.js';
 import { TextImage } from '../../widgets/Text/Text.jsx';
 import {GON_FLAG} from "../../../constants/cubegon";
+import {addTxn} from "../../../actions/txnAction";
+import {UpdateCubegonEnergy} from "../../../services/transaction";
 
 
 require("style-loader!./CubegonCard.scss");
@@ -110,13 +112,25 @@ class CubegonCard extends React.Component {
                       </div>
                     </div>
                 <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
-                <ButtonNew size={ButtonNew.sizes.NORMAL} className={'energy'}
-                           label={(
-                             <div className={'energy-btn'}>
-                               <img src={require(`../../../shared/img/inventory/energy-icon.png`)}/>
-                               {energy_left}/{energy_limit} +
-                             </div>
-                           )} onClick={() => {}}/>
+                <ButtonNew
+                  size={ButtonNew.sizes.NORMAL} color={ButtonNew.colors.BLUE} className={'energy'}
+                  label={(
+                    <div className={'energy-btn'}>
+                      <img src={require(`../../../shared/img/inventory/energy-icon.png`)}/>
+                      {energy_left}/{energy_limit} +
+                    </div>
+                  )} onClick={() => {
+                  UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
+                    name: name,
+                    tokenId: token_id,
+                    energyLimit: energy_limit,
+                    successCallback: (data) => {
+                    },
+                    failedCallback: null,
+                    finishCallback: () => {
+                    },
+                  });
+                }}/>
               </div>
               <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
               <div className="stats__container">

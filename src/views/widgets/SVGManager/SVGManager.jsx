@@ -1,5 +1,5 @@
 import React from "react"
-import PropTypes from 'prop-types';
+import {CUBE_MATERIALS, CUBE_MATERIALS_MAP} from "../../../constants/cubego";
 
 require("style-loader!./SVGManager.scss");
 
@@ -7,7 +7,7 @@ export const Pentagon = ({active}) => {
   return (
     <svg width="100%" height="100%" viewBox="0 0 382 268" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
         <defs>
-            <path d="M46,21 L336,21 C349.807119,21 361,32.1928813 361,46 L361,178.613613 C361,189.660948 353.749107,199.398531 343.165234,202.564801 L198.165234,245.942982 C193.490758,247.341397 188.509242,247.341397 183.834766,245.942982 L38.8347657,202.564801 C28.2508935,199.398531 21,189.660948 21,178.613613 L21,46 C21,32.1928813 32.1928813,21 46,21 Z" id="path-1"></path>
+            <path d="M46,21 L336,21 C349.807119,21 361,32.1928813 361,46 L361,178.613613 C361,189.660948 353.749107,199.398531 343.165234,202.564801 L198.165234,245.942982 C193.490758,247.341397 188.509242,247.341397 183.834766,245.942982 L38.8347657,202.564801 C28.2508935,199.398531 21,189.660948 21,178.613613 L21,46 C21,32.1928813 32.1928813,21 46,21 Z" id="path-1"/>
             <filter x="-8.5%" y="-12.8%" width="117.1%" height="125.5%" filterUnits="objectBoundingBox" id="filter-2">
                 <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                 <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
@@ -152,82 +152,161 @@ export const DiscountFrame = ({text}) => {
     )
 }
 
-export const MaterialStatistics = ({material_1, material_2, material_3, material_4}) => {
+
+const getHeightFromValue = (val) => {
+  let v = Math.min(Math.sqrt(val), 10);
+  return -110 + 10*v;
+};
+
+export const MaterialStatistics = ({_t, num_cubes, m1, m2, m3, m4}) => {
+    m1.height = getHeightFromValue(m1.value);
+    m2.height = getHeightFromValue(m2.value);
+    m3.height = getHeightFromValue(m3.value);
+    m4.height = getHeightFromValue(m4.value);
+
+    let _m1 = m1;
+    let _m4 = m2;
+    let _m2 = m3;
+    let _m3 = m4;
+
     return (
-        <svg width="100%" height="100%" viewBox="0 0 1054 1291" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+        <svg className='material-stats' width="100%" height="100%" viewBox="0 0 1054 1291" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
             <defs></defs>
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                <g id="left" transform="translate(0.000000, 365.000000)">
-                    <polygon id="Rectangle-10" fill={material_1.fillTop} points="202.080736 80 404.161472 241.080736 202.080736 402.16 0 241.080736"></polygon>
-                    <polygon id="Path-6" fill={material_1.fillLeft} points={`0.763327361 241.158054 0.763327361 ${368.997641 + material_1.height} 202.405472 ${529.857031 + material_1.height} 202.405472 400.880243`}></polygon>
-                    <polygon id="Path-6" fill={material_1.fillRight} points={`202 ${529.698977 + material_1.height} 202 401.85939 403.642145 241 403.642145 ${369.976788 + material_1.height}`}></polygon>
-                    <text id="text-left"   fill="#000000">
-                        <tspan x="114.096191" y="49">text left</tspan>
-                    </text>
+                <g id="left" transform={`translate(0.000000, ${-_m1.height+365.000000})`}>
+                    <polygon id="Rectangle-10" fill={MaterialStatistics.materialMap[_m1.id].fillRight} points="202.080736 80 404.161472 241.080736 202.080736 402.16 0 241.080736"></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m1.id].fillLeft} points={`0.763327361 241.158054 0.763327361 ${368.997641 + _m1.height} 202.405472 ${529.857031 + _m1.height} 202.405472 400.880243`}></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m1.id].fillTop} points={`202 ${529.698977 + _m1.height} 202 401.85939 403.642145 241 403.642145 ${369.976788 + _m1.height}`}></polygon>
+                    {_m1.id !== -1 ?
+                    <text id="text-left" fill="#ffffff">
+                        <tspan textAnchor="middle" x="200" y={`${-_m1.height+140}`}>{_t(CUBE_MATERIALS[_m1.id].name)}</tspan>
+                        <tspan textAnchor="middle" x="200" y={`${-_m1.height+240}`}>{_m1.value}</tspan>
+                    </text> : null}
                 </g>
-                <g id="right" transform="translate(649.000000, 365.000000)">
-                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 96 404.161472 257.080736 202.080736 418.16 0 257.080736"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 257.158054 0.763327361 384.997641 202.405472 545.857031 202.405472 416.880243"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="202 545.698977 202 417.85939 403.642145 257 403.642145 385.976788"></polygon>
-                    <text id="text-right"   fill="#000000">
-                        <tspan x="95.0541992" y="49">text right</tspan>
-                    </text>
+                <g id="right" transform={`translate(649.000000, ${-_m2.height+365.000000})`}>
+                    <polygon id="Rectangle-10" fill={MaterialStatistics.materialMap[_m2.id].fillRight} points="202.080736 96 404.161472 257.080736 202.080736 418.16 0 257.080736"></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m2.id].fillLeft} points={`0.763327361 257.158054 0.763327361 ${384.997641 + _m2.height} 202.405472 ${545.857031 + _m2.height} 202.405472 416.880243`}></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m2.id].fillTop} points={`202 ${545.698977 + _m2.height} 202 417.85939 403.642145 257 403.642145 ${385.976788 + _m2.height}`}></polygon>
+                    {_m2.id !== -1 ?
+                    <text id="text-right"   fill="#ffffff">
+                        <tspan textAnchor="middle" x="200" y={`${-_m2.height+140}`}>{_t(CUBE_MATERIALS[_m2.id].name)}</tspan>
+                        <tspan textAnchor="middle" x="200" y={`${-_m2.height+240}`}>{_m2.value}</tspan>
+                    </text> : null}
                 </g>
-                <g id="bottom" transform="translate(315.000000, 748.000000)">
-                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 1.8189894e-12 404.161472 161.080736 202.080736 322.16 0 161.080736"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 161.158054 0.763327361 288.997641 202.405472 449.857031 202.405472 320.880243"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="202 449.698977 202 321.85939 403.642145 161 403.642145 289.976788"></polygon>
-                    <text id="text-bottom"   fill="#000000">
-                        <tspan x="65.9038086" y="532">text bottom</tspan>
-                    </text>
+                <g id="bottom" transform={`translate(315.000000, ${-_m3.height+740})`}>
+                    <polygon id="Rectangle-10" fill={MaterialStatistics.materialMap[_m3.id].fillRight} points="202.080736 1.8189894e-12 404.161472 161.080736 202.080736 322.16 0 161.080736"></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m3.id].fillLeft} points={`0.763327361 161.158054 0.763327361 ${288.997641 + _m3.height} 202.405472 ${449.857031 + _m3.height} 202.405472 320.880243`}></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m3.id].fillTop} points={`202 ${449.698977 + _m3.height} 202 321.85939 403.642145 161 403.642145 ${289.976788 + _m3.height}`}></polygon>
+                    {_m3.id !== -1 ?
+                    <text id="text-bottom"   fill="#ffffff">
+                        <tspan textAnchor="middle" x="200" y={`${-_m3.height+60}`}>{_t(CUBE_MATERIALS[_m3.id].name)}</tspan>
+                        <tspan textAnchor="middle" x="200" y={`${-_m3.height+160}`}>{_m3.value}</tspan>
+                    </text> : null}
                 </g>
-                <g id="top" transform="translate(315.000000, 0.000000)">
-                    <polygon id="Rectangle-10" fill="#D8D8D8" points="202.080736 90 404.161472 251.080736 202.080736 412.16 0 251.080736"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="0.763327361 251.158054 0.763327361 378.997641 202.405472 539.857031 202.405472 410.880243"></polygon>
-                    <polygon id="Path-6" fill="#D8D8D8" points="202 539.698977 202 411.85939 403.642145 251 403.642145 379.976788"></polygon>
-                    <text id="text-top"   fill="#000000">
-                        <tspan x="111.729004" y="49">text top</tspan>
-                    </text>
+                <g id="top" transform={`translate(315.000000, ${-_m4.height+60})`}>
+                    <polygon id="Rectangle-10" fill={MaterialStatistics.materialMap[_m4.id].fillRight} points="202.080736 90 404.161472 251.080736 202.080736 412.16 0 251.080736"></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m4.id].fillLeft} points={`0.763327361 251.158054 0.763327361 ${378.997641 + _m4.height} 202.405472 ${539.857031 + _m4.height} 202.405472 410.880243`}></polygon>
+                    <polygon id="Path-6" fill={MaterialStatistics.materialMap[_m4.id].fillTop} points={`202 ${539.698977 + _m4.height} 202 411.85939 403.642145 251 403.642145 ${379.976788 + _m4.height}`}></polygon>
+
+                    {_m4.id !== -1 ?
+                    <text id="text-top"   fill="#ffffff">
+                        <tspan textAnchor="middle" x="200" y={`${-_m4.height+140}`}>{_t(CUBE_MATERIALS[_m4.id].name)}</tspan>
+                        <tspan textAnchor="middle" x="200" y={`${-_m4.height+240}`}>{_m4.value}</tspan>
+                    </text> : null}
                 </g>
-                <text id="text-center"   fill="#000000">
-                    <tspan x="401.135742" y="635">text center</tspan>
+                <text id="text-center"   fill="#ffffff">
+                    <tspan/>
+                    <tspan textAnchor="middle" x="520" y="720">{num_cubes}</tspan>
                 </text>
             </g>
         </svg>
     )
 }
 
-MaterialStatistics.height = {
-    LEVEL_0: -127.839587,
-    LEVEL_1: -50,
-    LEVEL_3: 0,
-    LEVEL_4: 50,
+MaterialStatistics.materialMap = {
+  [-1]: {
+    fillTop: '#92b0ce60',
+    fillLeft: '#92b0ce60',
+    fillRight: '#92b0ce60',
+  },
+  [CUBE_MATERIALS_MAP.plastic]: {
+    fillTop: '#CE3838',
+    fillLeft: '#bc3333',
+    fillRight: '#852424',
+  },
+  [CUBE_MATERIALS_MAP.paper]: {
+    fillTop: '#ceceb1',
+    fillLeft: '#a4a48d',
+    fillRight: '#787867',
+  },
+  [CUBE_MATERIALS_MAP.fur]: {
+    fillTop: '#cebbca',
+    fillLeft: '#a394a0',
+    fillRight: '#70666e',
+  },
+  [CUBE_MATERIALS_MAP.leaf]: {
+    fillTop: '#7bce67',
+    fillLeft: '#69b058',
+    fillRight: '#558f48',
+  },
+  [CUBE_MATERIALS_MAP.brick]: {
+    fillTop: '#ce7933',
+    fillLeft: '#ac652b',
+    fillRight: '#854e21',
+  },
+  [CUBE_MATERIALS_MAP.wood]: {
+    fillTop: '#63381a',
+    fillLeft: '#522e16',
+    fillRight: '#3e230f',
+  },
+  [CUBE_MATERIALS_MAP.stone]: {
+    fillTop: '#515151',
+    fillLeft: '#3b3b3b',
+    fillRight: '#242424',
+  },
+  [CUBE_MATERIALS_MAP.iron]: {
+    fillTop: '#657692',
+    fillLeft: '#526077',
+    fillRight: '#445063',
+  },
+  [CUBE_MATERIALS_MAP.silver]: {
+    fillTop: '#e7e8e7',
+    fillLeft: '#b0b1b0',
+    fillRight: '#a0a1a0',
+  },
+  [CUBE_MATERIALS_MAP.ice]: {
+    fillTop: '#62dfdc',
+    fillLeft: '#4caeac',
+    fillRight: '#398281',
+  },
+  [CUBE_MATERIALS_MAP.gold]: {
+    fillTop: '#dad028',
+    fillLeft: '#b4ac21',
+    fillRight: '#a29b1c',
+  },
+  [CUBE_MATERIALS_MAP.diamond]: {
+    fillTop: '#4cacd9',
+    fillLeft: '#4092b8',
+    fillRight: '#357998',
+  },
 }
 
-
 MaterialStatistics.defaultProps = {
-    material_1: {
-        fillTop: '#CE3838',
-        fillLeft: '#C19595',
-        fillRight: '#314CC8',
-        height: MaterialStatistics.height.LEVEL_0,
-    },
-    material_2: {
-        fillTop: '#D8D8D8',
-        fillLeft: '#D8D8D8',
-        fillRight: '#D8D8D8',
-        height: 0,
-    },
-    material_3: {
-        fillTop: '#D8D8D8',
-        fillLeft: '#D8D8D8',
-        fillRight: '#D8D8D8',
-        height: 0,
-    },
-    material_4: {
-        fillTop: '#D8D8D8',
-        fillLeft: '#D8D8D8',
-        fillRight: '#D8D8D8',
-        height: 0,
-    },
-  };
+  num_cubes: 100,
+  m1: {
+    id: -1,
+    value: 0,
+  },
+  m2: {
+    id: -1,
+    value: 0,
+  },
+  m3: {
+    id: -1,
+    value: 0,
+  },
+  m4: {
+    id: -1,
+    value: 0,
+  },
+};

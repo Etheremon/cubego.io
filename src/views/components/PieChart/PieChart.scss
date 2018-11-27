@@ -14,11 +14,11 @@ svg {
     
     tspan {
       &:nth-child(1) {
-        font-size: 8px;
+        font-size: $font-size-small;
       }
 
       &:nth-child(2) {
-        font-size: 10px;
+        font-size: $font-size-big;
         font-family: $f__baloobha;
         font-weight: $font-weight-bold;
       }
