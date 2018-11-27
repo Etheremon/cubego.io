@@ -4,11 +4,14 @@ import {getTranslate} from 'react-localize-redux'
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { CustomRectangle, CubegoFooter } from '../../widgets/SVGManager/SVGManager.jsx';
 import { CUBE_TYPES } from '../../../constants/cubego.js';
-import { GetImageFromGonID } from '../../../utils/logicUtils';
+import {ConvertStatsToTier, GetImageFromGonID} from '../../../utils/logicUtils';
 import {RegisterModelToBlockchain} from "../../../services/transaction";
 import {addTxn} from "../../../actions/txnAction";
 import {CubegonApi} from "../../../services/api/cubegonApi";
 import withRouter from "react-router-dom/es/withRouter";
+import {GON_TIER} from "../../../constants/cubegon";
+import Countdown from "../../widgets/Countdown/Countdown.jsx";
+import * as Config from "../../../config";
 
 require("style-loader!./PendingCubegonCard.scss");
 
@@ -50,55 +53,79 @@ class CubegonCard extends React.Component {
   }
 
   render() {
-    const {_t, className, energy_limit, energy_left, id, name, total_cubego, total_stats, type_id} = this.props;
-
-    console.log("Zzz", this.props);
+    const {_t, className, energy_limit, expiry_time, id, name, total_cubego, total_stats, type_id} = this.props;
+    let tierId = ConvertStatsToTier(total_stats);
 
     return(
       <div className={`pending-cubegon-card__container ${className && className}`}>
         <div className="border-1">
           <div className="border-2">
             <div className="border-3">
-              <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/background_${CUBE_TYPES[type_id].name}.png`)} />
-              <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
-              <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
-              <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
-                <div className="stats__container">
-                  <div className="cubegoes">
+
+              <div className={'cubegon__image-wrapper'}>
+                <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
+                <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
+
+                <div className={'cubegon__badges'}>
+                  <div className={'badge__tier-wrapper'}>
+                    <img src={GON_TIER[tierId].img} />
+                  </div>
+                  {/* ... */}
+                </div>
+
+                <div className={'cubegon__countdown-content'}>
+                  {this.state.expired ? (
+                    <div className={'countdown-box'}>
+                      {_t('expired')}
+                    </div>
+                  ) : (
+                    <React.Fragment>
+                      <Countdown className={'countdown-box'} targetTime={expiry_time*1000} showDays={false} showText={false}
+                                 onFinishCountdown={() => {this.setState({expired: true});}}/>
+                      <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} loading={this.state.submitting}
+                                 color={ButtonNew.colors.BLUE}
+                                 label={_t(`re-register`)} onClick={this.resubmitCubegon}/>
+                    </React.Fragment>
+                  )}
+                </div>
+              </div>
+
+              {/*<img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>*/}
+
+              <div className="stats__container">
+                  <div className="item">
                     <div className="number">
                       {total_cubego}
                     </div>
                     <div className="label">
-                      {_t('total_cubegoes')}
+                      {_t('cubegoes')}
                     </div>
                   </div>
-                  <div className="stats">
+                  <div className="item">
                     <div className="number">
                       {total_stats}
                     </div>
                     <div className="label">
-                      {_t('total_stats')}
+                      {_t('stats')}
                     </div>
                   </div>
-                </div>
-
-                <div className="cubegon-info">
-                  <div className="id">
-                  {`ID ${id}`}
+                  <div className="item">
+                    <div className="number">
+                      {energy_limit}
+                    </div>
+                    <div className="label">
+                      {_t('energy')}
+                    </div>
                   </div>
-                  <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={`${energy_left}/${energy_limit}+`} onClick={() => {}}/>
-                </div>
+              </div>
 
-                <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} loading={this.state.submitting}
-                           label={_t(`resubmit`)} onClick={this.resubmitCubegon}/>
-
-                <div className="footer">
-                  <div className="cubegon-name">
-                    <CubegoFooter stroke={'#75C3F5'} fill={'#12314F'} />
-                    <span>{name}</span>
-                  </div>
+              <div className="footer">
+                <div className="cubegon-name">
+                  <CubegoFooter stroke={'#75C3F5'} fill={'#12314F'} />
+                  <div className={'cubegon-name__content'}>{name}</div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </div>
