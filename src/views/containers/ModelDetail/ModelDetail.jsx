@@ -102,12 +102,20 @@ class ModelDetail extends React.Component {
                 {/*<Image img={'icon_camera'}/>*/}
               {/*</div>*/}
 
+
+
               {model ?
                 <Model3D
                   ref={(canvas) => {this.modelCanvas = canvas}}
                   model={model} viewOnly
                 /> : null
               }
+
+              <div className={'model-review__build'} onClick={() => {
+                this.props.history.push(`/${URLS.BUILD_GON}?gon_id=${gonInfo.id}`)
+              }}>
+                {_t('open in build tool')}
+              </div>
             </div>
 
             <div className={`model-info`}>

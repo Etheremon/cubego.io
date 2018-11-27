@@ -254,7 +254,7 @@
 
       .model-editor__3d-capture {
         position: absolute;
-        z-index: 2;
+        z-index: 3;
         right: 18px;
         top: 60px;
         cursor: pointer;
@@ -264,6 +264,7 @@
           width: 36px;
         }
       }
+
     }
 
     .model-editor__2d {
@@ -450,9 +451,11 @@
       }
     }
     .actions {
+      padding-top: 8px;
       .action {
         padding: 2px;
         cursor: pointer;
+        text-decoration: none;
         &:hover {
           opacity: 0.9;
         }

@@ -41,6 +41,15 @@
       background: rgba($color: #369ead, $alpha: 0.2);
       border-radius: 12px;
       position: relative;
+      text-align: center;
+
+      .model-review__build {
+        text-align: center;
+        padding-bottom: 16px;
+        cursor: pointer;
+        text-decoration: underline;
+        display: inline-block;
+      }
 
       .model-editor__3d-capture {
         position: absolute;

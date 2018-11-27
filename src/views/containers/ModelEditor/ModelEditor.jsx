@@ -22,6 +22,7 @@ import {CUBE_MATERIALS, CUBE_MATERIALS_MAP, CUBE_TYPES} from "../../../constants
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {
+  GetCubegonInfo,
   GetLoggedInUserId, GetSavedModel, GetUserInfo, GetUserMaterials,
   GetUserNumberOfMaterials
 } from "../../../reducers/selectors";
@@ -38,6 +39,7 @@ import * as Config from "../../../config";
 import {Image} from "../../components/Image/Image.jsx";
 import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
+import {CubegonActions} from "../../../actions/cubegon";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -134,7 +136,7 @@ class _ModelEditor extends React.Component {
     this.renderError = this.renderError.bind(this);
 
     this.capturePhoto = this.capturePhoto.bind(this);
-    this.downloadPhoto = this.downloadPhoto.bind(this);
+    this.exportModel = this.exportModel.bind(this);
 
     this.isHoldingKey = {};
     this.selectedVariants = {};
@@ -142,7 +144,12 @@ class _ModelEditor extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.savedModel && this.props.savedModel.length) {
+    if (this.props.gonInfo && this.props.gonInfo.structure) {
+      this.toolManager.addModel({model: LogicUtils.GetModelFromStructure(this.props.gonInfo.structure)});
+      this.selectedModelIndex = -1;
+      this.forceUpdate();
+    }
+    else if (this.props.savedModel && this.props.savedModel.length) {
       this.toolManager.addModel({model: this.props.savedModel[0].model});
       this.selectedModelIndex = 0;
       this.forceUpdate();
@@ -157,6 +164,8 @@ class _ModelEditor extends React.Component {
     window.addEventListener("keyup", this.onKeyUp, false);
 
     this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
+    if (this.props.gonId)
+      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: false}));
   }
 
   componentWillUnmount() {
@@ -166,9 +175,16 @@ class _ModelEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!IsEqual(nextProps.gonInfo, this.props.gonInfo) && nextProps.gonInfo && nextProps.gonInfo.structure) {
+      this.toolManager.addModel({model: LogicUtils.GetModelFromStructure(nextProps.gonInfo.structure)});
+      this.selectedModelIndex = -1;
+      this.forceUpdate();
+    }
+
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
     }
+
     if (nextProps.savedModel.length > this.props.savedModel.length && nextProps.savedModel.length > 0) {
       // this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
       this.selectedModelIndex = nextProps.savedModel.length - 1;
@@ -251,20 +267,25 @@ class _ModelEditor extends React.Component {
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
     }
-    
+  }
+
+  exportModel() {
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image().then((data) => {
+        this.setState({saved: true});
+        this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
+      })
+    }
   }
 
   capturePhoto() {
     if (this.modelCanvas) {
       this.modelCanvas.getBase64Image().then((data) => {
         this.imageBase64 = data;
+        this.modelString = JSON.stringify(LogicUtils.GetSimplifiedModel({...this.toolManager.model, ['image']: data}));
         this.setState({showModelCapturing: true});
       })
     }
-  }
-
-  downloadPhoto() {
-    Utils.OpenInNewTab(this.imageBase64);
   }
 
   reviewModel(verified=false, text) {
@@ -483,7 +504,10 @@ class _ModelEditor extends React.Component {
                 </div>
                 <div className={'actions'}>
                   <a href={this.imageBase64} className={'action'} download={"cubego.png"}>
-                    <Image img={'btn_download'}/>
+                    <ButtonNew color={ButtonNew.colors.BLUE} label={_t('save image')}/>
+                  </a>
+                  <a href={`data:text/plain;charset=utf-8,${this.modelString}`} className={'action'} download={"cubego.txt"}>
+                    <ButtonNew label={_t('export model')}/>
                   </a>
                   {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
                     {/*<Image img={'btn_share_fb'}/>*/}
@@ -708,11 +732,13 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
                 <div className={'model-editor__3d'}>
+
                   <div className={'model-editor__3d-capture'}
                        tooltip={_t('capture a photo')} tooltip-position={'bottom'}
                        onClick={this.capturePhoto}>
                     <Image img={'icon_camera'}/>
                   </div>
+
                   {this.toolManager.stats.err ?
                     <div className={'model-editor__model-error'}>
                       <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err)}</p>
@@ -815,6 +841,7 @@ class _ModelEditor extends React.Component {
 const mapStateToProps = (store, props) => {
   let pathName = props.pathname;
   let userId = GetLoggedInUserId(store);
+  let gonId = Utils.ParseQueryString(props.location.search)['gon_id'];
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
@@ -822,6 +849,8 @@ const mapStateToProps = (store, props) => {
     userId,
     userInfo: GetUserInfo(store, userId),
     userCubes: GetUserNumberOfMaterials(store, userId),
+    gonId,
+    gonInfo: GetCubegonInfo(store, gonId),
   }
 };
 
