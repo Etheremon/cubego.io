@@ -172,7 +172,7 @@ const _CUBE_MATERIALS = {
     material_id: CUBE_MATERIALS_MAP.diamond,
     name: 'diamond',
     sub_materials: {
-      [CUBE_MATERIALS_MAP.diamond * 100 + 1]: {color: '#b6ddf2', emissive: '#232a9b',},
+      [CUBE_MATERIALS_MAP.diamond * 100 + 1]: {color: '#85f0ff', emissive: '#3d20c8',},
       [CUBE_MATERIALS_MAP.diamond * 100 + 2]: {color: '#f70000', emissive: '#430529',},
       [CUBE_MATERIALS_MAP.diamond * 100 + 3]: {color: '#005521', emissive: '#005521',},
       [CUBE_MATERIALS_MAP.diamond * 100 + 4]: {color: '#ffd100', emissive: '#a74400',},
@@ -198,7 +198,7 @@ const _CUBE_MATERIALS = {
       [CUBE_MATERIALS_MAP.ice * 100 + 2]: {color: '#a2004c', emissive: '#842121'},
       [CUBE_MATERIALS_MAP.ice * 100 + 3]: {color: '#4b7046', emissive: '#13191e'},
       [CUBE_MATERIALS_MAP.ice * 100 + 4]: {color: '#ff7800', emissive: '#480000'},
-      [CUBE_MATERIALS_MAP.ice * 100 + 5]: {color: '#ffc200', emissive: '#7a2b00'}
+      [CUBE_MATERIALS_MAP.ice * 100 + 5]: {color: '#f2c535', emissive: '#a04b00'}
     },
     point: 300,
     tier: CUBE_TIER_MAP.epic,
@@ -287,7 +287,7 @@ const _CUBE_MATERIALS = {
     material_id: CUBE_MATERIALS_MAP.leaf,
     name: 'leaf',
     sub_materials: {
-      [CUBE_MATERIALS_MAP.leaf * 100 + 1]: {color: '#646464', emissive: '#011603'},
+      [CUBE_MATERIALS_MAP.leaf * 100 + 1]: {color: '#a5ff74', emissive: '#011603'},
       [CUBE_MATERIALS_MAP.leaf * 100 + 2]: {color: '#441ba7', emissive: '#0d0d43'},
       [CUBE_MATERIALS_MAP.leaf * 100 + 3]: {color: '#911414', emissive: '#200b25'},
       [CUBE_MATERIALS_MAP.leaf * 100 + 4]: {color: '#e84603', emissive: '#221746'},
@@ -324,7 +324,7 @@ const _CUBE_MATERIALS = {
     material_id: CUBE_MATERIALS_MAP.paper,
     name: 'paper',
     sub_materials: {
-      [CUBE_MATERIALS_MAP.paper * 100 + 1]: {color: '#7f0000', emissive: '#7d2424'},
+      [CUBE_MATERIALS_MAP.paper * 100 + 1]: {color: '#eb6128', emissive: '#912727'},
       [CUBE_MATERIALS_MAP.paper * 100 + 2]: {color: '#f773c8', emissive: '#af3692'},
       [CUBE_MATERIALS_MAP.paper * 100 + 3]: {color: '#0b3787', emissive: '#183f9d'},
       [CUBE_MATERIALS_MAP.paper * 100 + 4]: {color: '#450b87', emissive: '#4d1f82'},
