@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getTranslate} from "react-localize-redux";
-import { PostProcessesOptimization } from "babylonjs";
 
 require("style-loader!./Popup.scss");
 
@@ -53,7 +52,7 @@ class Popup extends React.Component {
   }
 
   close() {
-    
+
     this.setState({open: false});
   }
 

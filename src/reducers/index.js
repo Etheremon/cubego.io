@@ -8,6 +8,7 @@ import { localization } from './localization';
 import { notifications } from './notification';
 import { subscriber } from './subscriber';
 import { presale } from './presale';
+import {battle} from "./battle";
 
 export const voxelStoreReducers = {
   auth,
@@ -20,6 +21,7 @@ export const voxelStoreReducers = {
   notifications,
   subscriber,
   txnStore,
+  battle
 };
 
 export const getTxnStore = (store) => (store['txnStore']);

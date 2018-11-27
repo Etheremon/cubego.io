@@ -25,8 +25,14 @@ export type RequestActionType = {
  */
 export function createFlowTypes(name: string): FlowActionType {
   return {
-    START: `${name}_START`,
-    STOP: `${name}_STOP`,
+    start: {
+      key: `${name}_START`,
+      func: createAction(`${name}_START`),
+    },
+    stop: {
+      key: `${name}_STOP`,
+      func: createAction(`${name}_STOP`),
+    }
   };
 }
 
