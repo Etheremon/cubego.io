@@ -14,7 +14,7 @@ export const GON_TIER = {
   challenger: {
     id: 0,
     name: 'Challenger',
-    points: [1, 5999],
+    points: [1, 999],
     stats: [400, 560],
     img: require('../shared/img/badges/badge-challenger.png'),
     img_ne: require('../shared/img/badges/badge-challenger-ne.png'),
@@ -22,7 +22,7 @@ export const GON_TIER = {
   elite: {
     id: 1,
     name: 'Elite',
-    points: [6000, 25999],
+    points: [1000, 4999],
     stats: [561, 640],
     img: require('../shared/img/badges/badge-elite.png'),
     img_ne: require('../shared/img/badges/badge-elite-ne.png'),
@@ -30,7 +30,7 @@ export const GON_TIER = {
   champion: {
     id: 2,
     name: 'Champion',
-    points: [26000, 67999],
+    points: [5000, 19999],
     stats: [641, 800],
     img: require('../shared/img/badges/badge-champion.png'),
     img_ne: require('../shared/img/badges/badge-champion-ne.png'),
@@ -38,7 +38,7 @@ export const GON_TIER = {
   god: {
     id: 3,
     name: 'God',
-    points: [68000, 68000],
+    points: [19999, 19999],
     stats: [801, 1000],
     img: require('../shared/img/badges/badge-god.png'),
     img_ne: require('../shared/img/badges/badge-god-ne.png'),

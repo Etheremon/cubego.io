@@ -107,3 +107,5 @@ export const ConvertStatsToTier = (stats) => {
 }
 
 export const VerifyLength = (text, fr, t) => (text && fr <= text.length && text.length <= t);
+
+export const ConvertDiffToSimilarity = (diff) => (Utils.RoundDownToDecimal(100-diff*100, 2));

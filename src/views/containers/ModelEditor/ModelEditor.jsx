@@ -334,8 +334,11 @@ class _ModelEditor extends React.Component {
           <div className={'matched-gons'}>
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
-                <img src={LogicUtils.GetImageFromGonID(gon.id)}/>
-                <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+                <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+                <p>{_t('ID')}: {gon['id']} {_t('Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['shape_diff'])}%</p>
+                <div className={'notice'}>
+                  {_t('shape_matched_notice')}
+                </div>
               </div>
             ))}
           </div>
@@ -344,9 +347,22 @@ class _ModelEditor extends React.Component {
     }
     else if (code === window.RESULT_CODE.ERROR_CUBEGO_MODEL_MATCH) {
       content = (
-        <div className={'header'}>
-          {_t('err.model_already_registered')}
-        </div>
+        <React.Fragment>
+          <div className={'header'}>
+            {_t('err.model_already_registered')}
+          </div>
+          <div className={'matched-gons'}>
+            {data['match_cubegons'].map((gon, idx) => (
+              <div className={'matched-gon'} key={idx}>
+                <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+                <p>{_t('ID')}: {gon['id']} - {_t('Color Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['color_diff'])}%</p>
+                <div className={'notice'}>
+                  {_t('model_matched_notice')}
+                </div>
+              </div>
+            ))}
+          </div>
+        </React.Fragment>
       )
     }
     else if (code === window.RESULT_CODE.SUCCESS) {
@@ -358,8 +374,8 @@ class _ModelEditor extends React.Component {
           </div>
           <div className={'matched-gons'}>
             <div className={'matched-gon'}>
-              <img src={LogicUtils.GetImageFromGonID(gon.id)}/>
-              <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+              <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+              <p>{_t('ID')}: {gon['id']} - {_t('Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['shape_diff'])}%</p>
             </div>
           </div>
           {nextFunc ?
@@ -675,12 +691,12 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__tier-bar'}>
-              <div className={'bar'} style={{width: `${this.toolManager.stats.gonTier.showPoints/70000*100}%`}}>
+              <div className={'bar'} style={{width: `${this.toolManager.stats.gonTier.showPoints/24000*100}%`}}>
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
-                     style={{left: `${(tier.points[0] + (idx <= 1 ? 1200 : 0))/70000*100}%`}}
+                     style={{left: `${(tier.points[0])/24000*100}%`}}
                      tooltip={_t(`${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>

@@ -189,21 +189,32 @@
       position: relative;
       margin-bottom: 16px;
 
-      .tier__container {
+      .badges {
+        display: flex;
         position: absolute;
         right: 0;
         top: 50%;
         transform: translateY(-50%);
-        width: 56px;
-        height: 56px;
 
-        img {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          width: 180px;
-          height: 180px;
+        .badge__tier-wrapper, .badge__origin-wrapper {
+          width: 40px;
+          height: 40px;
+          position: relative;
+          margin-left: 6px;
+          img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
+            pointer-events: none;
+          }
+        }
+
+        .badge__tier-wrapper {
+          img {width: 120px;}
+        }
+        .badge__origin-wrapper {
+          img {width: 110px;}
         }
       }
 

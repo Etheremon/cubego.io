@@ -22,6 +22,7 @@ import { ConvertUnixToDateTime } from '../../../utils/utils.js';
 import { GON_TIER } from '../../../constants/cubegon.js';
 import {URLS} from "../../../constants/general";
 import {MaterialStatistics} from "../../widgets/SVGManager/SVGManager.jsx";
+import {GON_FLAG} from "../../../constants/cubegon";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -66,7 +67,7 @@ class ModelDetail extends React.Component {
       )
     }
 
-    let isOwner = userId && gonInfo.owner && userId.toLowerCase() === gonInfo.owner.toLowerCase();
+    let isOwner = userId && gonInfo.token_id && gonInfo.owner && userId.toLowerCase() === gonInfo.owner.toLowerCase();
 
     const combatStats = [
       {icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_win, label: 'win'},
@@ -176,8 +177,19 @@ class ModelDetail extends React.Component {
                 <span>{gonInfo.shape_id}</span>
               </div>
 
-              <div className="tier__container">
-                <img src={tier ? GON_TIER[tier].img : ''}/>
+              <div className={'badges'}>
+                <div className={'badge__tier-wrapper'}
+                     tooltip={_t(GON_TIER[tier].name)}
+                     tooltip-position={'bottom'}>
+                  <img src={GON_TIER[tier].img} />
+                </div>
+                {gonInfo.flag === GON_FLAG.ORIGINAL ?
+                  <div className={'badge__origin-wrapper'}
+                       tooltip={_t('original')}
+                       tooltip-position={'bottom'}>
+                    <img src={require('../../../shared/img/badges/original.png')}/>
+                  </div> : null
+                }
               </div>
 
             </div>
@@ -231,9 +243,11 @@ class ModelDetail extends React.Component {
             </div>
 
             <div className="profile-action__container">
-              <ButtonNew label={_t('view_on_battle')}
-                         onClick={()=>history.push(`/${URLS.BATTLE}/${gonId}`)}
-                         className={'go-to-battle__button'} size={ButtonNew.sizes.NORMAL}/>
+              {gonInfo.token_id ?
+                <ButtonNew label={_t('view_on_battle')}
+                           onClick={() => history.push(`/${URLS.BATTLE}/${gonId}`)}
+                           className={'go-to-battle__button'} size={ButtonNew.sizes.NORMAL}/> : null
+              }
 
               {isOwner ?
                 <div className="trade__container">
