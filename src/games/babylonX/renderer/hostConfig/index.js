@@ -3,6 +3,7 @@ import {commitMount, commitTextUpdate, resetTextContent} from "./mutations";
 import {createTextInstance, prepareForCommit} from "./reconcilers";
 import {diffProps, emptyFnc} from "../../utils";
 import {createComponent} from "../../components";
+import {applyProps, filterByKey, including, loggerFnc} from "../../../threeX/fiber/utils";
 
 const appendChild = (parent, child) => {
   child.parent = parent;
@@ -38,9 +39,9 @@ const insertBefore = () => {
 
 };
 
-const prepareUpdate = (pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) => {
+const prepareUpdate = (element, type, oldProps, newProps, rootContainerInstance, hostContext) => {
   emptyFnc('prepareUpdate')();
-  return diffProps(pixiElement, type, oldProps, newProps, rootContainerInstance);
+  return diffProps(element, type, oldProps, newProps, rootContainerInstance);
 };
 
 const resetAfterCommit = () => {
@@ -50,8 +51,13 @@ const createInstance = (type, props, rootContainerInstance, hostContext, interna
   return createComponent(type, props, rootContainerInstance);
 };
 
-const commitUpdate = (domElement, updatePayload, type, oldProps, newProps, internalInstanceHandle) => {
-  emptyFnc('commitUpdate')();
+const commitUpdate = (instance, updatePayload, type, lastRawProps, nextRawProps, internalInstanceHandle) => {
+  loggerFnc('commitUpdate')();
+  const updatedPropKeys = including(updatePayload.filter((item, i) => i % 2 === 0));
+  const oldProps = filterByKey(lastRawProps, updatedPropKeys);
+  const newProps = filterByKey(nextRawProps, updatedPropKeys);
+
+  applyProps(instance, oldProps, newProps);
 };
 
 const hostConfig = {

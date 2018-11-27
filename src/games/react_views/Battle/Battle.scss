@@ -1,9 +1,43 @@
+@import '../../../views/styles/mixins';
+@import '../../../views/styles/colors';
+@import '../../../views/styles/variables';
+@import '../../../views/styles/fonts';
+
 .battle-3d-view {
   canvas {
     width: 100%;
   }
-  .webgl-error {
+
+  &__webgl-error {
     color: #ffffff;
     text-align: center;
+  }
+
+  &__select-cubegons {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $c__background-2;
+    @include border-radius-without-overflow(4px);
+    padding: 12px 12px 12px 12px;
+    .template {
+      padding: 4px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      &:hover {
+        background-color: $c__blue-3;
+      }
+    }
+    .img {
+      height: 120px;
+      @include mobile {
+        height: 100px;
+      }
+    }
+    .name {
+      padding-top: 4px;
+      font-family: $f__baloobha;
+      text-transform: capitalize;
+    }
   }
 }
