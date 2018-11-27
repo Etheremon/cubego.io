@@ -74,7 +74,6 @@ class ModelDetail extends React.Component {
 
     const total_stats = pieData.reduce((acc, curr) => acc + curr.value, 0)
     const tier = ConvertStatsToTier(total_stats)
-    console.log(gonInfo)
 
     return (
       <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>

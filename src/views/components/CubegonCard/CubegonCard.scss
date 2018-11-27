@@ -29,13 +29,63 @@
     position: relative;
   }
 
-  .cubegon__image {
-    display: block;
-    width: 100%;
-    height: auto;
+  .cubegon-image__container {
     z-index: 2;
     position: relative;
+    background: #051527;
+    @include transition-duration;
+
+    .energy {
+      z-index: 1;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 16px;
+    }
+
+    .cubegon__image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .detail-stats__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: #051527;
+      z-index: 2;
+      opacity: 1;
+      @include transition-duration;
+
+      &.hidden {
+        // display: none;
+        z-index: 0;
+        opacity: 0;
+        @include transition-duration;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: $white;
+      font-family: $f__baloobha;
+      padding: 5px 12px;
+
+      .right {
+        font-family: $f__overpass;
+      }
+    }
   }
+
+  
 
   .cubegon-background__image {
     display: block;
@@ -46,13 +96,56 @@
     z-index: 0;
   }
 
-  .type__image {
-    position: absolute;
-    height: 44px;
-    width: auto;
-    top: 0;
-    left: 0;
+  .header {
+    background: #051527;
+    position: relative;
+    color: $white;
+    font-size: $font-size-small;
     z-index: 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 12px;
+    box-sizing: border-box;
+    align-items: center;
+
+    .id {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .tier-image__container {
+      height: 44px;
+      width: 44px;
+      position: relative;
+      
+      .tier__image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 120px;
+        width: 120px;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .fas {
+      height: 24px;
+      width: auto;
+      display: block;
+      margin-left: 5px;
+    }
+  }
+
+  .type__image {
+    // position: absolute;
+    height: 30px;
+    width: auto;
+    // top: 0;
+    // left: 0;
+    // z-index: 3;
   }
 
   .shopping__image {
@@ -66,55 +159,52 @@
     display: none;
   }
 
-  .cubegon-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background: $regal_blue;
-    color: $white;
-    font-size: $font-size-nano;
-
-    .id {
-      padding-left: 8px;
-      text-align: left;
-      width: 50%;
-    }
-
-    .energy {
-      
-    }
-  }
-
   .stats__container {
     display: flex;
     flex-direction: row;
     background: $regal_blue;
     color: $white;
-    padding: 8px 0 0 0;
+    padding: 12px 0 12px 0;
     position: relative;
     z-index: 2;
+    font-weight: $font-weight-bold;
+    font-family: $f__baloobha;
+
+    .cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
 
     .number {
-      font-size: $font-size-large;
+      font-size: $font-size-big;
       font-weight: $font-weight-bold;
       font-family: $f__baloobha;
     }
 
     .label {
+      font-family: $f__overpass;
       font-size: $font-size-tiny;
     }
 
     .cubegoes {
-      width: 50%;
+      width: 33%;
       box-sizing: border-box;
       border-right: 2px solid $white;
     }
 
     .stats {
-      width: 50%;
+      width: 33%;
       box-sizing: border-box;
-      font-size: $font-size-small;
+      font-size: $font-size-big;
+      border-right: 2px solid $white;
+    }
+
+    .type {
+      width: 33%;
+      font-size: $font-size-big;
+      box-sizing: border-box; 
     }
   }
 
@@ -125,21 +215,24 @@
 
   .cubegon-name {
     position: absolute;
-    bottom: -22px;
+    bottom: -36px;
     left: 50%;
     transform: translateX(-50%);
-    height: 44px;
+    height: 56px;
     width: calc(100% + 24px);
 
-    span {
+    .value {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      width: 100%;
       font-size: $font-size-header-1;
       color: $white;
       font-family: $f__baloobha;
       text-shadow: 0 0 3px white;
+      text-align: center;
+      @include ellipsis;
     }
   }
 }
