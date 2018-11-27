@@ -37,6 +37,9 @@ const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerEleme
   for (propKey in nextProps) {
     const nextProp = nextProps[propKey];
     const lastProp = lastProps != null ? lastProps[propKey] : undefined;
+    if (propKey === 'imageData') {
+      debugger;
+    }
     if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
       continue;
     }
@@ -49,7 +52,7 @@ const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerEleme
   return updatePayload;
 };
 
-const isWebGLAvailable = function(canvas) {
+const isWebGLAvailable = function (canvas) {
   try {
     return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
   } catch (e) {
