@@ -25,34 +25,69 @@
 
   .border-3 {
     border: 1px solid #1C3B50;
+    background-color: #051527;
     border-radius: 8px;
     position: relative;
   }
 
-  .cubegon__image {
-    display: block;
-    width: 100%;
-    height: auto;
-    z-index: 2;
+  .cubegon__image-wrapper {
     position: relative;
-  }
 
-  .cubegon-background__image {
-    display: block;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
+    .cubegon__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      padding-top: 0;
+      padding-bottom: 30px;
+    }
 
-  .type__image {
-    position: absolute;
-    height: 44px;
-    width: auto;
-    top: 0;
-    left: 0;
-    z-index: 3;
+    .type__image {
+      position: absolute;
+      height: 30px;
+      width: auto;
+      top: 10px;
+      right: 4px;
+      z-index: 1;
+    }
+
+    .cubegon__badges {
+      position: absolute;
+      display: flex;
+      top: 8px;
+      left: 6px;
+
+      .badge__tier-wrapper {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin-right: 4px;
+        img {
+          width: 110px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          @include transform(translateX(-50%) translateY(-50%));
+        }
+      }
+    }
+
+    .cubegon__countdown-content {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      .widget__countdown {
+        margin-bottom: -4px;
+        color: $white;
+        font-size: $font-size-header-1;
+        .group {
+          margin: 0 2px;
+        }
+      }
+    }
   }
 
   .shopping__image {
@@ -66,55 +101,35 @@
     display: none;
   }
 
-  .cubegon-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background: $regal_blue;
-    color: $white;
-    font-size: $font-size-nano;
-
-    .id {
-      padding-left: 8px;
-      text-align: left;
-      width: 50%;
-    }
-
-    .energy {
-      
-    }
-  }
-
   .stats__container {
     display: flex;
     flex-direction: row;
     background: $regal_blue;
     color: $white;
-    padding: 8px 0 0 0;
+    padding: 12px 0;
     position: relative;
     z-index: 2;
 
-    .number {
-      font-size: $font-size-large;
-      font-weight: $font-weight-bold;
-      font-family: $f__baloobha;
-    }
-
-    .label {
-      font-size: $font-size-tiny;
-    }
-
-    .cubegoes {
-      width: 50%;
+    .item {
       box-sizing: border-box;
-      border-right: 2px solid $white;
-    }
-
-    .stats {
       width: 50%;
-      box-sizing: border-box;
-      font-size: $font-size-small;
+      border-right: 1px solid $white;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      .number {
+        font-size: $font-size-header-1;
+        font-family: $f__baloobha;
+        color: rgb(160, 242, 260);
+      }
+
+      .label {
+        font-family: $f__baloobha;
+        font-size: $font-size-small;
+        text-transform: capitalize;
+      }
     }
   }
 
@@ -125,21 +140,26 @@
 
   .cubegon-name {
     position: absolute;
-    bottom: -22px;
+    margin-top: -2px;
+    z-index: 2;
     left: 50%;
     transform: translateX(-50%);
-    height: 44px;
+    height: 50px;
     width: calc(100% + 24px);
 
-    span {
+    .cubegon-name__content {
       position: absolute;
-      left: 50%;
+      left: 0;
+      right: 0;
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateY(-50%);
       font-size: $font-size-header-1;
       color: $white;
       font-family: $f__baloobha;
       text-shadow: 0 0 3px white;
+      padding: 0 12px 4px 12px;
+      @include ellipsis;
+      text-align: center;
     }
   }
 }

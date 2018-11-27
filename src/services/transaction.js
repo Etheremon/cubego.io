@@ -283,19 +283,22 @@ export const RegisterModelToBlockchain = (dispatch, action, _t, {retrying, cubeg
   }));
 };
 
-export const DeleteModel = (dispatch, action, _t, {tokenId, successCallback, failedCallback, finishCallback}) => {
+export const DeleteModel = (dispatch, action, _t, {tokenId, name, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
     title: _t('delete_cubegon'),
     note: _t('delete_cubegon_note'),
     title_done: _t('deleting_cube'),
-    txn_done: _t('detele_cubegon_done'),
+    txn_done: _t('delete_cubegon_done'),
     follow_up_txt: _t('check inventory'),
     follow_up_action: () => {history.push(`/${URLS.INVENTORY}`)},
-    fields_order: ['tokenid'],
-    button: _t('delete cubegon'),
+    fields_order: ['name', 'tokenid'],
+    button: _t('delete_cubegon'),
     forceToSubmittingState: true,
 
     fields: {
+      name: {
+        text: _t('cubegon name'), value: name, readonly: true, type: 'text',
+      },
       tokenid: {
         text: _t('token_id'), value: tokenId, readonly: true, type: 'text',
       },

@@ -150,7 +150,7 @@ class HomePage extends React.Component {
           {
             !Config.START_PRESALE ? <div className={'home__intro-countdown'}>
               <p className={'presale-text'}>{_t('presale start in')}</p>
-              <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE} onFinishCountdown={() => {
+              <Countdown className={'countdown__container'} targetTime={Config.PRESALE_DATE} onFinishCountdown={() => {
                   window.location.reload()
               }}/>
   

@@ -17,11 +17,23 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
+    &.colon {
+      width: auto;
+      margin: 0;
+    }
   }
 
   .label {
     font-family: $f__overpass;
     font-size: $font-size-big;
     white-space: nowrap;
+    display: none;
+  }
+
+  &.show-text {
+    .label {
+      display: block;
+    }
   }
 }

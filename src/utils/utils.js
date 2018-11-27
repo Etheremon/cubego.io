@@ -5,7 +5,8 @@ export const IsLiveServer = window.location.hostname === "cubego.io"
 export const IsLocalhost = window.location.hostname === "localhost"
   || window.location.hostname === "www.localhost"
   || window.location.hostname === "127.0.0.1"
-  || window.location.hostname === "222.127.0.0.1";
+  || window.location.hostname === "222.127.0.0.1"
+  || window.location.hostname === "192.168.1.15";
 
 export const CutoffString = (s, p) => (!s || s.length <= p ? s : `${s.substr(0, p)}...`);
 
