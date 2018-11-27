@@ -12,6 +12,11 @@
     width: 100%;
     display: flex;
     align-items: center;
+
+    .fas {
+      margin-left: auto;
+      padding-right: 8px;
+    }
   }
 
   .widget__dropdown__list {
@@ -26,6 +31,7 @@
     z-index: 10;
     max-height: 500px;
     overflow-y: auto;
+    min-width: 100%;
 
     p, a {
       color: $gray-dark !important;

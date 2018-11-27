@@ -21,7 +21,7 @@ class CubegonCard extends React.Component {
   }
 
   render() {
-    const {_t, className, energy_limit, energy_left, id, name, total_cubego, total_stats, type_id} = this.props;
+    const {_t, className, energy_limit, energy_left, id, name, total_cubego, total_stats, type_id, shape_id} = this.props;
 
     return(
       <div className={`cubegon-card__container ${className && className}`}>

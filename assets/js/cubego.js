@@ -64,6 +64,7 @@ function destroyCubegon(tokenId, callbackFunc) {
 }
 
 function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
+  console.log(tokenId, energyLimit, valueToSend)
   callBlockchainFunction(
     contractInstances.cubegonBuilderInstance.updateCubegonEnergyLimit,
     contractAddress.CUBEGON_BUILDER_ADDRESS,

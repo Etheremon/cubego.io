@@ -2,13 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import {getTranslate} from "react-localize-redux"
 import * as Stores from "../../../../reducers/index"
-import Popup from "../../../widgets/Popup/Popup.jsx";
-import * as Utils from "../../../../utils/utils";
-import {Text} from "../../../widgets/Text/Text.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
-import * as LS from "../../../../services/localStorageService";
+import * as ObjUtils from "../../../../utils/objUtils";
 import Dropdown from "../../../widgets/Dropdown/Dropdown.jsx";
-import { IsEqual } from '../../../../utils/objUtils';
 import { popTxn } from '../../../../actions/txnAction';
 import {GetLoggedInUserId, GetTxn, GetUserInfo} from '../../../../reducers/selectors';
 import { CustomRectangle } from "../../../widgets/SVGManager/SVGManager.jsx";
@@ -41,6 +37,7 @@ class TxnBar extends React.Component {
       currentTxn: {...this.props.currentTxn, state: TxnBarState.TO_SUBMIT},
       toggleVar: null,
     };
+    this.dropdownSelected = undefined;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,7 +46,7 @@ class TxnBar extends React.Component {
       return
     }
 
-    if (!IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
+    if (!ObjUtils.IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
       if (this.state.currentTxn) {
         this.state.currentTxn.onFinishCallback && this.state.currentTxn.onFinishCallback();
       }
@@ -103,7 +100,19 @@ class TxnBar extends React.Component {
   }
 
   handleOnInputChange(e, field) {
-    this.state.currentTxn.fields[field].value = e.target.value;
+    this.state.currentTxn.fields[field].value = e.target;
+
+    let passiveUpdate = {};
+    ObjUtils.ForEach(this.state.currentTxn.fields, (key, val) => {
+      if (val.onUpdate) {
+        passiveUpdate[key] = val.onUpdate(this.state.currentTxn.fields)
+      }
+    });
+
+    ObjUtils.ForEach(passiveUpdate, (k, val) => {
+      this.state.currentTxn.fields[k].value = val;
+    });
+
     this.setState({
       currentTxn: this.state.currentTxn
     });
@@ -129,16 +138,26 @@ class TxnBar extends React.Component {
             {/*</div>*/}
 
             {this.state.currentTxn.fields_order.map((fieldName, idx) => {
-              console.log(typeof(this.state.currentTxn.fields[fieldName].text), this.state.currentTxn.fields[fieldName].text)
+              
               return(
                 <div className="txn-field" key={idx}>
                   <label>{typeof(this.state.currentTxn.fields[fieldName].text) === 'string' ? _t(this.state.currentTxn.fields[fieldName].text) : this.state.currentTxn.fields[fieldName].text}</label>
                   { (this.state.currentTxn.fields[fieldName].type === 'dropdown' || this.state.currentTxn.fields[fieldName].type === 'buttons')
                     ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
-                        ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
-                                    list={this.state.currentTxn.fields[fieldName].options}
-                                    onClick={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
-                          />
+                        ? <Dropdown key={idx}
+                                    iconDropdown={true}
+                                    list={this.state.currentTxn.fields[fieldName].options.map(k => {
+                                      return {
+                                        content: k.content,
+                                        onClick: () => { 
+                                          this.dropdownSelected = k.content;
+                                          this.handleOnInputChange({target: k.value}, fieldName)
+                                        }
+                                      }
+                                    })}
+                          >
+                          {this.dropdownSelected ? this.dropdownSelected : this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
+                          </Dropdown>
                         : this.state.currentTxn.fields[fieldName].options.map((option, idx) => (
                             this.state.currentTxn.fields[fieldName].value === option.value
                               ? <span key={idx}><ButtonNew>{option.text}</ButtonNew></span>
