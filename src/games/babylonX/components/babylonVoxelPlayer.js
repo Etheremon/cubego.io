@@ -244,11 +244,10 @@ export class BabylonVoxelPlayer extends BabylonComponent {
           // this.particles[idx].originalColor = color;
           let x = (parseInt(voxel.color.sub_material_id, 10)%100);
           let y = parseInt(voxel.color.material_id, 10);
-          console.log(x, y);
-          this.particles[idx].uvs.x = (x-1)/10;
-          this.particles[idx].uvs.y = (y)/13;
-          this.particles[idx].uvs.z = x/10;
-          this.particles[idx].uvs.w = (y+1)/13;
+          this.particles[idx].uvs.x = (x-1)/10 + 0.01;
+          this.particles[idx].uvs.y = (y)/13 + 0.01;
+          this.particles[idx].uvs.z = x/10 - 0.01;
+          this.particles[idx].uvs.w = (y+1)/13 - 0.01;
         });
       };
       let playerMesh = spsVoxel.buildMesh();

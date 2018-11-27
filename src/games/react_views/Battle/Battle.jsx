@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import BabylonX from "../../babylonX";
 import VoxBattle from "../../3d/VoxBattle.jsx";
 import Popup from "../../../views/widgets/Popup/Popup.jsx";
-import {GetLoggedInUserId, GetSavedModel, GetUserInfo, GetUserNumberOfMaterials} from "../../../reducers/selectors";
+import {GetSavedModel} from "../../../reducers/selectors";
 import {getTranslate} from "react-localize-redux";
 import withRouter from "react-router-dom/es/withRouter";
 import connect from "react-redux/es/connect/connect";
+import {EmptyCubegonList} from "../../../views/containers/EmptyView/EmptyView.jsx";
 
 require("style-loader!./Battle.scss");
-
 
 class _Battle extends Component {
   constructor(props) {
@@ -47,12 +47,19 @@ class _Battle extends Component {
 
   loadModel() {
     let parser = new window.vox.Parser();
-
     let model2Parser = parser.parse(require('../../../shared/sample_models/cat.vox'));
     let model1Parser = parser.parse(require('../../../shared/sample_models/momotaro.vox'));
     Promise.all([model1Parser, model2Parser]).then((data) => {
-      this.voxel.setPlayer(0, {model: data[0], image: require('../../../shared/img/game_ui/momotoro1.png'), type: 'magical_voxel'});
-      this.voxel.setPlayer(1, {model: data[1], image: '', type: 'magical_voxel'});
+      this.voxel.setPlayer(0, {
+        model: data[0],
+        image: require('../../../shared/img/game_ui/momotoro1.png'),
+        type: 'magical_voxel'
+      });
+      this.voxel.setPlayer(1, {
+        model: data[1],
+        image: require('../../../shared/img/game_ui/cat.png'),
+        type: 'magical_voxel'
+      });
     });
   }
 
@@ -60,8 +67,26 @@ class _Battle extends Component {
     this.setState({showCubegonSelect: true});
   }
 
+  renderListModel(listModel, _t, history) {
+    if (listModel.length > 0) {
+      return listModel.map((item, idx) => {
+        return <div className={'template'} key={idx} onClick={() => {
+          this.onModelSelect(item, idx)
+        }}>
+          <img className={'img'}
+               src={item.image ? item.image : require('../../../shared/sample_models/0.png')}/>
+          <div className={'name'}>
+            {_t(`saved model ${idx}`)}
+          </div>
+        </div>
+      })
+    } else {
+      return <EmptyCubegonList _t={_t} history={history}/>
+    }
+  }
+
   render() {
-    let {savedModel, _t} = this.props;
+    let {savedModel, _t, history} = this.props;
 
     return (
       <div className={'battle-3d-view'}
@@ -77,19 +102,7 @@ class _Battle extends Component {
           }}
                  open={this.state.showCubegonSelect} size={'large'}>
             <div className={'battle-3d-view__select-cubegons'}>
-              {
-                savedModel.map((item, idx) => {
-                  return <div className={'template'} key={idx} onClick={() => {
-                    this.onModelSelect(item, idx)
-                  }}>
-                    <img className={'img'}
-                         src={item.image ? item.image : require('../../../shared/sample_models/0.png')}/>
-                    <div className={'name'}>
-                      {_t(`saved model ${idx}`)}
-                    </div>
-                  </div>
-                })
-              }
+              {this.renderListModel(savedModel, _t, history)}
             </div>
           </Popup> : null
         }

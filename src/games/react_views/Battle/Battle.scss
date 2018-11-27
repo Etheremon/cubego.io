@@ -18,7 +18,7 @@
     flex-wrap: wrap;
     background-color: $c__background-2;
     @include border-radius-without-overflow(4px);
-    padding: 12px 12px 2px 12px;
+    padding: 12px 12px 12px 12px;
     .template {
       padding: 4px;
       text-align: center;
