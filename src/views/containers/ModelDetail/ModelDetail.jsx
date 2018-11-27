@@ -21,6 +21,7 @@ import { UpdateCubegonName, DeleteModel, UpdateCubegonEnergy } from '../../../se
 import { addTxn } from '../../../actions/txnAction.js';
 import { ConvertUnixToDateTime } from '../../../utils/utils.js';
 import { GON_TIER } from '../../../constants/cubegon.js';
+import {URLS} from "../../../constants/general";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -44,7 +45,7 @@ class ModelDetail extends React.Component {
   }
 
   mainViewRender() {
-    const {_t, gonInfo, userInfo, gonId, userId} = this.props;
+    const {_t, gonInfo, userInfo, gonId, userId, history} = this.props;
 
     if (!gonInfo) {
       return <div className={'model-detail__loading-container'}>
@@ -75,7 +76,7 @@ class ModelDetail extends React.Component {
           <div className="model-detail__container">
             <div className="model-review">
                 {model ?
-                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} 
+                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}}
                   model={model} viewOnly/> : null
                 }
             </div>
@@ -99,7 +100,7 @@ class ModelDetail extends React.Component {
                     failedCallback: null,
                     finishCallback: (data) => {},
                   });
-                }} /> 
+                }} />
               </span>
             </div>
 
@@ -109,11 +110,11 @@ class ModelDetail extends React.Component {
                         DeleteModel(this.props.dispatch, addTxn, _t, {
                           tokenId: gonInfo.token_id,
                           successCallback: (data) => {
-                            
+
                           },
                           failedCallback: null,
                           finishCallback: () => {
-                            
+
                           },
                         });
                       }}/>
@@ -148,7 +149,7 @@ class ModelDetail extends React.Component {
             <Text className={'detail-profile header'} type={Text.types.H2} children={_t('profile')} />
             <div className="profile__container">
               <div className={'cube-statistic'}>
-                
+
               </div>
               <div className="pie-chart__container">
                 <div className="pie-chart">
@@ -171,7 +172,7 @@ class ModelDetail extends React.Component {
 
             <Text className={'detail-moves header'} type={Text.types.H2} children={_t('moves')} />
             <div className="moves__container">
-              {moves.map((item, idx) => 
+              {moves.map((item, idx) =>
                 <img key={idx} src={require('../../../shared/img/icons/icon-stats.png')} />
                 )}
             </div>
@@ -189,6 +190,7 @@ class ModelDetail extends React.Component {
 
             <div className="profile-action__container">
               <ButtonNew label={_t('go_to_battle')}
+                         onClick={()=>history.push(`/${URLS.BATTLE}/${gonId}`)}
                       className={'go-to-battle__button'} size={ButtonNew.sizes.NORMAL}/>
 
               <div className="trade__container">
@@ -197,7 +199,7 @@ class ModelDetail extends React.Component {
                 <ButtonNew label={_t('sell')} color={ButtonNew.colors.TURQUOISE}
                 className={'sell__button'} size={ButtonNew.sizes.NORMAL}/>
               </div>
-              
+
               <ButtonNew label={_t('top_up_energy')}
                       className={'top-up-energy__button'} size={ButtonNew.sizes.NORMAL} onClick={() => {
                         UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
@@ -205,11 +207,11 @@ class ModelDetail extends React.Component {
                           tokenId: gonInfo.token_id,
                           energyLimit: gonInfo.used_energy,
                           successCallback: (data) => {
-                            
+
                           },
                           failedCallback: null,
                           finishCallback: () => {
-                            
+
                           },
                         });
                       }}/>

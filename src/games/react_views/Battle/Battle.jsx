@@ -70,17 +70,29 @@ class _Battle extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.match.params.gon1Id && nextProps.selectedGon1Info && (!this.props.selectedGon1Info || nextProps.match.params.gon1Id !== this.props.match.params.gon1Id)) {
+    if (!this.props.selectedGon1Info || nextProps.match.params.gon1Id !== this.props.match.params.gon1Id) {
+      this.setPlayer1Data(nextProps);
+    }
+    if (!this.props.selectedGon2Info || nextProps.match.params.gon2Id !== this.props.match.params.gon2Id) {
+      this.setPlayer2Data(nextProps);
+    }
+  }
+
+  setPlayer1Data(props) {
+    if (props.match.params.gon1Id && props.selectedGon1Info) {
       let playerData = {
-        image: GetImageFromGonID(nextProps.match.params.gon1Id),
-        model: GetModelFromStructure(nextProps.selectedGon1Info.structure)
+        image: GetImageFromGonID(props.match.params.gon1Id),
+        model: GetModelFromStructure(props.selectedGon1Info.structure)
       };
       this.voxel.setPlayer(1, playerData);
     }
-    if (nextProps.match.params.gon2Id && nextProps.selectedGon2Info && (!this.props.selectedGon2Info || nextProps.match.params.gon2Id !== this.props.match.params.gon2Id)) {
+  }
+
+  setPlayer2Data(props) {
+    if (props.match.params.gon2Id && props.selectedGon2Info) {
       let playerData = {
-        image: GetImageFromGonID(nextProps.match.params.gon2Id),
-        model: GetModelFromStructure(nextProps.selectedGon2Info.structure)
+        image: GetImageFromGonID(props.match.params.gon2Id),
+        model: GetModelFromStructure(props.selectedGon2Info.structure)
       };
       this.voxel.setPlayer(0, playerData);
     }
@@ -88,7 +100,6 @@ class _Battle extends Component {
 
   loadModel() {
     let parser = new window.vox.Parser();
-    let parserPromise = [];
 
     if (!this.props.match.params.gon1Id || this.props.match.params.gon1Id === '-1' || isNaN(this.props.match.params.gon1Id)) {
       parser.parse(require('../../../shared/sample_models/cat.vox')).then((data) => {
@@ -99,7 +110,11 @@ class _Battle extends Component {
         });
       });
     } else {
-      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.match.params.gon1Id, forceUpdate: true}));
+      this.setPlayer1Data(this.props);
+      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({
+        gonId: this.props.match.params.gon1Id,
+        forceUpdate: true
+      }));
     }
 
     if (!this.props.match.params.gon2Id || this.props.match.params.gon2Id === '-1' || isNaN(this.props.match.params.gon2Id)) {
@@ -111,7 +126,11 @@ class _Battle extends Component {
         });
       });
     } else {
-      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.match.params.gon2Id, forceUpdate: true}));
+      this.setPlayer2Data(this.props);
+      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({
+        gonId: this.props.match.params.gon2Id,
+        forceUpdate: true
+      }));
     }
   }
 
