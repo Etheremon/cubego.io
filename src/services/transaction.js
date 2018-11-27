@@ -167,18 +167,18 @@ export const SubmitModel = (dispatch, action, _t, {cubegon_name, cubegon_structu
   }));
 };
 
-export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, id, successCallback, failedCallback, finishCallback}) => {
+export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, id, tokenId, successCallback, failedCallback, finishCallback}) => {
   let forceToSubmittingState, fields_order;
   let messageToSign = `${id}-${''}`;
 
   if (window.isEtherAccountActive()) {
     // can sign automatically
     forceToSubmittingState = false;
-    fields_order = ['id', 'name'];
+    fields_order = ['id', 'old_name', 'name'];
   } else {
     // sign manually
     forceToSubmittingState = false;
-    fields_order = ['id', 'name', 'message', 'signature'];
+    fields_order = ['id', 'old_name', 'name', 'message', 'signature'];
   }
 
   dispatch(action({
@@ -194,13 +194,17 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
 
     fields: {
       id: {
-        text: _t(`cubegon id`), value: id, readonly: true, type: 'text',
+        text: _t(`cubegon id`), value: tokenId, readonly: true, type: 'text',
+      },
+      old_name: {
+        text: _t(`cubegon old name`), value: cubegon_name, readonly: true, type: 'text',
       },
       name: {
-        text: _t(`cubegon name`), value: cubegon_name, readonly: false, type: 'text',
+        text: _t(`cubegon new name`), value: "", placeholder: _t('give me a name'), readonly: false, type: 'text',
       },
       message: {
         text: _t('txn.message_to_sign'), value: messageToSign, readonly: true, type: 'text',
+        onUpdate: (fields) => (`${fields.id.value}-${fields.name.value}`),
       },
       signature: {
         text: _t('txn.signature_desc'), placeholder: _t('txn.signature_placeholder'), value: '', readonly: false, type: 'text',
@@ -211,7 +215,7 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
       // Validating Data
 
       // Sending Txn
-      window.signMessage(messageToSign, address, (code, data) => {
+      window.signMessage(obj.message.value, address, (code, data) => {
         let signature;
         if (code === RESULT_CODE.SUCCESS) {
           signature = data.signature;
@@ -225,7 +229,6 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
         CubegonApi.UpdateCubegonName({
           id: id,
           name: cubegon_name,
-          timestamp: currentTimestamp,
           signature: signature,
         }).then(({response, error}) => apiCallbackFunction(response, error, callback, successCallback, failedCallback));
       });

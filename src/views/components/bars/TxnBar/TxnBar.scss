@@ -84,13 +84,13 @@
         outline: none;
         border: 0;
         background-color: #49A6C5;
-        padding: 8px 8px 4px 8px;
+        padding: 4px 8px 0 8px;
         border-radius: 5px;
         font-family: $f__baloobha;
         color: $white;
         box-sizing: border-box;
         resize: none;
-        line-height: 20px;
+        line-height: 0;
 
         &:read-only {
           box-shadow: none;

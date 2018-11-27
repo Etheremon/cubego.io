@@ -28,8 +28,7 @@ class ModelDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allowChangeName: false,
-    }
+    };
     this.mainViewRender = this.mainViewRender.bind(this);
   }
 
@@ -50,9 +49,6 @@ class ModelDetail extends React.Component {
       return <Loading />
     }
 
-
-    const {allowChangeName} = this.state;
-
     const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_win, label: 'win'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_lose, label: 'lose'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: `${gonInfo.used_energy}/${gonInfo.energy_limit}`, label: 'energy'}];
@@ -64,7 +60,7 @@ class ModelDetail extends React.Component {
                           {label: 'Health', value: gonInfo.hp, color: '#332216'},
                           {label: 'Speed', value: gonInfo.speed, color: '#003366'}];
     const model = GetModelFromStructure(gonInfo.structure);
-    console.log(gonInfo)
+
     return (
       <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>
 
@@ -76,7 +72,7 @@ class ModelDetail extends React.Component {
                 }
             </div>
 
-            <div className={`model-info ${allowChangeName ? 'expand' : ''}`}>
+            <div className={`model-info`}>
               <div className="model-logo__container">
                 {/* <div className="hexagon-img">
                   <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
@@ -84,23 +80,16 @@ class ModelDetail extends React.Component {
                 <img src={require('../../../shared/img/types/earth.png')} />
               </div>
               <span>
-                <input type="text" defaultValue={gonInfo.name} size={10} onChange={() => {}}
-                onFocus={() => {this.setState({allowChangeName: true})}}
-                onBlur={() => {this.setState({allowChangeName: false})}}
-                ref={(input) => {this.cubegonName = input}}
-                />
+                <input type="text" defaultValue={gonInfo.name} size={10} onChange={() => {}} readOnly={true} />
                 <img src={require('../../../shared/img/icons/icon_pencil.png')} onClick={() => {
                   UpdateCubegonName(this.props.dispatch, addTxn, _t, {
-                    cubegon_name: '',
+                    cubegon_name: gonInfo.name,
                     id: gonId,
+                    tokenId: gonInfo.token_id,
                     address: userId,
-                    successCallback: (data) => {
-                      
-                    },
+                    successCallback: null,
                     failedCallback: null,
-                    finishCallback: () => {
-                      
-                    },
+                    finishCallback: (data) => {},
                   });
                 }} /> 
               </span>

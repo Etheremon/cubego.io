@@ -41,14 +41,6 @@
       // transition: all 0.5s;
       // transition-timing-function: ease-in-out;
 
-      &.expand {
-        span {
-          input[type=text] {
-            width: 200px;
-          }
-        }
-      }
-
       span {
         text-align: center;
         flex-grow: 1;
@@ -81,14 +73,13 @@
         img {
           display: block;
           margin-left: 8px;
-          height: 5px;
-          transform: rotate(-240deg);
+          padding: 12px 0;
+          height: 12px;
           transform: rotate(120deg);
           @include transition-duration;
-        }
+          cursor: pointer;
 
-        &:hover {
-          img {
+          &:hover {
             transform: rotate(60deg);
           }
         }
