@@ -2,7 +2,7 @@ import * as BABYLON from 'babylonjs';
 
 const CHILDREN = 'children';
 const emptyFnc = (name) => () => {
-  console.log(name);
+  // console.log(name);
 };
 
 const cutHex = (h) => h.charAt(0) === "0" && h.charAt(1) === "x" ? h.substring(2, 8) : h;

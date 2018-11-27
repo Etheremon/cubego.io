@@ -204,7 +204,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       let max = {x: 0, y: 0, z: 0};
       let elements = [];
       let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
-      console.log(data.voxels);
       Object.keys(data.voxels).forEach((key) => {
         let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
         meshBox.dataId = key;
@@ -238,10 +237,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
             y: size/2 + size * voxel.z,
             z: -size * (max.y - min.y) / 2 + size * voxel.y
           };
-          // let color = hexToColor3(voxel.color.color.replace('#', ''));
           this.particles[idx].position = position;
-          // this.particles[idx].color = color;
-          // this.particles[idx].originalColor = color;
           let x = (parseInt(voxel.color.sub_material_id, 10)%100);
           let y = parseInt(voxel.color.material_id, 10);
           this.particles[idx].uvs.x = (x-1)/10 + 0.01;
@@ -262,7 +258,13 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       elements.forEach((element) => {
         element.dispose();
       });
-
+      spsVoxel.updateParticle = (p) => {
+        if (this.isCollision && !this.isAttacking) {
+          p.color = HURT_COLOR;
+        } else {
+          p.color = null;
+        }
+      };
       spsVoxel.initParticles();
       spsVoxel.setParticles();
       let pivotAt = new BABYLON.Vector3(0, 0, 0);

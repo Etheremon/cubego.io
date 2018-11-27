@@ -167,7 +167,7 @@ class App extends React.Component {
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
           <Route path={`/${URLS.INVENTORY}`} component={Inventory}/>
 
-          <Route path={`/${URLS.BATTLE}`} component={BattlePage}/>
+          <Route path={`/${URLS.BATTLE}/:gon1Id?/:gon2Id?`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
           <Route path={`/${URLS.RANKING}`} component={RankingPage}/>
