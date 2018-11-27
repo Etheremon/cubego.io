@@ -237,16 +237,16 @@ export const UpdateCubegonName = (dispatch, action, _t, {cubegon_name, address, 
   }));
 };
 
-export const CreateModel = (dispatch, action, _t, {cubegon_name, num_cubes, total_cost, txn_data, history, successCallback, failedCallback, finishCallback}) => {
+export const CreateModel = (dispatch, action, _t, {retrying, cubegon_name, num_cubes, txn_data, history, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
-    title: _t('create_cubegon'),
-    note: _t('create_cubegon_note'),
+    title: retrying ? _t('resubmit_cubegon') : _t('create_cubegon'),
+    note: retrying ? _t('resubmit_cubegon_note') : _t('create_cubegon_note'),
     title_done: _t('creating_cube'),
     txn_done: _t('creating_cubegon_done'),
     follow_up_txt: _t('check inventory'),
-    follow_up_action: () => {history.push(`/${URLS.INVENTORY}`)},
+    follow_up_action: () => {history.push(`/${URLS.INVENTORY}?tab=cubegons`)},
     fields_order: ['name', 'cubes', 'energy', 'total_cost'],
-    button: _t('create cubegon'),
+    button: retrying ? _t('resubmit_cubegon') : _t('create cubegon'),
     forceToSubmittingState: false,
 
     fields: {

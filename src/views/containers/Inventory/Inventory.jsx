@@ -23,6 +23,7 @@ import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
 import {URLS} from "../../../constants/general";
 import { Link } from 'react-router-dom';
+import PendingCubegonCard from "../../components/PendingCubegonCard/PendingCubegonCard.jsx";
 
 require("style-loader!./Inventory.scss");
 
@@ -44,7 +45,7 @@ class Inventory extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId, forceUpdate: true}));
   }
 
   componentWillUnmount() {
@@ -56,7 +57,7 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <CubegonCard key={idx} {...item} />
+            <PendingCubegonCard key={idx} {...item} />
           </div>
         )}
       </div>

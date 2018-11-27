@@ -1,0 +1,145 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.pending-cubegon-card__container {
+  border: 1px solid #75C3F5;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 3px #59ADE3;
+
+  .border-1 {
+    border: 2px solid #194379;
+    border-radius: 8px;
+  }
+
+  .border-2 {
+    border: 3px solid #B0EDFB;
+    border-radius: 8px;
+  }
+
+  .border-3 {
+    border: 1px solid #1C3B50;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .cubegon__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    position: relative;
+  }
+
+  .cubegon-background__image {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .type__image {
+    position: absolute;
+    height: 44px;
+    width: auto;
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+
+  .shopping__image {
+    background: rgba(204, 81, 80, 1);
+    position: absolute;
+    height: 32px;
+    width: auto;
+    top: -5px;
+    right: 5px;
+    z-index: 3;
+    display: none;
+  }
+
+  .cubegon-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: $regal_blue;
+    color: $white;
+    font-size: $font-size-nano;
+
+    .id {
+      padding-left: 8px;
+      text-align: left;
+      width: 50%;
+    }
+
+    .energy {
+      
+    }
+  }
+
+  .stats__container {
+    display: flex;
+    flex-direction: row;
+    background: $regal_blue;
+    color: $white;
+    padding: 8px 0 0 0;
+    position: relative;
+    z-index: 2;
+
+    .number {
+      font-size: $font-size-large;
+      font-weight: $font-weight-bold;
+      font-family: $f__baloobha;
+    }
+
+    .label {
+      font-size: $font-size-tiny;
+    }
+
+    .cubegoes {
+      width: 50%;
+      box-sizing: border-box;
+      border-right: 2px solid $white;
+    }
+
+    .stats {
+      width: 50%;
+      box-sizing: border-box;
+      font-size: $font-size-small;
+    }
+  }
+
+  .footer {
+    position: relative;
+    height: 20px;
+  }
+
+  .cubegon-name {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 44px;
+    width: calc(100% + 24px);
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: $font-size-header-1;
+      color: $white;
+      font-family: $f__baloobha;
+      text-shadow: 0 0 3px white;
+    }
+  }
+}

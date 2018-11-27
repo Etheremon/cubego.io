@@ -3,6 +3,7 @@ import {SERVER_URL} from "../../config";
 
 const URL_GET_CUBEGON_INFO = SERVER_URL + '/api/cubego/get_data';
 const URL_REGISTER_CUBEGON = SERVER_URL + '/api/cubego/register';
+const URL_RETRY_REGISTER_CUBEGON = SERVER_URL + '/api/cubego/register_retry';
 const URL_UPDATE_NAME = SERVER_URL + '/api/cubego/update_name';
 
 const GetCubegonInfo = (id, tokenId) => {
@@ -32,6 +33,19 @@ const RegisterCubegon = ({address, structure, name, energy_limit, image, timesta
   });
 };
 
+const RetryRegisterCubegon = ({gonId}) => {
+  return new Promise(function(resolve, reject) {
+    sendPostRequest({
+      url: URL_RETRY_REGISTER_CUBEGON,
+      data: {
+        id: gonId
+      },
+      resolve, reject
+    });
+  });
+};
+
+
 const UpdateCubegonName = ({id, name, signature}) => {
   return new Promise(function(resolve, reject) {
     sendPostRequest({
@@ -49,5 +63,6 @@ const UpdateCubegonName = ({id, name, signature}) => {
 export const CubegonApi = {
   GetCubegonInfo,
   RegisterCubegon,
+  RetryRegisterCubegon,
   UpdateCubegonName,
 };

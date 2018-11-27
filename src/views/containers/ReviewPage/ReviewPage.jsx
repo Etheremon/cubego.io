@@ -93,7 +93,6 @@ class ReviewPage extends React.Component {
       CreateModel(this.props.dispatch, addTxn, _t, {
         cubegon_name: this.nameInput ? this.nameInput.value : '',
         num_cubes: stats.total,
-        total_cost: this.cost,
         txn_data: this.createCubegonTxnData,
         history: this.props.history,
         successCallback: null,
@@ -102,7 +101,7 @@ class ReviewPage extends React.Component {
           this.setState({submitting: false});
         },
       });
-    };
+    }
 
   }
 

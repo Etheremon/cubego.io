@@ -5,13 +5,19 @@ import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { CustomRectangle, CubegoFooter } from '../../widgets/SVGManager/SVGManager.jsx';
 import { CUBE_TYPES } from '../../../constants/cubego.js';
 import { GetImageFromGonID } from '../../../utils/logicUtils';
+import {CreateModel} from "../../../services/transaction";
+import {addTxn} from "../../../actions/txnAction";
+import {CubegonApi} from "../../../services/api/cubegonApi";
+import withRouter from "react-router-dom/es/withRouter";
 
-require("style-loader!./CubegonCard.scss");
+require("style-loader!./PendingCubegonCard.scss");
 
 class CubegonCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.resubmitCubegon = this.resubmitCubegon.bind(this);
   }
 
   componentDidMount() {
@@ -20,11 +26,36 @@ class CubegonCard extends React.Component {
   componentWillUnmount() {
   }
 
+  resubmitCubegon() {
+    let {total_cubego, id, name, history, _t} = this.props;
+
+    this.setState({submitting: true});
+
+    CubegonApi.RetryRegisterCubegon({gonId: id}).then(({response, error}) => {
+      if (!error) {
+        CreateModel(this.props.dispatch, addTxn, _t, {
+          retrying: true,
+          cubegon_name: name,
+          num_cubes: total_cubego,
+          txn_data: response,
+          history: history,
+          successCallback: null,
+          failedCallback: null,
+          finishCallback: () => {
+            this.setState({submitting: false});
+          },
+        });
+      }
+    });
+  }
+
   render() {
     const {_t, className, energy_limit, energy_left, id, name, total_cubego, total_stats, type_id} = this.props;
 
+    console.log("Zzz", this.props);
+
     return(
-      <div className={`cubegon-card__container ${className && className}`}>
+      <div className={`pending-cubegon-card__container ${className && className}`}>
         <div className="border-1">
           <div className="border-2">
             <div className="border-3">
@@ -58,6 +89,9 @@ class CubegonCard extends React.Component {
                   <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={`${energy_left}/${energy_limit}+`} onClick={() => {}}/>
                 </div>
 
+                <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} loading={this.state.submitting}
+                           label={_t(`resubmit`)} onClick={this.resubmitCubegon}/>
+
                 <div className="footer">
                   <div className="cubegon-name">
                     <CubegoFooter stroke={'#75C3F5'} fill={'#12314F'} />
@@ -84,7 +118,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(CubegonCard);
+)(CubegonCard));
