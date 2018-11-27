@@ -112,7 +112,7 @@ const PieChart = ({data, stroke, strokeWidth, showLabels, hole, radius}) => {
     startAngle = 0;
     
   return (
-    <svg width={ diameter } height={ diameter } viewBox={ '0 0 ' + diameter + ' ' + diameter } xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <svg width={ '100%' } height={ '100%' } viewBox={ '0 0 ' + diameter + ' ' + diameter } xmlns="http://www.w3.org/2000/svg" version="1.1">
       { data.map(function (slice, sliceIndex) {
         let angle, nextAngle, percent;
 

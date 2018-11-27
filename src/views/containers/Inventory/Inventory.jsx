@@ -69,7 +69,7 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <Link to={`/${URLS.CUBEGONS}/${item.id}`} target={'_self'}>
+            <Link to={`/${URLS.CUBEGONS}/${item.id}`}>
               <CubegonCard key={idx} {...item} />
             </Link>
           </div>
@@ -101,7 +101,7 @@ class Inventory extends React.Component {
       <div className="cubego-view__container">
         <div className="list-item__container">
           {cubegoes.sort((a, b) => (b.material_id - a.material_id)).map((item, idx) =>
-            <div className="card-item" key={idx}>
+            <div className="card-item tag-cubego" key={idx}>
               <CubegoCard key={idx} {...item} _t={_t}/>
             </div>
           )}

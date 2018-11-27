@@ -220,6 +220,13 @@
       @include mobile {
         width: 100%;
       }
+
+      &.tag-cubego {
+        width: 25%;
+        @include mobile {
+          width: 50%;
+        }
+      }
     }
   }
 }
