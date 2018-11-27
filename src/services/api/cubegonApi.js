@@ -46,12 +46,12 @@ const RetryRegisterCubegon = ({gonId}) => {
 };
 
 
-const UpdateCubegonName = ({id, name, signature}) => {
+const UpdateCubegonName = ({token_id, name, signature}) => {
   return new Promise(function(resolve, reject) {
     sendPostRequest({
       url: URL_UPDATE_NAME,
       data: {
-        id,
+        token_id,
         name,
         signature,
       },

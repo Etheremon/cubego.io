@@ -3,6 +3,7 @@ import * as Utils from "./utils";
 import {GetCellKey} from "./modelUtils";
 import {CUBE_MATERIALS} from "../constants/cubego";
 import {IMAGE_URL} from "../config";
+import { GON_TIER } from '../constants/cubegon';
 
 export const GetStructure = (model) => {
   let res = [];
@@ -97,4 +98,10 @@ export const GetImageFromGonID = (id) => {
 
 export const CalculateDiscountPrice = (price, discount, roundNumber) => {
   return Utils.RoundUpToDecimal(price * (1 - discount) , roundNumber);
+}
+
+export const ConvertStatsToTier = (stats) => {
+  return ObjUtils.FilterValue(GON_TIER, (k, v) => {
+    return v.stats[0] <= stats && stats <= v.stats[1];
+  })[0] || undefined
 }

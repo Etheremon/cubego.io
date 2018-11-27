@@ -37,6 +37,7 @@ class TxnBar extends React.Component {
       currentTxn: {...this.props.currentTxn, state: TxnBarState.TO_SUBMIT},
       toggleVar: null,
     };
+    this.dropdownSelected = undefined;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,7 +100,7 @@ class TxnBar extends React.Component {
   }
 
   handleOnInputChange(e, field) {
-    this.state.currentTxn.fields[field].value = e.target.value;
+    this.state.currentTxn.fields[field].value = e.target;
 
     let passiveUpdate = {};
     ObjUtils.ForEach(this.state.currentTxn.fields, (key, val) => {
@@ -137,15 +138,26 @@ class TxnBar extends React.Component {
             {/*</div>*/}
 
             {this.state.currentTxn.fields_order.map((fieldName, idx) => {
+              
               return(
                 <div className="txn-field" key={idx}>
                   <label>{typeof(this.state.currentTxn.fields[fieldName].text) === 'string' ? _t(this.state.currentTxn.fields[fieldName].text) : this.state.currentTxn.fields[fieldName].text}</label>
                   { (this.state.currentTxn.fields[fieldName].type === 'dropdown' || this.state.currentTxn.fields[fieldName].type === 'buttons')
                     ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
-                        ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
-                                    list={this.state.currentTxn.fields[fieldName].options}
-                                    onClick={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
-                          />
+                        ? <Dropdown key={idx}
+                                    iconDropdown={true}
+                                    list={this.state.currentTxn.fields[fieldName].options.map(k => {
+                                      return {
+                                        content: k.content,
+                                        onClick: () => { 
+                                          this.dropdownSelected = k.content;
+                                          this.handleOnInputChange({target: k.value}, fieldName)
+                                        }
+                                      }
+                                    })}
+                          >
+                          {this.dropdownSelected ? this.dropdownSelected : this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
+                          </Dropdown>
                         : this.state.currentTxn.fields[fieldName].options.map((option, idx) => (
                             this.state.currentTxn.fields[fieldName].value === option.value
                               ? <span key={idx}><ButtonNew>{option.text}</ButtonNew></span>

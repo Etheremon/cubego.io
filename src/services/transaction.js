@@ -317,34 +317,40 @@ export const DeleteModel = (dispatch, action, _t, {tokenId, successCallback, fai
   }));
 };
 
-export const UpdateCubegonEnergy = (dispatch, action, _t, {tokenId, energyLimit, successCallback, failedCallback, finishCallback}) => {
+export const UpdateCubegonEnergy = (dispatch, action, _t, {name, tokenId, energyLimit, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
     title: _t('top_up_energy'),
     note: _t('top_up_energy_note'),
     title_done: _t('topping_up_energy'),
     txn_done: _t('top_up_energy_done'),
+    follow_up_txt: _t(''),
     follow_up_action: () => {},
-    fields_order: ['tokenid', 'energyList'],
+    fields_order: ['name', 'energyList'],
     button: _t('top up energy'),
     forceToSubmittingState: false,
     fields: {
-      tokenid: {
-        text: _t('token_id'), value: tokenId, readonly: true, type: 'text',
+      name: {
+        text: _t('name'), value: name, readonly: true, type: 'text',
       },
       energyList: {
         text: _t('energy'),
-        options: Object.keys(ENERGY_LIMIT_PRICE).filter((k) => k > energyLimit).map(item => {content: item}),
+        options: Object.keys(ENERGY_LIMIT_PRICE).filter((k) => k > energyLimit).map(item => { return {content: `${item} (${ENERGY_LIMIT_PRICE[item]} ETH)`, value: item} }),
         type: 'dropdown',
       },
     },
 
     submitFunc: (obj, callback) => {
       // Validating Data
+      if (obj.energyList.value === undefined || obj.energyList.value === '') {
+        callback({'err': 'err.energy_cannot_be_blank'});
+        return;
+      }
+      
 
       // Sending Txn
       let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
-      window.destroyCubegon(
-        tokenId, cbFunc
+      window.updateCubegonEnergy(
+        tokenId, obj.energyList.value, ENERGY_LIMIT_PRICE[obj.energyList.value], cbFunc
       );
     },
     onFinishCallback: function(data) {

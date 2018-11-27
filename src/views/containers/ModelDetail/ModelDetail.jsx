@@ -15,11 +15,12 @@ import PieChart from '../../components/PieChart/PieChart.jsx';
 import {CubegonActions} from "../../../actions/cubegon";
 import {GetCubegonInfo, GetLoggedInUserId, GetUserInfo} from "../../../reducers/selectors";
 import Loading from '../../components/Loading/Loading.jsx';
-import { GetModelFromStructure } from '../../../utils/logicUtils.js';
+import { GetModelFromStructure, ConvertStatsToTier } from '../../../utils/logicUtils.js';
 import { Model3D } from '../../../games/react_views/Model3D/Model3D.jsx';
 import { UpdateCubegonName, DeleteModel, UpdateCubegonEnergy } from '../../../services/transaction.js';
 import { addTxn } from '../../../actions/txnAction.js';
-
+import { ConvertUnixToDateTime } from '../../../utils/utils.js';
+import { GON_TIER } from '../../../constants/cubegon.js';
 
 require("style-loader!./ModelDetail.scss");
 
@@ -46,8 +47,12 @@ class ModelDetail extends React.Component {
     const {_t, gonInfo, userInfo, gonId, userId} = this.props;
 
     if (!gonInfo) {
-      return <Loading />
+      return <div className={'model-detail__loading-container'}>
+                <Loading className={'model-detail__loader'} type={Loading.types.DOG}/>
+            </div>
     }
+
+    const {allowChangeName} = this.state;
 
     const combatStats = [{icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_win, label: 'win'},
                           {icon: require('../../../shared/img/icons/icon-stats.png'), content: gonInfo.total_lose, label: 'lose'},
@@ -55,12 +60,14 @@ class ModelDetail extends React.Component {
 
     const moves = ['icon-stats', 'icon-stats', 'icon-stats', 'icon-stats'];
 
-    const samplePieData = [{label: 'Defense', value: gonInfo.defense, color: '#81d8d0'},
-                          {label: 'Attack', value: gonInfo.attack, color: '#52b7bd'},
-                          {label: 'Health', value: gonInfo.hp, color: '#332216'},
-                          {label: 'Speed', value: gonInfo.speed, color: '#003366'}];
+    const pieData = [{label: 'Defense', value: gonInfo.stats.defense, color: '#81d8d0'},
+                          {label: 'Attack', value: gonInfo.stats.attack, color: '#52b7bd'},
+                          {label: 'Health', value: gonInfo.stats.health, color: '#332216'},
+                          {label: 'Speed', value: gonInfo.stats.speed, color: '#003366'}];
     const model = GetModelFromStructure(gonInfo.structure);
 
+    const total_stats = pieData.reduce((acc, curr) => acc + curr.value, 0)
+    const tier = ConvertStatsToTier(total_stats)
     return (
       <Container className={'model-detail__main'} size={Container.sizes.NORMAL}>
 
@@ -98,7 +105,6 @@ class ModelDetail extends React.Component {
             <div className="model-action">
               <ButtonNew label={_t('destroy')}
                       className={'destroy__button'} size={ButtonNew.sizes.NORMAL} onClick={() => {
-                        console.log('ok')
                         DeleteModel(this.props.dispatch, addTxn, _t, {
                           tokenId: gonInfo.token_id,
                           successCallback: (data) => {
@@ -118,15 +124,22 @@ class ModelDetail extends React.Component {
             <div className="owner-info">
               <div className="owner-name">
                 {_t('owner:')}
-                <span>Maerongia</span>
+                <span>{gonInfo.owner_name}</span>
               </div>
 
               <div className="timestamp">
                 {`${_t('create_time')}:`}
-                <span>20/10/2018</span>
+                <span>{ConvertUnixToDateTime(gonInfo.create_time)}</span>
 
                 {`${_t('patent_id')}:`}
                 <span>{gonInfo.shape_id}</span>
+
+                {`${_t('token_id')}:`}
+                <span>{gonInfo.token_id}</span>
+              </div>
+
+              <div className="tier__container">
+                <img src={tier ? GON_TIER[tier].img : ''}/>
               </div>
 
             </div>
@@ -139,7 +152,7 @@ class ModelDetail extends React.Component {
               <div className="pie-chart__container">
                 <div className="pie-chart">
                 {<PieChart
-                  data={ samplePieData }
+                  data={ pieData }
                   radius={ 100 }
                   hole={ 15 }
                   showLabels={ true }
@@ -150,7 +163,7 @@ class ModelDetail extends React.Component {
                 <img src={require('../../../shared/img/background/background_circle.png')} />
                 <img className={'octagon-img'} src={require('../../../shared/img/icons/icon-total.png')} />
                 <div className="total">
-                  {samplePieData.reduce((acc, curr) => acc + curr.value, 0)}
+                  {total_stats}
                 </div>
               </div>
             </div>
@@ -187,8 +200,9 @@ class ModelDetail extends React.Component {
               <ButtonNew label={_t('top_up_energy')}
                       className={'top-up-energy__button'} size={ButtonNew.sizes.NORMAL} onClick={() => {
                         UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
+                          name: gonInfo.name,
                           tokenId: gonInfo.token_id,
-                          energyLimit: gonInfo.energyLimit,
+                          energyLimit: gonInfo.energy_limit,
                           successCallback: (data) => {
                             
                           },
@@ -210,7 +224,7 @@ class ModelDetail extends React.Component {
   render() {
     const {_t, userInfo} = this.props;
     return (
-      <PageWrapper type={PageWrapper.types.BLUE}>
+      <PageWrapper type={PageWrapper.types.BLUE_DARK}>
 
         <Navbar minifying/>
 

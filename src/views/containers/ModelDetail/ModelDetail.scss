@@ -7,6 +7,10 @@
   margin-top: 60px;
 }
 
+.model-detail__loading-container {
+  padding: 44px 0;
+}
+
 .model-detail__main {
   display: flex;
   flex-wrap: wrap;
@@ -166,6 +170,26 @@
     }
 
     .owner-info {
+      position: relative;
+
+      .tier__container {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 56px;
+        height: 56px;
+
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 180px;
+          height: 180px;
+        }
+      }
+
       .owner-name {
         color: #DBDBDB;
         span {

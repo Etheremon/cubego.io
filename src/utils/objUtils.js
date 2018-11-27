@@ -67,6 +67,12 @@ export const ForEach = (obj, func) => {
   });
 };
 
+export const FilterValue = (obj, func) => {
+  return Object.keys(obj).filter((key) => {
+    return func(key, obj[key]);
+  });
+};
+
 export const Map = (obj, func) => {
   let result = [];
   if (!obj) return result;

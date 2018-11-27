@@ -54,7 +54,7 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    let {enableSearch, className, children, list, position, _t} = this.props;
+    let {enableSearch, className, children, list, position, iconDropdown, _t} = this.props;
 
     if (enableSearch) {
       list = list.filter(item => item.search.toLowerCase().includes(this.state.searchValue));
@@ -65,6 +65,7 @@ class Dropdown extends React.Component {
            ref={(node) => {this.dropdownNode = node}}>
         <div className={`widget__dropdown__content`} onClick={this.toggleOpen}>
           {children}
+          {iconDropdown ? <i className="fas fa-caret-down"></i> : null}
         </div>
         <div className={`widget__dropdown__list ${this.state.open ? 'open' : ''}`}>
           {!enableSearch ? null :
@@ -98,6 +99,7 @@ Dropdown.defaultProps = {
   position: 'left',
   enableSearch: false,
   icon: null,
+  iconDropdown: false,
 };
 
 Dropdown.propTypes = {
