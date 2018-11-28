@@ -64,11 +64,19 @@ function destroyCubegon(tokenId, callbackFunc) {
 }
 
 function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
-  console.log(tokenId, energyLimit, valueToSend)
   callBlockchainFunction(
     contractInstances.cubegonBuilderInstance.updateCubegonEnergyLimit,
     contractAddress.CUBEGON_BUILDER_ADDRESS,
     [tokenId, energyLimit], callbackFunc,
     valueToSend, 600000
   );
+}
+
+function transferCubegon(fromAdd, toAdd, tokenId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonNftInstance.safeTransferFrom,
+    contractAddress.CUBEGO_NFT_ADDRESS,
+    [fromAdd, toAdd, tokenId], callbackFunc,
+    0, 600000
+  )
 }

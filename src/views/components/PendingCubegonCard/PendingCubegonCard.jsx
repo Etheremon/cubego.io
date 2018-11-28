@@ -56,7 +56,6 @@ class CubegonCard extends React.Component {
     const {_t, className, energy_limit, expiry_time, id, name, total_cubego, total_stats, type_id, flag} = this.props;
     let tierId = ConvertStatsToTier(total_stats);
 
-    console.log("asdf", this.props);
     return(
       <div className={`pending-cubegon-card__container ${className && className}`}>
         <div className="border-1">

@@ -23,6 +23,8 @@ import { GON_TIER } from '../../../constants/cubegon.js';
 import {URLS} from "../../../constants/general";
 import {MaterialStatistics} from "../../widgets/SVGManager/SVGManager.jsx";
 import {GON_FLAG} from "../../../constants/cubegon";
+import {TransferCubegon} from "../../../services/transaction";
+import * as Utils from "../../../utils/utils";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -49,7 +51,7 @@ class ModelDetail extends React.Component {
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
         this.imageBase64 = data;
         this.setState({showModelCapturing: true});
       })
@@ -171,7 +173,7 @@ class ModelDetail extends React.Component {
           <div className="model-stats">
             <div className="owner-info">
               <div className="owner-name">
-                {`${_t('owner')}:`}<span>{gonInfo.owner_name}</span>
+                {`${_t('owner')}:`}<span>{gonInfo.owner_name || Utils.CutoffString(gonInfo.owner, 6)}</span>
               </div>
 
               <div className={"id-info"}>
@@ -259,8 +261,22 @@ class ModelDetail extends React.Component {
 
               {isOwner ?
                 <div className="trade__container">
-                  <ButtonNew label={_t('transfer')}
-                             className={'transfer__button'} size={ButtonNew.sizes.NORMAL}/>
+                  <ButtonNew
+                    label={_t('transfer')}
+                    className={'transfer__button'} size={ButtonNew.sizes.NORMAL}
+                    onClick={() => {
+                      TransferCubegon(this.props.dispatch, addTxn, _t, {
+                        fromAdd: gonInfo.owner,
+                        name: gonInfo.name,
+                        token_id: gonInfo.token_id,
+                        successCallback: (data) => {
+                        },
+                        failedCallback: null,
+                        finishCallback: () => {
+                        },
+                      });
+                    }}
+                  />
                   {/*<ButtonNew label={_t('sell')} color={ButtonNew.colors.TURQUOISE}*/}
                              {/*className={'sell__button'} size={ButtonNew.sizes.NORMAL}/>*/}
                 </div> : null

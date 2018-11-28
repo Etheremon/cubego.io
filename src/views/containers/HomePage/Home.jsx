@@ -266,7 +266,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H2} children={_t('combat').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('home_combat_title').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
                       <ButtonNew color={ButtonNew.colors.BLUE} label={_t('watch battle')} onClick={() => {this.props.history.push(`/${URLS.BATTLE}`)}}/>
                     </div>
