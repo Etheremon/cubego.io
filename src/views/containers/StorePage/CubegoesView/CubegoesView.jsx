@@ -206,6 +206,9 @@ class CubegoesView extends React.Component {
         <div className={"cubegoes-view__tip_note"} onClick={() => {Utils.OpenInNewTab(_t('store_tip_link'))}}>
           {_t('store_tip_note')}
         </div>
+        <div className={"cubegoes-view__tip_note"} onClick={() => {Utils.OpenInNewTab(_t('store_read_more_link'))}}>
+          {_t('store_read_more')}
+        </div>
 
         <div className="pack-view__container" onClick={() => {this.setState({selectedItem: ultimatePack})}}>
             {!Utils.IsMobile ? <div className="border"><DiscountFrame text={_t('Save 5%')} /></div> : <img className={'mobile-sale-tag'} src={require('../../../../shared/img/store_cubegoes/presale/saletag.png') } /> }

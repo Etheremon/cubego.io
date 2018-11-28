@@ -11,6 +11,14 @@
 
   .sign-in-page__app {
     text-align: center;
+    .read-more {
+      margin-top: 16px;
+      a {
+        display: block;
+        color: $white;
+        font-size: $font-size-smaller;
+      }
+    }
     img {
       width: 160px;
     }

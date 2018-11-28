@@ -58,7 +58,7 @@ class ReviewPage extends React.Component {
       this.setState({showError: true});
     } else {
       this.setState({submitting: true});
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 512, height: 512}).then((data) => {
         SubmitModel(this.props.dispatch, addTxn, _t, {
           cubegon_name: this.nameInput ? this.nameInput.value : '',
           cubegon_structure: validatedModel.structure,

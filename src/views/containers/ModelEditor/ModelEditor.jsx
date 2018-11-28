@@ -40,6 +40,8 @@ import {Image} from "../../components/Image/Image.jsx";
 import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
+import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
+
 
 require("style-loader!./ModelEditor.scss");
 
@@ -262,7 +264,7 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 120, height: 120}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
@@ -271,7 +273,7 @@ class _ModelEditor extends React.Component {
 
   exportModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
@@ -280,7 +282,7 @@ class _ModelEditor extends React.Component {
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
         this.imageBase64 = data;
         this.modelString = JSON.stringify(LogicUtils.GetSimplifiedModel({...this.toolManager.model, ['image']: data}));
         this.setState({showModelCapturing: true});
@@ -680,8 +682,8 @@ class _ModelEditor extends React.Component {
                       }}/>
                     </div>
                   })
-                  }
-                </div> : null
+                  } 
+                  </div> : null
               }
             </div>
 
@@ -736,7 +738,7 @@ class _ModelEditor extends React.Component {
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
-                     style={{left: `${(tier.points[0])/24000*100}%`}}
+                     style={{left: `${33*idx}%`}}
                      tooltip={_t(`${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>
@@ -753,6 +755,22 @@ class _ModelEditor extends React.Component {
                        tooltip={_t('capture a photo')} tooltip-position={'bottom'}
                        onClick={this.capturePhoto}>
                     <Image img={'icon_camera'}/>
+                  </div>
+                  <div className="model-editor__3d-file-loader" tooltip={_t('load model from file')} tooltip-position={'bottom'}>
+                    <ImportFromFile text={_t('template from file')} handleData={dataFile => {
+                        let modelFromFile;
+                        try {
+                          dataFile = JSON.parse(dataFile);
+                          modelFromFile = LogicUtils.GetFullModel(dataFile);
+                          if (modelFromFile) {
+                            this.toolManager.addModel({model: modelFromFile.model});
+                            this.selectedModelIndex = -1;
+                            this.forceUpdate()
+                          }
+                        } catch (err) {
+                          console.log(err)
+                        }
+                      }}/>
                   </div>
 
                   {this.toolManager.stats.err ?

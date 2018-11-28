@@ -253,9 +253,19 @@
         }
       }
 
-      .model-editor__3d-capture {
+      .model-editor__3d-file-loader {
         position: absolute;
         z-index: 3;
+        right: 18px;
+        top: 105px;
+        .upload-expense {
+
+        }
+      }
+
+      .model-editor__3d-capture {
+        position: absolute;
+        z-index: 4;
         right: 18px;
         top: 60px;
         cursor: pointer;
