@@ -265,6 +265,7 @@ export class ToolManager {
     this._stats.err = '';
     if (this._userCubes && this._stats.invalid_materials.length) {
       this._stats.err = 'err.some_invalid_materials';
+      this._stats.errValues = this._stats.invalid_materials;
     } else if (ObjUtils.GetLength(this._stats.materials) > Config.CUBEGON_MAX_MATERIALS) {
       this._stats.err = 'err.max_materials';
     } else if (this._stats.total > Config.CUBEGON_MAX_CUBE) {

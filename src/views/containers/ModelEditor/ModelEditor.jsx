@@ -289,16 +289,21 @@ class _ModelEditor extends React.Component {
   }
 
   reviewModel(verified=false, text) {
+    let {_t} = this.props;
+
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
 
-      console.log("reviewing");
       if (this.toolManager.stats.err) {
+        let missingMats = "";
+        if (Array.isArray(this.toolManager.stats.errValues))
+          missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
+
         this.setState({
           validating: false,
           showModelReview: true,
-          reviewError: {code: "general_error", data: this.props._t(this.toolManager.stats.err)},
+          reviewError: {code: "general_error", data: _t(this.toolManager.stats.err, {materials: missingMats})},
           showRegisterPopup: false,
         });
         return;
@@ -356,12 +361,12 @@ class _ModelEditor extends React.Component {
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
                 <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
-                <p>{_t('ID')}: {gon['id']} {_t('Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['shape_diff'])}%</p>
-                <div className={'notice'}>
-                  {_t('shape_matched_notice')}
-                </div>
+                <p>{_t('ID')}: {gon['id']} {_t('Similarity')}: {LogicUtils.ConvertShapeDiffToSimilarity(gon['shape_diff'])}%</p>
               </div>
             ))}
+            <div className={'notice'}>
+              {_t('shape_matched_notice')}
+            </div>
           </div>
         </React.Fragment>
       )
@@ -376,12 +381,12 @@ class _ModelEditor extends React.Component {
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
                 <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
-                <p>{_t('ID')}: {gon['id']} - {_t('Color Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['color_diff'])}%</p>
-                <div className={'notice'}>
-                  {_t('model_matched_notice')}
-                </div>
+                <p>{_t('ID')}: {gon['id']} - {_t('Color Similarity')}: {LogicUtils.ConvertColorDiffToSimilarity(gon['color_diff'])}%</p>
               </div>
             ))}
+            <div className={'notice'}>
+              {_t('model_matched_notice')}
+            </div>
           </div>
         </React.Fragment>
       )
@@ -396,7 +401,7 @@ class _ModelEditor extends React.Component {
           <div className={'matched-gons'}>
             <div className={'matched-gon'}>
               <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
-              <p>{_t('ID')}: {gon['id']} - {_t('Similarity')}: {LogicUtils.ConvertDiffToSimilarity(gon['shape_diff'])}%</p>
+              <p>{_t('ID')}: {gon['id']} - {_t('Similarity')}: {LogicUtils.ConvertShapeDiffToSimilarity(gon['shape_diff'])}%</p>
             </div>
           </div>
           {nextFunc ?
@@ -455,6 +460,12 @@ class _ModelEditor extends React.Component {
           }
         </div>
       );
+    } else if (selectedMaterial.material_id === 0) {
+      colorNote = (
+        <div className={'model-editor__color-note info'}>
+          {_t('color.plastic_note')}
+        </div>
+      );
     }
 
     let totalCost = null;
@@ -469,6 +480,11 @@ class _ModelEditor extends React.Component {
         //   ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
       }
     }
+
+
+    let missingMats = "";
+    if (Array.isArray(this.toolManager.stats.errValues))
+      missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -741,7 +757,7 @@ class _ModelEditor extends React.Component {
 
                   {this.toolManager.stats.err ?
                     <div className={'model-editor__model-error'}>
-                      <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err)}</p>
+                      <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err, {materials: missingMats})}</p>
                     </div> : null
                   }
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}

@@ -70,15 +70,16 @@
         }
       }
       .img {
-        height: 120px;
+        height: 100px;
         @include mobile {
-          height: 100px;
+          height: 90px;
         }
       }
       .name {
         padding-top: 4px;
         font-family: $f__baloobha;
         text-transform: capitalize;
+        font-size: $font-size-small;
       }
     }
   }
@@ -407,7 +408,7 @@
   }
 
   .model-editor__error {
-    padding: 30px;
+    padding: 40px;
     background-color: $regal_blue;
     color: $white95;
 
@@ -425,7 +426,7 @@
     }
 
     .matched-gon {
-      padding: 12px 4px 4px 4px;
+      padding: 30px 4px;
       img {
         width: 200px;
         background-color: rgba(0, 0, 0, 0.6);
