@@ -246,12 +246,12 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 120, height: 120}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
     }
-    
+
   }
 
   capturePhoto() {
