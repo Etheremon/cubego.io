@@ -282,7 +282,7 @@ class _ModelEditor extends React.Component {
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 512, height: 512}).then((data) => {
         this.imageBase64 = data;
         this.modelString = JSON.stringify(LogicUtils.GetSimplifiedModel({...this.toolManager.model, ['image']: data}));
         this.setState({showModelCapturing: true});
@@ -768,6 +768,8 @@ class _ModelEditor extends React.Component {
                             this.toolManager.addModel({model: modelFromFile.model});
                             this.selectedModelIndex = -1;
                             this.forceUpdate()
+                          } else {
+                            alert(_t("template file is invalid"))
                           }
                         } catch (err) {
                           console.log(err)

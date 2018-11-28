@@ -4,6 +4,7 @@
 
   .model3D__buttons {
     position: absolute;
+    z-index: 4;
     top: 8px;
     right: 16px;
     .layer {
