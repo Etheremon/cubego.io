@@ -45,6 +45,22 @@ const DEMO_BATTLE_LOGS = [
   {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
   {moveId: HealingWater.getId(), effects: {damage: 20}, player: 0}
 ];
+
+const DEMO_BATTLE_MOVES = [
+  WindStrike.getId(),
+  HydroBash.getId(),
+  FireBreath.getId(),
+  MilkDrink.getId(),
+  GuardianShield.getId(),
+  LeafThrow.getId(),
+  PyroWisp.getId(),
+  Tackle.getId(),
+  RockThrow.getId(),
+  FireBall.getId(),
+  HydroGun.getId(),
+  AirSlash.getId(),
+  HealingWater.getId()
+];
 //Load map texture
 const loadMapTexture = () => {
   let req = require.context('../../shared/battleground/map_1/', false, /.*\.png/);
@@ -134,10 +150,13 @@ class VoxBattle extends Component {
   }
 
   createDummyBattleLog() {
-    return DEMO_BATTLE_LOGS;
     let logs = [];
+    let moves = DEMO_BATTLE_MOVES.slice();
     for (let i = 0; i < 9; i++) {
-      logs.push({moveId: GetRandomInt(0, MOVES.length - 1), effects: {damage: 20}, player: i % 2})
+      let randomMoveIdx = GetRandomInt(0, moves.length - 1);
+      let moveId = moves[randomMoveIdx];
+      moves.splice(randomMoveIdx, 1);
+      logs.push({moveId: moveId, effects: {damage: 20}, player: i % 2})
     }
     return logs;
   }

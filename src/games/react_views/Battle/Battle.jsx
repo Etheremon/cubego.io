@@ -6,7 +6,6 @@ import {
   GetCubegonInfo,
   GetLoggedInUserId,
   GetSavedModel,
-  GetSelectedCubegon,
   GetUserCubegons
 } from "../../../reducers/selectors";
 import {getTranslate} from "react-localize-redux";
@@ -17,7 +16,6 @@ import {GetImageFromGonID, GetModelFromStructure} from "../../../utils/logicUtil
 import Loading from "../../../views/components/Loading/Loading.jsx";
 import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
-import {BattleActions} from "../../../actions/battle";
 import {URLS} from "../../../constants/general";
 
 require("style-loader!./Battle.scss");

@@ -143,7 +143,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     if (type === 'magical_voxel') {
       let elements = [];
       let scaling = PLAYER_SIZE / data.size.y;
-
       size = size * scaling;
 
       let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
@@ -157,7 +156,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
           let voxel = data.voxels[idx];
           let position = {
             x: -size * data.size.y / 2 + size * voxel.y,
-            y: size/2 + size * voxel.z,
+            y: size / 2 + size * voxel.z,
             z: size * data.size.x / 2 - size * voxel.x
           };
           let color = hexToColor3(fullColorHex(data.palette[voxel.colorIndex]));
@@ -204,7 +203,7 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       let max = {x: -Infinity, y: -Infinity, z: -Infinity};
       let elements = [];
       let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
-      Object.keys(data.voxels).forEach((key)=>{
+      Object.keys(data.voxels).forEach((key) => {
         if (min.x > data.voxels[key].x) {
           min.x = data.voxels[key].x;
         }
@@ -227,7 +226,12 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
       let scalingX = PLAYER_SIZE / (max.x - min.x);
       let scalingY = PLAYER_SIZE / (max.y - min.y);
-      let scaling = scalingX < scalingY ? scalingX : scalingY;
+
+      let scaling = (scalingX + scalingY) / 2;
+      scaling = scalingX < 0.25 ? scalingX * 2 : scaling;
+      scaling = scalingY < 0.25 ? scalingY * 2 : scaling;
+
+      console.log(scalingX, scalingY, scaling);
       size = size * scaling;
 
       Object.keys(data.voxels).forEach((key) => {
@@ -243,16 +247,16 @@ export class BabylonVoxelPlayer extends BabylonComponent {
           let voxel = data.voxels[element.dataId];
           let position = {
             x: -size * (max.x - min.x) / 2 + size * voxel.x,
-            y: size/2 + size * voxel.z,
+            y: size / 2 + size * voxel.z,
             z: -size * (max.y - min.y) / 2 + size * voxel.y
           };
           this.particles[idx].position = position;
-          let x = (parseInt(voxel.color.sub_material_id, 10)%100);
+          let x = (parseInt(voxel.color.sub_material_id, 10) % 100);
           let y = parseInt(voxel.color.material_id, 10);
-          this.particles[idx].uvs.x = (x-1)/10 + 0.01;
-          this.particles[idx].uvs.y = (y)/13 + 0.01;
-          this.particles[idx].uvs.z = x/10 - 0.01;
-          this.particles[idx].uvs.w = (y+1)/13 - 0.01;
+          this.particles[idx].uvs.x = (x - 1) / 10 + 0.01;
+          this.particles[idx].uvs.y = (y) / 13 + 0.01;
+          this.particles[idx].uvs.z = x / 10 - 0.01;
+          this.particles[idx].uvs.w = (y + 1) / 13 - 0.01;
         });
       };
       let playerMesh = spsVoxel.buildMesh();
