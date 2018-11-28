@@ -231,7 +231,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       scaling = scalingX < 0.25 ? scalingX * 2 : scaling;
       scaling = scalingY < 0.25 ? scalingY * 2 : scaling;
 
-      console.log(scalingX, scalingY, scaling);
       size = size * scaling;
 
       Object.keys(data.voxels).forEach((key) => {

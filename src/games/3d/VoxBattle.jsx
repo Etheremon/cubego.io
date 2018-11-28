@@ -93,6 +93,7 @@ class VoxBattle extends Component {
     this.rePlayBtn = null;
     this.startImage = null;
     this.resultImage = null;
+    this.playerWinImage = null;
   }
 
   startGame() {
@@ -134,6 +135,7 @@ class VoxBattle extends Component {
   restartGame() {
     this.rePlayBtn.visible = false;
     this.resultImage.visible = false;
+    this.playerWinImage.visible = false;
     this.mainCamera.attachControl = true;
     let logs = this.createDummyBattleLog();
     this.players[0].init();
@@ -171,6 +173,7 @@ class VoxBattle extends Component {
       this.mainCamera.attachControl = false;
       this.rePlayBtn.visible = true;
       this.resultImage.visible = true;
+      this.playerWinImage.visible = true;
     }, 5000 * logs.length + 1000);
   }
 
@@ -269,24 +272,19 @@ class VoxBattle extends Component {
         <GUI>
           <GUIImage image={require('../../shared/img/game_ui/open.png')} width={`${960 / 960 * 100}%`}
                     height={`${540 / 540 * 100}%`}
-                    ref={(image) => {
-                      this.startImage = image
-                    }}/>
+                    ref={(image) => {this.startImage = image}}/>
           <GUIImage image={this.state.player1Data ? this.state.player1Data.image : null} width={`${150 / 960 * 100}%`}
                     height={`${150 / 540 * 100}%`} left={'-300px'}
-                    ref={(image) => {
-                      this.player1Image = image
-                    }}/>
+                    ref={(image) => {this.player1Image = image}}/>
           <GUIImage image={this.state.player0Data ? this.state.player0Data.image : null} width={`${150 / 960 * 100}%`}
                     height={`${150 / 540 * 100}%`} left={'300px'}
-                    ref={(image) => {
-                      this.player0Image = image
-                    }}/>
+                    ref={(image) => {this.player0Image = image}}/>
           <GUIImage image={require('../../shared/img/game_ui/battle-result.png')} width={`${542 / 960 * 100}%`}
                     height={`${489 / 540 * 100}%`}
-                    visible={false} ref={(image) => {
-            this.resultImage = image
-          }}/>
+                    visible={false} ref={(image) => {this.resultImage = image}}/>
+          <GUIImage image={this.state.player0Data ? this.state.player0Data.image : null} width={`${300 / 960 * 100}%`}
+                    height={`${300 / 540 * 100}%`} visible={false}
+                    ref={(image) => {this.playerWinImage = image}}/>
 
           <GUIImageButton left={'0px'} top={`${200 / 540 * 100}%`} value={'REPLAY GAME'} onClick={this.restartGame}
                           width={`${200 / 960 * 100}%`}
