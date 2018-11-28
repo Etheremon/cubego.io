@@ -62,7 +62,7 @@ export default class LeafThrow extends BaseMove {
     let alpha = fireBall.position.z;
     const update = () => {
       if (!isCollision) {
-        if (fireBall.intersectsMesh(this.player.opponent.playerMesh, false)) {
+        if (this.player.opponent.checkCollision(fireBall)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage);
           pSystem.stop();

@@ -70,7 +70,7 @@ export default class HydroGun extends BaseMove {
     let alpha = water.position.z;
     const update = () => {
       if (!isCollision) {
-        if (water.intersectsMesh(this.player.opponent.playerMesh, false)) {
+        if (this.player.opponent.checkCollision(water)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage);
           pSystem.stop();

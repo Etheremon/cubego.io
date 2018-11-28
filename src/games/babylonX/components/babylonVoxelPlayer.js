@@ -140,6 +140,13 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       this.playerMesh.dispose();
       this.playerMesh = null;
     }
+    let collisionMesh = BabylonMeshBox.create({scene: this.scene}, {
+      size: PLAYER_SIZE * size * 2,
+      position: {x: 0, y: PLAYER_SIZE * size, z: 0}
+    });
+    collisionMesh.parent = this.renderer;
+    collisionMesh.visibility = 0;
+    this.collisionMesh = collisionMesh;
     if (type === 'magical_voxel') {
       let elements = [];
       let scaling = PLAYER_SIZE / data.size.y;
@@ -196,8 +203,10 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       let translation = playerMesh.position.subtract(pivotAt);
       playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
       playerMesh.parent = this.renderer;
+
       this.sps = spsVoxel;
       this.playerMesh = playerMesh;
+
     } else {
       let min = {x: Infinity, y: Infinity, z: Infinity};
       let max = {x: -Infinity, y: -Infinity, z: -Infinity};
@@ -346,8 +355,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   }
 
   createHitParticle(emitter) {
-    // let matrix = this.playerMesh.getWorldMatrix();
-    // let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     if (!emitter)
       emitter = new BABYLON.Vector3(0, 4, 0);
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
@@ -427,6 +434,10 @@ export class BabylonVoxelPlayer extends BabylonComponent {
 
   get opponent() {
     return this._opponent;
+  }
+
+  checkCollision(mesh) {
+    return mesh.intersectsMesh(this.playerMesh, false) || mesh.intersectsMesh(this.collisionMesh, false)
   }
 
   destroyAll() {
