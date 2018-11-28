@@ -324,7 +324,8 @@ const _CUBE_MATERIALS = {
     material_id: CUBE_MATERIALS_MAP.paper,
     name: 'paper',
     sub_materials: {
-      [CUBE_MATERIALS_MAP.paper * 100 + 1]: {color: '#eb6128', emissive: '#912727'},
+      // [CUBE_MATERIALS_MAP.paper * 100 + 1]: {color: '#eb6128', emissive: '#912727'},
+      [CUBE_MATERIALS_MAP.paper * 100 + 1]: {color: '#7f0000', emissive: '#7d2424'},
       [CUBE_MATERIALS_MAP.paper * 100 + 2]: {color: '#f773c8', emissive: '#af3692'},
       [CUBE_MATERIALS_MAP.paper * 100 + 3]: {color: '#0b3787', emissive: '#183f9d'},
       [CUBE_MATERIALS_MAP.paper * 100 + 4]: {color: '#450b87', emissive: '#4d1f82'},

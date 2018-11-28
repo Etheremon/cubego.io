@@ -96,7 +96,7 @@ class Slice extends React.Component {
 					<text x={ this.state.x } y={ this.state.y } fill="#fff" textAnchor="middle">
             {/* { this.props.percent ? this.props.percentValue + '%' : this.props.value } */}
             <tspan x={ this.state.x } y={this.state.y} >{this.props.label}</tspan>
-            <tspan x={ this.state.x } y={this.state.y + 12}>{this.props.value}</tspan>
+            <tspan x={ this.state.x } y={this.state.y + 20}>{this.props.value}</tspan>
 					</text>
 				: null }
 			</g>

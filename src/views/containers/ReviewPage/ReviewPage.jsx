@@ -33,7 +33,6 @@ class ReviewPage extends React.Component {
     super(props);
     this.state = {
       allowChangeName: false,
-      cubegonName: '',
 
       energy: Object.keys(ENERGY_LIMIT_PRICE)[0],
       energyBarOffset: 0,
@@ -193,7 +192,7 @@ class ReviewPage extends React.Component {
                 </div>
 
                 <span>
-                  <input type="text" defaultValue={'CubeGon'} size={10} onChange={() => {}}
+                  <input type="text" defaultValue={'name me'} size={10} onChange={() => {}}
                          onFocus={() => {this.setState({allowChangeName: true})}}
                          onBlur={() => {this.setState({allowChangeName: false})}}
                          ref={(input) => {this.nameInput = input}}
@@ -238,7 +237,7 @@ class ReviewPage extends React.Component {
                       let material = CUBE_MATERIALS[mId];
                       let ownedMaterials = stats.storage[mId] || 0;
                       let toPurchaseMaterials = Math.max(0, mVal-ownedMaterials);
-                      let mPrice = toPurchaseMaterials * (material.price || 0);
+                      let mPrice = Utils.RoundToDecimalFloat(toPurchaseMaterials * (material.price || 0), 4);
                       return (
                         <tr key={mId}>
                           <td>

@@ -74,6 +74,8 @@
         border-radius: 8px;
 
         .widget__dropdown__content {
+          width: 100%;
+          box-sizing: border-box;
           padding: 8px 8px;
           color: $white !important;
         }
