@@ -51,7 +51,7 @@ class ModelDetail extends React.Component {
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
         this.imageBase64 = data;
         this.setState({showModelCapturing: true});
       })

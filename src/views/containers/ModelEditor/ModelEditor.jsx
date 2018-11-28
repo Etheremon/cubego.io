@@ -264,7 +264,7 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
@@ -273,7 +273,7 @@ class _ModelEditor extends React.Component {
 
   exportModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
@@ -282,7 +282,7 @@ class _ModelEditor extends React.Component {
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image({width: 64, height: 64}).then((data) => {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
         this.imageBase64 = data;
         this.modelString = JSON.stringify(LogicUtils.GetSimplifiedModel({...this.toolManager.model, ['image']: data}));
         this.setState({showModelCapturing: true});
@@ -487,6 +487,8 @@ class _ModelEditor extends React.Component {
     let missingMats = "";
     if (Array.isArray(this.toolManager.stats.errValues))
       missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
+    
+    let cubegonTierLength = LogicUtils.CalculateLengthBaseOnTier(this.toolManager.stats.gonTier.showPoints);
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -733,7 +735,7 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__tier-bar'}>
-              <div className={'bar'} style={{width: `${this.toolManager.stats.gonTier.showPoints/24000*100}%`}}>
+              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*33 + cubegonTierLength.length*100) : 0}%`}}>
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
