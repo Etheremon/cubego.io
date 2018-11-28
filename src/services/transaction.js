@@ -372,3 +372,42 @@ export const UpdateCubegonEnergy = (dispatch, action, _t, {name, tokenId, energy
 
   }));
 };
+
+export const TransferCubegon = (dispatch, action, _t, {name, fromAdd, token_id, successCallback, failedCallback, finishCallback}) => {
+  dispatch(action({
+    title: _t('transfer_cubegon'),
+    note: _t('transfer_cubegon_note'),
+    title_done: _t('transferring_cubegon'),
+    txn_done: _t('transfer_cubegon_done'),
+    fields_order: ['name', 'cubegon_id', 'to_add'],
+    button: _t('transfer'),
+    forceToSubmittingState: false,
+    fields: {
+      name: {
+        text: _t('cubegon'), value: name, readonly: true, type: 'text',
+      },
+      cubegon_id: {
+        text: _t('cubegon id'), value: token_id, readonly: true, type: 'text',
+      },
+      to_add: {
+        text: _t('receiver address'), value: '', readonly: false, type: 'text',
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+      if (obj.to_add.value === undefined || obj.to_add.value === '' || !window.isValidEtherAddress(obj.to_add.value)) {
+        callback({'err': 'err.invalid_receiver'});
+        return;
+      }
+
+      // Sending Txn
+      let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
+      window.transferCubegon(fromAdd, obj.to_add.value, token_id, cbFunc);
+    },
+    onFinishCallback: function(data) {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};

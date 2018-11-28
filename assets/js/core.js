@@ -22,6 +22,7 @@ function initContractInstance(network) {
   instances.cubegoPresaleInstance = getContractInstance(contractAddress.CUBEGO_PRESALE_ABI_ARRAY, contractAddress.CUBEGO_PRESALE_ADDRESS);
   instances.cubegoEmontPaymentInstance = getContractInstance(contractAddress.CUBEGO_EMONT_PAYMENT_ABI_ARRAY, contractAddress.CUBEGO_EMONT_PAYMENT_ADDRESS);
   instances.cubegoCoreInstance = getContractInstance(contractAddress.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
+  instances.cubegonNftInstance = getContractInstance(contractAddress.CUBEGO_NFT_ABI_ARRAY, contractAddress.CUBEGO_NFT_ADDRESS);
   instances.cubegonBuilderInstance = getContractInstance(contractAddress.CUBEGON_BUILDER_ABI_ARRAY, contractAddress.CUBEGON_BUILDER_ADDRESS);
   return instances;
 }
