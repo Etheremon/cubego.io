@@ -204,7 +204,7 @@
   }
 
   .cubego-view__container {
-    
+    padding-top: 30px;
   }
 
   .pending-note {
@@ -216,13 +216,12 @@
   }
 
   .list-item__container {
-    margin-top: 44px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     .card-item {
       width: 33%;
-      padding: 16px;
+      padding: 32px 20px;
       box-sizing: border-box;
 
       @include mobile {
