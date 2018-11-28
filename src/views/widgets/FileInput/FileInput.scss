@@ -2,17 +2,19 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-.input-file {
-  display: none;
-}
+.upload-expense {
+  .input-file {
+    display: none;
+  }
 
-.input {
-  min-width: 36px;
-  min-height: 16px;
-  cursor: pointer;
-  font-size: $font-size-header-2;
-}
+  .input {
+    min-width: 36px;
+    min-height: 16px;
+    cursor: pointer;
+    font-size: $font-size-header-2;
+  }
 
-.fas {
-  pointer-events: none;
+  .fas {
+    pointer-events: none;
+  }
 }
