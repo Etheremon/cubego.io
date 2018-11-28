@@ -436,20 +436,21 @@
     }
 
     .matched-gon {
-      padding: 30px 4px;
+      padding: 24px 4px;
       img {
         width: 200px;
         background-color: rgba(0, 0, 0, 0.6);
         @include border-radius(6px);
         cursor: pointer;
       }
+    }
 
-      .notice {
-        font-size: $font-size-medium;
-        max-width: 500px;
-        font-weight: $font-weight-semi-bold;
-        padding-top: 8px;
-      }
+    .notice {
+      width: 100%;
+      font-size: $font-size-medium;
+      max-width: 500px;
+      font-weight: $font-weight-semi-bold;
+      padding-top: 8px;
     }
   }
 
