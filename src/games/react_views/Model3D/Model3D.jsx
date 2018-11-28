@@ -42,8 +42,8 @@ export class Model3D extends Component {
     }
   }
 
-  getBase64Image() {
-    return this.voxel.takeScreenshot();
+  getBase64Image(size) {
+    return this.voxel.takeScreenshot(size);
   }
 
   toggleShowLayer() {

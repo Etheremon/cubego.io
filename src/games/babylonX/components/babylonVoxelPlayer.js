@@ -225,7 +225,9 @@ export class BabylonVoxelPlayer extends BabylonComponent {
         }
       });
 
-      let scaling = PLAYER_SIZE / (max.x - min.x);
+      let scalingX = PLAYER_SIZE / (max.x - min.x);
+      let scalingY = PLAYER_SIZE / (max.y - min.y);
+      let scaling = scalingX < scalingY ? scalingX : scalingY;
       size = size * scaling;
 
       Object.keys(data.voxels).forEach((key) => {

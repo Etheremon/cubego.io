@@ -130,17 +130,16 @@ class VoxViewerThree extends Component {
     this.rendererObjects = this.getRendererObjects();
   }
 
-  takeScreenshot() {
+  takeScreenshot(size) {
     return ThreeX.loadTexture('bg-capture', require('../../shared/img/background/background_capture.jpg')).then(() => {
       return new Promise((resolve, reject) => {
         this.setState({
           takingScreenshot: true
         }, () => {
-          let data = ThreeX.Tools.takeScreenshot();
+          let data = ThreeX.Tools.takeScreenshot(size);
           this.setState({
             takingScreenshot: false
-          });
-          resolve(data);
+          }, () => resolve(data));
         });
       });
     })
