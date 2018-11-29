@@ -263,7 +263,7 @@ input[type="range"]::-moz-range-thumb {
 [tooltip] {
   position: relative;
   display: inline-block;
-  font-weight: $font-weight-normal !important; 
+  font-weight: $font-weight-normal;
 
   &:before {
     content: "";
@@ -279,6 +279,7 @@ input[type="range"]::-moz-range-thumb {
     z-index: 9;
     display: none;
     overflow: hidden;
+    font-weight: $font-weight-normal !important;
   }
 
   &:after {
@@ -298,6 +299,7 @@ input[type="range"]::-moz-range-thumb {
     pointer-events: none;
     z-index: 8;
     display: none;
+    font-weight: $font-weight-normal !important;
   }
 
   &:hover::before, &:hover::after {
