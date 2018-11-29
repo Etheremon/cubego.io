@@ -41,6 +41,7 @@ import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
+import { TextImage } from '../../widgets/Text/Text.jsx';
 
 
 require("style-loader!./ModelEditor.scss");
@@ -54,6 +55,7 @@ class _ModelEditor extends React.Component {
       scale2D: 1,
       saved: false,
       validating: false,
+      showStatsDistribute: false,
     };
 
     this.tools = {
@@ -717,15 +719,54 @@ class _ModelEditor extends React.Component {
                   </div> : null
                 }
 
-                <div className={'stat'}
-                     tooltip={_t('estimated power')}
-                     tooltip-position="bottom">
+                <div className={'stat'} onMouseOver={() => {
+                  this.setState({showStatsDistribute: true})
+                }} onMouseLeave={() => {
+                  this.setState({showStatsDistribute: false})
+                }}>
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
                   {this.toolManager.stats.power ? (
                     this.toolManager.stats.power[0] !== this.toolManager.stats.power[1]
                       ? `${this.toolManager.stats.power[0]} - ${this.toolManager.stats.power[1]}`
                       : `${this.toolManager.stats.power[0]}`
                   ) : ''}
+                  {
+                    this.toolManager.stats.stats_distribute && this.state.showStatsDistribute ? <div className="stats-distribute">
+                      <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('health')} imgSource={require(`../../../shared/img/inventory/health-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.health}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('attack')} imgSource={require(`../../../shared/img/inventory/attack-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                          {this.toolManager.stats.stats_distribute.attack}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('defense')} imgSource={require(`../../../shared/img/inventory/defense-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.defense}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('speed')} imgSource={require(`../../../shared/img/inventory/speed-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.speed}%
+                          </div>
+                        </div>
+                    </div> : null
+                  }
+                  
                 </div>
 
                 <div className={'stat'}
