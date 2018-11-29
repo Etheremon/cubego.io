@@ -721,8 +721,11 @@ class _ModelEditor extends React.Component {
                      tooltip={_t('estimated power')}
                      tooltip-position="bottom">
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
-                  {/*{this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}*/}
-                  {this.toolManager.stats.gonTier.stats[0]} - {this.toolManager.stats.gonTier.stats[1]}
+                  {this.toolManager.stats.power ? (
+                    this.toolManager.stats.power[0] !== this.toolManager.stats.power[1]
+                      ? `${this.toolManager.stats.power[0]} - ${this.toolManager.stats.power[1]}`
+                      : `${this.toolManager.stats.power[0]}`
+                  ) : ''}
                 </div>
 
                 <div className={'stat'}
