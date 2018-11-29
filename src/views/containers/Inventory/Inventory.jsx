@@ -151,12 +151,15 @@ class Inventory extends React.Component {
             listItemName={_t('cubegons')}
             handleGenerateCardView={(cubegons) => (isCubegonTab ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons))}
             filters={[
-              FilterSearch({_t, searchFields: ['id'], value: query.search}),
+              FilterSearch({_t, searchFields: ['name', 'id', 'token_id'], value: query.search}),
               FilterType({_t, value: query.type, right: true}),
               FilterSort({_t, sortTypes: [
-                ['+total_cubego', _t('sort.lowest_cubegoes')],
-                ['+total_stats', _t('sort.lowest_stats')],
-              ], defaultSort: '+total_cubego', value: query.sort, right: true})
+                  ['-id', _t('sort.newest_cubegon')],
+                  ['-total_stats', _t('sort.highest_stats')],
+                  ['-total_cubego', _t('sort.highest_cubegoes')],
+                  ['+type_id', _t('sort.type')],
+                  ['+name', _t('sort.name')],
+              ], defaultSort: '-id', value: query.sort, right: true})
             ]}
             page={query.page}
             handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}

@@ -376,7 +376,7 @@ export const CUBE_MATERIALS = ObjUtils.CloneWithValueModify(_CUBE_MATERIALS, (cK
     })),
     types: ObjUtils.CloneWithValueModify(CUBE_TYPES, (tKey) => {
       return Object.keys(cube.sub_materials).filter(vKey => {
-        return SUB_MATERIAL_TYPE_POINTS[vKey][tKey];
+        return SUB_MATERIAL_TYPE_POINTS[vKey].types[tKey];
       })
     })
   }
