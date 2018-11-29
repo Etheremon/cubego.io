@@ -6,11 +6,12 @@ import { SubBgr } from '../../HomePage/SubBgr/SubBgr.jsx';
 
 require("style-loader!./Tutorial.scss");
 
+const youtubeURL = "https://www.youtube.com/embed/JzuqvnA4Jq8";
+
 class Tutorial extends React.Component {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     let {_t} = this.props;
@@ -32,14 +33,14 @@ class Tutorial extends React.Component {
             {_t('tutorial')}
           </div>
         </div>
-        <div className="title">
+        <div className="main-title">
           {_t('tutorial.title')}
         </div>
         {
           tutorialContent.map((item, idx) => (
             <div key={idx} className={`section ${item.title}`}>
               <img className={`content-${idx}`} src={item.img}/>
-              <div className={`${item.title}`}>
+              <div className={`title ${item.title}`}>
                 {_t(item.title)}
               </div>
               <p>{_t(`desc.${item.title}`)}</p>
@@ -49,6 +50,10 @@ class Tutorial extends React.Component {
             </div>
           ))
         }
+
+        <iframe ref={this.videoRef} className="iframe__popup" width="100%" height="100%"
+              src={youtubeURL}>
+        </iframe>
       </div>
     )
   }

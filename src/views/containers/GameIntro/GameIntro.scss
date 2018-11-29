@@ -159,7 +159,8 @@
     font-family: $f__baloobha;
     position: relative;
     display: inline-block;
-    width: 45%;
+    min-width: 45%;
+    padding: 0 8px;
     @include mobile {
       width: 100%;
     }
@@ -783,6 +784,12 @@
         z-index: 2;
       }
     }
+
+    .content {
+      img {
+        height: 300px;
+      }
+    }
   }
 
   .guide__why-presale {
@@ -791,10 +798,10 @@
       position: relative;
       .decorated-cube {
         position: absolute;
-        top: 0;
+        top: 50%;
         transform: translateY(-50%);
-        right: -44px;
-        height: 128px;
+        left: -40px;
+        height: 64px;
         z-index: 2;
       }
     }
@@ -808,6 +815,16 @@
         position: relative;
         margin: 120px 0;
         text-align: left;
+
+        .original-tag {
+          position: absolute;
+          right: 0;
+          top: 36px;
+          transform: translateY(-50%);
+          height: 250px;
+          width: auto;
+          z-index: 9;
+        }
 
         .content-image {
           img {
@@ -827,11 +844,15 @@
           }
         }
 
+        &:nth-child(1) {
+          color: #D75A11;
+        }
+
         &:nth-child(2) {
-          color: #d34e13;
+          color: #00308F;
         }
         &:nth-child(3) {
-          color: #153e65;
+          color: #380B0B;
         }
 
         .right, .left {

@@ -7,6 +7,11 @@
   position: relative;
   text-align: center;
   padding: 40px 20px;
+
+  .iframe__popup {
+    height: 350px;
+  }
+
   .header {
     position: relative;
     display: inline-block;
@@ -22,12 +27,20 @@
     }
   }
 
-  .title {
+  .main-title {
     padding: 24px 0;
   }
   
   .section {
     padding: 8px 0;
+
+    .title {
+      font-size: $font-size-big;
+      color: #05C2B9;
+      font-family: $f__baloobha;
+      padding: 0 !important;
+    }
+
     img {
       height: 88px;
       width: auto;

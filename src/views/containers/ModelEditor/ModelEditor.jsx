@@ -499,13 +499,17 @@ class _ModelEditor extends React.Component {
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
-          <Popup canCloseOutside={true} contentColor={Popup.contentColor.BLUE_DARK} className={'tutorial-popup'} onUnmount={() => {
-            LS.SetItem(LS.Fields.firstTimeEnterGame, true)
-            this.setState({showTutorial: false})
-          }}
-                  open={this.state.showTutorial} scroll={true}>
-            <Tutorial />
-          </Popup>
+          {
+            this.state.showTutorial ? 
+            <Popup canCloseOutside={true} contentColor={Popup.contentColor.BLUE_DARK} className={'tutorial-popup'} onUnmount={() => {
+              LS.SetItem(LS.Fields.firstTimeEnterGame, true)
+              this.setState({showTutorial: false})
+            }}
+                    open={this.state.showTutorial} scroll={true}>
+              
+              <Tutorial />
+            </Popup> : null
+          }
 
           {this.state.showRegisterPopup !== undefined ?
             <Popup onUnmount={() => {this.setState({showRegisterPopup: false})}}
@@ -555,8 +559,12 @@ class _ModelEditor extends React.Component {
                      userInfo={userInfo}
                      onBackClicked={() => {this.props.history.goBack()}}/>
           <Container size={Container.sizes.BIG} className={'main-tool'}>
-
             <div className={'model-editor__tool-bar'}>
+              <div className="popup-tutorial__button" onClick={() => {
+                this.setState({showTutorial: true})
+              }}>
+                {_t('game_tutorial')}
+              </div>
               <div className={'bar'}>
                 <div className={'group'}>
                 <div className={'item'}>

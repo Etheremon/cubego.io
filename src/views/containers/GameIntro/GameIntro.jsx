@@ -28,7 +28,9 @@ const scrollSelectors = [
   {key: 'cubego', id: 'cubego-intro'},
   {key: 'cubegon', id: 'cubegon-intro'},
   {key: 'combat', id: 'combat-intro'},
-  {key: 'coming', id: 'what-next'}
+  {key: 'coming', id: 'what-next'},
+  {key: 'about_presale', id: 'presale'},
+  {key: 'why_presale', id: 'why_presale'},
 ];
 
 class GameIntro extends React.Component {
@@ -446,13 +448,12 @@ class GameIntro extends React.Component {
 
           <Container size={containerSize} className={'guide__presale'} id={'presale'}>
             <div className="main__header about-cubego-presale__header left">
-              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
               <div className="header">
                 {_t('about_cubego_presale')}
               </div>
             </div>
             <div className="content center">
-              <img src={require('../../../shared/img/game_intro/paper.png')} />
+              <img src={require('../../../shared/img/game_intro/about_presale.png')} />
               <p>{_t('desc.presale_1')}</p>
               <p>{_t('desc.presale_2')}</p>
               <p>{_t('desc.presale_3')}</p>
@@ -461,7 +462,7 @@ class GameIntro extends React.Component {
 
           <Container size={containerSize} className={'guide__why-presale'} id={'why_presale'}>
             <div className="main__header why-presale__header right">
-              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/gold.png')}/>
               <div className="header">
                 {_t('why_presale_header')}
               </div>
@@ -469,18 +470,18 @@ class GameIntro extends React.Component {
             <div className="presale-explaination__container">
 
               <div className="presale-explaination__sub-section">
+                <img className={'original-tag'} src={require('../../../shared/img/game_intro/original.png')}/>
                 <div className={'background yellow left'}/>
                 <div className="content right">
                   <div className="content-desc">
                     <div className="cubegon__header">
-                      {_t('creation_header')}
+                      {_t('why_presale_header')}
                     </div>
-                    <p>{_t('desc.creation_header')}</p>
-                    <p>{_t('desc.creation_header_2')}</p>
-                    <p>{_t('desc.creation_header_3')}</p>
+                    <p>{_t('desc.why_presale_header_1')}</p>
+                    <p>{_t('desc.why_presale_header_2')}</p>
                   </div>
                   <div className="content-image">
-                    <img src={require('../../../shared/img/game_intro/variant.png')}/>
+                    <img src={require('../../../shared/img/game_intro/why_presale.png')}/>
                   </div>
                 </div>
               </div>
@@ -490,12 +491,13 @@ class GameIntro extends React.Component {
                 <div className="content left">
                   <div className="content-desc">
                     <div className="cubegon__header">
-                    {_t('copyright_logic_header')}
+                    {_t('earn_reward_header')}
                     </div>
-                    <p>{_t('desc.copyright_logic_header')}</p>
+                    <p>{_t('desc.earn_reward_header_1')}</p>
+                    <p>{_t('desc.earn_reward_header_2')}</p>
                   </div>
                   <div className="content-image">
-                    <img src={require('../../../shared/img/game_intro/unique.png')}/>
+                    <img src={require('../../../shared/img/game_intro/earn_reward.png')}/>
                   </div>
                 </div>
               </div>
@@ -505,14 +507,13 @@ class GameIntro extends React.Component {
                 <div className="content right">
                   <div className="content-desc">
                     <div className="cubegon__header">
-                      {_t('creation_header')}
+                      {_t('trade_cubegon')}
                     </div>
-                    <p>{_t('desc.creation_header')}</p>
-                    <p>{_t('desc.creation_header_2')}</p>
-                    <p>{_t('desc.creation_header_3')}</p>
+                    <p>{_t('desc.trade_cubegon_1')}</p>
+                    <p>{_t('desc.trade_cubegon_2')}</p>
                   </div>
                   <div className="content-image">
-                    <img src={require('../../../shared/img/game_intro/variant.png')}/>
+                    <img src={require('../../../shared/img/game_intro/trade-eth.png')}/>
                   </div>
                 </div>
               </div>
