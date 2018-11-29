@@ -42,7 +42,8 @@ import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
 import { TextImage } from '../../widgets/Text/Text.jsx';
-
+import Tutorial from './Tutorial/Tutorial.jsx';
+import * as LS from '../../../services/localStorageService';
 
 require("style-loader!./ModelEditor.scss");
 
@@ -56,6 +57,7 @@ class _ModelEditor extends React.Component {
       saved: false,
       validating: false,
       showStatsDistribute: false,
+      showTutorial: LS.GetItem(LS.Fields.firstTimeEnterGame) ? false : true,
     };
 
     this.tools = {
@@ -430,7 +432,7 @@ class _ModelEditor extends React.Component {
   }
 
   render() {
-    let {_t, savedModel, userInfo, userCubes} = this.props;
+    let {_t, savedModel, userInfo, userCubes, firstTimeEnterGame} = this.props;
 
     let {saved} = this.state;
     let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
@@ -497,6 +499,13 @@ class _ModelEditor extends React.Component {
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
+          <Popup canCloseOutside={true} contentColor={Popup.contentColor.BLUE_DARK} className={'tutorial-popup'} onUnmount={() => {
+            LS.SetItem(LS.Fields.firstTimeEnterGame, true)
+            this.setState({showTutorial: false})
+          }}
+                  open={this.state.showTutorial} scroll={true}>
+            <Tutorial />
+          </Popup>
 
           {this.state.showRegisterPopup !== undefined ?
             <Popup onUnmount={() => {this.setState({showRegisterPopup: false})}}

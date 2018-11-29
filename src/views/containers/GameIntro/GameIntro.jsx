@@ -443,6 +443,82 @@ class GameIntro extends React.Component {
             }}/>
 
           </Container>
+
+          <Container size={containerSize} className={'guide__presale'} id={'presale'}>
+            <div className="main__header about-cubego-presale__header left">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
+              <div className="header">
+                {_t('about_cubego_presale')}
+              </div>
+            </div>
+            <div className="content center">
+              <img src={require('../../../shared/img/game_intro/paper.png')} />
+              <p>{_t('desc.presale_1')}</p>
+              <p>{_t('desc.presale_2')}</p>
+              <p>{_t('desc.presale_3')}</p>
+            </div>
+          </Container>
+
+          <Container size={containerSize} className={'guide__why-presale'} id={'why_presale'}>
+            <div className="main__header why-presale__header right">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/paper.png')}/>
+              <div className="header">
+                {_t('why_presale_header')}
+              </div>
+            </div>
+            <div className="presale-explaination__container">
+
+              <div className="presale-explaination__sub-section">
+                <div className={'background yellow left'}/>
+                <div className="content right">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                      {_t('creation_header')}
+                    </div>
+                    <p>{_t('desc.creation_header')}</p>
+                    <p>{_t('desc.creation_header_2')}</p>
+                    <p>{_t('desc.creation_header_3')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/variant.png')}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="presale-explaination__sub-section">
+                <div className={'background blue right'}/>
+                <div className="content left">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                    {_t('copyright_logic_header')}
+                    </div>
+                    <p>{_t('desc.copyright_logic_header')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/unique.png')}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="presale-explaination__sub-section">
+                <div className={'background red left'}/>
+                <div className="content right">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                      {_t('creation_header')}
+                    </div>
+                    <p>{_t('desc.creation_header')}</p>
+                    <p>{_t('desc.creation_header_2')}</p>
+                    <p>{_t('desc.creation_header_3')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/variant.png')}/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </Container>
           
         </div>
 

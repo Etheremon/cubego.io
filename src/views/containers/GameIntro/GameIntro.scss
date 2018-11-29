@@ -217,6 +217,10 @@
     justify-content: space-between;
     z-index: 2;
 
+    &.center {
+      flex-direction: column;
+    }
+
     .content-desc {
       width: 45%;
       height: 100%;
@@ -763,6 +767,99 @@
       font-family: $f__baloobha;
       font-size: $font-size-header-3;
       color: #FFBE02;
+    }
+  }
+
+  .guide__presale {
+    padding-top: 80px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        right: -44px;
+        height: 128px;
+        z-index: 2;
+      }
+    }
+  }
+
+  .guide__why-presale {
+    padding-top: 80px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        right: -44px;
+        height: 128px;
+        z-index: 2;
+      }
+    }
+
+    .presale-explaination__container {
+      margin-top: 40px;
+      text-align: center;
+      position: relative;
+
+      .presale-explaination__sub-section {
+        position: relative;
+        margin: 120px 0;
+        text-align: left;
+
+        .content-image {
+          img {
+            top: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
+          }
+        }
+
+        .left {
+          .content-desc {
+            padding: 48px 32px 32px 32px;
+          }
+        }
+        .right {
+          .content-desc {
+            padding: 48px 32px 32px 16px;
+          }
+        }
+
+        &:nth-child(2) {
+          color: #d34e13;
+        }
+        &:nth-child(3) {
+          color: #153e65;
+        }
+
+        .right, .left {
+          .content-desc {
+            @include mobile {
+              padding: 16px;
+            }
+          }
+        }
+
+        .content-desc {
+          font-weight: $font-weight-semi-bold;
+        }
+
+        .cubegon__header {
+          font-size: $font-size-large;
+          font-weight: $font-weight-normal;
+          font-family: $f__baloobha;
+          color: $white;
+        }
+
+      }
+
+      .header {
+        p {
+          font-weight: $font-weight-bold;
+        }
+      }
     }
   }
 
