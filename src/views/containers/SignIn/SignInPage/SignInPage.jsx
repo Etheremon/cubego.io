@@ -115,46 +115,16 @@ class SignInPage extends React.Component {
             <div>
               <div className="subscription__container">
 
-                <div className={'subscription__boxes'}>
-
-                  <div className={'subscription__input-box'}>
-                    <div className="channels__label">
-                      {_t('subscribe_us')}
-                    </div>
-                    <input placeholder={_t('your_email_address')} type="text"
-                            value={email} onChange={(e) => {this.setState({email: e.target.value, subscribedResponse: undefined})}}/>
-                    <div className={`subscribe-btn ${email === '' ? 'hidden' : ''}`}
-                          onClick={() => {
-                            this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
-                              email: email,
-                              callbackFunc: (code, data) => {
-                                this.setState({
-                                  subscribedResponse: code === window.RESULT_CODE.SUCCESS,
-                                });
-                              }
-                            }));
-                          }}
-                    >
-                      {_t('subscribe')}
-                    </div>
-                  </div>
-
-                  <div className={'subscription__channels'}>
-                    <div className="channels__label">
-                      {_t('channels')}
-                    </div>
-                    <div className="channels">
-                      <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
-                      <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
-                      <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={`response__label ${subscribedResponse === true ? 'm--color--green' : ''} ${subscribedResponse === false ? 'm--color--red' : ''}`}>
+                <div className="read-more">
                   {
-                    _t(`${subscribedResponse === true ? 'success_response' :
-                      subscribedResponse !== undefined ? 'err.invalid_email' : ''}`)
+                    language.code === 'en' ? (
+                      <a href="https://medium.com/cubego/ff5f32516192" target="_blank">{_t('metamask_installation_guide')}</a>
+                    ) : (
+                      <React.Fragment>
+                         <a href={`https://dappsmarket.net/beginner/purchase-eth-${Utils.IsMobile ? 'sp' : 'pc'}/`} target="_blank">{_t('purchase_eth_pc')}</a>
+                         <a href="https://medium.com/cubego/ee1d66159a00" target="_blank">{_t('metamask_installation_guide')}</a>
+                      </React.Fragment>
+                    )
                   }
                 </div>
 
@@ -177,57 +147,22 @@ class SignInPage extends React.Component {
               <div className={'header'}>{_t('metamask_not_installed')}</div>
               <div className={'desc'}>{_t('please_install_metamask')}</div>
               <div size={Container.sizes.SMALL}>
-                <div className="subscription__container">
-
-                  <div className={'subscription__boxes'}>
-
-                    <div className={'subscription__input-box'}>
-                      <div className="channels__label">
-                        {_t('subscribe_us')}
-                      </div>
-                      <input placeholder={_t('your_email_address')} type="text"
-                             value={email} onChange={(e) => {this.setState({email: e.target.value, subscribedResponse: undefined})}}/>
-                      <div className={`subscribe-btn ${email === '' ? 'hidden' : ''}`}
-                           onClick={() => {
-                             this.props.dispatch(SubscriberActions.SUBSCRIBE_EMAIL.init.func({
-                               email: email,
-                               callbackFunc: (code, data) => {
-                                 this.setState({
-                                   subscribedResponse: code === window.RESULT_CODE.SUCCESS,
-                                 });
-                               }
-                             }));
-                           }}
-                      >
-                        {_t('subscribe')}
-                      </div>
-                    </div>
-
-                    <div className={'subscription__channels'}>
-                      <div className="channels__label">
-                        {_t('channels')}
-                      </div>
-                      <div className="channels">
-                        <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img={'icon_discord'} /></a>
-                        <a href="https://t.me/cubego" target="_blank"><Image img={'icon_telegram'} /></a>
-                        <a href="https://twitter.com/cubego_io" target="_blank"><Image img={'icon_twitter'} /></a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={`response__label ${subscribedResponse === true ? 'm--color--green' : ''} ${subscribedResponse === false ? 'm--color--red' : ''}`}>
-                    {
-                      _t(`${subscribedResponse === true ? 'success_response' :
-                        subscribedResponse !== undefined ? 'err.invalid_email' : ''}`)
-                    }
-                  </div>
-
-                  <div className="subscription-action">
-                    <ButtonNew label={_t('Install Metamask')}
+              <div className="read-more">
+                  {
+                    language.code === 'en' ? (
+                      <a href="https://medium.com/cubego/ff5f32516192" target="_blank">{_t('metamask_installation_guide')}</a>
+                    ) : (
+                      <React.Fragment>
+                         <a href={`https://dappsmarket.net/beginner/purchase-eth-${Utils.IsMobile ? 'sp' : 'pc'}/`} target="_blank">{_t('purchase_eth_pc')}</a>
+                         <a href="https://medium.com/cubego/ee1d66159a00" target="_blank">{_t('metamask_installation_guide')}</a>
+                      </React.Fragment>
+                    )
+                  }
+              </div>
+              <div className="subscription-action">
+                    <ButtonNew label={_t('install metamask')}
                             onClick={() => {Utils.OpenMetamaskInstallation()}} />
-                  </div>
-
-                </div>
+              </div>
               </div>
           </div>
     )

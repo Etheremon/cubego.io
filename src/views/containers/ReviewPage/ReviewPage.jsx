@@ -19,7 +19,7 @@ import Popup from "../../widgets/Popup/Popup.jsx";
 import * as GonUtils from "../../../utils/logicUtils";
 import * as Config from "../../../config";
 import * as ObjUtils from "../../../utils/objUtils";
-import {CreateModel, RegisterModel} from "../../../services/transaction";
+import {RegisterModelToBlockchain, SubmitModel} from "../../../services/transaction";
 import {addTxn} from "../../../actions/txnAction";
 import {ENERGY_LIMIT_PRICE, GON_TIER} from "../../../constants/cubegon";
 import { TextImage } from '../../widgets/Text/Text.jsx';
@@ -33,14 +33,13 @@ class ReviewPage extends React.Component {
     super(props);
     this.state = {
       allowChangeName: false,
-      cubegonName: '',
 
       energy: Object.keys(ENERGY_LIMIT_PRICE)[0],
       energyBarOffset: 0,
     };
 
+    this.submitCubegon = this.submitCubegon.bind(this);
     this.registerCubegon = this.registerCubegon.bind(this);
-    this.createCubegon = this.createCubegon.bind(this);
     this.renderSubmitResult = this.renderSubmitResult.bind(this);
   }
 
@@ -51,7 +50,7 @@ class ReviewPage extends React.Component {
     Utils.ScrollTop();
   }
 
-  registerCubegon() {
+  submitCubegon() {
     let {validatedModel, userId, _t} = this.props;
     let {stats} = validatedModel;
 
@@ -59,8 +58,8 @@ class ReviewPage extends React.Component {
       this.setState({showError: true});
     } else {
       this.setState({submitting: true});
-      this.modelCanvas.getBase64Image().then((data) => {
-        RegisterModel(this.props.dispatch, addTxn, _t, {
+      this.modelCanvas.getBase64Image({width: 512, height: 512}).then((data) => {
+        SubmitModel(this.props.dispatch, addTxn, _t, {
           cubegon_name: this.nameInput ? this.nameInput.value : '',
           cubegon_structure: validatedModel.structure,
           cubegon_image: Utils.ExtractImageBase64String(data),
@@ -70,7 +69,7 @@ class ReviewPage extends React.Component {
           address: userId,
           successCallback: (data) => {
             this.createCubegonTxnData = data;
-            this.createCubegon();
+            this.registerCubegon();
           },
           failedCallback: null,
           finishCallback: () => {
@@ -81,7 +80,7 @@ class ReviewPage extends React.Component {
     }
   }
 
-  createCubegon() {
+  registerCubegon() {
     let {validatedModel, _t} = this.props;
     let {stats} = validatedModel;
 
@@ -90,10 +89,9 @@ class ReviewPage extends React.Component {
     }
     else {
       this.setState({submitting: true});
-      CreateModel(this.props.dispatch, addTxn, _t, {
+      RegisterModelToBlockchain(this.props.dispatch, addTxn, _t, {
         cubegon_name: this.nameInput ? this.nameInput.value : '',
         num_cubes: stats.total,
-        total_cost: this.cost,
         txn_data: this.createCubegonTxnData,
         history: this.props.history,
         successCallback: null,
@@ -102,7 +100,7 @@ class ReviewPage extends React.Component {
           this.setState({submitting: false});
         },
       });
-    };
+    }
 
   }
 
@@ -146,7 +144,7 @@ class ReviewPage extends React.Component {
       {icon: require('../../../shared/img/inventory/cubego.png'), content: stats.total, label: 'cubego'},
       {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
       {icon: validatedModel.stats.gonTier.img, content: validatedModel.stats.gonTier.name, label: 'tier'},
-      {icon: require('../../../shared/img/inventory/stat.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
+      {icon: require('../../../shared/img/inventory/stat.png'), content: `${validatedModel.stats.power[0]}-${validatedModel.stats.power[1]}`, label: 'stats range'}
     ];
 
     return (
@@ -183,7 +181,8 @@ class ReviewPage extends React.Component {
                   <p>{_t('review.image_note')}</p>
                 </div>
                 {validatedModel ?
-                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
+                  <Model3D ref={(canvas) => {this.modelCanvas = canvas}} 
+                        model={validatedModel.model} viewOnly/> : null
                 }
               </div>
 
@@ -193,7 +192,7 @@ class ReviewPage extends React.Component {
                 </div>
 
                 <span>
-                  <input type="text" defaultValue={'CubeGon'} size={10} onChange={() => {}}
+                  <input type="text" defaultValue={'name me'} size={10} onChange={() => {}}
                          onFocus={() => {this.setState({allowChangeName: true})}}
                          onBlur={() => {this.setState({allowChangeName: false})}}
                          ref={(input) => {this.nameInput = input}}
@@ -238,7 +237,7 @@ class ReviewPage extends React.Component {
                       let material = CUBE_MATERIALS[mId];
                       let ownedMaterials = stats.storage[mId] || 0;
                       let toPurchaseMaterials = Math.max(0, mVal-ownedMaterials);
-                      let mPrice = toPurchaseMaterials * (material.price || 0);
+                      let mPrice = Utils.RoundToDecimalFloat(toPurchaseMaterials * (material.price || 0), 4);
                       return (
                         <tr key={mId}>
                           <td>
@@ -313,8 +312,9 @@ class ReviewPage extends React.Component {
                 <div className="checkout__container">
                   <ButtonNew label={_t('Back')} color={ButtonNew.colors.TURQUOISE} className={'back__button'}
                              onClick={() => {this.props.history.goBack()}}/>
-                  <ButtonNew label={this.createCubegonTxnData ? _t('create cubegon') : _t('register cubegon')} className={'check-out__button'} loading={this.state.submitting}
-                             onClick={this.createCubegonTxnData ? this.createCubegon : this.registerCubegon}/>
+                  <ButtonNew label={this.createCubegonTxnData ? _t('register cubegon') : _t('submit cubegon')}
+                             className={'check-out__button'} loading={this.state.submitting}
+                             onClick={this.createCubegonTxnData ? this.registerCubegon : this.submitCubegon}/>
                 </div>
 
               </div>

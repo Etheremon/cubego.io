@@ -12,13 +12,11 @@ export class BabylonComponent {
     this._renderer = renderer;
   }
 
-  setProps(props, permitProps) {
+  setProps(props) {
     this.props = {};
     for (let key in props) {
       if (props.hasOwnProperty(key)) {
-        if (permitProps.indexOf(key) > -1) {
-          this.props[key] = props[key];
-        }
+        this.props[key] = props[key];
       }
     }
   }

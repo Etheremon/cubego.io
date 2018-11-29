@@ -33,7 +33,9 @@ export const GetValidatedModel = (state) => CloneDeep(state.model['validatedMode
 /**
  * Cubegons
  */
-export const GetCubegonInfo = (state, gonId) => CloneDeep(state.cubegon.info[gonId]);
+export const GetCubegonInfo = (state, gonId) => {
+  return gonId ? CloneDeep(state.cubegon.info[gonId]) : {};
+}
 
 /**
  * Cubegoes
@@ -64,3 +66,10 @@ export const GetTxn = (state) => CloneDeep(state.txn);
  * Presale
  */
 export const GetDiscountFactor = (state) => (CloneDeep(state.presale.discountFactor))
+
+/**
+ * Battle
+ */
+export const GetSelectedCubegon = (state) => {
+  return state.battle.cubegons.selectedCubegon ? CloneDeep(state.battle.cubegons.selectedCubegon) : {};
+}

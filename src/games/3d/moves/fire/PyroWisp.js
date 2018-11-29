@@ -31,7 +31,7 @@ export default class PyroWisp extends BaseMove {
     let start = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     start.y = 2;
     let end = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrixOpponent);
-    end.y = 2;
+    end.y = 0;
     let controlPoint1 = 4 + Math.random() * 4;
     let controlPoint2 = 4 + Math.random() * 4;
     let cubicBezierVectors = BABYLON.Curve3.CreateCubicBezier(
@@ -106,7 +106,7 @@ export default class PyroWisp extends BaseMove {
     let alpha = fireBall.position.z;
     const update = () => {
       if (!isCollision) {
-        if (fireBall.intersectsMesh(this.player.opponent.playerMesh, false)) {
+        if (this.player.opponent.checkCollision(fireBall)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage / this.numberOfFireball);
           pSystem.stop();

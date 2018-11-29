@@ -6,6 +6,7 @@ import {GetCellKey} from "../utils/modelUtils";
 import {CUBE_MATERIALS, CUBE_TIER_MAP} from "../constants/cubego";
 import {GON_TIER} from "../constants/cubegon";
 import * as Config from "../config";
+import * as ArrayUtils from "../utils/arrayUtils";
 
 export class ToolManager {
   constructor(props) {
@@ -208,21 +209,29 @@ export class ToolManager {
     this._stats.materials = {};
     this._stats.points = 0;
 
-    let typePoints = [0, 0, 0, 0, 0];
+    let typePoints = [0, 0, 0, 0, 0];   // air, grass, water, fire, earth
+    let statPoints = [0, 0, 0, 0];    // attack, defense, hp, speed
 
     ObjUtils.ForEach(this._model.voxels, (cellId, cell) => {
       if (cell && !Utils.ObjIsEmpty(cell.color)) {
-        this._stats.materials[cell.color.material_id] = (this._stats.materials[cell.color.material_id] || 0) + 1;
-        this._stats.points += CUBE_MATERIALS[cell.color.material_id].point;
+        let m_id = cell.color.material_id;
+        this._stats.materials[m_id] = (this._stats.materials[m_id] || 0) + 1;
+        this._stats.points += CUBE_MATERIALS[m_id].point;
         for (let i = 0; i <= 4; i += 1)
           typePoints[i] += cell.color.type_points[i];
+        for (let i = 0; i <= 3; i += 1)
+          statPoints[i] += cell.color.stat_points[i];
       }
     });
 
-    this._stats.type = typePoints.reduce((res, val, idx, arr) => (val > 0 && (res === -1 || arr[res] < val)) ? idx : res, -1);
-
-    // Calculate power from points
-    this._stats.power = [this._stats.total - 10, this._stats.total + 10];
+    let totalStatsPoint = ArrayUtils.Sum(statPoints);
+    this._stats.stats_distribute = {
+      attack: Utils.RoundToDecimalFloat(statPoints[0] / totalStatsPoint * 100, 2),
+      defense: Utils.RoundToDecimalFloat(statPoints[1] / totalStatsPoint * 100, 2),
+      health: Utils.RoundToDecimalFloat(statPoints[2] / totalStatsPoint * 100, 2),
+      speed: Utils.RoundToDecimalFloat(statPoints[3] / totalStatsPoint * 100, 2),
+    };
+    this._stats.type = ArrayUtils.FindIndexOfFirstMax(typePoints);
 
     // Calculate cost & tier
     this._stats.cubeTiers = {};
@@ -248,7 +257,7 @@ export class ToolManager {
     this._stats.gonTier = {id: -1, showPoints: 0, stats: [0, 0]};
     if (this._stats.points >= GON_TIER.god.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.legend]) {
       this._stats.gonTier = {...GON_TIER.god, showPoints: Math.min(this._stats.points, GON_TIER.god.points[1])};
-    } else if (this._stats.points >= GON_TIER.champion.points[0] && this._stats.cubeTiers[CUBE_TIER_MAP.epic]) {
+    } else if (this._stats.points >= GON_TIER.champion.points[0] && (this._stats.cubeTiers[CUBE_TIER_MAP.legend] || this._stats.cubeTiers[CUBE_TIER_MAP.epic])) {
       this._stats.gonTier = {...GON_TIER.champion, showPoints: Math.min(this._stats.points, GON_TIER.champion.points[1])};
     } else if (this._stats.points >= GON_TIER.elite.points[0]) {
       this._stats.gonTier = {...GON_TIER.elite, showPoints: Math.min(this._stats.points, GON_TIER.elite.points[1])};
@@ -262,9 +271,19 @@ export class ToolManager {
       this._stats.gonTier.note = ('tier.need_legend');
     }
 
+    // Calculate power from points
+    if (this._stats.gonTier.id >= 0) {
+      let currentPoint = this._stats.points;
+      let pointRange = this._stats.gonTier.points;
+      let statsRange = this._stats.gonTier.stats;
+      let estimated_stats = statsRange[0] + Math.round((currentPoint - pointRange[0]) / (pointRange[1] - pointRange[0]) * (statsRange[1] - statsRange[0]));
+      this._stats.power = [Utils.CapValue(estimated_stats - 15, statsRange[0], statsRange[1]), Utils.CapValue(estimated_stats + 15, statsRange[0], statsRange[1])];
+    }
+
     this._stats.err = '';
     if (this._userCubes && this._stats.invalid_materials.length) {
       this._stats.err = 'err.some_invalid_materials';
+      this._stats.errValues = this._stats.invalid_materials;
     } else if (ObjUtils.GetLength(this._stats.materials) > Config.CUBEGON_MAX_MATERIALS) {
       this._stats.err = 'err.max_materials';
     } else if (this._stats.total > Config.CUBEGON_MAX_CUBE) {

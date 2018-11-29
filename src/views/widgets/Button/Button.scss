@@ -196,6 +196,10 @@
     filter: grayscale(1);
   }
 
+  &.loading {
+    pointer-events: none;
+  }
+
   &.both, &.left {
     &:before {
       content: '';

@@ -45,6 +45,22 @@ const DEMO_BATTLE_LOGS = [
   {moveId: HydroGun.getId(), effects: {damage: 20}, player: 1},
   {moveId: HealingWater.getId(), effects: {damage: 20}, player: 0}
 ];
+
+const DEMO_BATTLE_MOVES = [
+  WindStrike.getId(),
+  HydroBash.getId(),
+  FireBreath.getId(),
+  MilkDrink.getId(),
+  GuardianShield.getId(),
+  LeafThrow.getId(),
+  PyroWisp.getId(),
+  Tackle.getId(),
+  RockThrow.getId(),
+  FireBall.getId(),
+  HydroGun.getId(),
+  AirSlash.getId(),
+  HealingWater.getId()
+];
 //Load map texture
 const loadMapTexture = () => {
   let req = require.context('../../shared/battleground/map_1/', false, /.*\.png/);
@@ -57,7 +73,7 @@ loadMapTexture();
 class VoxBattle extends Component {
   constructor(props) {
     super(props);
-    this.state = {battle: props.battle};
+    this.state = {battle: props.battle, player0Data: null, player1Data: null};
     this.players = [null, null];
     this.backgroundIdx = Math.floor(1 + Math.random() * 4);
     this.skyboxImages = [
@@ -71,16 +87,22 @@ class VoxBattle extends Component {
     this.clouds = [];
     this.startGame = this.startGame.bind(this);
     this.restartGame = this.restartGame.bind(this);
+    this.changeCubegon = this.changeCubegon.bind(this);
     this.startBtn = null;
     this.mainCamera = null;
     this.rePlayBtn = null;
     this.startImage = null;
     this.resultImage = null;
+    this.playerWinImage = null;
   }
 
   startGame() {
     this.startBtn.visible = false;
     this.startImage.visible = false;
+    this.player0Image.visible = false;
+    this.player1Image.visible = false;
+    this.changePlayer1Btn.visible = false;
+    this.changePlayer2Btn.visible = false;
     this.mainCamera.attachControl = true;
     this.animateCamera();
     if (this.clouds.length) {
@@ -113,6 +135,7 @@ class VoxBattle extends Component {
   restartGame() {
     this.rePlayBtn.visible = false;
     this.resultImage.visible = false;
+    this.playerWinImage.visible = false;
     this.mainCamera.attachControl = true;
     let logs = this.createDummyBattleLog();
     this.players[0].init();
@@ -122,11 +145,20 @@ class VoxBattle extends Component {
     }, 5000);
   }
 
+  changeCubegon(idx) {
+    return () => {
+      typeof this.props.changeCubegon === 'function' && this.props.changeCubegon(idx);
+    }
+  }
+
   createDummyBattleLog() {
-    return DEMO_BATTLE_LOGS;
     let logs = [];
+    let moves = DEMO_BATTLE_MOVES.slice();
     for (let i = 0; i < 9; i++) {
-      logs.push({moveId: GetRandomInt(0, MOVES.length - 1), effects: {damage: 20}, player: i % 2})
+      let randomMoveIdx = GetRandomInt(0, moves.length - 1);
+      let moveId = moves[randomMoveIdx];
+      moves.splice(randomMoveIdx, 1);
+      logs.push({moveId: moveId, effects: {damage: 20}, player: i % 2})
     }
     return logs;
   }
@@ -135,17 +167,18 @@ class VoxBattle extends Component {
     logs.forEach((turn, idx) => {
       setTimeout(() => {
         MOVES[turn.moveId].play(this.players[turn.player], turn.effects);
-        // MilkDrink.play(this.players[turn.player], turn.effects);
       }, 5000 * idx);
     });
     setTimeout(() => {
       this.mainCamera.attachControl = false;
       this.rePlayBtn.visible = true;
       this.resultImage.visible = true;
+      this.playerWinImage.visible = true;
     }, 5000 * logs.length + 1000);
   }
 
   initPlayerAnimation(player, idx) {
+    if (!player) return;
     if (this.players[0]) {
       this.players[0].opponent = player;
       player.opponent = this.players[0];
@@ -155,32 +188,26 @@ class VoxBattle extends Component {
     this.players[idx] = player;
   }
 
-  renderPlayer(data, rotate, idx) {
-    return <VoxelPlayer data={data} key={idx} size={SIZE * 0.9} rotate={rotate} ref={(ref) => {
-      this.initPlayerAnimation(ref, idx);
-    }}/>
+  renderPlayers() {
+    let player0 = this.state.player0Data ? <MeshContainer position={{x: 0, y: 0, z: -5}} key={'player-container-0'}>
+      <VoxelPlayer key={this.state.player0Data} data={this.state.player0Data} size={SIZE * 0.9} rotate={1}
+                   ref={(ref) => {
+                     this.initPlayerAnimation(ref, 0);
+                   }}/>
+    </MeshContainer> : null;
+    let player1 = this.state.player1Data ? <MeshContainer position={{x: 0, y: 0, z: 5}} key={'player-container-1'}>
+      <VoxelPlayer key={this.state.player1Data} data={this.state.player1Data} size={SIZE * 0.9} rotate={-1}
+                   ref={(ref) => {
+                     this.initPlayerAnimation(ref, 1);
+                   }}/>
+    </MeshContainer> : null;
+    return [player0, player1]
   }
 
-  renderPlayers(playerData) {
-    if (!playerData) {
-      return [];
-    }
-    return [
-      <MeshContainer position={{x: 0, y: 0, z: -5}} key='player-1'>
-        {this.renderPlayer(playerData[0], 1, 0)}
-      </MeshContainer>,
-      <MeshContainer position={{x: 0, y: 0, z: 5}} key='player-2'>
-        {this.renderPlayer(playerData[1], -1, 1)}
-      </MeshContainer>
-    ]
-  }
-
-  setPlayer(playerData) {
-    this.setState({
-      battle: {
-        player: playerData
-      }
-    })
+  setPlayer(idx, playerData) {
+    let updateData = {};
+    updateData[`player${idx}Data`] = playerData;
+    this.setState(updateData);
   }
 
   componentDidMount() {
@@ -243,24 +270,47 @@ class VoxBattle extends Component {
       <MeshContainer position={{x: 0, y: 0, z: 0}}>
         {/*<Axis size={5}/>*/}
         <GUI>
-          <GUIImage image={require('../../shared/img/game_ui/open.png')} width={`${960/960 * 100}%`} height={`${540/540 * 100}%`}
-                    ref={(image) => {
-                      this.startImage = image
-                    }}/>
-          <GUIImage image={require('../../shared/img/game_ui/battle-result.png')} width={`${542/960 * 100}%`} height={`${489/540 * 100}%`}
-                    visible={false} ref={(image) => {
-            this.resultImage = image
-          }}/>
+          <GUIImage image={require('../../shared/img/game_ui/open.png')} width={`${960 / 960 * 100}%`}
+                    height={`${540 / 540 * 100}%`}
+                    ref={(image) => {this.startImage = image}}/>
+          <GUIImage image={this.state.player1Data ? this.state.player1Data.image : null} width={`${150 / 960 * 100}%`}
+                    height={`${150 / 540 * 100}%`} left={'-300px'}
+                    ref={(image) => {this.player1Image = image}}/>
+          <GUIImage image={this.state.player0Data ? this.state.player0Data.image : null} width={`${150 / 960 * 100}%`}
+                    height={`${150 / 540 * 100}%`} left={'300px'}
+                    ref={(image) => {this.player0Image = image}}/>
+          <GUIImage image={require('../../shared/img/game_ui/battle-result.png')} width={`${542 / 960 * 100}%`}
+                    height={`${489 / 540 * 100}%`}
+                    visible={false} ref={(image) => {this.resultImage = image}}/>
+          <GUIImage image={this.state.player0Data ? this.state.player0Data.image : null} width={`${300 / 960 * 100}%`}
+                    height={`${300 / 540 * 100}%`} visible={false}
+                    ref={(image) => {this.playerWinImage = image}}/>
 
-          <GUIImageButton left={'0px'} top={`${200/540 * 100}%`} value={'REPLAY GAME'} onClick={this.restartGame} width={`${200/960 * 100}%`}
-                          image={require('../../shared/img/game_ui/replay_game.png')} height={`${75/540 * 100}%`}
+          <GUIImageButton left={'0px'} top={`${200 / 540 * 100}%`} value={'REPLAY GAME'} onClick={this.restartGame}
+                          width={`${200 / 960 * 100}%`}
+                          image={require('../../shared/img/game_ui/replay_game.png')} height={`${75 / 540 * 100}%`}
                           ref={(button) => {
                             this.rePlayBtn = button
                           }} visible={false}/>
-          <GUIImageButton left={'0px'} top={`${200/540 * 100}%`} value={'START GAME'} onClick={this.startGame} width={`${200/960 * 100}%`}
-                          image={require('../../shared/img/game_ui/start_game.png')} height={`${75/540 * 100}%`}
+
+          <GUIImageButton left={'0px'} top={`${200 / 540 * 100}%`} value={'START GAME'} onClick={this.startGame}
+                          width={`${200 / 960 * 100}%`}
+                          image={require('../../shared/img/game_ui/start_game.png')} height={`${75 / 540 * 100}%`}
                           ref={(button) => {
                             this.startBtn = button
+                          }}/>
+
+          <GUIImageButton left={'-300px'} top={`${150 / 540 * 100}%`} value={'CHANGE CUBEGON'}
+                          onClick={this.changeCubegon(1)} width={`${100 / 960 * 100}%`}
+                          image={require('../../shared/img/game_ui/change_cubegons.png')} height={`${40 / 540 * 100}%`}
+                          ref={(button) => {
+                            this.changePlayer1Btn = button
+                          }}/>
+          <GUIImageButton left={'300px'} top={`${-150 / 540 * 100}%`} value={'CHANGE CUBEGON'}
+                          onClick={this.changeCubegon(2)} width={`${100 / 960 * 100}%`}
+                          image={require('../../shared/img/game_ui/change_cubegons.png')} height={`${40 / 540 * 100}%`}
+                          ref={(button) => {
+                            this.changePlayer2Btn = button
                           }}/>
 
         </GUI>
@@ -272,7 +322,7 @@ class VoxBattle extends Component {
         <PointLight position={{x: 100, y: 100, z: 100}}/>
         <PointLight position={{x: -100, y: -100, z: -100}}/>
         <Skybox imageUrls={this.skyboxImages}/>
-        {this.renderPlayers(this.state.battle.player)}
+        {this.renderPlayers()}
       </MeshContainer>
     );
   }

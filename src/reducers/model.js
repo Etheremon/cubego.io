@@ -44,7 +44,10 @@ const validatedModel = (state=null, action) => {
   switch (action.type) {
     case ModelActions.VALIDATE_MODEL.success.key:
       return {
-        model: action.model,
+        model: {
+          ...action.model,
+          spaceSize: {...action.model.modelSize}
+        },
         structure: action.structure,
         stats: action.stats,
         info: action.response,

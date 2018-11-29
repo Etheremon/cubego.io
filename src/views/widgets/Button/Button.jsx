@@ -10,7 +10,7 @@ export const ButtonNew = ({className, label, children, color, size, type, disabl
                            style, showDeco, loading}) => {
 
   return (
-    <div className={`widget__button-new ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
+    <div className={`widget__button-new ${loading ? 'loading' : ''} ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
          style={style}
          onClick={(e) => {
            if (onClick) {

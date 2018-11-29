@@ -57,13 +57,39 @@ function unmountComponentAtNode(container) {
   }
 }
 
-function takeScreenshot() {
+function takeScreenshot(size) {
   if (!scene) {
     console.warn('ThreeX: Please init threeX before take a screenshot');
     return;
   }
   scene.renderer.render(scene.scene, scene.renderer.camera.renderer);
-  return scene.renderer.domElement.toDataURL();
+  let data = scene.renderer.domElement.toDataURL();
+  if (size) {
+    return new Promise((resolve, reject) => {
+      let img = document.createElement('img');
+      img.onload = function () {
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = size.width;
+        canvas.height = size.height;
+        ctx.drawImage(this, 0, 0, size.width, size.height);
+        let dataURI = canvas.toDataURL();
+        resolve(dataURI);
+      };
+      img.src = data;
+    });
+  } else {
+    return Promise.resolve(data);
+  }
+}
+
+function exportToFacebook() {
+  return new Promise((resolve, reject) => {
+    let exporter = new window.THREE.GLTFExporter();
+    exporter.parse(scene.scene, (result) => {
+      resolve(result);
+    }, {binary: true, forcePowerOfTwoTextures: true, forceIndices: true})
+  });
 }
 
 function stopRender() {
@@ -74,5 +100,6 @@ function stopRender() {
 export {
   render,
   stopRender,
-  takeScreenshot
+  takeScreenshot,
+  exportToFacebook
 };

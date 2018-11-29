@@ -3,6 +3,7 @@ import * as Utils from "./utils";
 import {GetCellKey} from "./modelUtils";
 import {CUBE_MATERIALS} from "../constants/cubego";
 import {IMAGE_URL} from "../config";
+import { GON_TIER } from '../constants/cubegon';
 
 export const GetStructure = (model) => {
   let res = [];
@@ -16,13 +17,27 @@ export const GetStructure = (model) => {
 };
 
 export const GetModelFromStructure = (structure) => {
-  let res = {};
+  let res = {voxels: {}, modelSize: {}, spaceSize: {}};
+  let modelSize = {x: [1000, -1000], y: [1000, -1000], z: [1000, -1000]};
   for (let i = 0; i < structure.length; i += 4) {
-    res[GetCellKey(structure[i], structure[i+1], structure[i+2])] = {
+    res.voxels[GetCellKey(structure[i], structure[i+1], structure[i+2])] = {
       x: structure[i], y: structure[i+1], z: structure[i+2],
       color: {...CUBE_MATERIALS[Math.floor(structure[i+3]/100)].sub_materials[structure[i+3]]},
     }
+
+    let arr = ['x', 'y', 'z'];
+    arr.forEach((k, idx) => {
+      modelSize[k][0] = Math.min(modelSize[k][0], structure[i + idx]);
+      modelSize[k][1] = Math.max(modelSize[k][1], structure[i + idx]);
+    })
   }
+  res.modelSize = modelSize;
+  res.spaceSize = ObjUtils.CloneDeep(modelSize);
+  res.size = {
+    x: modelSize.x[1]-modelSize.x[0]+1,
+    y: modelSize.y[1]-modelSize.y[0]+1,
+    z: modelSize.z[1]-modelSize.z[0]+1,
+  };
   return res;
 };
 
@@ -83,4 +98,39 @@ export const GetImageFromGonID = (id) => {
 
 export const CalculateDiscountPrice = (price, discount, roundNumber) => {
   return Utils.RoundUpToDecimal(price * (1 - discount) , roundNumber);
+}
+
+export const ConvertStatsToTier = (stats) => {
+  return ObjUtils.FilterValue(GON_TIER, (k, v) => {
+    return v.stats[0] <= stats && stats <= v.stats[1];
+  })[0] || undefined
+}
+
+export const VerifyLength = (text, fr, t) => (text && fr <= text.length && text.length <= t);
+
+const cutoffShapeSimilarity = {correct: 0.1, fake: 85};
+const cutoffColorSimilarity = {correct: 0.05, fake: 90};
+export const ConvertShapeDiffToSimilarity = (diff) => (
+  diff <= cutoffShapeSimilarity.correct
+    ? Utils.RoundDownToDecimal(100-diff*(100-cutoffShapeSimilarity.fake)/(cutoffShapeSimilarity.correct), 2)
+    : Utils.RoundDownToDecimal((1-diff)/(1-cutoffShapeSimilarity.correct)*cutoffShapeSimilarity.fake, 2)
+);
+export const ConvertColorDiffToSimilarity = (diff) => (
+  diff <= cutoffColorSimilarity.correct
+    ? Utils.RoundDownToDecimal(100-diff*(100-cutoffColorSimilarity.fake)/(cutoffColorSimilarity.correct), 2)
+    : Utils.RoundDownToDecimal((1-diff)/(1-cutoffColorSimilarity.correct)*cutoffColorSimilarity.fake, 2)
+);
+export const CalculateLengthBaseOnTier = (point) => {
+  let validPoint = Math.min(point, GON_TIER.god.points[1]);
+  let tierId = ObjUtils.FilterValue(GON_TIER, (k, v) => {
+    return v.points [0] <= validPoint && validPoint <= v.points[1];
+  })[0] || undefined;
+
+  if (tierId) {
+    let index = Object.keys(GON_TIER).indexOf(tierId);
+    let {points} = GON_TIER[tierId];
+    return {idx: index, length: (validPoint - points[0]) / (points[1] - points[0])};
+  }
+
+  return undefined;
 }

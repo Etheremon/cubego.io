@@ -11,6 +11,14 @@
 
   .sign-in-page__app {
     text-align: center;
+    .read-more {
+      margin-top: 16px;
+      a {
+        display: block;
+        color: $white;
+        font-size: $font-size-smaller;
+      }
+    }
     img {
       width: 160px;
     }
@@ -26,6 +34,10 @@
     }
     .btns {
       padding-top: 20px;
+    }
+
+    .subscription-action {
+      margin-top: 16px;
     }
 
     .subscription__container {
@@ -104,9 +116,7 @@
         }
       }
 
-      .subscription-action {
-        margin-top: 16px;
-      }
+      
     }
 
     .response__label {

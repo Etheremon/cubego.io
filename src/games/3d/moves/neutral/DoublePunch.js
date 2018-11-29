@@ -75,7 +75,7 @@ export default class DoublePunch extends BaseMove {
     let alpha = seed.position.z;
     const update = () => {
       if (!isCollision) {
-        if (seed.intersectsMesh(this.player.opponent.playerMesh, false)) {
+        if (this.player.opponent.checkCollision(seed)) {
           isCollision = true;
           this.player.opponent.hurt(this.damage / this.numberOfSeeds);
           pSystem.stop();

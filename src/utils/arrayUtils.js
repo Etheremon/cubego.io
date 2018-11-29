@@ -25,3 +25,14 @@ export const Filter = (arr, func) => {
   if (!Array.isArray(arr)) return arr;
   return arr.filter(func)
 }
+
+export const FindIndexOfFirstMax = (arr) => {
+  let res = 0;
+  for (let i = 1; i < arr.length; i++)
+    if (arr[res] < arr[i]) res = i;
+  return res;
+}
+
+export const Sum = (arr) => (arr.reduce((a, b) => a + b, 0));
+
+export const ConvertToArray = (v) => (Array.isArray(v) ? v : [v]);

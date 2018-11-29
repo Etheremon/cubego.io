@@ -1,0 +1,175 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/fonts';
+
+.pending-cubegon-card__container {
+  border: 1px solid #75C3F5;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 3px #59ADE3;
+
+  .border-1 {
+    border: 2px solid #194379;
+    border-radius: 8px;
+  }
+
+  .border-2 {
+    border: 3px solid #B0EDFB;
+    border-radius: 8px;
+  }
+
+  .border-3 {
+    border: 1px solid #1C3B50;
+    background-color: #051527;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .cubegon__image-wrapper {
+    position: relative;
+
+    .cubegon__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      padding: 24px 12px 60px 12px;
+      box-sizing: border-box;
+    }
+
+    .type__image {
+      position: absolute;
+      width: auto;
+      top: 10px;
+      right: 4px;
+      z-index: 1;
+
+      img {
+        display: block;
+        height: 30px;
+      }
+    }
+
+    .cubegon__badges {
+      position: absolute;
+      display: flex;
+      top: 8px;
+      left: 6px;
+
+      .badge__tier-wrapper, .badge__origin-wrapper {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin-right: 2px;
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          @include transform(translateX(-50%) translateY(-50%));
+          pointer-events: none;
+        }
+      }
+
+      .badge__tier-wrapper {
+        img {width: 100px;}
+      }
+      .badge__origin-wrapper {
+        img {width: 94px;}
+      }
+    }
+
+    .cubegon__countdown-content {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      .widget__countdown {
+        margin-bottom: -4px;
+        color: $white;
+        font-size: $font-size-header-1;
+        .group {
+          margin: 0 2px;
+        }
+      }
+    }
+  }
+
+  .shopping__image {
+    background: rgba(204, 81, 80, 1);
+    position: absolute;
+    height: 32px;
+    width: auto;
+    top: -5px;
+    right: 5px;
+    z-index: 3;
+    display: none;
+  }
+
+  .stats__container {
+    display: flex;
+    flex-direction: row;
+    background: $regal_blue;
+    color: $white;
+    padding: 20px 0;
+    position: relative;
+    z-index: 2;
+
+    .item {
+      box-sizing: border-box;
+      width: 50%;
+      border-right: 1px solid $white;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      .number {
+        font-size: 22px;
+        font-family: $f__baloobha;
+        color: rgb(160, 242, 260);
+      }
+
+      .label {
+        font-family: $f__baloobha;
+        font-size: $font-size-small;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .footer {
+    position: relative;
+    height: 20px;
+  }
+
+  .cubegon-name {
+    position: absolute;
+    margin-top: -2px;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+    width: calc(100% + 24px);
+
+    .cubegon-name__content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: $white;
+      font-family: $f__baloobha;
+      padding: 0 12px 4px 12px;
+      @include ellipsis;
+      text-align: center;
+    }
+  }
+}

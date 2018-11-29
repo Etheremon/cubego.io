@@ -5,6 +5,7 @@
  */
 
 function signMessage(message, address, callbackFunc) {
+  console.log("signing", message, address);
   if (isEtherAccountActive() && isValidEtherAddress(address)) {
     web3.personal.sign(web3.toHex(message), address, function(err, sig) {
       if (err) {

@@ -22,6 +22,7 @@ import {CUBE_MATERIALS, CUBE_MATERIALS_MAP, CUBE_TYPES} from "../../../constants
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {
+  GetCubegonInfo,
   GetLoggedInUserId, GetSavedModel, GetUserInfo, GetUserMaterials,
   GetUserNumberOfMaterials
 } from "../../../reducers/selectors";
@@ -38,6 +39,11 @@ import * as Config from "../../../config";
 import {Image} from "../../components/Image/Image.jsx";
 import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
+import {CubegonActions} from "../../../actions/cubegon";
+import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
+import { TextImage } from '../../widgets/Text/Text.jsx';
+import * as ArrayUtils from "../../../utils/arrayUtils";
+
 
 require("style-loader!./ModelEditor.scss");
 
@@ -50,6 +56,7 @@ class _ModelEditor extends React.Component {
       scale2D: 1,
       saved: false,
       validating: false,
+      showStatsDistribute: false,
     };
 
     this.tools = {
@@ -134,7 +141,7 @@ class _ModelEditor extends React.Component {
     this.renderError = this.renderError.bind(this);
 
     this.capturePhoto = this.capturePhoto.bind(this);
-    this.downloadPhoto = this.downloadPhoto.bind(this);
+    this.exportModel = this.exportModel.bind(this);
 
     this.isHoldingKey = {};
     this.selectedVariants = {};
@@ -142,7 +149,12 @@ class _ModelEditor extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.savedModel && this.props.savedModel.length) {
+    if (this.props.gonInfo && this.props.gonInfo.structure) {
+      this.toolManager.addModel({model: LogicUtils.GetModelFromStructure(this.props.gonInfo.structure)});
+      this.selectedModelIndex = -1;
+      this.forceUpdate();
+    }
+    else if (this.props.savedModel && this.props.savedModel.length) {
       this.toolManager.addModel({model: this.props.savedModel[0].model});
       this.selectedModelIndex = 0;
       this.forceUpdate();
@@ -157,6 +169,8 @@ class _ModelEditor extends React.Component {
     window.addEventListener("keyup", this.onKeyUp, false);
 
     this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
+    if (this.props.gonId)
+      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: false}));
   }
 
   componentWillUnmount() {
@@ -166,9 +180,16 @@ class _ModelEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!IsEqual(nextProps.gonInfo, this.props.gonInfo) && nextProps.gonInfo && nextProps.gonInfo.structure) {
+      this.toolManager.addModel({model: LogicUtils.GetModelFromStructure(nextProps.gonInfo.structure)});
+      this.selectedModelIndex = -1;
+      this.forceUpdate();
+    }
+
     if (!IsEqual(nextProps.userCubes, this.props.userCubes)) {
       this.toolManager.updateUserCubes(nextProps.userCubes);
     }
+
     if (nextProps.savedModel.length > this.props.savedModel.length && nextProps.savedModel.length > 0) {
       // this.onSavedModelSelect(nextProps.savedModel[nextProps.savedModel.length - 1], nextProps.savedModel.length - 1)
       this.selectedModelIndex = nextProps.savedModel.length - 1;
@@ -246,38 +267,48 @@ class _ModelEditor extends React.Component {
 
   saveModel() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
         this.setState({saved: true});
         this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
       })
     }
-    
+  }
+
+  exportModel() {
+    if (this.modelCanvas) {
+      this.modelCanvas.getBase64Image({width: 128, height: 128}).then((data) => {
+        this.setState({saved: true});
+        this.props.dispatch(ModelActions.SAVE_MODEL.init.func({model: {...this.toolManager.model, ['image']: data}, modelIndex: this.selectedModelIndex}));
+      })
+    }
   }
 
   capturePhoto() {
     if (this.modelCanvas) {
-      this.modelCanvas.getBase64Image().then((data) => {
+      this.modelCanvas.getBase64Image({width: 512, height: 512}).then((data) => {
         this.imageBase64 = data;
+        this.modelString = JSON.stringify(LogicUtils.GetSimplifiedModel({...this.toolManager.model, ['image']: data}));
         this.setState({showModelCapturing: true});
       })
     }
   }
 
-  downloadPhoto() {
-    Utils.OpenInNewTab(this.imageBase64);
-  }
-
   reviewModel(verified=false, text) {
+    let {_t} = this.props;
+
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
       this.setState({showRegisterPopup: true});
     } else {
 
-      console.log("reviewing");
       if (this.toolManager.stats.err) {
+        let missingMats = "";
+        if (Array.isArray(this.toolManager.stats.errValues))
+          missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
+
         this.setState({
           validating: false,
           showModelReview: true,
-          reviewError: {code: "general_error", data: this.props._t(this.toolManager.stats.err)},
+          reviewError: {code: "general_error", data: _t(this.toolManager.stats.err, {materials: missingMats})},
           showRegisterPopup: false,
         });
         return;
@@ -334,19 +365,35 @@ class _ModelEditor extends React.Component {
           <div className={'matched-gons'}>
             {data['match_cubegons'].map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
-                <img src={LogicUtils.GetImageFromGonID(gon.id)}/>
-                <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+                <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+                <p>{_t('ID')}: {gon['id']} {_t('Similarity')}: {LogicUtils.ConvertShapeDiffToSimilarity(gon['shape_diff'])}%</p>
               </div>
             ))}
+            <div className={'notice'}>
+              {_t('shape_matched_notice')}
+            </div>
           </div>
         </React.Fragment>
       )
     }
     else if (code === window.RESULT_CODE.ERROR_CUBEGO_MODEL_MATCH) {
       content = (
-        <div className={'header'}>
-          {_t('err.model_already_registered')}
-        </div>
+        <React.Fragment>
+          <div className={'header'}>
+            {_t('err.model_already_registered')}
+          </div>
+          <div className={'matched-gons'}>
+            {(data['match_cubegons'] || []).map((gon, idx) => (
+              <div className={'matched-gon'} key={idx}>
+                <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+                <p>{_t('ID')}: {gon['id']} - {_t('Color Similarity')}: {LogicUtils.ConvertColorDiffToSimilarity(gon['color_diff'])}%</p>
+              </div>
+            ))}
+            <div className={'notice'}>
+              {_t('model_matched_notice')}
+            </div>
+          </div>
+        </React.Fragment>
       )
     }
     else if (code === window.RESULT_CODE.SUCCESS) {
@@ -358,8 +405,8 @@ class _ModelEditor extends React.Component {
           </div>
           <div className={'matched-gons'}>
             <div className={'matched-gon'}>
-              <img src={`${SERVER_URL}/cubego_image/${Utils.AddHeadingZero(gon.id, 8)}.png`}/>
-              <p>{_t('ID')}: {gon['id']} {_t('Diff')}: {Utils.RoundToDecimalStr(gon['shape_diff'], 4)}</p>
+              <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
+              <p>{_t('ID')}: {gon['id']} - {_t('Similarity')}: {LogicUtils.ConvertShapeDiffToSimilarity(gon['shape_diff'])}%</p>
             </div>
           </div>
           {nextFunc ?
@@ -418,6 +465,12 @@ class _ModelEditor extends React.Component {
           }
         </div>
       );
+    } else if (selectedMaterial.material_id === 0) {
+      colorNote = (
+        <div className={'model-editor__color-note info'}>
+          {_t('color.plastic_note')}
+        </div>
+      );
     }
 
     let totalCost = null;
@@ -432,6 +485,13 @@ class _ModelEditor extends React.Component {
         //   ? _t('build.are_not_for_sale', {list: text}) : _t('build.is_not_for_sale', {list: text});
       }
     }
+
+
+    let missingMats = "";
+    if (Array.isArray(this.toolManager.stats.errValues))
+      missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
+    
+    let cubegonTierLength = LogicUtils.CalculateLengthBaseOnTier(this.toolManager.stats.gonTier.showPoints);
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -467,7 +527,10 @@ class _ModelEditor extends React.Component {
                 </div>
                 <div className={'actions'}>
                   <a href={this.imageBase64} className={'action'} download={"cubego.png"}>
-                    <Image img={'btn_download'}/>
+                    <ButtonNew color={ButtonNew.colors.BLUE} label={_t('save image')}/>
+                  </a>
+                  <a href={`data:text/plain;charset=utf-8,${this.modelString}`} className={'action'} download={"cubego.txt"}>
+                    <ButtonNew label={_t('export model')}/>
                   </a>
                   {/*<a className={'action'} onClick={() => {ShareImageToFacebook()}}>*/}
                     {/*<Image img={'btn_share_fb'}/>*/}
@@ -624,8 +687,8 @@ class _ModelEditor extends React.Component {
                       }}/>
                     </div>
                   })
-                  }
-                </div> : null
+                  } 
+                  </div> : null
               }
             </div>
 
@@ -657,12 +720,54 @@ class _ModelEditor extends React.Component {
                   </div> : null
                 }
 
-                <div className={'stat'}
-                     tooltip={_t('estimated power')}
-                     tooltip-position="bottom">
+                <div className={'stat'} onMouseOver={() => {
+                  this.setState({showStatsDistribute: true})
+                }} onMouseLeave={() => {
+                  this.setState({showStatsDistribute: false})
+                }}>
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
-                  {/*{this.toolManager.stats.power ? this.toolManager.stats.power[0] : ''} - {this.toolManager.stats.power ? this.toolManager.stats.power[1] : ''}*/}
-                  {this.toolManager.stats.gonTier.stats[0]} - {this.toolManager.stats.gonTier.stats[1]}
+                  {this.toolManager.stats.power ? (
+                    this.toolManager.stats.power[0] !== this.toolManager.stats.power[1]
+                      ? `${this.toolManager.stats.power[0]} - ${this.toolManager.stats.power[1]}`
+                      : `${this.toolManager.stats.power[0]}`
+                  ) : ''}
+                  {
+                    this.toolManager.stats.stats_distribute && this.state.showStatsDistribute ? <div className="stats-distribute">
+                      <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('health')} imgSource={require(`../../../shared/img/inventory/health-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.health}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('attack')} imgSource={require(`../../../shared/img/inventory/attack-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                          {this.toolManager.stats.stats_distribute.attack}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('defense')} imgSource={require(`../../../shared/img/inventory/defense-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.defense}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('speed')} imgSource={require(`../../../shared/img/inventory/speed-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.speed}%
+                          </div>
+                        </div>
+                    </div> : null
+                  }
+                  
                 </div>
 
                 <div className={'stat'}
@@ -675,12 +780,12 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__tier-bar'}>
-              <div className={'bar'} style={{width: `${this.toolManager.stats.gonTier.showPoints/70000*100}%`}}>
+              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*25 + cubegonTierLength.length*100*0.25) : 0}%`}}>
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
-                     style={{left: `${(tier.points[0] + (idx <= 1 ? 1200 : 0))/70000*100}%`}}
+                     style={{left: `${25*idx}%`}}
                      tooltip={_t(`${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>
@@ -692,14 +797,34 @@ class _ModelEditor extends React.Component {
             <div className={'model-editor__canvas'}>
               <div className={'model-editor__left'}>
                 <div className={'model-editor__3d'}>
+
                   <div className={'model-editor__3d-capture'}
                        tooltip={_t('capture a photo')} tooltip-position={'bottom'}
                        onClick={this.capturePhoto}>
                     <Image img={'icon_camera'}/>
                   </div>
+                  <div className="model-editor__3d-file-loader" tooltip={_t('load model from file')} tooltip-position={'bottom'}>
+                    <ImportFromFile text={_t('template from file')} handleData={dataFile => {
+                        let modelFromFile;
+                        try {
+                          dataFile = JSON.parse(dataFile);
+                          modelFromFile = LogicUtils.GetFullModel(dataFile);
+                          if (modelFromFile) {
+                            this.toolManager.addModel({model: modelFromFile.model});
+                            this.selectedModelIndex = -1;
+                            this.forceUpdate()
+                          } else {
+                            alert(_t("template file is invalid"))
+                          }
+                        } catch (err) {
+                          console.log(err)
+                        }
+                      }}/>
+                  </div>
+
                   {this.toolManager.stats.err ?
                     <div className={'model-editor__model-error'}>
-                      <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err)}</p>
+                      <Image img={'icon_warning'}/> <p>{_t(this.toolManager.stats.err, {materials: missingMats})}</p>
                     </div> : null
                   }
                   <Model3D model={this.toolManager.model} tools={ObjUtils.CloneDeep(this.toolManager.tools)} onCellClicked={this.onCellClicked}
@@ -799,6 +924,7 @@ class _ModelEditor extends React.Component {
 const mapStateToProps = (store, props) => {
   let pathName = props.pathname;
   let userId = GetLoggedInUserId(store);
+  let gonId = Utils.ParseQueryString(props.location.search)['gon_id'];
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
@@ -806,6 +932,8 @@ const mapStateToProps = (store, props) => {
     userId,
     userInfo: GetUserInfo(store, userId),
     userCubes: GetUserNumberOfMaterials(store, userId),
+    gonId,
+    gonInfo: GetCubegonInfo(store, gonId),
   }
 };
 

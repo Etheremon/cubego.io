@@ -7,7 +7,7 @@ import {hexToColor3} from "../utils";
 import {BabylonMeshContainer} from "./babylonMeshContainer";
 
 const HURT_COLOR = BABYLON.Color3.White();
-const PLAYER_SIZE = 25;
+const PLAYER_SIZE = 10;
 
 export class BabylonVoxelPlayer extends BabylonComponent {
   constructor() {
@@ -38,7 +38,8 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     voxelPlayer.renderer = containerMesh;
     voxelPlayer.scene = scene;
     voxelPlayer.engine = engine;
-    voxelPlayer.createPlayerMesh(props.size, props.data, props.rotate);
+    voxelPlayer.setProps(props);
+    voxelPlayer.createPlayerMesh(props.size, props.data.model, props.data.type);
     voxelPlayer.createFakeShadow();
     voxelPlayer.createHealthBar();
     voxelPlayer.createHurtPoint();
@@ -129,64 +130,171 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     });
   }
 
-  createPlayerMesh(size, data, rotate) {
-    let elements = [];
-    let scaling = PLAYER_SIZE / data.size.y;
+  createPlayerMesh(size, data, type) {
+    if (this.sps) {
+      this.sps.dispose();
+      this.sps = null;
+    }
 
-    size = size * scaling;
-
-    let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
-    data.voxels.forEach((voxel) => {
-      let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
-      spsVoxel.addShape(meshBox, 1);
-      elements.push(meshBox);
+    if (this.playerMesh) {
+      this.playerMesh.dispose();
+      this.playerMesh = null;
+    }
+    let collisionMesh = BabylonMeshBox.create({scene: this.scene}, {
+      size: PLAYER_SIZE * size * 2,
+      position: {x: 0, y: PLAYER_SIZE * size, z: 0}
     });
-    spsVoxel.initParticles = function () {
-      elements.forEach((element, idx) => {
-        let voxel = data.voxels[idx];
-        let position = {
-          x: -size * data.size.y / 2 + size * voxel.y,
-          y: size * voxel.z,
-          z: size * data.size.x / 2 - size * voxel.x
-        };
-        let color = hexToColor3(fullColorHex(data.palette[voxel.colorIndex]));
-        this.particles[idx].position = position;
-        this.particles[idx].color = color;
-        this.particles[idx].originalColor = color;
+    collisionMesh.parent = this.renderer;
+    collisionMesh.visibility = 0;
+    this.collisionMesh = collisionMesh;
+    if (type === 'magical_voxel') {
+      let elements = [];
+      let scaling = PLAYER_SIZE / data.size.y;
+      size = size * scaling;
+
+      let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
+      data.voxels.forEach((voxel) => {
+        let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
+        spsVoxel.addShape(meshBox, 1);
+        elements.push(meshBox);
       });
-    };
-    let playerMesh = spsVoxel.buildMesh();
-    spsVoxel.computeBoundingBox = true;
-    elements.forEach((element) => {
-      element.dispose();
-    });
-    spsVoxel.updateParticle = (p) => {
-      if (this.isCollision && !this.isAttacking) {
-        p.color = HURT_COLOR;
-      } else {
-        p.color = p.originalColor;
-      }
-      // if (this.isDying) {
-      //   this.explore(p);
-      //   if (p.position.y <= 0) {
-      //     p.color.a -= 0.1;
-      //   } else {
-      //     p.velocity.y -= 0.01;
-      //     p.position = new BABYLON.Vector3(p.position.x, p.position.y, p.position.z);
-      //     (p.position).addInPlace(p.velocity);
-      //     p.position.y += 0.5 / 2;
-      //   }
-      // }
-    };
+      spsVoxel.initParticles = function () {
+        elements.forEach((element, idx) => {
+          let voxel = data.voxels[idx];
+          let position = {
+            x: -size * data.size.y / 2 + size * voxel.y,
+            y: size / 2 + size * voxel.z,
+            z: size * data.size.x / 2 - size * voxel.x
+          };
+          let color = hexToColor3(fullColorHex(data.palette[voxel.colorIndex]));
+          this.particles[idx].position = position;
+          this.particles[idx].color = color;
+          this.particles[idx].originalColor = color;
+        });
+      };
+      let playerMesh = spsVoxel.buildMesh();
+      spsVoxel.computeBoundingBox = true;
+      elements.forEach((element) => {
+        element.dispose();
+      });
+      spsVoxel.updateParticle = (p) => {
+        if (this.isCollision && !this.isAttacking) {
+          p.color = HURT_COLOR;
+        } else {
+          p.color = p.originalColor;
+        }
+        // if (this.isDying) {
+        //   this.explore(p);
+        //   if (p.position.y <= 0) {
+        //     p.color.a -= 0.1;
+        //   } else {
+        //     p.velocity.y -= 0.01;
+        //     p.position = new BABYLON.Vector3(p.position.x, p.position.y, p.position.z);
+        //     (p.position).addInPlace(p.velocity);
+        //     p.position.y += 0.5 / 2;
+        //   }
+        // }
+      };
 
-    spsVoxel.initParticles();
-    spsVoxel.setParticles();
-    this.sps = spsVoxel;
-    let pivotAt = new BABYLON.Vector3(0, 0, 0);
-    let translation = playerMesh.position.subtract(pivotAt);
-    playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
-    playerMesh.parent = this.renderer;
-    this.playerMesh = playerMesh;
+      spsVoxel.initParticles();
+      spsVoxel.setParticles();
+      let pivotAt = new BABYLON.Vector3(0, 0, 0);
+
+      let translation = playerMesh.position.subtract(pivotAt);
+      playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
+      playerMesh.parent = this.renderer;
+
+      this.sps = spsVoxel;
+      this.playerMesh = playerMesh;
+
+    } else {
+      let min = {x: Infinity, y: Infinity, z: Infinity};
+      let max = {x: -Infinity, y: -Infinity, z: -Infinity};
+      let elements = [];
+      let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
+      Object.keys(data.voxels).forEach((key) => {
+        if (min.x > data.voxels[key].x) {
+          min.x = data.voxels[key].x;
+        }
+        if (min.y > data.voxels[key].y) {
+          min.y = data.voxels[key].y;
+        }
+        if (min.z > data.voxels[key].z) {
+          min.z = data.voxels[key].z;
+        }
+        if (max.x < data.voxels[key].x) {
+          max.x = data.voxels[key].x;
+        }
+        if (max.y < data.voxels[key].y) {
+          max.y = data.voxels[key].y;
+        }
+        if (max.z < data.voxels[key].z) {
+          max.z = data.voxels[key].z;
+        }
+      });
+
+      let scalingX = (max.x - min.x) > 0 ? PLAYER_SIZE / (max.x - min.x) : 1;
+      let scalingY = (max.y - min.y) > 0 ? PLAYER_SIZE / (max.y - min.y) : 1;
+
+      let scaling = (scalingX + scalingY) / 2;
+      scaling = scalingX < 0.25 ? scalingX * 2 : scaling;
+      scaling = scalingY < 0.25 ? scalingY * 2 : scaling;
+
+      size = size * scaling;
+
+      Object.keys(data.voxels).forEach((key) => {
+        let meshBox = BabylonMeshBox.create({scene: this.scene}, {size: size * 1, position: {x: 0, y: 0, z: 0}});
+        meshBox.dataId = key;
+
+        spsVoxel.addShape(meshBox, 1);
+        elements.push(meshBox);
+      });
+
+      spsVoxel.initParticles = function () {
+        elements.forEach((element, idx) => {
+          let voxel = data.voxels[element.dataId];
+          let position = {
+            x: -size * (max.x - min.x) / 2 + size * voxel.x,
+            y: size / 2 + size * voxel.z,
+            z: -size * (max.y - min.y) / 2 + size * voxel.y
+          };
+          this.particles[idx].position = position;
+          let x = (parseInt(voxel.color.sub_material_id, 10) % 100);
+          let y = parseInt(voxel.color.material_id, 10);
+          this.particles[idx].uvs.x = (x - 1) / 10 + 0.01;
+          this.particles[idx].uvs.y = (y) / 13 + 0.01;
+          this.particles[idx].uvs.z = x / 10 - 0.01;
+          this.particles[idx].uvs.w = (y + 1) / 13 - 0.01;
+        });
+      };
+      let playerMesh = spsVoxel.buildMesh();
+      let url = require('../../../shared/img/cubego-variants/atlas.png');
+      let mat = new BABYLON.StandardMaterial("mat1", this.scene);
+      let texture = new BABYLON.Texture(url, this.scene);
+      mat.diffuseTexture = texture;
+
+      playerMesh.material = mat;
+
+      spsVoxel.computeBoundingBox = true;
+      elements.forEach((element) => {
+        element.dispose();
+      });
+      spsVoxel.updateParticle = (p) => {
+        if (this.isCollision && !this.isAttacking) {
+          p.color = HURT_COLOR;
+        } else {
+          p.color = null;
+        }
+      };
+      spsVoxel.initParticles();
+      spsVoxel.setParticles();
+      let pivotAt = new BABYLON.Vector3(0, 0, 0);
+      let translation = playerMesh.position.subtract(pivotAt);
+      playerMesh.setPivotMatrix(BABYLON.Matrix.Translation(translation.x, translation.y, translation.z));
+      playerMesh.parent = this.renderer;
+      this.sps = spsVoxel;
+      this.playerMesh = playerMesh;
+    }
   }
 
   explore(particle) {
@@ -247,8 +355,6 @@ export class BabylonVoxelPlayer extends BabylonComponent {
   }
 
   createHitParticle(emitter) {
-    // let matrix = this.playerMesh.getWorldMatrix();
-    // let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     if (!emitter)
       emitter = new BABYLON.Vector3(0, 4, 0);
     let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
@@ -322,8 +428,16 @@ export class BabylonVoxelPlayer extends BabylonComponent {
     // }, 5000);
   }
 
+  set data(data) {
+    this.createPlayerMesh(this.props.size, data.model, data.type);
+  }
+
   get opponent() {
     return this._opponent;
+  }
+
+  checkCollision(mesh) {
+    return mesh.intersectsMesh(this.playerMesh, false) || mesh.intersectsMesh(this.collisionMesh, false)
   }
 
   destroyAll() {

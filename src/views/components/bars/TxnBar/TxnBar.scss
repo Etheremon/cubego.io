@@ -69,6 +69,18 @@
       text-align: left;
       padding: 8px;
 
+      .widget__dropdown {
+        background: #49A6C5;
+        border-radius: 8px;
+
+        .widget__dropdown__content {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 8px 8px;
+          color: $white !important;
+        }
+      }
+
       label {
         display: block;
         margin-bottom: 3px;
@@ -78,19 +90,19 @@
         font-family: $f__baloobha;
       }
 
-      input[type=text], textarea {
+      input[type=text], input[type=number], textarea {
         width: 100%;
         box-shadow: inset 0 1px 2px #2C6477;
         outline: none;
         border: 0;
         background-color: #49A6C5;
-        padding: 8px 8px 4px 8px;
+        padding: 4px 8px 0 8px;
         border-radius: 5px;
         font-family: $f__baloobha;
         color: $white;
         box-sizing: border-box;
         resize: none;
-        line-height: 20px;
+        line-height: 100%;
 
         &:read-only {
           box-shadow: none;
@@ -99,6 +111,11 @@
 
         &::selection {
           background: #0b58a6 !important; /* WebKit/Blink Browsers */
+        }
+
+        &::placeholder {
+          color: #EDEFF070;
+          font-weight: $font-weight-light;
         }
       }
     }

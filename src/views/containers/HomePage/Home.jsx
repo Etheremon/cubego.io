@@ -150,7 +150,7 @@ class HomePage extends React.Component {
           {
             !Config.START_PRESALE ? <div className={'home__intro-countdown'}>
               <p className={'presale-text'}>{_t('presale start in')}</p>
-              <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE} onFinishCountdown={() => {
+              <Countdown className={'countdown__container'} targetTime={Config.PRESALE_DATE} onFinishCountdown={() => {
                   window.location.reload()
               }}/>
   
@@ -266,7 +266,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'desc'}>
-                      <Text className={'header'} type={Text.types.H2} children={_t('combat').toUpperCase()} />
+                      <Text className={'header'} type={Text.types.H2} children={_t('home_combat_title').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
                       <ButtonNew color={ButtonNew.colors.BLUE} label={_t('watch battle')} onClick={() => {this.props.history.push(`/${URLS.BATTLE}`)}}/>
                     </div>

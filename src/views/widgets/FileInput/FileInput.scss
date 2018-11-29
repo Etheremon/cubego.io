@@ -1,0 +1,20 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.upload-expense {
+  .input-file {
+    display: none;
+  }
+
+  .input {
+    min-width: 36px;
+    min-height: 16px;
+    cursor: pointer;
+    font-size: $font-size-header-2;
+  }
+
+  .fas {
+    pointer-events: none;
+  }
+}

@@ -22,10 +22,14 @@ import Loading from "../../components/Loading/Loading.jsx";
 import {EmptyCubegoList, EmptyCubegonList} from "../EmptyView/EmptyView.jsx";
 import {GetUserMaterials} from "../../../reducers/selectors";
 import {URLS} from "../../../constants/general";
+import { Link } from 'react-router-dom';
+import PendingCubegonCard from "../../components/PendingCubegonCard/PendingCubegonCard.jsx";
+import {TransferCubegon, TransferMaterialCube} from "../../../services/transaction";
+import {addTxn} from "../../../actions/txnAction";
 
 require("style-loader!./Inventory.scss");
 
-const inventoryTabs = !Utils.IsLocalhost
+const inventoryTabs = Utils.IsLiveServer
   ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}]
   : [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 
@@ -39,11 +43,11 @@ class Inventory extends React.Component {
     this.handleGenerateCubegonView = this.handleGenerateCubegonView.bind(this);
     this.handleGenerateCubegoView = this.handleGenerateCubegoView.bind(this);
     this.handleGeneratePendingCubegonView = this.handleGeneratePendingCubegonView.bind(this);
-    this.renderTabcontent = this.renderTabcontent.bind(this);
+    this.renderTabContent = this.renderTabContent.bind(this);
   }
 
   componentDidMount() {
-    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId}));
+    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId, forceUpdate: true}));
   }
 
   componentWillUnmount() {
@@ -55,7 +59,7 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <CubegonCard key={idx} {...item} />
+            <PendingCubegonCard key={idx} {...item} />
           </div>
         )}
       </div>
@@ -67,7 +71,9 @@ class Inventory extends React.Component {
       <div className="list-item__container">
         {cubegons.map((item, idx) => 
           <div className="card-item" key={idx}>
-            <CubegonCard key={idx} {...item} />
+            <Link to={`/${URLS.CUBEGONS}/${item.id}`}>
+              <CubegonCard key={idx} {...item} />
+            </Link>
           </div>
         )}
       </div>
@@ -75,7 +81,7 @@ class Inventory extends React.Component {
   }
 
   handleGenerateCubegoView(cubegoes) {
-    const {_t, history} = this.props;
+    const {_t, history, userId} = this.props;
 
     if (!cubegoes) {
       return (
@@ -97,8 +103,20 @@ class Inventory extends React.Component {
       <div className="cubego-view__container">
         <div className="list-item__container">
           {cubegoes.sort((a, b) => (b.material_id - a.material_id)).map((item, idx) =>
-            <div className="card-item" key={idx}>
-              <CubegoCard key={idx} {...item} _t={_t}/>
+            <div className="card-item tag-cubego" key={idx}>
+              <CubegoCard key={idx} {...item} _t={_t} onTransferFunc={item.name === 'plastic' ? null : () => {
+                TransferMaterialCube(this.props.dispatch, addTxn, _t, {
+                  fromAdd: userId,
+                  cubeName: item.name,
+                  numCubes: item.amount,
+                  successCallback: (data) => {
+                  },
+                  failedCallback: null,
+                  finishCallback: () => {
+                  },
+                });
+
+              }}/>
             </div>
           )}
         </div>
@@ -107,32 +125,49 @@ class Inventory extends React.Component {
     )
   }
 
-  renderTabcontent(dataUserMaterials) {
+  renderTabContent(dataUserMaterials) {
     const {_t, query, userCubegons, userPendingCubegons,history} = this.props;
     if (query.tab !== inventoryTabs[0].key) {
       if (!userCubegons && !userPendingCubegons) {
-        return <div className="list-item__container">
-                <Loading/>
-              </div>
+        return (
+          <div className="list-item__container">
+            <Loading/>
+          </div>
+        )
       }
 
-      return <ListView
-        emptyView={<EmptyCubegonList _t={_t} history={history}/>}
-        itemList={query.tab === inventoryTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
-        listItemName={_t('cubegons')}
-        handleGenerateCardView={(cubegons) => {return query.tab === inventoryTabs[1].key ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons)}}
-        filters={[
-          FilterSearch({_t, searchFields: ['id'], value: query.search}),
-          FilterType({_t, value: query.type, right: true}),
-          FilterSort({_t, sortTypes: [
-            ['+total_cubego', _t('sort.lowest_cubegoes')],
-            ['+total_stats', _t('sort.lowest_stats')],
-          ], defaultSort: '+total_cubego', value: query.sort, right: true})
-        ]}
-        page={query.page}
-        handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
-      />
-    } else{
+      let isCubegonTab = query.tab === inventoryTabs[1].key;
+
+      return (
+        <React.Fragment>
+          {!isCubegonTab ?
+            <div className={'pending-note'}>
+              {_t('pending_cubegon_desc')}
+            </div> : null
+          }
+          <ListView
+            emptyView={<EmptyCubegonList _t={_t} history={history}/>}
+            itemList={query.tab === inventoryTabs[1].key ? (userCubegons || []) : (userPendingCubegons || [])}
+            listItemName={_t('cubegons')}
+            handleGenerateCardView={(cubegons) => (isCubegonTab ? this.handleGenerateCubegonView(cubegons) : this.handleGeneratePendingCubegonView(cubegons))}
+            filters={[
+              FilterSearch({_t, searchFields: ['name', 'id', 'token_id'], value: query.search}),
+              FilterType({_t, value: query.type, right: true}),
+              FilterSort({_t, sortTypes: [
+                  ['-id', _t('sort.newest_cubegon')],
+                  ['-total_stats', _t('sort.highest_stats')],
+                  ['-total_cubego', _t('sort.highest_cubegoes')],
+                  ['+type_id', _t('sort.type')],
+                  ['+name', _t('sort.name')],
+              ], defaultSort: '-id', value: query.sort, right: true})
+            ]}
+            page={query.page}
+            handleFilter={(filterValues) => {Utils.handleJoinQueryURL(this.props.history.push, query, filterValues)}}
+          />
+        </React.Fragment>
+      )
+    }
+    else {
       return this.handleGenerateCubegoView(dataUserMaterials ? dataUserMaterials : null)
     }
   }
@@ -234,7 +269,7 @@ class Inventory extends React.Component {
 
           <Container className={'inventory-page__main'} size={Container.sizes.NORMAL}>
             {
-              this.renderTabcontent(dataUserMaterials)
+              this.renderTabContent(dataUserMaterials)
             }
           </Container>
         </div>

@@ -204,21 +204,35 @@
   }
 
   .cubego-view__container {
-    
+    padding-top: 30px;
+  }
+
+  .pending-note {
+    font-size: $font-size-medium;
+    color: $white;
+    text-align: center;
+    font-weight: $font-weight-semi-bold;
+    padding: 20px 0;
   }
 
   .list-item__container {
-    margin-top: 44px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     .card-item {
-      width: 25%;
-      padding: 16px;
+      width: 33%;
+      padding: 32px 20px;
       box-sizing: border-box;
 
       @include mobile {
-        width: 50%;
+        width: 100%;
+      }
+
+      &.tag-cubego {
+        width: 25%;
+        @include mobile {
+          width: 50%;
+        }
       }
     }
   }

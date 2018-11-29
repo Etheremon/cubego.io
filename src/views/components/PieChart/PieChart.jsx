@@ -96,7 +96,7 @@ class Slice extends React.Component {
 					<text x={ this.state.x } y={ this.state.y } fill="#fff" textAnchor="middle">
             {/* { this.props.percent ? this.props.percentValue + '%' : this.props.value } */}
             <tspan x={ this.state.x } y={this.state.y} >{this.props.label}</tspan>
-            <tspan x={ this.state.x } y={this.state.y + 12}>{this.props.value}</tspan>
+            <tspan x={ this.state.x } y={this.state.y + 20}>{this.props.value}</tspan>
 					</text>
 				: null }
 			</g>
@@ -112,7 +112,7 @@ const PieChart = ({data, stroke, strokeWidth, showLabels, hole, radius}) => {
     startAngle = 0;
     
   return (
-    <svg width={ diameter } height={ diameter } viewBox={ '0 0 ' + diameter + ' ' + diameter } xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <svg width={ '100%' } height={ '100%' } viewBox={ '0 0 ' + diameter + ' ' + diameter } xmlns="http://www.w3.org/2000/svg" version="1.1">
       { data.map(function (slice, sliceIndex) {
         let angle, nextAngle, percent;
 

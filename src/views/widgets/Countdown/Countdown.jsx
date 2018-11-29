@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from "react-redux"
 import {getTranslate} from 'react-localize-redux'
 import { ConvertTimeUnix } from '../../../utils/utils';
+import PropTypes from "prop-types";
 
 require("style-loader!./Countdown.scss");
 
@@ -12,11 +13,11 @@ class Countdown extends React.Component {
   }
 
   componentDidMount() {
-    const { presaleDate, onFinishCountdown} = this.props;
+    const { targetTime, onFinishCountdown} = this.props;
     this.interval = setInterval( () => {
       let now = Date.now();
       this.setState(
-        ConvertTimeUnix(now, presaleDate, false)
+        ConvertTimeUnix(now, targetTime, false)
       )
 
       if (this.state.days === 0 && this.state.hours === 0 && this.state.minutes === 0 && this.state.seconds === 0) {
@@ -34,19 +35,24 @@ class Countdown extends React.Component {
 
   render() {
     let {_t, className} = this.props;
-    let { days, hours, minutes, seconds } = this.state;
+    let { days, hours, minutes, seconds, showDays, showText } = this.state;
 
     return(
-      <div className={`widget__countdown ${className && className}`}>
-        <div className="group">
-          <div className="days">
-          {days}
-          </div>
-          <div className="label">
-            {_t('days')}
-          </div>
-        </div>
-        <div className="group">:</div>
+      <div className={`widget__countdown ${className && className} ${showText ? 'show-text' : ''}`}>
+        {showDays ?
+          <React.Fragment>
+            <div className="group">
+              <div className="days">
+                {days}
+              </div>
+              <div className="label">
+                {_t('days')}
+              </div>
+            </div>
+            <div className="group colon">:</div>
+          </React.Fragment> : null
+        }
+
         <div className="group">
           <div className="hours">
           {hours}
@@ -55,7 +61,7 @@ class Countdown extends React.Component {
             {_t('hours')}
           </div>
         </div>
-        <div className="group">:</div>
+        <div className="group colon">:</div>
         <div className="group">
           <div className="min">
           {minutes}
@@ -64,7 +70,7 @@ class Countdown extends React.Component {
             {_t('mins')}
           </div>
         </div>
-        <div className="group">:</div>
+        <div className="group colon">:</div>
         <div className="group">
           <div className="sec">
           {seconds}
@@ -88,6 +94,17 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatch: dispatch,
   }
+};
+
+
+Countdown.propTypes = {
+  showDays: PropTypes.bool,
+  showText: PropTypes.bool,
+};
+
+Countdown.defaultProps = {
+  showDays: true,
+  showText: true,
 };
 
 export default connect(

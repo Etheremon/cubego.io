@@ -86,7 +86,7 @@ class StorePage extends React.Component {
         <img className={'store-page__banner-img'} src={require(`../../../shared/img/banner/banner_store.png`)} />
         <div className="main-content__container">
           <p className={'presale-text'}>{_t('presale start in')}</p>
-          <Countdown className={'countdown__container'} presaleDate={Config.PRESALE_DATE} onFinishCountdown={() => {
+          <Countdown className={'countdown__container'} targetTime={Config.PRESALE_DATE} onFinishCountdown={() => {
                   window.location.reload()
               }}/>
           <p className={'presale-time'}>({Config.PRESALE_DATE})</p>

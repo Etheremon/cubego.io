@@ -2,19 +2,16 @@ import React from "react"
 import { connect } from "react-redux"
 import {getTranslate} from "react-localize-redux"
 import * as Stores from "../../../../reducers/index"
-import Popup from "../../../widgets/Popup/Popup.jsx";
-import * as Utils from "../../../../utils/utils";
-import {Text} from "../../../widgets/Text/Text.jsx";
 import {ButtonNew} from "../../../widgets/Button/Button.jsx";
-import * as LS from "../../../../services/localStorageService";
+import * as ObjUtils from "../../../../utils/objUtils";
 import Dropdown from "../../../widgets/Dropdown/Dropdown.jsx";
-import { IsEqual } from '../../../../utils/objUtils';
 import { popTxn } from '../../../../actions/txnAction';
 import {GetLoggedInUserId, GetTxn, GetUserInfo} from '../../../../reducers/selectors';
 import { CustomRectangle } from "../../../widgets/SVGManager/SVGManager.jsx";
 import Loading from '../../Loading/Loading.jsx';
 import { SubBgr } from '../../../containers/HomePage/SubBgr/SubBgr.jsx';
 import RegisterPopup from "../../../containers/SignIn/RegisterPopup/RegisterPopup.jsx";
+import {CloneDeep} from "../../../../utils/objUtils";
 
 require("style-loader!./TxnBar.scss");
 
@@ -38,19 +35,25 @@ class TxnBar extends React.Component {
     this.updateState = this.updateState.bind(this);
 
     this.state = {
-      currentTxn: {...this.props.currentTxn, state: TxnBarState.TO_SUBMIT},
+      currentTxn: {...this.props.currentTxn},
       toggleVar: null,
     };
+    this.dropdownSelected = undefined;
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.currentTxn && nextProps.currentTxn.forceToSubmittingState && this.state.currentTxn.state !== TxnBarState.SUBMITTING && this.state.currentTxn.state !== TxnBarState.DONE) {
-      this.handleValidate(nextProps.currentTxn)
+    if (nextProps.currentTxn && nextProps.currentTxn.forceToSubmittingState && this.state.currentTxn.status === undefined) {
+      this.handleValidate(nextProps.currentTxn);
       return
     }
-    if (!IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
+
+    if (!ObjUtils.IsEqual(this.props.currentTxn, nextProps.currentTxn)) {
+
+      if (this.state.currentTxn) {
+        this.state.currentTxn.onFinishCallback && this.state.currentTxn.onFinishCallback();
+      }
       this.updateState({
-        currentTxn: {...nextProps.currentTxn, status: nextProps.currentTxn ? TxnBarState.TO_SUBMIT : null},
+        currentTxn: {...CloneDeep(nextProps.currentTxn), status: nextProps.currentTxn ? TxnBarState.TO_SUBMIT : null},
       });
     }
   }
@@ -67,7 +70,7 @@ class TxnBar extends React.Component {
   }
 
   handleValidate(currentTxnObj) {
-    this.updateState({currentTxn: {...currentTxnObj,  validateErr: '', status: TxnBarState.SUBMITTING}});
+    this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.SUBMITTING}});
     currentTxnObj.submitFunc(currentTxnObj.fields, function(data) {
       if (data && data.err) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: data.err, status: TxnBarState.TO_SUBMIT}});
@@ -75,6 +78,8 @@ class TxnBar extends React.Component {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': null, 'txn_data': data.txn_data}});
       } else if (data && data.txn_hash) {
         this.updateState({currentTxn: {...currentTxnObj, validateErr: '', status: TxnBarState.DONE, 'txn_hash': data.txn_hash, 'txn_data': null}});
+      } else if (data && data.api_success) {
+        this.updateState({currentTxn: {...currentTxnObj, validateErr: 'data_updated', status: TxnBarState.TO_SUBMIT}});
       }
     }.bind(this));
   }
@@ -100,6 +105,18 @@ class TxnBar extends React.Component {
 
   handleOnInputChange(e, field) {
     this.state.currentTxn.fields[field].value = e.target.value;
+
+    let passiveUpdate = {};
+    ObjUtils.ForEach(this.state.currentTxn.fields, (key, val) => {
+      if (val.onUpdate) {
+        passiveUpdate[key] = val.onUpdate(this.state.currentTxn.fields)
+      }
+    });
+
+    ObjUtils.ForEach(passiveUpdate, (k, val) => {
+      this.state.currentTxn.fields[k].value = val;
+    });
+
     this.setState({
       currentTxn: this.state.currentTxn
     });
@@ -125,17 +142,27 @@ class TxnBar extends React.Component {
             {/*</div>*/}
 
             {this.state.currentTxn.fields_order.map((fieldName, idx) => {
+              
               return(
                 <div className="txn-field" key={idx}>
-                  <label>{this.props._t(this.state.currentTxn.fields[fieldName].text)}</label>
+                  <label>{typeof(this.state.currentTxn.fields[fieldName].text) === 'string' ? _t(this.state.currentTxn.fields[fieldName].text) : this.state.currentTxn.fields[fieldName].text}</label>
                   { (this.state.currentTxn.fields[fieldName].type === 'dropdown' || this.state.currentTxn.fields[fieldName].type === 'buttons')
                     ? (this.state.currentTxn.fields[fieldName].type === 'dropdown'
-                        ? <Dropdown key={idx} placeholder={this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
-                                    pointing={'bottom'} selection
-                                    options={this.state.currentTxn.fields[fieldName].options}
-                                    onChange={(e, data) => {this.handleOnInputChange({target: data}, fieldName)}}
-                                    value={this.state.currentTxn.fields[fieldName].value}
-                          />
+                        ? <Dropdown key={idx}
+                                    iconDropdown={true}
+                                    emptyListText={this.state.currentTxn.fields[fieldName].emptyOption}
+                                    list={this.state.currentTxn.fields[fieldName].options.map(k => {
+                                      return {
+                                        content: k.content,
+                                        onClick: () => { 
+                                          this.dropdownSelected = k.content;
+                                          this.handleOnInputChange({target: {value: k.value}}, fieldName)
+                                        }
+                                      }
+                                    })}
+                          >
+                          {this.dropdownSelected ? this.dropdownSelected : this.state.currentTxn.fields[fieldName].placeholder || this.props._t('please_select')}
+                          </Dropdown>
                         : this.state.currentTxn.fields[fieldName].options.map((option, idx) => (
                             this.state.currentTxn.fields[fieldName].value === option.value
                               ? <span key={idx}><ButtonNew>{option.text}</ButtonNew></span>
@@ -161,7 +188,13 @@ class TxnBar extends React.Component {
 
             {this.state.currentTxn.status === TxnBarState.SUBMITTING
               ? <p className={'txn-msg txn-notice'}>{_t('txn_submitting_note')}</p>
-              : <p className={'txn-msg txn-error'}>{this.state.currentTxn.validateErr ? this.props._t(this.state.currentTxn.validateErr) : null}</p>
+              : <p className={'txn-msg txn-error'}>{
+                this.state.currentTxn.validateErr ? (
+                  typeof(this.state.currentTxn.validateErr) === 'string'
+                    ? this.props._t(this.state.currentTxn.validateErr)
+                    : this.state.currentTxn.validateErr
+                ): null
+              }</p>
             }
 
             <ButtonNew color={ButtonNew.colors.BLUE}

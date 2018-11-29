@@ -4,14 +4,22 @@ import {getTranslate} from 'react-localize-redux'
 import { ButtonNew } from '../../widgets/Button/Button.jsx';
 import { CustomRectangle, CubegoFooter } from '../../widgets/SVGManager/SVGManager.jsx';
 import { CUBE_TYPES } from '../../../constants/cubego.js';
-import { GetImageFromGonID } from '../../../utils/logicUtils';
+import { GetImageFromGonID, ConvertStatsToTier } from '../../../utils/logicUtils';
+import { GON_TIER } from '../../../constants/cubegon.js';
+import { TextImage } from '../../widgets/Text/Text.jsx';
+import {GON_FLAG} from "../../../constants/cubegon";
+import {addTxn} from "../../../actions/txnAction";
+import {UpdateCubegonEnergy} from "../../../services/transaction";
+
 
 require("style-loader!./CubegonCard.scss");
 
 class CubegonCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showCubegonStats: false
+    };
   }
 
   componentDidMount() {
@@ -21,19 +29,112 @@ class CubegonCard extends React.Component {
   }
 
   render() {
-    const {_t, className, energy_limit, energy_used, id, total_cubego, total_stats, type_id} = this.props;
+    const {_t, className, energy_limit, energy_left, id, token_id, name, total_cubego, total_stats, type_id, flag, shape_id, stats} = this.props;
+    const tierId = ConvertStatsToTier(total_stats)
 
     return(
       <div className={`cubegon-card__container ${className && className}`}>
         <div className="border-1">
           <div className="border-2">
             <div className="border-3">
-              <img className={'cubegon-background__image'} src={require(`../../../shared/img/background/cubegon_background/background_${CUBE_TYPES[type_id].name}.png`)} />
-              <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
-              <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
+
+              <div className="cubegon-image__container">
+
+                <div className="header">
+
+                  <div className={'cubegon__badges'}>
+                    {flag === GON_FLAG.ORIGINAL ?
+                      <div className={'badge__origin-wrapper'}
+                           tooltip={_t('original')}
+                           tooltip-position={'bottom'}>
+                        <img src={require('../../../shared/img/badges/original.png')}/>
+                      </div> : null
+                    }
+                    <div className={'badge__tier-wrapper'}
+                         tooltip={_t(GON_TIER[tierId].name)}
+                         tooltip-position={'bottom'}>
+                      <img src={GON_TIER[tierId].img} />
+                    </div>
+
+                    {/* ... */}
+                  </div>
+
+                  <div className="id">
+                    <div className={"token-id"}>{this.state.showCubegonStats ? `${_t('token_id')}: #${token_id}` : ''}</div>
+                    <img className={'fas'} src={require(`../../../shared/img/inventory/info-icon.png`)}
+                         onMouseOver={() => {this.setState({showCubegonStats: true})}}
+                         onMouseLeave={() => {this.setState({showCubegonStats: false})}}
+                         onClick={(e) => {e.stopPropagation()}}
+                    />
+                  </div>
+                </div>
+
+                <div className={`detail-stats__container ${this.state.showCubegonStats ? '' : 'hidden'}`}>
+                      <div className="content">
+                        <div className="left">
+                          <TextImage order={TextImage.order.REVERSE} text={_t('energy')} imgSource={require(`../../../shared/img/inventory/energy-icon.png`)}/>
+                        </div>
+                        <div className="right">
+                          {`${energy_left}/${energy_limit}`}
+                        </div>
+                      </div>
+                      <div className="content">
+                        <div className="left">
+                          <TextImage order={TextImage.order.REVERSE} text={_t('health')} imgSource={require(`../../../shared/img/inventory/health-icon.png`)}/>
+                        </div>
+                        <div className="right">
+                          {stats.health}
+                        </div>
+                      </div>
+                      <div className="content">
+                        <div className="left">
+                          <TextImage order={TextImage.order.REVERSE} text={_t('attack')} imgSource={require(`../../../shared/img/inventory/attack-icon.png`)}/>
+                        </div>
+                        <div className="right">
+                          {stats.attack}
+                        </div>
+                      </div>
+                      <div className="content">
+                        <div className="left">
+                          <TextImage order={TextImage.order.REVERSE} text={_t('defense')} imgSource={require(`../../../shared/img/inventory/defense-icon.png`)}/>
+                        </div>
+                        <div className="right">
+                          {stats.defense}
+                        </div>
+                      </div>
+                      <div className="content">
+                        <div className="left">
+                          <TextImage order={TextImage.order.REVERSE} text={_t('speed')} imgSource={require(`../../../shared/img/inventory/speed-icon.png`)}/>
+                        </div>
+                        <div className="right">
+                          {stats.speed}
+                        </div>
+                      </div>
+                    </div>
+                <img className={'cubegon__image'} src={GetImageFromGonID(id)}/>
+                <ButtonNew
+                  size={ButtonNew.sizes.NORMAL} color={ButtonNew.colors.BLUE} className={'energy'}
+                  label={(
+                    <div className={'energy-btn'}>
+                      <img src={require(`../../../shared/img/inventory/energy-icon.png`)}/>
+                      {energy_left}/{energy_limit} +
+                    </div>
+                  )} onClick={() => {
+                  UpdateCubegonEnergy(this.props.dispatch, addTxn, _t, {
+                    name: name,
+                    tokenId: token_id,
+                    energyLimit: energy_limit,
+                    successCallback: (data) => {
+                    },
+                    failedCallback: null,
+                    finishCallback: () => {
+                    },
+                  });
+                }}/>
+              </div>
               <img className={'shopping__image'} src={require(`../../../shared/img/cubegoes/${'000'}.png`)}/>
-                <div className="stats__container">
-                  <div className="cubegoes">
+              <div className="stats__container">
+                  <div className="cell cubegoes">
                     <div className="number">
                       {total_cubego}
                     </div>
@@ -41,7 +142,7 @@ class CubegonCard extends React.Component {
                       {_t('total_cubegoes')}
                     </div>
                   </div>
-                  <div className="stats">
+                  <div className="cell stats">
                     <div className="number">
                       {total_stats}
                     </div>
@@ -49,19 +150,18 @@ class CubegonCard extends React.Component {
                       {_t('total_stats')}
                     </div>
                   </div>
-                </div>
-
-                <div className="cubegon-info">
-                  <div className="id">
-                  {`ID ${id}`}
+                  <div className="cell type">
+                    <img className={'type__image'} src={require(`../../../shared/img/types/${CUBE_TYPES[type_id].name}.png`)}/>
+                    <div className="label">
+                      {_t('type')}
+                    </div>
                   </div>
-                  <ButtonNew size={ButtonNew.sizes.SMALL} className={'energy'} label={`${energy_used}/${energy_limit}+`} onClick={() => {}}/>
                 </div>
 
                 <div className="footer">
                   <div className="cubegon-name">
                     <CubegoFooter stroke={'#75C3F5'} fill={'#12314F'} />
-                    <span>Vexigon</span>
+                    <div className={'value'}>{name}</div>
                   </div>
                 </div>
               </div>

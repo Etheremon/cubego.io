@@ -29,30 +29,149 @@
     position: relative;
   }
 
-  .cubegon__image {
-    display: block;
-    width: 100%;
-    height: auto;
+  .cubegon-image__container {
     z-index: 2;
     position: relative;
-  }
+    background: #051527;
+    @include transition-duration;
 
-  .cubegon-background__image {
-    display: block;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
+    .cubegon__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      padding: 24px 0;
+    }
 
+    .energy {
+      z-index: 1;
+      position: absolute;
+      bottom: -8px;
+      right: 0;
+      height: 16px;
+
+      .energy-btn {
+        display: flex;
+        align-items: center;
+        img {
+          height: 20px;
+          width: auto;
+          margin-top: -4px;
+        }
+      }
+    }
+
+    .header {
+      background: #051527;
+      position: absolute;
+      color: $white;
+      font-size: $font-size-small;
+      z-index: 3;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 12px 12px 8px;
+      box-sizing: border-box;
+      align-items: center;
+      top: 0;
+      left: 0;
+
+      .id {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .fas {
+          height: 24px;
+          width: auto;
+          display: block;
+          margin-left: 5px;
+        }
+        .token-id {
+          font-size: $font-size-medium;
+          padding-right: 8px;
+          font-family: $f__baloobha;
+          padding-top: 3px;
+        }
+      }
+
+      .cubegon__badges {
+        display: flex;
+
+        .badge__tier-wrapper, .badge__origin-wrapper {
+          width: 40px;
+          height: 40px;
+          position: relative;
+          margin-right: 2px;
+          img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
+            pointer-events: none;
+          }
+        }
+
+        .badge__tier-wrapper {
+          img {width: 100px;}
+        }
+        .badge__origin-wrapper {
+          img {width: 94px;}
+        }
+      }
+
+    }
+
+    .detail-stats__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: #051527;
+      z-index: 2;
+      opacity: 1;
+      @include transition-duration;
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: $white;
+        font-family: $f__baloobha;
+        padding: 5px 12px;
+        font-weight: $font-weight-normal;
+
+        .widget__text-image {
+          span {
+            padding-top: 4px;
+          }
+        }
+
+        .right {
+          padding-top: 4px;
+        }
+      }
+
+      &.hidden {
+        z-index: 0;
+        opacity: 0;
+        @include transition-duration;
+      }
+    }
+  }
+  
   .type__image {
-    position: absolute;
-    height: 44px;
+    // position: absolute;
+    height: 28px;
     width: auto;
-    top: 0;
-    left: 0;
-    z-index: 3;
+    padding-bottom: 2px;
+    // top: 0;
+    // left: 0;
+    // z-index: 3;
   }
 
   .shopping__image {
@@ -66,55 +185,39 @@
     display: none;
   }
 
-  .cubegon-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background: $regal_blue;
-    color: $white;
-    font-size: $font-size-nano;
-
-    .id {
-      padding-left: 8px;
-      text-align: left;
-      width: 50%;
-    }
-
-    .energy {
-      
-    }
-  }
-
   .stats__container {
     display: flex;
     flex-direction: row;
     background: $regal_blue;
     color: $white;
-    padding: 8px 0 0 0;
+    padding: 12px 0 12px 0;
     position: relative;
     z-index: 2;
+    font-weight: $font-weight-bold;
+    font-family: $f__baloobha;
+
+    .cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      width: 33%;
+      border-right: 1px solid $white;
+      &:last-child {
+        border-right: none;
+      }
+    }
 
     .number {
-      font-size: $font-size-large;
-      font-weight: $font-weight-bold;
+      font-size: 22px;
       font-family: $f__baloobha;
+      color: rgb(160, 242, 260);
     }
 
     .label {
-      font-size: $font-size-tiny;
-    }
-
-    .cubegoes {
-      width: 50%;
-      box-sizing: border-box;
-      border-right: 2px solid $white;
-    }
-
-    .stats {
-      width: 50%;
-      box-sizing: border-box;
+      font-family: $f__baloobha;
       font-size: $font-size-small;
+      font-weight: $font-weight-normal;
     }
   }
 
@@ -125,21 +228,26 @@
 
   .cubegon-name {
     position: absolute;
-    bottom: -22px;
+    bottom: -36px;
     left: 50%;
     transform: translateX(-50%);
-    height: 44px;
+    height: 56px;
     width: calc(100% + 24px);
 
-    span {
+    .value {
+      box-sizing: border-box;
+      padding: 0 12px 4px 12px;
+      width: 100%;
       position: absolute;
-      left: 50%;
+      left: 0;
+      right: 0;
       top: 50%;
-      transform: translate(-50%, -50%);
-      font-size: $font-size-header-1;
+      transform: translateY(-50%);
+      font-size: 22px;
       color: $white;
       font-family: $f__baloobha;
-      text-shadow: 0 0 3px white;
+      text-align: center;
+      @include ellipsis;
     }
   }
 }

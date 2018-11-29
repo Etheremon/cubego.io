@@ -53,3 +53,88 @@ function createCubegon(ch, cmt, tmt, energyLimit, expiryTime, v, r, s, valueToSe
     valueToSend, 600000
   );
 }
+
+function destroyCubegon(tokenId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonBuilderInstance.dismantleCubegon,
+    contractAddress.CUBEGON_BUILDER_ADDRESS,
+    [tokenId], callbackFunc,
+    0, 600000
+  );
+}
+
+function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonBuilderInstance.updateCubegonEnergyLimit,
+    contractAddress.CUBEGON_BUILDER_ADDRESS,
+    [tokenId, energyLimit], callbackFunc,
+    valueToSend, 600000
+  );
+}
+
+function transferCubegon(fromAdd, toAdd, tokenId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonNftInstance.safeTransferFrom,
+    contractAddress.CUBEGO_NFT_ADDRESS,
+    [fromAdd, toAdd, tokenId], callbackFunc,
+    0, 600000
+  )
+}
+
+function transferCubego(material, fromAdd, toAdd, numCubes, callbackFunc) {
+  var funcInstance, cAddress;
+  switch (material) {
+    case 'diamond':
+      funcInstance = contractInstances.cubegoDiamondInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_DIAMOND_ADDRESS;
+      break;
+    case 'gold':
+      funcInstance = contractInstances.cubegoGoldInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_GOLD_ADDRESS;
+      break;
+    case 'ice':
+      funcInstance = contractInstances.cubegoIceInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_ICE_ADDRESS;
+      break;
+    case 'silver':
+      funcInstance = contractInstances.cubegoSilverInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_SILVER_ADDRESS;
+      break;
+    case 'iron':
+      funcInstance = contractInstances.cubegoIronInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_IRON_ADDRESS;
+      break;
+    case 'stone':
+      funcInstance = contractInstances.cubegoStoneInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_STONE_ADDRESS;
+      break;
+    case 'wood':
+      funcInstance = contractInstances.cubegoWoodInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_WOOD_ADDRESS;
+      break;
+    case 'brick':
+      funcInstance = contractInstances.cubegoBrickInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_BRICK_ADDRESS;
+      break;
+    case 'leaf':
+      funcInstance = contractInstances.cubegoLeafInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_LEAF_ADDRESS;
+      break;
+    case 'fur':
+      funcInstance = contractInstances.cubegoFurInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_FUR_ADDRESS;
+      break;
+    case 'paper':
+      funcInstance = contractInstances.cubegoPaperInstance.transfer;
+      cAddress = contractAddress.CUBEGO_ERC20_PAPER_ADDRESS;
+      break;
+    default:
+      callbackFunc(RESULT_CODE.ERROR_PARAMS, {})
+  }
+
+  callBlockchainFunction(
+    funcInstance, cAddress,
+    [toAdd, numCubes], callbackFunc,
+    0, 600000
+  )
+}
