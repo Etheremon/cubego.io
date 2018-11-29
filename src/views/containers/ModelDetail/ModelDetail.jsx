@@ -25,6 +25,7 @@ import {MaterialStatistics} from "../../widgets/SVGManager/SVGManager.jsx";
 import {GON_FLAG} from "../../../constants/cubegon";
 import {TransferCubegon} from "../../../services/transaction";
 import * as Utils from "../../../utils/utils";
+import {CUBE_TYPES} from "../../../constants/cubego";
 
 require("style-loader!./ModelDetail.scss");
 
@@ -125,7 +126,8 @@ class ModelDetail extends React.Component {
                 {/* <div className="hexagon-img">
                   <Model3D ref={(canvas) => {this.modelCanvas = canvas}} model={validatedModel.model} viewOnly/> : null
                 </div> */}
-                <img src={require('../../../shared/img/types/earth.png')} />
+                {/*<img src={require('../../../shared/img/types/earth.png')} />*/}
+                <img src={CUBE_TYPES[gonInfo.type_id].img}/>
               </div>
               <span>
                 <div className={'input-name'}>{gonInfo.name}</div>
