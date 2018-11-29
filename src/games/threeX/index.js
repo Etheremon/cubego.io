@@ -1,4 +1,4 @@
-import {render, stopRender, takeScreenshot} from "./fiber/render";
+import {exportToFacebook, render, stopRender, takeScreenshot} from "./fiber/render";
 import {TYPES} from "./components";
 import {getMaterial, getTexture, loadMaterial, loadTexture} from "./loaders";
 
@@ -16,7 +16,7 @@ export const AmbientLight = TYPES.AMBIENT_LIGHT;
 export const DirectionalLight = TYPES.DIRECTION_LIGHT;
 export const Background = TYPES.BACKGROUND;
 
-const Tools = {takeScreenshot};
+const Tools = {takeScreenshot, exportToFacebook};
 
 const ThreeX = {render, loadMaterial, getMaterial, stopRender, Tools, loadTexture, getTexture};
 export default ThreeX;
