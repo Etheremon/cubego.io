@@ -29,9 +29,7 @@ import {addTxn} from "../../../actions/txnAction";
 
 require("style-loader!./Inventory.scss");
 
-const inventoryTabs = Utils.IsLiveServer
-  ? [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}]
-  : [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
+const inventoryTabs = [ {key: 'cubegoes', content: 'cubegoes'}, {key: 'cubegons', content: 'cubegons'}, {key: 'pending-cubegons', content: 'pending cubegons'}];
 
 class Inventory extends React.Component {
 
