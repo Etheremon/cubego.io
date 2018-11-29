@@ -272,11 +272,13 @@ export class ToolManager {
     }
 
     // Calculate power from points
-    let currentPoint = this._stats.points;
-    let pointRange = this._stats.gonTier.points;
-    let statsRange = this._stats.gonTier.stats;
-    let estimated_stats = statsRange[0] + Math.round((currentPoint-pointRange[0]) / (pointRange[1]-pointRange[0]) * (statsRange[1]-statsRange[0]));
-    this._stats.power = [Utils.CapValue(estimated_stats-15, statsRange[0], statsRange[1]), Utils.CapValue(estimated_stats+15, statsRange[0], statsRange[1])];
+    if (this._stats.gonTier.id >= 0) {
+      let currentPoint = this._stats.points;
+      let pointRange = this._stats.gonTier.points;
+      let statsRange = this._stats.gonTier.stats;
+      let estimated_stats = statsRange[0] + Math.round((currentPoint - pointRange[0]) / (pointRange[1] - pointRange[0]) * (statsRange[1] - statsRange[0]));
+      this._stats.power = [Utils.CapValue(estimated_stats - 15, statsRange[0], statsRange[1]), Utils.CapValue(estimated_stats + 15, statsRange[0], statsRange[1])];
+    }
 
     this._stats.err = '';
     if (this._userCubes && this._stats.invalid_materials.length) {

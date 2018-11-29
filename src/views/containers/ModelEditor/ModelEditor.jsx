@@ -744,7 +744,7 @@ class _ModelEditor extends React.Component {
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
                      style={{left: `${33*idx}%`}}
-                     tooltip={_t(`${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
+                     tooltip={_t(`note_${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>
                   <img className={'no-effect'} src={tier.img_ne}/>

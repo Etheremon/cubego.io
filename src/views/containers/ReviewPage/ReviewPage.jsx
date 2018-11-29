@@ -144,7 +144,7 @@ class ReviewPage extends React.Component {
       {icon: require('../../../shared/img/inventory/cubego.png'), content: stats.total, label: 'cubego'},
       {icon: CUBE_TYPES[validatedModel.stats.type].img, content: CUBE_TYPES[validatedModel.stats.type].name, label: 'type'},
       {icon: validatedModel.stats.gonTier.img, content: validatedModel.stats.gonTier.name, label: 'tier'},
-      {icon: require('../../../shared/img/inventory/stat.png'), content: `${stats.gonTier.stats[0]}-${stats.gonTier.stats[1]}`, label: 'stats range'}
+      {icon: require('../../../shared/img/inventory/stat.png'), content: `${validatedModel.stats.power[0]}-${validatedModel.stats.power[1]}`, label: 'stats range'}
     ];
 
     return (
