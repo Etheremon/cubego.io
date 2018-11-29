@@ -41,6 +41,7 @@ import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
+import { TextImage } from '../../widgets/Text/Text.jsx';
 
 
 require("style-loader!./ModelEditor.scss");
@@ -54,6 +55,7 @@ class _ModelEditor extends React.Component {
       scale2D: 1,
       saved: false,
       validating: false,
+      showStatsDistribute: false,
     };
 
     this.tools = {
@@ -717,15 +719,54 @@ class _ModelEditor extends React.Component {
                   </div> : null
                 }
 
-                <div className={'stat'}
-                     tooltip={_t('estimated power')}
-                     tooltip-position="bottom">
+                <div className={'stat'} onMouseOver={() => {
+                  this.setState({showStatsDistribute: true})
+                }} onMouseLeave={() => {
+                  this.setState({showStatsDistribute: false})
+                }}>
                   <img src={require('../../../shared/img/icons/icon-stats.png')}/>
                   {this.toolManager.stats.power ? (
                     this.toolManager.stats.power[0] !== this.toolManager.stats.power[1]
                       ? `${this.toolManager.stats.power[0]} - ${this.toolManager.stats.power[1]}`
                       : `${this.toolManager.stats.power[0]}`
                   ) : ''}
+                  {
+                    this.toolManager.stats.stats_distribute && this.state.showStatsDistribute ? <div className="stats-distribute">
+                      <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('health')} imgSource={require(`../../../shared/img/inventory/health-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.health}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('attack')} imgSource={require(`../../../shared/img/inventory/attack-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                          {this.toolManager.stats.stats_distribute.attack}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('defense')} imgSource={require(`../../../shared/img/inventory/defense-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.defense}%
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="left">
+                            <TextImage order={TextImage.order.REVERSE} text={_t('speed')} imgSource={require(`../../../shared/img/inventory/speed-icon.png`)}/>
+                          </div>
+                          <div className="right">
+                            {this.toolManager.stats.stats_distribute.speed}%
+                          </div>
+                        </div>
+                    </div> : null
+                  }
+                  
                 </div>
 
                 <div className={'stat'}
@@ -738,13 +779,13 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__tier-bar'}>
-              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*33 + cubegonTierLength.length*100*0.33) : 0}%`}}>
+              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*25 + cubegonTierLength.length*100*0.25) : 0}%`}}>
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
                      className={`tier ${this.toolManager.stats.gonTier.id === tier.id ? 'active' : ''} ${tier.name}`}
-                     style={{left: `${33*idx}%`}}
-                     tooltip={_t(`note_${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
+                     style={{left: `${25*idx}%`}}
+                     tooltip={_t(`${tier.name}`.toLowerCase())} tooltip-position={'bottom'}
                 >
                   <img className={'with-effect'} src={tier.img}/>
                   <img className={'no-effect'} src={tier.img_ne}/>

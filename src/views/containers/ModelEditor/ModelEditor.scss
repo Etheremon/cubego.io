@@ -133,9 +133,48 @@
         align-items: center;
         padding-left: 20px;
         font-weight: $font-weight-black;
+        position: relative;
         img {
           height: 26px;
           margin-right: 8px;
+        }
+
+        .stats-distribute {
+          position: absolute;
+          bottom: -8px;
+          transform: translateY(100%);
+          left: 0;
+          border: 1px solid $c__text__orange;
+          border-radius: 8px;
+          padding: 8px;
+          background: $white;
+          color: $c__text__orange;
+          font-weight: $font-weight-normal;
+          z-index: 3;
+
+          &:after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            transform: rotate(45deg) translateX(-50%);
+            top: -3px;
+            left: 50%;
+            border-top: 1px solid $c__text__orange;
+            border-left: 1px solid $c__text__orange;
+            background: $white;
+            z-index: 4;
+          }
+
+          .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .right {
+              margin-left: 16px;
+            }
+          }
         }
       }
     }

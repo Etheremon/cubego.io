@@ -263,6 +263,7 @@ input[type="range"]::-moz-range-thumb {
 [tooltip] {
   position: relative;
   display: inline-block;
+  font-weight: $font-weight-normal !important; 
 
   &:before {
     content: "";

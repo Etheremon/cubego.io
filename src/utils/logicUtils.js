@@ -121,14 +121,15 @@ export const ConvertColorDiffToSimilarity = (diff) => (
     : Utils.RoundDownToDecimal((1-diff)/(1-cutoffColorSimilarity.correct)*cutoffColorSimilarity.fake, 2)
 );
 export const CalculateLengthBaseOnTier = (point) => {
+  let validPoint = Math.min(point, GON_TIER.god.points[1]);
   let tierId = ObjUtils.FilterValue(GON_TIER, (k, v) => {
-    return v.points [0] <= point && point <= v.points[1];
+    return v.points [0] <= validPoint && validPoint <= v.points[1];
   })[0] || undefined;
 
   if (tierId) {
     let index = Object.keys(GON_TIER).indexOf(tierId);
     let {points} = GON_TIER[tierId];
-    return {idx: index, length: (point - points[0]) / (points[1] - points[0])};
+    return {idx: index, length: (validPoint - points[0]) / (points[1] - points[0])};
   }
 
   return undefined;
