@@ -411,3 +411,53 @@ export const TransferCubegon = (dispatch, action, _t, {name, fromAdd, token_id, 
 
   }));
 };
+
+export const TransferMaterialCube = (dispatch, action, _t, {cubeName, fromAdd, numCubes, successCallback, failedCallback, finishCallback}) => {
+  dispatch(action({
+    title: _t('transfer_cubego'),
+    note: _t('transfer_cubego_note'),
+    title_done: _t('transferring_cubego'),
+    txn_done: _t('transfer_cubego_done'),
+    fields_order: ['name', 'available_amount', 'to_add', 'transfer_amount'],
+    button: _t('transfer'),
+    forceToSubmittingState: false,
+    fields: {
+      name: {
+        text: _t('cubego'), value: _t(cubeName), readonly: true, type: 'text',
+      },
+      available_amount: {
+        text: _t('total amount'), value: numCubes, readonly: true, type: 'text',
+      },
+      to_add: {
+        text: _t('receiver address'), value: '', readonly: false, type: 'text',
+      },
+      transfer_amount: {
+        text: _t('transfer amount'), value: 0, readonly: false, type: 'number', min: 1, max: numCubes,
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+      if (obj.to_add.value === undefined || obj.to_add.value === '' || !window.isValidEtherAddress(obj.to_add.value)) {
+        callback({'err': 'err.invalid_receiver'});
+        return;
+      }
+      if (!obj.transfer_amount.value || obj.transfer_amount.value <= 0 || obj.transfer_amount.value > numCubes) {
+        callback({'err': 'err.invalid_transfer_amount'});
+        return;
+      }
+      if (obj.to_add.value === fromAdd) {
+        callback({'err': 'err.transfer_to_owner'});
+        return;
+      }
+
+      // Sending Txn
+      let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
+      window.transferCubego(cubeName, fromAdd, obj.to_add.value, obj.transfer_amount.value, cbFunc);
+    },
+    onFinishCallback: function(data) {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};

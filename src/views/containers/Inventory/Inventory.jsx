@@ -24,6 +24,8 @@ import {GetUserMaterials} from "../../../reducers/selectors";
 import {URLS} from "../../../constants/general";
 import { Link } from 'react-router-dom';
 import PendingCubegonCard from "../../components/PendingCubegonCard/PendingCubegonCard.jsx";
+import {TransferCubegon, TransferMaterialCube} from "../../../services/transaction";
+import {addTxn} from "../../../actions/txnAction";
 
 require("style-loader!./Inventory.scss");
 
@@ -79,7 +81,7 @@ class Inventory extends React.Component {
   }
 
   handleGenerateCubegoView(cubegoes) {
-    const {_t, history} = this.props;
+    const {_t, history, userId} = this.props;
 
     if (!cubegoes) {
       return (
@@ -102,7 +104,19 @@ class Inventory extends React.Component {
         <div className="list-item__container">
           {cubegoes.sort((a, b) => (b.material_id - a.material_id)).map((item, idx) =>
             <div className="card-item tag-cubego" key={idx}>
-              <CubegoCard key={idx} {...item} _t={_t}/>
+              <CubegoCard key={idx} {...item} _t={_t} onTransferFunc={item.name === 'plastic' ? null : () => {
+                TransferMaterialCube(this.props.dispatch, addTxn, _t, {
+                  fromAdd: userId,
+                  cubeName: item.name,
+                  numCubes: item.amount,
+                  successCallback: (data) => {
+                  },
+                  failedCallback: null,
+                  finishCallback: () => {
+                  },
+                });
+
+              }}/>
             </div>
           )}
         </div>

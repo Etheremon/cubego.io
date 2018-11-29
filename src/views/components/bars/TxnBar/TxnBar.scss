@@ -90,7 +90,7 @@
         font-family: $f__baloobha;
       }
 
-      input[type=text], textarea {
+      input[type=text], input[type=number], textarea {
         width: 100%;
         box-shadow: inset 0 1px 2px #2C6477;
         outline: none;
