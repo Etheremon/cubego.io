@@ -735,7 +735,7 @@ class _ModelEditor extends React.Component {
             </div>
 
             <div className={'model-editor__tier-bar'}>
-              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*33 + cubegonTierLength.length*100) : 0}%`}}>
+              <div className={'bar'} style={{width: `${cubegonTierLength ? (cubegonTierLength.idx*33 + cubegonTierLength.length*100*0.33) : 0}%`}}>
               </div>
               {[GON_TIER.challenger, GON_TIER.elite, GON_TIER.champion, GON_TIER.god].map((tier, idx) => (
                 <div key={idx}
