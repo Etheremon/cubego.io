@@ -215,9 +215,10 @@
     .model-editor__left, .model-editor__right {
       padding: 8px;
       flex-grow: 1;
-      flex-basis: 50%;
+      width: 50%;
       @include mobile {
         width: 100%;
+        box-sizing: border-box;
       }
     }
 
