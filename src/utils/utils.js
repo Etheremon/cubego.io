@@ -297,3 +297,5 @@ export const ConvertTimeUnix = (fromDay, toDay, allowNegative=true) => {
 }
 
 export const ExtractImageBase64String = (str) => (str.split(',').length > 1 ? str.split(',')[1] : str);
+
+export const CapValue = (val, minn, maxx) => (Math.max(minn, Math.min(val, maxx)));
