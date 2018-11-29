@@ -1,3 +1,5 @@
+import * as ObjUtils from "../utils/objUtils";
+
 export const GON_STATUS = {
   INIT: 0,
   PENDING: 1,
@@ -44,6 +46,20 @@ export const GON_TIER = {
     img_ne: require('../shared/img/badges/badge-god-ne.png'),
   },
 };
+
+// let _MAX_POINT_OF_TIER = 0;
+// ObjUtils.ForEach(GON_TIER, (k,v) => {
+//   if (_MAX_POINT_OF_TIER < v.points[1]) {
+//     _MAX_POINT_OF_TIER = v.points[1];
+//   }
+// })
+
+// export const TIER_RANGE = ObjUtils.CloneWithValueModify(GON_TIER, (k, v, idx) => ({
+//   points: v.points[1],
+//   compareToMax: v.points[0] / _MAX_POINT_OF_TIER,
+// }));
+
+// export const MAX_POINT_OF_TIER = _MAX_POINT_OF_TIER;
 
 export const ENERGY_LIMIT_PRICE = {
   10: 0.05,
