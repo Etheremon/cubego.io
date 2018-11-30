@@ -5,10 +5,11 @@ import Loading from '../../../components/Loading/Loading.jsx';
 import ListView from '../../../widgets/ListView/ListView.jsx';
 import { EmptyCubegonList } from '../../EmptyView/EmptyView.jsx';
 import GalleryCubegonCard from '../GalleryCubegonCard/GalleryCubegonCard.jsx';
-import { Link } from 'react-router-dom/';
+import { Link } from 'react-router-dom';
 import { URLS } from '../../../../constants/general.js';
 import { FilterSearch, FilterSort, FilterType } from '../../../widgets/Filters/Filters.jsx';
 import * as Utils from "../../../../utils/utils";
+import withRouter from "react-router-dom/es/withRouter";
 
 require("style-loader!./ShowRoom.scss");
 
@@ -35,12 +36,11 @@ class ShowRoom extends React.Component {
 
 
   render() {
-
     const {_t, query, listCubegons, history} = this.props;
     
     if (!listCubegons) {
       return (
-        <div className="list-item__container">
+        <div className="show-room__loader">
           <Loading/>
         </div>
       )
@@ -66,6 +66,7 @@ class ShowRoom extends React.Component {
           ]}
           page={query.page}
           handleFilter={(filterValues) => {Utils.handleJoinQueryURL(history.push, query, filterValues)}}
+          itemsPerPage={15}
         />
       </div>
     )
@@ -84,7 +85,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShowRoom);
+)(ShowRoom));

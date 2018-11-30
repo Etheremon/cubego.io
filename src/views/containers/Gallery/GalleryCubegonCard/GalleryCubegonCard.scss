@@ -35,16 +35,19 @@
     z-index: 2;
     position: relative;
     background: #051527;
-    overflow: hidden;
     @include transition-duration;
 
     .cubegon-name {
-      font-size: 22px;
+      position: absolute;
+      font-size: 20px;
       color: $white;
       font-family: $f__baloobha;
       text-align: center;
       @include ellipsis;
       padding: 0 8px;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     .cubegon__image {
@@ -84,10 +87,10 @@
         display: flex;
 
         .badge__tier-wrapper, .badge__origin-wrapper {
-          width: 40px;
-          height: 40px;
+          width: 32px;
+          height: 32px;
           position: relative;
-          margin-right: 2px;
+          margin-right: 8px;
           img {
             position: absolute;
             left: 50%;
@@ -114,7 +117,7 @@
       position: absolute;
       top: 20px;
       left: 0;
-      height: 100%;
+      bottom: 0;
       width: 100%;
       background: #051527;
       z-index: 2;
@@ -165,12 +168,10 @@
     background: $regal_blue;
     color: $white;
     padding: 0 12px 0 12px;
-    position: relative;
     z-index: 2;
-    font-weight: $font-weight-bold;
     font-family: $f__baloobha;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-end;
     position: relative;
 
     .fas {
@@ -184,20 +185,21 @@
     .cell {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
-      border-bottom: 1px solid $white;
+      //border-bottom: 1px solid $white;
       height: 25%;
-      padding-bottom: 16px;
+      padding: 0 0 8px 0;
       &:last-child {
         border-bottom: none;
       }
     }
 
     .number {
-      font-size: 22px;
+      font-size: 20px;
       font-family: $f__baloobha;
       color: rgb(160, 242, 260);
+      font-weight: $font-weight-normal;
     }
 
     .label {

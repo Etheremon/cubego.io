@@ -42,6 +42,7 @@ class ModelDetail extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({gonId: this.props.gonId, forceUpdate: true}));
+    Utils.ScrollTop();
   }
 
   componentWillReceiveProps(nextProps) {
