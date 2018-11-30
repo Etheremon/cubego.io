@@ -196,9 +196,43 @@ class HomePage extends React.Component {
           </Container>
           {/* end home__intro */}
 
+          <div className="home__why-presale" id={'why_presale'}>
+            <div className="home__why-presale-title__container extended-title__container">
+              <Text className={'home__why-presale-title extended-title'} type={Text.types.H2} children={_t('why_joining_cubego_presale_header')} />
+            </div>
+          </div>
+
+          <div className="home__game-detail">
+
+              <Container className={'home__why-presale section'}>
+
+                <div className={'content left'}>
+                  <InviewMonitor
+                    classNameNotInView='vis-hidden'
+                    classNameInView='animated fadeInUp'
+                  >
+                    <div className={'desc'}>
+                      <p className={'text'}>{_t('home.why_presale')}</p>
+                      <div className="why-presale__button" onClick={() => { this.props.history.push(`/${URLS.GUIDE}`) }}>
+                           {_t('read more')}
+                      </div>
+                    </div>
+                  </InviewMonitor>
+    
+                  <div className={'image'}>
+                    <div className={'img'}>
+                      <img className={'img-real why_presale'} src={require('../../../shared/img/banner/banner_chest.png')}/>
+                    </div>
+                  </div>
+                </div>
+              </Container>
+            </div>
+          {/* end home__why-presale */}
+
+
           <div className="home__modes" id={'modes'}>
-            <div className="home__modes-title__container">
-              <Text className={'home__modes-title'} type={Text.types.H2} children={_t('how_to_play')} />
+            <div className="home__modes-title__container extended-title__container">
+              <Text className={'home__modes-title extended-title'} type={Text.types.H2} children={_t('how_to_play')} />
             </div>
           </div>
           {/* end home__modes */}
@@ -248,7 +282,7 @@ class HomePage extends React.Component {
 
                   <div className={'image'} >
                     <div className={'img'}>
-                      <img className={'img-real copyright'} src={require('../../../shared/img/banner/banner-copyright.png')}/>
+                      <img className={'img-real copyright'} src={require('../../../shared/img/game_intro/trade-eth.png')}/>
                     </div>
                     {/*<div className={'img'}>*/}
                       {/*<SpriteSheet {...SpriteSource.COPYRIGHT}/>*/}
@@ -268,7 +302,6 @@ class HomePage extends React.Component {
                     <div className={'desc'}>
                       <Text className={'header'} type={Text.types.H2} children={_t('home_combat_title').toUpperCase()} />
                       <p className={'text'}>{_t('home.combat')}</p>
-                      <ButtonNew color={ButtonNew.colors.BLUE} label={_t('watch battle')} onClick={() => {this.props.history.push(`/${URLS.BATTLE}`)}}/>
                     </div>
                   </InviewMonitor>
     

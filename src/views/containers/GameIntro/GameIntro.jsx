@@ -456,7 +456,6 @@ class GameIntro extends React.Component {
               <img src={require('../../../shared/img/game_intro/about_presale.png')} />
               <p>{_t('desc.presale_1')}</p>
               <p>{_t('desc.presale_2')}</p>
-              <p>{_t('desc.presale_3')}</p>
             </div>
           </Container>
 
@@ -475,10 +474,10 @@ class GameIntro extends React.Component {
                 <div className="content right">
                   <div className="content-desc">
                     <div className="cubegon__header">
-                      {_t('why_presale_header')}
+                      {_t('build_unique_header')}
                     </div>
-                    <p>{_t('desc.why_presale_header_1')}</p>
-                    <p>{_t('desc.why_presale_header_2')}</p>
+                    <p>{_t('desc.build_unique_1')}</p>
+                    <p>{_t('desc.build_unique_2')}</p>
                   </div>
                   <div className="content-image">
                     <img src={require('../../../shared/img/game_intro/why_presale.png')}/>
@@ -493,8 +492,8 @@ class GameIntro extends React.Component {
                     <div className="cubegon__header">
                     {_t('earn_reward_header')}
                     </div>
-                    <p>{_t('desc.earn_reward_header_1')}</p>
-                    <p>{_t('desc.earn_reward_header_2')}</p>
+                    <p>{_t('desc.earn_reward_1')}</p>
+                    <p>{_t('desc.earn_reward_2')}</p>
                   </div>
                   <div className="content-image">
                     <img src={require('../../../shared/img/game_intro/earn_reward.png')}/>
@@ -519,6 +518,19 @@ class GameIntro extends React.Component {
               </div>
 
             </div>
+          </Container>
+
+          <Container size={containerSize} className={'guide__last'}>
+
+            <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                       onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
+            }}/>
+
+            <ButtonNew className={'create__button'} label={_t('join presale')}
+                       color={ButtonNew.colors.BLUE}
+                       onClick={() => {this.props.history.push(`/${URLS.STORE}`)
+            }}/>
+
           </Container>
           
         </div>
