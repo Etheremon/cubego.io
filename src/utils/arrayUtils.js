@@ -34,3 +34,5 @@ export const FindIndexOfFirstMax = (arr) => {
 }
 
 export const Sum = (arr) => (arr.reduce((a, b) => a + b, 0));
+
+export const ConvertToArray = (v) => (Array.isArray(v) ? v : [v]);

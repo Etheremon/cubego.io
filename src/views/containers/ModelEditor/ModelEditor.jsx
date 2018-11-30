@@ -44,6 +44,7 @@ import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
 import { TextImage } from '../../widgets/Text/Text.jsx';
 import Tutorial from './Tutorial/Tutorial.jsx';
 import * as LS from '../../../services/localStorageService';
+import * as ArrayUtils from "../../../utils/arrayUtils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -384,7 +385,7 @@ class _ModelEditor extends React.Component {
             {_t('err.model_already_registered')}
           </div>
           <div className={'matched-gons'}>
-            {data['match_cubegons'].map((gon, idx) => (
+            {(data['match_cubegons'] || []).map((gon, idx) => (
               <div className={'matched-gon'} key={idx}>
                 <img src={LogicUtils.GetImageFromGonID(gon.id)} onClick={() => {Utils.OpenInNewTab(`/${URLS.CUBEGONS}/${gon.id}`)}}/>
                 <p>{_t('ID')}: {gon['id']} - {_t('Color Similarity')}: {LogicUtils.ConvertColorDiffToSimilarity(gon['color_diff'])}%</p>

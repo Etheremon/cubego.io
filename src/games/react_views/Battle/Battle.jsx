@@ -100,10 +100,10 @@ class _Battle extends Component {
     let parser = new window.vox.Parser();
 
     if (!this.props.match.params.gon1Id || this.props.match.params.gon1Id === '-1' || isNaN(this.props.match.params.gon1Id)) {
-      parser.parse(require('../../../shared/sample_models/cat.vox')).then((data) => {
+      parser.parse(require('../../../shared/sample_models/batman.vox')).then((data) => {
         this.voxel.setPlayer(1, {
           model: data,
-          image: require('../../../shared/img/game_ui/cat.png'),
+          image: require('../../../shared/img/game_ui/batman.png'),
           type: 'magical_voxel'
         });
       });
@@ -116,10 +116,10 @@ class _Battle extends Component {
     }
 
     if (!this.props.match.params.gon2Id || this.props.match.params.gon2Id === '-1' || isNaN(this.props.match.params.gon2Id)) {
-      parser.parse(require('../../../shared/sample_models/momotaro.vox')).then((data) => {
+      parser.parse(require('../../../shared/sample_models/iron_man.vox')).then((data) => {
         this.voxel.setPlayer(0, {
           model: data,
-          image: require('../../../shared/img/game_ui/momotoro1.png'),
+          image: require('../../../shared/img/game_ui/ironman.png'),
           type: 'magical_voxel'
         });
       });

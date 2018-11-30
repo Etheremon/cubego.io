@@ -26,6 +26,42 @@
     background: #051527;
   }
 
+  .img-wrapper {
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 16px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .transfer-cube {
+      position: absolute;
+      text-align: right;
+      display: inline-block;
+      right: 4px;
+      bottom: 8px;
+      cursor: pointer;
+      z-index: 3;
+      font-family: $f__overpass;
+      font-size: $font-size-smaller;
+      border: 1px solid $white;
+      border-radius: 4px;
+      padding: 2px 4px;
+      @include transition-duration;
+
+      &:hover {
+        background-color: $white;
+        border-color: $white;
+        color: $gray-dark;
+      }
+    }
+  }
+
   .stats {
     background: #12314F;
     height: 60px;
@@ -75,14 +111,6 @@
       transform: translate(-50%, -50%);
       font-size: $font-size-header-1;
     }
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    position: relative;
-    z-index: 1;
   }
 
   .quantity {

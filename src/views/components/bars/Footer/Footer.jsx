@@ -37,6 +37,8 @@ class Footer extends React.Component {
                 ['EMONT Contract', CONTRACTS[NETWORKS.mainnet].EMONT_ADDRESS],
                 ['Presale Contract', CONTRACTS[NETWORKS.mainnet].CUBEGO_PRESALE_ADDRESS],
                 ['Cubego Core Contract', CONTRACTS[NETWORKS.mainnet].CUBEGO_CORE_ADDRESS],
+                ['Cubegon NFT Contract', CONTRACTS[NETWORKS.mainnet].CUBEGO_NFT_ADDRESS],
+                ['Cubegon Builder Contract', CONTRACTS[NETWORKS.mainnet].CUBEGON_BUILDER_ADDRESS],
               ].map((item, idx) => (
                 <a key={idx} href={`https://etherscan.io/address/${item[1]}`} target={'_blank'}>{item[0]}: {item[1]}</a>
               ))}

@@ -24,6 +24,19 @@ function initContractInstance(network) {
   instances.cubegoCoreInstance = getContractInstance(contractAddress.CUBEGO_CORE_ABI_ARRAY, contractAddress.CUBEGO_CORE_ADDRESS);
   instances.cubegonNftInstance = getContractInstance(contractAddress.CUBEGO_NFT_ABI_ARRAY, contractAddress.CUBEGO_NFT_ADDRESS);
   instances.cubegonBuilderInstance = getContractInstance(contractAddress.CUBEGON_BUILDER_ABI_ARRAY, contractAddress.CUBEGON_BUILDER_ADDRESS);
+
+  instances.cubegoDiamondInstance = getContractInstance(contractAddress.CUBEGO_ERC20_DIAMOND_ARRAY, contractAddress.CUBEGO_ERC20_DIAMOND_ADDRESS);
+  instances.cubegoGoldInstance = getContractInstance(contractAddress.CUBEGO_ERC20_GOLD_ARRAY, contractAddress.CUBEGO_ERC20_GOLD_ADDRESS);
+  instances.cubegoIceInstance = getContractInstance(contractAddress.CUBEGO_ERC20_ICE_ARRAY, contractAddress.CUBEGO_ERC20_ICE_ADDRESS);
+  instances.cubegoSilverInstance = getContractInstance(contractAddress.CUBEGO_ERC20_SILVER_ARRAY, contractAddress.CUBEGO_ERC20_SILVER_ADDRESS);
+  instances.cubegoIronInstance = getContractInstance(contractAddress.CUBEGO_ERC20_IRON_ARRAY, contractAddress.CUBEGO_ERC20_IRON_ADDRESS);
+  instances.cubegoStoneInstance = getContractInstance(contractAddress.CUBEGO_ERC20_STONE_ARRAY, contractAddress.CUBEGO_ERC20_STONE_ADDRESS);
+  instances.cubegoWoodInstance = getContractInstance(contractAddress.CUBEGO_ERC20_WOOD_ARRAY, contractAddress.CUBEGO_ERC20_WOOD_ADDRESS);
+  instances.cubegoBrickInstance = getContractInstance(contractAddress.CUBEGO_ERC20_BRICK_ARRAY, contractAddress.CUBEGO_ERC20_BRICK_ADDRESS);
+  instances.cubegoLeafInstance = getContractInstance(contractAddress.CUBEGO_ERC20_LEAF_ARRAY, contractAddress.CUBEGO_ERC20_LEAF_ADDRESS);
+  instances.cubegoFurInstance = getContractInstance(contractAddress.CUBEGO_ERC20_FUR_ARRAY, contractAddress.CUBEGO_ERC20_FUR_ADDRESS);
+  instances.cubegoPaperInstance = getContractInstance(contractAddress.CUBEGO_ERC20_PAPER_ARRAY, contractAddress.CUBEGO_ERC20_PAPER_ADDRESS);
+
   return instances;
 }
 

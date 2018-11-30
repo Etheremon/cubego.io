@@ -233,8 +233,8 @@ export class BabylonVoxelPlayer extends BabylonComponent {
         }
       });
 
-      let scalingX = PLAYER_SIZE / (max.x - min.x);
-      let scalingY = PLAYER_SIZE / (max.y - min.y);
+      let scalingX = (max.x - min.x) > 0 ? PLAYER_SIZE / (max.x - min.x) : 1;
+      let scalingY = (max.y - min.y) > 0 ? PLAYER_SIZE / (max.y - min.y) : 1;
 
       let scaling = (scalingX + scalingY) / 2;
       scaling = scalingX < 0.25 ? scalingX * 2 : scaling;

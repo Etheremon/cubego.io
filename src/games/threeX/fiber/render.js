@@ -67,7 +67,7 @@ function takeScreenshot(size) {
   if (size) {
     return new Promise((resolve, reject) => {
       let img = document.createElement('img');
-      img.onload = function() {
+      img.onload = function () {
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
         canvas.width = size.width;
@@ -81,7 +81,15 @@ function takeScreenshot(size) {
   } else {
     return Promise.resolve(data);
   }
+}
 
+function exportToFacebook() {
+  return new Promise((resolve, reject) => {
+    let exporter = new window.THREE.GLTFExporter();
+    exporter.parse(scene.scene, (result) => {
+      resolve(result);
+    }, {binary: true, forcePowerOfTwoTextures: true, forceIndices: true})
+  });
 }
 
 function stopRender() {
@@ -92,5 +100,6 @@ function stopRender() {
 export {
   render,
   stopRender,
-  takeScreenshot
+  takeScreenshot,
+  exportToFacebook
 };
