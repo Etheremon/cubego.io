@@ -9,6 +9,7 @@ export const URLS = {
   BATTLE: 'battle',
   MARKET: 'market',
   RANKING: 'ranking',
+  GALLERY: 'gallery',
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',

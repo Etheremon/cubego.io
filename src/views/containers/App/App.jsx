@@ -36,6 +36,7 @@ import RankingPage from '../RankingPage/RankingPage.jsx';
 import { UserApi } from '../../../services/api/userApi.js';
 import { TIME_TO_REFRESH } from '../../../config';
 import LandingPage from '../LandingPage/LandingPage.jsx';
+import Gallery from '../Gallery/Gallery.jsx';
 
 require("style-loader!./App.scss");
 
@@ -166,6 +167,7 @@ class App extends React.Component {
 
           <Route path={`/${URLS.CUBEGONS}/:id`} component={ModelDetail}/>
           <Route path={`/${URLS.INVENTORY}`} component={Inventory}/>
+          <Route path={`/${URLS.GALLERY}`} component={Gallery} />
 
           <Route path={`/${URLS.BATTLE}/:gon1Id?/:gon2Id?`} component={BattlePage}/>
           <Route path={`/${URLS.STORE}`} component={StorePage}/>

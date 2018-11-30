@@ -37,6 +37,8 @@ export const GetCubegonInfo = (state, gonId) => {
   return gonId ? CloneDeep(state.cubegon.info[gonId]) : {};
 }
 
+export const GetCubegonList = (state) => CloneDeep(state.cubegon.list['gallery']);
+
 /**
  * Cubegoes
  */

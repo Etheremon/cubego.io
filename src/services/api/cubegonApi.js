@@ -5,6 +5,7 @@ const URL_GET_CUBEGON_INFO = SERVER_URL + '/api/cubego/get_data';
 const URL_REGISTER_CUBEGON = SERVER_URL + '/api/cubego/register';
 const URL_RETRY_REGISTER_CUBEGON = SERVER_URL + '/api/cubego/register_retry';
 const URL_UPDATE_NAME = SERVER_URL + '/api/cubego/update_name';
+const URL_GET_CUBEGON_LIST = SERVER_URL + '/api/cubego/get_list';
 
 const GetCubegonInfo = (id, tokenId) => {
   return new Promise(function(resolve, reject) {
@@ -60,9 +61,19 @@ const UpdateCubegonName = ({id, name, signature}) => {
   });
 };
 
+const GetCubegonList = () => {
+  return new Promise(function(resolve, reject) {
+    sendGetRequest({
+      url: URL_GET_CUBEGON_LIST,
+      resolve, reject
+    });
+  });
+}
+
 export const CubegonApi = {
   GetCubegonInfo,
   RegisterCubegon,
   RetryRegisterCubegon,
   UpdateCubegonName,
+  GetCubegonList,
 };
