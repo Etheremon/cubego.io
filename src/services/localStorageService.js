@@ -9,6 +9,7 @@ export const Fields = {
   referralCode: 'referral-code',
   localization: 'localization',
   timeToRefresh: 'time-to-refresh',
+  firstTimeEnterGame: 'first-time-enter-game',
 };
 
 export const SetItem = (key, value)  => {

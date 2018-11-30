@@ -11,9 +11,27 @@
   text-align: right;
   padding-top: 60px;
   padding-bottom: 60px;
+  position: relative;
+
+  .tutorial-popup {
+    .widget__popup-wrap {
+      border: 3px solid #75C3F5;
+      border-radius: 8px;
+    }
+  }
 
   .model-editor__tool-bar {
     position: relative;
+    .popup-tutorial__button {
+      position: absolute;
+      right: 0;
+      top: -18px;
+      color: $white;
+      font-size: $font-size-tiny;
+      cursor: pointer;
+      text-decoration: underline;
+      text-transform: capitalize;
+    }
 
     .bar {
       //overflow-x: auto;

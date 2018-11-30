@@ -23,7 +23,7 @@ export const ImportFromFile = ({handleData, text}) => {
       <div className="input" onClick={() => {
         document.getElementById('file').click()
       }}>
-        <i className="fas fa-folder-open"></i>
+        <img className={'fas'} src={require(`../../../shared/img/icons/icon-open-file.png`)} />
       </div>
       <input type='file'
              id='file'

@@ -62,7 +62,7 @@ class Popup extends React.Component {
   }
 
   render() {
-    let {size, scroll, children, className, onUnmount, align, canCloseOutside} = this.props;
+    let {size, scroll, children, className, onUnmount, align, canCloseOutside, contentColor} = this.props;
     let open = this.props.open !== undefined ? this.props.open : this.state.open;
 
     return (
@@ -73,7 +73,7 @@ class Popup extends React.Component {
         }
       }}>
         <div className={'widget__popup-wrap'} onClick={(e) => {e.stopPropagation()}}>
-          <div className={'widget__popup-content'} ref={(node) => {this.popupNode = node}}>
+          <div className={`widget__popup-content ${contentColor}`} ref={(node) => {this.popupNode = node}}>
             {children}
           </div>
           <div className={'widget__popup-close'}
@@ -96,6 +96,11 @@ Popup.align = {
   CENTER: 'center',
 }
 
+Popup.contentColor = {
+  NORMAL: 'normal',
+  BLUE_DARK: 'blue_dark',
+}
+
 Popup.sizes = {
   SMALL: 'small',
   NORMAL: 'normal',
@@ -110,6 +115,7 @@ Popup.defaultProps = {
   defaultOpen: false,
   scroll: false,
   align: Popup.align.CENTER,
+  contentColor: Popup.contentColor.NORMAL,
   // open: undefined,
 };
 

@@ -28,7 +28,9 @@ const scrollSelectors = [
   {key: 'cubego', id: 'cubego-intro'},
   {key: 'cubegon', id: 'cubegon-intro'},
   {key: 'combat', id: 'combat-intro'},
-  {key: 'coming', id: 'what-next'}
+  {key: 'coming', id: 'what-next'},
+  {key: 'about_presale', id: 'presale'},
+  {key: 'why_presale', id: 'why_presale'},
 ];
 
 class GameIntro extends React.Component {
@@ -432,6 +434,93 @@ class GameIntro extends React.Component {
             <div className={'build-your-cubegon__header'}>
               {_t('join_presale_build_your_cubegon')}
             </div>
+
+            <ButtonNew className={'create__button'} label={_t('build_cubegon')}
+                       onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)
+            }}/>
+
+            <ButtonNew className={'create__button'} label={_t('join presale')}
+                       color={ButtonNew.colors.BLUE}
+                       onClick={() => {this.props.history.push(`/${URLS.STORE}`)
+            }}/>
+
+          </Container>
+
+          <Container size={containerSize} className={'guide__presale'} id={'presale'}>
+            <div className="main__header about-cubego-presale__header left">
+              <div className="header">
+                {_t('about_cubego_presale')}
+              </div>
+            </div>
+            <div className="content center">
+              <img src={require('../../../shared/img/game_intro/about_presale.png')} />
+              <p className={'header--detail'}>{_t('desc.presale_1')}</p>
+              <p className={'header--detail'}>{_t('desc.presale_2')}</p>
+            </div>
+          </Container>
+
+          <Container size={containerSize} className={'guide__why-presale'} id={'why_presale'}>
+            <div className="main__header why-presale__header right">
+              <img className={'decorated-cube'} src={require('../../../shared/img/game_intro/gold.png')}/>
+              <div className="header">
+                {_t('why_presale_header')}
+              </div>
+            </div>
+            <div className="presale-explaination__container">
+
+              <div className="presale-explaination__sub-section">
+                <img className={'original-tag'} src={require('../../../shared/img/game_intro/original.png')}/>
+                <div className={'background yellow left'}/>
+                <div className="content right">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                      {_t('build_unique_header')}
+                    </div>
+                    <p>{_t('desc.build_unique_1')}</p>
+                    <p>{_t('desc.build_unique_2')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/why_presale.png')}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="presale-explaination__sub-section">
+                <div className={'background blue right'}/>
+                <div className="content left">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                    {_t('earn_reward_header')}
+                    </div>
+                    <p>{_t('desc.earn_reward_1')}</p>
+                    <p>{_t('desc.earn_reward_2')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/earn_reward.png')}/>
+                  </div>
+                </div>
+              </div>
+
+              <div className="presale-explaination__sub-section">
+                <div className={'background red left'}/>
+                <div className="content right">
+                  <div className="content-desc">
+                    <div className="cubegon__header">
+                      {_t('trade_cubegon')}
+                    </div>
+                    <p>{_t('desc.trade_cubegon_1')}</p>
+                    <p>{_t('desc.trade_cubegon_2')}</p>
+                  </div>
+                  <div className="content-image">
+                    <img src={require('../../../shared/img/game_intro/trade-eth.png')}/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </Container>
+
+          <Container size={containerSize} className={'guide__last'}>
 
             <ButtonNew className={'create__button'} label={_t('build_cubegon')}
                        onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)

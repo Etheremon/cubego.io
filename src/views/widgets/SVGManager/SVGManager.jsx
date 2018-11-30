@@ -74,6 +74,30 @@ CubegoFooter.defaultProps = {
   shadow: '#FFFFFF',
 };
 
+export const CustomRectangleWithShadow = ({}) => {
+    return (
+        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 692 206" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+            <defs>
+                <path d="M0,19.1507638 C115.493567,6.38358794 230.8269,4.27055815e-15 346,0 C461.1731,0 576.506433,6.38358794 692,19.1507638 L692,205.150764 C576.666667,205.150764 461.333333,205.150764 346,205.150764 C230.666667,205.150764 115.333333,205.150764 0,205.150764 L0,19.1507638 Z" id="rectangle-with-shadow"></path>
+                <filter x="-2.9%" y="-9.7%" width="105.8%" height="119.5%" filterUnits="objectBoundingBox" id="rectangle-with-shadow-filter">
+                    <feMorphology radius="24" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+                    <feGaussianBlur stdDeviation="8" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+                    <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+                    <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+                    <feColorMatrix values="0 0 0 0 0.117647059   0 0 0 0 0.37254902   0 0 0 0 0.611764706  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+                </filter>
+            </defs>
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <g id="Rectangle-2">
+                    <use fill="#12314F" fillRule="evenodd" href="#rectangle-with-shadow"></use>
+                    <use fill="black" fillOpacity="1" filter="url(#rectangle-with-shadow-filter)" href="#rectangle-with-shadow"></use>
+                    <path stroke="#75C3F5" strokeWidth="10" d="M5,23.631655 L5,200.150764 C173.016371,200.150764 174.682932,200.150764 346,200.150764 C517.317068,200.150764 518.983629,200.150764 687,200.150764 L687,23.631655 C573.176134,11.2104941 459.509728,5 346,5 C232.490272,5 118.823866,11.2104941 5,23.631655 Z" strokeLinejoin="square"></path>
+                </g>
+            </g>
+        </svg>
+    )
+}
+
 export const CustomRectangle = ({tier, fill, strokeWidth}) => {
   return (
     <svg width="100%" height="100%" viewBox="0 0 692 206" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">

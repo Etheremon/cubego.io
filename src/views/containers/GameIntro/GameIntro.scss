@@ -159,7 +159,8 @@
     font-family: $f__baloobha;
     position: relative;
     display: inline-block;
-    width: 45%;
+    min-width: 45%;
+    padding: 0 8px;
     @include mobile {
       width: 100%;
     }
@@ -172,6 +173,10 @@
       z-index: 2;
       padding-top: 16px;
       padding-bottom: 8px;
+
+      @include mobile {
+        font-size: 40px;
+      }
     }
 
     &:after {
@@ -216,6 +221,10 @@
     position: relative;
     justify-content: space-between;
     z-index: 2;
+
+    &.center {
+      flex-direction: column;
+    }
 
     .content-desc {
       width: 45%;
@@ -763,6 +772,123 @@
       font-family: $f__baloobha;
       font-size: $font-size-header-3;
       color: #FFBE02;
+    }
+  }
+
+  .guide__presale {
+    padding-top: 80px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        right: -44px;
+        height: 128px;
+        z-index: 2;
+      }
+    }
+
+    .content {
+      img {
+        height: 300px;
+      }
+    }
+  }
+
+  .guide__why-presale {
+    padding-top: 80px;
+    .main__header {
+      position: relative;
+      .decorated-cube {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -40px;
+        height: 64px;
+        z-index: 2;
+      }
+    }
+
+    .presale-explaination__container {
+      margin-top: 40px;
+      text-align: center;
+      position: relative;
+
+      @include mobile {
+        margin-top: 180px;
+      }
+
+      .presale-explaination__sub-section {
+        position: relative;
+        margin: 120px 0;
+        text-align: left;
+
+        .original-tag {
+          position: absolute;
+          right: 0;
+          top: 36px;
+          transform: translateY(-50%);
+          height: 250px;
+          width: auto;
+          z-index: 9;
+        }
+
+        .content-image {
+          img {
+            top: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
+          }
+        }
+
+        .left {
+          .content-desc {
+            padding: 48px 32px 32px 32px;
+          }
+        }
+        .right {
+          .content-desc {
+            padding: 48px 32px 32px 16px;
+          }
+        }
+
+        &:nth-child(1) {
+          color: #D75A11;
+        }
+
+        &:nth-child(2) {
+          color: #00308F;
+        }
+        &:nth-child(3) {
+          color: #380B0B;
+        }
+
+        .right, .left {
+          .content-desc {
+            @include mobile {
+              padding: 16px;
+            }
+          }
+        }
+
+        .content-desc {
+          font-weight: $font-weight-semi-bold;
+        }
+
+        .cubegon__header {
+          font-size: $font-size-large;
+          font-weight: $font-weight-normal;
+          font-family: $f__baloobha;
+          color: $white;
+        }
+
+      }
+
+      .header {
+        p {
+          font-weight: $font-weight-bold;
+        }
+      }
     }
   }
 
