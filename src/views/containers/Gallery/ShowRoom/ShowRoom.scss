@@ -15,7 +15,7 @@
     justify-content: center;
     .card-item {
       width: 33%;
-      padding: 32px 16px;
+      padding: 16px 16px 8px 16px;
       box-sizing: border-box;
 
       @include mobile {
