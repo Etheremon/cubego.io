@@ -274,10 +274,10 @@ class VoxBattle extends Component {
                     height={`${540 / 540 * 100}%`}
                     ref={(image) => {this.startImage = image}}/>
           <GUIImage image={this.state.player1Data ? this.state.player1Data.image : null} width={`${150 / 960 * 100}%`}
-                    height={`${150 / 540 * 100}%`} left={'-300px'}
+                    height={`${150 / 540 * 100}%`} left={-250}
                     ref={(image) => {this.player1Image = image}}/>
           <GUIImage image={this.state.player0Data ? this.state.player0Data.image : null} width={`${150 / 960 * 100}%`}
-                    height={`${150 / 540 * 100}%`} left={'300px'}
+                    height={`${150 / 540 * 100}%`} left={250}
                     ref={(image) => {this.player0Image = image}}/>
           <GUIImage image={require('../../shared/img/game_ui/battle-result.png')} width={`${542 / 960 * 100}%`}
                     height={`${489 / 540 * 100}%`}
@@ -286,27 +286,27 @@ class VoxBattle extends Component {
                     height={`${300 / 540 * 100}%`} visible={false}
                     ref={(image) => {this.playerWinImage = image}}/>
 
-          <GUIImageButton left={'0px'} top={`${200 / 540 * 100}%`} value={'REPLAY GAME'} onClick={this.restartGame}
+          <GUIImageButton top={200} value={'REPLAY GAME'} onClick={this.restartGame}
                           width={`${200 / 960 * 100}%`}
                           image={require('../../shared/img/game_ui/replay_game.png')} height={`${75 / 540 * 100}%`}
                           ref={(button) => {
                             this.rePlayBtn = button
                           }} visible={false}/>
 
-          <GUIImageButton left={'0px'} top={`${200 / 540 * 100}%`} value={'START GAME'} onClick={this.startGame}
+          <GUIImageButton top={200} value={'START GAME'} onClick={this.startGame}
                           width={`${200 / 960 * 100}%`}
                           image={require('../../shared/img/game_ui/start_game.png')} height={`${75 / 540 * 100}%`}
                           ref={(button) => {
                             this.startBtn = button
                           }}/>
 
-          <GUIImageButton left={'-300px'} top={`${150 / 540 * 100}%`} value={'CHANGE CUBEGON'}
+          <GUIImageButton left={-300} top={150} value={'CHANGE CUBEGON'}
                           onClick={this.changeCubegon(1)} width={`${100 / 960 * 100}%`}
                           image={require('../../shared/img/game_ui/change_cubegons.png')} height={`${40 / 540 * 100}%`}
                           ref={(button) => {
                             this.changePlayer1Btn = button
                           }}/>
-          <GUIImageButton left={'300px'} top={`${-150 / 540 * 100}%`} value={'CHANGE CUBEGON'}
+          <GUIImageButton left={300} top={-150} value={'CHANGE CUBEGON'}
                           onClick={this.changeCubegon(2)} width={`${100 / 960 * 100}%`}
                           image={require('../../shared/img/game_ui/change_cubegons.png')} height={`${40 / 540 * 100}%`}
                           ref={(button) => {

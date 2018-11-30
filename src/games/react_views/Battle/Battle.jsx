@@ -49,7 +49,7 @@ class _Battle extends Component {
   componentDidMount() {
     this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({userId: this.props.userId, forceUpdate: true}));
     this.voxel = BabylonX.render(<VoxBattle battle={this.state.battle}
-                                            changeCubegon={this.toggleCubegonSelect}/>, document.getElementById('battle'));
+                                            changeCubegon={this.toggleCubegonSelect}/>, document.getElementById('battle'), {width: 960, height: 540});
     if (this.voxel) {
       this.loadModel();
     } else {
@@ -168,6 +168,7 @@ class _Battle extends Component {
         {this.state.showWebglError ? <div className={'battle-3d-view__webgl-error'}>
           WebGL not supported by your browser <a href="https://get.webgl.org">More information</a>
         </div> : null}
+
         {this.state.showCubegonSelect ?
           <Popup onUnmount={() => {
             this.setState({showCubegonSelect: false})

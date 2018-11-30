@@ -7,7 +7,7 @@ import {hexToColor3} from "../utils";
 import {BabylonMeshContainer} from "./babylonMeshContainer";
 
 const HURT_COLOR = BABYLON.Color3.White();
-const PLAYER_SIZE = 10;
+const PLAYER_SIZE = {x: 10, y: 10, z: 20};
 
 export class BabylonVoxelPlayer extends BabylonComponent {
   constructor() {
@@ -141,15 +141,15 @@ export class BabylonVoxelPlayer extends BabylonComponent {
       this.playerMesh = null;
     }
     let collisionMesh = BabylonMeshBox.create({scene: this.scene}, {
-      size: PLAYER_SIZE * size * 2,
-      position: {x: 0, y: PLAYER_SIZE * size, z: 0}
+      size: PLAYER_SIZE.y * size * 2,
+      position: {x: 0, y: PLAYER_SIZE.y * size, z: 0}
     });
     collisionMesh.parent = this.renderer;
     collisionMesh.visibility = 0;
     this.collisionMesh = collisionMesh;
     if (type === 'magical_voxel') {
       let elements = [];
-      let scaling = PLAYER_SIZE / data.size.y;
+      let scaling = PLAYER_SIZE.y / data.size.y;
       size = size * scaling;
 
       let spsVoxel = new BABYLON.SolidParticleSystem('playerMesh', this.scene, {isPickable: true});
@@ -233,12 +233,14 @@ export class BabylonVoxelPlayer extends BabylonComponent {
         }
       });
 
-      let scalingX = (max.x - min.x) > 0 ? PLAYER_SIZE / (max.x - min.x) : 1;
-      let scalingY = (max.y - min.y) > 0 ? PLAYER_SIZE / (max.y - min.y) : 1;
+      let scalingX = (max.x - min.x) > 0 ? PLAYER_SIZE.x / (max.x - min.x) : 1;
+      let scalingY = (max.y - min.y) > 0 ? PLAYER_SIZE.y / (max.y - min.y) : 1;
+      let scalingZ = (max.z - min.z) > 0 ? PLAYER_SIZE.z / (max.z - min.z) : 1;
 
       let scaling = (scalingX + scalingY) / 2;
       scaling = scalingX < 0.25 ? scalingX * 2 : scaling;
       scaling = scalingY < 0.25 ? scalingY * 2 : scaling;
+      scaling = scaling > scalingZ ? scalingZ : scaling;
 
       size = size * scaling;
 

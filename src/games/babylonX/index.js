@@ -14,7 +14,7 @@ let loopStarted = false;
 let root = null;
 let loadingScreen = null;
 
-const createRenderer = (canvas) => {
+const createRenderer = (canvas, options) => {
   engine = new BABYLON.Engine(canvas, true);
   loadingScreen = new LoadingScreen(canvas);
   engine.loadingScreen = loadingScreen;
@@ -23,6 +23,7 @@ const createRenderer = (canvas) => {
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
+  root.options = options;
   window.addEventListener('resize', resize);
   resize();
   _createAssetsManager(scene, startLoop);
@@ -43,11 +44,11 @@ const startLoop = () => {
   }
 };
 
-const render = (element, canvas) => {
+const render = (element, canvas, options) => {
   if (!isWebGLAvailable(canvas)) {
     return;
   }
-  rootContainer = createRenderer(canvas);
+  rootContainer = createRenderer(canvas, options);
   BabylonRenderer.updateContainer(element, rootContainer, null);
   return BabylonRenderer.getPublicRootInstance(rootContainer);
 };
@@ -64,6 +65,11 @@ const stopRender = () => {
   loadingScreen.forceHideLoadingUI();
   loadingScreen = null;
 };
+
+const switchFullScreen = () => {
+  engine.switchFullscreen(true);
+};
+
 
 export const MeshSphere = TYPES.MESH_SPHERE;
 export const MeshCylinder = TYPES.MESH_CYLINDER;
@@ -86,5 +92,5 @@ export const HTMLGUIButton = TYPES.CASTOR_GUI_BUTTON;
 export const HTMLGUIImage = TYPES.CASTOR_GUI_TEXTURE;
 export const HTMLGUIText = TYPES.CASTOR_GUI_TEXT;
 
-const BabylonX = {render, loaders, stopRender};
+const BabylonX = {render, loaders, stopRender, switchFullScreen};
 export default BabylonX;

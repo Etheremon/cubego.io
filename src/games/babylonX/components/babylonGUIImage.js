@@ -1,19 +1,23 @@
-import {BabylonComponent} from "./babylonComponent";
 import * as GUI from 'babylonjs-gui';
+import {BabylonGUIComponent} from "./babylonGUIComponent";
 
-export class BabylonGUIImage extends BabylonComponent {
-  static create({scene}, props) {
+export class BabylonGUIImage extends BabylonGUIComponent {
+  constructor() {
+    super();
+  }
+
+  static create({scene, options, canvas}, props) {
     let guiImage = new BabylonGUIImage();
+    guiImage.calculateScalingUI(options, canvas);
     let image;
     if (props.image) {
       image = new BABYLON.GUI.Image("but", props.image);
     } else {
       image = new BABYLON.GUI.Image("but");
     }
-    image.left = props.left || "0px";
-
-    image.height = props.height || "40px";
-    image.width = props.width || "40px";
+    image.left = props.left ? parseInt(props.left, 10) * guiImage.uiScaling : "0px";
+    image.height = props.height || "50px";
+    image.width = props.width || "50px";
     image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
 
     guiImage.renderer = image;
