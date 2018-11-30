@@ -454,8 +454,8 @@ class GameIntro extends React.Component {
             </div>
             <div className="content center">
               <img src={require('../../../shared/img/game_intro/about_presale.png')} />
-              <p>{_t('desc.presale_1')}</p>
-              <p>{_t('desc.presale_2')}</p>
+              <p className={'header--detail'}>{_t('desc.presale_1')}</p>
+              <p className={'header--detail'}>{_t('desc.presale_2')}</p>
             </div>
           </Container>
 

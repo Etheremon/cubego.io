@@ -213,7 +213,7 @@ class HomePage extends React.Component {
                   >
                     <div className={'desc'}>
                       <p className={'text'}>{_t('home.why_presale')}</p>
-                      <div className="why-presale__button" onClick={() => { this.props.history.push(`/${URLS.GUIDE}`) }}>
+                      <div className="why-presale__button" onClick={() => { this.props.history.push(`/${URLS.GUIDE}#presale`) }}>
                            {_t('read more')}
                       </div>
                     </div>

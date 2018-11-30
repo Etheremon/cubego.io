@@ -246,10 +246,14 @@
   }
 
   .home__why-presale {
-
+    padding-top: 0 !important;
+    margin-top: 24px !important;
     .desc {
-      width: 50%;
       text-align: left;
+      width: 50%;
+      @include mobile {
+        width: 100%;
+      }
       p {
         color: #380B0B;
       }
@@ -478,7 +482,7 @@
   .extended-title__container {
     //background-color: rgba(25, 50, 78, 1);
     background-color: #0C4A7E;
-    padding: 0;
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -496,7 +500,7 @@
 
   .home__modes, .home__why-presale  {
     text-align: center;
-    padding-top: 80px;
+    padding-top: 40px;
     position: relative;
   }
 
