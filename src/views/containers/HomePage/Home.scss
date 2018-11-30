@@ -245,6 +245,29 @@
     }
   }
 
+  .home__why-presale {
+    padding-top: 0 !important;
+    margin-top: 24px !important;
+    .desc {
+      text-align: left;
+      width: 50%;
+      @include mobile {
+        width: 100%;
+      }
+      p {
+        color: #380B0B;
+      }
+
+      .why-presale__button {
+        font-family: $f__baloobha;
+        text-decoration: underline;
+        text-transform: capitalize;
+        color: #FF7313;
+        cursor: pointer;
+      }
+    }
+  }
+
   .home__game-detail {
     .section {
       position: relative;
@@ -404,7 +427,10 @@
               width: 480px;
             }
             &.copyright {
-              width: 420px;
+              width: 520px;
+            }
+            &.why_presale {
+              width: 350px;
             }
             @include mobile {
               width: 260px;
@@ -453,29 +479,29 @@
 
   }
 
-  .home__modes {
-    text-align: center;
-    padding-top: 80px;
-    position: relative;
-
-    .home__modes-title__container {
-      //background-color: rgba(25, 50, 78, 1);
-      background-color: #0C4A7E;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 56px;
-      
-      .home__modes-title {
-        display: inline;
-        color: $white;
-        font-family: $f__baloobha;
-        padding-top: 8px;
-        font-size: 30px;
-        font-weight: $font-weight-normal;
-      }
+  .extended-title__container {
+    //background-color: rgba(25, 50, 78, 1);
+    background-color: #0C4A7E;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 56px;
+    
+    .extended-title {
+      display: inline;
+      color: $white;
+      font-family: $f__baloobha;
+      padding-top: 8px;
+      font-size: 30px;
+      font-weight: $font-weight-normal;
     }
+  }
+
+  .home__modes, .home__why-presale  {
+    text-align: center;
+    padding-top: 40px;
+    position: relative;
   }
 
   .home__channels {

@@ -109,6 +109,10 @@
     box-shadow: 0 0 10px -1px $c__blue-2;
     color: $white95;
 
+    &.blue_dark {
+      background-color: #051527;
+    }
+
     overflow: visible;
     position: relative;
     @include mobile {
