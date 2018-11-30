@@ -44,7 +44,7 @@ class Gallery extends React.Component {
     return (
       <div className="slider-show__container">
         {
-          listCubegons.map((ele, idx) => (
+          listCubegons.sort((a, b) => (b.token_id - a.token_id)).map((ele, idx) => (
             <div className="slider-cell" key={idx}>
               <img src={GetImageFromGonID(ele.id)}/>
             </div>
