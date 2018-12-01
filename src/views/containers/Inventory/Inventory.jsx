@@ -106,7 +106,7 @@ class Inventory extends React.Component {
                 TransferMaterialCube(this.props.dispatch, addTxn, _t, {
                   fromAdd: userId,
                   cubeName: item.name,
-                  numCubes: item.amount,
+                  numCubes: item.available_amount,
                   successCallback: (data) => {
                   },
                   failedCallback: null,
