@@ -16,6 +16,7 @@ export const ImgSource = {
   'icon_my_heroes': require('../../../shared/img/icons/icon-cubegon.png'),
   icon_gallery: require('../../../shared/img/icons/icon-gallery.png'),
   icon_camera: require('../../../shared/img/icons/icon-camera.png'),
+  icon_import: require('../../../shared/img/icons/icon-import.png'),
   icon_export: require('../../../shared/img/icons/icon-export.png'),
 
   btn_download: require('../../../shared/img/buttons/download.png'),

@@ -12,10 +12,13 @@
     min-height: 16px;
     cursor: pointer;
     font-size: $font-size-header-2;
+
+    img {
+      width: 40px;
+    }
   }
 
   .fas {
-    height: 22px;
     pointer-events: none;
   }
 }

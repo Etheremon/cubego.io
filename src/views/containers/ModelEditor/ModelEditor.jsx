@@ -816,9 +816,9 @@ class _ModelEditor extends React.Component {
                 <div className={'model-editor__3d'}>
 
                   <div className={'model-editor__3d-capture'}
-                       tooltip={_t('capture a photo')} tooltip-position={'bottom'}
+                       tooltip={_t('export model')} tooltip-position={'bottom'}
                        onClick={this.capturePhoto}>
-                    <Image img={'icon_camera'}/>
+                    <Image img={'icon_export'}/>
                   </div>
                   <div className="model-editor__3d-file-loader" tooltip={_t('load model from file')} tooltip-position={'bottom'}>
                     <ImportFromFile text={_t('template from file')} handleData={dataFile => {

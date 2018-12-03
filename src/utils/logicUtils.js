@@ -108,8 +108,9 @@ export const ConvertStatsToTier = (stats) => {
 
 export const VerifyLength = (text, fr, t) => (text && fr <= text.length && text.length <= t);
 
-const cutoffShapeSimilarity = {correct: 0.1, fake: 85};
+const cutoffShapeSimilarity = {correct: 0.08, fake: 85};
 const cutoffColorSimilarity = {correct: 0.05, fake: 90};
+
 export const ConvertShapeDiffToSimilarity = (diff) => (
   diff <= cutoffShapeSimilarity.correct
     ? Utils.RoundDownToDecimal(100-diff*(100-cutoffShapeSimilarity.fake)/(cutoffShapeSimilarity.correct), 2)

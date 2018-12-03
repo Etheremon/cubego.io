@@ -27,7 +27,7 @@ export const GetUserNumberOfMaterials = (state, userId) => {
 /**
  * Model
  */
-export const GetSavedModel = (state) => CloneDeep(state.model['savedModel'].map(i => LogicUtils.GetFullModel(i)));
+export const GetSavedModel = (state) => CloneDeep(state.model['savedModel'].map(i => LogicUtils.GetFullModel(i)).filter(m => m));
 export const GetValidatedModel = (state) => CloneDeep(state.model['validatedModel']);
 
 /**

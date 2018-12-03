@@ -25,12 +25,15 @@
     .popup-tutorial__button {
       position: absolute;
       right: 0;
-      top: -18px;
+      top: -20px;
       color: $white;
       font-size: $font-size-tiny;
       cursor: pointer;
       text-decoration: underline;
       text-transform: capitalize;
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     .bar {
@@ -330,7 +333,7 @@
 
         img {
           display: block;
-          width: 36px;
+          width: 40px;
         }
       }
 
