@@ -37,6 +37,8 @@ import { UserApi } from '../../../services/api/userApi.js';
 import { TIME_TO_REFRESH } from '../../../config';
 import LandingPage from '../LandingPage/LandingPage.jsx';
 import Gallery from '../Gallery/Gallery.jsx';
+import ClaimRewardPage from '../ClaimRewardPage/ClaimRewardPage.jsx';
+
 
 require("style-loader!./App.scss");
 
@@ -173,6 +175,7 @@ class App extends React.Component {
           <Route path={`/${URLS.STORE}`} component={StorePage}/>
           <Route path={`/${URLS.MARKET}`} component={ComingSoon}/>
           <Route path={`/${URLS.RANKING}`} component={RankingPage}/>
+          <Route path={`/${URLS.CLAIM_AIR_DROP}`} component={ClaimRewardPage} />
 
           <Route path={`/${URLS.ABOUT_US}`} component={SignUp}/>
           <Route path={`/${URLS.GUIDE}`} component={GameIntro}/>
