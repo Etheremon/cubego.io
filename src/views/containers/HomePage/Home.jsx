@@ -173,17 +173,13 @@ class HomePage extends React.Component {
                 <div className={'home__intro-header'}>
                   <span>{_t('what_is_cubego')}</span>
                 </div>
-                <p>{_t('home.opening')}</p>
+                <p>{_t('home.opening_2')}</p>
                 <ButtonNew className={'create__button'} label={_t('build_cubegon')}
                            color={ButtonNew.colors.BLUE}
-                           onClick={
-                             () => {this.props.history.push(`/${URLS.BUILD_GON}`)}
-                           }
+                           onClick={() => {this.props.history.push(`/${URLS.BUILD_GON}`)}}
                 />
                 <ButtonNew className={'watchbattle__button'} label={_t('watch battle')}
-                           onClick={
-                             () => {this.props.history.push(`/${URLS.BATTLE}`)}
-                           }
+                           onClick={() => {this.props.history.push(`/${URLS.BATTLE}`)}}
                 />
               </div>
               <div className={'home__intro-build'}>
@@ -206,23 +202,21 @@ class HomePage extends React.Component {
 
               <Container className={'home__why-presale section'}>
 
-                <div className={'content left'}>
+                <div className={'presale-content'}>
                   <InviewMonitor
                     classNameNotInView='vis-hidden'
                     classNameInView='animated fadeInUp'
                   >
-                    <div className={'desc'}>
-                      <p className={'text'}>{_t('home.why_presale')}</p>
+                    <div className={'presale-desc'}>
+                      <p className={'text'}>{_t('home.about_presale')}</p>
                       <div className="why-presale__button" onClick={() => { this.props.history.push(`/${URLS.GUIDE}#presale`) }}>
                            {_t('read more')}
                       </div>
                     </div>
                   </InviewMonitor>
     
-                  <div className={'image'}>
-                    <div className={'img'}>
-                      <img className={'img-real why_presale'} src={require('../../../shared/img/banner/banner_chest.png')}/>
-                    </div>
+                  <div className={'presale-image'}>
+                    <img src={require('../../../shared/img/banner/cubes.png')}/>
                   </div>
                 </div>
               </Container>
@@ -232,7 +226,8 @@ class HomePage extends React.Component {
 
           <div className="home__modes" id={'modes'}>
             <div className="home__modes-title__container extended-title__container">
-              <Text className={'home__modes-title extended-title'} type={Text.types.H2} children={_t('how_to_play')} />
+              <Text className={'home__modes-title extended-title'} type={Text.types.H2}
+                    children={_t('how_to_play_2')} />
             </div>
           </div>
           {/* end home__modes */}
