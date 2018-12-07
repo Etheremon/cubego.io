@@ -16,6 +16,8 @@ import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import * as Config from "../../../config";
 import {URLS} from "../../../constants/general";
 import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
+import { ClaimAirDrop } from '../../../services/transaction.js';
+import { addTxn } from '../../../actions/txnAction.js';
 
 require("style-loader!./ClaimRewardPage.scss");
 
@@ -78,7 +80,7 @@ class ClaimRewardPage extends React.Component {
 
   
   render() {
-    const {_t, query, userInfo} = this.props;
+    const {_t, query, userInfo, userId} = this.props;
 
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
@@ -101,20 +103,18 @@ class ClaimRewardPage extends React.Component {
           <Container className={'claim-reward-page__main'}>
             {
               <div className="claim-air-drop__container">
-
                 <div className="header__label">
                   <CustomRectangle  />
                   <span>{_t('air_drop_package')}</span>
                 </div>
                 <div className="total-quantity">
-                {200} {_t('Cubegoes')}
+                {50} {_t('leaf')}
                 </div>
 
                 <div className="main-content">
                   <div className="content left">
                     <img src={require(`../../../shared/img/store_cubegoes/leaf.png`)}/>
                   </div>
-
                   <div className="content right">
                     <p className="note">
                       {
@@ -136,7 +136,12 @@ class ClaimRewardPage extends React.Component {
 
                 <ButtonNew className={'claim-air-drop__button'} color={ButtonNew.colors.BLUE} label={_t('claim_air_drop')}
                       onClick={() => {
-                        
+                        if (userId) {
+                          ClaimAirDrop(this.props.dispatch, addTxn, _t, {
+                            userId: userId,
+                            name: userInfo.username,
+                          })
+                        }
                       }}
                     />
               </div>
@@ -163,6 +168,7 @@ const mapStateToProps = (store, props) => {
     banners: GetStoreBanners(store),
     language: getActiveLanguage(store.localeReducer),
     userInfo: GetUserInfo(store, userId),
+    userId: userId,
   }
 };
 

@@ -121,6 +121,11 @@
       }
 
       .content {
+
+        &.right {
+          text-align: left;
+        }
+
         img {
           width: auto;
           height: 200px;

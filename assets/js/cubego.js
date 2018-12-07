@@ -72,6 +72,15 @@ function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
   );
 }
 
+function claimAirDropReward(userId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegonNftInstance.safeTransferFrom,
+    contractAddress.CUBEGO_NFT_ADDRESS,
+    [userId], callbackFunc,
+    0, 600000
+  )
+}
+
 function transferCubegon(fromAdd, toAdd, tokenId, callbackFunc) {
   callBlockchainFunction(
     contractInstances.cubegonNftInstance.safeTransferFrom,

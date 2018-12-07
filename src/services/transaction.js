@@ -432,7 +432,7 @@ export const ClaimAirDrop = (dispatch, action, _t, {userId, name, successCallbac
 
       // Sending Txn
       let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
-      window.transferCubego(cubeName, fromAdd, obj.to_add.value, obj.transfer_amount.value, cbFunc);
+      window.claimAirDropReward(userId, cbFunc);
     },
     onFinishCallback: function(data) {
       finishCallback && finishCallback(data);
