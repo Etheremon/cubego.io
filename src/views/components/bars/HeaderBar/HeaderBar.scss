@@ -62,11 +62,35 @@
 
     .header-bar__balance {
       flex-grow: 1;
+      perspective: 1000px;
+
       .content {
+        position: relative;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        width: 100%;
         height: 100%;
+      }
+
+      .group {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+
+        &.front {
+          z-index: 1;
+          transform: rotateX(180deg);
+        }
+
+        &.back {
+          z-index: 2;
+        }
+
+
 
         .item {
           position: relative;

@@ -412,6 +412,35 @@ export const TransferCubegon = (dispatch, action, _t, {name, fromAdd, token_id, 
   }));
 };
 
+export const ClaimAirDrop = (dispatch, action, _t, {userId, name, successCallback, failedCallback, finishCallback}) => {
+  dispatch(action({
+    title: _t('claim_air_drop'),
+    note: _t('claim_air_drop_note'),
+    title_done: _t('claiming_air_drop'),
+    txn_done: _t('claim_air_drop_done'),
+    fields_order: ['name'],
+    button: _t('claim'),
+    forceToSubmittingState: false,
+    fields: {
+      name: {
+        text: _t('name'), value: name, readonly: true, type: 'text',
+      },
+    },
+
+    submitFunc: (obj, callback) => {
+      // Validating Data
+
+      // Sending Txn
+      let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
+      window.transferCubego(cubeName, fromAdd, obj.to_add.value, obj.transfer_amount.value, cbFunc);
+    },
+    onFinishCallback: function(data) {
+      finishCallback && finishCallback(data);
+    },
+
+  }));
+};
+
 export const TransferMaterialCube = (dispatch, action, _t, {cubeName, fromAdd, numCubes, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
     title: _t('transfer_cubego'),

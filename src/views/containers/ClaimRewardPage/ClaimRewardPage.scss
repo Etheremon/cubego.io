@@ -60,4 +60,72 @@
       }
     }
   }
+
+  .claim-reward-page__main {
+    text-align: center;
+    padding: 44px;
+    .claim-air-drop__container {
+      width: 600px;
+      height: 300px;
+      position: relative;
+      font-family: $f__baloobha;
+      border-width: 5px;
+      border-radius: 8px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom right, #FF4F02, #FFFF00, #FF6D00) 1;
+      background: #05192C;
+      box-shadow: 0px 1px 65px 1px #07192B;
+      padding: 8px 16px;
+      display: inline-block;
+
+      .claim-air-drop__button {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+      }
+
+      .header__label {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 50px;
+        z-index: 1;
+  
+        span {
+          padding-top: 4px;
+          font-size: $font-size-header-1;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+          color: $c__text__neon;
+        }
+      }
+  
+      .total-quantity {
+        margin-top: 36px;
+        font-size: $font-size-header-2;
+        position: relative;
+        z-index: 1;
+      }
+
+      .main-content {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 16px;
+      }
+
+      .content {
+        img {
+          width: auto;
+          height: 200px;
+        }
+      }
+    }
+  }
 }
