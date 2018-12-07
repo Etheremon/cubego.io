@@ -19,10 +19,16 @@
   padding-top: 60px;
   position: relative;
 
+  .cubegoes-view__hightlight_note {
+    margin-bottom: 24px;
+    font-size: $font-size-large;
+    color: #E9C303;
+  }
+
   .cubegoes-view__tip_note {
     cursor: pointer;
     display: block;
-    &:nth-child(3) {
+    &:nth-child(4) {
       margin-bottom: 50px;
     }
     &:hover {

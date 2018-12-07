@@ -203,6 +203,10 @@ class CubegoesView extends React.Component {
           <ReferralView className={'referral-box'} />
         </Container>
 
+        <div className="cubegoes-view__hightlight_note">
+          {_t('store.hightlight_note')}
+        </div>
+
         <div className={"cubegoes-view__tip_note"} onClick={() => {Utils.OpenInNewTab(_t('store_tip_link'))}}>
           {_t('store_tip_note')}
         </div>
