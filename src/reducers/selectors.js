@@ -55,6 +55,7 @@ export const GetLocalizationData = (state) => CloneDeep(state.localization.local
 export const GetNotification = (state) => (CloneDeep(state.notifications.notification));
 export const GetHomeBanners = (state) => CloneDeep(state.notifications.notification['banners_home']);
 export const GetStoreBanners = (state) => CloneDeep(state.notifications.notification['banners_store']);
+export const GetEventBanners = (state) => CloneDeep(state.notifications.notification['banners_event']);
 export const GetFeed = (state) => CloneDeep((state.notifications.notification['feeds'] || [])[0]);
 
 

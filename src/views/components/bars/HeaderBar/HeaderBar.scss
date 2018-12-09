@@ -14,6 +14,11 @@
   //overflow: hidden;
   box-shadow: 0 0 20px 0 rgb(0, 0, 0);
 
+  @include mobile {
+    overflow-x: scroll;
+    @include no-scroll-bar;
+  }
+
   .header-bar__container {
     height: 100%;
     display: flex;
@@ -62,43 +67,42 @@
 
     .header-bar__balance {
       flex-grow: 1;
-      perspective: 1000px;
+      //perspective: 1000px;
+      display: flex;
+      justify-content: flex-end;
 
       .content {
         position: relative;
         transition: transform 0.8s;
-        transform-style: preserve-3d;
-        width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
       }
 
       .group {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        position: absolute;
-        width: 100%;
-        height: 100%;
         backface-visibility: hidden;
+        z-index: 1;
+        //transform: rotateX(180deg);
+        @include transition-duration;
+        height: 100%;
 
-        &.front {
-          z-index: 1;
-          transform: rotateX(180deg);
-        }
-
-        &.back {
-          z-index: 2;
-        }
-
-
+        //&.active {
+        //  z-index: 2;
+        //  transform: rotateX(0);
+        //}
 
         .item {
           position: relative;
-          padding: 6px 40px 0 40px;
+          padding: 6px 20px 0 24px;
           margin-left: 30px;
           font-family: $f__baloobha;
           font-size: $font-size-large;
           color: $white;
+          min-width: 40px;
+          text-align: center;
 
           .text {
             position: relative;
@@ -129,9 +133,9 @@
 
           img {
             position: absolute;
-            left: -10px;
+            left: 0;
             top: 50%;
-            @include transform(translateY(-50%));
+            @include transform(translate(-50%, -50%));
 
             height: 32px;
             z-index: 1;

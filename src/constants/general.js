@@ -10,7 +10,7 @@ export const URLS = {
   MARKET: 'market',
   RANKING: 'ranking',
   GALLERY: 'gallery',
-  CLAIM_AIR_DROP: 'claim-air-drop',
+  CLAIM_AIR_DROP: 'airdrop',
 
   TERM_OF_SALE: 'tos',
   PRIVACY: 'privacy',

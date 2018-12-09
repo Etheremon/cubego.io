@@ -18,6 +18,7 @@ const notification = (state = {}, action) => {
         feeds: [],
         banners_home: [],
         banners_store: [],
+        banners_event: [],
       };
 
       if (json['feed'] && json['feed'].entry.length) {
@@ -33,6 +34,10 @@ const notification = (state = {}, action) => {
             }, (key, val) => val['$t']));
           } else if (entryObj['key']['$t'] === 'banner_store') {
             obj.banners_store.push(ObjUtils.CloneWithValueModify({
+              ...entryObj
+            }, (key, val) => val['$t']));
+          } else if (entryObj['key']['$t'] === 'banner_event') {
+            obj.banners_event.push(ObjUtils.CloneWithValueModify({
               ...entryObj
             }, (key, val) => val['$t']));
           } else if (entryObj['key']['$t'] === 'feed') {

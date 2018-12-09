@@ -264,6 +264,7 @@ input[type="range"]::-moz-range-thumb {
   position: relative;
   display: inline-block;
   font-weight: $font-weight-normal;
+  font-family: $f__overpass;
 
   &:before {
     content: "";
@@ -280,6 +281,7 @@ input[type="range"]::-moz-range-thumb {
     display: none;
     overflow: hidden;
     font-weight: $font-weight-normal !important;
+    font-family: $f__overpass !important;
   }
 
   &:after {
@@ -292,7 +294,7 @@ input[type="range"]::-moz-range-thumb {
     border: 0.5px solid $orange;
     text-align: center;
     color: $orange;
-    padding: 4px 2px;
+    padding: 4px;
     font-size: 14px;
     min-width: 80px;
     border-radius: 5px;
@@ -300,6 +302,7 @@ input[type="range"]::-moz-range-thumb {
     z-index: 8;
     display: none;
     font-weight: $font-weight-normal !important;
+    font-family: $f__overpass !important;
   }
 
   &:hover::before, &:hover::after {

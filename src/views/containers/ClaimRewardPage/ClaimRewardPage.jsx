@@ -10,11 +10,9 @@ import * as Utils from "../../../utils/utils";
 import Footer from "../../components/bars/Footer/Footer.jsx";
 import Slider from '../../widgets/Slider/Slider.jsx';
 import TabsView from '../../widgets/TabsView/TabsView.jsx';
-import {GetLoggedInUserId, GetStoreBanners, GetUserInfo} from "../../../reducers/selectors";
+import {GetEventBanners, GetLoggedInUserId, GetUserInfo} from "../../../reducers/selectors";
 import {getActiveLanguage} from "react-localize-redux/lib/index";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
-import * as Config from "../../../config";
-import {URLS} from "../../../constants/general";
 import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
 import { ClaimAirDrop } from '../../../services/transaction.js';
 import { addTxn } from '../../../actions/txnAction.js';
@@ -38,9 +36,9 @@ class ClaimRewardPage extends React.Component {
   }
 
   renderBanner() {
-    const { language, banners, _t } = this.props;
+    const { language, banners } = this.props;
 
-    const bannerList = (banners || []).map((banner, idx) => {
+    return (banners || []).map((banner, idx) => {
       let btn = null;
       let customBtn = banner[`${language.code}custombtn`] || banner[`encustombtn`];
       if (customBtn)
@@ -74,8 +72,6 @@ class ClaimRewardPage extends React.Component {
         </div>
       )
     });
-
-    return bannerList;
   }
 
   
@@ -87,7 +83,7 @@ class ClaimRewardPage extends React.Component {
         <Navbar minifying />
 
         <div className="claim-reward-page__container">
-          <HeaderBar label={_t('first_launch')}
+          <HeaderBar label={_t('airdrop')}
                      userInfo={userInfo} onBackClicked={() => {this.props.history.goBack()}}/>
 
           <div className={'claim-reward-page__banner'} id={'store'}>
@@ -108,7 +104,7 @@ class ClaimRewardPage extends React.Component {
                   <span>{_t('air_drop_package')}</span>
                 </div>
                 <div className="total-quantity">
-                {50} {_t('leaf')}
+                {50} {_t('leaf-cubegoes')}
                 </div>
 
                 <div className="main-content">
@@ -165,7 +161,7 @@ const mapStateToProps = (store, props) => {
   return {
     _t: getTranslate(store.localeReducer),
     query,
-    banners: GetStoreBanners(store),
+    banners: GetEventBanners(store),
     language: getActiveLanguage(store.localeReducer),
     userInfo: GetUserInfo(store, userId),
     userId: userId,
