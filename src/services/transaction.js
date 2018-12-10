@@ -432,7 +432,7 @@ export const ClaimAirDrop = (dispatch, action, _t, {userId, name, successCallbac
 
       // Sending Txn
       let cbFunc = (code, data) => defaultCallbackFunction(code, data, callback);
-      window.claimAirDropReward(userId, cbFunc);
+      window.claimAirDropReward(cbFunc);
     },
     onFinishCallback: function(data) {
       finishCallback && finishCallback(data);

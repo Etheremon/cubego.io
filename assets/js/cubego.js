@@ -72,11 +72,29 @@ function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
   );
 }
 
-function claimAirDropReward(userId, callbackFunc) {
+function claimAirDropReward(callbackFunc) {
   callBlockchainFunction(
-    contractInstances.cubegonNftInstance.safeTransferFrom,
-    contractAddress.CUBEGO_NFT_ADDRESS,
+    contractInstances.cubegoStarterClaim.claimStarterPack,
+    contractAddress.CUBEGO_CLAIM_ADDRESS,
+    [], callbackFunc,
+    0, 600000
+  )
+}
+
+function getClaimStatus(userId, callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegoStarterClaim.getClaimStatus,
+    contractAddress.CUBEGO_CLAIM_ADDRESS,
     [userId], callbackFunc,
+    0, 600000
+  )
+}
+
+function getClaimedCount(callbackFunc) {
+  callBlockchainFunction(
+    contractInstances.cubegoStarterClaim.getClaimedCount,
+    contractAddress.CUBEGO_CLAIM_ADDRESS,
+    [], callbackFunc,
     0, 600000
   )
 }

@@ -70,10 +70,24 @@ const GetCubegonList = () => {
   });
 }
 
+const CheckEligibleToClaim = (userId) => {
+  return new Promise(function(resolve, reject) {
+    window.getClaimStatus(userId, getCallbackFunc(resolve, reject));
+  });
+}
+
+const GetClaimedCount = () => {
+  return new Promise(function(resolve, reject) {
+    window.getClaimedCount(getCallbackFunc(resolve, reject));
+  });
+}
+
 export const CubegonApi = {
   GetCubegonInfo,
   RegisterCubegon,
   RetryRegisterCubegon,
   UpdateCubegonName,
   GetCubegonList,
+  CheckEligibleToClaim,
+  GetClaimedCount,
 };

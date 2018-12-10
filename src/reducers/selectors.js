@@ -39,6 +39,9 @@ export const GetCubegonInfo = (state, gonId) => {
 
 export const GetCubegonList = (state) => CloneDeep(state.cubegon.list['gallery']);
 
+export const GetClaimStatus = (state, userId) => CloneDeep(state.cubegon.eligibleToClaim[userId]);
+export const GetClaimedCount = (state) => CloneDeep(state.cubegon.claimedCount);
+
 /**
  * Cubegoes
  */
