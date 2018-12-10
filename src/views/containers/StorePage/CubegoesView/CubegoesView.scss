@@ -20,7 +20,7 @@
   position: relative;
 
   .cubegoes-view__hightlight_note {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     font-size: $font-size-large;
     color: #E9C303;
     font-family: $f__baloobha;
@@ -29,6 +29,7 @@
   .cubegoes-view__tip_note {
     cursor: pointer;
     display: block;
+    font-size: $font-size-small;
     &:nth-child(4) {
       margin-bottom: 50px;
     }
