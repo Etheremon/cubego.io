@@ -209,8 +209,9 @@ class HomePage extends React.Component {
                   >
                     <div className={'presale-desc'}>
                       <p className={'text'}>{_t('home.about_presale')}</p>
-                      <div className="why-presale__button" onClick={() => { this.props.history.push(`/${URLS.GUIDE}#presale`) }}>
-                           {_t('read more')}
+                      <div className="why-presale__button">
+                        <ButtonNew label={_t('join now')} onClick={() => { this.props.history.push(`/${URLS.STORE}`) }}/>
+                        <ButtonNew label={_t('read more')} color={ButtonNew.colors.GREY} onClick={() => { this.props.history.push(`/${URLS.GUIDE}#presale`) }}/>
                       </div>
                     </div>
                   </InviewMonitor>

@@ -46,6 +46,7 @@
       text-align: left;
 
       .home__intro-board {
+        min-height: 340px;
         .create__button {
           margin-right: 8px;
         }
@@ -276,11 +277,15 @@
       }
 
       .why-presale__button {
-        font-family: $f__baloobha;
-        text-decoration: underline;
-        text-transform: capitalize;
-        color: #FF7313;
-        cursor: pointer;
+        display: flex;
+        align-items: center;
+        @include mobile {
+          justify-content: center;
+        }
+
+        .widget__button-new {
+          margin: 0 8px 0 0;
+        }
       }
     }
 
