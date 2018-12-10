@@ -17,6 +17,7 @@ import { CustomRectangle } from '../../widgets/SVGManager/SVGManager.jsx';
 import { ClaimAirDrop } from '../../../services/transaction.js';
 import { addTxn } from '../../../actions/txnAction.js';
 import { CubegonActions } from '../../../actions/cubegon.js';
+import {URLS} from "../../../constants/general";
 
 
 require("style-loader!./ClaimRewardPage.scss");
@@ -35,12 +36,12 @@ class ClaimRewardPage extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(CubegonActions.LOAD_CLAIM_COUNT.init.func({forceUpdate: true}));
-    this.props.dispatch(CubegonActions.CHECK_ELIGIBLE_TO_CLAIM.init.func({userId: this.props.userId, forceUpdate: true}))
+    this.props.dispatch(CubegonActions.CHECK_ELIGIBLE_TO_CLAIM.init.func({forceUpdate: true}))
   }
 
   componentWillUnmount() {
     this.props.dispatch(CubegonActions.LOAD_CLAIM_COUNT.stop.func({}));
-    this.props.dispatch(CubegonActions.CHECK_ELIGIBLE_TO_CLAIM.stop.func({userId: this.props.userId}))
+    this.props.dispatch(CubegonActions.CHECK_ELIGIBLE_TO_CLAIM.stop.func({}))
   }
 
   renderBanner() {
@@ -86,12 +87,18 @@ class ClaimRewardPage extends React.Component {
   render() {
     const {_t, query, userInfo, userId, eligibleToClaim, claimedCount} = this.props;
 
+
+    let btnText = _t('claim_air_drop');
+    if (claimedCount >= 1000) btnText = _t('claim_air_drop_all_claimed');
+      else if (eligibleToClaim) btnText = _t('claim_air_drop_claimed');
+      else if (userId === null) btnText = _t('sign in to claim');
+
     return (
       <PageWrapper type={PageWrapper.types.BLUE_NEW}>
         <Navbar minifying />
 
         <div className="claim-reward-page__container">
-          <HeaderBar label={_t('airdrop')}
+          <HeaderBar label={_t('gift')}
                      userInfo={userInfo} onBackClicked={() => {this.props.history.goBack()}}/>
 
           <div className={'claim-reward-page__banner'} id={'store'}>
@@ -135,24 +142,31 @@ class ClaimRewardPage extends React.Component {
                         _t('desc.claim_note_2')
                       }
                     </p>
+                    <p className="note">
+                      {
+                        _t('desc.claim_note_3')
+                      }
+                    </p>
                   </div>
                 </div>
 
-                <ButtonNew disabled={eligibleToClaim ? true : false} className={'claim-air-drop__button'} color={ButtonNew.colors.BLUE} label={_t('claim_air_drop')}
+                <ButtonNew loading={eligibleToClaim === undefined && userId !== null} disabled={eligibleToClaim}
+                           className={'claim-air-drop__button'} color={ButtonNew.colors.BLUE}
+                           label={btnText}
                       onClick={() => {
                         if (userId) {
                           ClaimAirDrop(this.props.dispatch, addTxn, _t, {
                             userId: userId,
                             name: userInfo.username,
                           })
+                        } else {
+                          this.props.history.push(`/${URLS.SIGN_IN}`)
                         }
                       }}
                     />
 
                 <div className="claim-airdrop__note">
-                  {
-                    _t(`claim_airdrop_note: ${claimedCount * 50}/1000`)
-                  }
+                  {_t(`claim_airdrop_note`)}: {claimedCount}/1000
                 </div>
               </div>
             }

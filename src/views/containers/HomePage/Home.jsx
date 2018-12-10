@@ -208,7 +208,7 @@ class HomePage extends React.Component {
                     classNameInView='animated fadeInUp'
                   >
                     <div className={'presale-desc'}>
-                      <p className={'text'}>{_t('home.about_presale')}</p>
+                      <p className={'text'}>{_t('home.why_presale')}</p>
                       <div className="why-presale__button">
                         <ButtonNew label={_t('join now')} onClick={() => { this.props.history.push(`/${URLS.STORE}`) }}/>
                         <ButtonNew label={_t('read more')} color={ButtonNew.colors.GREY} onClick={() => { this.props.history.push(`/${URLS.GUIDE}#presale`) }}/>
@@ -217,7 +217,19 @@ class HomePage extends React.Component {
                   </InviewMonitor>
     
                   <div className={'presale-image'}>
-                    <img src={require('../../../shared/img/banner/cubes.png')}/>
+                    <div className={'cube-png'}>
+                      <img src={require('../../../shared/img/banner/cubes_2.png')}/>
+
+                      <div className={'hover-effect common'}/>
+                      <div className={'hover-desc common'}>{_t('common')}</div>
+
+                      <div className={'hover-effect rare'}/>
+                      <div className={'hover-desc rare'}>{_t('rare')}</div>
+
+                      <div className={'hover-effect epic'}/>
+                      <div className={'hover-desc epic'}>{_t('epic')}</div>
+
+                    </div>
                   </div>
                 </div>
               </Container>

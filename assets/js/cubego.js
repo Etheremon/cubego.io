@@ -74,7 +74,7 @@ function updateCubegonEnergy(tokenId, energyLimit, valueToSend, callbackFunc) {
 
 function claimAirDropReward(callbackFunc) {
   callBlockchainFunction(
-    contractInstances.cubegoStarterClaim.claimStarterPack,
+    contractInstances.cubegoStarterClaimInstance.claimStarterPack,
     contractAddress.CUBEGO_CLAIM_ADDRESS,
     [], callbackFunc,
     0, 600000
@@ -82,21 +82,23 @@ function claimAirDropReward(callbackFunc) {
 }
 
 function getClaimStatus(userId, callbackFunc) {
-  callBlockchainFunction(
-    contractInstances.cubegoStarterClaim.getClaimStatus,
-    contractAddress.CUBEGO_CLAIM_ADDRESS,
-    [userId], callbackFunc,
+  getBlockchainData(
+    contractInstances.cubegoStarterClaimInstance.getClaimStatus,
+    [userId], function(code, data) {
+      if (code !== RESULT_CODE.SUCCESS) callbackFunc(code, data);
+      else callbackFunc(code, data);
+    },
     0, 600000
   )
 }
 
 function getClaimedCount(callbackFunc) {
-  callBlockchainFunction(
-    contractInstances.cubegoStarterClaim.getClaimedCount,
-    contractAddress.CUBEGO_CLAIM_ADDRESS,
-    [], callbackFunc,
-    0, 600000
-  )
+  getBlockchainProperty(
+    'cubegoStarterClaimInstance', 'claimedCount', function(code, data) {
+      if (code !== RESULT_CODE.SUCCESS) callbackFunc(code, data);
+      else callbackFunc(code, data.toNumber());
+    }
+  );
 }
 
 function transferCubegon(fromAdd, toAdd, tokenId, callbackFunc) {

@@ -414,16 +414,15 @@ export const TransferCubegon = (dispatch, action, _t, {name, fromAdd, token_id, 
 
 export const ClaimAirDrop = (dispatch, action, _t, {userId, name, successCallback, failedCallback, finishCallback}) => {
   dispatch(action({
-    title: _t('claim_air_drop'),
-    note: _t('claim_air_drop_note'),
-    title_done: _t('claiming_air_drop'),
-    txn_done: _t('claim_air_drop_done'),
+    title: _t('claim_gift'),
+    title_done: _t('claiming_gift'),
+    txn_done: _t('claim_gift_done'),
     fields_order: ['name'],
     button: _t('claim'),
-    forceToSubmittingState: false,
+    forceToSubmittingState: true,
     fields: {
       name: {
-        text: _t('name'), value: name, readonly: true, type: 'text',
+        text: _t('air_drop_package'), value: "50 Leaf-Cubegoes", readonly: true, type: 'text',
       },
     },
 

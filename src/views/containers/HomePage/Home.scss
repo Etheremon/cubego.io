@@ -249,6 +249,8 @@
   .home__why-presale {
     padding-top: 0 !important;
     margin-top: 24px !important;
+    position: relative;
+    z-index: 0;
 
     .presale-content {
       display: flex;
@@ -296,26 +298,73 @@
       padding: 20px 0;
       order: 0;
 
-      img {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        @include transform(translateY(-50%));
-        width: 720px;
-        @include mobile {
+      .cube-png {
+        position: relative;
+
+        img {
+          width: 500px;
           max-width: 100%;
-          @include transform(translateY(0%));
+          display: block;
+          margin: 0 auto;
         }
 
-        @include mobile {
-          position: relative;
-          width: 100%;
+        .hover-effect {
+          display: none;
+        }
+        .hover-desc {
+          position: absolute;
+          z-index: 0;
+          color: white;
+          text-shadow: 0 0 4px black;
+          font-family: $f__baloobha;
+          font-size: $font-size-bigger;
+          opacity: 0;
+          @include transition-duration;
+
+          &.common {
+            top: 76%;
+            left: 44%;
+          }
+          &.rare {
+            top: 56%;
+            left: 46.5%;
+          }
+          &.epic {
+            top: 45.5%;
+            left: 47%;
+          }
+        }
+
+        &:hover {
+          .hover-desc {
+            opacity: 1;
+          }
         }
       }
+
+      //img {
+      //  position: absolute;
+      //  right: 0;
+      //  top: 50%;
+      //  @include transform(translateY(-50%));
+      //  width: 720px;
+      //  @include mobile {
+      //    max-width: 100%;
+      //    @include transform(translateY(0%));
+      //  }
+      //
+      //  @include mobile {
+      //    position: relative;
+      //    width: 100%;
+      //  }
+      //}
     }
   }
 
   .home__game-detail {
+    position: relative;
+    z-index: 1;
+
     .section {
       position: relative;
       margin-top: 100px;
@@ -550,6 +599,7 @@
     text-align: center;
     padding-top: 40px;
     position: relative;
+    z-index: 2;
   }
 
   .home__channels {

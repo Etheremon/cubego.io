@@ -52,11 +52,16 @@ class Slider extends React.Component {
             {item}
           </div>
         ))}
-        <div className={'dots'}>
-          {list.map((item, idx) => (
-            <div className={`dot ${current === idx ? 'active' : ''}`} onClick={() => {this.selectItem(idx)}} key={idx}/>
-          ))}
-        </div>
+
+        {list && list.length > 1 ?
+          <div className={'dots'}>
+            {list.map((item, idx) => (
+              <div className={`dot ${current === idx ? 'active' : ''}`} onClick={() => {
+                this.selectItem(idx)
+              }} key={idx}/>
+            ))}
+          </div> : null
+        }
       </div>
     );
   }

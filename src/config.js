@@ -17,7 +17,7 @@ export const TIME_TO_REFRESH = 15 * 60 * 1000;
 
 export const CUBEGON_MAX_CUBE = 2000;
 export const CUBEGON_MAX_MATERIALS = 4;
-export const CLAIM_AIRDROP_OFFSET = 2;
+export const CLAIM_AIRDROP_OFFSET = 1;
 
 // CASE TEST CONFIG
 let _ethToEmont, _ultimatePrice, _epicPrice, _rarePrice;

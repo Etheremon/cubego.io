@@ -148,13 +148,24 @@
 
         &.right {
           text-align: left;
+          padding-left: 20px;
+          @include mobile {
+            text-align: center;
+          }
         }
 
-        img {
-          width: auto;
-          height: 200px;
+        &.left {
+          flex-shrink: 0;
+          img {
+            width: auto;
+            height: 200px;
+          }
         }
       }
     }
+  }
+
+  .widget__button-new.disabled {
+    opacity: 1;
   }
 }
