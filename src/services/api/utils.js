@@ -55,7 +55,8 @@ export const sendPostRequest = ({url, data, resolve, reject}) => {
       type: 'post',
       dataType: 'json',
       contentType: 'application/json',
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      timeout: 0,
     })
     .done(function(data) {
       if (data.result !== undefined)
@@ -65,6 +66,6 @@ export const sendPostRequest = ({url, data, resolve, reject}) => {
     })
     .fail(function(err) {
       reject({error: err});
-    });
+    })
 };
 

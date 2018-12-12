@@ -1,6 +1,5 @@
 import React from 'react'
-import {connect} from "react-redux"
-import {getTranslate} from 'react-localize-redux'
+import {getTranslate} from "react-localize-redux";
 import {CustomRectangle, DiscountFrame} from '../../../widgets/SVGManager/SVGManager.jsx';
 import StoreCubegoCard from '../StoreCubegoCard/StoreCubegoCard.jsx';
 import {TextImage} from '../../../widgets/Text/Text.jsx';
@@ -13,11 +12,14 @@ import {PRESALE_PACK_DISCOUNT, START_PRESALE} from '../../../../config.js';
 import {CalculateDiscountPrice} from '../../../../utils/logicUtils';
 import {PurchasePackage} from '../../../../services/transaction';
 import {addTxn} from '../../../../actions/txnAction.js';
-import {GetDiscountFactor, GetLoggedInUserId} from '../../../../reducers/selectors';
 import {PresaleActions} from '../../../../actions/presale';
 import {presaleCubegoes, ultimatePack} from "../../../../config";
 import {Container} from "../../../widgets/Container/Container.jsx";
 import ReferralView from "../../Referral/ReferralView.jsx";
+import * as Config from "../../../../config";
+import Countdown from "../../../widgets/Countdown/Countdown.jsx";
+import {connect} from "react-redux";
+import {GetDiscountFactor, GetLoggedInUserId} from "../../../../reducers/selectors";
 
 require("style-loader!./CubegoesView.scss");
 
@@ -204,7 +206,20 @@ class CubegoesView extends React.Component {
         </Container>
 
         <div className="cubegoes-view__hightlight_note">
-          {_t('store.hightlight_note')}
+
+          {this.state.forceShowMsg || Config.EMONT_REBATE_END_TIME*1000 <= Utils.GetCurrentUnixTime()
+             ? _t('store.hightlight_note')
+             : (
+               <React.Fragment>
+                 {_t('emont rebate ends in')}
+                 <Countdown className={'cd'} targetTime={Config.EMONT_REBATE_END_TIME*1000}
+                            onFinishCountdown={() => {
+                              this.setState({forceShowMsg: true})
+                            }}
+                 />
+               </React.Fragment>
+            )
+          }
         </div>
 
         <div className={"cubegoes-view__tip_note"} onClick={() => {Utils.OpenInNewTab(_t('store_tip_link'))}}>

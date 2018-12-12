@@ -289,7 +289,7 @@ class TxnBar extends React.Component {
       )
     }
 
-    if (!userInfo.username) {
+    if (!userInfo.username && !currentTxn.forceToSubmittingState) {
       return (
         <div className="txn-bar__wrapper">
           <SubBgr position={SubBgr.positions.RIGHT} color={SubBgr.colors.BLUE}/>
