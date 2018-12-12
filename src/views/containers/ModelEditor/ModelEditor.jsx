@@ -23,28 +23,25 @@ import Footer from "../../components/bars/Footer/Footer.jsx";
 import {ButtonNew} from "../../widgets/Button/Button.jsx";
 import {
   GetCubegonInfo,
-  GetLoggedInUserId, GetSavedModel, GetUserInfo, GetUserMaterials,
+  GetLoggedInUserId, GetSavedModel, GetUserInfo,
   GetUserNumberOfMaterials
 } from "../../../reducers/selectors";
 import {ModelActions} from "../../../actions/model";
 import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import {URLS} from "../../../constants/general";
-import {SERVER_URL} from "../../../config";
 import {GON_TIER} from "../../../constants/cubegon";
 import {CloneDeep} from "../../../utils/objUtils";
 import * as LogicUtils from "../../../utils/logicUtils";
 import {IsEqual} from "../../../utils/objUtils";
 import * as Config from "../../../config";
 import {Image} from "../../components/Image/Image.jsx";
-import {ShareImageToFacebook} from "../../../services/social";
 import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
 import { TextImage } from '../../widgets/Text/Text.jsx';
 import Tutorial from './Tutorial/Tutorial.jsx';
 import * as LS from '../../../services/localStorageService';
-import * as ArrayUtils from "../../../utils/arrayUtils";
 
 require("style-loader!./ModelEditor.scss");
 
@@ -157,8 +154,9 @@ class _ModelEditor extends React.Component {
       this.forceUpdate();
     }
     else if (this.props.savedModel && this.props.savedModel.length) {
-      this.toolManager.addModel({model: this.props.savedModel[0].model});
-      this.selectedModelIndex = 0;
+      let selectedIdx = this.props.savedModel.length - 1
+      this.toolManager.addModel({model: this.props.savedModel[selectedIdx].model});
+      this.selectedModelIndex = selectedIdx;
       this.forceUpdate();
     } else {
       this.onTemplateSelect(MODEL_TEMPLATES[1]);
