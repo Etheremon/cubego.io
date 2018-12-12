@@ -85,6 +85,7 @@ class App extends React.Component {
     let acc = undefined;
 
     setInterval(function() {
+
       if (window.account === undefined) return;
 
       if (window.account !== acc) {
