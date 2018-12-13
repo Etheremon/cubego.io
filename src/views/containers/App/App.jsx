@@ -164,6 +164,16 @@ class App extends React.Component {
 
     return (
       <div className={'page-container-wrapper'}>
+        {
+          Utils.IsMobile ? 
+            <img className={'convertion-tagging'} src="https://servedbyadbutler.com/convtrack.spark?MID=169476&zoneID=302433" />
+           : 
+            <React.Fragment> 
+              <img className={'convertion-tagging'} src="https://servedbyadbutler.com/convtrack.spark?MID=169476&zoneID=282891" /> 
+              <img className={'convertion-tagging'} src="https://servedbyadbutler.com/convtrack.spark?MID=169476&zoneID=302430" />
+            </React.Fragment>
+        }
+
         <Switch history={history}>
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
