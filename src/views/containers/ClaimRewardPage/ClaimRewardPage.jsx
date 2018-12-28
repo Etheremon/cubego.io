@@ -150,7 +150,7 @@ class ClaimRewardPage extends React.Component {
                   </div>
                 </div>
 
-                <ButtonNew loading={eligibleToClaim === undefined && userId !== null} disabled={eligibleToClaim}
+                <ButtonNew loading={eligibleToClaim === undefined && userId !== null} disabled={eligibleToClaim || claimedCount >= 1000}
                            className={'claim-air-drop__button'} color={ButtonNew.colors.BLUE}
                            label={btnText}
                       onClick={() => {
