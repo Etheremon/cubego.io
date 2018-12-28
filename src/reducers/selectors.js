@@ -71,7 +71,8 @@ export const GetTxn = (state) => CloneDeep(state.txn);
 /**
  * Presale
  */
-export const GetDiscountFactor = (state) => (CloneDeep(state.presale.discountFactor))
+export const GetDiscountFactor = (state) => (CloneDeep(state.presale.discountFactor));
+export const GetPresalePerformance = (state, userId) => (CloneDeep(state.presale.performance[userId]));
 
 /**
  * Battle

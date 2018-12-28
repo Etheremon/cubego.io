@@ -38,6 +38,9 @@ import { TIME_TO_REFRESH } from '../../../config';
 import LandingPage from '../LandingPage/LandingPage.jsx';
 import Gallery from '../Gallery/Gallery.jsx';
 import ClaimRewardPage from '../ClaimRewardPage/ClaimRewardPage.jsx';
+import Popup from "../../widgets/Popup/Popup.jsx";
+import {ButtonNew} from "../../widgets/Button/Button.jsx";
+import RefundPage from "../RefundPage/RefundPage.jsx";
 
 
 require("style-loader!./App.scss");
@@ -47,6 +50,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.maintenance = false;
+
+    this.state = {};
 
     // Set window onload
     window.onLoadFunctions = {};
@@ -139,7 +144,7 @@ class App extends React.Component {
   }
 
   render () {
-    const {alreadyFetchedLocalization} = this.props;
+    const {alreadyFetchedLocalization, _t} = this.props;
 
     if (this.maintenance) {
       return (
@@ -178,6 +183,32 @@ class App extends React.Component {
             </React.Fragment>
         }
 
+        <Popup canCloseOutside={false} contentColor={Popup.contentColor.BLUE_DARK}
+               onUnmount={() => {this.setState({hidePopup: true})}}
+               open={!this.state.hidePopup} scroll={true}>
+          <div className={'noti-popup'}>
+            <div className={'header'}>
+              {_t('close down note')}
+            </div>
+            <div className={'buttons'}>
+              <ButtonNew size={ButtonNew.sizes.SMALL} label={_t('check your refund')}
+                         onClick={() => {
+                           this.setState({hidePopup: true});
+                           this.props.history.push(`/${URLS.REFUND}`);
+                         }}
+              />
+              <ButtonNew size={ButtonNew.sizes.SMALL} label={_t('read_more')}
+                         onClick={() => {
+                           Utils.OpenInNewTab(_t('close down blog link'))
+                         }}
+              />
+            </div>
+            {/*<div className={'note'}>*/}
+              {/*<p>{_t('do not show again')}</p>*/}
+            {/*</div>*/}
+          </div>
+        </Popup>
+
         <Switch history={history}>
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor}/>
           <Route path={`/${URLS.REVIEW_GON}`} component={ReviewPage}/>
@@ -200,6 +231,8 @@ class App extends React.Component {
 
           <Route path={`/${URLS.TERM_OF_SALE}`} component={TosPage}/>
           <Route path={`/${URLS.PRIVACY}`} component={PrivacyPage}/>
+
+          <Route path={`/${URLS.REFUND}`} component={RefundPage}/>
 
           <Route component={Home}/>
         </Switch>

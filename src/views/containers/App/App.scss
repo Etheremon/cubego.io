@@ -15,6 +15,20 @@
     url('../../styles/Fonts/KOSUGIMARU-REGULAR.TTF') format('truetype');
 }
 
+.noti-popup {
+  padding: 40px 20px;
+
+  .header {
+    font-family: $f__baloobha;
+    font-weight: $font-weight-light;
+    font-size: $font-size-medium;
+  }
+
+  .buttons {
+    padding-top: 20px;
+  }
+}
+
 .convertion-tagging {
   width: 1px;
   height: 1px;

@@ -130,61 +130,63 @@ class CubegoesView extends React.Component {
                  src={require(`../../../../shared/img/store_cubegoes/${item && item.type || 'chest'}.png`)}/>
             {selectedPack.currency ?
               <React.Fragment>
-                <div className={'review-item'}>
-                  <div className={'left'}>{_t('pack(s)')}:</div>
-                  <div className={'right'}>{PRESALE_PACK_DISCOUNT[selectedPack.idx].id}</div>
-                </div>
-                <div className={'review-item'}>
-                  <div className={'left'}>{_t('cubes/pack')}:</div>
-                  <div className={'right'}>{item.quantity}</div>
-                </div>
-                <div className={'review-item'}>
-                  <div className={'left'}>{_t('total cubes')}:</div>
-                  <div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>
-                </div>
+                {/*<div className={'review-item'}>*/}
+                  {/*<div className={'left'}>{_t('pack(s)')}:</div>*/}
+                  {/*<div className={'right'}>{PRESALE_PACK_DISCOUNT[selectedPack.idx].id}</div>*/}
+                {/*</div>*/}
+                {/*<div className={'review-item'}>*/}
+                  {/*<div className={'left'}>{_t('cubes/pack')}:</div>*/}
+                  {/*<div className={'right'}>{item.quantity}</div>*/}
+                {/*</div>*/}
+                {/*<div className={'review-item'}>*/}
+                  {/*<div className={'left'}>{_t('total cubes')}:</div>*/}
+                  {/*<div className={'right'}>{Utils.RoundToDecimalFloat(item.quantity*PRESALE_PACK_DISCOUNT[selectedPack.idx].id, 4)}</div>*/}
+                {/*</div>*/}
 
-                {
-                  START_PRESALE ? (
-                    <React.Fragment>
-                      <div className={'review-item'}>
-                        <div className={'left'}>{_t('price')}:</div>
-                        <div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>
-                      </div>
+                {/*{*/}
+                  {/*START_PRESALE ? (*/}
+                    {/*<React.Fragment>*/}
+                      {/*<div className={'review-item'}>*/}
+                        {/*<div className={'left'}>{_t('price')}:</div>*/}
+                        {/*<div className={'right'}>{totalAmount} {_t(selectedPack.currency)}</div>*/}
+                      {/*</div>*/}
 
-                      {allStoreDiscount !== 0 ?
-                        <React.Fragment>
-                          <div className={'divider-line'}/>
-                          <div className={`review-item`}>
-                            <div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:
-                            </div>
-                            <div className={'right'}>{`-${allStoreDiscount*100}%`}</div>
-                          </div>
-                          <div className={'review-item'}>
-                            <div className={'left'}>{_t('total price')}:</div>
-                            <div className={'right'}>{CalculateDiscountPrice(totalAmount, allStoreDiscount, 4)} {_t(selectedPack.currency)}</div>
-                          </div>
-                        </React.Fragment> : null
-                      }
+                      {/*{allStoreDiscount !== 0 ?*/}
+                        {/*<React.Fragment>*/}
+                          {/*<div className={'divider-line'}/>*/}
+                          {/*<div className={`review-item`}>*/}
+                            {/*<div className={'left'}>{allStoreDiscount === 10 ? _t('early bird discount') : _t('early discount')}:*/}
+                            {/*</div>*/}
+                            {/*<div className={'right'}>{`-${allStoreDiscount*100}%`}</div>*/}
+                          {/*</div>*/}
+                          {/*<div className={'review-item'}>*/}
+                            {/*<div className={'left'}>{_t('total price')}:</div>*/}
+                            {/*<div className={'right'}>{CalculateDiscountPrice(totalAmount, allStoreDiscount, 4)} {_t(selectedPack.currency)}</div>*/}
+                          {/*</div>*/}
+                        {/*</React.Fragment> : null*/}
+                      {/*}*/}
 
-                      <ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {
-                        PurchasePackage(this.props.dispatch, addTxn, _t, {
-                          address: userId,
-                          numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,
-                          packId: item.pack_id,
-                          amount: CalculateDiscountPrice(totalAmount, allStoreDiscount, 4),
-                          purchaseType: (item && item.tier)
-                            ? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]
-                            : PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],
-                          currency: selectedPack.currency,
-                          name: _t(item.name),
-                          history: this.props.history,
-                        })
-                      }}/>
-                    </React.Fragment>
-                  ) : null
-                }
+                      {/*<ButtonNew className={'confirm-purchase__button'} label={_t('purchase')} onClick={() => {*/}
+                        {/*PurchasePackage(this.props.dispatch, addTxn, _t, {*/}
+                          {/*address: userId,*/}
+                          {/*numPacks: PRESALE_PACK_DISCOUNT[selectedPack.idx].id,*/}
+                          {/*packId: item.pack_id,*/}
+                          {/*amount: CalculateDiscountPrice(totalAmount, allStoreDiscount, 4),*/}
+                          {/*purchaseType: (item && item.tier)*/}
+                            {/*? PurchasePackage.types[`PURCHASE_SINGLE_PACK_USING_${selectedPack.currency.toUpperCase()}`]*/}
+                            {/*: PurchasePackage.types[`PURCHASE_ULTIMATE_PACK_USING_${selectedPack.currency.toUpperCase()}`],*/}
+                          {/*currency: selectedPack.currency,*/}
+                          {/*name: _t(item.name),*/}
+                          {/*history: this.props.history,*/}
+                        {/*})*/}
+                      {/*}}/>*/}
+                    {/*</React.Fragment>*/}
+                  {/*) : null*/}
+                {/*}*/}
               </React.Fragment> : null
             }
+
+            <h3>{_t('Presale has ended')}</h3>
           </div>
         </div>
       </div>
@@ -208,7 +210,7 @@ class CubegoesView extends React.Component {
         <div className="cubegoes-view__hightlight_note">
 
           {this.state.forceShowMsg || Config.EMONT_REBATE_END_TIME*1000 <= Utils.GetCurrentUnixTime()
-             ? _t('store.hightlight_note')
+             ? _t('Presale has ended')
              : (
                <React.Fragment>
                  {_t('emont rebate ends in')}

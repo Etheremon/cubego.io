@@ -11,6 +11,19 @@ export const discountFactor = (state=null, action) => {
   }
 };
 
+export const performance = (state={null: {}}, action) => {
+  switch (action.type) {
+    case PresaleActions.GET_PRESALE_PERFORMANCE.success.key:
+      return {
+        ...state,
+        [action.userId]: action.response
+      };
+    default:
+      return state;
+  }
+};
+
 export const presale = combineReducers({
   discountFactor,
+  performance,
 });

@@ -20,6 +20,8 @@ export const URLS = {
 
   ABOUT_US: 'about-us',
   GUIDE: 'guide',
+
+  REFUND: 'refund',
 };
 
 
