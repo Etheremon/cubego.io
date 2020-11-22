@@ -27,7 +27,6 @@ import {
   GetUserNumberOfMaterials
 } from "../../../reducers/selectors";
 import {ModelActions} from "../../../actions/model";
-import RegisterPopup from "../SignIn/RegisterPopup/RegisterPopup.jsx";
 import Popup from "../../widgets/Popup/Popup.jsx";
 import {URLS} from "../../../constants/general";
 import {GON_TIER} from "../../../constants/cubegon";
@@ -40,7 +39,6 @@ import {UserActions} from "../../../actions/user";
 import {CubegonActions} from "../../../actions/cubegon";
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
 import { TextImage } from '../../widgets/Text/Text.jsx';
-import Tutorial from './Tutorial/Tutorial.jsx';
 import * as LS from '../../../services/localStorageService';
 
 require("style-loader!./ModelEditor.scss");
@@ -293,7 +291,7 @@ class _ModelEditor extends React.Component {
     }
   }
 
-  reviewModel(verified=false, text) {
+  reviewModel(verified=false) {
     let {_t} = this.props;
 
     if (!verified && (!this.props.userId || !this.props.userInfo || !this.props.userInfo.username)) {
@@ -431,7 +429,7 @@ class _ModelEditor extends React.Component {
   }
 
   render() {
-    let {_t, savedModel, userInfo, userCubes, firstTimeEnterGame} = this.props;
+    let {_t, savedModel, userInfo, userCubes} = this.props;
 
     let {saved} = this.state;
     let selectedColor = this.toolManager.getToolValue(this.tools.color.key);
@@ -443,11 +441,11 @@ class _ModelEditor extends React.Component {
                  onMouseOut={() => {this.setState({saved: false})}}/>,
       <ButtonNew loading={this.state.validating}
                  label={_t('preview')} color={ButtonNew.colors.ORANGE} key={1}
-                 onClick={() => {this.reviewModel(false, totalCost)}}/>,
+                 onClick={() => {this.reviewModel(false)}}/>,
     ];
 
     let colorNote = null;
-    let numSelectedCubes = userCubes[selectedMaterial.material_id] || 0;
+    let numSelectedCubes = 0;
     let numSelectedCubesUsed = (this.toolManager.stats.materials || {})[selectedMaterial.material_id] || 0;
     if (numSelectedCubes-numSelectedCubesUsed < 0 && selectedMaterial.is_for_sale) {
       colorNote = (
@@ -490,7 +488,7 @@ class _ModelEditor extends React.Component {
     let missingMats = "";
     if (Array.isArray(this.toolManager.stats.errValues))
       missingMats = this.toolManager.stats.errValues.map(v => _t(v)).join(', ');
-    
+
     let cubegonTierLength = LogicUtils.CalculateLengthBaseOnTier(this.toolManager.stats.gonTier.showPoints);
 
     return (
@@ -498,37 +496,6 @@ class _ModelEditor extends React.Component {
         <Navbar size={Container.sizes.BIG} minifying label={_t('build_cubegon')} />
 
         <div className={'model-editor__container'}>
-          {
-            this.state.showTutorial ? 
-            <Popup canCloseOutside={true} contentColor={Popup.contentColor.BLUE_DARK} className={'tutorial-popup'} onUnmount={() => {
-              LS.SetItem(LS.Fields.firstTimeEnterGame, true)
-              this.setState({showTutorial: false})
-            }}
-                    open={this.state.showTutorial} scroll={true}>
-              
-              <Tutorial />
-            </Popup> : null
-          }
-
-          {this.state.showRegisterPopup !== undefined ?
-            <Popup onUnmount={() => {this.setState({showRegisterPopup: false})}}
-                   open={this.state.showRegisterPopup} scroll={true}>
-              <RegisterPopup onRegistered={() => {
-                this.reviewModel(true);
-              }}/>
-            </Popup> : null
-          }
-
-          {this.state.showModelReview ?
-            <Popup align={Popup.align.CENTER}
-             onUnmount={() => {this.setState({showModelReview: false})}}
-                   open={this.state.showModelReview}>
-              <div>
-                {this.renderError()}
-              </div>
-            </Popup> : null
-          }
-
           {this.state.showModelCapturing ?
             <Popup onUnmount={() => {this.setState({showModelCapturing: false})}}
                    open={this.state.showModelCapturing}>
@@ -702,7 +669,7 @@ class _ModelEditor extends React.Component {
                       }}/>
                     </div>
                   })
-                  } 
+                  }
                   </div> : null
               }
             </div>
@@ -782,7 +749,7 @@ class _ModelEditor extends React.Component {
                         </div>
                     </div> : null
                   }
-                  
+
                 </div>
 
                 <div className={'stat'}
@@ -871,7 +838,7 @@ class _ModelEditor extends React.Component {
 
             <div className={'model-editor__material'}>
               {ObjUtils.GetValues(CUBE_MATERIALS).map((material, idx) => {
-                let numCubes = userCubes[material.material_id] || 0;
+                let numCubes = 0;
                 let numCubesUsed = (this.toolManager.stats.materials || {})[material.material_id] || 0;
 
                 return (
@@ -944,9 +911,6 @@ const mapStateToProps = (store, props) => {
     pathName,
     _t: getTranslate(store.localeReducer),
     savedModel: GetSavedModel(store),
-    userId,
-    userInfo: GetUserInfo(store, userId),
-    userCubes: GetUserNumberOfMaterials(store, userId),
     gonId,
     gonInfo: GetCubegonInfo(store, gonId),
   }

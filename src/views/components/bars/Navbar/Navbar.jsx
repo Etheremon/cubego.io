@@ -6,7 +6,6 @@ import {getActiveLanguage, getTranslate, setActiveLanguage} from 'react-localize
 
 import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx'
 
-import * as Config from '../../../../config_language'
 import * as LS from '../../../../services/localStorageService.js'
 import PropTypes from "prop-types";
 import {URLS} from "../../../../constants/general";
@@ -17,7 +16,6 @@ import withRouter from "react-router-dom/es/withRouter";
 import {GetFeed, GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
 import * as Utils from "../../../../utils/utils";
 import Link from "react-router-dom/es/Link";
-import Notification from "./Notification/Notification.jsx";
 
 require("style-loader!./Navbar.scss");
 
@@ -97,11 +95,10 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {currentLanguage, _t, fixed, size, userId, userInfo, feed} = this.props;
+    let {_t, fixed, size, feed} = this.props;
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''} ${feed ? 'have-feed' : ''}`}>
-        <Notification/>
         <Container size={size} className={'navbar__content'}>
 
           <div className={'logo m--computer-only'}>
@@ -109,17 +106,6 @@ class Navbar extends React.Component {
               <Image img={'logo_cubego'}/>
             </Link>
           </div>
-
-          {/*<div className={'text-links'}>*/}
-            {/*{NavbarTextList.map((item, idx) => (*/}
-              {/*<div className={`navbar__item`} key={idx}*/}
-                   {/*onClick={() => {*/}
-                     {/*this.props.history.push(item.link);*/}
-                   {/*}}>*/}
-                {/*{_t(item.text)}*/}
-              {/*</div>*/}
-            {/*))}*/}
-          {/*</div>*/}
 
           <div className={'img-links'}>
             {NavbarList.map((item, idx) => (
@@ -164,27 +150,7 @@ class Navbar extends React.Component {
             </Dropdown>
           </div>
 
-          <div className={'user-info'}>
-            <div className={'user-info__username'}>
-              <Link to={`/${URLS.SIGN_IN}`}>
-                {(userInfo.username || userId)
-                  ? <span><i className="fas fa-user"/>{Utils.CutoffString(userInfo.username || userId, 6)}</span>
-                  : _t('sign in')}
-              </Link>
-            </div>
-            <Dropdown position={'right'} list={(Config.Languages.map(lan => ({
-              content: <span className={'navbar__text'}><Icon name={lan.country + ' flag'}/>{lan.code}</span>,
-              onClick: () => {this.handleLanguageChange(lan.code)},
-            })))}>
-              <span>
-                <Icon name={currentLanguage.country + ' flag'}/>
-                {currentLanguage.code}
-              </span>
-            </Dropdown>
-          </div>
-
         </Container>
-
 
       </div>
     );
@@ -197,8 +163,6 @@ const mapStateToProps = (store) => {
     _t: getTranslate(store.localeReducer),
     currentLanguage: getActiveLanguage(store.localeReducer),
     userId,
-    userInfo: GetUserInfo(store, userId) || {},
-    feed: GetFeed(store),
   };
 };
 

@@ -7,7 +7,7 @@ import * as ArrayUtils from "../utils/arrayUtils";
 /**
  * Auth
  */
-export const GetLoggedInUserId = (state) => (state.auth['userId']);
+export const GetLoggedInUserId = (state) => (undefined);
 
 /**
  * User

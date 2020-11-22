@@ -1,21 +1,15 @@
 {
-  "name": "CubeGo",
+  "name": "cubego-builder",
   "version": "1.0.0",
-  "description": "CubeGo",
+  "description": "cubego-builder",
   "main": "app.jsx",
   "scripts": {
-    "startDev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
-    "startProd": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=prod",
-    "startLive": "del-cli public/* && webpack-dev-server --host 0.0.0.0 --port 80 --hot --config webpack.dev.js --env.ENV=prod",
+    "dev": "del-cli public/* && webpack-dev-server --hot --config webpack.dev.js --env.ENV=dev",
     "buildDev": "del-cli public/* && webpack -p --config webpack.dev.js --env.ENV=dev",
     "buildProd": "del-cli public/* && webpack -p --config webpack.prod.js --env.ENV=prod"
   },
   "keywords": [
-    "cubego",
-    "etheremon",
-    "emont",
-    "decentralize",
-    "ethereum"
+    "cubego"
   ],
   "author": "EmontAlliance Team",
   "license": "ISC",
@@ -40,6 +34,7 @@
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-react-html-attrs": "^2.1.0",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
@@ -53,6 +48,9 @@
     "css-loader": "^1.0.0",
     "csv-loader": "^3.0.2",
     "del-cli": "^1.1.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-es5": "^1.5.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
     "fs": "0.0.1-security",
@@ -61,6 +59,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.7.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "prettier": "^2.2.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^1.2.7",

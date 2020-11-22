@@ -41,18 +41,7 @@
   <script src="/assets/lib/three.canvasRenderer.js"></script>
   <script src="/assets/lib/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
-  <script src="/assets/lib/web3.min.js"></script>
   <!-- End Libs -->
-
-  <!-- Internal JS -->
-  <script src="/assets/js/core_constants.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/utils.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/core.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/user.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/cubego.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/emont_payment.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <script src="/assets/js/presale.js?v=<%= htmlWebpackPlugin.options.customHash %>"></script>
-  <!-- End Internal JS-->
 
   <!-- Internal CSS-->
   <link rel="stylesheet" href="/styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
@@ -116,10 +105,10 @@
     startFuncInterval = window.setInterval(startFunc, 100);
     startFunc();
   </script>
-  <!--<script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
-  <!--<script src="/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
-  <!--<script src="/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>-->
-  <!-- End Bundles -->
+  <script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script src="/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script src="/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <!-- End Bundles
 </body>
 
 </html>
