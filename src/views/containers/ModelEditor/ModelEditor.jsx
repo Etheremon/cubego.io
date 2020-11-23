@@ -1156,10 +1156,8 @@ class _ModelEditor extends React.Component {
                     <ImportFromFile
                       text={_t('template from file')}
                       handleData={(dataFile) => {
-                        let modelFromFile;
                         try {
-                          dataFile = JSON.parse(dataFile);
-                          modelFromFile = LogicUtils.GetFullModel(dataFile);
+                          const modelFromFile = LogicUtils.GetFullModel(JSON.parse(dataFile));
                           if (modelFromFile) {
                             this.toolManager.addModel({
                               model: modelFromFile.model,
@@ -1170,7 +1168,7 @@ class _ModelEditor extends React.Component {
                             alert(_t('template file is invalid'));
                           }
                         } catch (err) {
-                          console.log(err);
+                          alert(err);
                         }
                       }}
                     />

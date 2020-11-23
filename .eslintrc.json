@@ -45,6 +45,8 @@
         "max-len": ["error", { "code": 120 }],
         "no-mixed-operators": 0,
         "global-require": 0,
-        "no-nested-ternary": 0
+        "no-nested-ternary": 0,
+        "no-alert": 0,
+        "no-console": 0
     }
 }
