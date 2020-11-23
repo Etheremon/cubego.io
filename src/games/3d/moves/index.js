@@ -1,8 +1,8 @@
 import FireMove from './fire';
 import WaterMove from './water';
 import GrassMove from './grass';
-import AirMove from './air'
-import EarthMove from './earth'
+import AirMove from './air';
+import EarthMove from './earth';
 import NeutralMove from './neutral';
 
 const listMoves = {
@@ -11,12 +11,12 @@ const listMoves = {
   ...GrassMove,
   ...AirMove,
   ...EarthMove,
-  ...NeutralMove
+  ...NeutralMove,
 };
 
-let MOVES = {};
+const MOVES = {};
 
-for (let moveKey in listMoves) {
+for (const moveKey in listMoves) {
   if (!listMoves.hasOwnProperty(moveKey)) continue;
   MOVES[listMoves[moveKey].getId()] = listMoves[moveKey];
 }

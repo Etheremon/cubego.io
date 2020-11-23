@@ -1,19 +1,19 @@
-import {BabylonComponent} from "./babylonComponent";
+import { BabylonComponent } from './babylonComponent';
 
 export class CastorGUITexture extends BabylonComponent {
   constructor() {
     super();
   }
 
-  static create({guiSystem}, props) {
-    let texture = new CastorGUITexture();
-    let options = {
+  static create({ guiSystem }, props) {
+    const texture = new CastorGUITexture();
+    const options = {
       x: props.x || 0,
       y: props.y || 0,
       w: props.w || 50,
-      h: props.h || 50
+      h: props.h || 50,
     };
-    let castorComponent = new GUITexture(props.id || "castorTexture", props.image, options, guiSystem, props.onClick);
+    const castorComponent = new GUITexture(props.id || 'castorTexture', props.image, options, guiSystem, props.onClick);
     texture.renderer = castorComponent;
     if (props.visible === false) {
       texture.visible = props.visible;

@@ -1,4 +1,4 @@
-import {FiberNode} from "./FiberNode";
+import { FiberNode } from './FiberNode';
 
 /**
  * ThreeX node bridge

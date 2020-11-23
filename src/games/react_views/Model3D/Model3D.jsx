@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Model3D.scss';
-import PropTypes from "prop-types";
-import {IsEqual} from "../../../utils/objUtils";
-import ThreeX from "../../threeX";
-import VoxViewerThree from "../../3d/VoxViewerThree.jsx";
-import * as LS from "../../../services/localStorageService";
+import PropTypes from 'prop-types';
+import { IsEqual } from '../../../utils/objUtils';
+import ThreeX from '../../threeX';
+import VoxViewerThree from '../../3d/VoxViewerThree.jsx';
+import * as LS from '../../../services/localStorageService';
 
-require("style-loader!./Model3D.scss");
-
+require('style-loader!./Model3D.scss');
 
 export class Model3D extends Component {
   constructor(props) {
@@ -21,8 +20,13 @@ export class Model3D extends Component {
 
   componentDidMount() {
     this.voxel = ThreeX.render(
-      <VoxViewerThree data={this.props.model} onCellClicked={this.props.onCellClicked} tools={this.props.tools}
-                      viewOnly={this.props.viewOnly} showLayer={!!this.state.showLayer}/>,
+      <VoxViewerThree
+        data={this.props.model}
+        onCellClicked={this.props.onCellClicked}
+        tools={this.props.tools}
+        viewOnly={this.props.viewOnly}
+        showLayer={!!this.state.showLayer}
+      />,
       document.getElementById('canvas3D'),
     );
   }
@@ -49,23 +53,25 @@ export class Model3D extends Component {
   toggleShowLayer() {
     LS.SetItem(LS.Fields.showLayer, !this.state.showLayer);
     this.voxel.toggleLayer(!this.state.showLayer);
-    this.setState({showLayer: !this.state.showLayer});
+    this.setState({ showLayer: !this.state.showLayer });
   }
 
   render() {
     return (
-      <div className={'model3D'}>
-        {!this.props.viewOnly ?
-          <div className={'model3D__buttons'}>
-            <div className={`layer ${this.state.showLayer ? 'active' : ''}`}
-                 onClick={this.toggleShowLayer}
-                 tooltip={this.props._t(this.state.showLayer ? '3d.hide_layer' : '3d.show_layer')}
-                 tooltip-position={'bottom'}
-            />
-          </div> : null
-        }
-        <div className={'canvas-wrapper'}>
-          <canvas id='canvas3D' width="600" height="600"/>
+      <div className="model3D">
+        {!this.props.viewOnly
+          ? (
+            <div className="model3D__buttons">
+              <div
+                className={`layer ${this.state.showLayer ? 'active' : ''}`}
+                onClick={this.toggleShowLayer}
+                tooltip={this.props._t(this.state.showLayer ? '3d.hide_layer' : '3d.show_layer')}
+                tooltip-position="bottom"
+              />
+            </div>
+          ) : null}
+        <div className="canvas-wrapper">
+          <canvas id="canvas3D" width="600" height="600" />
         </div>
       </div>
     );

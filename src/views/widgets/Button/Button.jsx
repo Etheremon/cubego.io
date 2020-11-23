@@ -1,66 +1,70 @@
-import React from "react"
+import React from 'react';
 import PropTypes from 'prop-types';
-import Loading from "../../components/Loading/Loading.jsx";
+import Loading from '../../components/Loading/Loading.jsx';
 
-require("style-loader!./Button.scss");
+require('style-loader!./Button.scss');
 
+export const ButtonNew = ({
+  className, label, children, color, size, type, disabled, fluid, tokenList,
+  onClick, onMouseDown, onMouseUp, onMouseOut,
+  style, showDeco, loading,
+}) => (
+  <div
+    className={`widget__button-new ${loading ? 'loading' : ''} ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
+    style={style}
+    onClick={(e) => {
+      if (onClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(e);
+      }
+    }}
+    onMouseDown={(e) => {
+      if (onMouseDown) {
+        e.preventDefault();
+        e.stopPropagation();
+        onMouseDown(e);
+      }
+    }}
+    onMouseUp={(e) => {
+      if (onMouseUp) {
+        e.preventDefault();
+        e.stopPropagation();
+        onMouseUp(e);
+      }
+    }}
+    onMouseOut={(e) => {
+      if (onMouseOut) {
+        onMouseOut(e);
+      }
+    }}
+  >
 
-export const ButtonNew = ({className, label, children, color, size, type, disabled, fluid, tokenList,
-                           onClick, onMouseDown, onMouseUp, onMouseOut,
-                           style, showDeco, loading}) => {
+    <div className="content">
+      {loading ? <Loading /> : label || children}
+    </div>
 
-  return (
-    <div className={`widget__button-new ${loading ? 'loading' : ''} ${fluid ? 'fluid' : ''} ${disabled ? 'disabled' : ''} ${showDeco} ${color} ${size} ${type ? `${type}` : ''} ${className}`}
-         style={style}
-         onClick={(e) => {
-           if (onClick) {
-             e.preventDefault();
-             e.stopPropagation();
-             onClick(e);
-           }
-         }}
-         onMouseDown={(e) => {
-           if (onMouseDown) {
-             e.preventDefault();
-             e.stopPropagation();
-             onMouseDown(e);
-           }
-         }}
-         onMouseUp={(e) => {
-           if (onMouseUp) {
-             e.preventDefault();
-             e.stopPropagation();
-             onMouseUp(e);
-           }
-         }}
-         onMouseOut={(e) => {
-           if (onMouseOut) {
-             onMouseOut(e);
-           }
-         }}
-    >
-
-      <div className={'content'} >
-        {loading ? <Loading/> : label || children}
-      </div>
-
-      {type === ButtonNew.types.TOKEN ?
-        <div className={'transform'}>
+    {type === ButtonNew.types.TOKEN
+      ? (
+        <div className="transform">
           {tokenList.map((token, idx) => (
-            <div key={idx} className={'item'} onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onClick && onClick({token});
-            }}>
+            <div
+              key={idx}
+              className="item"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClick && onClick({ token });
+              }}
+            >
               {/* <Image img={`icon_${token}`}/> */}
             </div>
           ))}
-        </div> : null
-      }
+        </div>
+      ) : null}
 
-    </div>
-  );
-};
+  </div>
+);
 
 ButtonNew.colors = {
   ORANGE: 'orange',
@@ -70,7 +74,7 @@ ButtonNew.colors = {
   GREEN: 'green',
   GREY_NO_SHADOW: 'grey_no_shadow',
   BLACK_NO_SHADOW: 'black_no_shadow',
-  TURQUOISE: 'turquoise', 
+  TURQUOISE: 'turquoise',
 };
 ButtonNew.sizes = {
   SMALL: 'small',

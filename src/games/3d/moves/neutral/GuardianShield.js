@@ -1,13 +1,13 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
 
 export default class GuardianShield extends BaseMove {
   static getId() {
-    return "guardian_shield"
+    return 'guardian_shield';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.speed = 0.01;
     this.damage = damage;
@@ -21,16 +21,15 @@ export default class GuardianShield extends BaseMove {
   }
 
   _createShieldParticle() {
-    let matrix = this.player.playerMesh.getWorldMatrix();
-    let position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    const matrix = this.player.playerMesh.getWorldMatrix();
+    const position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     position.y += 1;
-    let emitter = position;
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const emitter = position;
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
 
-
     pSystem.emitter = emitter;
-    let emitterType = new BABYLON.SphereParticleEmitter();
+    const emitterType = new BABYLON.SphereParticleEmitter();
     emitterType.radius = 3;
     emitterType.radiusRange = 0;
     pSystem.particleEmitterType = emitterType;
@@ -54,7 +53,7 @@ export default class GuardianShield extends BaseMove {
 
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, 1);
     pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, 1);
-    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+    pSystem.colorDead = new BABYLON.Color4(0.5, 0.02, 0, 0.5);
 
     pSystem.minEmitPower = 0;
     pSystem.maxEmitPower = 0;
@@ -67,7 +66,7 @@ export default class GuardianShield extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new GuardianShield(player, effects);
+    const move = new GuardianShield(player, effects);
     move.playMove();
   }
 }

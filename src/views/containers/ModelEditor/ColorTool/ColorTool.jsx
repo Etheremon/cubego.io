@@ -1,13 +1,12 @@
 import React from 'react';
 
-import {connect} from "react-redux";
-import {getTranslate} from 'react-localize-redux';
+import { connect } from 'react-redux';
+import { getTranslate } from 'react-localize-redux';
 
-import withRouter from "react-router-dom/es/withRouter";
-import * as ObjUtils from "../../../../utils/objUtils";
+import withRouter from 'react-router-dom/es/withRouter';
+import * as ObjUtils from '../../../../utils/objUtils';
 
-require("style-loader!./ColorTool.scss");
-
+require('style-loader!./ColorTool.scss');
 
 class _ColorTool extends React.Component {
   constructor(props) {
@@ -26,34 +25,39 @@ class _ColorTool extends React.Component {
   }
 
   render() {
-    let {value, options} = this.props;
+    const { value, options } = this.props;
 
     return (
-      <div className={'color-tool'}>
-        <div className={'color-tool__list'}>
+      <div className="color-tool">
+        <div className="color-tool__list">
           {ObjUtils.GetValues(options).map((c, idx) => (
-            <div className={`color-tool__cell ${value['material_id'] === c['material_id'] && value['sub_material_id'] === c['sub_material_id'] ? 'selected' : ''}`}
-                 key={idx} onClick={() => {this.onColorChange(c)}}>
-              <img src={c.img ? c.img : require('../../../../shared/img/cubego-variants/placeholder.png')}
-                   style={c.color ? {backgroundColor: `${c.color}`} : {}}/>
+            <div
+              className={`color-tool__cell ${value.material_id === c.material_id && value.sub_material_id === c.sub_material_id ? 'selected' : ''}`}
+              key={idx}
+              onClick={() => { this.onColorChange(c); }}
+            >
+              <img
+                src={c.img ? c.img : require('../../../../shared/img/cubego-variants/placeholder.png')}
+                style={c.color ? { backgroundColor: `${c.color}` } : {}}
+              />
             </div>
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (store, props) => {
-  let pathName = props.pathname;
+  const pathName = props.pathname;
   return {
     pathName,
     _t: getTranslate(store.localeReducer),
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch: dispatch,
+  dispatch,
 });
 
 export const ColorTool = withRouter(connect(

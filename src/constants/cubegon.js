@@ -1,4 +1,4 @@
-import * as ObjUtils from "../utils/objUtils";
+import * as ObjUtils from '../utils/objUtils';
 
 export const GON_STATUS = {
   INIT: 0,

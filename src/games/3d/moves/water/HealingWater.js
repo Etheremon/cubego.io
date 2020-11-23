@@ -1,15 +1,15 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
-import {hexToColor3} from "../../../babylonX/utils";
-import {GetRandomInt} from "../../../../utils/utils";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
+import { hexToColor3 } from '../../../babylonX/utils';
+import { GetRandomInt } from '../../../../utils/utils';
 
 export default class HealingWater extends BaseMove {
   static getId() {
-    return "healing_water"
+    return 'healing_water';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.speed = 0.01;
     this.numberOfIce = 2;
@@ -27,20 +27,20 @@ export default class HealingWater extends BaseMove {
       this.player.playSkeletonAnimation('attack_normal', false, 1);
       setTimeout(() => {
         this._createWaterParticle();
-      }, 150)
+      }, 150);
     }, this.chargingTime + 1000);
   }
 
   _createWaterShieldParticle() {
-    let matrix = this.player.playerMesh.getWorldMatrix();
-    let position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    const matrix = this.player.playerMesh.getWorldMatrix();
+    const position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     position.y += 1;
-    let emitter = position;
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const emitter = position;
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.particleTexture = BabylonX.loaders.get('particle_flare').clone();
 
     pSystem.emitter = emitter;
-    let emitterType = new BABYLON.SphereParticleEmitter();
+    const emitterType = new BABYLON.SphereParticleEmitter();
     emitterType.radius = 3;
     emitterType.radiusRange = 0;
     pSystem.particleEmitterType = emitterType;
@@ -79,27 +79,27 @@ export default class HealingWater extends BaseMove {
   _createWaterParticle() {
     let isCollision = false;
     let direction = 1;
-    let options = {
+    const options = {
       size: 0.01,
-      faceColors: [0, 1, 2, 3, 4, 5].map(() => hexToColor3('#FFFFFF'))
+      faceColors: [0, 1, 2, 3, 4, 5].map(() => hexToColor3('#FFFFFF')),
     };
 
-    let water = BABYLON.MeshBuilder.CreateBox("water", options, this.player.scene);
+    const water = BABYLON.MeshBuilder.CreateBox('water', options, this.player.scene);
     water.scaling.z = 3;
-    let startMatrix = this.player.playerMesh.getWorldMatrix();
-    let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
-    let targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
-    let targetPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), targetMatrix);
+    const startMatrix = this.player.playerMesh.getWorldMatrix();
+    const startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
+    const targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
+    const targetPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), targetMatrix);
 
     if (targetPosition.z > startPosition.z) {
       direction = -1;
     }
     water.position = startPosition;
-    let x = GetRandomInt(0, 5) / 10;
-    let y = 1 + GetRandomInt(0, 5) / 10;
+    const x = GetRandomInt(0, 5) / 10;
+    const y = 1 + GetRandomInt(0, 5) / 10;
     water.position.x = x;
     water.position.y = y;
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.emitter = water;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
@@ -142,7 +142,7 @@ export default class HealingWater extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new HealingWater(player, effects);
+    const move = new HealingWater(player, effects);
     move.playMove();
   }
 }

@@ -1,13 +1,13 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
 
 export default class WindStrike extends BaseMove {
   static getId() {
-    return "wind_strike"
+    return 'wind_strike';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.damage = damage;
   }
@@ -20,16 +20,16 @@ export default class WindStrike extends BaseMove {
   }
 
   _createWindParticle() {
-    let startMatrix = this.player.playerMesh.getWorldMatrix();
-    let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
-    let targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
-    let targetPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), targetMatrix);
+    const startMatrix = this.player.playerMesh.getWorldMatrix();
+    const startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
+    const targetMatrix = this.player.opponent.playerMesh.getWorldMatrix();
+    const targetPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), targetMatrix);
     let direction = 1;
     if (targetPosition.z > startPosition.z) {
       direction = -1;
     }
-    let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.emitter = emitter;
 
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -90,7 +90,7 @@ export default class WindStrike extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new WindStrike(player, effects);
+    const move = new WindStrike(player, effects);
     move.playMove();
   }
 }

@@ -1,5 +1,3 @@
-
-
 export const types = {
   ADD_TXN: 'ADD_TXN',
   POP_TXN: 'POP_TXN',

@@ -12,9 +12,7 @@ const emptyFnc = (name) => () => {
   // console.log(name);
 };
 
-const compareNullUndefined = (nextProps, lastProps) => {
-  return (nextProps === null || nextProps === undefined) && (lastProps === null || lastProps === undefined)
-};
+const compareNullUndefined = (nextProps, lastProps) => (nextProps === null || nextProps === undefined) && (lastProps === null || lastProps === undefined);
 
 const compareVector = (vector1, vector2) => {
   if (typeof vector1 !== 'object' || typeof vector2 !== 'object') {
@@ -30,15 +28,13 @@ const loggerFnc = (name) => () => {
   // console.log(name);
 };
 
-const compareProp = (nextProp, lastProp) => {
-  return nextProp === lastProp || compareNullUndefined(nextProp, lastProp) || compareVector(nextProp, lastProp);
-};
+const compareProp = (nextProp, lastProp) => nextProp === lastProp || compareNullUndefined(nextProp, lastProp) || compareVector(nextProp, lastProp);
 
 const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerElement) => {
   let updatePayload = null;
 
-  let lastProps = lastRawProps;
-  let nextProps = nextRawProps;
+  const lastProps = lastRawProps;
+  const nextProps = nextRawProps;
   let propKey;
 
   for (propKey in lastProps) {
@@ -71,36 +67,33 @@ function filterByKey(inputObject, filter) {
 
   Object.keys(inputObject)
     .filter(filter)
-    .forEach(key => {
+    .forEach((key) => {
       exportObject[key] = inputObject[key];
     });
 
   return exportObject;
 }
 
-const including = props => key => props.indexOf(key) !== -1;
+const including = (props) => (key) => props.indexOf(key) !== -1;
 
-
-const not = fn => (...args) => !fn(...args);
+const not = (fn) => (...args) => !fn(...args);
 
 export const includingReservedProps = including(Object.keys(RESERVED_PROPS));
 
 function defaultApplyProps(instance, oldProps, newProps) {
   Object.keys(newProps)
     .filter(not(includingReservedProps))
-    .forEach(propName => {
+    .forEach((propName) => {
       const value = newProps[propName];
-      if (typeof value !== "undefined") {
+      if (typeof value !== 'undefined') {
         setThreeXValue(instance, propName, value);
-      } else if (typeof instance[propName] !== "undefined" && typeof DEFAULT_PROPS[propName] !== "undefined") {
+      } else if (typeof instance[propName] !== 'undefined' && typeof DEFAULT_PROPS[propName] !== 'undefined') {
         if (__DEV__) {
           console.warn(`setting default value: ${propName} was ${instance[propName]} is ${value} for`, instance);
         }
         setThreeXValue(instance, propName, DEFAULT_PROPS[propName]);
-      } else {
-        if (__DEV__) {
-          console.warn(`ignoring prop: ${propName} was ${instance[propName]} is ${value} for`, instance);
-        }
+      } else if (__DEV__) {
+        console.warn(`ignoring prop: ${propName} was ${instance[propName]} is ${value} for`, instance);
       }
     });
 }
@@ -110,7 +103,7 @@ function setThreeXValue(instance, propName, value) {
 }
 
 function applyProps(instance, oldProps, newProps) {
-  if (typeof instance._customApplyProps === "function") {
+  if (typeof instance._customApplyProps === 'function') {
     instance._customApplyProps(instance, oldProps, newProps);
   } else {
     defaultApplyProps(instance, oldProps, newProps);
@@ -119,16 +112,16 @@ function applyProps(instance, oldProps, newProps) {
 
 function parsePoint(value) {
   let arr = [];
-  if (typeof value === "undefined") {
+  if (typeof value === 'undefined') {
     return arr;
-  } else if (typeof value === "string") {
-    arr = value.split(",");
-  } else if (typeof value === "number") {
+  } if (typeof value === 'string') {
+    arr = value.split(',');
+  } else if (typeof value === 'number') {
     arr = [value];
   } else if (Array.isArray(value)) {
     // shallow copy the array
     arr = value.slice();
-  } else if (typeof value.x !== "undefined" && typeof value.y !== "undefined") {
+  } else if (typeof value.x !== 'undefined' && typeof value.y !== 'undefined') {
     arr = [value.x, value.y];
   }
 
@@ -136,17 +129,18 @@ function parsePoint(value) {
 }
 
 function getMousePositionOnCanvas(event, canvas) {
-  let canvasStyle = getComputedStyle(canvas);
-  let width = parseInt(canvasStyle.getPropertyValue('width'), 10);
-  let height = parseInt(canvasStyle.getPropertyValue('height'), 10);
-  let scaleX = canvas.width / width;
-  let scaleY = canvas.height / height;
-  let rect = canvas.getBoundingClientRect();
+  const canvasStyle = getComputedStyle(canvas);
+  const width = parseInt(canvasStyle.getPropertyValue('width'), 10);
+  const height = parseInt(canvasStyle.getPropertyValue('height'), 10);
+  const scaleX = canvas.width / width;
+  const scaleY = canvas.height / height;
+  const rect = canvas.getBoundingClientRect();
   return {
     x: (event.clientX - rect.left) * scaleX,
-    y: (event.clientY - rect.top) * scaleY
-  }
+    y: (event.clientY - rect.top) * scaleY,
+  };
 }
 
-
-export {emptyFnc, diffProps, loggerFnc, filterByKey, including, applyProps, getMousePositionOnCanvas}
+export {
+  emptyFnc, diffProps, loggerFnc, filterByKey, including, applyProps, getMousePositionOnCanvas,
+};

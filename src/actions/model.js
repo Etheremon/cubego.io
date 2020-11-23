@@ -1,4 +1,4 @@
-import {createActionTypes} from "./action_utils";
+import { createActionTypes } from './action_utils';
 
 export const ModelActions = {
   DELETE_MODEL: createActionTypes('DELETE_MODEL'),

@@ -1,35 +1,41 @@
-import React from "react"
+import React from 'react';
 import PropTypes from 'prop-types';
 
-require("style-loader!./FileInput.scss");
+require('style-loader!./FileInput.scss');
 
-export const ImportFromFile = ({handleData, text}) => {
+export const ImportFromFile = ({ handleData, text }) => {
   let fileReader;
 
   const handleFileRead = (e) => {
-      const content = fileReader.result;
-      if (handleData) {
-        handleData(content)
-      }
+    const content = fileReader.result;
+    if (handleData) {
+      handleData(content);
+    }
   };
 
   const handleFileChosen = (file) => {
-      fileReader = new FileReader();
-      fileReader.onloadend = handleFileRead;
-      fileReader.readAsText(file);
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(file);
   };
 
-  return <div className='upload-expense'>
-      <div className="input" onClick={() => {
-        document.getElementById('file').click()
-      }}>
-        <img className={'fas'} src={require(`../../../shared/img/icons/icon-import.png`)} />
+  return (
+    <div className="upload-expense">
+      <div
+        className="input"
+        onClick={() => {
+          document.getElementById('file').click();
+        }}
+      >
+        <img className="fas" src={require('../../../shared/img/icons/icon-import.png')} />
       </div>
-      <input type='file'
-             id='file'
-             className='input-file'
-             accept='.txt'
-             onChange={e => handleFileChosen(e.target.files[0])}
+      <input
+        type="file"
+        id="file"
+        className="input-file"
+        accept=".txt"
+        onChange={(e) => handleFileChosen(e.target.files[0])}
       />
-  </div>;
+    </div>
+  );
 };

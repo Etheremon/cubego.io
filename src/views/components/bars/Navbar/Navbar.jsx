@@ -1,26 +1,25 @@
-import React from "react"
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import {getTranslate, setActiveLanguage} from 'react-localize-redux';
+import { getTranslate, setActiveLanguage } from 'react-localize-redux';
 
-import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx'
+import PropTypes from 'prop-types';
+import withRouter from 'react-router-dom/es/withRouter';
+import Link from 'react-router-dom/es/Link';
+import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx';
 
-import * as LS from '../../../../services/localStorageService.js'
-import PropTypes from "prop-types";
-import {URLS} from "../../../../constants/general";
-import {Image} from "../../Image/Image.jsx";
-import {Container} from "../../../widgets/Container/Container.jsx";
-import withRouter from "react-router-dom/es/withRouter";
-import Link from "react-router-dom/es/Link";
+import * as LS from '../../../../services/localStorageService.js';
+import { URLS } from '../../../../constants/general';
+import { Image } from '../../Image/Image.jsx';
+import { Container } from '../../../widgets/Container/Container.jsx';
 
-require("style-loader!./Navbar.scss");
+require('style-loader!./Navbar.scss');
 
 const NavbarList = [
-  {link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build'},
-  {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
+  { link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build' },
+  { link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle' },
 ];
-
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -35,11 +34,11 @@ class Navbar extends React.Component {
   }
 
   handleNavItemSelect(link) {
-    this.setState({ selectedNavItem: link })
+    this.setState({ selectedNavItem: link });
   }
 
   componentDidMount() {
-    let {transforming, minifying, scrollingElement} = this.props;
+    const { transforming, minifying, scrollingElement } = this.props;
 
     if (transforming || minifying) {
       if (transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
@@ -49,7 +48,7 @@ class Navbar extends React.Component {
   }
 
   componentWillUnmount() {
-    let {transforming, minifying, scrollingElement} = this.props;
+    const { transforming, minifying, scrollingElement } = this.props;
 
     if (transforming || minifying) {
       if (scrollingElement) document.getElementById(scrollingElement).removeEventListener('scroll', this.handleScroll);
@@ -58,20 +57,16 @@ class Navbar extends React.Component {
   }
 
   handleScroll(e) {
-    let scrollTop = undefined;
+    let scrollTop;
     if (e.target) scrollTop = e.target.scrollTop;
     if (e.target && e.target.scrollingElement) scrollTop = e.target.scrollingElement.scrollTop;
     if (scrollTop !== undefined) {
       if (scrollTop >= 50) {
-        if (this.props.transforming)
-          document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
-        if (this.props.minifying)
-          document.getElementsByClassName('navbar__wrapper')[0].classList.add('minifying');
+        if (this.props.transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
+        if (this.props.minifying) document.getElementsByClassName('navbar__wrapper')[0].classList.add('minifying');
       } else {
-        if (this.props.transforming)
-          document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
-        if (this.props.minifying)
-          document.getElementsByClassName('navbar__wrapper')[0].classList.remove('minifying');
+        if (this.props.transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+        if (this.props.minifying) document.getElementsByClassName('navbar__wrapper')[0].classList.remove('minifying');
       }
     }
   }
@@ -82,57 +77,67 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let {_t, fixed, size, feed} = this.props;
+    const {
+      _t, fixed, size, feed,
+    } = this.props;
 
     return (
       <div className={`navbar__wrapper ${fixed ? 'fixed' : ''} ${feed ? 'have-feed' : ''}`}>
-        <Container size={size} className={'navbar__content'}>
+        <Container size={size} className="navbar__content">
 
-          <div className={'logo m--computer-only'}>
+          <div className="logo m--computer-only">
             <Link to="/#home">
-              <Image img={'logo_cubego'}/>
+              <Image img="logo_cubego" />
             </Link>
           </div>
 
-          <div className={'img-links'}>
+          <div className="img-links">
             {NavbarList.map((item, idx) => (
-              <div className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`} key={idx}
-                   onClick={() => {
-                     this.handleNavItemSelect(item.link);
-                     this.props.history.push(item.link);
-                   }} tooltip={_t(item.text)} tooltip-position={'bottom'}>
-                <Image img={`${item.img}`}/>
+              <div
+                className={`navbar__item m--computer-only ${this.state.selectedNavItem === item.link ? 'active' : ''}`}
+                key={idx}
+                onClick={() => {
+                  this.handleNavItemSelect(item.link);
+                  this.props.history.push(item.link);
+                }}
+                tooltip={_t(item.text)}
+                tooltip-position="bottom"
+              >
+                <Image img={`${item.img}`} />
               </div>
             ))}
 
-            <Dropdown className={'mobile-menu m--mobile-only'} position={'left'}
-                      list={[
-                        {
-                          content: (
-                            <div className={`navbar__item-dropdown`}>
-                              <Image img={'logo_cubego'}/>
-                              {_t('Home')}
-                            </div>
-                          ),
-                          onClick: () => {
-                            this.props.history.push('/#home');
-                          },
-                        },
-                        ...NavbarList.map((item, idx) => ({
-                          content: (
-                            <div className={`navbar__item-dropdown`} key={idx}>
-                              <Image img={`${item.img}`}/>
-                              {_t(item.text)}
-                            </div>
-                          ),
-                          onClick: () => {
-                            this.handleNavItemSelect(item.link);
-                            this.props.history.push(item.link);
-                          },
-                        }))
-                      ]}>
+            <Dropdown
+              className="mobile-menu m--mobile-only"
+              position="left"
+              list={[
+                {
+                  content: (
+                    <div className="navbar__item-dropdown">
+                      <Image img="logo_cubego" />
+                      {_t('Home')}
+                    </div>
+                  ),
+                  onClick: () => {
+                    this.props.history.push('/#home');
+                  },
+                },
+                ...NavbarList.map((item, idx) => ({
+                  content: (
+                    <div className="navbar__item-dropdown" key={idx}>
+                      <Image img={`${item.img}`} />
+                      {_t(item.text)}
+                    </div>
+                  ),
+                  onClick: () => {
+                    this.handleNavItemSelect(item.link);
+                    this.props.history.push(item.link);
+                  },
+                })),
+              ]}
+            >
               <span>
-                <i className="fas fa-bars"/>
+                <i className="fas fa-bars" />
               </span>
             </Dropdown>
           </div>
@@ -144,17 +149,15 @@ class Navbar extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
-  return {
-    _t: getTranslate(store.localeReducer),
-  };
-};
+const mapStateToProps = (store) => ({
+  _t: getTranslate(store.localeReducer),
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch: dispatch,
+  dispatch,
   actions: {
     setActiveLanguage: bindActionCreators(setActiveLanguage, dispatch),
-  }
+  },
 });
 
 Navbar.defaultProps = {
@@ -172,5 +175,5 @@ Navbar.propTypes = {
 
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Navbar));

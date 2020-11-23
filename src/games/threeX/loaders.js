@@ -1,34 +1,34 @@
-import {CUBE_MATERIALS, CUBE_MATERIALS_MAP} from "../../constants/cubego";
+import { CUBE_MATERIALS, CUBE_MATERIALS_MAP } from '../../constants/cubego';
 
-let requireParticleTextures = require.context('../../shared/materials/textures', true);
-let materialStorage = {};
-let textureStorage = {};
-let cachedMaterial = {};
-let threeTextureLoader = new window.THREE.TextureLoader();
-let threeCubeTextureLoader = new window.THREE.CubeTextureLoader();
+const requireParticleTextures = require.context('../../shared/materials/textures', true);
+const materialStorage = {};
+const textureStorage = {};
+const cachedMaterial = {};
+const threeTextureLoader = new window.THREE.TextureLoader();
+const threeCubeTextureLoader = new window.THREE.CubeTextureLoader();
 
 function loadMaterial(id, materialData) {
-  let textures = {};
+  const textures = {};
   let material;
   materialData.textures.forEach((texture) => {
     if (texture.type === 'cube') {
-      let urls = [
+      const urls = [
         require('../../shared/skybox/1/skybox_px.jpg'),
         require('../../shared/skybox/1/skybox_nx.jpg'),
         require('../../shared/skybox/1/skybox_py.jpg'),
         require('../../shared/skybox/1/skybox_ny.jpg'),
         require('../../shared/skybox/1/skybox_pz.jpg'),
-        require('../../shared/skybox/1/skybox_nz.jpg')
+        require('../../shared/skybox/1/skybox_nz.jpg'),
       ];
 
-      let reflectionCube = threeCubeTextureLoader.load(urls);
+      const reflectionCube = threeCubeTextureLoader.load(urls);
       reflectionCube.format = THREE.RGBFormat;
       textures[texture.uuid] = reflectionCube;
     } else {
-      textures[texture.uuid] = threeTextureLoader.load(requireParticleTextures('./' + texture.image, true));
+      textures[texture.uuid] = threeTextureLoader.load(requireParticleTextures(`./${texture.image}`, true));
     }
   });
-  let loader = new window.THREE.MaterialLoader();
+  const loader = new window.THREE.MaterialLoader();
   loader.setTextures(textures);
   material = loader.parse(materialData);
   materialStorage[id] = material;
@@ -43,7 +43,7 @@ function loadTexture(id, textureUrl) {
       textureStorage[id] = data;
       resolve(data);
     }, undefined, (error) => {
-      reject(error)
+      reject(error);
     });
   });
 }
@@ -61,24 +61,23 @@ function getMaterial(id, variantId, isWebGL) {
     return cachedMaterial[id][variantId];
   }
   if (!isWebGL) {
-    let variantProperties = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId];
+    const variantProperties = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId];
     if (!variantProperties) {
       return;
     }
-    let canvasTexture = variantProperties.img;
-    let texture = new window.THREE.TextureLoader().load(canvasTexture);
-    let material = new window.THREE.MeshBasicMaterial({map: texture});
+    const canvasTexture = variantProperties.img;
+    const texture = new window.THREE.TextureLoader().load(canvasTexture);
+    const material = new window.THREE.MeshBasicMaterial({ map: texture });
     cacheMaterial(id, variantId, material);
     return material;
-  } else {
-    let material = materialStorage[id].clone();
-    let color = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].color.replace('#', '');
-    let emissiveColor = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].emissive.replace('#', '');
-    material.color.setHex(parseInt(color, 16));
-    material.emissive.setHex(parseInt(emissiveColor, 16));
-    cacheMaterial(id, variantId, material);
-    return material
   }
+  const material = materialStorage[id].clone();
+  const color = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].color.replace('#', '');
+  const emissiveColor = CUBE_MATERIALS[CUBE_MATERIALS_MAP[id]].sub_materials[variantId].emissive.replace('#', '');
+  material.color.setHex(parseInt(color, 16));
+  material.emissive.setHex(parseInt(emissiveColor, 16));
+  cacheMaterial(id, variantId, material);
+  return material;
 }
 
 function getTexture(id) {
@@ -89,5 +88,5 @@ export {
   loadMaterial,
   getMaterial,
   loadTexture,
-  getTexture
-}
+  getTexture,
+};

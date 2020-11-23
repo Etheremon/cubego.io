@@ -4,5 +4,5 @@ export const CustomTrackList = {
 
 export const AutoTrack = (page) => {
   if (!page) page = location.pathname;
-  typeof gtag !== 'undefined' && gtag('config', GA_TRACKING_ID, {page_path: `/${page}`});
+  typeof gtag !== 'undefined' && gtag('config', GA_TRACKING_ID, { page_path: `/${page}` });
 };

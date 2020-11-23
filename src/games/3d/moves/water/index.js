@@ -1,13 +1,13 @@
-import HydroGun from "./HydroGun";
-import DoubleCannon from "./DoubleCannon";
-import HydroBash from "./HydroBash";
-import HealingWater from "./HealingWater";
+import HydroGun from './HydroGun';
+import DoubleCannon from './DoubleCannon';
+import HydroBash from './HydroBash';
+import HealingWater from './HealingWater';
 
 const WaterMove = {
   HydroGun,
   DoubleCannon,
   HydroBash,
-  HealingWater
+  HealingWater,
 };
 
 export default WaterMove;

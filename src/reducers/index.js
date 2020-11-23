@@ -1,9 +1,9 @@
-import {battle} from "./battle";
-import {model} from "./model";
+import { battle } from './battle';
+import { model } from './model';
 
 export const voxelStoreReducers = {
   battle,
-  model
+  model,
 };
 
-export const getTxnStore = (store) => (store['txnStore']);
+export const getTxnStore = (store) => (store.txnStore);

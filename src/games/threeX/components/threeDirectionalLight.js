@@ -1,5 +1,4 @@
-import {ThreeComponent} from "./threeComponent";
-
+import { ThreeComponent } from './threeComponent';
 
 export class ThreeDirectionalLight extends ThreeComponent {
   constructor() {
@@ -8,16 +7,16 @@ export class ThreeDirectionalLight extends ThreeComponent {
     this.scene = null;
   }
 
-  static create({scene, canvas, renderer}, props) {
-    let threeDirectionalLight = new ThreeDirectionalLight();
-    let directionalLight = new window.THREE.DirectionalLight(props.color || 0xffffff, 1);
+  static create({ scene, canvas, renderer }, props) {
+    const threeDirectionalLight = new ThreeDirectionalLight();
+    const directionalLight = new window.THREE.DirectionalLight(props.color || 0xffffff, 1);
     directionalLight.castShadow = true;
     directionalLight.shadow.bias = -0.0001;
     directionalLight.shadow.mapSize = new window.THREE.Vector2(512, 512);
     directionalLight.shadow.radius = 2;
     directionalLight.shadow.camera.near = 0;
     directionalLight.shadow.camera.far = 10000;
-    directionalLight.shadow.camera.left = - canvas.width;
+    directionalLight.shadow.camera.left = -canvas.width;
     directionalLight.shadow.camera.right = canvas.width;
     directionalLight.shadow.camera.top = canvas.height;
     directionalLight.shadow.camera.bottom = -canvas.height;
@@ -39,7 +38,7 @@ export class ThreeDirectionalLight extends ThreeComponent {
   }
 
   set target(targetPosition) {
-    let targetObject = new window.THREE.Object3D();
+    const targetObject = new window.THREE.Object3D();
     targetObject.position.set(targetPosition.x, targetPosition.y, targetPosition.z);
     this.scene.add(targetObject);
     this.renderer.target = targetObject;

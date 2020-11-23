@@ -1,10 +1,9 @@
-import React from "react"
+import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {getTranslate} from "react-localize-redux";
+import { connect } from 'react-redux';
+import { getTranslate } from 'react-localize-redux';
 
-require("style-loader!./Dropdown.scss");
-
+require('style-loader!./Dropdown.scss');
 
 class Dropdown extends React.Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class Dropdown extends React.Component {
 
   handleOnOutsideClick(event) {
     if (this.dropdownNode && !this.dropdownNode.contains(event.target)) {
-      this.setState({open: false});
+      this.setState({ open: false });
     }
   }
 
@@ -40,56 +39,61 @@ class Dropdown extends React.Component {
     this.setState({
       open: !this.state.open,
       selected: idx,
-    })
+    });
   }
 
   toggleOpen() {
     this.setState({
       open: !this.state.open,
-    })
+    });
   }
 
   handleOnSearchInputChange(e) {
-    this.setState({searchValue: e.target.value});
+    this.setState({ searchValue: e.target.value });
   }
 
   render() {
-    let {enableSearch, className, children, list, position, iconDropdown, _t} = this.props;
+    let {
+      enableSearch, className, children, list, position, iconDropdown, _t,
+    } = this.props;
 
     if (enableSearch) {
-      list = list.filter(item => item.search.toLowerCase().includes(this.state.searchValue));
+      list = list.filter((item) => item.search.toLowerCase().includes(this.state.searchValue));
     }
 
     return (
-      <div className={`widget__dropdown ${className} widget__dropdown__${position}`}
-           ref={(node) => {this.dropdownNode = node}}>
-        <div className={`widget__dropdown__content`} onClick={this.toggleOpen}>
+      <div
+        className={`widget__dropdown ${className} widget__dropdown__${position}`}
+        ref={(node) => { this.dropdownNode = node; }}
+      >
+        <div className="widget__dropdown__content" onClick={this.toggleOpen}>
           {children}
-          {iconDropdown ? <i className="fas fa-caret-down"></i> : null}
+          {iconDropdown ? <i className="fas fa-caret-down" /> : null}
         </div>
         <div className={`widget__dropdown__list ${this.state.open ? 'open' : ''}`}>
-          {!enableSearch ? null :
-            <div className={'widget__dropdown__search widget__dropdown__item'}>
-              <i className="fas fa-search"/>
-              <input type="text" placeholder={`${_t('search')}...`} value={this.state.searchValue} onChange={this.handleOnSearchInputChange}/>
-            </div>
-          }
+          {!enableSearch ? null
+            : (
+              <div className="widget__dropdown__search widget__dropdown__item">
+                <i className="fas fa-search" />
+                <input type="text" placeholder={`${_t('search')}...`} value={this.state.searchValue} onChange={this.handleOnSearchInputChange} />
+              </div>
+            )}
 
           {list.length
             ? list.map((item, idx) => (
-                <div className={`widget__dropdown__item ${idx === this.state.selected ? 'active' : ''}`} key={idx} onClick={() => {this.onClick(idx, item.onClick)}}>
-                  {item.content}
-                </div>
-              ))
-            : <div className={`widget__dropdown__item`}>
+              <div className={`widget__dropdown__item ${idx === this.state.selected ? 'active' : ''}`} key={idx} onClick={() => { this.onClick(idx, item.onClick); }}>
+                {item.content}
+              </div>
+            ))
+            : (
+              <div className="widget__dropdown__item">
                 {_t(this.props.emptyListText || 'no_result')}
               </div>
-          }
+            )}
         </div>
       </div>
-    )
+    );
   }
-
 }
 
 Dropdown.defaultProps = {
@@ -123,5 +127,5 @@ const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Dropdown);

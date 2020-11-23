@@ -1,19 +1,18 @@
-
 export const ShareToFacebook = (url, callback) => {
   window.FB.ui({
     method: 'share',
     href: url,
-  }, function(response){ callback && callback(response); });
+  }, (response) => { callback && callback(response); });
 };
 
-
 export const ShareToTwitter = (url, callback) => {
-  let w = 500, h = 300;
-  let left = (screen.width/2)-(w/2);
-  let top = (screen.height/2)-(h/2);
-  let popup = window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('Hello world')}&hashtags=Etheremon,dapps,game&url=${encodeURIComponent(url)}`, 'Etheremon', `height=${h},width=${w},top=${top},left=${left}`);
+  const w = 500; const
+    h = 300;
+  const left = (screen.width / 2) - (w / 2);
+  const top = (screen.height / 2) - (h / 2);
+  const popup = window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('Hello world')}&hashtags=Etheremon,dapps,game&url=${encodeURIComponent(url)}`, 'Etheremon', `height=${h},width=${w},top=${top},left=${left}`);
   if (popup) {
-    let timer = setInterval(function () {
+    const timer = setInterval(() => {
       if (popup.closed) {
         clearInterval(timer);
         callback && callback(true);
@@ -22,78 +21,77 @@ export const ShareToTwitter = (url, callback) => {
   }
 };
 
-
 export const ShareImageToFacebook = (blob) => {
-  window.FB.getLoginStatus(function (response) {
-    if (response.status === "connected") {
-      postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-    } else if (response.status === "not_authorized") {
-      window.FB.login(function (response) {
-        postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-      }, {scope: "publish_actions"});
+  window.FB.getLoginStatus((response) => {
+    if (response.status === 'connected') {
+      postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook/Twitter', 'image/png', blob, window.location.href);
+    } else if (response.status === 'not_authorized') {
+      window.FB.login((response) => {
+        postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook/Twitter', 'image/png', blob, window.location.href);
+      }, { scope: 'publish_actions' });
     } else {
-      window.FB.login(function (response) {
-        postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-      }, {scope: "publish_actions"});
+      window.FB.login((response) => {
+        postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook/Twitter', 'image/png', blob, window.location.href);
+      }, { scope: 'publish_actions' });
     }
   });
 };
 
 function postImageToFacebook(token, filename, mimeType, imageData, message) {
-  let fd = new FormData();
-  fd.append("access_token", token);
-  fd.append("source", imageData);
-  fd.append("no_story", true);
+  const fd = new FormData();
+  fd.append('access_token', token);
+  fd.append('source', imageData);
+  fd.append('no_story', true);
 
   // Upload image to facebook without story(post to feed)
   $.ajax({
-    url: "https://graph.facebook.com/me/photos?access_token=" + token,
-    type: "POST",
+    url: `https://graph.facebook.com/me/photos?access_token=${token}`,
+    type: 'POST',
     data: fd,
     processData: false,
     contentType: false,
     cache: false,
-    success: function (data) {
-      console.log("success: ", data);
+    success(data) {
+      console.log('success: ', data);
 
       // Get image source url
       FB.api(
-        "/" + data.id + "?fields=images",
-        function (response) {
+        `/${data.id}?fields=images`,
+        (response) => {
           if (response && !response.error) {
-            //console.log(response.images[0].source);
+            // console.log(response.images[0].source);
 
             // Create facebook post using image
             FB.api(
-              "/me/feed",
-              "POST",
+              '/me/feed',
+              'POST',
               {
-                "message": "",
-                "picture": response.images[0].source,
-                "link": window.location.href,
-                "name": 'Look at the cute panda!',
-                "description": message,
-                "privacy": {
-                  value: 'SELF'
-                }
+                message: '',
+                picture: response.images[0].source,
+                link: window.location.href,
+                name: 'Look at the cute panda!',
+                description: message,
+                privacy: {
+                  value: 'SELF',
+                },
               },
-              function (response) {
+              (response) => {
                 if (response && !response.error) {
                   /* handle the result */
-                  console.log("Posted story to facebook");
+                  console.log('Posted story to facebook');
                   console.log(response);
                 }
-              }
+              },
             );
           }
-        }
+        },
       );
     },
-    error: function (shr, status, data) {
-      console.log("error " + data + " Status " + shr.status);
+    error(shr, status, data) {
+      console.log(`error ${data} Status ${shr.status}`);
     },
-    complete: function (data) {
-      //console.log('Post to facebook Complete');
-    }
+    complete(data) {
+      // console.log('Post to facebook Complete');
+    },
   });
 }

@@ -1,15 +1,15 @@
-import {ThreeComponent} from "./threeComponent";
+import { ThreeComponent } from './threeComponent';
 
-import render from "../fiber/render";
-import {getMousePositionOnCanvas} from "../fiber/utils";
+import render from '../fiber/render';
+import { getMousePositionOnCanvas } from '../fiber/utils';
 
 export class ThreeCubeGoCustomCamera extends ThreeComponent {
-  static create({renderer, canvas, scene}, props) {
-    let threeCamera = new ThreeCubeGoCustomCamera();
-    let camera = new window.THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
+  static create({ renderer, canvas, scene }, props) {
+    const threeCamera = new ThreeCubeGoCustomCamera();
+    const camera = new window.THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
     camera.position.set(500, 800, 1300);
     camera.lookAt(0, 0, 0);
-    let controls = new window.THREE.OrbitControls(camera, canvas);
+    const controls = new window.THREE.OrbitControls(camera, canvas);
     controls.update();
     const animate = () => {
       requestAnimationFrame(animate);
@@ -21,10 +21,10 @@ export class ThreeCubeGoCustomCamera extends ThreeComponent {
     threeCamera.mouse = new window.THREE.Vector2();
     threeCamera.raycaster = new window.THREE.Raycaster();
     threeCamera.cacheCubeGeo = new window.THREE.BoxBufferGeometry(50, 50, 50);
-    threeCamera.cacheCubeMaterial = new window.THREE.MeshBasicMaterial({color: 0x0000ff});
+    threeCamera.cacheCubeMaterial = new window.THREE.MeshBasicMaterial({ color: 0x0000ff });
     threeCamera.canvas = canvas;
-    let rollOverGeo = new window.THREE.BoxBufferGeometry(50, 50, 50);
-    let rollOverMaterial = new window.THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true});
+    const rollOverGeo = new window.THREE.BoxBufferGeometry(50, 50, 50);
+    const rollOverMaterial = new window.THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
     threeCamera.rollOverMesh = new window.THREE.Mesh(rollOverGeo, rollOverMaterial);
     scene.add(rollOverMesh);
     canvas.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
@@ -34,14 +34,14 @@ export class ThreeCubeGoCustomCamera extends ThreeComponent {
 
   onDocumentMouseDown(event) {
     event.preventDefault();
-    let mousePos = getMousePositionOnCanvas(event);
+    const mousePos = getMousePositionOnCanvas(event);
     this.mouse.set((mousePos.x / canvas.width) * 2 - 1, -(mousePos.y / canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(mouse, camera);
-    let objects = [];
-    let intersects = raycaster.intersectObjects(objects);
+    const objects = [];
+    const intersects = raycaster.intersectObjects(objects);
     if (intersects.length > 0) {
-      let intersect = intersects[0];
-      let voxel = new window.THREE.Mesh(this.cacheCubeGeo, this.cacheCubeMaterial);
+      const intersect = intersects[0];
+      const voxel = new window.THREE.Mesh(this.cacheCubeGeo, this.cacheCubeMaterial);
       voxel.position.copy(intersect.point).add(intersect.face.normal);
       voxel.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
       this.parent.add(voxel);
@@ -51,13 +51,13 @@ export class ThreeCubeGoCustomCamera extends ThreeComponent {
 
   onDocumentMouseMove(event) {
     event.preventDefault();
-    let mousePos = getMousePositionOnCanvas(event);
+    const mousePos = getMousePositionOnCanvas(event);
     this.mouse.set((mousePos.x / this.canvas.width) * 2 - 1, -(mousePos.y / this.canvas.height) * 2 + 1);
     this.raycaster.setFromCamera(this.mouse, this.renderer);
-    let objects = [];
-    let intersects = raycaster.intersectObjects(objects);
+    const objects = [];
+    const intersects = raycaster.intersectObjects(objects);
     if (intersects.length > 0) {
-      let intersect = intersects[0];
+      const intersect = intersects[0];
       this.rollOverMesh.position.copy(intersect.point).add(intersect.face.normal);
       this.rollOverMesh.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
     }

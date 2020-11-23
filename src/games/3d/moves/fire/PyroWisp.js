@@ -1,13 +1,13 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
 
 export default class PyroWisp extends BaseMove {
   static getId() {
-    return "pyro_wisp"
+    return 'pyro_wisp';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.speed = 0.01;
     this.numberOfFireball = 4;
@@ -26,26 +26,26 @@ export default class PyroWisp extends BaseMove {
   }
 
   _createFireBallParticle() {
-    let matrix = this.player.playerMesh.getWorldMatrix();
-    let matrixOpponent = this.player.opponent.playerMesh.getWorldMatrix();
-    let start = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    const matrix = this.player.playerMesh.getWorldMatrix();
+    const matrixOpponent = this.player.opponent.playerMesh.getWorldMatrix();
+    const start = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     start.y = 2;
-    let end = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrixOpponent);
+    const end = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrixOpponent);
     end.y = 0;
-    let controlPoint1 = 4 + Math.random() * 4;
-    let controlPoint2 = 4 + Math.random() * 4;
-    let cubicBezierVectors = BABYLON.Curve3.CreateCubicBezier(
+    const controlPoint1 = 4 + Math.random() * 4;
+    const controlPoint2 = 4 + Math.random() * 4;
+    const cubicBezierVectors = BABYLON.Curve3.CreateCubicBezier(
       start,
       new BABYLON.Vector3(0, controlPoint1, 0),
       new BABYLON.Vector3(0, controlPoint1, 0),
       end,
-      60
+      60,
     );
-    let points = cubicBezierVectors.getPoints();
-    let path3d = new BABYLON.Path3D(points);
+    const points = cubicBezierVectors.getPoints();
+    const path3d = new BABYLON.Path3D(points);
     // this.showPath(path3d, 0.5);
-    let emitter = this._createParticle();
-    let curve = path3d.getCurve();
+    const emitter = this._createParticle();
+    const curve = path3d.getCurve();
     let i = 0;
     const update = () => {
       emitter.position.y = curve[i].y;
@@ -58,12 +58,13 @@ export default class PyroWisp extends BaseMove {
 
   showPath(path3d, size) {
     size = size || 0.5;
-    let curve = path3d.getCurve();
-    let tgts = path3d.getTangents();
-    let norms = path3d.getNormals();
-    let binorms = path3d.getBinormals();
-    let vcTgt, vcNorm, vcBinorm;
-    let line = BABYLON.Mesh.CreateLines("curve", curve, this.scene);
+    const curve = path3d.getCurve();
+    const tgts = path3d.getTangents();
+    const norms = path3d.getNormals();
+    const binorms = path3d.getBinormals();
+    let vcTgt; let vcNorm; let
+      vcBinorm;
+    const line = BABYLON.Mesh.CreateLines('curve', curve, this.scene);
     // for (var i = 0; i < curve.length; i++) {
     //   vcTgt = BABYLON.Mesh.CreateLines("tgt" + i, [curve[i], curve[i].add(tgts[i].scale(size))], scene);
     //   vcNorm = BABYLON.Mesh.CreateLines("norm" + i, [curve[i], curve[i].add(norms[i].scale(size))], scene);
@@ -72,14 +73,14 @@ export default class PyroWisp extends BaseMove {
     //   vcNorm.color = BABYLON.Color3.Green();
     //   vcBinorm.color = BABYLON.Color3.Blue();
     // }
-  };
+  }
 
   _createParticle() {
-    let fireBall = BABYLON.Mesh.CreateBox("fist", 0.4, this.scene);
-    let matrix = this.player.playerMesh.getWorldMatrix();
+    const fireBall = BABYLON.Mesh.CreateBox('fist', 0.4, this.scene);
+    const matrix = this.player.playerMesh.getWorldMatrix();
     let isCollision = false;
     fireBall.position = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.emitter = fireBall;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
@@ -87,17 +88,17 @@ export default class PyroWisp extends BaseMove {
 
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
-    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
-    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
-    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, 0.9);
+    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, 0.9);
+    pSystem.colorDead = new BABYLON.Color4(0.5, 0.02, 0, 0.5);
     pSystem.minSize = 0.75;
     pSystem.maxSize = 1.0;
     pSystem.minLifeTime = 0.075;
     pSystem.maxLifeTime = 0.1;
     pSystem.emitRate = 400;
     pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
-    pSystem.direction1 = new BABYLON.Vector3(0, .05, 0);
-    pSystem.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    pSystem.direction1 = new BABYLON.Vector3(0, 0.05, 0);
+    pSystem.direction2 = new BABYLON.Vector3(0, -0.05, 0);
     pSystem.minAngularSpeed = 1.5;
     pSystem.maxAngularSpeed = 2.5;
     pSystem.minEmitPower = 0.4;
@@ -112,7 +113,6 @@ export default class PyroWisp extends BaseMove {
           pSystem.stop();
           fireBall.dispose();
           this.scene.onBeforeRenderObservable.remove(update);
-
         } else {
           for (let i2 = 0, max2 = pSystem.particles.length; i2 < max2; i2 += 1) {
             if (pSystem.particles[i2].age >= (pSystem.particles[i2].lifeTime * 0.05)) {
@@ -130,7 +130,7 @@ export default class PyroWisp extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new PyroWisp(player, effects);
+    const move = new PyroWisp(player, effects);
     move.playMove();
   }
 }

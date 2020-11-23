@@ -1,5 +1,4 @@
-import {ThreeComponent} from "./threeComponent";
-
+import { ThreeComponent } from './threeComponent';
 
 export class ThreeAmbientLight extends ThreeComponent {
   constructor() {
@@ -8,10 +7,10 @@ export class ThreeAmbientLight extends ThreeComponent {
   }
 
   static create({}, props) {
-    let threeAmbientLight = new ThreeAmbientLight();
-    let ambientLight = new window.THREE.AmbientLight(0x000000, 1);
+    const threeAmbientLight = new ThreeAmbientLight();
+    const ambientLight = new window.THREE.AmbientLight(0x000000, 1);
 
-    let hemiLightHelper = new window.THREE.AmbientLight(ambientLight, 10);
+    const hemiLightHelper = new window.THREE.AmbientLight(ambientLight, 10);
     ambientLight.renderer = ambientLight;
     ambientLight.helper = hemiLightHelper;
     return threeAmbientLight;

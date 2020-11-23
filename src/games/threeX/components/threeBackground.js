@@ -1,14 +1,13 @@
-import {ThreeComponent} from "./threeComponent";
-import {getTexture} from "../loaders";
-
+import { ThreeComponent } from './threeComponent';
+import { getTexture } from '../loaders';
 
 export class ThreeBackground extends ThreeComponent {
   constructor() {
     super();
   }
 
-  static create({scene}, props) {
-    let threeBackground = new ThreeBackground();
+  static create({ scene }, props) {
+    const threeBackground = new ThreeBackground();
     let texture;
     if (props.imageUrl) {
       texture = new window.THREE.TextureLoader().load(props.imageUrl);

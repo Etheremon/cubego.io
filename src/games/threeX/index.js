@@ -1,6 +1,10 @@
-import {exportToFacebook, render, stopRender, takeScreenshot} from "./fiber/render";
-import {TYPES} from "./components";
-import {getMaterial, getTexture, loadMaterial, loadTexture} from "./loaders";
+import {
+  exportToFacebook, render, stopRender, takeScreenshot,
+} from './fiber/render';
+import { TYPES } from './components';
+import {
+  getMaterial, getTexture, loadMaterial, loadTexture,
+} from './loaders';
 
 export const MeshContainer = TYPES.MESH_CONTAINER;
 export const PerspectiveCamera = TYPES.PERSPECTIVE_CAMERA;
@@ -16,7 +20,9 @@ export const AmbientLight = TYPES.AMBIENT_LIGHT;
 export const DirectionalLight = TYPES.DIRECTION_LIGHT;
 export const Background = TYPES.BACKGROUND;
 
-const Tools = {takeScreenshot, exportToFacebook};
+const Tools = { takeScreenshot, exportToFacebook };
 
-const ThreeX = {render, loadMaterial, getMaterial, stopRender, Tools, loadTexture, getTexture};
+const ThreeX = {
+  render, loadMaterial, getMaterial, stopRender, Tools, loadTexture, getTexture,
+};
 export default ThreeX;

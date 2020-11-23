@@ -1,11 +1,7 @@
-import React from "react";
+import React from 'react';
 
-require("style-loader!./Icon.scss");
+require('style-loader!./Icon.scss');
 
-
-export const Icon = ({name}) => {
-  return (
-    <i className={`${name}`}/>
-  );
-};
-
+export const Icon = ({ name }) => (
+  <i className={`${name}`} />
+);

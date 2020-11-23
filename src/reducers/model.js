@@ -1,16 +1,16 @@
-import {combineReducers} from "redux";
-import {CloneDeep, ConvertToArray} from "../utils/objUtils";
-import * as LS from "../services/localStorageService";
-import {ModelActions} from "../actions/model";
-import * as LogicUtils from "../utils/logicUtils";
+import { combineReducers } from 'redux';
+import { CloneDeep, ConvertToArray } from '../utils/objUtils';
+import * as LS from '../services/localStorageService';
+import { ModelActions } from '../actions/model';
+import * as LogicUtils from '../utils/logicUtils';
 
 // Note: Always store simplified models
 const savedModelState = ConvertToArray(LS.GetItem(LS.Fields.savedModel));
 
-const savedModel = (state=savedModelState, action) => {
+const savedModel = (state = savedModelState, action) => {
   switch (action.type) {
     case ModelActions.SAVE_MODEL.init.key:
-      let savedModel = CloneDeep(LogicUtils.GetSimplifiedModel(action.model));
+      const savedModel = CloneDeep(LogicUtils.GetSimplifiedModel(action.model));
 
       let newState;
 
@@ -18,7 +18,7 @@ const savedModel = (state=savedModelState, action) => {
         newState = [
           ...state.slice(0, action.modelIndex),
           savedModel,
-          ...state.slice(action.modelIndex + 1)
+          ...state.slice(action.modelIndex + 1),
         ];
       } else {
         newState = [...state, savedModel];
@@ -27,9 +27,9 @@ const savedModel = (state=savedModelState, action) => {
       return newState;
 
     case ModelActions.DELETE_MODEL.init.key:
-      let newState2 = [
+      const newState2 = [
         ...state.slice(0, action.modelIndex),
-        ...state.slice(action.modelIndex + 1)
+        ...state.slice(action.modelIndex + 1),
       ];
 
       LS.SetItem(LS.Fields.savedModel, newState2);
@@ -40,13 +40,13 @@ const savedModel = (state=savedModelState, action) => {
   }
 };
 
-const validatedModel = (state=null, action) => {
+const validatedModel = (state = null, action) => {
   switch (action.type) {
     case ModelActions.VALIDATE_MODEL.success.key:
       return {
         model: {
           ...action.model,
-          spaceSize: {...action.model.modelSize}
+          spaceSize: { ...action.model.modelSize },
         },
         structure: action.structure,
         stats: action.stats,
@@ -58,8 +58,7 @@ const validatedModel = (state=null, action) => {
   }
 };
 
-
 export const model = combineReducers({
-  savedModel: savedModel,
-  validatedModel: validatedModel,
+  savedModel,
+  validatedModel,
 });

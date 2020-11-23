@@ -1,4 +1,4 @@
-import {ThreeComponent} from "./threeComponent";
+import { ThreeComponent } from './threeComponent';
 
 export class ThreeObject3DComponent extends ThreeComponent {
   destroy() {

@@ -1,11 +1,11 @@
-import {BaseMove} from "../BaseMove";
+import { BaseMove } from '../BaseMove';
 
 export default class Tackle extends BaseMove {
   static getId() {
-    return "tackle"
+    return 'tackle';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.damage = damage;
   }
@@ -19,7 +19,7 @@ export default class Tackle extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new Tackle(player, effects);
+    const move = new Tackle(player, effects);
     move.playMove();
   }
 }

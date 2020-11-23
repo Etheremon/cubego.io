@@ -14,7 +14,7 @@ export class BabylonComponent {
 
   setProps(props) {
     this.props = {};
-    for (let key in props) {
+    for (const key in props) {
       if (props.hasOwnProperty(key)) {
         this.props[key] = props[key];
       }

@@ -1,4 +1,4 @@
-import {emptyFnc} from "../../utils";
+import { emptyFnc } from '../../utils';
 
 export const cloneInstance = emptyFnc('cloneInstance');
 export const createContainerChildSet = emptyFnc('createContainerChildSet');

@@ -1,4 +1,4 @@
-import {emptyFnc} from "../utils";
+import { emptyFnc } from '../utils';
 
 export const canHydrateInstance = emptyFnc('canHydrateInstance');
 export const canHydrateTextInstance = emptyFnc('canHydrateTextInstance');

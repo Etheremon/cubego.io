@@ -1,13 +1,13 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
 
 export default class FireBreath extends BaseMove {
   static getId() {
-    return "fire_breath"
+    return 'fire_breath';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.damage = damage;
   }
@@ -20,8 +20,8 @@ export default class FireBreath extends BaseMove {
   }
 
   _createFireBreathParticle() {
-    let fountain = this.player.playerMesh;
-    let smokeSystem = new BABYLON.ParticleSystem("particles", 1000, this.scene);
+    const fountain = this.player.playerMesh;
+    const smokeSystem = new BABYLON.ParticleSystem('particles', 1000, this.scene);
     // smokeSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
     smokeSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
     smokeSystem.emitter = fountain;
@@ -29,8 +29,8 @@ export default class FireBreath extends BaseMove {
     smokeSystem.minEmitBox = new BABYLON.Vector3(-0.2, 1.5, 1.5);
     smokeSystem.maxEmitBox = new BABYLON.Vector3(0.2, 1, 1.5);
 
-    smokeSystem.color1 = new BABYLON.Color4(0.02, 0.02, 0.02, .02);
-    smokeSystem.color2 = new BABYLON.Color4(0.02, 0.02, 0.02, .02);
+    smokeSystem.color1 = new BABYLON.Color4(0.02, 0.02, 0.02, 0.02);
+    smokeSystem.color2 = new BABYLON.Color4(0.02, 0.02, 0.02, 0.02);
     smokeSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
     smokeSystem.minSize = 1;
@@ -57,11 +57,10 @@ export default class FireBreath extends BaseMove {
 
     smokeSystem.start();
 
-    let fireSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const fireSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
 
     // fireSystem.particleTexture = new BABYLON.Texture(require("../../../../shared/particles/textures/cube.png"), this.scene);
     fireSystem.particleTexture = BabylonX.loaders.get('particle_cube').clone();
-
 
     fireSystem.emitter = fountain;
 
@@ -102,7 +101,7 @@ export default class FireBreath extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new FireBreath(player, effects);
+    const move = new FireBreath(player, effects);
     move.playMove();
   }
 }

@@ -3,13 +3,13 @@ const emptyFnc = (name) => () => {
   console.log(name);
 };
 
-const cutHex = (h) => h.charAt(0) === "0" && h.charAt(1) === "x" ? h.substring(2, 8) : h;
+const cutHex = (h) => (h.charAt(0) === '0' && h.charAt(1) === 'x' ? h.substring(2, 8) : h);
 
 const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerElement) => {
   let updatePayload = null;
 
-  let lastProps = lastRawProps;
-  let nextProps = nextRawProps;
+  const lastProps = lastRawProps;
+  const nextProps = nextRawProps;
   let propKey;
 
   for (propKey in lastProps) {
@@ -37,4 +37,4 @@ const diffProps = (element, type, lastRawProps, nextRawProps, rootContainerEleme
   return updatePayload;
 };
 
-export {emptyFnc, diffProps}
+export { emptyFnc, diffProps };

@@ -1,16 +1,16 @@
-import {ThreeMeshContainer} from "./threeMeshContainer";
-import {ThreePerspectiveCamera} from "./threePerspectiveCamera";
-import {ThreeGrid} from "./threeGrid";
-import {ThreeHemisphereLight} from "./threeHemisphereLight";
-import {ThreeMeshBox} from "./threeMeshBox";
-import {ThreeAxis} from "./threeAxis";
-import {ThreeBox3Helper} from "./threeBox3Helper";
-import {ThreeOrthographicCamera} from "./threeOrthographicCamera";
-import {ThreePointLight} from "./threePointLight";
-import {ThreePlane} from "./threePlane";
-import {ThreeAmbientLight} from "./threeAmbientLight";
-import {ThreeDirectionalLight} from "./threeDirectionalLight";
-import {ThreeBackground} from "./threeBackground";
+import { ThreeMeshContainer } from './threeMeshContainer';
+import { ThreePerspectiveCamera } from './threePerspectiveCamera';
+import { ThreeGrid } from './threeGrid';
+import { ThreeHemisphereLight } from './threeHemisphereLight';
+import { ThreeMeshBox } from './threeMeshBox';
+import { ThreeAxis } from './threeAxis';
+import { ThreeBox3Helper } from './threeBox3Helper';
+import { ThreeOrthographicCamera } from './threeOrthographicCamera';
+import { ThreePointLight } from './threePointLight';
+import { ThreePlane } from './threePlane';
+import { ThreeAmbientLight } from './threeAmbientLight';
+import { ThreeDirectionalLight } from './threeDirectionalLight';
+import { ThreeBackground } from './threeBackground';
 
 const TYPES = {
   MESH_CONTAINER: 'MESH_CONTAINER',
@@ -25,10 +25,10 @@ const TYPES = {
   PLANE: 'PLANE',
   AMBIENT_LIGHT: 'AMBIENT_LIGHT',
   DIRECTION_LIGHT: 'DIRECTION_LIGHT',
-  BACKGROUND: 'BACKGROUND'
+  BACKGROUND: 'BACKGROUND',
 };
 
-let mappingComponents = {};
+const mappingComponents = {};
 mappingComponents[TYPES.MESH_CONTAINER] = ThreeMeshContainer;
 mappingComponents[TYPES.PERSPECTIVE_CAMERA] = ThreePerspectiveCamera;
 mappingComponents[TYPES.GRID] = ThreeGrid;
@@ -43,8 +43,6 @@ mappingComponents[TYPES.AMBIENT_LIGHT] = ThreeAmbientLight;
 mappingComponents[TYPES.DIRECTION_LIGHT] = ThreeDirectionalLight;
 mappingComponents[TYPES.BACKGROUND] = ThreeBackground;
 
-const createComponent = (type, props, rootContainerInstance) => {
-  return mappingComponents[type].create(rootContainerInstance, props);
-};
+const createComponent = (type, props, rootContainerInstance) => mappingComponents[type].create(rootContainerInstance, props);
 
-export {createComponent, TYPES};
+export { createComponent, TYPES };

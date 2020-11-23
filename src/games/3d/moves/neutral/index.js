@@ -1,6 +1,6 @@
-import Tackle from "./Tackle";
-import GuardianShield from "./GuardianShield";
-import MilkDrink from "./MilkDrink";
+import Tackle from './Tackle';
+import GuardianShield from './GuardianShield';
+import MilkDrink from './MilkDrink';
 
 const NeutralMove = {
   Tackle,

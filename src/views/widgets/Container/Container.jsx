@@ -1,14 +1,16 @@
-import React from "react"
-import PropTypes from "prop-types";
-import {GetValues} from "../../../utils/objUtils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { GetValues } from '../../../utils/objUtils';
 
-require("style-loader!./Container.scss");
+require('style-loader!./Container.scss');
 
-export const Container = ({className, children, size, text, id}) => {
+export const Container = ({
+  className, children, size, text, id,
+}) => {
   if (text) size = Container.sizes.SMALL;
 
   return (
-    <div className={`widget__container ${className} ${size}`} id={`${id ? id : null}`}>
+    <div className={`widget__container ${className} ${size}`} id={`${id || null}`}>
       {children}
     </div>
   );

@@ -1,12 +1,12 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
 
 export default class MilkDrink extends BaseMove {
   static getId() {
-    return "milk_drink"
+    return 'milk_drink';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.damage = damage;
   }
@@ -20,13 +20,13 @@ export default class MilkDrink extends BaseMove {
   }
 
   _createMilkAnimation() {
-    let spriteManagerPlayer = new BABYLON.SpriteManager("milkSprite", require("../../../../shared/spritesheet/bottle.png"), 2, {
+    const spriteManagerPlayer = new BABYLON.SpriteManager('milkSprite', require('../../../../shared/spritesheet/bottle.png'), 2, {
       width: 128,
-      height: 128
+      height: 128,
     }, this.player.scene);
-    let milk = new BABYLON.Sprite("player", spriteManagerPlayer);
-    let startMatrix = this.player.playerMesh.getWorldMatrix();
-    let startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
+    const milk = new BABYLON.Sprite('player', spriteManagerPlayer);
+    const startMatrix = this.player.playerMesh.getWorldMatrix();
+    const startPosition = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), startMatrix);
     const update = () => {
       if (milk.size < 4) {
         milk.size += time;
@@ -45,7 +45,7 @@ export default class MilkDrink extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new MilkDrink(player, effects);
+    const move = new MilkDrink(player, effects);
     move.playMove();
   }
 }

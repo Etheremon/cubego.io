@@ -1,4 +1,4 @@
-import {BabylonComponent} from "./babylonComponent";
+import { BabylonComponent } from './babylonComponent';
 
 export class BabylonGUIComponent extends BabylonComponent {
   constructor() {

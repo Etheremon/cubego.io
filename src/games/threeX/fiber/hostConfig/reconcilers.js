@@ -1,4 +1,4 @@
-import {emptyFnc} from "../utils";
+import { emptyFnc } from '../utils';
 
 export const getPublicInstance = emptyFnc('getPublicInstance');
 export const getRootHostContext = emptyFnc('getRootHostContext');

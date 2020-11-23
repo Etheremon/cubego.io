@@ -1,4 +1,4 @@
-import {FiberNode} from "../fiber/FiberNode";
+import { FiberNode } from '../fiber/FiberNode';
 
 export class ThreeComponent extends FiberNode {
   constructor() {
@@ -44,7 +44,7 @@ export class ThreeComponent extends FiberNode {
 
   setProps(props) {
     this.props = {};
-    for (let key in props) {
+    for (const key in props) {
       if (props.hasOwnProperty(key)) {
         this.props[key] = props[key];
       }

@@ -1,7 +1,7 @@
-import RockThrow from "./RockThrow";
+import RockThrow from './RockThrow';
 
 const EarthMove = {
-  RockThrow
+  RockThrow,
 };
 
 export default EarthMove;

@@ -1,13 +1,13 @@
-import {BaseMove} from "../BaseMove";
-import * as BABYLON from "babylonjs";
-import BabylonX from "../../../babylonX";
+import * as BABYLON from 'babylonjs';
+import { BaseMove } from '../BaseMove';
+import BabylonX from '../../../babylonX';
 
 export default class AirSlash extends BaseMove {
   static getId() {
-    return "air_slash"
+    return 'air_slash';
   }
 
-  constructor(player, {damage}) {
+  constructor(player, { damage }) {
     super(player);
     this.speed = 0.01;
     this.damage = damage;
@@ -21,10 +21,10 @@ export default class AirSlash extends BaseMove {
   }
 
   _createScratchParticle() {
-    let matrix = this.player.opponent.playerMesh.getWorldMatrix();
-    let emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
+    const matrix = this.player.opponent.playerMesh.getWorldMatrix();
+    const emitter = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, 0), matrix);
     emitter.y = 1.5;
-    let pSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+    const pSystem = new BABYLON.ParticleSystem('particles', 2000, this.scene);
     pSystem.emitter = emitter;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
@@ -34,7 +34,7 @@ export default class AirSlash extends BaseMove {
     pSystem.maxInitialRotation = 4;
     pSystem.color1 = new BABYLON.Color4(0.0, 0.95, 1, 1);
     pSystem.color2 = new BABYLON.Color4(0.0, 0.9, 1, 1);
-    pSystem.colorDead = new BABYLON.Color4(0, .06, 1, .5);
+    pSystem.colorDead = new BABYLON.Color4(0, 0.06, 1, 0.5);
     pSystem.minSize = 5.0;
     pSystem.maxSize = 5.0;
     pSystem.minLifeTime = 3;
@@ -55,7 +55,7 @@ export default class AirSlash extends BaseMove {
   }
 
   static play(player, effects) {
-    let move = new AirSlash(player, effects);
+    const move = new AirSlash(player, effects);
     move.playMove();
   }
 }

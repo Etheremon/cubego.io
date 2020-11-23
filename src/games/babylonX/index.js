@@ -1,15 +1,16 @@
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
-import {renderer as BabylonRenderer} from "./renderer/index";
-import {TYPES} from './components';
-import {BabylonMeshContainer} from "./components/babylonMeshContainer";
-import {LoadingScreen} from "./loader/LoadingScreen";
-import {_createAssetsManager} from './loader';
-import loaders from "./loader";
-import {isWebGLAvailable} from "./utils";
+import { renderer as BabylonRenderer } from './renderer/index';
+import { TYPES } from './components';
+import { BabylonMeshContainer } from './components/babylonMeshContainer';
+import { LoadingScreen } from './loader/LoadingScreen';
+import loaders, { _createAssetsManager } from './loader';
+
+import { isWebGLAvailable } from './utils';
 
 let rootContainer = null;
-let scene, engine;
+let scene; let
+  engine;
 let loopStarted = false;
 let root = null;
 let loadingScreen = null;
@@ -19,7 +20,7 @@ const createRenderer = (canvas, options) => {
   loadingScreen = new LoadingScreen(canvas);
   engine.loadingScreen = loadingScreen;
   scene = new BABYLON.Scene(engine);
-  root = BabylonMeshContainer.create(scene, {name: 'root', position: {x: 0, y: 0, z: 0}});
+  root = BabylonMeshContainer.create(scene, { name: 'root', position: { x: 0, y: 0, z: 0 } });
   root.scene = scene;
   root.engine = engine;
   root.canvas = canvas;
@@ -70,7 +71,6 @@ const switchFullScreen = () => {
   engine.switchFullscreen(true);
 };
 
-
 export const MeshSphere = TYPES.MESH_SPHERE;
 export const MeshCylinder = TYPES.MESH_CYLINDER;
 export const MeshBox = TYPES.MESH_BOX;
@@ -84,7 +84,7 @@ export const DirectionLight = TYPES.DIRECTION_LIGHT;
 export const Animation = TYPES.ANIMATION;
 export const Plane = TYPES.PLANE;
 export const Skybox = TYPES.SKY_BOX;
-export const GUI = TYPES.GUI;
+export const { GUI } = TYPES;
 export const GUISimpleButton = TYPES.GUI_SIMPLE_BUTTON;
 export const GUIImageButton = TYPES.GUI_IMAGE_BUTTON;
 export const GUIImage = TYPES.GUI_IMAGE;
@@ -92,5 +92,7 @@ export const HTMLGUIButton = TYPES.CASTOR_GUI_BUTTON;
 export const HTMLGUIImage = TYPES.CASTOR_GUI_TEXTURE;
 export const HTMLGUIText = TYPES.CASTOR_GUI_TEXT;
 
-const BabylonX = {render, loaders, stopRender, switchFullScreen};
+const BabylonX = {
+  render, loaders, stopRender, switchFullScreen,
+};
 export default BabylonX;

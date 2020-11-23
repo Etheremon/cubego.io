@@ -1,6 +1,6 @@
-import * as BABYLON from "babylonjs";
+import * as BABYLON from 'babylonjs';
 
-let loaderStorage = {};
+const loaderStorage = {};
 let assetsManager = null;
 
 export function _createAssetsManager(scene, startFnc) {
@@ -10,29 +10,29 @@ export function _createAssetsManager(scene, startFnc) {
 
 function addMesh(id, root, file) {
   return new Promise((resolve, reject) => {
-    let task = assetsManager.addMeshTask(id, "", root, file);
+    const task = assetsManager.addMeshTask(id, '', root, file);
     task.onSuccess = (taskData) => {
       loaderStorage[id] = taskData;
-      resolve(taskData)
+      resolve(taskData);
     };
     task.onError = (taskData, message, exception) => {
       console.error(message);
-      reject(message)
-    }
+      reject(message);
+    };
   });
 }
 
 function addTexture(id, url) {
   return new Promise((resolve, reject) => {
-    let task = assetsManager.addTextureTask(id, url);
+    const task = assetsManager.addTextureTask(id, url);
     task.onSuccess = (taskData) => {
       loaderStorage[id] = taskData.texture;
-      resolve(taskData)
+      resolve(taskData);
     };
     task.onError = (taskData, message, exception) => {
       console.error(message);
-      reject(message)
-    }
+      reject(message);
+    };
   });
 }
 
@@ -48,7 +48,7 @@ const loaders = {
   addMesh,
   addTexture,
   load,
-  get
+  get,
 };
 
 export default loaders;

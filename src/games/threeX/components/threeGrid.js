@@ -1,28 +1,28 @@
-import {ThreeObject3DComponent} from "./threeObject3DComponent";
+import { ThreeObject3DComponent } from './threeObject3DComponent';
 
 export class ThreeGrid extends ThreeObject3DComponent {
-  static create({scene}, props) {
-    let threeGrid = new ThreeGrid();
+  static create({ scene }, props) {
+    const threeGrid = new ThreeGrid();
 
-    let config = {
+    const config = {
       height: props.height || 500,
       width: props.width || 500,
       linesHeight: props.linesHeight || 10,
       linesWidth: props.linesWidth || 10,
-      color: props.color || 0xffffff
+      color: props.color || 0xffffff,
     };
 
-    let material = new window.THREE.LineBasicMaterial({vertexColors: THREE.VertexColors});
+    const material = new window.THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
 
-    let gridGeo = new window.THREE.BufferGeometry(),
-      stepw = 2 * config.width / config.linesWidth,
-      steph = 2 * config.height / config.linesHeight;
+    const gridGeo = new window.THREE.BufferGeometry();
+    const stepw = 2 * config.width / config.linesWidth;
+    const steph = 2 * config.height / config.linesHeight;
 
-    //width
+    // width
     let j = 0;
-    let colors = [];
-    let color = new window.THREE.Color(config.color);
-    let vertices = [];
+    const colors = [];
+    const color = new window.THREE.Color(config.color);
+    const vertices = [];
     for (let i = -config.width; i <= config.width; i += stepw) {
       vertices.push(-config.height, 0, i, config.height, 0, i);
       color.toArray(colors, j);
@@ -30,7 +30,7 @@ export class ThreeGrid extends ThreeObject3DComponent {
       color.toArray(colors, j);
       j += 3;
     }
-    //height
+    // height
     for (let i = -config.height; i <= config.height; i += steph) {
       vertices.push(i, 0, -config.width, i, 0, config.width);
       color.toArray(colors, j);
@@ -40,7 +40,7 @@ export class ThreeGrid extends ThreeObject3DComponent {
     }
     gridGeo.addAttribute('position', new window.THREE.Float32BufferAttribute(vertices, 3));
     gridGeo.addAttribute('color', new window.THREE.Float32BufferAttribute(colors, 3));
-    let line = new window.THREE.LineSegments(gridGeo, material);
+    const line = new window.THREE.LineSegments(gridGeo, material);
     if (props.position) {
       line.position.set(props.position.x, props.position.y, props.position.z);
     }

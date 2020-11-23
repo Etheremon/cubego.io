@@ -1,8 +1,10 @@
-import now from "performance-now";
-import {commitMount, commitTextUpdate, resetTextContent} from "./mutations";
-import {createTextInstance, prepareForCommit} from "./reconcilers";
-import {applyProps, diffProps, emptyFnc, filterByKey, including, loggerFnc} from "../utils";
-import {createComponent} from "../../components";
+import now from 'performance-now';
+import { commitMount, commitTextUpdate, resetTextContent } from './mutations';
+import { createTextInstance, prepareForCommit } from './reconcilers';
+import {
+  applyProps, diffProps, emptyFnc, filterByKey, including, loggerFnc,
+} from '../utils';
+import { createComponent } from '../../components';
 
 const createInstance = (type, props, rootContainerInstance, hostContext, internalInstanceHandle) => {
   loggerFnc('createInstance')();
@@ -33,25 +35,15 @@ const commitUpdate = (instance, updatePayload, type, lastRawProps, nextRawProps,
   applyProps(instance, oldProps, newProps);
 };
 
-const shouldSetTextContent = () => {
-  return false;
-};
+const shouldSetTextContent = () => false;
 
-const finalizeInitialChildren = () => {
-  return false;
-};
+const finalizeInitialChildren = () => false;
 
-const getChildHostContext = () => {
-  return {};
-};
+const getChildHostContext = () => ({});
 
-const getRootHostContext = () => {
-  return {};
-};
+const getRootHostContext = () => ({});
 
-const getPublicInstance = (inst) => {
-  return inst;
-};
+const getPublicInstance = (inst) => inst;
 
 const insertBefore = (parentInstance, child, beforeChild) => {
   loggerFnc('insertBefore')();
@@ -63,29 +55,29 @@ const resetAfterCommit = () => {
 };
 
 const hostConfig = {
-  now: now,
+  now,
   appendInitialChild: appendChild,
-  createInstance: createInstance,
-  createTextInstance: createTextInstance,
-  finalizeInitialChildren: finalizeInitialChildren,
-  getChildHostContext: getChildHostContext,
-  getRootHostContext: getRootHostContext,
-  getPublicInstance: getPublicInstance,
-  insertBefore: insertBefore,
+  createInstance,
+  createTextInstance,
+  finalizeInitialChildren,
+  getChildHostContext,
+  getRootHostContext,
+  getPublicInstance,
+  insertBefore,
   insertInContainerBefore: insertBefore,
-  prepareForCommit: prepareForCommit,
-  prepareUpdate: prepareUpdate,
-  resetAfterCommit: resetAfterCommit,
-  resetTextContent: resetTextContent,
-  shouldSetTextContent: shouldSetTextContent,
+  prepareForCommit,
+  prepareUpdate,
+  resetAfterCommit,
+  resetTextContent,
+  shouldSetTextContent,
   supportsMutation: true,
-  //Mutations
-  commitUpdate: commitUpdate,
-  commitMount: commitMount,
-  commitTextUpdate: commitTextUpdate,
-  appendChild: appendChild,
+  // Mutations
+  commitUpdate,
+  commitMount,
+  commitTextUpdate,
+  appendChild,
   appendChildToContainer: appendChild,
-  removeChild: removeChild,
+  removeChild,
   removeChildFromContainer: removeChild,
 };
 

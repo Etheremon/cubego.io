@@ -1,16 +1,14 @@
-import React from "react"
-import PropTypes from "prop-types";
-import {GetValues} from "../../../utils/objUtils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { GetValues } from '../../../utils/objUtils';
 
-require("style-loader!./PageWrapper.scss");
+require('style-loader!./PageWrapper.scss');
 
-export const PageWrapper = ({className, children, type}) => {
-  return (
-    <div className={`widget__page-wrapper ${className} ${type}`}>
-      {children}
-    </div>
-  );
-};
+export const PageWrapper = ({ className, children, type }) => (
+  <div className={`widget__page-wrapper ${className} ${type}`}>
+    {children}
+  </div>
+);
 
 PageWrapper.types = {
   NORMAL: 'normal',

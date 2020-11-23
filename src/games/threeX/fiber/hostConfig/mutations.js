@@ -1,4 +1,4 @@
-import {emptyFnc} from "../utils";
+import { emptyFnc } from '../utils';
 
 export const appendChild = emptyFnc('appendChild');
 export const appendChildToContainer = emptyFnc('appendChildToContainer');

@@ -1,51 +1,50 @@
 const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
 const path = require('path');
+const common = require('./webpack.common.js');
+
 const APP_DIR = path.resolve(__dirname, 'src');
 
-module.exports = env => {
-  return (
-    merge(common(env), {
-      module: {
-        rules: [{
-          test: /\.s?[ac]ss$/,
-          include: APP_DIR,
-          use: [{
-            loader: 'style-loader'
-          }, {
-            loader: 'css-loader',
-            options: {
-              minimize: true,
-              sourceMap: true,
-            }
-          }, {
-            loader: "sass-loader"
-          }]
+module.exports = (env) => (
+  merge(common(env), {
+    module: {
+      rules: [{
+        test: /\.s?[ac]ss$/,
+        include: APP_DIR,
+        use: [{
+          loader: 'style-loader',
         }, {
-          loader: "raw-loader",
-          test: /\.obj$/,
-        }]
-      },
+          loader: 'css-loader',
+          options: {
+            minimize: true,
+            sourceMap: true,
+          },
+        }, {
+          loader: 'sass-loader',
+        }],
+      }, {
+        loader: 'raw-loader',
+        test: /\.obj$/,
+      }],
+    },
 
-      optimization: {
-        splitChunks: {
-          cacheGroups: {
-            vendor: {
-              chunks: 'initial',
-              name: 'vendor',
-              test: 'vendor',
-              enforce: true
-            },
-          }
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            chunks: 'initial',
+            name: 'vendor',
+            test: 'vendor',
+            enforce: true,
+          },
         },
-        runtimeChunk: true
       },
+      runtimeChunk: true,
+    },
 
-      devtool: 'inline-source-map',
+    devtool: 'inline-source-map',
 
-      plugins: [],
+    plugins: [],
 
-      mode: 'development',
-    })
-  );
-};
+    mode: 'development',
+  })
+);

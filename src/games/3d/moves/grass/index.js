@@ -1,9 +1,9 @@
-import LeafThrow from "./LeafThrow";
-import SeedGun from "./SeedGun";
+import LeafThrow from './LeafThrow';
+import SeedGun from './SeedGun';
 
 const AirMove = {
   LeafThrow,
-  SeedGun
+  SeedGun,
 };
 
 export default AirMove;
