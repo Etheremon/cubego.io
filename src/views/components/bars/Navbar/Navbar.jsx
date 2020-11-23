@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 
-import {getActiveLanguage, getTranslate, setActiveLanguage} from 'react-localize-redux';
+import {getTranslate, setActiveLanguage} from 'react-localize-redux';
 
 import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx'
 
@@ -11,26 +11,13 @@ import PropTypes from "prop-types";
 import {URLS} from "../../../../constants/general";
 import {Image} from "../../Image/Image.jsx";
 import {Container} from "../../../widgets/Container/Container.jsx";
-import { Icon } from "../../Icon/Icon.jsx";
 import withRouter from "react-router-dom/es/withRouter";
-import {GetFeed, GetLoggedInUserId, GetUserInfo} from "../../../../reducers/selectors";
-import * as Utils from "../../../../utils/utils";
 import Link from "react-router-dom/es/Link";
 
 require("style-loader!./Navbar.scss");
 
-const NavbarTextList = [
-  // {link: `/${URLS.ABOUT_US}`, text: 'about_us'},
-  // {link: `/${URLS.GUIDE}`, text: 'game_intro'},
-];
-
 const NavbarList = [
-  {link: `/${URLS.GUIDE}`, text: 'game_intro', img: 'icon_intro'},
   {link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build'},
-  {link: `/${URLS.GALLERY}`, text: 'gallery', img: 'icon_gallery'},
-  {link: `/${URLS.INVENTORY}`, text: 'inventory', img: 'icon_my_heroes'},
-  {link: `/${URLS.STORE}`, text: 'store', img: 'icon_store'},
-  {link: `/${URLS.MARKET}`, text: 'market', img: 'icon_market'},
   {link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle'},
 ];
 
@@ -158,11 +145,8 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = (store) => {
-  let userId = GetLoggedInUserId(store);
   return {
     _t: getTranslate(store.localeReducer),
-    currentLanguage: getActiveLanguage(store.localeReducer),
-    userId,
   };
 };
 
@@ -176,7 +160,6 @@ const mapDispatchToProps = (dispatch) => ({
 Navbar.defaultProps = {
   transforming: false,
   fixed: true,
-  noti: '',
   minifying: false,
 };
 
@@ -185,7 +168,6 @@ Navbar.propTypes = {
   minifying: PropTypes.bool,
   size: PropTypes.string,
   fixed: PropTypes.bool,
-  noti: PropTypes.string,
 };
 
 export default withRouter(connect(
