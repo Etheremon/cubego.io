@@ -14,8 +14,6 @@ import {
 import { EmptyCubegonList } from '../../../views/containers/EmptyView/EmptyView.jsx';
 import { GetImageFromGonID, GetModelFromStructure } from '../../../utils/logicUtils';
 import Loading from '../../../views/components/Loading/Loading.jsx';
-import { UserActions } from '../../../actions/user';
-import { CubegonActions } from '../../../actions/cubegon';
 import { URLS } from '../../../constants/general';
 
 require('style-loader!./Battle.scss');
@@ -43,11 +41,9 @@ class _Battle extends Component {
       gon2Id = item.id;
     }
     this.props.history.push(`/${URLS.BATTLE}/${gon1Id}/${gon2Id}`);
-    this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({ gonId: item.id, forceUpdate: false }));
   }
 
   componentDidMount() {
-    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.init.func({ userId: this.props.userId, forceUpdate: true }));
     this.voxel = BabylonX.render(<VoxBattle
       battle={this.state.battle}
       changeCubegon={this.toggleCubegonSelect}
@@ -60,8 +56,6 @@ class _Battle extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(UserActions.LOAD_USER_CUBEGON.stop.func({ userId: this.props.userId }));
-
     if (this.voxel) {
       BabylonX.stopRender();
       this.voxel.destroy();
@@ -69,7 +63,7 @@ class _Battle extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps) {
     if (!this.props.selectedGon1Info || nextProps.match.params.gon1Id !== this.props.match.params.gon1Id) {
       this.setPlayer1Data(nextProps);
     }
@@ -101,7 +95,11 @@ class _Battle extends Component {
   loadModel() {
     const parser = new window.vox.Parser();
 
-    if (!this.props.match.params.gon1Id || this.props.match.params.gon1Id === '-1' || isNaN(this.props.match.params.gon1Id)) {
+    if (
+      !this.props.match.params.gon1Id
+      || this.props.match.params.gon1Id === '-1'
+      || Number.isNaN(this.props.match.params.gon1Id)
+    ) {
       parser.parse(require('../../../shared/sample_models/batman.vox')).then((data) => {
         this.voxel.setPlayer(1, {
           model: data,
@@ -111,13 +109,13 @@ class _Battle extends Component {
       });
     } else {
       this.setPlayer1Data(this.props);
-      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({
-        gonId: this.props.match.params.gon1Id,
-        forceUpdate: true,
-      }));
     }
 
-    if (!this.props.match.params.gon2Id || this.props.match.params.gon2Id === '-1' || isNaN(this.props.match.params.gon2Id)) {
+    if (
+      !this.props.match.params.gon2Id
+      || this.props.match.params.gon2Id === '-1'
+      || Number.isNaN(this.props.match.params.gon2Id)
+    ) {
       parser.parse(require('../../../shared/sample_models/iron_man.vox')).then((data) => {
         this.voxel.setPlayer(0, {
           model: data,
@@ -127,10 +125,6 @@ class _Battle extends Component {
       });
     } else {
       this.setPlayer2Data(this.props);
-      this.props.dispatch(CubegonActions.LOAD_CUBEGON_INFO.init.func({
-        gonId: this.props.match.params.gon2Id,
-        forceUpdate: true,
-      }));
     }
   }
 

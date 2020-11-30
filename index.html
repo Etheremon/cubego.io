@@ -18,7 +18,7 @@
   <!-- END Facebook OG Tag -->
 
   <!-- Favicon -->
-  <link rel="icon" href="/assets/images/icon.ico?v=3">
+  <link rel="icon" href="assets/images/icon.ico?v=3">
 
   <!-- Details -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,15 +36,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
   <script src="https://cdn.rawgit.com/daishihmr/vox.js/1.0.3/build/vox.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
-  <script src="/assets/lib/three.Projector.js"></script>
-  <script src="/assets/lib/three.gltfExporter.js"></script>
-  <script src="/assets/lib/three.canvasRenderer.js"></script>
-  <script src="/assets/lib/OrbitControls.js"></script>
+  <script src="assets/lib/three.Projector.js"></script>
+  <script src="assets/lib/three.gltfExporter.js"></script>
+  <script src="assets/lib/three.canvasRenderer.js"></script>
+  <script src="assets/lib/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
   <!-- End Libs -->
 
   <!-- Internal CSS-->
-  <link rel="stylesheet" href="/styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
+  <link rel="stylesheet" href="styles.css?v=<%= htmlWebpackPlugin.options.customHash %>">
   <!-- End Internal CSS-->
 </head>
 
@@ -91,23 +91,23 @@
       window.clearInterval(startFuncInterval);
 
       var script1 = document.createElement('script');
-      script1.src = "/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      script1.src = "runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
       document.body.appendChild(script1);
 
       var script2 = document.createElement('script');
-      script2.src = "/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      script2.src = "vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
       document.body.appendChild(script2);
 
       var script3 = document.createElement('script');
-      script3.src = "/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
+      script3.src = "app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>";
       document.body.appendChild(script3);
     };
     startFuncInterval = window.setInterval(startFunc, 100);
     startFunc();
   </script>
-  <script src="/runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
-  <script src="/vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
-  <script src="/app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script src="runtime~app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script src="vendor.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
+  <script src="app.bundle.js?v=<%= htmlWebpackPlugin.options.customHash %>" type="text/javascript"></script>
   <!-- End Bundles
 </body>
 

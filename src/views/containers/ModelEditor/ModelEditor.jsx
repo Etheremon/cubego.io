@@ -38,8 +38,6 @@ import * as LogicUtils from '../../../utils/logicUtils';
 
 import * as Config from '../../../config';
 import { Image } from '../../components/Image/Image.jsx';
-import { UserActions } from '../../../actions/user';
-import { CubegonActions } from '../../../actions/cubegon';
 import { ImportFromFile } from '../../widgets/FileInput/FileInput.jsx';
 import { TextImage } from '../../widgets/Text/Text.jsx';
 
@@ -213,26 +211,11 @@ class _ModelEditor extends React.Component {
 
     window.addEventListener('keydown', this.onKeyDown, false);
     window.addEventListener('keyup', this.onKeyUp, false);
-
-    this.props.dispatch(
-      UserActions.LOAD_USER_CUBEGON.init.func({ userId: this.props.userId }),
-    );
-    if (this.props.gonId) {
-      this.props.dispatch(
-        CubegonActions.LOAD_CUBEGON_INFO.init.func({
-          gonId: this.props.gonId,
-          forceUpdate: false,
-        }),
-      );
-    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp);
-    this.props.dispatch(
-      UserActions.LOAD_USER_CUBEGON.stop.func({ userId: this.props.userId }),
-    );
   }
 
   componentWillReceiveProps(nextProps) {

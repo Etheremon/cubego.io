@@ -16,7 +16,7 @@ module.exports = (env) => ({
     vendor: ['babylonjs', 'react', 'redux'],
   },
   output: {
-    publicPath: '/',
+    publicPath: '',
     path: BUILD_DIR,
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',

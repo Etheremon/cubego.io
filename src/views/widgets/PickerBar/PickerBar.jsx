@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
-import { ButtonNew } from '../Button/Button.jsx';
-import * as Utils from '../../../utils/utils';
-import { IsEqual } from '../../../utils/objUtils';
 
 require('style-loader!./PickerBar.scss');
 
@@ -21,18 +18,6 @@ class _PickerBar extends React.Component {
     this.prevLayer = this.prevLayer.bind(this);
 
     this.itemRefs = {};
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentDidUpdate(props, state) {
   }
 
   onChange(val) {
@@ -126,10 +111,8 @@ class _PickerBar extends React.Component {
 
 _PickerBar.defaultProps = {
   className: '',
-  label: null,
   valMin: null,
   valMax: null,
-  valRange: 12,
   valStep: null,
   defaultValue: 1,
 };
@@ -137,21 +120,18 @@ _PickerBar.defaultProps = {
 _PickerBar.propTypes = {
   valMin: PropTypes.number,
   valMax: PropTypes.number,
-  valRange: PropTypes.number,
   valStep: PropTypes.number,
   className: PropTypes.string,
-  label: PropTypes.string,
   value: PropTypes.number,
   defaultValue: PropTypes.number,
   onChange: PropTypes.func,
-  text: PropTypes.string,
 };
 
 const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = () => ({});
 
 export const PickerBar = connect(
   mapStateToProps,

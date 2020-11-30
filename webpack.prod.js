@@ -1,9 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const path = require('path');
 const common = require('./webpack.common.js');
 
@@ -43,9 +41,6 @@ module.exports = (env) => (
       runtimeChunk: true,
       minimizer: [
         new OptimizeCSSAssetsPlugin({}),
-        // new UglifyJSPlugin({
-        //   sourceMap: true,
-        // }),
       ],
     },
 
@@ -62,7 +57,6 @@ module.exports = (env) => (
         filename: 'styles.css',
         chunkFilename: 'styles.css',
       }),
-      // new BundleAnalyzerPlugin(),
     ],
 
     mode: 'production',

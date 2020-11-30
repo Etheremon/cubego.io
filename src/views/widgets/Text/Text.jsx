@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { GetValues } from '../../../utils/objUtils';
 
 require('style-loader!./Text.scss');
 
@@ -8,7 +6,10 @@ export const TextImage = ({
   className, text, imgSource, uppercase, capitalize, onClick, order,
 }) => (
   <div
-    className={`widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`}
+    className={
+      // eslint-disable-next-line max-len
+      `widget__text-image ${className !== undefined ? className : ''} ${uppercase !== undefined ? 'uppercase' : ''} ${capitalize !== undefined ? 'capitalize' : ''}`
+    }
     onClick={(e) => {
       e.stopPropagation();
       onClick && onClick(e);

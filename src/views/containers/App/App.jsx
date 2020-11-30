@@ -7,26 +7,20 @@ import { URLS } from '../../../constants/general';
 import { ModelEditor } from '../ModelEditor/ModelEditor.jsx';
 import Loading from '../../components/Loading/Loading.jsx';
 import { BattlePage } from '../BattlePage/BattlePage.jsx';
+import { GetLocalizationData } from '../../../reducers/selectors';
 
 require('style-loader!./App.scss');
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loaded: false,
-    };
-  }
-
-  componentDidMount() {
-    // Set window onload
-    setTimeout(() => {
-      this.setState({ loaded: true });
-    }, 1500);
+    this.state = {};
   }
 
   render() {
-    if (!this.state.loaded) {
+    const { alreadyFetchedLocalization } = this.props;
+
+    if (!alreadyFetchedLocalization) {
       return (
         <div className="app-page-loading">
           <Loading className="main__page-loader" type={Loading.types.DOG} />
@@ -36,6 +30,7 @@ class App extends React.Component {
 
     return (
       <div className="page-container-wrapper">
+        {/* eslint-disable-next-line no-restricted-globals */}
         <Switch history={history}>
           <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor} />
           <Route path={`/${URLS.BATTLE}/:gon1Id?/:gon2Id?`} component={BattlePage} />
@@ -48,6 +43,7 @@ class App extends React.Component {
 
 const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
+  alreadyFetchedLocalization: GetLocalizationData(store),
 });
 
 const mapDispatchToProps = (dispatch) => ({
