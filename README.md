@@ -16,6 +16,8 @@ yarn lint:fix
 
 ### Build Bundles
 
+This is built to `/public` & being served directly on https://jarvis57.github.io/cubego.io.
+
 ```
-yarn build
+yarn buildProd
 ```

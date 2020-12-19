@@ -102,6 +102,15 @@ class Navbar extends React.Component {
             </Link>
           </div>
 
+          <div className="githubstar">
+            <div className="githubstar-wrapper">
+              <a href="https://github.com/jarvis57/cubego.io" target="_blank" rel="noreferrer">
+                <img className="githubstar-img" src={require('../../../../shared/img/assets/octocat.png')} />
+              </a>
+            </div>
+            <p className="githubstar-text">{_t('Feed me star')}</p>
+          </div>
+
           <div className="img-links">
             {NavbarList.map((item, idx) => (
               <div
