@@ -61,14 +61,6 @@ export class _HeaderBar extends React.Component {
 
             <div className="content">
 
-              {/* <div className={`group front ${this.state.balanceType === 0 ? 'active' : ''}`}> */}
-              {/* <div className={'item'}> */}
-              {/* <div className={'bgr'}/> */}
-              {/* <img src={require('../../../../shared/img/icons/icon-emont.png')}/> */}
-              {/* <div className={'text'}>{userInfo ? Utils.RoundToDecimalFloat(userInfo.emont_rebate, 4) || 0 : 0}</div> */}
-              {/* </div> */}
-              {/* </div> */}
-
               <div className={`group back ${this.state.balanceType === 1 ? 'active' : ''}`}>
                 <div
                   className="item"
@@ -76,18 +68,15 @@ export class _HeaderBar extends React.Component {
                   tooltip-position="bottom"
                 >
                   <div className="bgr" />
-                  <img src={require('../../../../shared/img/icons/icon-emont-rebate.png')} />
-                  <div className="text">{userInfo ? Utils.RoundToDecimalFloat(userInfo.emont_rebate, 4) || 0 : 0}</div>
+                  <div className="text">0</div>
                 </div>
                 <div className="item">
                   <div className="bgr" />
-                  <img src={require('../../../../shared/img/icons/icon-emont.png')} />
-                  <div className="text">{userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_emont, 4) || 0 : 0}</div>
+                  <div className="text">0</div>
                 </div>
                 <div className="item">
                   <div className="bgr" />
-                  <img src={require('../../../../shared/img/icons/icon-ether.png')} />
-                  <div className="text">{userInfo ? Utils.RoundToDecimalFloat(userInfo.balance_eth, 6) || 0 : 0}</div>
+                  <div className="text">0</div>
                 </div>
               </div>
 
