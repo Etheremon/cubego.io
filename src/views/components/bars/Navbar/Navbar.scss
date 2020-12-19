@@ -139,8 +139,8 @@
 
 @keyframes octocat {
   0%   {top: 50%;}
-  10%  {top: 30%;}
-  20% {top: 50%;}
+  8%  {top: 30%;}
+  16% {top: 50%;}
   100% {top: 50%;}
 }
 
@@ -160,7 +160,7 @@
     width: 100%;
     height: auto !important;
     position: absolute;
-    animation: octocat 5s infinite;
+    animation: octocat 6s infinite;
   }
 
   .githubstar-text {
