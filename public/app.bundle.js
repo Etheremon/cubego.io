@@ -23736,7 +23736,8 @@ var VoxBattle = function (_Component) {
       _babylonX2.default.loaders.addTexture('particle_star', __webpack_require__(507));
       _babylonX2.default.loaders.addTexture('particle_twirl_02', __webpack_require__(508));
 
-      _babylonX2.default.loaders.addMesh('battlemap1', '/', battleGroundFileName).then(function (data) {
+      // eslint-disable-next-line no-undef
+      _babylonX2.default.loaders.addMesh('battlemap1', '/', "/cubego.io/public" + '/' + battleGroundFileName).then(function (data) {
         data.loadedMeshes.forEach(function (mesh) {
           if (mesh.name.match(/^Cloud_\d+_l$/g)) {
             var anim = new BABYLON.Animation('cloudFly', 'position.z', 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);

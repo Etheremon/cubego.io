@@ -219,7 +219,8 @@ class VoxBattle extends Component {
     BabylonX.loaders.addTexture('particle_star', require('../../shared/particles/textures/star.jpg'));
     BabylonX.loaders.addTexture('particle_twirl_02', require('../../shared/particles/textures/twirl_02.png'));
 
-    BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
+    // eslint-disable-next-line no-undef
+    BabylonX.loaders.addMesh('battlemap1', '/', `${DOMAIN_ROOT}/${battleGroundFileName}`).then((data) => {
       data.loadedMeshes.forEach((mesh) => {
         if (mesh.name.match(/^Cloud_\d+_l$/g)) {
           const anim = new BABYLON.Animation(
