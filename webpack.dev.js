@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const path = require('path');
+const webpack = require('webpack');
 const common = require('./webpack.common.js');
 
 const APP_DIR = path.resolve(__dirname, 'src');
@@ -43,7 +44,11 @@ module.exports = (env) => (
 
     devtool: 'inline-source-map',
 
-    plugins: [],
+    plugins: [
+      new webpack.DefinePlugin({
+        DOMAIN_ROOT: JSON.stringify(''),
+      }),
+    ],
 
     mode: 'development',
   })

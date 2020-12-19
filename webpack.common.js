@@ -65,7 +65,6 @@ module.exports = (env) => ({
   plugins: [
     new webpack.DefinePlugin({
       ENV: JSON.stringify(env.ENV),
-      DOMAIN_ROOT: '',
     }),
 
     new CopyWebpackPlugin([{
