@@ -53,43 +53,36 @@
       max-width: 50%;
       margin-bottom: 24px;
     }
-    
+
     .footer__copyright {
       font-size: $font-size-small;
       text-align: center;
     }
   }
-  
+
   .footer__right {
     display: flex;
     flex-direction: column;
     text-decoration: none !important;
-    
+
 
     .footer__right-content {
       display: flex;
       margin: 0 5px 16px 5px;
       font-size: $font-size-normal;
 
-      .footer__term-policy, .footer__service-customer {
-        display: block;
-        width: 50%;
-        @include mobile {
-          padding-left: 25px;
-        }
+      a, p {
+        text-decoration: none;
+        color: inherit;
+        padding: 0 10px;
+      }
 
-        a, p {
-          text-decoration: none;
-          color: inherit;
-        }
-
-        a, p {
-          font-style: normal;
-          cursor: pointer;
-        }
-        a:hover, p:hover {
-          color: $blue-light;
-        }
+      a, p {
+        font-style: normal;
+        cursor: pointer;
+      }
+      a:hover, p:hover {
+        color: $blue-light;
       }
     }
     .footer__right-social {

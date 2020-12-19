@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container } from '../../../widgets/Container/Container.jsx';
-import { Image } from '../../Image/Image.jsx';
 import { GetValues } from '../../../../utils/objUtils';
 import Popup from '../../../widgets/Popup/Popup.jsx';
 
@@ -52,30 +50,10 @@ class Footer extends React.Component {
 
             <div className="footer__right">
               <div className="footer__right-content">
-                <div className="footer__term-policy link">
-                  <Link to="/privacy" target="_blank">
-                    <p>{_t('footer.privacy_policy')}</p>
-                  </Link>
-                  <Link to="/tos" target="_blank">
-                    <p>{_t('footer.terms_of_sale')}</p>
-                  </Link>
-                  <a href="mailto:contact@cubego.io?Subject=Hello"><p>{_t('email')}</p></a>
-                </div>
-                <div className="footer__service-customer">
-                  <a onClick={() => { this.setState({ openContracts: true }); }}><p>{_t('contracts')}</p></a>
-                  {/* <a href="https://github.com/etheremon/smartcontract" target="_blank"><p>{_t('github')}</p></a> */}
-                  {/* <a href={`/${URLS.FAQ}`} target="_blank"><p>{_t('faq')}</p></a> */}
-                </div>
-              </div>
-              <div className="footer__right-social">
-                <a href="https://discordapp.com/invite/pYD5tss" target="_blank"><Image img="icon_discord" /></a>
-                <a href="https://t.me/cubego" target="_blank"><Image img="icon_telegram" /></a>
-                <a href="https://www.reddit.com/r/cubego/" target="_blank"><Image img="icon_reddit" /></a>
-                <a href="https://www.facebook.com/cubego.io/" target="_blank"><Image img="icon_facebook" /></a>
-                <a href="https://twitter.com/cubego_io" target="_blank"><Image img="icon_twitter" /></a>
-                {/* <a href="https://www.instagram.com/etheremon_official/" target="_blank"><Image img={'icon_instagram'} /></a> */}
-                <a href="https://medium.com/cubego" target="_blank"><Image img="icon_medium" /></a>
-                {/* <a href="https://www.youtube.com/channel/UCofiBCZvWbHFJRzKZixGfVw" target="_blank"><Image img={'icon_youtube'} /></a> */}
+                <a href="https://github.com/jarvis57/cubego.io" target="_blank" rel="noreferrer">
+                  <p>{_t('github')}</p>
+                </a>
+                <a href="mailto:nvdung149@gmail.com?Subject=Hello"><p>{_t('email')}</p></a>
               </div>
             </div>
           </div>
@@ -103,7 +81,7 @@ Footer.propTypes = {
 
 const mapStateToProps = (store) => ({ _t: getTranslate(store.localeReducer) });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = () => ({});
 
 export default connect(
   mapStateToProps,

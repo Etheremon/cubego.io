@@ -15,6 +15,19 @@ let loopStarted = false;
 let root = null;
 let loadingScreen = null;
 
+const resize = () => {
+  engine.resize();
+};
+
+const startLoop = () => {
+  if (!loopStarted) {
+    loopStarted = true;
+    engine.runRenderLoop(() => {
+      scene.render();
+    });
+  }
+};
+
 const createRenderer = (canvas, options) => {
   engine = new BABYLON.Engine(canvas, true);
   loadingScreen = new LoadingScreen(canvas);
@@ -32,25 +45,13 @@ const createRenderer = (canvas, options) => {
   return rootContainer;
 };
 
-const resize = () => {
-  engine.resize();
-};
-
-const startLoop = () => {
-  if (!loopStarted) {
-    loopStarted = true;
-    engine.runRenderLoop(() => {
-      scene.render();
-    });
-  }
-};
-
 const render = (element, canvas, options) => {
   if (!isWebGLAvailable(canvas)) {
     return;
   }
   rootContainer = createRenderer(canvas, options);
   BabylonRenderer.updateContainer(element, rootContainer, null);
+  // eslint-disable-next-line consistent-return
   return BabylonRenderer.getPublicRootInstance(rootContainer);
 };
 

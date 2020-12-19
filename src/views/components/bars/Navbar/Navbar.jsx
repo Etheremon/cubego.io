@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getTranslate, setActiveLanguage } from 'react-localize-redux';
+import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
 import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/es/withRouter';
 import Link from 'react-router-dom/es/Link';
+import * as Config from '../../../../config_language';
 import Dropdown from '../../../widgets/Dropdown/Dropdown.jsx';
 
+import { Icon } from '../../Icon/Icon.jsx';
 import * as LS from '../../../../services/localStorageService.js';
 import { URLS } from '../../../../constants/general';
 import { Image } from '../../Image/Image.jsx';
@@ -41,7 +43,9 @@ class Navbar extends React.Component {
     const { transforming, minifying, scrollingElement } = this.props;
 
     if (transforming || minifying) {
-      if (transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+      if (transforming) {
+        document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+      }
       if (scrollingElement) document.getElementById(scrollingElement).addEventListener('scroll', this.handleScroll);
       document.addEventListener('scroll', this.handleScroll);
     }
@@ -62,10 +66,14 @@ class Navbar extends React.Component {
     if (e.target && e.target.scrollingElement) scrollTop = e.target.scrollingElement.scrollTop;
     if (scrollTop !== undefined) {
       if (scrollTop >= 50) {
-        if (this.props.transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
+        if (this.props.transforming) {
+          document.getElementsByClassName('navbar__wrapper')[0].classList.remove('navbar__wrapper-transform');
+        }
         if (this.props.minifying) document.getElementsByClassName('navbar__wrapper')[0].classList.add('minifying');
       } else {
-        if (this.props.transforming) document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+        if (this.props.transforming) {
+          document.getElementsByClassName('navbar__wrapper')[0].classList.add('navbar__wrapper-transform');
+        }
         if (this.props.minifying) document.getElementsByClassName('navbar__wrapper')[0].classList.remove('minifying');
       }
     }
@@ -78,7 +86,7 @@ class Navbar extends React.Component {
 
   render() {
     const {
-      _t, fixed, size, feed,
+      currentLanguage, _t, fixed, size, feed,
     } = this.props;
 
     return (
@@ -142,6 +150,26 @@ class Navbar extends React.Component {
             </Dropdown>
           </div>
 
+          <div className="user-info">
+            <Dropdown
+              position="right"
+              list={(Config.Languages.map((lan) => ({
+                content: (
+                  <span className="navbar__text">
+                    <Icon name={`${lan.country} flag`} />
+                    {lan.code}
+                  </span>
+                ),
+                onClick: () => { this.handleLanguageChange(lan.code); },
+              })))}
+            >
+              <span>
+                <Icon name={`${currentLanguage.country} flag`} />
+                {currentLanguage.code}
+              </span>
+            </Dropdown>
+          </div>
+
         </Container>
 
       </div>
@@ -151,6 +179,7 @@ class Navbar extends React.Component {
 
 const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
+  currentLanguage: getActiveLanguage(store.localeReducer),
 });
 
 const mapDispatchToProps = (dispatch) => ({

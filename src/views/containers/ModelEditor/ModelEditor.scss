@@ -3,9 +3,6 @@
 @import '../../styles/variables';
 @import '../../styles/fonts';
 
-.model-editor {
-}
-
 .model-editor__container {
   color: $white;
   text-align: right;
@@ -51,9 +48,6 @@
         margin: 0 8px;
         display: flex;
         border-radius: 4px;
-      }
-
-      .item {
       }
     }
 
@@ -202,8 +196,8 @@
   }
 
   .model-editor__tier-bar {
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 60px;
+    margin-bottom: 40px;
     background-color: rgba(255, 255, 255, 0.3);
     height: 6px;
     position: relative;
@@ -221,13 +215,6 @@
       max-width: 100%;
     }
     .tier {
-      //&.Challenger, &.challenger {
-      //  padding-left: 24px;
-      //}
-      //&.Elite, &.elite {
-      //  padding-left: 32px;
-      //}
-
       position: absolute;
       top: 50%;
       @include transform(translateX(-50%) translateY(-50%));
@@ -319,9 +306,6 @@
         z-index: 3;
         right: 18px;
         top: 108px;
-        .upload-expense {
-
-        }
       }
 
       .model-editor__3d-capture {

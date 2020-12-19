@@ -51,7 +51,7 @@ class _BattlePage extends React.Component {
   }
 }
 
-const mapStateToProps = (store, props) => ({
+const mapStateToProps = (store) => ({
   _t: getTranslate(store.localeReducer),
   userId: GetLoggedInUserId(store),
 });

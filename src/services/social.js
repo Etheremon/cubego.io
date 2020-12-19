@@ -5,26 +5,16 @@ export const ShareToFacebook = (url, callback) => {
   }, (response) => { callback && callback(response); });
 };
 
-export const ShareToTwitter = (url, callback) => {
-  const w = 500; const
-    h = 300;
-  const left = (screen.width / 2) - (w / 2);
-  const top = (screen.height / 2) - (h / 2);
-  const popup = window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('Hello world')}&hashtags=Etheremon,dapps,game&url=${encodeURIComponent(url)}`, 'Etheremon', `height=${h},width=${w},top=${top},left=${left}`);
-  if (popup) {
-    const timer = setInterval(() => {
-      if (popup.closed) {
-        clearInterval(timer);
-        callback && callback(true);
-      }
-    }, 1000);
-  }
-};
-
 export const ShareImageToFacebook = (blob) => {
   window.FB.getLoginStatus((response) => {
     if (response.status === 'connected') {
-      postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook/Twitter', 'image/png', blob, window.location.href);
+      postImageToFacebook(
+        response.authResponse.accessToken,
+        'Canvas to Facebook/Twitter',
+        'image/png',
+        blob,
+        window.location.href,
+      );
     } else if (response.status === 'not_authorized') {
       window.FB.login((response) => {
         postImageToFacebook(response.authResponse.accessToken, 'Canvas to Facebook/Twitter', 'image/png', blob, window.location.href);

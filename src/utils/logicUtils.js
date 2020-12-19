@@ -75,12 +75,12 @@ export const GetFullModel = (simplifiedModel) => {
           x: cell.x,
           y: cell.y,
           z: cell.z,
+          // eslint-disable-next-line radix
           color: { ...CUBE_MATERIALS[mid].sub_materials[parseInt(mid * 100) + parseInt(cell.variant_id)] },
         };
       });
-    }
-    // v1: {ver: 2, image, model: {'1_1_1':{x,y,z,sub_mat_id}}
-    else if (simplifiedModel.ver === 2) {
+    } else if (simplifiedModel.ver === 2) {
+      // v1: {ver: 2, image, model: {'1_1_1':{x,y,z,sub_mat_id}}
       res.model.voxels = ObjUtils.CloneWithValueModify(simplifiedModel.model, (key, cell) => ({
         x: cell.x,
         y: cell.y,
@@ -120,15 +120,3 @@ export const ConvertColorDiffToSimilarity = (diff) => (
     ? Utils.RoundDownToDecimal(100 - diff * (100 - cutoffColorSimilarity.fake) / (cutoffColorSimilarity.correct), 2)
     : Utils.RoundDownToDecimal((1 - diff) / (1 - cutoffColorSimilarity.correct) * cutoffColorSimilarity.fake, 2)
 );
-export const CalculateLengthBaseOnTier = (point) => {
-  const validPoint = Math.min(point, GON_TIER.god.points[1]);
-  const tierId = ObjUtils.FilterValue(GON_TIER, (k, v) => v.points[0] <= validPoint && validPoint <= v.points[1])[0] || undefined;
-
-  if (tierId) {
-    const index = Object.keys(GON_TIER).indexOf(tierId);
-    const { points } = GON_TIER[tierId];
-    return { idx: index, length: (validPoint - points[0]) / (points[1] - points[0]) };
-  }
-
-  return undefined;
-};

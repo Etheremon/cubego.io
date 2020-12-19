@@ -26,25 +26,6 @@ import HealingWater from './moves/water/HealingWater';
 import HydroBash from './moves/water/HydroBash';
 
 const SIZE = 0.2;
-const DEMO_BATTLE_LOGS = [
-  { moveId: WindStrike.getId(), effects: { damage: 20 }, player: 0 },
-  { moveId: HydroBash.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: FireBreath.getId(), effects: { damage: 20 }, player: 0 },
-  { moveId: MilkDrink.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: GuardianShield.getId(), effects: { damage: 0 }, player: 0 },
-  { moveId: LeafThrow.getId(), effects: { damage: 0 }, player: 1 },
-  { moveId: PyroWisp.getId(), effects: { damage: 20 }, player: 0 },
-  { moveId: Tackle.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: MilkDrink.getId(), effects: { damage: 30 }, player: 0 },
-  { moveId: RockThrow.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: FireBall.getId(), effects: { damage: 20 }, player: 0 },
-  { moveId: HydroGun.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: PyroWisp.getId(), effects: { damage: 20 }, player: 0 },
-  { moveId: AirSlash.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: FireBreath.getId(), effects: { damage: 10 }, player: 0 },
-  { moveId: HydroGun.getId(), effects: { damage: 20 }, player: 1 },
-  { moveId: HealingWater.getId(), effects: { damage: 20 }, player: 0 },
-];
 
 const DEMO_BATTLE_MOVES = [
   WindStrike.getId(),
@@ -225,13 +206,14 @@ class VoxBattle extends Component {
   }
 
   componentDidMount() {
-    let battleGroundFileName = require('../../shared/battleground/map_1/BattleMap1.babylon');
-    battleGroundFileName = battleGroundFileName.substr(1);
+    const battleGroundFileName = require('../../shared/battleground/map_1/BattleMap1.babylon');
     BabylonX.loaders.addTexture('particle_circle_01', require('../../shared/particles/textures/circle_01.png'));
     BabylonX.loaders.addTexture('particle_circle_05', require('../../shared/particles/textures/circle_05.png'));
     BabylonX.loaders.addTexture('particle_cube', require('../../shared/particles/textures/cube.png'));
     BabylonX.loaders.addTexture('particle_flare', require('../../shared/particles/textures/flare.png'));
-    BabylonX.loaders.addTexture('particle_projectile_141', require('../../shared/particles/textures/projectile_141.png'));
+    BabylonX.loaders.addTexture(
+      'particle_projectile_141', require('../../shared/particles/textures/projectile_141.png'),
+    );
     BabylonX.loaders.addTexture('particle_scratch_01', require('../../shared/particles/textures/scratch_01.png'));
     BabylonX.loaders.addTexture('particle_window_04', require('../../shared/particles/textures/window_04.png'));
     BabylonX.loaders.addTexture('particle_star', require('../../shared/particles/textures/star.jpg'));
@@ -240,7 +222,13 @@ class VoxBattle extends Component {
     BabylonX.loaders.addMesh('battlemap1', '/', battleGroundFileName).then((data) => {
       data.loadedMeshes.forEach((mesh) => {
         if (mesh.name.match(/^Cloud_\d+_l$/g)) {
-          const anim = new BABYLON.Animation('cloudFly', 'position.z', 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+          const anim = new BABYLON.Animation(
+            'cloudFly',
+            'position.z',
+            60,
+            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
+          );
           const keys = [];
           keys.push({
             frame: 0,
@@ -360,7 +348,7 @@ class VoxBattle extends Component {
             left={300}
             top={-150}
             value="CHANGE CUBEGON"
-            onClick={this.changeCubegon(2)}
+            onClick={this.changeCubegon(0)}
             width={`${100 / 960 * 100}%`}
             image={require('../../shared/img/game_ui/change_cubegons.png')}
             height={`${40 / 540 * 100}%`}

@@ -7,16 +7,29 @@ import VoxBattle from '../../3d/VoxBattle.jsx';
 import Popup from '../../../views/widgets/Popup/Popup.jsx';
 import {
   GetCubegonInfo,
-  GetLoggedInUserId,
   GetSavedModel,
-  GetUserCubegons,
 } from '../../../reducers/selectors';
-import { EmptyCubegonList } from '../../../views/containers/EmptyView/EmptyView.jsx';
-import { GetImageFromGonID, GetModelFromStructure } from '../../../utils/logicUtils';
-import Loading from '../../../views/components/Loading/Loading.jsx';
-import { URLS } from '../../../constants/general';
 
 require('style-loader!./Battle.scss');
+
+const TEMPLATES = [
+  [
+    require('../../../shared/sample_models/batman.vox'),
+    require('../../../shared/img/game_ui/batman.png'),
+  ],
+  [
+    require('../../../shared/sample_models/iron_man.vox'),
+    require('../../../shared/img/game_ui/ironman.png'),
+  ],
+  [
+    require('../../../shared/sample_models/momotaro.vox'),
+    require('../../../shared/img/game_ui/momotoro1.png'),
+  ],
+  [
+    require('../../../shared/sample_models/cat.vox'),
+    require('../../../shared/img/game_ui/cat.png'),
+  ],
+];
 
 class _Battle extends Component {
   constructor(props) {
@@ -32,15 +45,24 @@ class _Battle extends Component {
   }
 
   onModelSelect(item) {
-    this.setState({ showCubegonSelect: false });
-    let gon1Id = this.props.match.params.gon1Id || -1;
-    let gon2Id = this.props.match.params.gon2Id || -1;
-    if (this.state.gonSelectionIdx === 1) {
-      gon1Id = item.id;
+    if (item.model) {
+      const playerData = {
+        image: item.image,
+        model: item.model,
+      };
+      this.voxel.setPlayer(this.state.gonSelectionIdx, playerData);
+      this.setState({ showCubegonSelect: false });
     } else {
-      gon2Id = item.id;
+      const parser = new window.vox.Parser();
+      parser.parse(item[0]).then((data) => {
+        this.voxel.setPlayer(this.state.gonSelectionIdx, {
+          model: data,
+          image: item[1],
+          type: 'magical_voxel',
+        });
+        this.setState({ showCubegonSelect: false });
+      });
     }
-    this.props.history.push(`/${URLS.BATTLE}/${gon1Id}/${gon2Id}`);
   }
 
   componentDidMount() {
@@ -63,103 +85,75 @@ class _Battle extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.selectedGon1Info || nextProps.match.params.gon1Id !== this.props.match.params.gon1Id) {
-      this.setPlayer1Data(nextProps);
-    }
-    if (!this.props.selectedGon2Info || nextProps.match.params.gon2Id !== this.props.match.params.gon2Id) {
-      this.setPlayer2Data(nextProps);
-    }
-  }
-
-  setPlayer1Data(props) {
-    if (props.match.params.gon1Id && props.selectedGon1Info) {
-      const playerData = {
-        image: GetImageFromGonID(props.match.params.gon1Id),
-        model: GetModelFromStructure(props.selectedGon1Info.structure),
-      };
-      this.voxel.setPlayer(1, playerData);
-    }
-  }
-
-  setPlayer2Data(props) {
-    if (props.match.params.gon2Id && props.selectedGon2Info) {
-      const playerData = {
-        image: GetImageFromGonID(props.match.params.gon2Id),
-        model: GetModelFromStructure(props.selectedGon2Info.structure),
-      };
-      this.voxel.setPlayer(0, playerData);
-    }
-  }
-
   loadModel() {
     const parser = new window.vox.Parser();
 
-    if (
-      !this.props.match.params.gon1Id
-      || this.props.match.params.gon1Id === '-1'
-      || Number.isNaN(this.props.match.params.gon1Id)
-    ) {
-      parser.parse(require('../../../shared/sample_models/batman.vox')).then((data) => {
-        this.voxel.setPlayer(1, {
-          model: data,
-          image: require('../../../shared/img/game_ui/batman.png'),
-          type: 'magical_voxel',
-        });
+    const i1 = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
+    parser.parse(i1[0]).then((data) => {
+      this.voxel.setPlayer(1, {
+        model: data,
+        image: i1[1],
+        type: 'magical_voxel',
       });
-    } else {
-      this.setPlayer1Data(this.props);
-    }
+      console.log(data);
+    });
 
-    if (
-      !this.props.match.params.gon2Id
-      || this.props.match.params.gon2Id === '-1'
-      || Number.isNaN(this.props.match.params.gon2Id)
-    ) {
-      parser.parse(require('../../../shared/sample_models/iron_man.vox')).then((data) => {
-        this.voxel.setPlayer(0, {
-          model: data,
-          image: require('../../../shared/img/game_ui/ironman.png'),
-          type: 'magical_voxel',
-        });
+    let i2 = i1;
+    while (i2 === i1) i2 = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
+    parser.parse(i2[0]).then((data) => {
+      this.voxel.setPlayer(0, {
+        model: data,
+        image: i2[1],
+        type: 'magical_voxel',
       });
-    } else {
-      this.setPlayer2Data(this.props);
-    }
+    });
   }
 
   toggleCubegonSelect(idx) {
     this.setState({ gonSelectionIdx: idx, showCubegonSelect: true });
   }
 
-  renderListModel(listModel, _t, history) {
-    if (!listModel) {
-      return <Loading />;
-    }
-    if (listModel.length > 0) {
-      return listModel.map((item, idx) => (
-        <div
-          className="template"
-          key={idx}
-          onClick={() => {
-            this.onModelSelect(item);
-          }}
-        >
-          <img
-            className="img"
-            src={GetImageFromGonID(item.id)}
-          />
-          <div className="name">
-            {item.name}
+  renderListModel(listModel) {
+    return (
+      <React.Fragment>
+        {listModel.map((item, idx) => (
+          <div
+            className="template"
+            key={idx}
+            onClick={() => {
+              this.onModelSelect(item);
+            }}
+          >
+            <img
+              className="img"
+              src={item.image}
+            />
+            <div className="name">
+              {item.name}
+            </div>
           </div>
-        </div>
-      ));
-    }
-    return <EmptyCubegonList _t={_t} history={history} />;
+        ))}
+
+        {TEMPLATES.map((item, idx) => (
+          <div
+            className="template"
+            key={idx}
+            onClick={() => {
+              this.onModelSelect(item);
+            }}
+          >
+            <img
+              className="img"
+              src={item[1]}
+            />
+          </div>
+        ))}
+      </React.Fragment>
+    );
   }
 
   render() {
-    const { userCubegons, _t, history } = this.props;
+    const { _t, history, savedModel } = this.props;
 
     return (
       <div
@@ -186,7 +180,7 @@ class _Battle extends Component {
               size="large"
             >
               <div className="battle-3d-view__select-cubegons">
-                {this.renderListModel(userCubegons, _t, history)}
+                {this.renderListModel(savedModel, _t, history)}
               </div>
             </Popup>
           ) : null}
@@ -197,16 +191,12 @@ class _Battle extends Component {
   }
 }
 
-const mapStateToProps = (store, props) => {
-  const userId = GetLoggedInUserId(store);
-  return {
-    _t: getTranslate(store.localeReducer),
-    savedModel: GetSavedModel(store),
-    userCubegons: GetUserCubegons(store, userId),
-    selectedGon1Info: GetCubegonInfo(store, props.match.params.gon1Id),
-    selectedGon2Info: GetCubegonInfo(store, props.match.params.gon2Id),
-  };
-};
+const mapStateToProps = (store, props) => ({
+  _t: getTranslate(store.localeReducer),
+  savedModel: GetSavedModel(store),
+  selectedGon1Info: GetCubegonInfo(store, props.match.params.gon1Id),
+  selectedGon2Info: GetCubegonInfo(store, props.match.params.gon2Id),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch,
