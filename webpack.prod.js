@@ -52,6 +52,7 @@ module.exports = (env) => (
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
+        DOMAIN_ROOT: '/cubego.io/public',
       }),
       new MiniCssExtractPlugin({
         filename: 'styles.css',

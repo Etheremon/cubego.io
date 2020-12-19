@@ -65,6 +65,7 @@ module.exports = (env) => ({
   plugins: [
     new webpack.DefinePlugin({
       ENV: JSON.stringify(env.ENV),
+      DOMAIN_ROOT: '',
     }),
 
     new CopyWebpackPlugin([{
@@ -75,7 +76,7 @@ module.exports = (env) => ({
 
     new HtmlWebpackPlugin({
       inject: false,
-      template: `${BASE_DIR}/index.html`,
+      template: `${BASE_DIR}/index_temp.html`,
       filename: `${BUILD_DIR}/index.html`,
       customHash: ((new Date()).getTime()).toString(),
     }),

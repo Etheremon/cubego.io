@@ -7898,7 +7898,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(367);
 
-var NavbarList = [{ link: '/' + _general.URLS.BUILD_GON, text: 'build', img: 'icon_build' }, { link: '/' + _general.URLS.BATTLE, text: 'battle', img: 'icon_battle' }];
+var NavbarList = [
+// eslint-disable-next-line no-undef
+{ link:  + '/' + _general.URLS.BUILD_GON, text: 'build', img: 'icon_build' },
+// eslint-disable-next-line no-undef
+{ link:  + '/' + _general.URLS.BATTLE, text: 'battle', img: 'icon_battle' }];
 
 var Navbar = function (_React$Component) {
   _inherits(Navbar, _React$Component);

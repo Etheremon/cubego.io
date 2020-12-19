@@ -19,8 +19,10 @@ import { Container } from '../../../widgets/Container/Container.jsx';
 require('style-loader!./Navbar.scss');
 
 const NavbarList = [
-  { link: `/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build' },
-  { link: `/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle' },
+  // eslint-disable-next-line no-undef
+  { link: `${DOMAIN_ROOT}/${URLS.BUILD_GON}`, text: 'build', img: 'icon_build' },
+  // eslint-disable-next-line no-undef
+  { link: `${DOMAIN_ROOT}/${URLS.BATTLE}`, text: 'battle', img: 'icon_battle' },
 ];
 
 class Navbar extends React.Component {
