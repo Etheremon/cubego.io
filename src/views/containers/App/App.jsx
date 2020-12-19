@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -32,8 +33,8 @@ class App extends React.Component {
       <div className="page-container-wrapper">
         {/* eslint-disable-next-line no-restricted-globals */}
         <Switch history={history}>
-          <Route path={`/${URLS.BUILD_GON}`} component={ModelEditor} />
-          <Route path={`/${URLS.BATTLE}/:gon1Id?/:gon2Id?`} component={BattlePage} />
+          <Route path={`${DOMAIN_ROOT}/${URLS.BUILD_GON}`} component={ModelEditor} />
+          <Route path={`${DOMAIN_ROOT}/${URLS.BATTLE}/:gon1Id?/:gon2Id?`} component={BattlePage} />
           <Route component={ModelEditor} />
         </Switch>
       </div>

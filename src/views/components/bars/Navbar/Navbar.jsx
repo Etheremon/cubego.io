@@ -96,7 +96,8 @@ class Navbar extends React.Component {
         <Container size={size} className="navbar__content">
 
           <div className="logo m--computer-only">
-            <Link to="/#home">
+            {/* eslint-disable-next-line no-undef */}
+            <Link to={`${DOMAIN_ROOT}/#home`}>
               <Image img="logo_cubego" />
             </Link>
           </div>
