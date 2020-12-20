@@ -1,6 +1,8 @@
 ## Cubego
 
-Cubego is served at https://jarvis57.github.io/cubego.io.
+https://jarvis57.github.io/cubego.io
+
+A quick tool to build 3D models from the voxels or 2D layers.
 
 ## Run
 
