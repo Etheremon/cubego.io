@@ -1,3 +1,7 @@
+## Cubego
+
+Cubego is served at https://jarvis57.github.io/cubego.io.
+
 ## Run
 
 ### Run Local
