@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getTranslate } from 'react-localize-redux';
 import withRouter from 'react-router-dom/es/withRouter';
 import connect from 'react-redux/es/connect/connect';
+import vox from 'vox.js';
 import BabylonX from '../../babylonX';
 import VoxBattle from '../../3d/VoxBattle.jsx';
 import Popup from '../../../views/widgets/Popup/Popup.jsx';
@@ -42,6 +43,7 @@ class _Battle extends Component {
     };
     this.toggleCubegonSelect = this.toggleCubegonSelect.bind(this);
     this.onModelSelect = this.onModelSelect.bind(this);
+    this.parser = new vox.Parser();
   }
 
   onModelSelect(item) {
@@ -53,8 +55,7 @@ class _Battle extends Component {
       this.voxel.setPlayer(this.state.gonSelectionIdx, playerData);
       this.setState({ showCubegonSelect: false });
     } else {
-      const parser = new window.vox.Parser();
-      parser.parse(item[0]).then((data) => {
+      this.parser.parse(item[0]).then((data) => {
         this.voxel.setPlayer(this.state.gonSelectionIdx, {
           model: data,
           image: item[1],
@@ -86,21 +87,18 @@ class _Battle extends Component {
   }
 
   loadModel() {
-    const parser = new window.vox.Parser();
-
     const i1 = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
-    parser.parse(i1[0]).then((data) => {
+    this.parser.parse(i1[0]).then((data) => {
       this.voxel.setPlayer(1, {
         model: data,
         image: i1[1],
         type: 'magical_voxel',
       });
-      console.log(data);
     });
 
     let i2 = i1;
     while (i2 === i1) i2 = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
-    parser.parse(i2[0]).then((data) => {
+    this.parser.parse(i2[0]).then((data) => {
       this.voxel.setPlayer(0, {
         model: data,
         image: i2[1],
