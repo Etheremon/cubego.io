@@ -27,3 +27,8 @@ This is built to `/public` & being served directly on https://jarvis57.github.io
 ```
 yarn buildProd
 ```
+
+### Screenshots
+
+![Alt text](/img/ss-battle.png?raw=true "Battle")
+![Alt text](/img/ss-model.png?raw=true "Build Model")
