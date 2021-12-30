@@ -21,31 +21,24 @@ const fetchLocalization = async () => {
   let oldData = LS.GetItem(LS.Fields.localization);
   if (oldData) oldData = JSON.parse(oldData);
 
-  if (oldData && parseFloat(oldData.expireTime) > Date.now() / 1000) {
-    return oldData.data;
-  }
-  const data = await GeneralApi.GetLocalization();
-  const localization = {};
+  if (oldData && parseFloat(oldData['expireTime']) > Date.now()/1000) {
+    return oldData['data'];
+  } else {
+    // const data = await GeneralApi.GetLocalization();
+    let data = require('./shared/files/localization.csv');
+    let localization = {};
 
-  const json = JSON.parse(data.response
-    .replace('gdata.io.handleScriptLoaded(', '')
-    .replace('});', '}')
-    .replace(/gsx\$/g, ''));
-
-  if (json.feed && json.feed.entry.length) {
-    json.feed.entry.forEach((entryObj) => {
-      localization[entryObj.key.$t] = Languages.map(
-        (l) => l.code,
-      ).map((l) => entryObj[l].$t || entryObj[DefaultLanguage].$t);
+    data.forEach(e => {
+      localization[e["key"]] = Languages.map(l => l.code).map(l => e[l] || e[DefaultLanguage])
     });
+
+    LS.SetItem(LS.Fields.localization, JSON.stringify({
+      expireTime: Date.now()/1000 + (IsLiveServer ? 15*60 : 0),
+      data: localization,
+    }));
+
+    return localization;
   }
-
-  LS.SetItem(LS.Fields.localization, JSON.stringify({
-    expireTime: Date.now() / 1000 + (IsLiveServer ? 15 * 60 : 0),
-    data: localization,
-  }));
-
-  return localization;
 };
 
 const browserLan = navigator.language.slice(0, 2);
